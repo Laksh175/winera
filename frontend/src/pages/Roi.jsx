@@ -127,13 +127,13 @@ export default function Roi({ siteData }) {
   };
 
   const roiSeo = siteData?.roiSeo || {
-    pageTitle: "ROI Calculator for Game Zones | Return on Investment | Winera International",
-    metaDescription: "Calculate your game zone ROI before investing. Winera International provides free ROI consultations, data-backed game mix planning, and complete setup services across India."
+    pageTitle: "Know Your Game Zone ROI Before You Invest | Winera International",
+    metaDescription: "Opening a game zone is easy, making it profitable is a system. Winera International models your ROI around your space and budget before you invest a rupee."
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = roiSeo.pageTitle || "ROI Calculator for Game Zones | Return on Investment | Winera International";
+    document.title = roiSeo.pageTitle || "Know Your Game Zone ROI Before You Invest | Winera International";
 
     let metaTag = document.querySelector('meta[name="description"]');
     if (!metaTag) {
@@ -141,7 +141,7 @@ export default function Roi({ siteData }) {
       metaTag.setAttribute('name', 'description');
       document.head.appendChild(metaTag);
     }
-    metaTag.setAttribute('content', roiSeo.metaDescription || "Calculate your game zone ROI before investing. Winera International provides free ROI consultations, data-backed game mix planning, and complete setup services across India.");
+    metaTag.setAttribute('content', roiSeo.metaDescription || "Opening a game zone is easy, making it profitable is a system. Winera International models your ROI around your space and budget before you invest a rupee.");
   }, [roiSeo]);
 
   const painPoints = Array.isArray(roiMatters.cards) ? roiMatters.cards : [
@@ -163,7 +163,7 @@ export default function Roi({ siteData }) {
       <section className="winera-roi-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '210px',
+        paddingTop: '165px',
         paddingBottom: '75px',
         background: `url(${roiHero.bgUrl || roiBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
@@ -175,13 +175,13 @@ export default function Roi({ siteData }) {
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <h1 className="winera-roi-hero-h1" style={{
-            fontSize: '2.8rem',
-            fontWeight: '900',
+            fontSize: '1.45rem',
+            fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '12px',
+            gap: '8px',
             margin: 0,
             lineHeight: 1.2,
             textAlign: 'center'

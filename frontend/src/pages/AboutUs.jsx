@@ -16,6 +16,22 @@ import welcomeWineraImg from '../assets/welcome-to-winera.png';
 import { Shield, Users, Target, Eye, TrendingUp, Maximize2, Clock, RefreshCw, Award, Headset, Settings } from 'lucide-react';
 
 export default function AboutUs({ siteData }) {
+  const aboutSeo = siteData?.aboutSeo || {
+    pageTitle: "The Right Choice for Your Business | Winera International",
+    metaDescription: "Winera delivers more than promises trusted expertise, customer care, and quality solutions that set us apart. Discover why clients choose us."
+  };
+
+  React.useEffect(() => {
+    document.title = aboutSeo.pageTitle || aboutSeo.title || "The Right Choice for Your Business | Winera International";
+    let metaTag = document.querySelector('meta[name="description"]');
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.setAttribute('name', 'description');
+      document.head.appendChild(metaTag);
+    }
+    metaTag.setAttribute('content', aboutSeo.metaDescription || aboutSeo.description || "Winera delivers more than promises trusted expertise, customer care, and quality solutions that set us apart. Discover why clients choose us.");
+  }, [aboutSeo]);
+
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
 
   const { header, footer } = siteData;

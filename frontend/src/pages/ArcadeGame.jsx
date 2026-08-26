@@ -23,6 +23,12 @@ import about1 from '../assets/about-1.png';
 import about2 from '../assets/about-2.png';
 import about3 from '../assets/about-3.png';
 import about4 from '../assets/about-4.png';
+import superAirHockeyImg from '../assets/super-air-hockey.jpg';
+import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.jpg';
+import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.jpg';
+import auroraAirHockeyImg from '../assets/aurora-air-hockey.jpg';
+import ochaAirHockeyImg from '../assets/ocha-air-hockey.jpg';
+import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.jpg';
 import projHulaboo from '../assets/proj-hulaboo.png';
 import projNeon1 from '../assets/proj-neonpanda1.png';
 import projSoft1 from '../assets/proj-softplay1.png';
@@ -30,66 +36,87 @@ import testiOwner from '../assets/testi-owner.png';
 import { Gamepad2, Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight } from 'lucide-react';
 
 export default function ArcadeGame({ siteData }) {
-  if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
-
-  const { header, footer } = siteData;
   const [activeFaqIndex, setActiveFaqIndex] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Arcade Games");
   const [expandedCat, setExpandedCat] = useState("Arcade Games");
   const [relatedIndex, setRelatedIndex] = useState(0);
   const [mobileProdIndex, setMobileProdIndex] = useState(0);
 
-  const arcadeGames = [
-    { title: "VR Racing Simulator", tag: "Hot Seller", desc: "Immersive motion platform with 4K VR headsets and force-feedback steering.", img: about3 },
-    { title: "Prize Claw Master", tag: "High Revenue", desc: "Premium transparent glass prize crane with LED lighting & customized claw strength.", img: about1 },
-    { title: "Air Hockey Tournament", tag: "Classic", desc: "Heavy-duty aluminum rails with high-volume air blower and LED score keeper.", img: ctaArcade },
-    { title: "Basketball Shootout PRO", tag: "Popular", desc: "Multi-stage basketball shooting arcade machine with digital timer and ticket dispenser.", img: about2 },
-    { title: "Motorbike Racer 3D", tag: "Featured", desc: "Full motion leaning motorbike simulator with dual screen multiplayer connectivity.", img: about4 },
-    { title: "Dancing Stage Revolution", tag: "Interactive", desc: "Non-slip stainless steel dance pads with surround sound & neon light beats.", img: ctaGamersBg }
-  ];
+  const arcadeSeo = siteData?.arcadeSeo || {
+    pageTitle: "Arcade Games Manufacturer in India | Winera International",
+    metaDescription: "Looking for arcade game machines in India? Winera International offers redemption games, kiddie rides, racing simulators, and more at direct factory prices."
+  };
 
-  const arcadeFaqs = [
-    {
-      q: "Where Can I Buy Arcade Game Machines In India?",
-      a: "Winera International is a trusted arcade games manufacturer and supplier in India — supplying claw machines, redemption games, racing simulators, shooting games, and kiddy rides for malls, hotels, FECs, and amusement parks, with complete installation across 50+ cities by our own team."
-    },
-    {
-      q: "Do You Supply Coin Operated Arcade Machines In India?",
-      a: "Yes. Winera International supplies a wide range of coin operated arcade machines in India, card-based systems, and ticket redemption arcade machines, built for commercial environments such as malls, hotels, resorts, and family entertainment centres."
-    },
-    {
-      q: "Can Winera International Set Up A Complete Arcade Game Zone Setup?",
-      a: "Yes. We handle space planning, machine selection, delivery, installation, and staff training as one connected arcade game zone setup process, not separate transactions with different vendors."
-    },
-    {
-      q: "What Happens If A Machine Breaks Down After Installation?",
-      a: "Our own technicians handle servicing directly, with coverage across 50+ cities in India. You are not waiting on an overseas supplier or a disconnected logistics partner to respond."
-    },
-    {
-      q: "Which Businesses Typically Install Arcade Game Machines In India?",
-      a: "Malls, hotels, resorts, and family entertainment centres are the most common buyers of arcade machines."
-    },
-    {
-      q: "How Long Does It Take To Install Arcade Machines?",
-      a: "Installation timelines depend on the number of machines, your venue's readiness, and your location. We share an exact schedule as part of your quote, so you know precisely when your arcade zone will be ready."
-    },
-    {
-      q: "What Is The Price Of Arcade Machines In India?",
-      a: "Arcade machine pricing in India depends on the machine category, payment mechanism, and customisation level. Because Winera International sources directly at scale, our pricing avoids the markup typical of multi-layer resellers."
-    },
-    {
-      q: "How Do I Get Started With Ordering Arcade Machines From Winera?",
-      a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Our team will recommend the right machine mix for your space and send a quote ASAP."
-    },
-    {
-      q: "Which Arcade Games Give The Best ROI For FECs And Malls In India?",
-      a: "Ticket redemption games, claw machines, and racing simulators consistently deliver the strongest revenue per square foot in Indian FECs and malls. Winera International helps you choose the right arcade game zone machine mix based on your specific footfall, floor size, and visitor demographic — not a generic recommendation."
-    },
-    {
-      q: "What Is The Difference Between Coin-Operated And Card-Based Arcade Machines?",
-      a: "Coin-operated arcade machines accept physical tokens and suit venues with casual walk-in visitors. Card-based systems use rechargeable cards — better for revenue tracking, reducing cash handling, and encouraging repeat visits through balance top-ups. Winera supplies both and advises on the right system for your venue."
+  useEffect(() => {
+    document.title = arcadeSeo.pageTitle || arcadeSeo.title || "Arcade Games Manufacturer in India | Winera International";
+    let metaTag = document.querySelector('meta[name="description"]');
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.setAttribute('name', 'description');
+      document.head.appendChild(metaTag);
     }
-  ];
+    metaTag.setAttribute('content', arcadeSeo.metaDescription || arcadeSeo.description || "Looking for arcade game machines in India? Winera International offers redemption games, kiddie rides, racing simulators, and more at direct factory prices.");
+  }, [arcadeSeo]);
+
+  if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
+
+  const { header, footer } = siteData;
+
+  const arcadeGames = Array.isArray(siteData?.arcadeCategories) && siteData.arcadeCategories.length > 0
+    ? siteData.arcadeCategories
+    : [
+        { title: "Super Air Hockey", name: "Super Air Hockey", category: "Arcade Games", tag: "Popular", desc: "Commercial grade heavy-duty air hockey table with digital score display.", img: superAirHockeyImg },
+        { title: "Puck Carnival Air Hockey", name: "Puck Carnival Air Hockey", category: "Arcade Games", tag: "Hot Seller", desc: "Multi-puck carnival style air hockey machine for high footfall game zones.", img: puckCarnivalAirHockeyImg },
+        { title: "Dazzling Air Hockey - Multi Puck", name: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games", tag: "High Revenue", desc: "LED illuminated stainless steel air hockey table with sound effects.", img: dazzlingAirHockeyImg },
+        { title: "Aurora Air Hockey", name: "Aurora Air Hockey", category: "Arcade Games", tag: "Classic", desc: "High-power air blower tournament air hockey table with durable aluminum rails.", img: auroraAirHockeyImg },
+        { title: "Ocha Air Hockey", name: "Ocha Air Hockey", category: "Arcade Games", tag: "Featured", desc: "Compact & stylish commercial air hockey machine for malls & FECs.", img: ochaAirHockeyImg },
+        { title: "Aero X Air Hockey", name: "Aero X Air Hockey", category: "Arcade Games", tag: "Interactive", desc: "Next-gen arcade air hockey table with multi-ticket dispenser system.", img: aeroXAirHockeyImg }
+      ];
+
+  const arcadeFaqs = Array.isArray(siteData?.arcadeFaqs) && siteData.arcadeFaqs.length > 0
+    ? siteData.arcadeFaqs
+    : [
+        {
+          q: "Where Can I Buy Arcade Game Machines In India?",
+          a: "Winera International is a trusted arcade games manufacturer and supplier in India — supplying claw machines, redemption games, racing simulators, shooting games, and kiddy rides for malls, hotels, FECs, and amusement parks, with complete installation across 50+ cities by our own team."
+        },
+        {
+          q: "Do You Supply Coin Operated Arcade Machines In India?",
+          a: "Yes. Winera International supplies a wide range of coin operated arcade machines in India, card-based systems, and ticket redemption arcade machines, built for commercial environments such as malls, hotels, resorts, and family entertainment centres."
+        },
+        {
+          q: "Can Winera International Set Up A Complete Arcade Game Zone Setup?",
+          a: "Yes. We handle space planning, machine selection, delivery, installation, and staff training as one connected arcade game zone setup process, not separate transactions with different vendors."
+        },
+        {
+          q: "What Happens If A Machine Breaks Down After Installation?",
+          a: "Our own technicians handle servicing directly, with coverage across 50+ cities in India. You are not waiting on an overseas supplier or a disconnected logistics partner to respond."
+        },
+        {
+          q: "Which Businesses Typically Install Arcade Game Machines In India?",
+          a: "Malls, hotels, resorts, and family entertainment centres are the most common buyers of arcade machines."
+        },
+        {
+          q: "How Long Does It Take To Install Arcade Machines?",
+          a: "Installation timelines depend on the number of machines, your venue's readiness, and your location. We share an exact schedule as part of your quote, so you know precisely when your arcade zone will be ready."
+        },
+        {
+          q: "What Is The Price Of Arcade Machines In India?",
+          a: "Arcade machine pricing in India depends on the machine category, payment mechanism, and customisation level. Because Winera International sources directly at scale, our pricing avoids the markup typical of multi-layer resellers."
+        },
+        {
+          q: "How Do I Get Started With Ordering Arcade Machines From Winera?",
+          a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Our team will recommend the right machine mix for your space and send a quote ASAP."
+        },
+        {
+          q: "Which Arcade Games Give The Best ROI For FECs And Malls In India?",
+          a: "Ticket redemption games, claw machines, and racing simulators consistently deliver the strongest revenue per square foot in Indian FECs and malls. Winera International helps you choose the right arcade game zone machine mix based on your specific footfall, floor size, and visitor demographic — not a generic recommendation."
+        },
+        {
+          q: "What Is The Difference Between Coin-Operated And Card-Based Arcade Machines?",
+          a: "Coin-operated arcade machines accept physical tokens and suit venues with casual walk-in visitors. Card-based systems use rechargeable cards — better for revenue tracking, reducing cash handling, and encouraging repeat visits through balance top-ups. Winera supplies both and advises on the right system for your venue."
+        }
+      ];
 
 
   return (
@@ -226,8 +253,8 @@ export default function ArcadeGame({ siteData }) {
             {/* Title Header with yellow brush accent */}
             <SectionHeading align="left" marginBottom="20px" accentWidth="75%" accentMaxWidth="300px">
               {(() => {
-                const rawTitle = siteData?.arcadeIntro?.title || "*Arcade Game* Machines in India";
-                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                const rawTitle = typeof siteData?.arcadeIntro?.title === 'string' ? siteData.arcadeIntro.title : "*Arcade Game* Machines in India";
+                const parts = String(rawTitle).split(/\*{1,2}(.*?)\*{1,2}/g);
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
@@ -401,10 +428,13 @@ export default function ArcadeGame({ siteData }) {
 
           {/* Mobile Category Select Dropdown (Visible only on mobile) */}
           <div className="winera-mobile-category-dropdown-container" style={{ display: 'none', marginBottom: '24px', width: '100%' }}>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px', textAlign: 'left' }}>
+            <label htmlFor="arcade_category_select" style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px', textAlign: 'left' }}>
               Select Category:
             </label>
             <select
+              id="arcade_category_select"
+              name="arcadeCategory"
+              aria-label="Select Category"
               value={activeCategory}
               onChange={(e) => {
                 setActiveCategory(e.target.value);
@@ -536,18 +566,44 @@ export default function ArcadeGame({ siteData }) {
             <div className="winera-products-display-area" style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
               {/* Product Cards Grid */}
               {(() => {
-                const prodCards = (
-                  Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0
-                    ? siteData.arcadeCategories.cards
-                    : [
-                      { name: "Super Air Hockey", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-                      { name: "Puck Carnival Air Hockey", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
-                      { name: "Dazzling Air Hockey - Multi Puck", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-                      { name: "Aurora Air Hockey", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" },
-                      { name: "Ocha Air Hockey", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
-                      { name: "Aero X Air Hockey", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" }
-                    ]
-                );
+                const defaultProdCards = [
+                  { name: "Super Air Hockey", title: "Super Air Hockey", img: superAirHockeyImg },
+                  { name: "Puck Carnival Air Hockey", title: "Puck Carnival Air Hockey", img: puckCarnivalAirHockeyImg },
+                  { name: "Dazzling Air Hockey - Multi Puck", title: "Dazzling Air Hockey - Multi Puck", img: dazzlingAirHockeyImg },
+                  { name: "Aurora Air Hockey", title: "Aurora Air Hockey", img: auroraAirHockeyImg },
+                  { name: "Ocha Air Hockey", title: "Ocha Air Hockey", img: ochaAirHockeyImg },
+                  { name: "Aero X Air Hockey", title: "Aero X Air Hockey", img: aeroXAirHockeyImg }
+                ];
+
+                const imageMap = {
+                  "Super Air Hockey": superAirHockeyImg,
+                  "Puck Carnival Air Hockey": puckCarnivalAirHockeyImg,
+                  "Dazzling Air Hockey - Multi Puck": dazzlingAirHockeyImg,
+                  "Aurora Air Hockey": auroraAirHockeyImg,
+                  "Ocha Air Hockey": ochaAirHockeyImg,
+                  "Aero X Air Hockey": aeroXAirHockeyImg
+                };
+
+                const rawCards = (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0)
+                  ? siteData.arcadeCategories.cards
+                  : (Array.isArray(siteData?.arcadeCategories) && siteData.arcadeCategories.length > 0 ? siteData.arcadeCategories : null);
+
+                let prodCards = defaultProdCards;
+                if (rawCards) {
+                  const hasUnsplash = rawCards.some(c => (c.img || c.imageUrl || '').includes('unsplash.com'));
+                  if (hasUnsplash) {
+                    prodCards = rawCards.map((c, i) => {
+                      const nameKey = c.name || c.title || "";
+                      const mappedImg = imageMap[nameKey] || defaultProdCards[i % defaultProdCards.length]?.img || c.img;
+                      return { ...c, img: mappedImg, imageUrl: mappedImg };
+                    });
+                  } else {
+                    prodCards = rawCards.map(c => ({
+                      ...c,
+                      img: imageMap[c.name || c.title] || c.img || c.imageUrl
+                    }));
+                  }
+                }
 
                 return (
                   <>
@@ -749,7 +805,6 @@ export default function ArcadeGame({ siteData }) {
               <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>2</span>
               <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>3</span>
               <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>4</span>
-              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', padding: '0 2px' }}>...</span>
               <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>71</span>
               <button style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
                 <ChevronRight style={{ width: '16px', height: '16px', color: '#475569' }} />
@@ -784,8 +839,8 @@ export default function ArcadeGame({ siteData }) {
             {/* Title with yellow brush line above */}
             <SectionHeading align="left" marginBottom="24px" accentWidth="80%" accentMaxWidth="320px">
               {(() => {
-                const rawTitle = siteData?.arcadeCommercial?.title || "Built for *Commercial Use*";
-                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                const rawTitle = typeof siteData?.arcadeCommercial?.title === 'string' ? siteData.arcadeCommercial.title : "Built for *Commercial Use*";
+                const parts = String(rawTitle).split(/\*{1,2}(.*?)\*{1,2}/g);
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
@@ -801,7 +856,7 @@ export default function ArcadeGame({ siteData }) {
 
             {/* Mobile Image Render */}
             <div className="winera-commercial-mobile-img" style={{ display: 'none', margin: '20px auto 24px', width: '100%', maxWidth: '340px', height: '240px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 12px 30px rgba(0,0,0,0.15)' }}>
-              <img src={aboutUsSectionImg} alt="Commercial Team" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={aboutUsSectionImg} alt="Commercial Team" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
 
             {/* Dynamic Commercial Points List */}
@@ -934,8 +989,8 @@ export default function ArcadeGame({ siteData }) {
           {/* Section Heading with Yellow Accent Line Above */}
           <SectionHeading marginBottom="60px" accentWidth="65%" accentMaxWidth="440px">
             {(() => {
-              const rawTitle = siteData?.arcadeWhyUs?.title || "Why Choose *Winera International*";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+              const rawTitle = typeof siteData?.arcadeWhyUs?.title === 'string' ? siteData.arcadeWhyUs.title : "Why Choose *Winera International*";
+              const parts = String(rawTitle).split(/\*{1,2}(.*?)\*{1,2}/g);
               return parts.map((part, index) => {
                 if (index % 2 === 1) {
                   return (

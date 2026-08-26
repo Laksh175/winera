@@ -120,8 +120,8 @@ export default function Hypergrid({ siteData }) {
 
   // SEO Title & Meta Description update
   useEffect(() => {
-    const defaultTitle = "Interactive LED Hypergrid Arena Manufacturer in India | Winera International";
-    const defaultMetaDesc = "Winera International is India's leading manufacturer of Interactive LED Hypergrid active gaming arenas, offering high-ROI illuminated floor tile systems and turnkey game zone setups.";
+    const defaultTitle = "Hypergrid Game Supplier in India | Winera International";
+    const defaultMetaDesc = "Winera International is a trusted Hypergrid game supplier in India, installing commercial interactive LED floor systems for malls, FECs, and trampoline parks.";
 
     document.title = siteData?.hypergridSeo?.pageTitle || defaultTitle;
     let metaDescriptionTag = document.querySelector('meta[name="description"]');
@@ -736,7 +736,7 @@ export default function Hypergrid({ siteData }) {
       <TestimonialsSection siteData={siteData} />
 
       {/* 11. RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection currentProductLink="/products/hypergrid" />
+      <RelatedProductsSection sectionData={siteData?.hypergridRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
 
       {/* 12. FAQ SECTION */}
       {(() => {

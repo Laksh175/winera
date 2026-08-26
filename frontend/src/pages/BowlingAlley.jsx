@@ -53,8 +53,8 @@ export default function BowlingAlley({ siteData }) {
 
   // Dynamic SEO Page Title & Meta Description
   useEffect(() => {
-    const pageTitle = siteData?.bowlingSeo?.pageTitle || "Refurbished Brunswick Bowling Alley Equipment & Pinsetters | Winera International";
-    const metaDesc = siteData?.bowlingSeo?.metaDescription || "Winera International supplies & installs refurbished Brunswick GS98, GSX Free-fall & String Bowling Alley equipment with scoring systems across India.";
+    const pageTitle = siteData?.bowlingSeo?.pageTitle || "Bowling Alley Manufacturer in India | Winera International";
+    const metaDesc = siteData?.bowlingSeo?.metaDescription || "Looking for a bowling alley manufacturer in India? Winera International supplies premium new and refurbished Brunswick systems, with 15+ years of expertise.";
     document.title = pageTitle;
 
     let descMeta = document.querySelector('meta[name="description"]');

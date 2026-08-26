@@ -28,6 +28,22 @@ export default function Home({ siteData }) {
   const [activeProductIndex, setActiveProductIndex] = React.useState(0);
   const [activeIndustryIndex, setActiveIndustryIndex] = React.useState(2);
 
+  const homeSeo = siteData?.homeSeo || {
+    pageTitle: "Game Zone Equipment Manufacturer in India | Winera International",
+    metaDescription: "Winera International is your trusted Game Zone Equipment Manufacturer and Indoor Play Equipment Manufacturer in India since 2014. Get Amazing deals!"
+  };
+
+  React.useEffect(() => {
+    document.title = homeSeo.pageTitle || homeSeo.title || "Game Zone Equipment Manufacturer in India | Winera International";
+    let metaTag = document.querySelector('meta[name="description"]');
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.setAttribute('name', 'description');
+      document.head.appendChild(metaTag);
+    }
+    metaTag.setAttribute('content', homeSeo.metaDescription || homeSeo.description || "Winera International is your trusted Game Zone Equipment Manufacturer and Indoor Play Equipment Manufacturer in India since 2014. Get Amazing deals!");
+  }, [homeSeo]);
+
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
 
   const { header, hero, footer } = siteData;
@@ -337,7 +353,7 @@ export default function Home({ siteData }) {
 
               {/* CTA Button */}
               <div className="winera-cyan-cta-wrapper">
-                <a href="/about" className="winera-cyan-cta-btn">
+                <a href="/why-us" className="winera-cyan-cta-btn">
                   <span>More About Us</span>
                 </a>
               </div>
@@ -348,6 +364,8 @@ export default function Home({ siteData }) {
               <img
                 src={siteData?.aboutHome?.rightImgUrl || aboutCollage}
                 alt="About Winera International"
+                loading="lazy"
+                decoding="async"
                 style={{
                   width: '100%',
                   maxWidth: '520px',
@@ -403,16 +421,16 @@ export default function Home({ siteData }) {
           }}>
             {(() => {
               const defaultProductsCards = [
-                { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
-                { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
-                { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
-                { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
-                { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
-                { id: "trampoline", title: "Trampoline", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
-                { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
-                { id: "lasertag", title: "Laser Tag & Spy", desc: "High-adrenaline commercial laser tag arena setup delivering competitive team battles for malls & venues.", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80", link: "/products/laser-tag" },
-                { id: "ride", title: "Amusement Ride", desc: "Exhilarating blend of collisions and smooth handling designed with top commercial safety.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
-                { id: "decorative", title: "Decorative Items", desc: "Custom themed lights, sculptures, reception desks, and ambient furniture to elevate your game zone.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80", link: "/products/lights" }
+                { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/product/arcade-games" },
+                { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/product/vr-games" },
+                { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/product/ar-games" },
+                { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/product/bowling-alley" },
+                { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/product/soft-play" },
+                { id: "trampoline", title: "Trampoline", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/product/trampoline-park" },
+                { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/product/hypergrid" },
+                { id: "lasertag", title: "Laser Tag & Spy", desc: "High-adrenaline commercial laser tag arena setup delivering competitive team battles for malls & venues.", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80", link: "/product/laser-tag" },
+                { id: "ride", title: "Amusement Ride", desc: "Exhilarating blend of collisions and smooth handling designed with top commercial safety.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/product/amusement-park" },
+                { id: "decorative", title: "Decorative Items", desc: "Custom themed lights, sculptures, reception desks, and ambient furniture to elevate your game zone.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80", link: "/product/arcade-games" }
               ];
 
               const cards = (Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
@@ -620,16 +638,15 @@ export default function Home({ siteData }) {
             {siteData?.industriesHeader?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
           </p>
 
-          <div className="winera-industries-wrapper" style={{
+          <div style={{
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            maxWidth: '1220px',
+            maxWidth: '1240px',
             margin: '0 auto',
-            minHeight: '440px',
-            overflow: 'hidden'
+            minHeight: '440px'
           }}>
             <button
               onClick={() => {
@@ -637,27 +654,27 @@ export default function Home({ siteData }) {
                 setActiveIndustryIndex((prev) => (prev > 0 ? prev - 1 : total - 1));
               }}
               className="winera-industries-btn-left"
+              aria-label="Previous Industry"
               style={{
                 position: 'absolute',
-                left: '-70px',
+                left: '10px',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                zIndex: 40,
-                background: 'linear-gradient(135deg, #00a8ff 0%, #0066ff 100%)',
+                zIndex: 50,
+                background: 'transparent',
                 border: 'none',
-                borderRadius: '50%',
-                width: '52px',
-                height: '52px',
-                color: '#ffffff',
+                color: '#64748b',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                boxShadow: '0 8px 24px rgba(0, 168, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.1)',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                padding: '8px',
+                transition: 'all 0.25s ease'
               }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#00a8ff'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
             >
-              <ChevronLeft style={{ width: '32px', height: '32px', strokeWidth: 2.8, color: '#ffffff' }} />
+              <ChevronLeft style={{ width: '40px', height: '40px', strokeWidth: 1.8 }} />
             </button>
 
             <div style={{
@@ -751,27 +768,27 @@ export default function Home({ siteData }) {
                 setActiveIndustryIndex((prev) => (prev < total - 1 ? prev + 1 : 0));
               }}
               className="winera-industries-btn-right"
+              aria-label="Next Industry"
               style={{
                 position: 'absolute',
-                right: '-70px',
+                right: '10px',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                zIndex: 40,
-                background: 'linear-gradient(135deg, #00a8ff 0%, #0066ff 100%)',
+                zIndex: 50,
+                background: 'transparent',
                 border: 'none',
-                borderRadius: '50%',
-                width: '52px',
-                height: '52px',
-                color: '#ffffff',
+                color: '#64748b',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                boxShadow: '0 8px 24px rgba(0, 168, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.1)',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                padding: '8px',
+                transition: 'all 0.25s ease'
               }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#00a8ff'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
             >
-              <ChevronRight style={{ width: '32px', height: '32px', strokeWidth: 2.8, color: '#ffffff' }} />
+              <ChevronRight style={{ width: '40px', height: '40px', strokeWidth: 1.8 }} />
             </button>
           </div>
         </div>
@@ -1147,6 +1164,8 @@ export default function Home({ siteData }) {
               <img
                 src={homeBlock1}
                 alt="Game Zone Experience"
+                loading="lazy"
+                decoding="async"
                 style={{
                   width: '210px',
                   height: 'auto',
@@ -1247,6 +1266,8 @@ export default function Home({ siteData }) {
               <img
                 src={homeBlock2}
                 alt="Game Zone Setup"
+                loading="lazy"
+                decoding="async"
                 style={{
                   width: '210px',
                   height: 'auto',

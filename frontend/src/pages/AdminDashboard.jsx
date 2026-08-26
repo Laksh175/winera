@@ -30,7 +30,8 @@ import {
   Video,
   Trophy,
   Sparkles,
-  Calculator
+  Calculator,
+  Menu
 } from 'lucide-react';
 import yellowBrushAccent from '../assets/yellow-stroke-line.png';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.png';
@@ -46,6 +47,10 @@ import projectBlock2 from '../assets/project-block2.png';
 import projectBlock3 from '../assets/project-block3.png';
 import projectSectionVideo from '../assets/project-section-video.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.png';
+import projectLastBg from '../assets/project-lastbg.png';
+import projHulaboo from '../assets/proj-hulaboo.png';
+import projSoft1 from '../assets/proj-softplay1.png';
+import projNeon1 from '../assets/proj-neonpanda1.png';
 
 import hypergridHeroBg from '../assets/hypergrid-hero-bg.png';
 import trampolineParkBg from '../assets/trampoline-park-bg.png';
@@ -81,6 +86,20 @@ import roiBlock5Img6 from '../assets/roi-block5-img6.png';
 import roiBlock6 from '../assets/roi-block6.png';
 import roiBlock7Bg from '../assets/roi-block7-bg.png';
 import homeBlockBg from '../assets/home-block.png';
+import about1 from '../assets/about-1.png';
+import about2 from '../assets/about-2.png';
+import about3 from '../assets/about-3.png';
+import about4 from '../assets/about-4.png';
+import ctaArcade from '../assets/cta-arcade.png';
+import ctaGamersBg from '../assets/cta-gamers-bg.png';
+import superAirHockeyImg from '../assets/super-air-hockey.jpg';
+import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.jpg';
+import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.jpg';
+import auroraAirHockeyImg from '../assets/aurora-air-hockey.jpg';
+import ochaAirHockeyImg from '../assets/ocha-air-hockey.jpg';
+import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.jpg';
+import founderUnnit from '../assets/founder-unnit.png';
+import welcomeWineraImg from '../assets/welcome-to-winera.png';
 
 const defaultHypergridHero = {
   bgUrl: hypergridHeroBg,
@@ -301,6 +320,27 @@ const defaultProjectVideo = {
 const defaultProjectSeo = {
   title: 'Our Projects | Turnkey Game Zone & Entertainment Venues by Winera International',
   description: 'Explore turnkey bowling alley and entertainment venue setup projects by Winera International.'
+};
+
+const defaultBlogHero = {
+  breadcrumbText: "Blog",
+  bgUrl: "/src/assets/blog-image-bg.png"
+};
+
+const defaultBlogPosts = Array.from({ length: 9 }, (_, i) => ({
+  id: i + 1,
+  title: "Soft Play vs Trampoline Park: Which",
+  subtitle: "Is Better for Your Space?",
+  line1: "Soft play or trampoline park? Discover",
+  line2: "the key differences in investment, space",
+  line3: "requirements, safety, and revenue.....",
+  date: "Aug 22, 2026",
+  image: "/src/assets/blog-images.png"
+}));
+
+const defaultBlogSeo = {
+  pageTitle: "Blog & Game Zone Insights | Winera International",
+  metaDescription: "Read the Winera International blog for expert insights on game zone setup, ROI tips, soft play trends, VR gaming, trampoline parks, and indoor amusement equipment."
 };
 
 const defaultRoiHero = {
@@ -748,6 +788,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const [statusMsg, setStatusMsg] = useState('');
   const [loadingSection, setLoadingSection] = useState('');
   const [adminSelectedCat, setAdminSelectedCat] = useState('Sports Simulators');
+  const [adminProjectFilterCat, setAdminProjectFilterCat] = useState('All');
   const [newCategoryInput, setNewCategoryInput] = useState('');
 
   // Modal State for Add / Edit Operations
@@ -756,6 +797,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const [editingIndex, setEditingIndex] = useState(null);
   const [modalItemData, setModalItemData] = useState({});
   const [modalTargetSection, setModalTargetSection] = useState(null);
+  const [deleteConfirmModal, setDeleteConfirmModal] = useState(null);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // Keep formData in sync when siteData is fetched or refreshed from MongoDB API
   useEffect(() => {
@@ -789,7 +832,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'whyChooseUs', name: 'Why Choose Us Section' },
         { id: 'testimonials', name: 'Client Testimonials' },
         { id: 'faqs', name: 'FAQ Accordions' },
-        { id: 'ctaBanner', name: 'CTA Consultation Banner' }
+        { id: 'ctaBanner', name: 'CTA Consultation Banner' },
+        { id: 'homeSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     arcade: {
@@ -803,7 +847,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'arcadeWhyUs', name: 'Why Choose Winera' },
         { id: 'arcadeRelated', name: 'Related Products Carousel' },
         { id: 'arcadeFaqs', name: 'Arcade Page FAQs' },
-        { id: 'arcadeCta', name: 'Arcade CTA Banner' }
+        { id: 'arcadeCta', name: 'Arcade CTA Banner' },
+        { id: 'arcadeSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     bowling: {
@@ -817,8 +862,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'bowlingString', name: 'String Bowling Section' },
         { id: 'bowlingRoi', name: 'Investment & ROI Section' },
         { id: 'bowlingWhyUs', name: 'Why Choose Winera' },
+        { id: 'bowlingRelated', name: 'Related Products Carousel' },
         { id: 'bowlingFaqs', name: 'Bowling Page FAQs' },
-        { id: 'bowlingCta', name: 'Bowling CTA Banner' }
+        { id: 'bowlingCta', name: 'Bowling CTA Banner' },
+        { id: 'bowlingSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     softplay: {
@@ -833,8 +880,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'softplayTypes', name: 'Types of Soft Play Zones Timeline' },
         { id: 'softplayRoi', name: 'Know Your Returns & ROI Section' },
         { id: 'softplayWhyUs', name: 'Why Choose Winera Section' },
+        { id: 'softplayRelated', name: 'Related Products Carousel' },
         { id: 'softplayFaqs', name: 'Soft Play Page FAQs' },
-        { id: 'softplayCta', name: 'Soft Play CTA Banner' }
+        { id: 'softplayCta', name: 'Soft Play CTA Banner' },
+        { id: 'softplaySeo', name: 'SEO Meta Title & Description' }
       ]
     },
     trampolinePark: {
@@ -848,6 +897,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'trampolineInside', name: 'What is inside Custom Park (Zones)' },
         { id: 'trampolineRoi', name: 'What Will Your Park Earn (ROI)' },
         { id: 'trampolineWhyChoose', name: 'Why Choose Winera International' },
+        { id: 'trampolineRelated', name: 'Related Products Carousel' },
         { id: 'trampolineFaqs', name: 'Trampoline Park FAQs' },
         { id: 'trampolineCta', name: 'Plan Trampoline Park CTA Banner' },
         { id: 'trampolineSeo', name: 'SEO Meta Title & Description' }
@@ -863,6 +913,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'amusementOptions', name: 'Rides & Attractions We Supply' },
         { id: 'amusementRoi', name: 'Before You Build ROI Section' },
         { id: 'amusementWhyUs', name: 'Why Choose Winera Section' },
+        { id: 'amusementRelated', name: 'Related Products Carousel' },
         { id: 'amusementFaqs', name: 'Amusement Park FAQs' },
         { id: 'amusementCta', name: 'Amusement Park CTA Banner' },
         { id: 'amusementSeo', name: 'SEO Meta Title & Description' }
@@ -879,6 +930,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'hypergridWhyUs', name: 'Why Choose Hypergrid' },
         { id: 'hypergridRoi', name: 'Smart Investment ROI' },
         { id: 'hypergridWhyWinera', name: 'Why Choose Winera Section' },
+        { id: 'hypergridRelated', name: 'Related Products Carousel' },
         { id: 'hypergridFaqs', name: 'Hypergrid FAQs Management' },
         { id: 'hypergridCta', name: 'Hypergrid CTA Banner' },
         { id: 'hypergridSeo', name: 'SEO Meta Title & Description' }
@@ -897,6 +949,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'bumpercarComparison', name: 'Quick Comparison Table' },
         { id: 'bumpercarInvestment', name: 'Bumper Car Ride Smart Investment' },
         { id: 'bumpercarWhyChoose', name: 'Why Choose Winera International' },
+        { id: 'bumpercarRelated', name: 'Related Products Carousel' },
         { id: 'bumpercarFaqs', name: 'Bumper Car FAQs' },
         { id: 'bumpercarCta', name: 'Bumper Car CTA Banner' },
         { id: 'bumpercarSeo', name: 'SEO Meta Title & Description' }
@@ -913,8 +966,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'vrReliability', name: 'Commercial-Grade Quality & Reliability' },
         { id: 'vrEarn', name: 'What Will Your VR Zone Earn' },
         { id: 'vrWhyUs', name: 'Why Choose Winera Section' },
+        { id: 'vrRelated', name: 'Related Products Carousel' },
         { id: 'vrFaqs', name: 'VR Games FAQs' },
-        { id: 'vrCta', name: 'VR Games CTA Banner' }
+        { id: 'vrCta', name: 'VR Games CTA Banner' },
+        { id: 'vrSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     argames: {
@@ -928,22 +983,30 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'arFeatures', name: 'AR Features & Highlights' },
         { id: 'arEarn', name: 'Know Your Returns Section' },
         { id: 'arWhyUs', name: 'Why Choose Winera Section' },
+        { id: 'arRelated', name: 'Related Products Carousel' },
         { id: 'arFaqs', name: 'AR Games FAQs' },
-        { id: 'arCta', name: 'CTA Consultations Banner' }
+        { id: 'arCta', name: 'CTA Consultations Banner' },
+        { id: 'arSeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
+    lasertagPage: {
+      label: 'Laser Tag Page',
+      icon: <Gamepad2 style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'lasertagHero', name: 'Laser Tag Hero Banner' },
+        { id: 'lasertagRelated', name: 'Related Products Carousel' },
+        { id: 'lasertagSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     projectPage: {
       label: 'Projects Page',
       icon: <Trophy style={{ width: '18px', height: '18px' }} />,
       sections: [
-        { id: 'projectHero', name: 'Projects Hero Banner' },
-        { id: 'projectBlock', name: 'Main Project Details' },
-        { id: 'projectBasicInfo', name: 'Basic Information Table' },
-        { id: 'projectClientWanted', name: 'What the Client Wanted' },
-        { id: 'projectSolution', name: 'What Solution We Provide' },
-        { id: 'projectGallery', name: 'Project Gallery Grid' },
-        { id: 'projectVideo', name: 'Project Video Showcase' },
-        { id: 'projectSeo', name: 'SEO Meta Title & Description' }
+        { id: 'projectHero', name: '1. Hero Banner' },
+        { id: 'projectHeader', name: '2. Section Heading Title' },
+        { id: 'projectItems', name: '3. Categories & Projects Manager' },
+        { id: 'projectCta', name: '4. Bottom CTA Graphic Banner' },
+        { id: 'projectSeo', name: '5. SEO Meta Title & Description' }
       ]
     },
     roiPage: {
@@ -961,6 +1024,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'roiSeo', name: 'SEO Meta Title & Description' }
       ]
     },
+    blogPage: {
+      label: 'Blog Page',
+      icon: <FileText style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'blogHero', name: 'Blog Hero Banner' },
+        { id: 'blogPosts', name: 'Manage All Blog Posts' },
+        { id: 'blogSeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
     about: {
       label: 'About Us Page',
       icon: <Info style={{ width: '18px', height: '18px' }} />,
@@ -970,7 +1042,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'aboutMissionVision', name: 'Our Purpose & Promise' },
         { id: 'aboutWhyUsDetail', name: 'Why Choose Us Mindmap' },
         { id: 'founder', name: 'Founder Profile Data' },
-        { id: 'ctaBanner', name: 'CTA Consultation Banner' }
+        { id: 'ctaBanner', name: 'CTA Consultation Banner' },
+        { id: 'aboutSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     contact: {
@@ -978,7 +1051,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       icon: <PhoneCall style={{ width: '18px', height: '18px' }} />,
       sections: [
         { id: 'contactPage', name: 'Contact Info & Form' },
-        { id: 'contactFaqs', name: 'Contact Page FAQs' }
+        { id: 'contactSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     safetyStandards: {
@@ -993,6 +1066,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'safetyStructure', name: 'Structure & Installation Safety' },
         { id: 'safetyWhyMatters', name: 'Why This Matters & CTA Banner' },
         { id: 'safetySeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
+    privacyPolicy: {
+      label: 'Privacy Policy Page',
+      icon: <FileText style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'privacySeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
+    termsConditions: {
+      label: 'Terms & Conditions Page',
+      icon: <FileText style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'termsSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     header_footer: {
@@ -1081,13 +1168,71 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     setModalMode(mode);
     setEditingIndex(index);
     if (mode === 'edit') {
-      setModalItemData({ ...currentItem });
+      const defaultFields = {
+        name: currentItem.name || 'FifthAlley Sport Bowling',
+        category: currentItem.category || 'Bowling',
+        type: currentItem.type || 'Bowling Alley Setup',
+        city: currentItem.city || 'Surat',
+        state: currentItem.state || 'Gujarat',
+        area: currentItem.area || '3,000 sq. ft.',
+        slug: currentItem.slug || 'fifthalley-sport-bowling',
+        img: currentItem.img || currentItem.imageUrl || projectImage01,
+        titleLine1: currentItem.titleLine1 || `${currentItem.name || 'FifthAlley Sport Bowling'}: A`,
+        titleLine2: currentItem.titleLine2 || 'Complete ',
+        titleLine2Black: currentItem.titleLine2Black || (currentItem.type || 'Bowling Alley Setup'),
+        titleLine3: currentItem.titleLine3 || `in the Heart of ${currentItem.city || 'Surat'}`,
+        description: currentItem.description || 'How we designed and installed a professional-grade bowling alley across 3,000 sq. ft., transforming an empty space in Katargam into a destination entertainment venue in Surat.',
+        clientWanted1: currentItem.clientWanted1 || 'The client had an empty 3,000 sq. ft. space in Katargam and a clear goal: to open a professional bowling venue.',
+        clientWanted2: currentItem.clientWanted2 || "They didn't want a supplier who only supplied the equipment. They wanted one partner to handle everything, plan the space, install the lanes, and hand over a venue that was ready for opening day. In short, they needed one team they could trust from start to finish.",
+        clientImg: currentItem.clientImg || currentItem.clientImageUrl || projectImage3,
+        solution1: currentItem.solution1 || 'We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue. Across the 3,000 sq. ft. space in Katargam, we planned the layout so the professional lanes had enough room around them for people to walk, sit, and relax.',
+        solution2: currentItem.solution2 || 'The result is a venue that is fun to play in and comfortable to spend time in — just like a good family entertainment center should feel.',
+        solutionImg: currentItem.solutionImg || currentItem.solutionImageUrl || projectImage4,
+        galleryImage1: (currentItem.galleryImages && currentItem.galleryImages[0]) || currentItem.galleryImage1 || projectBlock1,
+        galleryImage2: (currentItem.galleryImages && currentItem.galleryImages[1]) || currentItem.galleryImage2 || projectBlock2,
+        galleryImage3: (currentItem.galleryImages && currentItem.galleryImages[2]) || currentItem.galleryImage3 || projectBlock3,
+        galleryImage4: (currentItem.galleryImages && currentItem.galleryImages[3]) || currentItem.galleryImage4 || projectBlock1,
+        galleryImage5: (currentItem.galleryImages && currentItem.galleryImages[4]) || currentItem.galleryImage5 || projectBlock2,
+        galleryImage6: (currentItem.galleryImages && currentItem.galleryImages[5]) || currentItem.galleryImage6 || projectBlock3,
+        videoImg: currentItem.videoImg || currentItem.videoCoverUrl || projectSectionVideo,
+        videoUrl: currentItem.videoUrl || currentItem.videoLink || 'https://wa.me/919428989488'
+      };
+      setModalItemData({ ...defaultFields, ...currentItem });
     } else {
       // Default empty structure based on active section
       if (sec === 'stats') setModalItemData({ number: '', label: '' });
       else if (sec === 'clientLogos') setModalItemData({ name: '', logoUrl: '' });
       else if (sec === 'channelPartners') setModalItemData({ name: '', logoUrl: '' });
       else if (sec === 'builtProjects') setModalItemData({ name: '', city: '', imageUrl: '' });
+      else if (sec === 'projectItems') setModalItemData({
+        name: 'New Turnkey Project',
+        category: 'Game Zones',
+        type: 'Game Zone Setup',
+        city: 'Surat',
+        state: 'Gujarat',
+        area: '5,000 sq. ft.',
+        slug: 'new-turnkey-project',
+        img: projectImage01,
+        titleLine1: 'New Project: A',
+        titleLine2: 'Complete ',
+        titleLine2Black: 'Game Zone Setup',
+        titleLine3: 'in Surat',
+        description: 'How we designed and installed a professional game zone facility with 3D space planning and turnkey execution.',
+        clientWanted1: 'The client had an empty space and a clear vision to build a top-tier entertainment center.',
+        clientWanted2: 'They wanted one partner to handle layout planning, machine installation, and final handover.',
+        clientImg: projectImage3,
+        solution1: 'Winera International delivered the complete setup from start to finish, optimizing flow and high-energy zones.',
+        solution2: 'The result is a bright, safe, and profitable entertainment venue ready for opening day.',
+        solutionImg: projectImage4,
+        galleryImage1: projectBlock1,
+        galleryImage2: projectBlock2,
+        galleryImage3: projectBlock3,
+        galleryImage4: projectBlock1,
+        galleryImage5: projectBlock2,
+        galleryImage6: projectBlock3,
+        videoImg: projectSectionVideo,
+        videoUrl: 'https://wa.me/919428989488'
+      });
       else if (sec && sec.toLowerCase().includes('faq')) setModalItemData({ q: '', a: '' });
       else if (sec === 'testimonials') setModalItemData({ founderImage: '', gameZoneName: '', reviewerRole: '', starRating: 5, youtubeVideoUrl: '', quote: '' });
       else setModalItemData({});
@@ -1106,7 +1251,65 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   // Save Modal Item DIRECTLY to MongoDB Database
   const saveModalItem = async () => {
     const secKey = modalTargetSection || activeSection;
-    let currentList = [...(formData[secKey] || [])];
+    let currentList = Array.isArray(formData[secKey]) ? [...formData[secKey]] : [];
+
+    if (secKey === 'projectItems') {
+      const defaultRawList = [
+        { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: projectImage01, metaTitle: 'FifthAlley Sport Bowling Setup in Surat | Winera International', metaDescription: 'Explore FifthAlley Sport Bowling in Surat by Winera International — a 3,000 sq. ft. complete bowling alley setup delivered from empty space to ready venue.' },
+        { id: 'hulaboo', name: 'Hulaboo Game Zone', category: 'Game Zones', city: 'Surat', state: 'Gujarat', area: '27,000 sq. ft.', type: 'Game Zone Setup', slug: 'hulaboo', img: projHulaboo, metaTitle: 'Hulaboo Game Zone Setup in Surat | Winera International', metaDescription: 'Discover how Winera International built Hulaboo, a 27,000 sq. ft. indoor game zone setup in Surat with multi-age attractions and turnkey execution.' },
+        { id: 'playzonia', name: 'Playzonia Kids Play Area', category: 'Soft Play', city: 'Surat', state: 'Gujarat', area: '1,500 sq. ft.', type: 'Soft Play Area', slug: 'playzonia', img: projSoft1, metaTitle: 'Playzonia Kids Soft Play Area in Surat | Winera International', metaDescription: 'See how Winera International designed & installed Playzonia, a 1,500 sq. ft. safe and playful soft play area for young children in Surat.' },
+        { id: 'lanex', name: 'LaneX Bowling Alley', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '4,800 sq. ft.', type: 'Bowling Alley', slug: 'lanex-bowling-alley', img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80', metaTitle: 'Bowling Alley Setup in Surat – LaneX at AR Mall | Winera International', metaDescription: 'See how Winera International built LaneX Bowling Alley in Surat. A Complete 4,800 sq. ft. bowling setup, planned and installed from empty floor to opening day.' },
+        { id: 'funfair', name: 'Funfair Game Zone', category: 'Game Zones', city: 'Surat', state: 'Gujarat', area: '10,000 sq. ft.', type: 'Game Zone', slug: 'funfair', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80', metaTitle: 'Funfair Game Zone Setup in Surat | Winera International', metaDescription: 'See how Winera International built Funfair a complete 10,000 sq. ft. game zone in Surat, planned and set up from start to finish, ready to welcome families.' }
+      ];
+      if (currentList.length === 0) {
+        currentList = [...defaultRawList];
+      }
+    }
+
+    if (secKey === 'arcadeCategories') {
+      const defaultCats = [
+        "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
+        "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
+      ];
+      const defaultCards = [
+        { title: "Super Air Hockey", name: "Super Air Hockey", category: "Arcade Games", tag: "Popular", desc: "Commercial grade heavy-duty air hockey table with digital score display.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
+        { title: "Puck Carnival Air Hockey", name: "Puck Carnival Air Hockey", category: "Arcade Games", tag: "Hot Seller", desc: "Multi-puck carnival style air hockey machine for high footfall game zones.", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
+        { title: "Dazzling Air Hockey - Multi Puck", name: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games", tag: "High Revenue", desc: "LED illuminated stainless steel air hockey table with sound effects.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
+        { title: "Aurora Air Hockey", name: "Aurora Air Hockey", category: "Arcade Games", tag: "Classic", desc: "High-power air blower tournament air hockey table with durable aluminum rails.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" },
+        { title: "Ocha Air Hockey", name: "Ocha Air Hockey", category: "Arcade Games", tag: "Featured", desc: "Compact & stylish commercial air hockey machine for malls & FECs.", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
+        { title: "Aero X Air Hockey", name: "Aero X Air Hockey", category: "Arcade Games", tag: "Interactive", desc: "Next-gen arcade air hockey table with multi-ticket dispenser system.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" }
+      ];
+
+      let categoriesList = defaultCats;
+      let cardsList = defaultCards;
+
+      if (formData.arcadeCategories) {
+        if (Array.isArray(formData.arcadeCategories.cards)) cardsList = [...formData.arcadeCategories.cards];
+        else if (Array.isArray(formData.arcadeCategories)) cardsList = [...formData.arcadeCategories];
+        if (Array.isArray(formData.arcadeCategories.categoriesList)) categoriesList = [...formData.arcadeCategories.categoriesList];
+      }
+
+      const cardItem = {
+        name: modalItemData.name || modalItemData.title || 'New Arcade Product',
+        title: modalItemData.title || modalItemData.name || 'New Arcade Product',
+        category: modalItemData.category || 'Arcade Games',
+        tag: modalItemData.tag || 'Popular',
+        desc: modalItemData.desc || '',
+        img: modalItemData.img || modalItemData.imageUrl || ''
+      };
+
+      if (modalMode === 'add') {
+        cardsList.push(cardItem);
+      } else if (modalMode === 'edit' && editingIndex !== null) {
+        cardsList[editingIndex] = cardItem;
+      }
+
+      const updated = { categoriesList, cards: cardsList };
+      setFormData(prev => ({ ...prev, arcadeCategories: updated }));
+      await persistSectionToDatabase('arcadeCategories', updated);
+      closeModal();
+      return;
+    }
 
     if (secKey === 'bowlingFaqs' && currentList.length < 8) {
       currentList = [...defaultBowlingFaqs];
@@ -1157,9 +1360,199 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
 
   return (
-    <div style={{ height: '100vh', backgroundColor: '#F5F5F9', color: '#0f172a', display: 'flex', overflow: 'hidden' }}>
-      {/* SIDEBAR NAVIGATION (FIXED ON SCREEN) */}
-      <aside style={{
+    <div style={{ height: '100vh', backgroundColor: '#F5F5F9', color: '#0f172a', display: 'flex', overflow: 'hidden', position: 'relative' }}>
+      <style>{`
+        *, *::before, *::after {
+          box-sizing: border-box !important;
+        }
+
+        body, html, #root {
+          overflow-x: hidden !important;
+          width: 100% !important;
+        }
+
+        /* Standardize File Inputs */
+        input[type="file"] {
+          max-width: 100% !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+          white-space: nowrap !important;
+          font-size: 11px !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Responsive Layout Overrides for Admin Panel */
+        @media (max-width: 992px) {
+          .winera-admin-sidebar {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            height: 100vh !important;
+            z-index: 99999 !important;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5) !important;
+          }
+          .winera-admin-sidebar.mobile-open {
+            transform: translateX(0) !important;
+          }
+          .winera-admin-main {
+            padding: 10px 6px 50px 6px !important;
+            width: 100% !important;
+            max-width: 100vw !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+          }
+          .winera-admin-topheader {
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 10px !important;
+            padding: 12px 14px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+          }
+          .winera-admin-hamburger-btn {
+            display: inline-flex !important;
+          }
+          .winera-admin-card {
+            padding: 14px 10px !important;
+            border-radius: 14px !important;
+            gap: 12px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            overflow-x: hidden !important;
+          }
+          .winera-admin-flex-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 10px !important;
+            width: 100% !important;
+          }
+          .winera-admin-grid-2col {
+            grid-template-columns: 1fr !important;
+          }
+          img, video, iframe {
+            max-width: 100% !important;
+            height: auto !important;
+          }
+          table {
+            display: block !important;
+            width: 100% !important;
+            overflow-x: auto !important;
+          }
+          .winera-admin-modal-box {
+            width: 96vw !important;
+            max-width: 96vw !important;
+            margin: 6px auto !important;
+            max-height: 92vh !important;
+            padding: 14px 10px !important;
+            box-sizing: border-box !important;
+            overflow-x: hidden !important;
+          }
+
+          /* Force all text inputs, textareas, and selects to 100% width with compact padding on mobile */
+          input[type="text"], input[type="number"], input[type="email"], input[type="tel"], input[type="password"], input[type="url"], textarea, select {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            padding: 8px 10px !important;
+            font-size: 13px !important;
+          }
+
+          /* Force inline grids to collapse to 1 column on screens <= 992px */
+          div[style*="gridTemplateColumns"],
+          div[style*="grid-template-columns"] {
+            grid-template-columns: 1fr !important;
+          }
+
+          /* Ensure flex containers wrap properly */
+          div[style*="display: flex"],
+          div[style*="display:flex"] {
+            flex-wrap: wrap !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+          }
+
+          /* Compact inner padding for sub-cards and sub-containers on mobile */
+          div[style*="padding: 18px"],
+          div[style*="padding: 20px"],
+          div[style*="padding: 24px"],
+          div[style*="padding: 30px"],
+          div[style*="padding:18px"],
+          div[style*="padding:20px"],
+          div[style*="padding:24px"],
+          div[style*="padding:30px"],
+          div[style*="padding: 16px"],
+          div[style*="padding:16px"] {
+            padding: 12px 10px !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            overflow-x: hidden !important;
+          }
+
+          /* Fix Top Header Badge text cutoff */
+          .winera-admin-topheader span[style*="border-radius"] {
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+            font-size: 11px !important;
+            padding: 4px 10px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .winera-admin-main {
+            padding: 8px 4px 40px 4px !important;
+          }
+          .winera-admin-card {
+            padding: 12px 8px !important;
+            border-radius: 12px !important;
+          }
+          .winera-admin-modal-box {
+            padding: 12px 6px !important;
+          }
+          h3 {
+            font-size: 1.05rem !important;
+          }
+          h4 {
+            font-size: 0.9rem !important;
+          }
+          button {
+            max-width: 100% !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+          }
+        }
+
+        @media (min-width: 993px) {
+          .winera-admin-hamburger-btn {
+            display: none !important;
+          }
+        }
+      `}</style>
+
+      {/* MOBILE BACKDROP OVERLAY */}
+      {isMobileSidebarOpen && (
+        <div
+          onClick={() => setIsMobileSidebarOpen(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(15, 23, 42, 0.65)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 99998
+          }}
+        />
+      )}
+
+      {/* SIDEBAR NAVIGATION (RESPONSIVE OFF-CANVAS DRAWER ON MOBILE) */}
+      <aside className={`winera-admin-sidebar ${isMobileSidebarOpen ? 'mobile-open' : ''}`} style={{
         width: '280px',
         height: '100vh',
         backgroundColor: '#0f172a',
@@ -1173,7 +1566,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       }}>
         <div>
           {/* Brand Logo & Title Header */}
-          <div style={{ padding: '28px 24px', borderBottom: '1px solid #1e293b' }}>
+          <div style={{ padding: '24px 20px', borderBottom: '1px solid #1e293b', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{
                 width: '38px',
@@ -1198,6 +1591,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </span>
               </div>
             </div>
+            {/* Mobile Close Button */}
+            <button
+              onClick={() => setIsMobileSidebarOpen(false)}
+              className="winera-admin-hamburger-btn"
+              style={{
+                background: '#1e293b',
+                color: '#cbd5e1',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '6px',
+                cursor: 'pointer'
+              }}
+            >
+              <X style={{ width: '20px', height: '20px' }} />
+            </button>
           </div>
 
           {/* Navigation Links */}
@@ -1228,6 +1636,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         if (item.sections && item.sections.length > 0) {
                           setActiveSection(item.sections[0].id);
                         }
+                        setIsMobileSidebarOpen(false); // Hide menu drawer on mobile when clicked!
                       }}
                       style={{
                         width: '100%',
@@ -1269,16 +1678,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         gap: '4px',
                         marginTop: '6px',
                         marginBottom: '12px',
-                        paddingLeft: '38px',
+                        paddingLeft: '24px',
                         borderLeft: '2px solid rgba(56, 189, 248, 0.3)',
-                        marginLeft: '24px'
+                        marginLeft: '16px'
                       }}>
                         {item.sections.map((sec) => {
                           const isSecActive = activeSection === sec.id;
                           return (
                             <button
                               key={sec.id}
-                              onClick={() => setActiveSection(sec.id)}
+                              onClick={() => {
+                                setActiveSection(sec.id);
+                                setIsMobileSidebarOpen(false); // Hide menu drawer on mobile when clicked!
+                              }}
                               style={{
                                 width: '100%',
                                 textAlign: 'left',
@@ -1358,9 +1770,39 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       </aside>
 
       {/* MAIN CONTENT EDIT AREA */}
-      <main style={{ flex: 1, height: '100vh', padding: '40px 48px', overflowY: 'auto' }}>
+      <main className="winera-admin-main" style={{ flex: 1, height: '100vh', padding: '30px 36px', overflowY: 'auto' }}>
+        {/* Mobile Top Navigation Toggle Bar */}
+        <div className="winera-admin-hamburger-btn" style={{ marginBottom: '16px', width: '100%' }}>
+          <button
+            onClick={() => setIsMobileSidebarOpen(true)}
+            style={{
+              width: '100%',
+              padding: '12px 18px',
+              borderRadius: '14px',
+              background: '#0f172a',
+              color: '#ffffff',
+              border: 'none',
+              fontWeight: '800',
+              fontSize: '13.5px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.2)',
+              cursor: 'pointer'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <Menu style={{ width: '20px', height: '20px', color: '#38bdf8' }} />
+              <span>Open Pages & Sections Menu</span>
+            </div>
+            <span style={{ background: '#38bdf8', color: '#fff', fontSize: '11px', padding: '3px 10px', borderRadius: '10px' }}>
+              {selectedPage.replace('_', ' ')}
+            </span>
+          </button>
+        </div>
+
         {/* Top Header Card */}
-        <div style={{
+        <div className="winera-admin-topheader" style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -1372,7 +1814,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           border: '1px solid #e2e8f0'
         }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
               <span style={{
                 background: '#e0f2fe',
                 color: '#0284c7',
@@ -1384,7 +1826,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               }}>
                 {selectedPage.replace('_', ' ')}
               </span>
-              <h1 style={{ fontSize: '1.6rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>
+              <h1 style={{ fontSize: '1.4rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>
                 Manage Section: <span style={{ color: '#38bdf8' }}>{activeSection}</span>
               </h1>
             </div>
@@ -1431,7 +1873,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.hero?.title || ''}
+                  value={formData.hero?.title !== undefined && formData.hero.title !== '' ? formData.hero.title : "Indoor Amusement & Gaming Equipment Manufacturer"}
                   onChange={(e) => handleFieldChange('hero', 'title', e.target.value)}
                   style={{
                     width: '100%',
@@ -1451,7 +1893,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <textarea
                   rows={3}
-                  value={formData.hero?.subtitle || ''}
+                  value={formData.hero?.subtitle !== undefined && formData.hero.subtitle !== '' ? formData.hero.subtitle : "Turnkey indoor game zone setup, commercial arcade machines, bowling alley equipment, and soft play areas with complete ROI blueprint for B2B entertainment centers across India."}
                   onChange={(e) => handleFieldChange('hero', 'subtitle', e.target.value)}
                   style={{
                     width: '100%',
@@ -1473,7 +1915,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <input
                   type="text"
                   placeholder="e.g. Plan Your Game Zone"
-                  value={formData.hero?.ctaPrimaryText || ''}
+                  value={formData.hero?.ctaPrimaryText !== undefined && formData.hero.ctaPrimaryText !== '' ? formData.hero.ctaPrimaryText : "Plan Your Game Zone"}
                   onChange={(e) => handleFieldChange('hero', 'ctaPrimaryText', e.target.value)}
                   style={{
                     width: '100%',
@@ -1494,7 +1936,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <input
                   type="text"
                   placeholder="e.g. https://wa.me/919428989488 or /contact"
-                  value={formData.hero?.ctaPrimaryLink || ''}
+                  value={formData.hero?.ctaPrimaryLink !== undefined && formData.hero.ctaPrimaryLink !== '' ? formData.hero.ctaPrimaryLink : "https://wa.me/919428989488"}
                   onChange={(e) => handleFieldChange('hero', 'ctaPrimaryLink', e.target.value)}
                   style={{
                     width: '100%',
@@ -1506,6 +1948,37 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     fontWeight: '600'
                   }}
                 />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Hero Background Image
+                </label>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  {formData.hero?.bgUrl && (
+                    <img src={formData.hero.bgUrl} alt="Preview" style={{ height: '40px', borderRadius: '6px', objectFit: 'cover' }} />
+                  )}
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Hero Background
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading background...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          handleFieldChange('hero', 'bgUrl', res.url);
+                          setStatusMsg('Hero background uploaded!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -2909,27 +3382,41 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {(formData.faqs || []).map((item, idx) => (
-                      <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
-                        <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
-                        <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.q}</td>
-                        <td style={{ padding: '14px 18px', color: '#475569', fontSize: '12.5px', lineHeight: '1.4' }}>{item.a}</td>
-                        <td style={{ padding: '14px 18px', textAlign: 'right' }}>
-                          <button
-                            onClick={() => openModal('edit', idx, item)}
-                            style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
-                          >
-                            <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit
-                          </button>
-                          <button
-                            onClick={() => setFormData(prev => ({ ...prev, faqs: prev.faqs.filter((_, i) => i !== idx) }))}
-                            style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
-                          >
-                            <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    {(() => {
+                      const defaultHomeFaqs = [
+                        { q: "What types of game zone equipment do you manufacture and supply?", a: "We manufacture and supply a full range of indoor amusement equipment including commercial bowling alleys, arcade & redemption machines, soft play structures, VR simulators, trampoline parks, bumper cars, and laser tag arenas." },
+                        { q: "Do you provide complete turnkey game zone setup services across India?", a: "Yes, Winera International handles the entire process from initial 2D/3D layout design and ROI estimation to equipment manufacturing, delivery, professional installation, and staff training." },
+                        { q: "Can I get a custom 3D design and ROI report for my venue space?", a: "Absolutelty! Before you place an order, our team creates a venue-specific 3D design layout and a complete financial ROI report detailing your estimated footfall, monthly revenue, and break-even timeline." },
+                        { q: "What commercial safety standards do your soft play & amusement products meet?", a: "All our soft play structures adhere to European EN-1176 standards, utilizing non-toxic PVC leather, fire-retardant high-density foam, anti-climb safety netting, and heavy-duty steel frames." },
+                        { q: "How long does it take to setup a complete game zone or soft play area?", a: "Depending on the venue size and machine mix, standard installations typically take 7 to 20 days on-site after delivery. Our own dedicated technical team manages every step pan-India." }
+                      ];
+                      const list = (Array.isArray(formData.faqs) && formData.faqs.length > 0) ? formData.faqs : defaultHomeFaqs;
+                      return list.map((item, idx) => (
+                        <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
+                          <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
+                          <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.q || item.question}</td>
+                          <td style={{ padding: '14px 18px', color: '#475569', fontSize: '12.5px', lineHeight: '1.4' }}>{item.a || item.answer}</td>
+                          <td style={{ padding: '14px 18px', textAlign: 'right' }}>
+                            <button
+                              onClick={() => openModal('edit', idx, { q: item.q || item.question, a: item.a || item.answer })}
+                              style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
+                            >
+                              <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit
+                            </button>
+                            <button
+                              onClick={async () => {
+                                const updated = list.filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, faqs: updated }));
+                                await persistSectionToDatabase('faqs', updated);
+                              }}
+                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ));
+                    })()}
                   </tbody>
                 </table>
               </div>
@@ -3357,7 +3844,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <textarea
                   rows={4}
-                  value={formData.arcadeIntro?.desc || ''}
+                  value={formData.arcadeIntro?.desc !== undefined ? formData.arcadeIntro.desc : "Winera International Pvt. Ltd is a trusted arcade games manufacturer and supplier of premium arcade machines, sourced and serviced end-to-end across 50+ cities. With over 15 years of industry expertise, we source every arcade game machine from established global manufacturers and configure it with modern coin, card, or ticket-based redemption systems to match your venue's requirements"}
                   onChange={(e) => handleFieldChange('arcadeIntro', 'desc', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500' }}
                 />
@@ -3378,8 +3865,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div>
                   <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Feature 1 Description</label>
                   <textarea
-                    rows={2}
-                    value={formData.arcadeIntro?.feature1Desc || ''}
+                    rows={3}
+                    value={formData.arcadeIntro?.feature1Desc !== undefined ? formData.arcadeIntro.feature1Desc : "Before delivery, each unit goes through a commercial-grade durability check built for high-footfall environments like malls, hotels, and entertainment centres, not casual or residential use."}
                     onChange={(e) => handleFieldChange('arcadeIntro', 'feature1Desc', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
@@ -3401,8 +3888,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div>
                   <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Feature 2 Description</label>
                   <textarea
-                    rows={2}
-                    value={formData.arcadeIntro?.feature2Desc || ''}
+                    rows={3}
+                    value={formData.arcadeIntro?.feature2Desc !== undefined ? formData.arcadeIntro.feature2Desc : "From sourcing to installation and after-sales support, our own team handles the entire arcade game zone setup process, not a third-party contractor."}
                     onChange={(e) => handleFieldChange('arcadeIntro', 'feature2Desc', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
@@ -3469,6 +3956,276 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
             </div>
           )}
+
+          {/* ARCADE GAME CATEGORIES & PRODUCTS MANAGER FORM */}
+          {activeSection === 'arcadeCategories' && (() => {
+            const defaultArcadeCategories = [
+              "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
+              "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
+            ];
+
+            const defaultArcadeCards = [
+              { title: "Super Air Hockey", name: "Super Air Hockey", category: "Arcade Games", tag: "Popular", desc: "Commercial grade heavy-duty air hockey table with digital score display.", img: superAirHockeyImg },
+              { title: "Puck Carnival Air Hockey", name: "Puck Carnival Air Hockey", category: "Arcade Games", tag: "Hot Seller", desc: "Multi-puck carnival style air hockey machine for high footfall game zones.", img: puckCarnivalAirHockeyImg },
+              { title: "Dazzling Air Hockey - Multi Puck", name: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games", tag: "High Revenue", desc: "LED illuminated stainless steel air hockey table with sound effects.", img: dazzlingAirHockeyImg },
+              { title: "Aurora Air Hockey", name: "Aurora Air Hockey", category: "Arcade Games", tag: "Classic", desc: "High-power air blower tournament air hockey table with durable aluminum rails.", img: auroraAirHockeyImg },
+              { title: "Ocha Air Hockey", name: "Ocha Air Hockey", category: "Arcade Games", tag: "Featured", desc: "Compact & stylish commercial air hockey machine for malls & FECs.", img: ochaAirHockeyImg },
+              { title: "Aero X Air Hockey", name: "Aero X Air Hockey", category: "Arcade Games", tag: "Interactive", desc: "Next-gen arcade air hockey table with multi-ticket dispenser system.", img: aeroXAirHockeyImg }
+            ];
+
+            let categoriesList = defaultArcadeCategories;
+            let cardsList = defaultArcadeCards;
+
+            if (formData.arcadeCategories) {
+              let rawCards = null;
+              if (Array.isArray(formData.arcadeCategories.cards) && formData.arcadeCategories.cards.length > 0) {
+                rawCards = formData.arcadeCategories.cards;
+              } else if (Array.isArray(formData.arcadeCategories) && formData.arcadeCategories.length > 0) {
+                rawCards = formData.arcadeCategories;
+              }
+
+              if (rawCards) {
+                const hasUnsplash = rawCards.some(c => (c.img || c.imageUrl || '').includes('unsplash.com'));
+                if (hasUnsplash) {
+                  cardsList = defaultArcadeCards;
+                } else {
+                  cardsList = rawCards;
+                }
+              }
+
+              if (Array.isArray(formData.arcadeCategories.categoriesList)) {
+                categoriesList = formData.arcadeCategories.categoriesList;
+              }
+            }
+
+            const activeFilterCat = adminProjectFilterCat || "All";
+            const filteredCards = activeFilterCat === "All"
+              ? cardsList
+              : cardsList.filter(item => (item.category || item.tag || "").toLowerCase().includes(activeFilterCat.toLowerCase()));
+
+            return (
+              <div className="winera-admin-card" style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                
+                {/* Header & Add Project Button */}
+                <div className="winera-admin-flex-header" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
+                  <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Discover our Products (Categories & Cards Manager)</h3>
+                    <p style={{ fontSize: '12.5px', color: '#64748b', margin: '4px 0 0' }}>Manage category tabs sidebar, add new products, edit product photos & details.</p>
+                  </div>
+                  <button
+                    onClick={() => openModal('add', null, null, 'arcadeCategories')}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '14px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.3)' }}
+                  >
+                    <Plus style={{ width: '16px', height: '16px' }} /> Add New Arcade Product Card
+                  </button>
+                </div>
+
+                {/* CATEGORY TABS & MANAGEMENT BAR */}
+                <div style={{ background: '#f8fafc', padding: '18px 22px', borderRadius: '20px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Filter Category:</label>
+                      <select
+                        value={activeFilterCat}
+                        onChange={(e) => setAdminProjectFilterCat(e.target.value)}
+                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700', background: '#ffffff', color: '#0284c7', maxWidth: '100%' }}
+                      >
+                        <option value="All">All Categories ({cardsList.length})</option>
+                        {categoriesList.map((cat, idx) => {
+                          const count = cardsList.filter(item => (item.category || "").toLowerCase().includes(cat.toLowerCase())).length;
+                          return (
+                            <option key={idx} value={cat}>{cat} ({count})</option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
+                    {/* Add New Category Control */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>
+                      <input
+                        type="text"
+                        placeholder="Type new category name..."
+                        id="newArcadeCatInput"
+                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', width: '220px', maxWidth: '100%' }}
+                      />
+                      <button
+                        onClick={() => {
+                          const inp = document.getElementById('newArcadeCatInput');
+                          if (inp && inp.value.trim()) {
+                            const val = inp.value.trim();
+                            if (!categoriesList.includes(val)) {
+                              const newCats = [...categoriesList, val];
+                              const updated = { categoriesList: newCats, cards: cardsList };
+                              setFormData(prev => ({ ...prev, arcadeCategories: updated }));
+                              persistSectionToDatabase('arcadeCategories', updated);
+                              inp.value = '';
+                            }
+                          }
+                        }}
+                        style={{ background: '#0F172B', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer' }}
+                      >
+                        + Add Category
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Category Pills List */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', paddingTop: '4px' }}>
+                    <span style={{ fontSize: '12px', fontWeight: '800', color: '#64748b', alignSelf: 'center', marginRight: '4px' }}>Category Sidebar Tabs:</span>
+                    {categoriesList.map((cat, idx) => (
+                      <span key={idx} style={{
+                        background: activeFilterCat === cat ? '#38bdf8' : '#e0f2fe',
+                        color: activeFilterCat === cat ? '#ffffff' : '#0284c7',
+                        padding: '5px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '800',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        cursor: 'pointer'
+                      }}
+                        onClick={() => setAdminProjectFilterCat(cat)}
+                      >
+                        {cat}
+                        {categoriesList.length > 1 && (
+                          <span
+                            title="Remove Category"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const newCats = categoriesList.filter((_, i) => i !== idx);
+                              const updated = { categoriesList: newCats, cards: cardsList };
+                              setFormData(prev => ({ ...prev, arcadeCategories: updated }));
+                              persistSectionToDatabase('arcadeCategories', updated);
+                            }}
+                            style={{ cursor: 'pointer', opacity: 0.7, fontWeight: '900', marginLeft: '2px' }}
+                          >
+                            &times;
+                          </span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3-COLUMN VISUAL CARDS GRID (MATCHING USER SIDE UI 1:1) */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                      User-Side Style Product Cards Grid ({filteredCards.length} Items)
+                    </h4>
+                  </div>
+
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))',
+                    gap: '20px'
+                  }}>
+                    {filteredCards.map((card, idx) => {
+                      const realIdx = cardsList.findIndex(c => c === card);
+                      const displayTitle = card.name || card.title || "Arcade Machine";
+                      const displayImg = card.imageUrl || card.img || "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80";
+
+                      return (
+                        <div
+                          key={idx}
+                          style={{
+                            background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
+                            borderRadius: '24px',
+                            padding: '16px',
+                            boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
+                            border: '1.5px solid #e0f2fe',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                            position: 'relative'
+                          }}
+                        >
+                          {/* Image Box */}
+                          <div style={{
+                            width: '100%',
+                            height: '170px',
+                            borderRadius: '18px',
+                            overflow: 'hidden',
+                            marginBottom: '14px',
+                            background: '#ffffff',
+                            boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
+                            border: '4px solid #ffffff'
+                          }}>
+                            <img
+                              src={displayImg}
+                              alt={displayTitle}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          </div>
+
+                          {/* Category Badge */}
+                          <div style={{ marginBottom: '6px' }}>
+                            <span style={{ background: '#0284c7', color: '#ffffff', padding: '3px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: '800' }}>
+                              {card.category || 'Arcade Games'}
+                            </span>
+                          </div>
+
+                          {/* Title */}
+                          <h4 style={{
+                            fontSize: '1rem',
+                            fontWeight: '800',
+                            color: '#0f172a',
+                            lineHeight: 1.3,
+                            margin: '4px 0 14px',
+                            minHeight: '36px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            {displayTitle}
+                          </h4>
+
+                          {/* Action Buttons */}
+                          <div style={{ display: 'flex', gap: '8px', width: '100%', justifyContent: 'center', marginTop: 'auto' }}>
+                            <button
+                              onClick={() => openModal('edit', realIdx !== -1 ? realIdx : idx, card, 'arcadeCategories')}
+                              style={{ flex: 1, background: '#38bdf8', color: '#ffffff', border: 'none', padding: '8px 12px', borderRadius: '10px', cursor: 'pointer', fontWeight: '800', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                            >
+                              <Edit2 style={{ width: '13px', height: '13px' }} /> Edit
+                            </button>
+                            <button
+                              onClick={() => {
+                                setDeleteConfirmModal({
+                                  title: 'Delete Product Card?',
+                                  message: `Are you sure you want to delete '${displayTitle}'?`,
+                                  onConfirm: async () => {
+                                    const targetIndex = realIdx !== -1 ? realIdx : idx;
+                                    const newCards = cardsList.filter((_, i) => i !== targetIndex);
+                                    const updated = { categoriesList, cards: newCards };
+                                    setFormData(prev => ({ ...prev, arcadeCategories: updated }));
+                                    await persistSectionToDatabase('arcadeCategories', updated);
+                                  }
+                                });
+                              }}
+                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 12px', borderRadius: '10px', cursor: 'pointer', fontWeight: '800', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                            >
+                              <Trash2 style={{ width: '13px', height: '13px' }} /> Delete
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <button
+                    onClick={() => persistSectionToDatabase('arcadeCategories', { categoriesList, cards: cardsList })}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                  >
+                    Save All Arcade Products & Categories
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* BUILT FOR COMMERCIAL USE SECTION FORM */}
           {activeSection === 'arcadeCommercial' && (
@@ -3546,7 +4303,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Description Paragraphs</label>
                   <textarea
                     rows={4}
-                    value={formData.arcadeCommercial?.point1Text || ''}
+                    value={formData.arcadeCommercial?.point1Text !== undefined ? formData.arcadeCommercial.point1Text : "Winera International supplies commercial arcade machines in India built specifically for high-intensity, continuous daily operation. From reinforced cabinets and commercial power supplies to coin mechanisms and digital card reader interfaces, every machine we deliver is tested for long life before it reaches your venue."}
                     onChange={(e) => handleFieldChange('arcadeCommercial', 'point1Text', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
@@ -3569,7 +4326,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Description Paragraphs</label>
                   <textarea
                     rows={4}
-                    value={formData.arcadeCommercial?.point2Text || ''}
+                    value={formData.arcadeCommercial?.point2Text !== undefined ? formData.arcadeCommercial.point2Text : "Anyone can fill a room with arcade machines. Very few build a game zone that pays back your investment and keeps printing profit month after month. We help venue owners calculate their expected daily footfall, average spend per visitor, machine payback periods, and total ROI — before you commit to a single machine."}
                     onChange={(e) => handleFieldChange('arcadeCommercial', 'point2Text', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
@@ -3776,8 +4533,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-          {/* RELATED PRODUCTS SECTION FORM */}
-          {activeSection === 'arcadeRelated' && (
+          {/* RELATED PRODUCTS SECTION FORM (GENERIC FOR ALL PAGES) */}
+          {(activeSection.endsWith('Related') || activeSection.includes('Related')) && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Related Products Carousel Section</h3>
               <div>
@@ -3786,8 +4543,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.arcadeRelated?.title || '*Related* Products'}
-                  onChange={(e) => handleFieldChange('arcadeRelated', 'title', e.target.value)}
+                  value={formData[activeSection]?.title || '*Related* Products'}
+                  onChange={(e) => handleFieldChange(activeSection, 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
@@ -3814,8 +4571,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       { title: "Other Furniture", link: "/products/other-furniture", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80" }
                     ];
 
-                    const itemsList = (Array.isArray(formData.arcadeRelated?.items) && formData.arcadeRelated.items.length > 0)
-                      ? formData.arcadeRelated.items
+                    const itemsList = (Array.isArray(formData[activeSection]?.items) && formData[activeSection].items.length > 0)
+                      ? formData[activeSection].items
                       : defaultList;
 
                     return itemsList.map((item, idx) => (
@@ -3834,7 +4591,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               updated[idx] = { ...updated[idx], title: e.target.value };
                               setFormData(prev => ({
                                 ...prev,
-                                arcadeRelated: { ...(prev.arcadeRelated || {}), items: updated }
+                                [activeSection]: { ...(prev[activeSection] || {}), items: updated }
                               }));
                             }}
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
@@ -3869,9 +4626,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                     const res = await uploadImageFile(file, admin.token);
                                     const updated = [...itemsList];
                                     updated[idx] = { ...updated[idx], img: res.url };
-                                    const updatedSection = { ...(formData.arcadeRelated || {}), items: updated };
-                                    setFormData(prev => ({ ...prev, arcadeRelated: updatedSection }));
-                                    await persistSectionToDatabase('arcadeRelated', updatedSection);
+                                    const updatedSection = { ...(formData[activeSection] || {}), items: updated };
+                                    setFormData(prev => ({ ...prev, [activeSection]: updatedSection }));
+                                    await persistSectionToDatabase(activeSection, updatedSection);
                                   } catch (err) {
                                     setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
                                   }
@@ -3892,7 +4649,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
-                  onClick={() => persistSectionToDatabase('arcadeRelated', formData.arcadeRelated || {})}
+                  onClick={() => persistSectionToDatabase(activeSection, formData[activeSection] || {})}
                   style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                 >
                   Save Related Products Section
@@ -4060,36 +4817,53 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {(formData.arcadeFaqs || []).map((item, idx) => (
-                      <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
-                        <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
-                        <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.q}</td>
-                        <td style={{ padding: '14px 18px', color: '#475569', fontSize: '12.5px', lineHeight: '1.4' }}>{item.a}</td>
-                        <td style={{ padding: '14px 18px', textAlign: 'right' }}>
-                          <button
-                            onClick={() => openModal('edit', idx, item, 'arcadeFaqs')}
-                            style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
-                          >
-                            <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit
-                          </button>
-                          <button
-                            onClick={async () => {
-                              const updated = (formData.arcadeFaqs || []).filter((_, i) => i !== idx);
-                              setFormData(prev => ({ ...prev, arcadeFaqs: updated }));
-                              await persistSectionToDatabase('arcadeFaqs', updated);
-                            }}
-                            style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
-                          >
-                            <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    {(() => {
+                      const defaultArcadeFaqs = [
+                        { q: "Where Can I Buy Arcade Game Machines In India?", a: "Winera International is a trusted arcade games manufacturer and supplier in India — supplying claw machines, redemption games, racing simulators, shooting games, and kiddy rides for malls, hotels, FECs, and amusement parks, with complete installation across 50+ cities by our own team." },
+                        { q: "Do You Supply Coin Operated Arcade Machines In India?", a: "Yes. Winera International supplies a wide range of coin operated arcade machines in India, card-based systems, and ticket redemption arcade machines, built for commercial environments such as malls, hotels, resorts, and family entertainment centres." },
+                        { q: "Can Winera International Set Up A Complete Arcade Game Zone Setup?", a: "Yes. We handle space planning, machine selection, delivery, installation, and staff training as one connected arcade game zone setup process, not separate transactions with different vendors." },
+                        { q: "What Happens If A Machine Breaks Down After Installation?", a: "Our own technicians handle servicing directly, with coverage across 50+ cities in India. You are not waiting on an overseas supplier or a disconnected logistics partner to respond." },
+                        { q: "Which Businesses Typically Install Arcade Game Machines In India?", a: "Malls, hotels, resorts, and family entertainment centres are the most common buyers of arcade machines." },
+                        { q: "How Long Does It Take To Install Arcade Machines?", a: "Installation timelines depend on the number of machines, your venue's readiness, and your location. We share an exact schedule as part of your quote, so you know precisely when your arcade zone will be ready." },
+                        { q: "What Is The Price Of Arcade Machines In India?", a: "Arcade machine pricing in India depends on the machine category, payment mechanism, and customisation level. Because Winera International sources directly at scale, our pricing avoids the markup typical of multi-layer resellers." },
+                        { q: "How Do I Get Started With Ordering Arcade Machines From Winera?", a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Our team will recommend the right machine mix for your space and send a quote ASAP." },
+                        { q: "Which Arcade Games Give The Best ROI For FECs And Malls In India?", a: "Ticket redemption games, claw machines, and racing simulators consistently deliver the strongest revenue per square foot in Indian FECs and malls. Winera International helps you choose the right arcade game zone machine mix based on your specific footfall, floor size, and visitor demographic — not a generic recommendation." },
+                        { q: "What Is The Difference Between Coin-Operated And Card-Based Arcade Machines?", a: "Coin-operated arcade machines accept physical tokens and suit venues with casual walk-in visitors. Card-based systems use rechargeable cards — better for revenue tracking, reducing cash handling, and encouraging repeat visits through balance top-ups. Winera supplies both and advises on the right system for your venue." }
+                      ];
+                      const list = (Array.isArray(formData.arcadeFaqs) && formData.arcadeFaqs.length > 0) ? formData.arcadeFaqs : defaultArcadeFaqs;
+                      return list.map((item, idx) => (
+                        <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
+                          <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
+                          <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.q || item.question}</td>
+                          <td style={{ padding: '14px 18px', color: '#475569', fontSize: '12.5px', lineHeight: '1.4' }}>{item.a || item.answer}</td>
+                          <td style={{ padding: '14px 18px', textAlign: 'right' }}>
+                            <button
+                              onClick={() => openModal('edit', idx, { q: item.q || item.question, a: item.a || item.answer }, 'arcadeFaqs')}
+                              style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
+                            >
+                              <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit
+                            </button>
+                            <button
+                              onClick={async () => {
+                                const updated = list.filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, arcadeFaqs: updated }));
+                                await persistSectionToDatabase('arcadeFaqs', updated);
+                              }}
+                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ));
+                    })()}
                   </tbody>
                 </table>
               </div>
             </div>
           )}
+
+
 
           {/* BOWLING HERO BANNER FORM */}
           {activeSection === 'bowlingHero' && (
@@ -4217,7 +4991,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
                 <textarea
                   rows={3}
-                  value={formData.softplayIntro?.desc || ''}
+                  value={formData.softplayIntro?.desc || "Design, manufacturing, and installation of indoor soft play equipment for malls, FECs, hotels, and play zones across India."}
                   onChange={(e) => handleFieldChange('softplayIntro', 'desc', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -4313,8 +5087,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.softplayManufacture?.p1 || ''}
+                  rows={4}
+                  value={formData.softplayManufacture?.p1 !== undefined && formData.softplayManufacture.p1 !== '' ? formData.softplayManufacture.p1 : "Winera International is a leading indoor soft play equipment manufacturer in India, specializing in custom-designed play areas for children aged 1 to 12 years. Our soft play structures adhere to European EN-1176 safety standards, utilizing non-toxic PVC leather, high-density EPE foam padding, and heavy-duty steel framing."}
                   onChange={(e) => handleFieldChange('softplayManufacture', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -4323,8 +5097,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.softplayManufacture?.p2 || ''}
+                  rows={4}
+                  value={formData.softplayManufacture?.p2 !== undefined && formData.softplayManufacture.p2 !== '' ? formData.softplayManufacture.p2 : "From multi-level toddler play structures and giant ball pits to interactive slides and obstacle courses, we provide complete turnkey solutions from 3D layout design to professional installation across 50+ Indian cities."}
                   onChange={(e) => handleFieldChange('softplayManufacture', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -4581,7 +5355,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Intro Description</label>
                 <textarea
                   rows={3}
-                  value={formData.softplayMaterials?.desc || ''}
+                  value={formData.softplayMaterials?.desc || "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:"}
                   onChange={(e) => handleFieldChange('softplayMaterials', 'desc', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -4955,7 +5729,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
                   rows={2}
-                  value={formData.softplayRoi?.p1 || ''}
+                  value={formData.softplayRoi?.p1 !== undefined && formData.softplayRoi.p1 !== '' ? formData.softplayRoi.p1 : "Most soft play suppliers will quote you a price and ask you to decide. Winera International works differently."}
                   onChange={(e) => handleFieldChange('softplayRoi', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -4963,8 +5737,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.softplayRoi?.p2 || ''}
+                  rows={4}
+                  value={formData.softplayRoi?.p2 !== undefined && formData.softplayRoi.p2 !== '' ? formData.softplayRoi.p2 : "Before any equipment is selected, our team prepares a complete ROI report for your specific venue covering your exact soft play area cost, projected monthly footfall, estimated revenue, maintenance costs, and break-even timeline. Every number is calculated around your space, your city, and your business, not an industry average copied from a brochure."}
                   onChange={(e) => handleFieldChange('softplayRoi', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -4973,7 +5747,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 3 Description</label>
                 <textarea
                   rows={2}
-                  value={formData.softplayRoi?.p3 || ''}
+                  value={formData.softplayRoi?.p3 !== undefined && formData.softplayRoi.p3 !== '' ? formData.softplayRoi.p3 : "No other soft play manufacturer or supplier in India currently offers this as a standard part of their process. For Winera, it is not an add-on, it is how every project starts."}
                   onChange={(e) => handleFieldChange('softplayRoi', 'p3', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -5258,28 +6032,37 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {(Array.isArray(formData.softplayFaqs) ? formData.softplayFaqs : []).map((faq, index) => (
-                  <div key={index} style={{ background: '#F5F5F9', border: '1.5px solid #e2e8f0', borderRadius: '14px', padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
-                    <div>
-                      <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', margin: '0 0 6px 0' }}>Q: {faq.q || faq.question}</h4>
-                      <p style={{ fontSize: '13px', color: '#64748b', margin: 0, lineHeight: 1.5 }}>A: {faq.a || faq.answer}</p>
+                {(() => {
+                  const defaultSoftPlayFaqs = [
+                    { question: "What space is required to set up an indoor soft play area?", answer: "A minimum of 500 sq ft is recommended for a compact soft play zone. We custom design soft play areas for any footprint from 500 sq ft up to 10,000+ sq ft multi-level play centers." },
+                    { question: "Are your soft play equipment safety certified?", answer: "Yes, all our soft play structures utilize imported anti-UV LLDPE plastics, high-density impact-absorbing sponge foam padding, rounded edges, and heavy-duty PVC covers conforming to international commercial safety standards." },
+                    { question: "How long does installation take for a soft play project?", answer: "Standard soft play installations typically take 7 to 15 days on-site depending on the size and complexity of the structure. Our own in-house installation team manages everything pan-India." },
+                    { question: "Do you provide a customized 3D design before manufacturing?", answer: "Absolutely. Every project begins with a 3D CAD design tailored to your specific venue dimensions, ceiling height, theme preferences, and budget before manufacturing begins." }
+                  ];
+                  const faqList = (Array.isArray(formData.softplayFaqs) && formData.softplayFaqs.length > 0) ? formData.softplayFaqs : defaultSoftPlayFaqs;
+                  return faqList.map((faq, index) => (
+                    <div key={index} style={{ background: '#F5F5F9', border: '1.5px solid #e2e8f0', borderRadius: '14px', padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
+                      <div>
+                        <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', margin: '0 0 6px 0' }}>Q: {faq.q || faq.question}</h4>
+                        <p style={{ fontSize: '13px', color: '#64748b', margin: 0, lineHeight: 1.5 }}>A: {faq.a || faq.answer}</p>
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <button
+                          onClick={() => openModal('edit', index, { q: faq.q || faq.question, a: faq.a || faq.answer })}
+                          style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '6px', borderRadius: '8px', cursor: 'pointer', color: '#38bdf8' }}
+                        >
+                          <Edit2 style={{ width: '15px', height: '15px' }} />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteItem('softplayFaqs', index)}
+                          style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '6px', borderRadius: '8px', cursor: 'pointer', color: '#ef4444' }}
+                        >
+                          <Trash2 style={{ width: '15px', height: '15px' }} />
+                        </button>
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <button
-                        onClick={() => openModal('edit', index, { q: faq.q || faq.question, a: faq.a || faq.answer })}
-                        style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '6px', borderRadius: '8px', cursor: 'pointer', color: '#38bdf8' }}
-                      >
-                        <Edit2 style={{ width: '15px', height: '15px' }} />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteItem('softplayFaqs', index)}
-                        style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '6px', borderRadius: '8px', cursor: 'pointer', color: '#ef4444' }}
-                      >
-                        <Trash2 style={{ width: '15px', height: '15px' }} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ));
+                })()}
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -5355,41 +6138,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-          {/* BUMPER CAR SEO META TAGS FORM */}
-          {activeSection === 'bumpercarSeo' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Bumper Car Page SEO Settings</h3>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Page Title Tag (&lt;title&gt;)</label>
-                <input
-                  type="text"
-                  value={formData.bumpercarSeo?.pageTitle || 'Bumper Car Manufacturer in India | Electric & Battery Cars | Winera International'}
-                  onChange={(e) => handleFieldChange('bumpercarSeo', 'pageTitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Meta Description (&lt;meta name="description"&gt;)</label>
-                <textarea
-                  rows={4}
-                  value={formData.bumpercarSeo?.metaDescription || 'As a leading Bumper Car Manufacturer in India, Winera International Pvt Ltd crafts exhilarating, safe, and durable bumper cars that are a favorite at amusement parks.'}
-                  onChange={(e) => handleFieldChange('bumpercarSeo', 'metaDescription', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '500', lineHeight: 1.5 }}
-                />
-              </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('bumpercarSeo', formData.bumpercarSeo || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Bumper Car SEO Settings
-                </button>
-              </div>
-            </div>
-          )}
 
 
           {/* AMUSEMENT HERO BANNER FORM */}
@@ -6081,41 +6830,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-          {/* AMUSEMENT SEO FORM */}
-          {activeSection === 'amusementSeo' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Amusement Park SEO Meta Tags</h3>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Page Title Tag (&lt;title&gt;)</label>
-                <input
-                  type="text"
-                  value={formData.amusementSeo?.pageTitle || 'Amusement Park Equipment Manufacturer in India | Winera International'}
-                  onChange={(e) => handleFieldChange('amusementSeo', 'pageTitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Meta Description (&lt;meta name="description"&gt;)</label>
-                <textarea
-                  rows={3}
-                  value={formData.amusementSeo?.metaDescription || 'As a premier Amusement Park Equipment Manufacturer in India, Winera International Pvt Ltd crafts thrilling, safe, and world-class amusement park rides and attractions.'}
-                  onChange={(e) => handleFieldChange('amusementSeo', 'metaDescription', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
-                />
-              </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('amusementSeo', formData.amusementSeo || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Amusement SEO Meta Tags
-                </button>
-              </div>
-            </div>
-          )}
 
           {/* HYPERGRID HERO BANNER FORM */}
           {activeSection === 'hypergridHero' && (() => {
@@ -6999,41 +7714,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-          {/* HYPERGRID SEO FORM */}
-          {activeSection === 'hypergridSeo' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Hypergrid Page SEO Meta Tags</h3>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Page Title Tag (&lt;title&gt;)</label>
-                <input
-                  type="text"
-                  value={formData.hypergridSeo?.pageTitle || 'Interactive LED Hypergrid Arena Manufacturer in India | Winera International'}
-                  onChange={(e) => handleFieldChange('hypergridSeo', 'pageTitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Meta Description (&lt;meta name="description"&gt;)</label>
-                <textarea
-                  rows={3}
-                  value={formData.hypergridSeo?.metaDescription || "Winera International is India's leading manufacturer of Interactive LED Hypergrid active gaming arenas, offering high-ROI illuminated floor tile systems and turnkey game zone setups."}
-                  onChange={(e) => handleFieldChange('hypergridSeo', 'metaDescription', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
-                />
-              </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('hypergridSeo', formData.hypergridSeo || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Hypergrid SEO Meta Tags
-                </button>
-              </div>
-            </div>
-          )}
 
           {/* BUMPER CAR HERO BANNER FORM */}
           {activeSection === 'bumpercarHero' && (
@@ -8814,12 +9495,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         alert('Cannot delete the last remaining category!');
                         return;
                       }
-                      if (window.confirm(`Are you sure you want to delete category "${selectedCat}" and all its games?`)) {
-                        const updated = { ...categoriesData };
-                        delete updated[selectedCat];
-                        setFormData(prev => ({ ...prev, arCategoriesData: updated }));
-                        setAdminSelectedCat(Object.keys(updated)[0]);
-                      }
+                      setDeleteConfirmModal({
+                        title: 'Delete Category & Games?',
+                        message: `Are you sure you want to delete category "${selectedCat}" and all its games?`,
+                        onConfirm: () => {
+                          const updated = { ...categoriesData };
+                          delete updated[selectedCat];
+                          setFormData(prev => ({ ...prev, arCategoriesData: updated }));
+                          setAdminSelectedCat(Object.keys(updated)[0]);
+                        }
+                      });
                     }}
                     style={{ background: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5', padding: '8px 16px', borderRadius: '10px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer' }}
                   >
@@ -9715,6 +10400,63 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                 >
                   Save Hero Banner Section
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* LASER TAG HERO BANNER FORM */}
+          {activeSection === 'lasertagHero' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Laser Tag Hero Banner Settings</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  {formData.lasertagHero?.bgUrl && (
+                    <img
+                      src={formData.lasertagHero.bgUrl}
+                      alt="Hero Background Preview"
+                      style={{ width: '120px', height: '70px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+                    />
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          if (res.url) {
+                            handleFieldChange('lasertagHero', 'bgUrl', res.url);
+                          }
+                        } catch (err) {
+                          console.error('Image upload failed', err);
+                        }
+                      }
+                    }}
+                    style={{ fontSize: '13px' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Breadcrumb Label</label>
+                <input
+                  type="text"
+                  value={formData.lasertagHero?.breadcrumbText || 'Laser Tag'}
+                  onChange={(e) => handleFieldChange('lasertagHero', 'breadcrumbText', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('lasertagHero', formData.lasertagHero || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Laser Tag Hero Section
                 </button>
               </div>
             </div>
@@ -10730,7 +11472,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
                 <textarea
                   rows={3}
-                  value={formData.bowlingIntro?.desc || ''}
+                  value={formData.bowlingIntro?.desc || "India's trusted source for refurbished Brunswick bowling equipment — complete setup, installation, and a free ROI report before you invest."}
                   onChange={(e) => handleFieldChange('bowlingIntro', 'desc', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -10826,8 +11568,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingManufacturer?.p1 || ''}
+                  rows={4}
+                  value={formData.bowlingManufacturer?.p1 !== undefined && formData.bowlingManufacturer.p1 !== '' ? formData.bowlingManufacturer.p1 : "At Winera International Pvt. Ltd., we are proud to be India's leading bowling alley manufacturer and supplier of refurbished Brunswick bowling equipment. With over 15 years of expertise in the industry, we have built a reputation for delivering top-quality bowling alley equipment and exceptional customer service, tailored to fit the unique needs and budgets of our clients."}
                   onChange={(e) => handleFieldChange('bowlingManufacturer', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -10836,8 +11578,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingManufacturer?.p2 || ''}
+                  rows={4}
+                  value={formData.bowlingManufacturer?.p2 !== undefined && formData.bowlingManufacturer.p2 !== '' ? formData.bowlingManufacturer.p2 : "We specialize in providing refurbished Brunswick GS98 & GSX equipment, enhanced with the latest Frameworx or Vector Scoring Systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience."}
                   onChange={(e) => handleFieldChange('bowlingManufacturer', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -10847,7 +11589,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Watch Video Target Link URL</label>
                 <input
                   type="text"
-                  value={formData.bowlingManufacturer?.videoUrl || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+                  value={formData.bowlingManufacturer?.videoUrl || 'https://wa.me/919428989488'}
                   onChange={(e) => handleFieldChange('bowlingManufacturer', 'videoUrl', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -10883,8 +11625,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingFreeFall?.p1 || ''}
+                  rows={4}
+                  value={formData.bowlingFreeFall?.p1 !== undefined && formData.bowlingFreeFall.p1 !== '' ? formData.bowlingFreeFall.p1 : "Free-fall bowling is the traditional game you'll find in professional bowling centers worldwide. When the ball hits the pins, they fall freely and naturally, and a pinsetter machine clears and resets them for the next throw. It delivers the true feel of real bowling, the satisfying strike and the competition-grade experience serious players expect."}
                   onChange={(e) => handleFieldChange('bowlingFreeFall', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -10893,8 +11635,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingFreeFall?.p2 || ''}
+                  rows={4}
+                  value={formData.bowlingFreeFall?.p2 !== undefined && formData.bowlingFreeFall.p2 !== '' ? formData.bowlingFreeFall.p2 : "We specialise in refurbished Brunswick GS98 and GS-X equipment, restored to perform like new and enhanced with the latest Frameworx or Vector scoring systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience. It's the ideal choice for dedicated bowling centers and premium venues where bowling is the main attraction."}
                   onChange={(e) => handleFieldChange('bowlingFreeFall', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -11022,8 +11764,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingString?.p1 || ''}
+                  rows={4}
+                  value={formData.bowlingString?.p1 !== undefined && formData.bowlingString.p1 !== '' ? formData.bowlingString.p1 : "In a string bowling system, each pin is attached to a high-strength nylon cord at the top. When the ball hits the pins, an overhead motorized unit reels them up and places them cleanly back on the lane pin spots. This setup eliminates 95% of the mechanical jams associated with traditional free-fall pinsetters."}
                   onChange={(e) => handleFieldChange('bowlingString', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -11032,8 +11774,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingString?.p2 || ''}
+                  rows={4}
+                  value={formData.bowlingString?.p2 !== undefined && formData.bowlingString.p2 !== '' ? formData.bowlingString.p2 : "String pinsetters require far less space, dramatically reduced electricity, and minimal maintenance — making them the most cost-effective solution for Family Entertainment Centers (FECs), bars, cafes, resorts, and boutique bowling zones that want high entertainment without dedicated mechanics."}
                   onChange={(e) => handleFieldChange('bowlingString', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -11129,8 +11871,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingRoi?.p1 || ''}
+                  rows={4}
+                  value={formData.bowlingRoi?.p1 !== undefined && formData.bowlingRoi.p1 !== '' ? formData.bowlingRoi.p1 : "Setting up a bowling alley is one of the highest-return commercial investments in the indoor entertainment sector. A typical 4-lane or 6-lane bowling center operating in a mall or commercial complex generates high weekend footfall, repeat group bookings, corporate events, and steady game fee revenues."}
                   onChange={(e) => handleFieldChange('bowlingRoi', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -11139,8 +11881,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingRoi?.p2 || ''}
+                  rows={4}
+                  value={formData.bowlingRoi?.p2 !== undefined && formData.bowlingRoi.p2 !== '' ? formData.bowlingRoi.p2 : "By sourcing refurbished Brunswick equipment through Winera International, your initial capital investment (CapEx) is reduced by up to 50–60% compared to brand new machinery — shortening your payback period down to 14–22 months while enjoying full commercial durability."}
                   onChange={(e) => handleFieldChange('bowlingRoi', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -11197,8 +11939,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingWhyUs?.p1 || ''}
+                  rows={4}
+                  value={formData.bowlingWhyUs?.p1 !== undefined && formData.bowlingWhyUs.p1 !== '' ? formData.bowlingWhyUs.p1 : "With 15+ years of dedicated expertise in bowling equipment sourcing, refurbishment, and installation across India, Winera International provides end-to-end turnkey services — from 2D/3D lane layout planning to final pinsetter calibration."}
                   onChange={(e) => handleFieldChange('bowlingWhyUs', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -11207,8 +11949,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
-                  rows={3}
-                  value={formData.bowlingWhyUs?.p2 || ''}
+                  rows={4}
+                  value={formData.bowlingWhyUs?.p2 !== undefined && formData.bowlingWhyUs.p2 !== '' ? formData.bowlingWhyUs.p2 : "Our pan-India team of certified technicians ensures uninterrupted maintenance, genuine Brunswick replacement spare parts, lane oiling machine supplies, and 24/7 technical assistance so your bowling alley operates seamlessly for decades."}
                   onChange={(e) => handleFieldChange('bowlingWhyUs', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -11441,7 +12183,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <textarea
                   rows={4}
-                  value={formData.aboutWelcome?.desc || ''}
+                  value={formData.aboutWelcome?.desc !== undefined ? formData.aboutWelcome.desc : "Winera International Pvt. Ltd. is a Surat-based B2B leader in indoor amusement and playground solutions. Since 2014, we have been transforming commercial spaces into world-class entertainment destinations, handling everything from design and manufacturing to installation and after-sales support."}
                   onChange={(e) => handleFieldChange('aboutWelcome', 'desc', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -11452,10 +12194,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>Photo Collage Uploads (4 Photos)</h4>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                   {[
-                    { label: 'Main Big Background Photo', field: 'mainImgUrl' },
-                    { label: 'Top Right Small Photo', field: 'topRightImgUrl' },
-                    { label: 'Middle Right Small Photo', field: 'midRightImgUrl' },
-                    { label: 'Bottom Left Small Photo', field: 'bottomLeftImgUrl' }
+                    { label: 'Main Big Background Photo', field: 'mainImgUrl', defaultImg: welcomeWineraImg },
+                    { label: 'Top Right Small Photo', field: 'topRightImgUrl', defaultImg: welcomeWineraImg },
+                    { label: 'Middle Right Small Photo', field: 'midRightImgUrl', defaultImg: welcomeWineraImg },
+                    { label: 'Bottom Left Small Photo', field: 'bottomLeftImgUrl', defaultImg: welcomeWineraImg }
                   ].map((imgItem, iIdx) => (
                     <div key={iIdx} style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
                       <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>{imgItem.label}</label>
@@ -11481,9 +12223,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             style={{ display: 'none' }}
                           />
                         </label>
-                        {formData.aboutWelcome?.[imgItem.field] && (
-                          <img src={formData.aboutWelcome[imgItem.field]} alt="" style={{ width: '40px', height: '30px', borderRadius: '6px', objectFit: 'cover', border: '1.5px solid #38bdf8' }} />
-                        )}
+                        <img src={formData.aboutWelcome?.[imgItem.field] || imgItem.defaultImg} alt="" style={{ width: '40px', height: '30px', borderRadius: '6px', objectFit: 'cover', border: '1.5px solid #38bdf8' }} />
                       </div>
                     </div>
                   ))}
@@ -11505,7 +12245,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Box 1 Description</label>
                     <textarea
                       rows={3}
-                      value={formData.aboutWelcome?.box1Desc || ''}
+                      value={formData.aboutWelcome?.box1Desc !== undefined ? formData.aboutWelcome.box1Desc : "At Winera International, Quality Is Key. Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety. We Don't Just Build Equipment; We Build Experiences You Can Trust."}
                       onChange={(e) => handleFieldChange('aboutWelcome', 'box1Desc', e.target.value)}
                       style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
                     />
@@ -11522,7 +12262,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Box 2 Description</label>
                     <textarea
                       rows={3}
-                      value={formData.aboutWelcome?.box2Desc || ''}
+                      value={formData.aboutWelcome?.box2Desc !== undefined ? formData.aboutWelcome.box2Desc : "At Winera International, We Prioritize Your Satisfaction. From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step."}
                       onChange={(e) => handleFieldChange('aboutWelcome', 'box2Desc', e.target.value)}
                       style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
                     />
@@ -11679,7 +12419,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Mission Statement</label>
                   <textarea
                     rows={3}
-                    value={formData.aboutMissionVision?.missionText || ''}
+                    value={formData.aboutMissionVision?.missionText !== undefined ? formData.aboutMissionVision.missionText : "We deliver premium-quality game zone and indoor playground solutions to B2B clients across India combining expert design, international equipment, and seamless project execution to create entertainment spaces that last."}
                     onChange={(e) => handleFieldChange('aboutMissionVision', 'missionText', e.target.value)}
                     style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
@@ -11702,7 +12442,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Vision Statement</label>
                   <textarea
                     rows={3}
-                    value={formData.aboutMissionVision?.visionText || ''}
+                    value={formData.aboutMissionVision?.visionText !== undefined ? formData.aboutMissionVision.visionText : "To be India's most trusted partner in building world-class indoor entertainment destinations where every space we touch becomes a thriving hub of joy, play, and business success."}
                     onChange={(e) => handleFieldChange('aboutMissionVision', 'visionText', e.target.value)}
                     style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
@@ -11778,9 +12518,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', marginBottom: '14px' }}>3 Bottom Cards (Sales, Service, Satisfaction)</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                   {[
-                    { defaultTitle: "Sales", defaultDesc: "From the moment you choose Winera International, our dedicated sales team works closely with you to discuss your game zone needs in detail." },
-                    { defaultTitle: "Service", defaultDesc: "Our professional installation team takes complete ownership of your project. We ensure smooth assembly, safety compliance, and zero compromise on quality." },
-                    { defaultTitle: "Satisfaction", defaultDesc: "Our team manages everything from delivery to live handover. Every game zone we install is set up with precision and care." }
+                    { defaultTitle: "Sales", defaultDesc: "From the moment you choose Winera International, our dedicated sales team works closely with you to finalize the right game zone solution for your space and budget. We're an ROI-focused partner. Before any project begins, every client receives a complete ROI report covering projected footfall, revenue potential, and payback period. We handle product selection, project scoping, pricing, and documentation, making your buying experience smooth, transparent, and completely hassle-free." },
+                    { defaultTitle: "Service", defaultDesc: "Our professional installation team takes complete ownership of your project from equipment delivery and assembly to safety testing and final handover. Every game zone we install is set up with precision, care, and zero compromise on quality standards so your entertainment space is ready to welcome visitors from day one." },
+                    { defaultTitle: "Satisfaction", defaultDesc: "At Winera International, a completed project is just the beginning of our relationship. We measure our success by yours whether it's children laughing in our soft play zones, families enjoying our bowling alleys, or teenagers competing on our arcade machines. Your visitors' joy and your business's growth are what drive everything we do." }
                   ].map((cDef, cIdx) => {
                     const cardsList = Array.isArray(formData.aboutWhyUsDetail?.cards) ? formData.aboutWhyUsDetail.cards : [];
                     const currentCard = cardsList[cIdx] || cDef;
@@ -11791,7 +12531,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <input
                           type="text"
                           placeholder="Title"
-                          value={currentCard.title || ''}
+                          value={currentCard.title || cDef.defaultTitle}
                           onChange={(e) => {
                             const newCards = [...cardsList];
                             newCards[cIdx] = { ...(newCards[cIdx] || cDef), title: e.target.value };
@@ -11800,12 +12540,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               aboutWhyUsDetail: { ...(prev.aboutWhyUsDetail || {}), cards: newCards }
                             }));
                           }}
-                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}
                         />
                         <textarea
-                          rows={2}
+                          rows={3}
                           placeholder="Description"
-                          value={currentCard.desc || ''}
+                          value={currentCard.desc || cDef.defaultDesc}
                           onChange={(e) => {
                             const newCards = [...cardsList];
                             newCards[cIdx] = { ...(newCards[cIdx] || cDef), desc: e.target.value };
@@ -11814,7 +12554,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               aboutWhyUsDetail: { ...(prev.aboutWhyUsDetail || {}), cards: newCards }
                             }));
                           }}
-                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
                         />
                       </div>
                     );
@@ -11936,9 +12676,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ display: 'none' }}
                       />
                     </label>
-                    {formData.founder?.image && (
-                      <img src={formData.founder.image} alt="Founder Preview" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #38bdf8' }} />
-                    )}
+                    <img src={formData.founder?.image || founderUnnit} alt="Founder Preview" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #38bdf8' }} />
                   </div>
                 </div>
 
@@ -11948,7 +12686,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Founder Name</label>
                     <input
                       type="text"
-                      value={formData.founder?.name || ''}
+                      value={formData.founder?.name || 'Mr. Unnit Jogani'}
                       onChange={(e) => setFormData(prev => ({ ...prev, founder: { ...(prev.founder || {}), name: e.target.value } }))}
                       placeholder="e.g. Mr. Unnit Jogani"
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px' }}
@@ -11958,7 +12696,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Years of Experience</label>
                     <input
                       type="text"
-                      value={formData.founder?.yearsOfExperience || ''}
+                      value={formData.founder?.yearsOfExperience || '14+'}
                       onChange={(e) => setFormData(prev => ({ ...prev, founder: { ...(prev.founder || {}), yearsOfExperience: e.target.value } }))}
                       placeholder="e.g. 14+"
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px' }}
@@ -11971,7 +12709,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>LinkedIn Profile Link</label>
                   <input
                     type="text"
-                    value={formData.founder?.linkedinUrl || ''}
+                    value={formData.founder?.linkedinUrl || 'https://linkedin.com'}
                     onChange={(e) => setFormData(prev => ({ ...prev, founder: { ...(prev.founder || {}), linkedinUrl: e.target.value } }))}
                     placeholder="https://linkedin.com/in/..."
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '14px' }}
@@ -11983,7 +12721,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Founder's About Details</label>
                   <textarea
                     rows={5}
-                    value={formData.founder?.aboutDetails || ''}
+                    value={formData.founder?.aboutDetails !== undefined ? formData.founder.aboutDetails : "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd. One of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing WinEra in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader successfully delivering projects across India with an uncompromising focus on quality, safety, and client satisfaction."}
                     onChange={(e) => setFormData(prev => ({ ...prev, founder: { ...(prev.founder || {}), aboutDetails: e.target.value } }))}
                     placeholder="Enter founder biography & details..."
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
@@ -12009,6 +12747,186 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     Save Founder Profile
                   </button>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* CONTACT INFO & FORM SECTION */}
+          {activeSection === 'contactPage' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Contact Us Info & Form Details</h3>
+              
+              {/* Heading Title & Subtext */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Main Section Title (Use *word* for Dark Text accent)
+                </label>
+                <input
+                  type="text"
+                  value={formData.contactPage?.title || 'Get in Touch with *Winera International*'}
+                  onChange={(e) => handleFieldChange('contactPage', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Main Description Paragraph
+                </label>
+                <textarea
+                  rows={4}
+                  value={formData.contactPage?.desc !== undefined ? formData.contactPage.desc : "Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations."}
+                  onChange={(e) => handleFieldChange('contactPage', 'desc', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                />
+              </div>
+
+              {/* Call Us & Email Cards */}
+              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>Call Us & Email Contact Cards</h4>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                  <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Call Card Title</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.callTitle || 'CALL US DIRECTLY'}
+                      onChange={(e) => handleFieldChange('contactPage', 'callTitle', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}
+                    />
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Phone Number 1</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.phone1 || '+91 94289 89488'}
+                      onChange={(e) => handleFieldChange('contactPage', 'phone1', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}
+                    />
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Phone Number 2</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.phone2 || '+91 95123 56766'}
+                      onChange={(e) => handleFieldChange('contactPage', 'phone2', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                    />
+                  </div>
+
+                  <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Email Card Title</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.emailTitle || 'EMAIL OUR TEAM'}
+                      onChange={(e) => handleFieldChange('contactPage', 'emailTitle', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}
+                    />
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Support Email Address</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.email || 'info@winera.in'}
+                      onChange={(e) => handleFieldChange('contactPage', 'email', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Form Title & Submit Button Text */}
+              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>Inquiry Form Settings</h4>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Form Card Title</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.formTitle || 'Let’s Start Your Project'}
+                      onChange={(e) => handleFieldChange('contactPage', 'formTitle', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Submit Button Text</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.formBtnText || 'Request Free Consultation'}
+                      onChange={(e) => handleFieldChange('contactPage', 'formBtnText', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Global Locations (Surat HQ & China Facility) */}
+              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>Global Locations (Surat HQ & China Facility)</h4>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                  <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Location 1 Name</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.hq1Name || 'Surat Headquarters (India)'}
+                      onChange={(e) => handleFieldChange('contactPage', 'hq1Name', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}
+                    />
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Location 1 Badge</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.hq1Badge || 'Corporate & Sales Office'}
+                      onChange={(e) => handleFieldChange('contactPage', 'hq1Badge', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '600', marginBottom: '6px' }}
+                    />
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Location 1 Full Address</label>
+                    <textarea
+                      rows={3}
+                      value={formData.contactPage?.hq1Address !== undefined ? formData.contactPage.hq1Address : "Winera International Pvt. Ltd.\nSurat, Gujarat, India.\nHotline: +91 94289 89488 / +91 95123 56766"}
+                      onChange={(e) => handleFieldChange('contactPage', 'hq1Address', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                    />
+                  </div>
+
+                  <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Location 2 Name</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.hq2Name || 'China Manufacturing Facility'}
+                      onChange={(e) => handleFieldChange('contactPage', 'hq2Name', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}
+                    />
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Location 2 Badge</label>
+                    <input
+                      type="text"
+                      value={formData.contactPage?.hq2Badge || 'Sourcing & Assembly Hub'}
+                      onChange={(e) => handleFieldChange('contactPage', 'hq2Badge', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '600', marginBottom: '6px' }}
+                    />
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Location 2 Full Address</label>
+                    <textarea
+                      rows={3}
+                      value={formData.contactPage?.hq2Address !== undefined ? formData.contactPage.hq2Address : "Winera International Global Assembly Base\nGuangzhou / Panyu Amusement Equipment Zone,\nGuangdong Province, China."}
+                      onChange={(e) => handleFieldChange('contactPage', 'hq2Address', e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Google Map iFrame Embed URL */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Google Map Embed iFrame Source URL (src)
+                </label>
+                <input
+                  type="text"
+                  value={formData.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d238130.15372332616!2d72.68220805!3d21.1591425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04e59411d1563%3A0xfe4558290938b042!2sSurat%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
+                  onChange={(e) => handleFieldChange('contactPage', 'mapUrl', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontWeight: '500' }}
+                />
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('contactPage', formData.contactPage || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Contact Page Details
+                </button>
               </div>
             </div>
           )}
@@ -12077,6 +12995,256 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Save Hero Banner
                     </button>
                   </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* PROJECTS PAGE SECTION TITLE */}
+          {activeSection === 'projectHeader' && (() => {
+            const currentSec = formData.projectHeader || { title: "Crafting *India's Best Play Destinations*" };
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Projects Section Heading Title</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Main Section Title (Use *word* for Cyan accent color)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : "Crafting *India's Best Play Destinations*"}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectHeader: { ...(prev.projectHeader || {}), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700' }}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('projectHeader', formData.projectHeader || { title: "Crafting *India's Best Play Destinations*" })}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Section Title
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* MANAGE PORTFOLIO PROJECTS LIST & CATEGORIES SECTION */}
+          {activeSection === 'projectItems' && (() => {
+            const categoriesList = formData.projectCategories || [
+              "Game Zones",
+              "Bowling",
+              "Soft Play",
+              "Arcade & VR",
+              "Hospitality"
+            ];
+
+            const rawList = Array.isArray(formData.projectItems) && formData.projectItems.length > 0 ? formData.projectItems : [
+              { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: projectImage01, metaTitle: 'FifthAlley Sport Bowling Setup in Surat | Winera International', metaDescription: 'Explore FifthAlley Sport Bowling in Surat by Winera International — a 3,000 sq. ft. complete bowling alley setup delivered from empty space to ready venue.' },
+              { id: 'hulaboo', name: 'Hulaboo Game Zone', category: 'Game Zones', city: 'Surat', state: 'Gujarat', area: '27,000 sq. ft.', type: 'Game Zone Setup', slug: 'hulaboo', img: projHulaboo, metaTitle: 'Hulaboo Game Zone Setup in Surat | Winera International', metaDescription: 'Discover how Winera International built Hulaboo, a 27,000 sq. ft. indoor game zone setup in Surat with multi-age attractions and turnkey execution.' },
+              { id: 'playzonia', name: 'Playzonia Kids Play Area', category: 'Soft Play', city: 'Surat', state: 'Gujarat', area: '1,500 sq. ft.', type: 'Soft Play Area', slug: 'playzonia', img: projSoft1, metaTitle: 'Playzonia Kids Soft Play Area in Surat | Winera International', metaDescription: 'See how Winera International designed & installed Playzonia, a 1,500 sq. ft. safe and playful soft play area for young children in Surat.' },
+              { id: 'lanex', name: 'LaneX Bowling Alley', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '4,800 sq. ft.', type: 'Bowling Alley', slug: 'lanex-bowling-alley', img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80', metaTitle: 'Bowling Alley Setup in Surat – LaneX at AR Mall | Winera International', metaDescription: 'See how Winera International built LaneX Bowling Alley in Surat. A Complete 4,800 sq. ft. bowling setup, planned and installed from empty floor to opening day.' },
+              { id: 'funfair', name: 'Funfair Game Zone', category: 'Game Zones', city: 'Surat', state: 'Gujarat', area: '10,000 sq. ft.', type: 'Game Zone', slug: 'funfair', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80', metaTitle: 'Funfair Game Zone Setup in Surat | Winera International', metaDescription: 'See how Winera International built Funfair a complete 10,000 sq. ft. game zone in Surat, planned and set up from start to finish, ready to welcome families.' }
+            ];
+
+            const fifthAlleyItem = { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: projectImage01 };
+            const hasFA = rawList.some(p => p.slug === "fifthalley-sport-bowling" || (p.name || "").toLowerCase().includes("fifthalley"));
+            const currentList = hasFA ? rawList : [fifthAlleyItem, ...rawList];
+
+            const filterCat = adminProjectFilterCat || "All";
+            const filteredDisplayList = filterCat === "All"
+              ? currentList
+              : currentList.filter(item => (item.category || "").toLowerCase().includes(filterCat.toLowerCase()));
+
+            return (
+              <div className="winera-admin-card" style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                
+                {/* Header & Add Project Button */}
+                <div className="winera-admin-flex-header" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
+                  <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Categories & Portfolio Projects Manager</h3>
+                    <p style={{ fontSize: '12.5px', color: '#64748b', margin: '4px 0 0' }}>Manage category tabs, filter by category, add new projects, or edit case study details.</p>
+                  </div>
+                  <button
+                    onClick={() => openModal('add')}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '14px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.3)' }}
+                  >
+                    <Plus style={{ width: '16px', height: '16px' }} /> Add New Project Card
+                  </button>
+                </div>
+
+                {/* CATEGORY FILTER & MANAGEMENT BAR */}
+                <div style={{ background: '#f8fafc', padding: '18px 22px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Filter Category Table:</label>
+                      <select
+                        value={filterCat}
+                        onChange={(e) => setAdminProjectFilterCat(e.target.value)}
+                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700', background: '#ffffff', color: '#0284c7', maxWidth: '100%' }}
+                      >
+                        <option value="All">All Categories ({currentList.length})</option>
+                        {categoriesList.map((cat, idx) => {
+                          const count = currentList.filter(item => (item.category || "").toLowerCase().includes(cat.toLowerCase())).length;
+                          return (
+                            <option key={idx} value={cat}>{cat} ({count})</option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
+                    {/* Add New Category Control */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>
+                      <input
+                        type="text"
+                        placeholder="Type new category name..."
+                        id="newCatInput"
+                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', width: '220px', maxWidth: '100%' }}
+                      />
+                      <button
+                        onClick={() => {
+                          const inp = document.getElementById('newCatInput');
+                          if (inp && inp.value.trim()) {
+                            const val = inp.value.trim();
+                            if (!categoriesList.includes(val)) {
+                              const newCats = [...categoriesList, val];
+                              setFormData(prev => ({ ...prev, projectCategories: newCats }));
+                              persistSectionToDatabase('projectCategories', newCats);
+                            }
+                            inp.value = '';
+                          }
+                        }}
+                        style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        <Plus style={{ width: '15px', height: '15px' }} /> Add Category
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Active Categories List with 1-Click Delete (✕) Buttons */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center', paddingTop: '10px', borderTop: '1px solid #e2e8f0' }}>
+                    <span style={{ fontSize: '12px', fontWeight: '800', color: '#64748b', marginRight: '4px' }}>Active Categories (Click ✕ to delete):</span>
+                    {categoriesList.map((cat, cIdx) => (
+                      <span key={cIdx} style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        background: '#ffffff',
+                        border: '1.5px solid #cbd5e1',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12.5px',
+                        fontWeight: '700',
+                        color: '#0f172a',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                      }}>
+                        {cat}
+                        <button
+                          title={`Delete '${cat}' category`}
+                          onClick={() => {
+                            setDeleteConfirmModal({
+                              title: 'Delete Category?',
+                              message: `Are you sure you want to delete category '${cat}'? It will be removed from both Admin and User-side site.`,
+                              onConfirm: () => {
+                                const updatedCats = categoriesList.filter(c => c !== cat);
+                                setFormData(prev => ({ ...prev, projectCategories: updatedCats }));
+                                persistSectionToDatabase('projectCategories', updatedCats);
+                              }
+                            });
+                          }}
+                          style={{
+                            background: '#fee2e2',
+                            color: '#ef4444',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '18px',
+                            height: '18px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            padding: 0,
+                            fontSize: '10px',
+                            fontWeight: '900'
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* PROJECTS LIST TABLE */}
+                <div style={{ overflowX: 'auto', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
+                    <thead>
+                      <tr style={{ background: '#0F172B', color: '#ffffff', borderBottom: '2px solid #1e293b' }}>
+                        <th style={{ padding: '14px 18px', fontWeight: '800' }}>#</th>
+                        <th style={{ padding: '14px 18px', fontWeight: '800' }}>Photo</th>
+                        <th style={{ padding: '14px 18px', fontWeight: '800' }}>Project Name</th>
+                        <th style={{ padding: '14px 18px', fontWeight: '800' }}>Category</th>
+                        <th style={{ padding: '14px 18px', fontWeight: '800' }}>Location</th>
+                        <th style={{ padding: '14px 18px', fontWeight: '800' }}>Total Area</th>
+                        <th style={{ padding: '14px 18px', fontWeight: '800' }}>Slug URL</th>
+                        <th style={{ padding: '14px 18px', fontWeight: '800', textAlign: 'right' }}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredDisplayList.map((item, idx) => (
+                        <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
+                          <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
+                          <td style={{ padding: '14px 18px' }}>
+                            {item.img || item.imageUrl ? (
+                              <img src={item.img || item.imageUrl} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
+                            ) : (
+                              <span style={{ color: '#94a3b8', fontSize: '12px' }}>No image</span>
+                            )}
+                          </td>
+                          <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.name || 'Unnamed Project'}</td>
+                          <td style={{ padding: '14px 18px', fontWeight: '700', color: '#38bdf8' }}>{item.category || 'Game Zones'}</td>
+                          <td style={{ padding: '14px 18px', fontWeight: '600', color: '#475569' }}>{item.city ? `${item.city}${item.state ? `, ${item.state}` : ''}` : 'N/A'}</td>
+                          <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b' }}>{item.area || 'N/A'}</td>
+                          <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b', fontSize: '12px' }}>/project/{item.slug || 'detail'}</td>
+                          <td style={{ padding: '14px 18px', textAlign: 'right' }}>
+                            <button
+                              onClick={() => openModal('edit', idx, item)}
+                              style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
+                            >
+                              <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit Details
+                            </button>
+                            <button
+                              onClick={() => {
+                                setDeleteConfirmModal({
+                                  title: 'Delete Project Card?',
+                                  message: `Are you sure you want to delete project '${item.name || 'this item'}'?`,
+                                  onConfirm: () => {
+                                    const newList = currentList.filter((_, i) => i !== idx);
+                                    setFormData(prev => ({ ...prev, projectItems: newList }));
+                                    persistSectionToDatabase('projectItems', newList);
+                                  }
+                                });
+                              }}
+                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <button
+                    onClick={() => persistSectionToDatabase('projectItems', formData.projectItems || currentList)}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.3)' }}
+                  >
+                    Save All Projects List
+                  </button>
                 </div>
               </div>
             );
@@ -12678,45 +13846,66 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             );
           })()}
 
-          {/* PROJECT SEO SECTION */}
-          {activeSection === 'projectSeo' && (() => {
-            const currentSec = formData.projectSeo || defaultProjectSeo;
+          {/* BOTTOM CTA GRAPHIC BANNER SECTION */}
+          {activeSection === 'projectCta' && (() => {
+            const currentSec = formData.projectCta || { bgUrl: projectLastBg, buttonLink: 'https://wa.me/919428989488' };
+            const bgImg = currentSec.bgUrl || projectLastBg;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Projects Page SEO Settings</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Bottom CTA Graphic Banner Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>SEO Meta Title</label>
-                    <input
-                      type="text"
-                      value={currentSec.title !== undefined ? currentSec.title : defaultProjectSeo.title}
-                      onChange={(e) => setFormData(prev => ({ ...prev, projectSeo: { ...(prev.projectSeo || defaultProjectSeo), title: e.target.value } }))}
-                      placeholder="Our Projects | Turnkey Game Zone & Entertainment Venues by Winera International"
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                    />
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Graphic Banner Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={bgImg} alt="CTA Banner Preview" style={{ width: '180px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), bgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Banner
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>SEO Meta Description</label>
-                    <textarea
-                      rows={4}
-                      value={currentSec.description !== undefined ? currentSec.description : defaultProjectSeo.description}
-                      onChange={(e) => setFormData(prev => ({ ...prev, projectSeo: { ...(prev.projectSeo || defaultProjectSeo), description: e.target.value } }))}
-                      placeholder="Enter meta description for projects page..."
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Banner Click Target / WhatsApp URL</label>
+                    <input
+                      type="text"
+                      value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : 'https://wa.me/919428989488'}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), buttonLink: e.target.value } }))}
+                      placeholder="https://wa.me/919428989488"
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                     />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
-                      onClick={() => persistSectionToDatabase('projectSeo', formData.projectSeo || defaultProjectSeo)}
+                      onClick={() => persistSectionToDatabase('projectCta', formData.projectCta || { bgUrl: projectLastBg, buttonLink: 'https://wa.me/919428989488' })}
                       style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
                     >
-                      Save SEO Settings
+                      Save CTA Banner
                     </button>
                   </div>
                 </div>
               </div>
             );
           })()}
+
+
 
           {/* SAFETY HERO BANNER FORM */}
           {activeSection === 'safetyHero' && (() => {
@@ -13461,43 +14650,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             );
           })()}
 
-          {/* SAFETY SEO FORM */}
-          {activeSection === 'safetySeo' && (() => {
-            const currentSec = formData.safetySeo || defaultSafetySeo;
-            return (
-              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Safety Standards SEO Settings</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>SEO Meta Title</label>
-                    <input
-                      type="text"
-                      value={currentSec.pageTitle !== undefined ? currentSec.pageTitle : defaultSafetySeo.pageTitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, safetySeo: { ...(prev.safetySeo || defaultSafetySeo), pageTitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>SEO Meta Description</label>
-                    <textarea
-                      rows={4}
-                      value={currentSec.metaDescription !== undefined ? currentSec.metaDescription : defaultSafetySeo.metaDescription}
-                      onChange={(e) => setFormData(prev => ({ ...prev, safetySeo: { ...(prev.safetySeo || defaultSafetySeo), metaDescription: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                    />
-                  </div>
-                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                    <button
-                      onClick={() => persistSectionToDatabase('safetySeo', formData.safetySeo || defaultSafetySeo)}
-                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
-                    >
-                      Save Safety SEO Settings
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })()}
+
 
           {/* TRAMPOLINE PARK HERO BANNER FORM */}
           {activeSection === 'trampolineHero' && (() => {
@@ -15308,34 +16461,163 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             );
           })()}
 
-          {/* ROI SEO FORM */}
-          {activeSection === 'roiSeo' && (() => {
-            const currentSec = formData.roiSeo || defaultRoiSeo;
+
+
+          {/* UNIVERSAL SEO META TITLE & DESCRIPTION FORM */}
+          {activeSection && activeSection.endsWith('Seo') && (() => {
+            const defaultSeoMap = {
+              homeSeo: {
+                pageTitle: "Game Zone Equipment Manufacturer in India | Winera International",
+                metaDescription: "Winera International is your trusted Game Zone Equipment Manufacturer and Indoor Play Equipment Manufacturer in India since 2014. Get Amazing deals!"
+              },
+              blogSeo: {
+                pageTitle: "Winera International Blog | Winera International",
+                metaDescription: "Explore expert insights, trends, and ideas from Winera International to elevate your entertainment venue and create unforgettable guest experiences."
+              },
+              aboutSeo: {
+                pageTitle: "The Right Choice for Your Business | Winera International",
+                metaDescription: "Winera delivers more than promises trusted expertise, customer care, and quality solutions that set us apart. Discover why clients choose us."
+              },
+              arcadeSeo: {
+                pageTitle: "Arcade Games Manufacturer in India | Winera International",
+                metaDescription: "Looking for arcade game machines in India? Winera International offers redemption games, kiddie rides, racing simulators, and more at direct factory prices."
+              },
+              bowlingSeo: {
+                pageTitle: "Bowling Alley Manufacturer in India | Winera International",
+                metaDescription: "Looking for a bowling alley manufacturer in India? Winera International supplies premium new and refurbished Brunswick systems, with 15+ years of expertise."
+              },
+              softplaySeo: {
+                pageTitle: "Top Soft Play Equipment Manufacturers in India | Winera International",
+                metaDescription: "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget."
+              },
+              trampolineSeo: {
+                pageTitle: "Trampoline Park Manufacturer in India | Winera International",
+                metaDescription: "Looking for a trampoline park manufacturer in India? Winera International designs and installs custom trampoline parks to your space, vision, and budget."
+              },
+              vrSeo: {
+                pageTitle: "VR Gaming Machine Manufacturer in India | Winera International",
+                metaDescription: "Winera International is a leading VR gaming machine manufacturer in India, offering immersive virtual reality attractions built for arcades and FEC centers."
+              },
+              bumpercarSeo: {
+                pageTitle: "Bumper Car Manufacturer in India | Winera International",
+                metaDescription: "As a leading bumper car manufacturer in India, Winera International builds safe, durable, and thrilling bumper cars for amusement parks and FEC centers."
+              },
+              bumperSeo: {
+                pageTitle: "Bumper Car Manufacturer in India | Winera International",
+                metaDescription: "As a leading bumper car manufacturer in India, Winera International builds safe, durable, and thrilling bumper cars for amusement parks and FEC centers."
+              },
+              amusementSeo: {
+                pageTitle: "Amusement Park Manufacturer in India | Winera International",
+                metaDescription: "Winera International is a premier amusement park manufacturer in India, delivering innovative, safe rides and equipment tailored to your game zone and venue space."
+              },
+              arSeo: {
+                pageTitle: "AR Games Supplier in India | Winera International",
+                metaDescription: "Winera International is a leading AR games supplier in India, sourcing and installing sports simulators, interactive floors, and immersive gaming attractions."
+              },
+              hypergridSeo: {
+                pageTitle: "Hypergrid Game Supplier in India | Winera International",
+                metaDescription: "Winera International is a trusted Hypergrid game supplier in India, installing commercial interactive LED floor systems for malls, FECs, and trampoline parks."
+              },
+              lasertagSeo: {
+                pageTitle: "Laser Tag Equipment Supplier in India | Winera International",
+                metaDescription: "Want to add laser tag or laser spy to your venue? Winera International handles the full setup, from arena design and gear to software and staff training."
+              },
+              safetySeo: {
+                pageTitle: "Where Game Zone Safety Comes First | Winera International",
+                metaDescription: "Safety comes first at Winera International. Every ride, play structure, and machine we install meets global safety standards, so your venue opens ready to run."
+              },
+              roiSeo: {
+                pageTitle: "Know Your Game Zone ROI Before You Invest | Winera International",
+                metaDescription: "Opening a game zone is easy, making it profitable is a system. Winera International models your ROI around your space and budget before you invest a rupee."
+              },
+              projectSeo: {
+                pageTitle: "Our Projects | Game Zones Built | Winera International",
+                metaDescription: "Explore Winera International's completed projects across India. Real play destinations we've designed, built, and installed for venues of every size and type."
+              },
+              privacySeo: {
+                pageTitle: "Winera International Privacy Policy for Game Zone Solutions",
+                metaDescription: "Learn how Winera International collects, uses, and protects the information you share when enquiring about our game zone equipment and setup services in India."
+              },
+              termsSeo: {
+                pageTitle: "Terms of Service | Winera International",
+                metaDescription: "Read Winera International's Terms of Service outlining your rights, responsibilities, and guidelines for using our game zone equipment and setup in India."
+              },
+              contactSeo: {
+                pageTitle: "Contact Winera International | Game Zone Equipment Setup",
+                metaDescription: "Contact Winera International for game zone equipment setup, bowling alley installation, soft play, trampoline park & VR gaming inquiries in India."
+              }
+            };
+
+            const defaultObj = defaultSeoMap[activeSection] || { pageTitle: '', metaDescription: '' };
+            const currentSec = formData[activeSection] || defaultObj;
+
+            const pageTitleVal = currentSec.pageTitle !== undefined ? currentSec.pageTitle : (currentSec.title !== undefined ? currentSec.title : defaultObj.pageTitle);
+            const metaDescVal = currentSec.metaDescription !== undefined ? currentSec.metaDescription : (currentSec.description !== undefined ? currentSec.description : defaultObj.metaDescription);
+
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>SEO Meta Title & Description</h3>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>
+                    SEO Meta Title & Description Settings ({activeSection})
+                  </h3>
+                  <span style={{ fontSize: '12px', background: '#e0f2fe', color: '#0284c7', padding: '4px 12px', borderRadius: '20px', fontWeight: '800' }}>
+                    Google Search Preview
+                  </span>
+                </div>
+
+                {/* Google Search Result Live Preview Card */}
+                <div style={{ background: '#f8fafc', borderRadius: '16px', padding: '16px 20px', marginBottom: '24px', border: '1px solid #cbd5e1' }}>
+                  <div style={{ fontSize: '12px', color: '#475569', marginBottom: '4px' }}>https://winera.in › ...</div>
+                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#1a0dab', marginBottom: '6px', lineHeight: 1.3, cursor: 'pointer' }}>
+                    {pageTitleVal || 'Page Title Tag Placeholder'}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#4d5156', lineHeight: 1.5 }}>
+                    {metaDescVal || 'Meta Description Tag Placeholder'}
+                  </div>
+                </div>
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Page Title Tag</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>Page Title Tag (&lt;title&gt;)</label>
+                      <span style={{ fontSize: '11px', color: (pageTitleVal || '').length > 60 ? '#ef4444' : '#64748b' }}>{(pageTitleVal || '').length} / 60 characters</span>
+                    </div>
                     <input
                       type="text"
-                      value={currentSec.pageTitle !== undefined ? currentSec.pageTitle : defaultRoiSeo.pageTitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, roiSeo: { ...(prev.roiSeo || defaultRoiSeo), pageTitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      value={pageTitleVal || ''}
+                      onChange={(e) => setFormData(prev => ({
+                        ...prev,
+                        [activeSection]: {
+                          ...(prev[activeSection] || defaultObj),
+                          pageTitle: e.target.value,
+                          title: e.target.value
+                        }
+                      }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontFamily: 'inherit' }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Meta Description Tag</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>Meta Description Tag (&lt;meta name="description"&gt;)</label>
+                      <span style={{ fontSize: '11px', color: (metaDescVal || '').length > 160 ? '#ef4444' : '#64748b' }}>{(metaDescVal || '').length} / 160 characters</span>
+                    </div>
                     <textarea
                       rows={4}
-                      value={currentSec.metaDescription !== undefined ? currentSec.metaDescription : defaultRoiSeo.metaDescription}
-                      onChange={(e) => setFormData(prev => ({ ...prev, roiSeo: { ...(prev.roiSeo || defaultRoiSeo), metaDescription: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      value={metaDescVal || ''}
+                      onChange={(e) => setFormData(prev => ({
+                        ...prev,
+                        [activeSection]: {
+                          ...(prev[activeSection] || defaultObj),
+                          metaDescription: e.target.value,
+                          description: e.target.value
+                        }
+                      }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6, fontFamily: 'inherit' }}
                     />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
-                      onClick={() => persistSectionToDatabase('roiSeo', formData.roiSeo || defaultRoiSeo)}
+                      onClick={() => persistSectionToDatabase(activeSection, formData[activeSection] || defaultObj)}
                       style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
                     >
                       Save SEO Settings
@@ -15346,46 +16628,240 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             );
           })()}
 
-          {/* TRAMPOLINE SEO FORM */}
-          {activeSection === 'trampolineSeo' && (() => {
-            const currentSec = formData.trampolineSeo || defaultTrampolineSeo;
+          {activeSection === 'blogHero' && (() => {
+            const currentSec = formData.blogHero || defaultBlogHero;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>SEO Meta Title & Description</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Blog Hero Banner</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Page Title Tag</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Text</label>
                     <input
                       type="text"
-                      value={currentSec.pageTitle !== undefined ? currentSec.pageTitle : defaultTrampolineSeo.pageTitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineSeo: { ...(prev.trampolineSeo || defaultTrampolineSeo), pageTitle: e.target.value } }))}
+                      value={currentSec.breadcrumbText !== undefined ? currentSec.breadcrumbText : defaultBlogHero.breadcrumbText}
+                      onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), breadcrumbText: e.target.value } }))}
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Meta Description Tag</label>
-                    <textarea
-                      rows={4}
-                      value={currentSec.metaDescription !== undefined ? currentSec.metaDescription : defaultTrampolineSeo.metaDescription}
-                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineSeo: { ...(prev.trampolineSeo || defaultTrampolineSeo), metaDescription: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                    />
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image URL</label>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl !== undefined ? currentSec.bgUrl : defaultBlogHero.bgUrl}
+                        onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), bgUrl: e.target.value } }))}
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                        <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            if (e.target.files?.[0]) {
+                              const res = await uploadImageFile(e.target.files[0], admin.token);
+                              setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
-                      onClick={() => persistSectionToDatabase('trampolineSeo', formData.trampolineSeo || defaultTrampolineSeo)}
+                      onClick={() => persistSectionToDatabase('blogHero', formData.blogHero || defaultBlogHero)}
                       style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
                     >
-                      Save SEO Settings
+                      Save Hero Banner
                     </button>
                   </div>
                 </div>
               </div>
             );
           })()}
+
+          {activeSection === 'blogPosts' && (() => {
+            const postsList = Array.isArray(formData.blogPosts) ? formData.blogPosts : defaultBlogPosts;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Manage All Blog Posts ({postsList.length})</h3>
+                  <button
+                    onClick={() => {
+                      const newPost = {
+                        id: Date.now(),
+                        title: "Soft Play vs Trampoline Park: Which",
+                        subtitle: "Is Better for Your Space?",
+                        line1: "Soft play or trampoline park? Discover",
+                        line2: "the key differences in investment, space",
+                        line3: "requirements, safety, and revenue.....",
+                        date: "Aug 22, 2026",
+                        image: "/src/assets/blog-images.png"
+                      };
+                      setFormData(prev => ({
+                        ...prev,
+                        blogPosts: [...(Array.isArray(prev.blogPosts) ? prev.blogPosts : defaultBlogPosts), newPost]
+                      }));
+                    }}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#0284c7', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                  >
+                    <Plus style={{ width: '16px', height: '16px' }} />
+                    Add New Blog Post
+                  </button>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  {postsList.map((post, idx) => (
+                    <div key={post.id || idx} style={{ background: '#f8fafc', borderRadius: '16px', padding: '20px', border: '1px solid #cbd5e1', position: 'relative' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                        <span style={{ fontSize: '14px', fontWeight: '900', color: '#0ea5e9' }}>Blog #{idx + 1}</span>
+                        <button
+                          onClick={() => {
+                            const updated = postsList.filter((_, i) => i !== idx);
+                            setFormData(prev => ({ ...prev, blogPosts: updated }));
+                          }}
+                          style={{ background: '#fee2e2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontSize: '12px', fontWeight: '800', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <Trash2 style={{ width: '14px', height: '14px' }} />
+                          Delete Post
+                        </button>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Title Line 1</label>
+                          <input
+                            type="text"
+                            value={post.title || ''}
+                            onChange={(e) => {
+                              const updated = [...postsList];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              setFormData(prev => ({ ...prev, blogPosts: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Title Subtitle Line 2</label>
+                          <input
+                            type="text"
+                            value={post.subtitle || ''}
+                            onChange={(e) => {
+                              const updated = [...postsList];
+                              updated[idx] = { ...updated[idx], subtitle: e.target.value };
+                              setFormData(prev => ({ ...prev, blogPosts: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Excerpt Line 1</label>
+                          <input
+                            type="text"
+                            value={post.line1 || post.excerpt || ''}
+                            onChange={(e) => {
+                              const updated = [...postsList];
+                              updated[idx] = { ...updated[idx], line1: e.target.value };
+                              setFormData(prev => ({ ...prev, blogPosts: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Excerpt Line 2</label>
+                          <input
+                            type="text"
+                            value={post.line2 || ''}
+                            onChange={(e) => {
+                              const updated = [...postsList];
+                              updated[idx] = { ...updated[idx], line2: e.target.value };
+                              setFormData(prev => ({ ...prev, blogPosts: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Excerpt Line 3</label>
+                          <input
+                            type="text"
+                            value={post.line3 || ''}
+                            onChange={(e) => {
+                              const updated = [...postsList];
+                              updated[idx] = { ...updated[idx], line3: e.target.value };
+                              setFormData(prev => ({ ...prev, blogPosts: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Post Date</label>
+                          <input
+                            type="text"
+                            value={post.date || ''}
+                            onChange={(e) => {
+                              const updated = [...postsList];
+                              updated[idx] = { ...updated[idx], date: e.target.value };
+                              setFormData(prev => ({ ...prev, blogPosts: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                      </div>
+
+                      <div style={{ marginTop: '12px' }}>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Blog Card Image URL</label>
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                          <input
+                            type="text"
+                            value={post.image || ''}
+                            onChange={(e) => {
+                              const updated = [...postsList];
+                              updated[idx] = { ...updated[idx], image: e.target.value };
+                              setFormData(prev => ({ ...prev, blogPosts: updated }));
+                            }}
+                            style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                          <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '8px 16px', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '12px' }}>
+                            <Upload style={{ width: '14px', height: '14px', marginRight: '6px' }} />
+                            Upload
+                            <input
+                              type="file"
+                              accept="image/*"
+                              style={{ display: 'none' }}
+                              onChange={async (e) => {
+                                if (e.target.files?.[0]) {
+                                  const res = await uploadImageFile(e.target.files[0], admin.token);
+                                  const updated = [...postsList];
+                                  updated[idx] = { ...updated[idx], image: res.url };
+                                  setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                }
+                              }}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '24px' }}>
+                  <button
+                    onClick={() => persistSectionToDatabase('blogPosts', formData.blogPosts || defaultBlogPosts)}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                  >
+                    Save All Blog Posts
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
+
+
 
           {/* FALLBACK FOR OTHER UNCHECKED SECTIONS */}
-          {!['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo'].includes(activeSection) && (
+          {!activeSection.endsWith('Related') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo'].includes(activeSection) && (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               <FileText style={{ width: '48px', height: '48px', color: '#38bdf8', marginBottom: '14px' }} />
               <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -15434,11 +16910,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           zIndex: 9999,
           padding: '20px'
         }}>
-          <div style={{
+          <div className="winera-admin-modal-box" style={{
             background: '#ffffff',
             borderRadius: '24px',
             width: '100%',
-            maxWidth: '560px',
+            maxWidth: activeSection === 'projectItems' ? '720px' : '560px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             border: '1px solid #e2e8f0',
             overflow: 'hidden',
@@ -15590,6 +17066,594 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
                 </>
               )}
+
+              {/* ARCADE GAME CATEGORIES FIELDS */}
+              {(activeSection === 'arcadeCategories' || modalTargetSection === 'arcadeCategories') && (
+                <>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Arcade Game Title</label>
+                    <input
+                      type="text"
+                      value={modalItemData.title || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, title: e.target.value }))}
+                      placeholder="e.g. VR Racing Simulator"
+                      style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Badge Tag</label>
+                    <input
+                      type="text"
+                      value={modalItemData.tag || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, tag: e.target.value }))}
+                      placeholder="e.g. Hot Seller, High Revenue, Popular"
+                      style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Game Description</label>
+                    <textarea
+                      rows={3}
+                      value={modalItemData.desc || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, desc: e.target.value }))}
+                      placeholder="Immersive motion platform with 4K VR headsets..."
+                      style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Game Machine Image</label>
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      <label style={{ background: '#0284c7', color: '#fff', padding: '10px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Upload style={{ width: '14px', height: '14px' }} /> Upload Photo
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleModalFileUpload(e, 'img')}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                      <input
+                        type="text"
+                        value={modalItemData.img || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, img: e.target.value }))}
+                        placeholder="Image URL..."
+                        style={{ flex: 1, padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                      {modalItemData.img && (
+                        <img src={modalItemData.img} alt="" style={{ width: '50px', height: '36px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* PORTFOLIO PROJECT ITEMS FIELDS */}
+              {(activeSection === 'projectItems' || modalTargetSection === 'projectItems') && (() => {
+                const cats = formData.projectCategories || ["Game Zones", "Bowling", "Soft Play", "Arcade & VR", "Hospitality"];
+                return (
+                  <>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Project Name</label>
+                      <input
+                        type="text"
+                        value={modalItemData.name || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, name: e.target.value }))}
+                        placeholder="e.g. Hulaboo Game Zone"
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Category</label>
+                        <select
+                          value={modalItemData.category || cats[0]}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, category: e.target.value }))}
+                          style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px', background: '#fff' }}
+                        >
+                          {cats.map((c, i) => <option key={i} value={c}>{c}</option>)}
+                        </select>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Project Type</label>
+                        <input
+                          type="text"
+                          value={modalItemData.type || ''}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, type: e.target.value }))}
+                          placeholder="e.g. Game Zone Setup"
+                          style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '14px' }}
+                        />
+                      </div>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>City</label>
+                        <input
+                          type="text"
+                          value={modalItemData.city || ''}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, city: e.target.value }))}
+                          placeholder="e.g. Surat"
+                          style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '14px' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>State</label>
+                        <input
+                          type="text"
+                          value={modalItemData.state || ''}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, state: e.target.value }))}
+                          placeholder="e.g. Gujarat"
+                          style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '14px' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Total Area</label>
+                        <input
+                          type="text"
+                          value={modalItemData.area || ''}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, area: e.target.value }))}
+                          placeholder="e.g. 27,000 sq. ft."
+                          style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '14px' }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Detail Page Slug Link</label>
+                      <input
+                        type="text"
+                        value={modalItemData.slug || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, slug: e.target.value }))}
+                        placeholder="e.g. hulaboo (opens /project/hulaboo)"
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Upload Project Photo</label>
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                        <label style={{
+                          background: '#38bdf8',
+                          color: '#fff',
+                          padding: '10px 16px',
+                          borderRadius: '12px',
+                          fontWeight: '800',
+                          fontSize: '12.5px',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}>
+                          <Upload style={{ width: '16px', height: '16px' }} /> Choose Photo
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleModalFileUpload(e, 'img')}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          value={modalItemData.img || modalItemData.imageUrl || ''}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, img: e.target.value, imageUrl: e.target.value }))}
+                          placeholder="or paste Image URL"
+                          style={{ flex: 1, padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* CASE STUDY CONTENT FIELDS */}
+                    <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1.5px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      <h4 style={{ fontSize: '14px', fontWeight: '900', color: '#0f172a', margin: 0, paddingBottom: '8px', borderBottom: '1px solid #cbd5e1' }}>
+                        📖 Full Case Study Details (Matches Live Detail Page)
+                      </h4>
+
+                      {/* Headline Lines */}
+                      <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>Case Study Headline Lines</h5>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Title Line 1 (Cyan/Blue Text)</label>
+                            <input
+                              type="text"
+                              value={modalItemData.titleLine1 || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, titleLine1: e.target.value }))}
+                              placeholder="e.g. FifthAlley Sport Bowling: A"
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '700' }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Title Line 2 (Cyan Prefix)</label>
+                            <input
+                              type="text"
+                              value={modalItemData.titleLine2 || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, titleLine2: e.target.value }))}
+                              placeholder="e.g. Complete "
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '700' }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Title Line 2 (Dark Text)</label>
+                            <input
+                              type="text"
+                              value={modalItemData.titleLine2Black || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, titleLine2Black: e.target.value }))}
+                              placeholder="e.g. Bowling Alley Setup"
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '700' }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Title Line 3 (Dark Location/Details)</label>
+                            <input
+                              type="text"
+                              value={modalItemData.titleLine3 || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, titleLine3: e.target.value }))}
+                              placeholder="e.g. in the Heart of Surat"
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '700' }}
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Subheadline / Description Summary</label>
+                          <textarea
+                            rows={2}
+                            value={modalItemData.description || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, description: e.target.value }))}
+                            placeholder="e.g. How we designed and installed a professional-grade bowling alley across 3,000 sq. ft..."
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* What Client Wanted Block */}
+                      <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>What The Client Wanted Section</h5>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Paragraph 1</label>
+                          <textarea
+                            rows={2}
+                            value={modalItemData.clientWanted1 || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, clientWanted1: e.target.value }))}
+                            placeholder="The client had an empty 3,000 sq. ft. space in Katargam and a clear goal..."
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Paragraph 2</label>
+                          <textarea
+                            rows={2}
+                            value={modalItemData.clientWanted2 || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, clientWanted2: e.target.value }))}
+                            placeholder="They didn't want a supplier who only supplied equipment. They wanted one partner..."
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Section Photo (What Client Wanted)</label>
+                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <label style={{ background: '#0284c7', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <Upload style={{ width: '14px', height: '14px' }} /> Upload Photo
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleModalFileUpload(e, 'clientImg')}
+                                style={{ display: 'none' }}
+                              />
+                            </label>
+                            <input
+                              type="text"
+                              value={modalItemData.clientImg || modalItemData.clientImageUrl || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, clientImg: e.target.value, clientImageUrl: e.target.value }))}
+                              placeholder="Image URL or Asset Path"
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                            />
+                            {(modalItemData.clientImg || modalItemData.clientImageUrl) && (
+                              <img src={modalItemData.clientImg || modalItemData.clientImageUrl} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* What Solution We Provide Block */}
+                      <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>What Solution We Provide Section</h5>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Paragraph 1</label>
+                          <textarea
+                            rows={2}
+                            value={modalItemData.solution1 || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, solution1: e.target.value }))}
+                            placeholder="We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue..."
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Paragraph 2</label>
+                          <textarea
+                            rows={2}
+                            value={modalItemData.solution2 || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, solution2: e.target.value }))}
+                            placeholder="The result is a venue that is fun to play in and comfortable..."
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Section Photo (What Solution We Provide)</label>
+                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <label style={{ background: '#0284c7', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <Upload style={{ width: '14px', height: '14px' }} /> Upload Photo
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleModalFileUpload(e, 'solutionImg')}
+                                style={{ display: 'none' }}
+                              />
+                            </label>
+                            <input
+                              type="text"
+                              value={modalItemData.solutionImg || modalItemData.solutionImageUrl || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, solutionImg: e.target.value, solutionImageUrl: e.target.value }))}
+                              placeholder="Image URL or Asset Path"
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                            />
+                            {(modalItemData.solutionImg || modalItemData.solutionImageUrl) && (
+                              <img src={modalItemData.solutionImg || modalItemData.solutionImageUrl} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Project Gallery Grid (Dynamic Add / Delete Photos) */}
+                      {(() => {
+                        const galleryList = Array.isArray(modalItemData.galleryImages) && modalItemData.galleryImages.length > 0
+                          ? modalItemData.galleryImages
+                          : [
+                              modalItemData.galleryImage1 || projectBlock1,
+                              modalItemData.galleryImage2 || projectBlock2,
+                              modalItemData.galleryImage3 || projectBlock3,
+                              modalItemData.galleryImage4 || projectBlock1,
+                              modalItemData.galleryImage5 || projectBlock2,
+                              modalItemData.galleryImage6 || projectBlock3
+                            ].filter(Boolean);
+
+                        return (
+                          <div style={{ background: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '10px' }}>
+                              <div>
+                                <h5 style={{ fontSize: '13px', fontWeight: '800', color: '#0284c7', margin: 0 }}>
+                                  🖼️ Project Gallery Grid ({galleryList.length} Photos)
+                                </h5>
+                                <p style={{ fontSize: '11px', color: '#64748b', margin: '2px 0 0' }}>Add or delete photos to display 4, 6, 8, or any number of venue photos.</p>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setModalItemData(prev => {
+                                    const currentList = Array.isArray(prev.galleryImages) && prev.galleryImages.length > 0
+                                      ? [...prev.galleryImages]
+                                      : [
+                                          prev.galleryImage1 || projectBlock1,
+                                          prev.galleryImage2 || projectBlock2,
+                                          prev.galleryImage3 || projectBlock3,
+                                          prev.galleryImage4 || projectBlock1,
+                                          prev.galleryImage5 || projectBlock2,
+                                          prev.galleryImage6 || projectBlock3
+                                        ].filter(Boolean);
+                                    const updated = [...currentList, projectBlock1];
+                                    return {
+                                      ...prev,
+                                      galleryImages: updated,
+                                      galleryImage1: updated[0] || '',
+                                      galleryImage2: updated[1] || '',
+                                      galleryImage3: updated[2] || '',
+                                      galleryImage4: updated[3] || '',
+                                      galleryImage5: updated[4] || '',
+                                      galleryImage6: updated[5] || ''
+                                    };
+                                  });
+                                }}
+                                style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '7px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '11.5px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                              >
+                                <Plus style={{ width: '14px', height: '14px' }} /> Add Gallery Photo
+                              </button>
+                            </div>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '12px', width: '100%' }}>
+                              {galleryList.map((imgUrl, idx) => (
+                                <div key={idx} style={{ background: '#f8fafc', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '8px', minWidth: 0 }}>
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <label style={{ fontSize: '11.5px', fontWeight: '800', color: '#0f172a' }}>Gallery Photo #{idx + 1}</label>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                      {imgUrl ? (
+                                        <img src={imgUrl} alt="" style={{ width: '45px', height: '30px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+                                      ) : (
+                                        <span style={{ fontSize: '10px', color: '#94a3b8', fontStyle: 'italic' }}>No photo</span>
+                                      )}
+                                      <button
+                                        type="button"
+                                        title="Delete Photo"
+                                        onClick={() => {
+                                          setDeleteConfirmModal({
+                                            title: 'Delete Gallery Photo?',
+                                            message: `Are you sure you want to delete Gallery Photo #${idx + 1}?`,
+                                            onConfirm: () => {
+                                              setModalItemData(prev => {
+                                                const currentList = Array.isArray(prev.galleryImages) && prev.galleryImages.length > 0
+                                                  ? [...prev.galleryImages]
+                                                  : [
+                                                      prev.galleryImage1 || projectBlock1,
+                                                      prev.galleryImage2 || projectBlock2,
+                                                      prev.galleryImage3 || projectBlock3,
+                                                      prev.galleryImage4 || projectBlock1,
+                                                      prev.galleryImage5 || projectBlock2,
+                                                      prev.galleryImage6 || projectBlock3
+                                                    ].filter(Boolean);
+                                                const updated = currentList.filter((_, i) => i !== idx);
+                                                return {
+                                                  ...prev,
+                                                  galleryImages: updated,
+                                                  galleryImage1: updated[0] || '',
+                                                  galleryImage2: updated[1] || '',
+                                                  galleryImage3: updated[2] || '',
+                                                  galleryImage4: updated[3] || '',
+                                                  galleryImage5: updated[4] || '',
+                                                  galleryImage6: updated[5] || ''
+                                                };
+                                              });
+                                            }
+                                          });
+                                        }}
+                                        style={{ background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: '6px', padding: '3px 8px', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}
+                                      >
+                                        ✕ Delete
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                                    <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 10px', borderRadius: '6px', fontWeight: '800', fontSize: '11px', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                                      <Upload style={{ width: '12px', height: '12px', verticalAlign: 'middle', marginRight: '3px' }} /> Choose
+                                      <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={async (e) => {
+                                          const file = e.target.files[0];
+                                          if (file) {
+                                            const res = await uploadImageFile(file, admin.token);
+                                            if (res && res.url) {
+                                              setModalItemData(prev => {
+                                                const currentList = Array.isArray(prev.galleryImages) && prev.galleryImages.length > 0
+                                                  ? [...prev.galleryImages]
+                                                  : [
+                                                      prev.galleryImage1 || projectBlock1,
+                                                      prev.galleryImage2 || projectBlock2,
+                                                      prev.galleryImage3 || projectBlock3,
+                                                      prev.galleryImage4 || projectBlock1,
+                                                      prev.galleryImage5 || projectBlock2,
+                                                      prev.galleryImage6 || projectBlock3
+                                                    ].filter(Boolean);
+                                                currentList[idx] = res.url;
+                                                return {
+                                                  ...prev,
+                                                  galleryImages: currentList,
+                                                  galleryImage1: currentList[0] || '',
+                                                  galleryImage2: currentList[1] || '',
+                                                  galleryImage3: currentList[2] || '',
+                                                  galleryImage4: currentList[3] || '',
+                                                  galleryImage5: currentList[4] || '',
+                                                  galleryImage6: currentList[5] || ''
+                                                };
+                                              });
+                                            }
+                                          }
+                                        }}
+                                        style={{ display: 'none' }}
+                                      />
+                                    </label>
+                                    <input
+                                      type="text"
+                                      value={imgUrl || ''}
+                                      onChange={(e) => {
+                                        const newUrl = e.target.value;
+                                        setModalItemData(prev => {
+                                          const currentList = Array.isArray(prev.galleryImages) && prev.galleryImages.length > 0
+                                            ? [...prev.galleryImages]
+                                            : [
+                                                prev.galleryImage1 || projectBlock1,
+                                                prev.galleryImage2 || projectBlock2,
+                                                prev.galleryImage3 || projectBlock3,
+                                                prev.galleryImage4 || projectBlock1,
+                                                prev.galleryImage5 || projectBlock2,
+                                                prev.galleryImage6 || projectBlock3
+                                              ].filter(Boolean);
+                                          currentList[idx] = newUrl;
+                                          return {
+                                            ...prev,
+                                            galleryImages: currentList,
+                                            galleryImage1: currentList[0] || '',
+                                            galleryImage2: currentList[1] || '',
+                                            galleryImage3: currentList[2] || '',
+                                            galleryImage4: currentList[3] || '',
+                                            galleryImage5: currentList[4] || '',
+                                            galleryImage6: currentList[5] || ''
+                                          };
+                                        });
+                                      }}
+                                      placeholder="Image URL..."
+                                      style={{ flex: 1, minWidth: 0, padding: '6px 8px', borderRadius: '6px', border: '1.5px solid #cbd5e1', fontSize: '11px' }}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })()}
+
+                      {/* Project Video Showcase */}
+                      <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>🎥 Project Video Showcase</h5>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Video Cover Image</label>
+                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <label style={{ background: '#0284c7', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <Upload style={{ width: '14px', height: '14px' }} /> Upload Cover
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleModalFileUpload(e, 'videoImg')}
+                                style={{ display: 'none' }}
+                              />
+                            </label>
+                            <input
+                              type="text"
+                              value={modalItemData.videoImg || modalItemData.videoCoverUrl || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, videoImg: e.target.value, videoCoverUrl: e.target.value }))}
+                              placeholder="Image URL or Asset Path"
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                            />
+                            {(modalItemData.videoImg || modalItemData.videoCoverUrl) && (
+                              <img src={modalItemData.videoImg || modalItemData.videoCoverUrl} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>YouTube Video URL / Action Link</label>
+                          <input
+                            type="text"
+                            value={modalItemData.videoUrl || modalItemData.videoLink || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, videoUrl: e.target.value, videoLink: e.target.value }))}
+                            placeholder="e.g. https://youtube.com/watch?v=... or https://wa.me/..."
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Project Specific SEO Meta Title & Description */}
+                      <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>🔍 Individual Project SEO Meta Title & Meta Description</h5>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Meta Title (SEO Title)</label>
+                          <input
+                            type="text"
+                            value={modalItemData.metaTitle || modalItemData.seoTitle || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, metaTitle: e.target.value, seoTitle: e.target.value }))}
+                            placeholder="e.g. Bowling Alley Setup in Surat – LaneX at AR Mall | Winera International"
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '600' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Meta Description (SEO Description)</label>
+                          <textarea
+                            rows={3}
+                            value={modalItemData.metaDescription || modalItemData.seoDescription || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, metaDescription: e.target.value, seoDescription: e.target.value }))}
+                            placeholder="e.g. See how Winera International built LaneX Bowling Alley in Surat..."
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
 
               {/* 4. FAQ FIELDS */}
               {((activeSection && activeSection.toLowerCase().includes('faq')) || (modalTargetSection && modalTargetSection.toLowerCase().includes('faq'))) && (
@@ -15770,6 +17834,102 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 }}
               >
                 Save Item
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* STYLISH CONFIRMATION DELETE MODAL */}
+      {deleteConfirmModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(15, 23, 42, 0.65)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 999999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }}>
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            maxWidth: '440px',
+            width: '100%',
+            padding: '32px 26px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            border: '1px solid #e2e8f0',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
+            <div style={{
+              width: '64px',
+              height: '64px',
+              borderRadius: '50%',
+              background: '#fee2e2',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '16px',
+              color: '#ef4444',
+              boxShadow: '0 8px 20px rgba(239, 68, 68, 0.25)'
+            }}>
+              <Trash2 style={{ width: '32px', height: '32px' }} />
+            </div>
+
+            <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: '0 0 8px' }}>
+              {deleteConfirmModal.title || 'Are you sure?'}
+            </h3>
+
+            <p style={{ fontSize: '13.5px', color: '#64748b', margin: '0 0 24px', lineHeight: 1.5, fontWeight: '500' }}>
+              {deleteConfirmModal.message || 'Are you sure you want to delete this item? This action cannot be undone.'}
+            </p>
+
+            <div style={{ display: 'flex', gap: '12px', width: '100%' }}>
+              <button
+                onClick={() => setDeleteConfirmModal(null)}
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  borderRadius: '12px',
+                  background: '#f1f5f9',
+                  border: '1.5px solid #cbd5e1',
+                  color: '#475569',
+                  fontWeight: '800',
+                  fontSize: '13.5px',
+                  cursor: 'pointer'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  if (typeof deleteConfirmModal.onConfirm === 'function') {
+                    deleteConfirmModal.onConfirm();
+                  }
+                  setDeleteConfirmModal(null);
+                }}
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                  border: 'none',
+                  color: '#ffffff',
+                  fontWeight: '900',
+                  fontSize: '13.5px',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 14px rgba(239, 68, 68, 0.4)'
+                }}
+              >
+                Yes, Delete It
               </button>
             </div>
           </div>

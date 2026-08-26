@@ -14,6 +14,7 @@ import amusementOptionsTopCollage from '../assets/amusement-options-top-collage.
 import amusementOptionsBottomImg from '../assets/amusement-options-bottom-img.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.png';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.png';
+import amusementParkLastImage from '../assets/amusement-park-lastImage.png';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -45,8 +46,8 @@ export default function AmusementPark({ siteData }) {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const pageTitle = siteData?.amusementSeo?.pageTitle || "Amusement Park Equipment Manufacturer in India | Winera International";
-    const metaDesc = siteData?.amusementSeo?.metaDescription || "As a premier Amusement Park Equipment Manufacturer in India, Winera International Pvt Ltd crafts thrilling, safe, and world-class amusement park rides and attractions.";
+    const pageTitle = siteData?.amusementSeo?.pageTitle || "Amusement Park Manufacturer in India | Winera International";
+    const metaDesc = siteData?.amusementSeo?.metaDescription || "Winera International is a premier amusement park manufacturer in India, delivering innovative, safe rides and equipment tailored to your game zone and venue space.";
 
     document.title = pageTitle;
 
@@ -583,30 +584,26 @@ export default function AmusementPark({ siteData }) {
         simpleTitle={<>OUR <span style={{ color: '#38bdf8' }}>RECENT PROJECTS</span></>}
       />
       <TestimonialsSection siteData={siteData} />
-      <RelatedProductsSection currentPath="/products/amusement-park" />
+      <RelatedProductsSection sectionData={siteData?.amusementRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
       <FaqSection faqsList={siteData?.amusementFaqs || siteData?.faqs || defaultAmusementFaqs} highlightColor="#38bdf8" />
 
-            {/* CTA BANNER */}
-      <CtaBanner
-        bg={ctaConsultationsBanner}
-        bgUrl={siteData?.amusementCta?.bgUrl || siteData?.ctaBanner?.bgUrl || ctaConsultationsBanner}
-        tagline={null}
-        title={
-          <span style={{ fontSize: '2.6rem', fontWeight: '900', letterSpacing: '0.5px' }}>
-            <span style={{ color: '#ffcd00' }}>{siteData?.amusementCta?.yellowText || "NEED ANY"}</span>{' '}
-            <span style={{ color: '#38bdf8' }}>{siteData?.amusementCta?.cyanText || "CONSULTATIONS?"}</span>
-          </span>
-        }
-        subtitle={
-          <span style={{ fontSize: '1.4rem', fontWeight: '900', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            {siteData?.amusementCta?.subtitle || "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
-          </span>
-        }
-        description={null}
-        buttonText={siteData?.amusementCta?.buttonText || siteData?.ctaBanner?.buttonText || "Talk to an ROI Expert"}
-        buttonLink={siteData?.amusementCta?.buttonLink || siteData?.ctaBanner?.buttonLink || "https://wa.me/919428989488"}
-        align="center"
-      />
+      {/* CTA GRAPHIC BANNER IMAGE */}
+      <section style={{ padding: '60px 4vw', background: '#F5F5F9', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '1240px', width: '100%', position: 'relative', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
+          <a
+            href={siteData?.amusementCta?.buttonLink || siteData?.ctaBanner?.buttonLink || "https://wa.me/919428989488"}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'block', width: '100%', position: 'relative' }}
+          >
+            <img
+              src={siteData?.amusementCta?.bgUrl || amusementParkLastImage}
+              alt="Need Any Consultations - Amusement Park"
+              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '24px' }}
+            />
+          </a>
+        </div>
+      </section>
 
       {/* FOOTER */}
       <Footer footerData={footer} />

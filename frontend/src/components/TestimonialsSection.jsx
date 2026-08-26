@@ -40,8 +40,9 @@ export default function TestimonialsSection({
   highlightColor = '#00a8ff',
   bg = '#F5F5F9'
 }) {
+  const list = Array.isArray(testimonials) && testimonials.length > 0 ? testimonials : defaultTestimonials;
   const [activeIndex, setActiveIndex] = useState(0);
-  const currentItem = testimonials[activeIndex % testimonials.length];
+  const currentItem = list[activeIndex % list.length] || defaultTestimonials[0];
 
   // Extract YouTube video ID to fetch official HQ thumbnail
   const getYouTubeThumbnail = (url, fallbackImg) => {
@@ -53,10 +54,10 @@ export default function TestimonialsSection({
     return fallbackImg;
   };
 
-  const videoThumbnail = getYouTubeThumbnail(currentItem.youtubeVideoUrl, currentItem.founderImage || currentItem.videoImg || testiOwner);
+  const videoThumbnail = getYouTubeThumbnail(currentItem?.youtubeVideoUrl, currentItem?.founderImage || currentItem?.videoImg || testiOwner);
 
-  const goNext = () => setActiveIndex((prev) => (prev < testimonials.length - 1 ? prev + 1 : 0));
-  const goPrev = () => setActiveIndex((prev) => (prev > 0 ? prev - 1 : testimonials.length - 1));
+  const goNext = () => setActiveIndex((prev) => (prev < list.length - 1 ? prev + 1 : 0));
+  const goPrev = () => setActiveIndex((prev) => (prev > 0 ? prev - 1 : list.length - 1));
 
   return (
     <section id={id} style={{ padding: '40px 4vw 40px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>

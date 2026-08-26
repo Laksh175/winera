@@ -106,13 +106,15 @@ const renderRangeIcon = (iconVal, idx, isSelected) => {
 };
 
 export default function VrGames({ siteData }) {
-  if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading VR Games...</div>;
+  const [activeRangeIndex, setActiveRangeIndex] = React.useState(0);
+  const [showAllRangeItems, setShowAllRangeItems] = React.useState(false);
 
   React.useEffect(() => {
+    if (!siteData) return;
     window.scrollTo(0, 0);
 
-    const pageTitle = siteData?.vrSeo?.pageTitle || "VR Gaming Machine Manufacturer in India | Winera International Pvt Ltd";
-    const metaDesc = siteData?.vrSeo?.metaDescription || "Winera International Pvt Ltd is a leading VR Gaming Machine Manufacturer in India. Explore our range including 6 SEATS VR DARK MARS, VR SUPER ARMOR, VR CINEMA, VR MECHA, and more.";
+    const pageTitle = siteData?.vrSeo?.pageTitle || "VR Gaming Machine Manufacturer in India | Winera International";
+    const metaDesc = siteData?.vrSeo?.metaDescription || "Winera International is a leading VR gaming machine manufacturer in India, offering immersive virtual reality attractions built for arcades and FEC centers.";
 
     document.title = pageTitle;
 
@@ -125,10 +127,10 @@ export default function VrGames({ siteData }) {
     metaTag.content = metaDesc;
   }, [siteData]);
 
+  if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading VR Games...</div>;
+
   const { header, footer } = siteData;
   const heroBgImage = siteData?.vrHero?.bgUrl || vrHeroBg;
-  const [activeRangeIndex, setActiveRangeIndex] = React.useState(0);
-  const [showAllRangeItems, setShowAllRangeItems] = React.useState(false);
 
   const defaultRangeItems = [
     { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR4 Seated Simulator", img: vrImg, status: "ONLINE", latency: "4ms", icon: "plane" },

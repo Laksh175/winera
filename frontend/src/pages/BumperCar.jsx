@@ -50,8 +50,8 @@ export default function BumperCar({ siteData }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
 
-    const pageTitle = siteData?.bumpercarSeo?.pageTitle || "Bumper Car Manufacturer in India | Electric & Battery Cars | Winera International";
-    const metaDesc = siteData?.bumpercarSeo?.metaDescription || "As a leading Bumper Car Manufacturer in India, Winera International Pvt Ltd crafts exhilarating, safe, and durable bumper cars that are a favorite at amusement parks.";
+    const pageTitle = siteData?.bumpercarSeo?.pageTitle || siteData?.bumperSeo?.pageTitle || "Bumper Car Manufacturer in India | Winera International";
+    const metaDesc = siteData?.bumpercarSeo?.metaDescription || siteData?.bumperSeo?.metaDescription || "As a leading bumper car manufacturer in India, Winera International builds safe, durable, and thrilling bumper cars for amusement parks and FEC centers.";
 
     document.title = pageTitle;
 

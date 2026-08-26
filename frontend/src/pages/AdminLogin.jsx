@@ -134,12 +134,15 @@ export default function AdminLogin() {
 
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '22px' }}>
-            <label style={{ display: 'block', color: '#0f172a', fontSize: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
+            <label htmlFor="admin_username" style={{ display: 'block', color: '#0f172a', fontSize: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
               Username
             </label>
             <div style={{ position: 'relative' }}>
               <User style={{ position: 'absolute', left: '16px', top: '15px', color: '#38bdf8', width: '18px', height: '18px' }} />
               <input
+                id="admin_username"
+                name="username"
+                autoComplete="username"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -162,12 +165,15 @@ export default function AdminLogin() {
           </div>
 
           <div style={{ marginBottom: '30px' }}>
-            <label style={{ display: 'block', color: '#0f172a', fontSize: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
+            <label htmlFor="admin_password" style={{ display: 'block', color: '#0f172a', fontSize: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
               Password
             </label>
             <div style={{ position: 'relative' }}>
               <Key style={{ position: 'absolute', left: '16px', top: '15px', color: '#38bdf8', width: '18px', height: '18px' }} />
               <input
+                id="admin_password"
+                name="password"
+                autoComplete="current-password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

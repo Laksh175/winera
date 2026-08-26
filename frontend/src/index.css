@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
-
 :root {
   --font-main: 'Montserrat', sans-serif;
 
@@ -828,8 +826,9 @@ html {
     background-size: cover !important;
   }
 
-  .winera-vr-hero-h1 {
-    font-size: 2.4rem !important;
+  .winera-vr-hero-h1,
+  .winera-blog-hero-h1 {
+    font-size: 1.45rem !important;
     letter-spacing: -0.5px !important;
     margin-bottom: 8px !important;
   }
@@ -3180,7 +3179,8 @@ textarea::placeholder,
   .winera-hypergrid-hero-title,
   .winera-project-hero-h1,
   .winera-ar-hero-h1,
-  .winera-safety-hero-h1 {
+  .winera-safety-hero-h1,
+  .winera-blog-hero-h1 {
     font-size: 1.45rem !important;
     gap: 8px !important;
   }
@@ -3862,21 +3862,24 @@ img[src*="yellow-stroke-line"] {
 
   .winera-roi-checklist-grid {
     grid-template-columns: 1fr !important;
-    gap: 50px !important;
+    gap: 45px !important;
   }
 
   .winera-roi-checklist-card {
-    padding: 60px 24px 40px !important;
-    margin-top: 40px !important;
+    padding: 55px 16px 36px !important;
+    margin-top: 30px !important;
   }
 
   .winera-roi-checklist-col-left,
   .winera-roi-checklist-col-right {
-    align-items: center !important;
+    align-items: stretch !important;
+    width: 100% !important;
   }
 
   .winera-roi-checklist-col-right {
-    margin-top: 30px !important;
+    margin-top: 10px !important;
+    padding-top: 25px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
   }
 
   .winera-roi-checklist-pill-left,
@@ -3885,8 +3888,9 @@ img[src*="yellow-stroke-line"] {
     left: auto !important;
     top: auto !important;
     transform: none !important;
-    margin-bottom: 20px !important;
-    margin-top: 10px !important;
+    margin: 0 auto 24px auto !important;
+    display: flex !important;
+    justify-content: center !important;
   }
 }
 
@@ -3957,5 +3961,46 @@ img[src*="yellow-stroke-line"] {
     font-size: 1.35rem !important;
     line-height: 1.25 !important;
     word-break: break-word !important;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari, Opera, Edge, Firefox */
+.winera-blog-pagination-container::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.winera-blog-pagination-container {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+@media (max-width: 600px) {
+  .winera-blog-hero-section {
+    padding-top: 105px !important;
+    padding-bottom: 30px !important;
+    min-height: 155px !important;
+    aspect-ratio: auto !important;
+  }
+  .winera-blog-hero-h1 {
+    font-size: 1.1rem !important;
+    gap: 6px !important;
+  }
+  .winera-blog-card-img-container {
+    height: 180px !important;
+  }
+  .winera-blog-single-card {
+    padding: 14px !important;
+  }
+  .winera-blog-pagination-container {
+    padding: 5px 8px !important;
+    gap: 4px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .winera-blog-pagination-container button {
+    width: 27px !important;
+    height: 27px !important;
+    font-size: 11px !important;
   }
 }

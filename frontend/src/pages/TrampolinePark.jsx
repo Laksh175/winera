@@ -51,8 +51,8 @@ export default function TrampolinePark({ siteData }) {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const pageTitle = siteData?.trampolineSeo?.pageTitle || "Trampoline Park Equipment Manufacturer & Turnkey Setup in India | Winera International";
-    const metaDesc = siteData?.trampolineSeo?.metaDescription || "Winera International is a leading commercial Trampoline Park equipment manufacturer in India, offering ASTM F2970 certified turnkey trampoline park setups.";
+    const pageTitle = siteData?.trampolineSeo?.pageTitle || "Trampoline Park Manufacturer in India | Winera International";
+    const metaDesc = siteData?.trampolineSeo?.metaDescription || "Looking for a trampoline park manufacturer in India? Winera International designs and installs custom trampoline parks to your space, vision, and budget.";
 
     document.title = pageTitle;
 
@@ -842,7 +842,7 @@ export default function TrampolinePark({ siteData }) {
       <TestimonialsSection siteData={siteData} />
 
       {/* RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection currentProductLink="/products/trampoline-park" />
+      <RelatedProductsSection sectionData={siteData?.trampolineRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
 
       {/* FREQUENTLY ASKED QUESTIONS SECTION */}
       <FaqSection

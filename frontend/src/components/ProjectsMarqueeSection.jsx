@@ -23,6 +23,8 @@ export default function ProjectsMarqueeSection({
   buttonText = "View All",
   showBottomButton = false
 }) {
+  const items = Array.isArray(projects) && projects.length > 0 ? projects : defaultProjects;
+
   return (
     <section id={id} style={{ padding: '80px 0 100px', background: bg, overflow: 'hidden' }}>
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
@@ -89,7 +91,7 @@ export default function ProjectsMarqueeSection({
           <div className="marquee-track">
             {[...Array(4)].map((_, setIdx) => (
               <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '24px', paddingRight: '24px' }}>
-                {projects.map((proj, idx) => (
+                {items.map((proj, idx) => (
                   <div
                     key={idx}
                     style={{

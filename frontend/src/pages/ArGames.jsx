@@ -40,9 +40,22 @@ function renderTitleMarkup(rawText, defaultText, highlightColor = '#ffcd00') {
 }
 
 export default function ArGames({ siteData }) {
+  const arSeo = siteData?.arSeo || {
+    pageTitle: "AR Games Supplier in India | Winera International",
+    metaDescription: "Winera International is a leading AR games supplier in India, sourcing and installing sports simulators, interactive floors, and immersive gaming attractions."
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    document.title = arSeo.pageTitle || arSeo.title || "AR Games Supplier in India | Winera International";
+    let metaTag = document.querySelector('meta[name="description"]');
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.setAttribute('name', 'description');
+      document.head.appendChild(metaTag);
+    }
+    metaTag.setAttribute('content', arSeo.metaDescription || arSeo.description || "Winera International is a leading AR games supplier in India, sourcing and installing sports simulators, interactive floors, and immersive gaming attractions.");
+  }, [arSeo]);
 
   const [activeCategory, setActiveCategory] = useState('Sports Simulators');
   const [currentPage, setCurrentPage] = useState(1);
@@ -723,7 +736,13 @@ export default function ArGames({ siteData }) {
 
           {/* Mobile Category Dropdown */}
           <div className="winera-ar-mobile-cat-dropdown" style={{ display: 'none', marginBottom: '24px' }}>
+            <label htmlFor="ar_category_select" style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px', textAlign: 'left' }}>
+              Select Category:
+            </label>
             <select
+              id="ar_category_select"
+              name="arCategory"
+              aria-label="Select Category"
               value={activeCategory}
               onChange={(e) => { setActiveCategory(e.target.value); }}
               style={{
@@ -1330,7 +1349,7 @@ export default function ArGames({ siteData }) {
       <TestimonialsSection siteData={siteData} />
 
       {/* 11. RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection currentProductLink="/products/ar-games" />
+      <RelatedProductsSection sectionData={siteData?.arRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
 
       {/* 12. FAQ SECTION */}
       <FaqSection

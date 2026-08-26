@@ -1320,6 +1320,177 @@ export const defaultSiteData = {
   roiSeo: {
     pageTitle: "ROI Calculator for Game Zones | Return on Investment | Winera International",
     metaDescription: "Calculate your game zone ROI before investing. Winera International provides free ROI consultations, data-backed game mix planning, and complete setup services across India."
+  },
+  blogHero: {
+    breadcrumbText: "Blog",
+    bgUrl: "/src/assets/blog-image-bg.png"
+  },
+  blogPosts: [
+    {
+      id: 1,
+      title: "Soft Play vs Trampoline Park: Which",
+      subtitle: "Is Better for Your Space?",
+      line1: "Soft play or trampoline park? Discover",
+      line2: "the key differences in investment, space",
+      line3: "requirements, safety, and revenue.....",
+      date: "Aug 22, 2026",
+      image: "/src/assets/blog-images.png"
+    },
+    {
+      id: 2,
+      title: "Soft Play vs Trampoline Park: Which",
+      subtitle: "Is Better for Your Space?",
+      line1: "Soft play or trampoline park? Discover",
+      line2: "the key differences in investment, space",
+      line3: "requirements, safety, and revenue.....",
+      date: "Aug 22, 2026",
+      image: "/src/assets/blog-images.png"
+    },
+    {
+      id: 3,
+      title: "Soft Play vs Trampoline Park: Which",
+      subtitle: "Is Better for Your Space?",
+      line1: "Soft play or trampoline park? Discover",
+      line2: "the key differences in investment, space",
+      line3: "requirements, safety, and revenue.....",
+      date: "Aug 22, 2026",
+      image: "/src/assets/blog-images.png"
+    },
+    {
+      id: 4,
+      title: "Soft Play vs Trampoline Park: Which",
+      subtitle: "Is Better for Your Space?",
+      line1: "Soft play or trampoline park? Discover",
+      line2: "the key differences in investment, space",
+      line3: "requirements, safety, and revenue.....",
+      date: "Aug 22, 2026",
+      image: "/src/assets/blog-images.png"
+    },
+    {
+      id: 5,
+      title: "Soft Play vs Trampoline Park: Which",
+      subtitle: "Is Better for Your Space?",
+      line1: "Soft play or trampoline park? Discover",
+      line2: "the key differences in investment, space",
+      line3: "requirements, safety, and revenue.....",
+      date: "Aug 22, 2026",
+      image: "/src/assets/blog-images.png"
+    },
+    {
+      id: 6,
+      title: "Soft Play vs Trampoline Park: Which",
+      subtitle: "Is Better for Your Space?",
+      line1: "Soft play or trampoline park? Discover",
+      line2: "the key differences in investment, space",
+      line3: "requirements, safety, and revenue.....",
+      date: "Aug 22, 2026",
+      image: "/src/assets/blog-images.png"
+    },
+    {
+      id: 7,
+      title: "Soft Play vs Trampoline Park: Which",
+      subtitle: "Is Better for Your Space?",
+      line1: "Soft play or trampoline park? Discover",
+      line2: "the key differences in investment, space",
+      line3: "requirements, safety, and revenue.....",
+      date: "Aug 22, 2026",
+      image: "/src/assets/blog-images.png"
+    },
+    {
+      id: 8,
+      title: "Soft Play vs Trampoline Park: Which",
+      subtitle: "Is Better for Your Space?",
+      line1: "Soft play or trampoline park? Discover",
+      line2: "the key differences in investment, space",
+      line3: "requirements, safety, and revenue.....",
+      date: "Aug 22, 2026",
+      image: "/src/assets/blog-images.png"
+    },
+    {
+      id: 9,
+      title: "Soft Play vs Trampoline Park: Which",
+      subtitle: "Is Better for Your Space?",
+      line1: "Soft play or trampoline park? Discover",
+      line2: "the key differences in investment, space",
+      line3: "requirements, safety, and revenue.....",
+      date: "Aug 22, 2026",
+      image: "/src/assets/blog-images.png"
+    }
+  ],
+  homeSeo: {
+    pageTitle: "Game Zone Equipment Manufacturer in India | Winera International",
+    metaDescription: "Winera International is your trusted Game Zone Equipment Manufacturer and Indoor Play Equipment Manufacturer in India since 2014. Get Amazing deals!"
+  },
+  blogSeo: {
+    pageTitle: "Winera International Blog | Winera International",
+    metaDescription: "Explore expert insights, trends, and ideas from Winera International to elevate your entertainment venue and create unforgettable guest experiences."
+  },
+  aboutSeo: {
+    pageTitle: "The Right Choice for Your Business | Winera International",
+    metaDescription: "Winera delivers more than promises trusted expertise, customer care, and quality solutions that set us apart. Discover why clients choose us."
+  },
+  arcadeSeo: {
+    pageTitle: "Arcade Games Manufacturer in India | Winera International",
+    metaDescription: "Looking for arcade game machines in India? Winera International offers redemption games, kiddie rides, racing simulators, and more at direct factory prices."
+  },
+  bowlingSeo: {
+    pageTitle: "Bowling Alley Manufacturer in India | Winera International",
+    metaDescription: "Looking for a bowling alley manufacturer in India? Winera International supplies premium new and refurbished Brunswick systems, with 15+ years of expertise."
+  },
+  softplaySeo: {
+    pageTitle: "Top Soft Play Equipment Manufacturers in India | Winera International",
+    metaDescription: "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget."
+  },
+  trampolineSeo: {
+    pageTitle: "Trampoline Park Manufacturer in India | Winera International",
+    metaDescription: "Looking for a trampoline park manufacturer in India? Winera International designs and installs custom trampoline parks to your space, vision, and budget."
+  },
+  vrSeo: {
+    pageTitle: "VR Gaming Machine Manufacturer in India | Winera International",
+    metaDescription: "Winera International is a leading VR gaming machine manufacturer in India, offering immersive virtual reality attractions built for arcades and FEC centers."
+  },
+  bumperSeo: {
+    pageTitle: "Bumper Car Manufacturer in India | Winera International",
+    metaDescription: "As a leading bumper car manufacturer in India, Winera International builds safe, durable, and thrilling bumper cars for amusement parks and FEC centers."
+  },
+  amusementSeo: {
+    pageTitle: "Amusement Park Manufacturer in India | Winera International",
+    metaDescription: "Winera International is a premier amusement park manufacturer in India, delivering innovative, safe rides and equipment tailored to your game zone and venue space."
+  },
+  arSeo: {
+    pageTitle: "AR Games Supplier in India | Winera International",
+    metaDescription: "Winera International is a leading AR games supplier in India, sourcing and installing sports simulators, interactive floors, and immersive gaming attractions."
+  },
+  hypergridSeo: {
+    pageTitle: "Hypergrid Game Supplier in India | Winera International",
+    metaDescription: "Winera International is a trusted Hypergrid game supplier in India, installing commercial interactive LED floor systems for malls, FECs, and trampoline parks."
+  },
+  lasertagSeo: {
+    pageTitle: "Laser Tag Equipment Supplier in India | Winera International",
+    metaDescription: "Want to add laser tag or laser spy to your venue? Winera International handles the full setup, from arena design and gear to software and staff training."
+  },
+  lasertagHero: {
+    breadcrumbText: "Laser Tag"
+  },
+  safetySeo: {
+    pageTitle: "Where Game Zone Safety Comes First | Winera International",
+    metaDescription: "Safety comes first at Winera International. Every ride, play structure, and machine we install meets global safety standards, so your venue opens ready to run."
+  },
+  roiSeo: {
+    pageTitle: "Know Your Game Zone ROI Before You Invest | Winera International",
+    metaDescription: "Opening a game zone is easy, making it profitable is a system. Winera International models your ROI around your space and budget before you invest a rupee."
+  },
+  projectSeo: {
+    pageTitle: "Our Projects | Game Zones Built | Winera International",
+    metaDescription: "Explore Winera International's completed projects across India. Real play destinations we've designed, built, and installed for venues of every size and type."
+  },
+  privacySeo: {
+    pageTitle: "Winera International Privacy Policy for Game Zone Solutions",
+    metaDescription: "Learn how Winera International collects, uses, and protects the information you share when enquiring about our game zone equipment and setup services in India."
+  },
+  termsSeo: {
+    pageTitle: "Terms of Service | Winera International",
+    metaDescription: "Read Winera International's Terms of Service outlining your rights, responsibilities, and guidelines for using our game zone equipment and setup in India."
   }
 };
 

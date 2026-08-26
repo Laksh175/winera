@@ -35,23 +35,27 @@ export default function Footer({ footerData }) {
             </p>
           </div>
 
-          {/* Column 2: Product Categories (2 Sub-columns) */}
+          {/* Column 2: Product Categories */}
           <div>
             <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '18px' }}>
               Product
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
               {[
-                "Arcade Games", "Ninja Courses",
-                "Bowling Alley", "Wall Climbing",
-                "Soft Play", "Amusement Park",
-                "Trampoline Park", "Hypergrid",
-                "VR Games", "Laser tag",
-                "Bumper Cars"
+                { name: "Arcade Games", link: "/product/arcade-games" },
+                { name: "Bowling Alley", link: "/product/bowling-alley" },
+                { name: "Soft Play", link: "/product/soft-play" },
+                { name: "Trampoline Park", link: "/product/trampoline-park" },
+                { name: "VR Games", link: "/product/vr-games" },
+                { name: "AR Games", link: "/product/ar-games" },
+                { name: "Bumper Car", link: "/product/bumper-car" },
+                { name: "Amusement Park", link: "/product/amusement-park" },
+                { name: "Hypergrid", link: "/product/hypergrid" },
+                { name: "Laser tag", link: "/product/laser-tag" }
               ].map((prod, idx) => (
                 <a
                   key={idx}
-                  href="/arcade-game"
+                  href={prod.link}
                   style={{
                     fontSize: '12px',
                     color: '#475569',
@@ -60,7 +64,7 @@ export default function Footer({ footerData }) {
                     transition: 'color 0.2s'
                   }}
                 >
-                  {prod}
+                  {prod.name}
                 </a>
               ))}
             </div>
@@ -73,10 +77,10 @@ export default function Footer({ footerData }) {
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {[
-                { name: "About Us", link: "/about" },
-                { name: "Contact Us", link: "#contact" },
-                { name: "Privacy Policy", link: "#privacy" },
-                { name: "Terms of Use", link: "#terms" }
+                { name: "About Us", link: "/why-us" },
+                { name: "Contact Us", link: "/contact" },
+                { name: "Privacy Policy", link: "/privacy-policy" },
+                { name: "Terms & Conditions", link: "/terms-and-conditions" }
               ].map((item, idx) => (
                 <a
                   key={idx}
@@ -102,11 +106,10 @@ export default function Footer({ footerData }) {
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {[
-                { name: "Blog", link: "#blog" },
-                { name: "Project", link: "#projects" },
-                { name: "ROI", link: "#partner" },
-                { name: "Safety Standard", link: "/about" },
-                { name: "Industries", link: "#industries" }
+                { name: "Blog", link: "/blog" },
+                { name: "Project", link: "/project" },
+                { name: "ROI", link: "/resource/roi" },
+                { name: "Safety Standards", link: "/resource/safety-standards" }
               ].map((item, idx) => (
                 <a
                   key={idx}

@@ -54,6 +54,22 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 };
 
 export default function SoftPlay({ siteData }) {
+  const softplaySeo = siteData?.softplaySeo || {
+    pageTitle: "Top Soft Play Equipment Manufacturers in India | Winera International",
+    metaDescription: "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget."
+  };
+
+  React.useEffect(() => {
+    document.title = softplaySeo.pageTitle || softplaySeo.title || "Top Soft Play Equipment Manufacturers in India | Winera International";
+    let metaTag = document.querySelector('meta[name="description"]');
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.setAttribute('name', 'description');
+      document.head.appendChild(metaTag);
+    }
+    metaTag.setAttribute('content', softplaySeo.metaDescription || softplaySeo.description || "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget.");
+  }, [softplaySeo]);
+
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Soft Play...</div>;
 
   const { header, footer } = siteData;

@@ -20,14 +20,14 @@ export default function SafetyStandards({ siteData }) {
   const introImg = siteData?.safetyIntro?.mainImgUrl || safetyStandardImg1;
 
   useEffect(() => {
-    document.title = siteData?.safetySeo?.pageTitle || "Equipment Safety Standards | Winera International";
+    document.title = siteData?.safetySeo?.pageTitle || "Where Game Zone Safety Comes First | Winera International";
     let metaDescriptionTag = document.querySelector('meta[name="description"]');
     if (!metaDescriptionTag) {
       metaDescriptionTag = document.createElement('meta');
       metaDescriptionTag.name = "description";
       document.head.appendChild(metaDescriptionTag);
     }
-    metaDescriptionTag.setAttribute("content", siteData?.safetySeo?.metaDescription || "Winera International equipment safety standards, international certifications, commercial-grade materials, and on-site inspection protocols for game zones in India.");
+    metaDescriptionTag.setAttribute("content", siteData?.safetySeo?.metaDescription || "Safety comes first at Winera International. Every ride, play structure, and machine we install meets global safety standards, so your venue opens ready to run.");
   }, [siteData]);
 
   return (
@@ -39,7 +39,7 @@ export default function SafetyStandards({ siteData }) {
       <section className="winera-safety-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '210px',
+        paddingTop: '165px',
         paddingBottom: '75px',
         background: `url(${bgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
@@ -52,13 +52,13 @@ export default function SafetyStandards({ siteData }) {
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Safety Standards */}
           <h1 className="winera-safety-hero-h1" style={{
-            fontSize: '2.8rem',
-            fontWeight: '900',
+            fontSize: '1.45rem',
+            fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '12px',
+            gap: '8px',
             margin: 0,
             lineHeight: 1.2,
             textAlign: 'center'

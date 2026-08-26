@@ -13,26 +13,22 @@ export default function Header({ headerData }) {
   const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
 
   const productSubMenu = [
-    { label: 'Arcade Games', href: '/products/arcade-games' },
-    { label: 'VR Games', href: '/products/vr-games' },
-    { label: 'AR Games', href: '/products/ar-games' },
-    { label: 'Bowling Alley', href: '/products/bowling-alley' },
-    { label: 'Trampoline Park', href: '/products/trampoline-park' },
-    { label: 'Soft Play', href: '/products/soft-play' },
-    { label: 'Bumper Cars', href: '/products/bumper-cars' },
-    { label: 'Hypergrid', href: '/products/hypergrid' },
-    { label: 'Laser tag', href: '/products/laser-tag' },
-    { label: 'Amusement Park', href: '/products/amusement-park' },
-    { label: 'Lights', href: '/products/lights' },
-    { label: 'Sculpture', href: '/products/sculpture' },
-    { label: 'Reception Table', href: '/products/reception-table' },
-    { label: 'Other Furniture', href: '/products/other-furniture' }
+    { label: 'Arcade Games', href: '/product/arcade-games' },
+    { label: 'VR Games', href: '/product/vr-games' },
+    { label: 'AR Games', href: '/product/ar-games' },
+    { label: 'Bowling Alley', href: '/product/bowling-alley' },
+    { label: 'Trampoline Park', href: '/product/trampoline-park' },
+    { label: 'Soft Play', href: '/product/soft-play' },
+    { label: 'Bumper Car', href: '/product/bumper-car' },
+    { label: 'Hypergrid', href: '/product/hypergrid' },
+    { label: 'Laser tag', href: '/product/laser-tag' },
+    { label: 'Amusement Park', href: '/product/amusement-park' }
   ];
 
   const resourcesSubMenu = [
-    { label: 'Blog', href: '/#blog' },
-    { label: 'ROI', href: '/roi' },
-    { label: 'Safety Standard', href: '/resources/safety-standards' }
+    { label: 'Blog', href: '/blog' },
+    { label: 'ROI', href: '/resource/roi' },
+    { label: 'Safety Standards', href: '/resource/safety-standards' }
   ];
 
   return (
@@ -149,9 +145,10 @@ export default function Header({ headerData }) {
                 zIndex: 1050
               }}>
                 {productSubMenu.map((item, idx) => (
-                  <a
+                  <Link
                     key={idx}
-                    href={item.href}
+                    to={item.href}
+                    onClick={() => setProductDropdown(false)}
                     style={{
                       padding: '8px 18px',
                       color: '#0f172a',
@@ -171,7 +168,7 @@ export default function Header({ headerData }) {
                     }}
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}
@@ -230,9 +227,10 @@ export default function Header({ headerData }) {
                 zIndex: 1050
               }}>
                 {resourcesSubMenu.map((item, idx) => (
-                  <a
+                  <Link
                     key={idx}
-                    href={item.href}
+                    to={item.href}
+                    onClick={() => setResourcesDropdown(false)}
                     style={{
                       padding: '9px 18px',
                       color: '#0f172a',
@@ -252,18 +250,18 @@ export default function Header({ headerData }) {
                     }}
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}
           </div>
 
           <Link
-            to="/about"
+            to="/why-us"
             style={{
               fontSize: '14px',
-              fontWeight: currentPath === '/about' ? '800' : '700',
-              color: currentPath === '/about' ? '#0084ff' : '#1e293b',
+              fontWeight: (currentPath === '/why-us' || currentPath === '/about') ? '800' : '700',
+              color: (currentPath === '/why-us' || currentPath === '/about') ? '#0084ff' : '#1e293b',
               textDecoration: 'none'
             }}
           >
@@ -451,9 +449,9 @@ export default function Header({ headerData }) {
                   border: '1px solid #e2e8f0'
                 }}>
                   {productSubMenu.map((item, idx) => (
-                    <a
+                    <Link
                       key={idx}
-                      href={item.href}
+                      to={item.href}
                       onClick={() => setMobileMenuOpen(false)}
                       style={{
                         fontSize: '12.5px',
@@ -464,7 +462,7 @@ export default function Header({ headerData }) {
                       }}
                     >
                       • {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
@@ -516,12 +514,12 @@ export default function Header({ headerData }) {
                   padding: '12px',
                   background: '#f8fafc',
                   borderRadius: '14px',
-                  border: '1px solid #e2e8f0'
+                  border: '1.5px solid #e2e8f0'
                 }}>
                   {resourcesSubMenu.map((item, idx) => (
-                    <a
+                    <Link
                       key={idx}
-                      href={item.href}
+                      to={item.href}
                       onClick={() => setMobileMenuOpen(false)}
                       style={{
                         fontSize: '13px',
@@ -531,19 +529,19 @@ export default function Header({ headerData }) {
                       }}
                     >
                       • {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
             </div>
 
             <Link
-              to="/about"
+              to="/why-us"
               onClick={() => setMobileMenuOpen(false)}
               style={{
                 fontSize: '16px',
                 fontWeight: '800',
-                color: currentPath === '/about' ? '#0084ff' : '#0f172a',
+                color: (currentPath === '/why-us' || currentPath === '/about') ? '#0084ff' : '#0f172a',
                 textDecoration: 'none',
                 padding: '4px 0'
               }}

@@ -69,7 +69,7 @@ export default function ClientsMarqueeSection({
                       }}
                     >
                       {client.logoUrl ? (
-                        <img src={client.logoUrl} alt={client.name} style={{ maxHeight: '75px', maxWidth: '240px', objectFit: 'contain' }} />
+                        <img src={client.logoUrl} alt={client.name} loading="lazy" decoding="async" style={{ maxHeight: '75px', maxWidth: '240px', objectFit: 'contain' }} />
                       ) : (
                         <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px' }}>{client.name}</span>
                       )}
