@@ -283,7 +283,7 @@ export default function Header({ headerData }) {
         {/* 3. Social Icons Grid, Admin Portal & Mobile Hamburger */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div className="winera-socials-desktop" style={{ alignItems: 'center', gap: '10px' }}>
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" style={{
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" style={{
               width: '34px',
               height: '34px',
               borderRadius: '50%',
@@ -298,7 +298,7 @@ export default function Header({ headerData }) {
               </svg>
             </a>
 
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" style={{
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" style={{
               width: '34px',
               height: '34px',
               borderRadius: '50%',
@@ -313,7 +313,7 @@ export default function Header({ headerData }) {
               </svg>
             </a>
 
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" style={{
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube" style={{
               width: '34px',
               height: '34px',
               borderRadius: '50%',
@@ -328,7 +328,7 @@ export default function Header({ headerData }) {
               </svg>
             </a>
 
-            <a href="https://x.com" target="_blank" rel="noreferrer" style={{
+            <a href="https://x.com" target="_blank" rel="noreferrer" aria-label="Twitter X" style={{
               width: '34px',
               height: '34px',
               borderRadius: '50%',

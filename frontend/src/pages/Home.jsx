@@ -90,8 +90,8 @@ export default function Home({ siteData }) {
   return (
     <div style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh' }}>
       <Header headerData={header} />
-
-      <section id="hero" className="winera-home-hero-section" style={{
+      <main id="main-content">
+        <section id="hero" className="winera-home-hero-section" style={{
         position: 'relative',
         width: '100%',
         minHeight: 'auto',
@@ -1280,7 +1280,7 @@ export default function Home({ siteData }) {
           </div>
         </div>
       </section>
-
+      </main>
 
       {/* 16. FOOTER SECTION */}
       <Footer footerData={footer} />

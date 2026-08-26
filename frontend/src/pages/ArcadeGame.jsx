@@ -124,8 +124,9 @@ export default function ArcadeGame({ siteData }) {
       {/* 1. HEADER NAVBAR */}
       <Header headerData={header} />
 
-      {/* 2. ARCADE GAME HERO BANNER MATCHING SECOND IMAGE 1:1 */}
-      <section className="winera-arcade-hero-section" style={{
+      <main id="main-content">
+        {/* 2. ARCADE GAME HERO BANNER MATCHING SECOND IMAGE 1:1 */}
+        <section className="winera-arcade-hero-section" style={{
         position: 'relative',
         width: '100%',
         paddingTop: '165px',
@@ -722,6 +723,7 @@ export default function ArcadeGame({ siteData }) {
                       <button
                         onClick={() => setMobileProdIndex((prev) => Math.max(0, prev - 1))}
                         disabled={mobileProdIndex === 0}
+                        aria-label="Previous Product"
                         style={{
                           width: '40px',
                           height: '40px',
@@ -747,6 +749,7 @@ export default function ArcadeGame({ siteData }) {
                       <button
                         onClick={() => setMobileProdIndex((prev) => Math.min(prodCards.length - 1, prev + 1))}
                         disabled={mobileProdIndex >= prodCards.length - 1}
+                        aria-label="Next Product"
                         style={{
                           width: '40px',
                           height: '40px',
@@ -764,6 +767,46 @@ export default function ArcadeGame({ siteData }) {
                       >
                         <ChevronRight style={{ width: '22px', height: '22px' }} />
                       </button>
+                    </div>
+
+                    {/* Pagination Bar */}
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+                      <div style={{
+                        background: '#ffffff',
+                        border: '1.5px solid #7dd3fc',
+                        borderRadius: '24px',
+                        padding: '8px 26px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '18px',
+                        boxShadow: 'none'
+                      }}>
+                        <button aria-label="Previous Page" style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
+                          <ChevronLeft style={{ width: '16px', height: '16px', color: '#475569' }} />
+                        </button>
+                        <span style={{
+                          width: '38px',
+                          height: '38px',
+                          borderRadius: '12px',
+                          background: '#38bdf8',
+                          color: '#ffffff',
+                          fontSize: '15px',
+                          fontWeight: '800',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 4px 10px rgba(56, 189, 248, 0.25)'
+                        }}>
+                          1
+                        </span>
+                        <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>2</span>
+                        <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>3</span>
+                        <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>4</span>
+                        <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>71</span>
+                        <button aria-label="Next Page" style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
+                          <ChevronRight style={{ width: '16px', height: '16px', color: '#475569' }} />
+                        </button>
+                      </div>
                     </div>
                   </>
                 );
@@ -784,7 +827,7 @@ export default function ArcadeGame({ siteData }) {
               gap: '18px',
               boxShadow: 'none'
             }}>
-              <button style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
+              <button aria-label="Previous Page" style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
                 <ChevronLeft style={{ width: '16px', height: '16px', color: '#475569' }} />
               </button>
               <span style={{
@@ -1215,6 +1258,7 @@ export default function ArcadeGame({ siteData }) {
         buttonText={siteData?.arcadeCta?.buttonText ?? "Get Quote Now"}
         buttonLink={siteData?.arcadeCta?.buttonLink ?? "https://wa.me/919428989488"}
       />
+      </main>
 
       {/* 12. FOOTER */}
       <Footer footerData={footer} />

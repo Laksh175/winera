@@ -103,6 +103,7 @@ export default function TestimonialsSection({
           {/* Left Arrow Button */}
           <button
             onClick={goPrev}
+            aria-label="Previous Testimonial"
             style={{
               position: 'absolute',
               left: 0,
@@ -233,6 +234,7 @@ export default function TestimonialsSection({
                   href={currentItem.youtubeVideoUrl || "https://www.youtube.com"}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Watch Review Video on YouTube"
                   title="Watch Review Video on YouTube"
                   style={{
                     position: 'absolute',
@@ -265,6 +267,7 @@ export default function TestimonialsSection({
           {/* Right Arrow Button */}
           <button
             onClick={goNext}
+            aria-label="Next Testimonial"
             style={{
               position: 'absolute',
               right: 0,

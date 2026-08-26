@@ -105,6 +105,7 @@ export default function CtaBanner({
               href={buttonLink}
               target="_blank"
               rel="noreferrer"
+              aria-label={typeof buttonText === 'string' ? buttonText : "Get Quote Now"}
               className="winera-cyan-cta-btn"
             >
               <span>{buttonText}</span>

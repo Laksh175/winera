@@ -93,10 +93,11 @@ export default function RelatedProductsSection({ sectionData, accentColor = '#38
         }}>
           {/* Previous Button */}
           <button
+            aria-label="Previous Related Products"
             onClick={() => {
-              if (relatedIndex === 0) {
+              if (relatedIndex <= 0) {
                 setIsTransitioning(false);
-                setRelatedIndex(baseCategories.length);
+                setRelatedIndex(baseCategories.length * 2 - 1);
                 setTimeout(() => {
                   setIsTransitioning(true);
                   setRelatedIndex(baseCategories.length - 1);
@@ -206,6 +207,7 @@ export default function RelatedProductsSection({ sectionData, accentColor = '#38
 
           {/* Next Button */}
           <button
+            aria-label="Next Related Products"
             onClick={() => {
               setRelatedIndex((prev) => prev + 1);
             }}
