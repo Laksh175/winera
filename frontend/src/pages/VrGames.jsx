@@ -28,6 +28,9 @@ import vrCommercialReliability from '../assets/vr-commercial-reliability.png';
 import vrRoiFrame from '../assets/vr-roi-frame.png';
 import vrRoiContent from '../assets/vr-roi-content.png';
 import vrEarnPlayer from '../assets/vr-earn-player.jpg';
+import vrImg from '../assets/VR.png';
+import vectorVr from '../assets/Vector-VR.png';
+import vector01 from '../assets/Vector-01.png';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.png';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
@@ -105,41 +108,80 @@ const renderRangeIcon = (iconVal, idx, isSelected) => {
 export default function VrGames({ siteData }) {
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading VR Games...</div>;
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+
+    const pageTitle = siteData?.vrSeo?.pageTitle || "VR Gaming Machine Manufacturer in India | Winera International Pvt Ltd";
+    const metaDesc = siteData?.vrSeo?.metaDescription || "Winera International Pvt Ltd is a leading VR Gaming Machine Manufacturer in India. Explore our range including 6 SEATS VR DARK MARS, VR SUPER ARMOR, VR CINEMA, VR MECHA, and more.";
+
+    document.title = pageTitle;
+
+    let metaTag = document.querySelector('meta[name="description"]');
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.name = 'description';
+      document.head.appendChild(metaTag);
+    }
+    metaTag.content = metaDesc;
+  }, [siteData]);
+
   const { header, footer } = siteData;
   const heroBgImage = siteData?.vrHero?.bgUrl || vrHeroBg;
   const [activeRangeIndex, setActiveRangeIndex] = React.useState(0);
   const [showAllRangeItems, setShowAllRangeItems] = React.useState(false);
 
   const defaultRangeItems = [
-    { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR Wings Experience", img: vrRangeTheater, status: "ONLINE", latency: "4ms", icon: "plane" },
-    { title: "VR Wings", subtitle: "Immersive Flight", category: "FLIGHT SIMULATION", name: "VR Wings Flight Arena", img: about3, status: "ONLINE", latency: "2ms", icon: "users" },
-    { title: "VR UFO 5 player", subtitle: "Multiplayer Ride", category: "THEATER SIMULATION", name: "VR UFO 5 Player Motion Pod", img: arcadeHall, status: "ONLINE", latency: "5ms", icon: "radio" },
-    { title: "VR UFO 4 player", subtitle: "Multiplayer Ride", category: "ARCADE SIMULATION", name: "VR UFO 4 Player Battle Station", img: about4, status: "ONLINE", latency: "3ms", icon: "gamepad" },
+    { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR4 Seated Simulator", img: vrImg, status: "ONLINE", latency: "4ms", icon: "plane" },
+    { title: "VR Wings", subtitle: "Immersive Flight", category: "FLIGHT SIMULATION", name: "VR Wings Experience", img: about3, status: "ONLINE", latency: "2ms", icon: "users" },
+    { title: "VR UFO 5 player", subtitle: "Group Pod Ride", category: "THEATER SIMULATION", name: "VR UFO 5 Player Motion Pod", img: arcadeHall, status: "ONLINE", latency: "5ms", icon: "radio" },
+    { title: "VR UFO 4 player", subtitle: "Group Battle", category: "ARCADE SIMULATION", name: "VR UFO 4 Player Battle Station", img: about4, status: "ONLINE", latency: "3ms", icon: "gamepad" },
     { title: "VR Thunder Dual 360", subtitle: "Combat Station", category: "ACTION SIMULATION", name: "VR Thunder Dual 360 Platform", img: ctaArcade, status: "ONLINE", latency: "4ms", icon: "zap" },
-    { title: "VR 360 Egg Chair", subtitle: "Dual Seat Pod", category: "MOTION CINEMA", name: "VR 360 Egg Chair Simulator", img: about3, status: "ONLINE", latency: "3ms", icon: "sparkles" },
-    { title: "VR Racing Motorbike", subtitle: "Speed Simulation", category: "RACING SIMULATION", name: "VR Moto Racing Simulator", img: about4, status: "ONLINE", latency: "2ms", icon: "flame" },
-    { title: "VR Standing Arena", subtitle: "360 Platform", category: "ACTIVE SIMULATION", name: "VR Standing Flight Arena", img: ctaArcade, status: "ONLINE", latency: "4ms", icon: "target" }
+    { title: "VR small platform", subtitle: "Compact Pod", category: "MOTION CINEMA", name: "VR Small Platform Simulator", img: about3, status: "ONLINE", latency: "3ms", icon: "sparkles" },
+    { title: "VR skyside 2 player", subtitle: "Co-op Flight", category: "ACTIVE SIMULATION", name: "VR Skyside 2 Player Arena", img: about4, status: "ONLINE", latency: "4ms", icon: "target" },
+    { title: "VR Ski Machine 1P", subtitle: "Active Sports", category: "SPORTS SIMULATION", name: "VR Ski Machine Single Player", img: ctaArcade, status: "ONLINE", latency: "2ms", icon: "activity" },
+    { title: "VR Single 360-exclusive", subtitle: "Solo Simulation", category: "360 MOTION EXCLUSIVE", name: "VR Single 360 Exclusive Pod", img: vrImg, status: "ONLINE", latency: "3ms", icon: "layers" },
+    { title: "VR Single 360 Fighter Jet Simulator", subtitle: "Fighter Jet Sim", category: "MILITARY SIMULATION", name: "VR Single 360 Fighter Jet Simulator", img: about3, status: "ONLINE", latency: "5ms", icon: "plane" }
   ];
 
-  const vrRangeList = siteData?.vrRange?.items || defaultRangeItems;
+  const vrRangeListRaw = (Array.isArray(siteData?.vrRange?.items) && siteData.vrRange.items.length > 0) ? siteData.vrRange.items : defaultRangeItems;
+  const vrRangeList = vrRangeListRaw.map((item, idx) => {
+    if (idx === 0) return { ...item, img: vrImg, imgUrl: vrImg };
+    return item;
+  });
   const displayedRangeItems = showAllRangeItems ? vrRangeList : vrRangeList.slice(0, 5);
 
   const defaultVrFaqs = [
     {
-      q: "1. What Is A VR Game Setup For Game Zones?",
-      a: "VR games combine 9D/3D motion platforms, VR headsets, 360-degree rotation seats, and interactive shooting/racing gear to deliver fully immersive virtual reality experiences for visitors of all age groups."
+      question: "What is included in a commercial VR gaming set?",
+      answer: "A complete commercial VR gaming set from Winera includes the VR machine unit, motion platform (where applicable), VR headsets, a pre-loaded and commercially licensed game library, safety barriers, installation by our own team, and post-installation support. Exact components vary by machine model — confirmed at the quote stage."
     },
     {
-      q: "2. How Much Space Is Required For VR Machines?",
-      a: "Compact single VR simulators start from as little as 30 sq ft, while multi-player VR arenas or VR motion platforms require 100-300 sq ft depending on the model."
+      question: "Which businesses typically need a VR games supplier in India?",
+      answer: "Family entertainment centres, malls, amusement parks, hotels, resorts, bowling centers, and standalone gaming zones are the most common businesses that work with a VR games supplier in India."
     },
     {
-      q: "3. What VR Machines Are Best For Commercial Venues?",
-      a: "Popular choices include VR Egg Cinema Chairs, VR 360 Flight Simulators, VR Racing Motorbikes, VR Standing Flight Platforms, and Multi-Player VR Target Arenas."
+      question: "What is the VR gaming setup cost in India?",
+      answer: "VR gaming setup cost in India depends on the number of machines, machine category, motion system complexity, and game library size. Pricing varies significantly between a single compact platform and a multi-machine zone with group rides."
     },
     {
-      q: "4. Does Winera Provide Turnkey VR Setup & Maintenance In India?",
-      a: "Yes! We offer complete turnkey solutions including venue 3D layout planning, equipment installation, game library configuration, card reader integration, and lifetime technical support across 50+ cities in India."
+      question: "Do VR gaming machines require a minimum ceiling height or floor space?",
+      answer: "Yes. Motion platforms and group rides typically need higher ceiling clearance than solo simulators, and floor space requirements scale with player count. Winera assesses your venue's exact dimensions before recommending machine models, since not every machine fits every space."
+    },
+    {
+      question: "How long does VR gaming machine installation take?",
+      answer: "Installation timelines depend on machine count and complexity; a single solo platform can be operational within days, while a multi-machine zone with group rides takes longer for setup and software configuration. We confirm an exact schedule at the quote stage."
+    },
+    {
+      question: "Can VR gaming machines be customised with branded content or specific game libraries?",
+      answer: "Yes. Game library selection, branding wraps, and venue-specific configuration can be tailored per machine. We confirm available customisation options for each model during the consultation."
+    },
+    {
+      question: "What happens if a VR machine breaks down after installation?",
+      answer: "Our own technicians handle servicing directly, with coverage across 50+ cities in India. For software issues, remote diagnostics are available for most machines. For hardware faults, our own team visits your site; you're not waiting on an overseas manufacturer or a disconnected logistics partner."
+    },
+    {
+      question: "How do I get started with a VR gaming machine order from Winera?",
+      answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
     }
   ];
 
@@ -175,13 +217,13 @@ export default function VrGames({ siteData }) {
       {/* 1. HEADER NAVBAR */}
       <Header headerData={header} />
 
-      {/* 2. VR GAMES HERO BANNER SECTION */}
+      {/* 2. VR GAMES HERO BANNER SECTION (MATCHING 1:1 SECOND IMAGE UI) */}
       <section className="winera-vr-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '180px',
-        paddingBottom: '90px',
-        background: `url(${heroBgImage}) center/100% 100% no-repeat`,
+        paddingTop: '165px',
+        paddingBottom: '75px',
+        background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -189,34 +231,26 @@ export default function VrGames({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', padding: '0 20px' }}>
-          {/* Main Title: VR Games */}
+        <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
+          {/* Centered Single Line Heading: Home › VR Games */}
           <h1 className="winera-vr-hero-h1" style={{
-            fontSize: '3.8rem',
-            fontWeight: '900',
-            letterSpacing: '-1px',
-            marginBottom: '10px',
-            lineHeight: 1.15
-          }}>
-            {renderTitleMarkup(siteData?.vrHero?.title, "*VR* Games", '#ffcd00')}
-          </h1>
-
-          {/* Breadcrumb Navigation: Products > VR Games */}
-          <p className="winera-vr-hero-breadcrumb" style={{
-            fontSize: '15px',
-            fontWeight: '700',
+            fontSize: '1.45rem',
+            fontWeight: '800',
             color: '#ffffff',
-            opacity: 0.9,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
-            flexWrap: 'wrap'
+            margin: 0,
+            lineHeight: 1.2,
+            textAlign: 'center'
           }}>
-            <a href="/products" style={{ color: '#ffffff', textDecoration: 'none' }}>Products</a>
-            <span style={{ color: '#ffcd00' }}>&gt;</span>
-            <span style={{ color: '#ffcd00' }}>{siteData?.vrHero?.breadcrumbText || "VR Games"}</span>
-          </p>
+            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+            <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+            <span style={{ color: '#ffcd00', fontWeight: '900' }}>
+              {siteData?.vrHero?.breadcrumbText || "VR Games"}
+            </span>
+          </h1>
         </div>
       </section>
 
@@ -261,25 +295,16 @@ export default function VrGames({ siteData }) {
               {siteData?.vrIntro?.desc || "India's ROI-first VR gaming supplier commercial-grade machines sourced, configured, and serviced by our own team across 50+ cities"}
             </p>
 
-            <a
-              href={siteData?.vrIntro?.buttonLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                color: '#ffffff',
-                fontSize: '13.5px',
-                fontWeight: '900',
-                padding: '13px 32px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
-            >
-              {siteData?.vrIntro?.buttonText || "Get Quote From Expert"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.vrIntro?.buttonLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                {siteData?.vrIntro?.buttonText || "Get Quote From Expert"}
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -333,25 +358,16 @@ export default function VrGames({ siteData }) {
               </p>
             </div>
 
-            <a
-              href={siteData?.vrMatchedVenue?.buttonLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                color: '#ffffff',
-                fontSize: '14px',
-                fontWeight: '900',
-                padding: '14px 36px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
-            >
-              {siteData?.vrMatchedVenue?.buttonText || "Get Quote From Expert"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.vrMatchedVenue?.buttonLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                {siteData?.vrMatchedVenue?.buttonText || "Get Quote From Expert"}
+              </a>
+            </div>
           </div>
 
           {/* Right Image Column: Direct Image Asset */}
@@ -683,38 +699,43 @@ export default function VrGames({ siteData }) {
               </p>
             </div>
 
-            <a
-              href={siteData?.vrEarn?.buttonLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                color: '#ffffff',
-                fontSize: '13.5px',
-                fontWeight: '900',
-                padding: '13px 32px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
-            >
-              {siteData?.vrEarn?.buttonText || "Get Quote From Expert"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.vrEarn?.buttonLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                {siteData?.vrEarn?.buttonText || "Talk to an ROI Expert"}
+              </a>
+            </div>
           </div>
 
-          {/* Right Image Feature */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
+          {/* Right Image Feature with Vector-01.png and Vector-VR backdrop on left (FIGMA 1:1) */}
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
             <img
-              src={siteData?.vrEarn?.imgUrl || vrEarnPlayer}
+              src={vectorVr}
+              alt=""
+              style={{
+                position: 'absolute',
+                left: '-5px',
+                top: '0',
+                height: '100%',
+                width: 'auto',
+                zIndex: 1,
+                pointerEvents: 'none'
+              }}
+            />
+            <img
+              src={siteData?.vrEarn?.imgUrl || vector01}
               alt="VR Gaming Zone ROI Player"
               style={{
+                position: 'relative',
+                zIndex: 2,
                 width: '100%',
-                maxWidth: '520px',
+                maxWidth: '540px',
                 height: 'auto',
-                display: 'block',
-                borderRadius: '24px'
+                display: 'block'
               }}
             />
           </div>
@@ -774,27 +795,41 @@ export default function VrGames({ siteData }) {
               const bottomCards = cards.slice(topCount);
 
               return (
-                <>
+                <div style={{ position: 'relative' }}>
                   {/* TOP ROW */}
                   <div className="winera-vr-whyus-row winera-vr-whyus-top-row" style={{
                     display: 'grid',
                     gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
-                    borderBottom: bottomCards.length > 0 ? '1.5px solid #bae6fd' : 'none',
-                    paddingBottom: bottomCards.length > 0 ? '40px' : '0'
+                    gap: '0px',
+                    position: 'relative',
+                    zIndex: 2
                   }}>
                     {topCards.map((card, cIdx) => (
                       <div
                         key={cIdx}
                         className="winera-vr-whyus-card"
                         style={{
-                          padding: '0 30px',
+                          padding: '0 35px 30px',
                           textAlign: 'center',
-                          borderRight: cIdx === topCards.length - 1 ? 'none' : '1.5px solid #bae6fd',
+                          position: 'relative',
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center'
                         }}
                       >
+                        {/* Vertical Shade/Gradient Divider Line for Top Row */}
+                        {cIdx < topCards.length - 1 && (
+                          <div className="winera-vr-whyus-vertical-divider" style={{
+                            position: 'absolute',
+                            right: 0,
+                            top: '20px',
+                            bottom: 0,
+                            width: '2px',
+                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
+                            zIndex: 3
+                          }}></div>
+                        )}
+
                         {/* Cyan Icon Box */}
                         <div style={{
                           width: '48px',
@@ -817,22 +852,35 @@ export default function VrGames({ siteData }) {
                         <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
                           {card.title}
                         </h4>
-                        <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+                        <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                           {card.desc}
                         </p>
                       </div>
                     ))}
                   </div>
 
+                   {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                   {bottomCards.length > 0 && (
+                     <div className="winera-vr-whyus-horizontal-divider" style={{
+                       width: '100%',
+                       height: '2px',
+                       background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                       position: 'relative',
+                       zIndex: 3,
+                       margin: '0 0 30px'
+                     }}></div>
+                   )}
+
                   {/* BOTTOM ROW (CENTERED ODD/EVEN REMAINDER) */}
                   {bottomCards.length > 0 && (
                     <div className="winera-vr-whyus-row winera-vr-whyus-bottom-row" style={{
                       display: 'grid',
                       gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
-                      paddingTop: '40px',
                       maxWidth: bottomCards.length === 2 ? '780px' : '100%',
                       margin: '0 auto',
-                      width: '100%'
+                      gap: '0px',
+                      position: 'relative',
+                      zIndex: 2
                     }}>
                       {bottomCards.map((card, bIdx) => (
                         <div
@@ -841,12 +889,25 @@ export default function VrGames({ siteData }) {
                           style={{
                             padding: '0 35px',
                             textAlign: 'center',
-                            borderRight: bIdx === bottomCards.length - 1 ? 'none' : '1.5px solid #bae6fd',
+                            position: 'relative',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center'
                           }}
                         >
+                          {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
+                          {bIdx < bottomCards.length - 1 && (
+                            <div className="winera-vr-whyus-vertical-divider" style={{
+                              position: 'absolute',
+                              right: 0,
+                              top: '-30px',
+                              bottom: '20px',
+                              width: '2px',
+                              background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                              zIndex: 3
+                            }}></div>
+                          )}
+
                           {/* Cyan Icon Box */}
                           <div style={{
                             width: '48px',
@@ -869,42 +930,30 @@ export default function VrGames({ siteData }) {
                           <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
                             {card.title}
                           </h4>
-                          <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+                          <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                             {card.desc}
                           </p>
                         </div>
                       ))}
                     </div>
                   )}
-                </>
+                </div>
               );
             })()}
           </div>
 
           {/* CTA: Get Free Consultation Button */}
           <div style={{ textAlign: 'center', marginTop: '45px' }}>
-            <a
-              href={siteData?.vrWhyUs?.ctaLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: 'linear-gradient(90deg, #38bdf8 0%, #0284c7 100%)',
-                color: '#ffffff',
-                fontSize: '15px',
-                fontWeight: '900',
-                padding: '14px 38px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 25px rgba(56, 189, 248, 0.35)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                textDecoration: 'none',
-                transition: 'all 0.25s ease'
-              }}
-            >
-              {siteData?.vrWhyUs?.ctaText || "Get Free Consultation"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.vrWhyUs?.ctaLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                {siteData?.vrWhyUs?.ctaText || "Get Free Consultation"}
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -912,19 +961,28 @@ export default function VrGames({ siteData }) {
       {/* 9. OUR RECENT PROJECTS SHOWCASE SECTION */}
       <ProjectsMarqueeSection
         showTopHeader={false}
-        simpleTitle={<>OUR <span style={{ color: '#38bdf8' }}>RECENT PROJECTS</span></>}
+        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Project</span></>}
+        showBottomButton={true}
+        buttonText="Know More"
       />
 
-      {/* 6. TESTIMONIALS SECTION */}
-      <TestimonialsSection siteData={siteData} />
+      {/* 10. TESTIMONIALS SECTION */}
+      <TestimonialsSection
+        testimonials={siteData?.testimonials}
+        title={siteData?.testimonialsHeader?.title}
+        subtitle={siteData?.testimonialsHeader?.subtitle}
+        highlightColor="#38bdf8"
+      />
 
-      {/* 7. RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection currentProductLink="/products/vr-games" />
+      {/* 11. RELATED PRODUCTS SECTION */}
+      <RelatedProductsSection sectionData={siteData?.vrRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
 
-      {/* 8. FAQ SECTION */}
+      {/* 12. FAQ SECTION */}
       <FaqSection
         faqList={Array.isArray(siteData?.vrFaqs) && siteData.vrFaqs.length > 0 ? siteData.vrFaqs : defaultVrFaqs}
-        faqsList={Array.isArray(siteData?.vrFaqs) && siteData.vrFaqs.length > 0 ? siteData.vrFaqs : defaultVrFaqs}
+        title={siteData?.faqsHeader?.title}
+        subtitle={siteData?.faqsHeader?.subtitle}
+        highlightColor="#38bdf8"
       />
 
       {/* 9. CTA BANNER SECTION (MATCHING SCREENSHOT 1:1) */}
@@ -991,25 +1049,16 @@ export default function VrGames({ siteData }) {
           </p>
 
 
-          <a
-            href={siteData?.header?.whatsAppUrl || "https://wa.me/919428989488"}
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              background: '#ffcd00',
-              color: '#0f172a',
-              fontSize: '13.5px',
-              fontWeight: '900',
-              padding: '12px 30px',
-              borderRadius: '12px',
-              border: '3px solid #38bdf8',
-              boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-              display: 'inline-block',
-              textDecoration: 'none'
-            }}
-          >
-            {siteData?.vrCta?.buttonText || "Talk to an ROI Expert"}
-          </a>
+          <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+            <a
+              href={siteData?.header?.whatsAppUrl || "https://wa.me/919428989488"}
+              target="_blank"
+              rel="noreferrer"
+              className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+            >
+              {siteData?.vrCta?.buttonText || "Talk to an ROI Expert"}
+            </a>
+          </div>
         </div>
       </section>
 

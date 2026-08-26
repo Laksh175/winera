@@ -100,25 +100,16 @@ export default function CtaBanner({
             </p>
           )}
 
-          <a
-            href={buttonLink}
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              background: isCentered ? '#ffcd00' : '#00a8ff',
-              color: isCentered ? '#0f172a' : '#ffffff',
-              fontSize: '13.5px',
-              fontWeight: '900',
-              padding: '12px 34px',
-              borderRadius: '25px',
-              border: isCentered ? '2px solid #38bdf8' : '2px solid #ffcd00',
-              boxShadow: isCentered ? '0 8px 24px rgba(255, 205, 0, 0.4)' : '0 8px 24px rgba(0, 168, 255, 0.4)',
-              display: 'inline-block',
-              textDecoration: 'none'
-            }}
-          >
-            {buttonText}
-          </a>
+          <div className="winera-cyan-cta-wrapper">
+            <a
+              href={buttonLink}
+              target="_blank"
+              rel="noreferrer"
+              className="winera-cyan-cta-btn"
+            >
+              <span>{buttonText}</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

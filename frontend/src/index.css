@@ -2,20 +2,20 @@
 
 :root {
   --font-main: 'Montserrat', sans-serif;
-  
+
   --bg-main: #F5F5F9;
   --bg-white: #F5F5F9;
   --bg-hero: #09132b;
-  
+
   --primary-cyan: #00a8ff;
   --primary-blue: #0056b3;
   --accent-yellow: #ffb703;
   --accent-orange: #ff7000;
-  
+
   --text-dark: #0f172a;
   --text-muted: #64748b;
   --text-light: #94a3b8;
-  
+
   --shadow-card: 0 10px 30px rgba(0, 86, 179, 0.08);
   --shadow-hover: 0 18px 40px rgba(0, 168, 255, 0.18);
 }
@@ -60,8 +60,13 @@ button {
 }
 
 @keyframes infiniteMarquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .marquee-track {
@@ -111,16 +116,58 @@ button {
   border-color: var(--primary-cyan);
 }
 
+/* Industries Carousel Navigation Buttons */
+.winera-industries-btn-left,
+.winera-industries-btn-right {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 40 !important;
+  background: linear-gradient(135deg, #00a8ff 0%, #0066ff 100%) !important;
+  color: #ffffff !important;
+  border-radius: 50% !important;
+  width: 52px !important;
+  height: 52px !important;
+  box-shadow: 0 8px 24px rgba(0, 168, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+}
+
+.winera-industries-btn-left {
+  left: -70px !important;
+}
+
+.winera-industries-btn-right {
+  right: -70px !important;
+}
+
+.winera-industries-btn-left:hover,
+.winera-industries-btn-right:hover {
+  transform: translateY(-50%) scale(1.15) !important;
+  box-shadow: 0 12px 32px rgba(0, 168, 255, 0.65), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  background: linear-gradient(135deg, #00c3ff 0%, #0055ff 100%) !important;
+}
+
+.winera-industries-btn-left:active,
+.winera-industries-btn-right:active {
+  transform: translateY(-50%) scale(0.95) !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 /* ==========================================
-   MOBILE & TABLET RESPONSIVE STYLES (≤ 768px)
+   MOBILE & TABLET RESPONSIVE STYLES (≤ 1150px)
    ========================================== */
-@media (max-width: 768px) {
-  /* Global Spacing & Typography Fixes */
-  section {
+@media (max-width: 1150px) {
+
+  /* Global Spacing & Typography Fixes (Excluding Hero Banner Sections) */
+  section:not([class*="hero"]) {
     padding-top: 40px !important;
     padding-bottom: 50px !important;
   }
@@ -134,7 +181,15 @@ html {
   div[style*="gridTemplateColumns: 1fr 520px"],
   div[style*="gridTemplateColumns: 1fr 500px"],
   div[style*="gridTemplateColumns: 1fr 480px"],
-  div[style*="gridTemplateColumns: 500px 1fr"] {
+  div[style*="gridTemplateColumns: 500px 1fr"],
+  div[style*="grid-template-columns: '1fr 520px'"],
+  div[style*="grid-template-columns: '1fr 500px'"],
+  div[style*="grid-template-columns: '1fr 480px'"],
+  div[style*="grid-template-columns: '500px 1fr'"],
+  div[style*="grid-template-columns: 1fr 520px"],
+  div[style*="grid-template-columns: 1fr 500px"],
+  div[style*="grid-template-columns: 1fr 480px"],
+  div[style*="grid-template-columns: 500px 1fr"] {
     grid-template-columns: 1fr !important;
     gap: 30px !important;
   }
@@ -169,7 +224,7 @@ html {
     justify-items: center !important;
   }
 
-  .winera-about-content-wrapper > div {
+  .winera-about-content-wrapper>div {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -188,7 +243,7 @@ html {
     margin: 0 auto 32px !important;
   }
 
-  .winera-about-bullets-grid > div {
+  .winera-about-bullets-grid>div {
     justify-content: center !important;
     text-align: center !important;
     width: 100% !important;
@@ -218,7 +273,7 @@ html {
     text-align: center !important;
   }
 
-  .winera-partner-grid > div:first-child {
+  .winera-partner-grid>div:first-child {
     text-align: center !important;
     display: flex;
     flex-direction: column;
@@ -275,23 +330,19 @@ html {
   }
 
   .winera-industries-btn-left {
-    left: 4px !important;
-    background: #00a8ff !important;
-    color: #ffffff !important;
-    border-radius: 50% !important;
-    width: 42px !important;
-    height: 42px !important;
-    box-shadow: 0 8px 20px rgba(0, 168, 255, 0.4) !important;
+    left: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 44px !important;
+    height: 44px !important;
   }
 
   .winera-industries-btn-right {
-    right: 4px !important;
-    background: #00a8ff !important;
-    color: #ffffff !important;
-    border-radius: 50% !important;
-    width: 42px !important;
-    height: 42px !important;
-    box-shadow: 0 8px 20px rgba(0, 168, 255, 0.4) !important;
+    right: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 44px !important;
+    height: 44px !important;
   }
 
   /* Our Working Process 1-card vertical stack on mobile */
@@ -305,8 +356,9 @@ html {
     gap: 18px !important;
   }
 
-  .winera-process-cards-container > div,
+  .winera-process-cards-container>div,
   .winera-process-cards-container div[style*="gridTemplateColumns"],
+  .winera-process-cards-container div[style*="grid-template-columns"],
   .winera-process-row {
     display: grid !important;
     grid-template-columns: 1fr !important;
@@ -334,7 +386,7 @@ html {
     text-align: center !important;
   }
 
-  .winera-channel-partners-grid > div:first-child {
+  .winera-channel-partners-grid>div:first-child {
     text-align: center !important;
     display: flex;
     justify-content: center;
@@ -370,7 +422,7 @@ html {
     box-shadow: 0 16px 40px rgba(0, 86, 179, 0.3) !important;
   }
 
-  .winera-cta-banner-container > div {
+  .winera-cta-banner-container>div {
     align-items: center !important;
     text-align: center !important;
     max-width: 100% !important;
@@ -383,6 +435,37 @@ html {
 
   .winera-cta-banner-container p {
     text-align: center !important;
+  }
+
+  /* Ready To Get Started Home CTA Section Mobile Responsive */
+  .winera-home-cta-card {
+    flex-direction: column !important;
+    padding: 36px 20px !important;
+    text-align: center !important;
+    border-radius: 20px !important;
+    gap: 20px !important;
+  }
+
+  .winera-home-cta-left-img,
+  .winera-home-cta-right-img {
+    display: none !important;
+  }
+
+  .winera-home-cta-h2 {
+    font-size: 1.85rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .winera-home-cta-h3 {
+    font-size: 1.15rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 12px !important;
+  }
+
+  .winera-home-cta-p {
+    font-size: 13px !important;
+    margin-bottom: 20px !important;
   }
 
   /* Mobile Footer - Gradient background & vertical contents stack */
@@ -404,7 +487,7 @@ html {
     gap: 28px !important;
   }
 
-  .winera-footer-social-contact > div:last-child div {
+  .winera-footer-social-contact>div:last-child div {
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 10px !important;
@@ -434,6 +517,8 @@ html {
 
   .winera-section-heading-container h2 {
     text-align: center !important;
+    font-size: 1.85rem !important;
+    line-height: 1.22 !important;
   }
 
   /* Center all section subheadings/paragraphs on mobile */
@@ -447,35 +532,49 @@ html {
   /* Sub-Hero Banners */
   section[style*="aspectRatio"],
   section[style*="aspect-ratio"],
+  section[style*="paddingTop: '210px'"],
+  section[style*="paddingTop: 210px"],
   section[style*="paddingTop: '180px'"],
   section[style*="paddingTop: 180px"],
+  section[style*="paddingTop: '165px'"],
+  section[style*="paddingTop: 165px"],
   section[style*="paddingTop: '160px'"],
   section[style*="paddingTop: 160px"] {
     background-size: cover !important;
     background-position: center !important;
-    padding-top: 110px !important;
-    padding-bottom: 50px !important;
+    padding-top: 210px !important;
+    padding-bottom: 55px !important;
     aspect-ratio: auto !important;
-    min-height: 240px !important;
+    min-height: 260px !important;
   }
 
   section[style*="aspectRatio"] h1,
   section[style*="aspect-ratio"] h1,
-  section[style*="paddingTop"] h1 {
-    font-size: 2.2rem !important;
+  section[style*="paddingTop"] h1,
+  .winera-hypergrid-hero-title,
+  .winera-project-hero-h1,
+  .winera-ar-hero-h1 {
+    font-size: 1.85rem !important;
+    font-weight: 900 !important;
     line-height: 1.2 !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 0px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
   }
 
   /* Universal Multi-Column Grids stack 1-column on mobile */
-  div[style*="gridTemplateColumns"] {
+  div[style*="gridTemplateColumns"],
+  div[style*="grid-template-columns"] {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }
 
   /* Retain 2 columns for small badge/icon grids */
   .winera-about-bullets-grid,
-  .winera-channel-partners-grid div[style*="gridTemplateColumns"] {
+  .winera-channel-partners-grid div[style*="gridTemplateColumns"],
+  .winera-channel-partners-grid div[style*="grid-template-columns"] {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 
@@ -493,10 +592,12 @@ html {
     padding-bottom: 50px !important;
     background-size: cover !important;
   }
+
   .winera-ar-hero-h1 {
     font-size: 2.4rem !important;
     letter-spacing: -0.5px !important;
   }
+
   .winera-ar-hero-breadcrumb {
     font-size: 13px !important;
     gap: 6px !important;
@@ -506,33 +607,40 @@ html {
   .winera-ar-supplier-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-ar-supplier-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   /* Show image first on mobile by reversing column order */
-  .winera-ar-supplier-grid > div:last-child {
+  .winera-ar-supplier-grid>div:last-child {
     order: -1;
   }
+
   .winera-ar-supplier-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-ar-supplier-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-ar-supplier-text h2 {
     font-size: 2rem !important;
     text-align: center !important;
   }
+
   .winera-ar-supplier-text p {
     max-width: 100% !important;
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
+
   .winera-ar-supplier-text a {
     margin: 0 auto !important;
   }
@@ -541,31 +649,38 @@ html {
   .winera-ar-attractions-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-ar-attractions-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   .winera-ar-attractions-img {
     order: -1;
   }
+
   .winera-ar-attractions-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-ar-attractions-text img {
     margin: 0 auto 12px !important;
   }
+
   .winera-ar-attractions-text h2 {
     font-size: 2rem !important;
     text-align: center !important;
   }
+
   .winera-ar-attractions-text p {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
+
   .winera-ar-attractions-text a {
     margin: 0 auto !important;
   }
@@ -574,24 +689,29 @@ html {
   .winera-ar-categories-section {
     padding: 50px 5vw 55px !important;
   }
+
   /* Hide desktop sidebar on mobile */
   .winera-ar-sidebar {
     display: none !important;
   }
+
   /* Show dropdown on mobile */
   .winera-ar-mobile-cat-dropdown {
     display: block !important;
   }
+
   /* Full width on mobile */
   .winera-ar-categories-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
+
   /* 1 card per row on mobile */
   .winera-ar-products-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
+
   /* Hide desktop pagination on mobile */
   .winera-ar-pagination {
     display: none !important;
@@ -603,32 +723,39 @@ html {
     background-image: none !important;
     background-color: #F5F5F9 !important;
   }
+
   .winera-ar-features-section h3 {
     font-size: 1.8rem !important;
   }
+
   .winera-ar-feature-row {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
     text-align: center !important;
   }
+
   .winera-ar-feature-col-text {
     display: contents !important;
   }
+
   .winera-ar-feature-title {
     order: 1 !important;
     text-align: center !important;
     margin: 0 auto !important;
     width: 100% !important;
   }
+
   .winera-ar-feature-title img {
     margin: 0 auto 8px !important;
   }
+
   .winera-ar-feature-col-img {
     order: 2 !important;
     width: 100% !important;
     max-width: 340px !important;
     margin: 0 auto !important;
   }
+
   .winera-ar-feature-desc {
     order: 3 !important;
     text-align: center !important;
@@ -641,16 +768,19 @@ html {
     padding: 50px 5vw 55px !important;
     text-align: center !important;
   }
+
   .winera-ar-earn-grid {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }
+
   .winera-ar-earn-section h2 {
     font-size: 1.9rem !important;
     text-align: center !important;
   }
+
   /* Hide decorative gamers image on mobile */
-  .winera-ar-earn-grid > div:last-child {
+  .winera-ar-earn-grid>div:last-child {
     display: none !important;
   }
 
@@ -658,6 +788,7 @@ html {
   .winera-ar-whyus-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-ar-whyus-row {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
@@ -665,22 +796,27 @@ html {
     padding-bottom: 0 !important;
     padding-top: 0 !important;
   }
+
   .winera-ar-whyus-top-row {
     border-bottom: none !important;
     padding-bottom: 0 !important;
   }
+
   .winera-ar-whyus-bottom-row {
     padding-top: 24px !important;
   }
+
   .winera-ar-whyus-card {
     border-right: none !important;
     border-bottom: 1.5px solid #bae6fd !important;
     padding: 0 0 24px 0 !important;
   }
+
   .winera-ar-whyus-bottom-row .winera-ar-whyus-card:last-child {
     border-bottom: none !important;
     padding-bottom: 0 !important;
   }
+
   .winera-ar-whyus-section h2 {
     font-size: 2rem !important;
   }
@@ -711,8 +847,8 @@ html {
   }
 
   .winera-arcade-hero-h1 {
-    font-size: 2.4rem !important;
-    letter-spacing: -0.5px !important;
+    font-size: 1.25rem !important;
+    letter-spacing: -0.2px !important;
   }
 
   .winera-arcade-hero-breadcrumb {
@@ -721,19 +857,25 @@ html {
   }
 
   /* Home Hero CTA Button – smaller on mobile */
-  .winera-hero-cta-btn {
-    font-size: 13px !important;
-    padding: 8px 22px 8px 10px !important;
-    gap: 9px !important;
-    border-width: 2px !important;
+  .winera-hero-cta-wrapper {
+    border-radius: 14px !important;
+    padding: 2px !important;
   }
 
-  .winera-hero-cta-btn > div {
+  .winera-hero-cta-btn {
+    font-size: 13.5px !important;
+    padding: 7px 20px 7px 9px !important;
+    gap: 10px !important;
+    border-radius: 12px !important;
+    transform: rotate(-1.5deg) !important;
+  }
+
+  .winera-hero-cta-icon {
     width: 32px !important;
     height: 32px !important;
   }
 
-  .winera-hero-cta-btn > div svg {
+  .winera-hero-cta-icon svg {
     width: 18px !important;
     height: 18px !important;
   }
@@ -756,12 +898,12 @@ html {
     padding: 50px 5vw 60px !important;
   }
 
-  .winera-arcade-intro-section > div {
+  .winera-arcade-intro-section>div {
     grid-template-columns: 1fr !important;
     text-align: center !important;
   }
 
-  .winera-arcade-intro-section > div > div {
+  .winera-arcade-intro-section>div>div {
     text-align: center !important;
   }
 
@@ -772,7 +914,7 @@ html {
     padding: 50px 5vw 60px !important;
   }
 
-  .winera-commercial-section > div {
+  .winera-commercial-section>div {
     grid-template-columns: 1fr !important;
   }
 
@@ -783,7 +925,7 @@ html {
     flex-direction: column !important;
   }
 
-  .winera-commercial-text-container > * {
+  .winera-commercial-text-container>* {
     text-align: center !important;
   }
 
@@ -829,6 +971,10 @@ html {
     border-bottom: none !important;
   }
 
+  .winera-arcade-why-container {
+    gap: 16px !important;
+  }
+
   .winera-arcade-why-card {
     border-right: none !important;
     background: #ffffff !important;
@@ -836,6 +982,10 @@ html {
     border-radius: 18px !important;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04) !important;
     border: 1px solid #e2e8f0 !important;
+  }
+
+  .winera-arcade-why-divider {
+    display: none !important;
   }
 
   /* Related Products Section Mobile Single Card Carousel */
@@ -886,24 +1036,16 @@ html {
     width: 100% !important;
   }
 
-  .winera-mobile-products-carousel-toolbar {
-    display: flex !important;
-  }
-
-
-
-
-
-
-
-
+  /* About Us */
   .winera-desktop-pagination {
     display: none !important;
   }
 
   /* Contact Us Page Mobile Adjustments */
   div[style*="gridTemplateColumns: '1fr 1fr'"],
-  div[style*="gridTemplateColumns: 1fr 1fr"] {
+  div[style*="gridTemplateColumns: 1fr 1fr"],
+  div[style*="grid-template-columns: '1fr 1fr'"],
+  div[style*="grid-template-columns: 1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
 
@@ -911,31 +1053,39 @@ html {
   .winera-vr-supplier-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-vr-supplier-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
-  .winera-vr-supplier-grid > div:first-child {
-    order: -1; /* image above text */
+
+  .winera-vr-supplier-grid>div:first-child {
+    order: -1;
+    /* image above text */
   }
+
   .winera-vr-supplier-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-vr-supplier-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-vr-supplier-text h2 {
     font-size: 2rem !important;
     text-align: center !important;
   }
+
   .winera-vr-supplier-text p {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
+
   .winera-vr-supplier-text a {
     margin: 0 auto !important;
   }
@@ -943,31 +1093,39 @@ html {
   .winera-vr-attractions-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-vr-attractions-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   .winera-vr-attractions-img {
-    order: -1; /* image above text */
+    order: -1;
+    /* image above text */
   }
+
   .winera-vr-attractions-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-vr-attractions-text img {
     margin: 0 auto 12px !important;
   }
+
   .winera-vr-attractions-text h2 {
     font-size: 2rem !important;
     text-align: center !important;
   }
+
   .winera-vr-attractions-text p {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
+
   .winera-vr-attractions-text a {
     margin: 0 auto !important;
   }
@@ -975,13 +1133,16 @@ html {
   .winera-vr-range-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-vr-range-section h2 {
     font-size: 2rem !important;
   }
+
   .winera-vr-range-grid {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
   }
+
   .winera-vr-preview-card {
     min-height: 350px !important;
     padding: 24px !important;
@@ -990,34 +1151,43 @@ html {
   .winera-vr-reliability-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-vr-reliability-grid {
     grid-template-columns: 1fr !important;
     gap: 30px !important;
   }
-  .winera-vr-reliability-grid > div:last-child {
-    order: -1; /* image above text */
+
+  .winera-vr-reliability-grid>div:last-child {
+    order: -1;
+    /* image above text */
   }
+
   .winera-vr-reliability-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-vr-reliability-text img {
     margin: 0 auto 12px !important;
   }
+
   .winera-vr-reliability-text h2 {
     font-size: 2rem !important;
     text-align: center !important;
   }
+
   .winera-vr-reliability-text h3 {
     text-align: center !important;
   }
+
   .winera-vr-reliability-text p {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
+
   .winera-vr-reliability-text div[style*="display: flex"] {
     justify-content: center !important;
   }
@@ -1033,38 +1203,46 @@ html {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }
+
   .winera-vr-earn-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-vr-earn-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-vr-earn-text h2 {
     font-size: 1.9rem !important;
     text-align: center !important;
   }
+
   .winera-vr-earn-text p {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
+
   .winera-vr-earn-text a {
     margin: 0 auto !important;
   }
+
   /* Hide decorative gamer image in earn section on mobile */
-  .winera-vr-earn-grid > div:last-child {
+  .winera-vr-earn-grid>div:last-child {
     display: none !important;
   }
 
   .winera-vr-whyus-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-vr-whyus-section h2 {
     font-size: 2rem !important;
   }
+
   .winera-vr-whyus-row {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
@@ -1072,18 +1250,22 @@ html {
     padding-bottom: 0 !important;
     padding-top: 0 !important;
   }
+
   .winera-vr-whyus-top-row {
     border-bottom: none !important;
     padding-bottom: 0 !important;
   }
+
   .winera-vr-whyus-bottom-row {
     padding-top: 24px !important;
   }
+
   .winera-vr-whyus-card {
     border-right: none !important;
     border-bottom: 1.5px solid #bae6fd !important;
     padding: 0 0 24px 0 !important;
   }
+
   .winera-vr-whyus-bottom-row .winera-vr-whyus-card:last-child {
     border-bottom: none !important;
     padding-bottom: 0 !important;
@@ -1095,9 +1277,11 @@ html {
     padding-bottom: 70px !important;
     min-height: auto !important;
   }
+
   .winera-bumpercar-hero-h1 {
     font-size: 2.2rem !important;
   }
+
   .winera-bumpercar-hero-breadcrumb {
     font-size: 13px !important;
   }
@@ -1105,29 +1289,37 @@ html {
   .winera-bumpercar-supplier-section {
     padding: 50px 5vw 35px !important;
   }
+
   .winera-bumpercar-supplier-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
-  .winera-bumpercar-supplier-grid > div:last-child {
-    order: -1; /* image above text */
+
+  .winera-bumpercar-supplier-grid>div:last-child {
+    order: -1;
+    /* image above text */
   }
+
   .winera-bumpercar-supplier-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-bumpercar-supplier-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bumpercar-supplier-text h2 {
     font-size: 2rem !important;
     text-align: center !important;
   }
+
   .winera-bumpercar-supplier-text p {
     text-align: center !important;
   }
+
   .winera-bumpercar-supplier-text a {
     margin: 0 auto !important;
   }
@@ -1135,20 +1327,26 @@ html {
   .winera-bumpercar-intro-section {
     padding: 20px 5vw 55px !important;
   }
+
   .winera-bumpercar-intro-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   .winera-bumpercar-intro-img {
-    order: -1; /* image above text */
+    order: -1;
+    /* image above text */
   }
+
   .winera-bumpercar-intro-text {
     text-align: center !important;
   }
+
   .winera-bumpercar-intro-text h2 {
     font-size: 1.8rem !important;
     text-align: center !important;
   }
+
   .winera-bumpercar-intro-text p {
     text-align: center !important;
   }
@@ -1156,13 +1354,16 @@ html {
   .winera-bumpercar-thrill-section {
     padding: 20px 5vw 40px !important;
   }
+
   .winera-bumpercar-thrill-card {
     padding: 24px 20px 20px !important;
     border-radius: 20px !important;
   }
+
   .winera-bumpercar-thrill-card h3 {
     font-size: 1.35rem !important;
   }
+
   .winera-bumpercar-thrill-card p {
     font-size: 12.5px !important;
   }
@@ -1170,23 +1371,29 @@ html {
   .winera-bumpercar-specs-section {
     padding: 20px 5vw 55px !important;
   }
+
   .winera-bumpercar-specs-container {
-    background: #09132b !important; /* solid fallback blue-black */
+    background: #09132b !important;
+    /* solid fallback blue-black */
     padding: 30px 20px 24px !important;
     border-radius: 24px !important;
     min-height: auto !important;
   }
+
   .winera-bumpercar-specs-container h2 {
     font-size: 1.8rem !important;
   }
+
   .winera-bumpercar-specs-container img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bumpercar-specs-table-card {
     padding: 16px 18px !important;
     border-radius: 16px !important;
     margin-bottom: 24px !important;
   }
+
   .winera-bumpercar-specs-container a {
     margin: 0 auto !important;
     display: inline-block !important;
@@ -1194,28 +1401,37 @@ html {
 
   .winera-bumpercar-options-section {
     padding: 50px 5vw 55px !important;
-    background: #F5F5F9 !important; /* remove bg image */
+    background: #F5F5F9 !important;
+    /* remove bg image */
   }
+
   .winera-bumpercar-options-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   .winera-bumpercar-options-img {
-    display: none !important; /* hide decorative collage to keep layout clean */
+    display: none !important;
+    /* hide decorative collage to keep layout clean */
   }
+
   .winera-bumpercar-options-text {
     text-align: center !important;
   }
+
   .winera-bumpercar-options-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bumpercar-options-text h2 {
     font-size: 1.8rem !important;
     text-align: center !important;
   }
+
   .winera-bumpercar-options-text p {
     text-align: center !important;
   }
+
   .winera-bumpercar-options-text div[style*="display: flex"] {
     text-align: left !important;
   }
@@ -1223,15 +1439,19 @@ html {
   .winera-bumpercar-comparison-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-bumpercar-comparison-section h2 {
     font-size: 1.8rem !important;
   }
+
   .winera-bumpercar-comparison-section img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bumpercar-comparison-desktop {
     display: none !important;
   }
+
   .winera-bumpercar-comparison-mobile {
     display: flex !important;
   }
@@ -1239,32 +1459,41 @@ html {
   .winera-bumpercar-investment-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-bumpercar-investment-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   .winera-bumpercar-investment-img {
-    order: -1; /* image above text */
+    order: -1;
+    /* image above text */
   }
+
   .winera-bumpercar-investment-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-bumpercar-investment-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bumpercar-investment-text h2 {
     font-size: 1.8rem !important;
     text-align: center !important;
   }
+
   .winera-bumpercar-investment-text p {
     text-align: center !important;
   }
+
   .winera-bumpercar-investment-text div[style*="display: flex"] {
     text-align: left !important;
   }
+
   .winera-bumpercar-investment-text a {
     margin: 0 auto !important;
   }
@@ -1272,12 +1501,15 @@ html {
   .winera-bumpercar-whyus-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-bumpercar-whyus-section h2 {
     font-size: 1.8rem !important;
   }
+
   .winera-bumpercar-whyus-section img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bumpercar-whyus-row {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
@@ -1285,21 +1517,29 @@ html {
     padding-bottom: 0 !important;
     padding-top: 0 !important;
   }
+
   .winera-bumpercar-whyus-top-row {
     border-bottom: none !important;
     padding-bottom: 0 !important;
   }
+
   .winera-bumpercar-whyus-bottom-row {
     padding-top: 24px !important;
   }
+
   .winera-bumpercar-whyus-card {
     border-right: none !important;
     border-bottom: 1.5px solid #bae6fd !important;
     padding: 0 0 24px 0 !important;
   }
+
   .winera-bumpercar-whyus-bottom-row .winera-bumpercar-whyus-card:last-child {
     border-bottom: none !important;
     padding-bottom: 0 !important;
+  }
+
+  .winera-bumpercar-whyus-divider {
+    display: none !important;
   }
 
   /* Bowling Alley Page Mobile Adjustments */
@@ -1308,9 +1548,11 @@ html {
     padding-bottom: 50px !important;
     min-height: auto !important;
   }
+
   .winera-bowling-hero-h1 {
     font-size: 2.2rem !important;
   }
+
   .winera-bowling-hero-breadcrumb {
     font-size: 13px !important;
   }
@@ -1318,52 +1560,64 @@ html {
   .winera-bowling-supplier-section {
     padding: 50px 5vw 35px !important;
   }
+
   .winera-bowling-supplier-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
-  .winera-bowling-supplier-grid > div:last-child {
-    order: -1; /* image above text */
+
+  .winera-bowling-supplier-grid>div:last-child {
+    order: -1;
+    /* image above text */
   }
+
   .winera-bowling-supplier-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-bowling-supplier-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bowling-supplier-text h2 {
     font-size: 2rem !important;
     text-align: center !important;
   }
+
   .winera-bowling-supplier-text p {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
+
   .winera-bowling-supplier-text a {
     margin: 0 auto !important;
   }
+
   .winera-bowling-supplier-img {
     height: 300px !important;
     width: 100% !important;
     max-width: 400px !important;
     margin: 0 auto !important;
   }
-  .winera-bowling-supplier-img > div:nth-child(1) {
+
+  .winera-bowling-supplier-img>div:nth-child(1) {
     width: 220px !important;
     height: 180px !important;
     border-radius: 20px !important;
   }
-  .winera-bowling-supplier-img > div:nth-child(2) {
+
+  .winera-bowling-supplier-img>div:nth-child(2) {
     width: 240px !important;
     height: 190px !important;
     border-radius: 20px !important;
     border: 4px solid #ffffff !important;
   }
-  .winera-bowling-supplier-img > div:nth-child(3) {
+
+  .winera-bowling-supplier-img>div:nth-child(3) {
     bottom: 25px !important;
     right: 25px !important;
     padding: 6px 14px !important;
@@ -1372,69 +1626,119 @@ html {
   .winera-bowling-premium-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-bowling-premium-container {
     text-align: center !important;
   }
+
   .winera-bowling-premium-container h2 {
     font-size: 1.8rem !important;
     text-align: center !important;
   }
+
   .winera-bowling-premium-container img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bowling-premium-container p {
     text-align: center !important;
   }
+
   .winera-bowling-premium-container a {
     margin: 0 auto !important;
   }
+
   .winera-bowling-pins-explode {
-    display: none !important; /* hide decorative pins on mobile */
+    display: none !important;
+    /* hide decorative pins on mobile */
   }
 
   .winera-bowling-types-section {
     padding: 50px 5vw 55px !important;
-    background: #F5F5F9 !important; /* remove bg image */
+    background: #F5F5F9 !important;
+    /* remove bg image */
   }
+
   .winera-bowling-types-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
-  .winera-bowling-types-grid > div {
+
+  .winera-bowling-types-grid>div {
     order: 0 !important;
   }
+
   .winera-bowling-types-pills-col {
-    display: none !important; /* hide absolute pills on mobile */
+    display: none !important;
+    /* hide absolute pills on mobile */
   }
+
   .winera-bowling-types-mobile-specs {
     display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 10px !important;
   }
+
+  .winera-bowling-types-mobile-specs > div {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    gap: 12px !important;
+  }
+
+  .winera-bowling-types-mobile-specs > div > span:last-child {
+    text-align: right !important;
+    word-break: break-word !important;
+    max-width: 65% !important;
+  }
+
+  .winera-bowling-types-btn-row {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
   .winera-bowling-types-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    width: 100% !important;
   }
+
   .winera-bowling-types-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bowling-types-text h3 {
     font-size: 1.8rem !important;
     text-align: center !important;
+    white-space: normal !important;
   }
+
   .winera-bowling-types-text p {
     text-align: center !important;
   }
+
   .winera-bowling-types-text a {
     margin: 0 auto !important;
+  }
+
+  .winera-bowling-premium-title {
+    white-space: normal !important;
   }
 
   .winera-bowling-roi-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-bowling-roi-grid {
     grid-template-columns: 1fr !important;
   }
+
   .winera-bowling-roi-text {
     padding: 0 !important;
     text-align: center !important;
@@ -1442,52 +1746,72 @@ html {
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-bowling-roi-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bowling-roi-text h3 {
     font-size: 1.8rem !important;
     text-align: center !important;
   }
+
   .winera-bowling-roi-text p {
     text-align: center !important;
   }
+
   .winera-bowling-roi-text a {
     margin: 0 auto !important;
   }
-  .winera-bowling-roi-img {
-    display: none !important; /* hide diagonal image on mobile */
-  }
 
+  .winera-bowling-roi-img {
+    display: none !important;
+    /* hide diagonal image on mobile */
+  }
+}
+
+@media (max-width: 1150px) {
   .winera-bowling-whyus-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-bowling-whyus-grid {
-    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 28px !important;
   }
+
   .winera-bowling-whyus-img {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+    flex: none !important;
+    width: 100% !important;
+    max-width: 320px !important;
   }
+
   .winera-bowling-whyus-img img {
     width: 200px !important;
     height: auto !important;
   }
+
   .winera-bowling-whyus-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-bowling-whyus-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-bowling-whyus-text h2 {
     font-size: 1.8rem !important;
     text-align: center !important;
+    white-space: normal !important;
   }
+
   .winera-bowling-whyus-text p {
     text-align: center !important;
   }
@@ -1498,9 +1822,11 @@ html {
     padding-bottom: 50px !important;
     min-height: auto !important;
   }
+
   .winera-softplay-hero-h1 {
     font-size: 2.2rem !important;
   }
+
   .winera-softplay-hero-breadcrumb {
     font-size: 13px !important;
   }
@@ -1508,32 +1834,41 @@ html {
   .winera-softplay-supplier-section {
     padding: 50px 5vw 35px !important;
   }
+
   .winera-softplay-supplier-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
-  .winera-softplay-supplier-grid > div:last-child {
-    order: -1; /* image collage above text */
+
+  .winera-softplay-supplier-grid>div:last-child {
+    order: -1;
+    /* image collage above text */
   }
+
   .winera-softplay-supplier-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-softplay-supplier-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-softplay-supplier-text h2 {
     font-size: 2rem !important;
     text-align: center !important;
   }
+
   .winera-softplay-supplier-text p {
     text-align: center !important;
   }
+
   .winera-softplay-supplier-text a {
     margin: 0 auto !important;
   }
+
   .winera-softplay-supplier-img {
     min-height: 280px !important;
     height: 280px !important;
@@ -1541,60 +1876,73 @@ html {
     max-width: 400px !important;
     margin: 0 auto !important;
   }
-  .winera-softplay-supplier-img > div:nth-child(1) {
+
+  .winera-softplay-supplier-img>div:nth-child(1) {
     width: 260px !important;
     height: 200px !important;
     border-radius: 100px 30px 30px 30px !important;
     top: 10px !important;
     left: 40px !important;
   }
-  .winera-softplay-supplier-img > div:nth-child(2) {
+
+  .winera-softplay-supplier-img>div:nth-child(2) {
     width: 260px !important;
     height: 200px !important;
     border-radius: 100px 20px 20px 20px !important;
   }
-  .winera-softplay-supplier-img > div:nth-child(3) {
+
+  .winera-softplay-supplier-img>div:nth-child(3) {
     width: 190px !important;
     height: 160px !important;
     border-radius: 20px 20px 90px 20px !important;
     bottom: -10px !important;
     right: 15px !important;
   }
-  .winera-softplay-supplier-img > div:nth-child(4) {
+
+  .winera-softplay-supplier-img>div:nth-child(4) {
     width: 70px !important;
     height: 70px !important;
     border-width: 3px !important;
   }
-  .winera-softplay-supplier-img > div:nth-child(4) img {
+
+  .winera-softplay-supplier-img>div:nth-child(4) img {
     width: 50px !important;
   }
 
   .winera-softplay-intro-section {
     padding: 20px 5vw 55px !important;
   }
+
   .winera-softplay-intro-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   .winera-softplay-intro-img {
-    order: -1 !important; /* image above text */
+    order: -1 !important;
+    /* image above text */
   }
+
   .winera-softplay-intro-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-softplay-intro-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-softplay-intro-text h2 {
     font-size: 1.8rem !important;
     text-align: center !important;
   }
+
   .winera-softplay-intro-text p {
     text-align: center !important;
   }
+
   .winera-softplay-intro-text a {
     margin: 0 auto !important;
   }
@@ -1602,23 +1950,44 @@ html {
   .winera-softplay-specs-section {
     padding: 20px 5vw 55px !important;
   }
+
   .winera-softplay-specs-container {
-    background: #09132b !important; /* solid fallback blue-black */
+    background: #09132b !important;
+    /* solid fallback blue-black */
     padding: 30px 20px 24px !important;
     border-radius: 24px !important;
     min-height: auto !important;
   }
+
   .winera-softplay-specs-container h2 {
     font-size: 1.8rem !important;
   }
-  .winera-softplay-specs-container img {
-    margin: 0 auto 10px !important;
-  }
+
   .winera-softplay-specs-table-card {
-    padding: 16px 18px !important;
+    padding: 16px 14px !important;
     border-radius: 16px !important;
     margin-bottom: 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
+
+  .winera-softplay-specs-table-card th {
+    font-size: 15px !important;
+    padding-bottom: 12px !important;
+  }
+
+  .winera-softplay-specs-table-card td {
+    font-size: 13px !important;
+    padding: 8px 6px 8px 0 !important;
+  }
+
+  .winera-softplay-specs-container img {
+    margin: 0 auto 10px !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
   .winera-softplay-specs-container a {
     margin: 0 auto !important;
     display: inline-block !important;
@@ -1626,37 +1995,47 @@ html {
 
   .winera-softplay-materials-section {
     padding: 50px 5vw 55px !important;
-    background: #F5F5F9 !important; /* remove bg image */
+    background: #F5F5F9 !important;
+    /* remove bg image */
   }
+
   .winera-softplay-materials-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   .winera-softplay-materials-text {
     text-align: center !important;
   }
+
   .winera-softplay-materials-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-softplay-materials-text h2 {
     font-size: 1.8rem !important;
     text-align: center !important;
   }
+
   .winera-softplay-materials-text p {
     text-align: center !important;
   }
+
   .winera-softplay-materials-text div[style*="position: relative"] {
     max-width: 440px !important;
     margin: 0 auto 20px !important;
   }
+
   .winera-softplay-materials-text div[style*="height: 340px"] {
     height: 240px !important;
   }
+
   .winera-softplay-materials-text div[style*="right: -15px"] {
     right: 10px !important;
     bottom: 10px !important;
     padding: 8px 16px !important;
   }
+
   .winera-softplay-materials-points {
     padding-top: 0 !important;
   }
@@ -1664,101 +2043,126 @@ html {
   .winera-softplay-timeline-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-softplay-timeline-section h2 {
     font-size: 1.8rem !important;
   }
+
   .winera-softplay-timeline-section img {
     margin: 0 auto 10px !important;
   }
+
   .winera-softplay-timeline-line {
     display: none !important;
   }
+
   .winera-softplay-timeline-row {
     display: flex !important;
     flex-direction: column !important;
     gap: 16px !important;
     margin-bottom: 45px !important;
   }
+
   .winera-softplay-timeline-badge {
     position: static !important;
     transform: none !important;
     margin: 0 auto 10px !important;
   }
+
   .winera-softplay-timeline-text-col {
     order: 2 !important;
     text-align: center !important;
   }
+
   .winera-softplay-timeline-text-col h3 {
     font-size: 1.4rem !important;
     text-align: center !important;
   }
+
   .winera-softplay-timeline-text-col p {
     text-align: center !important;
   }
+
   .winera-softplay-timeline-img-col {
     order: 1 !important;
     width: 100% !important;
   }
-  .winera-softplay-timeline-img-col > div {
+
+  .winera-softplay-timeline-img-col>div {
     height: 200px !important;
   }
 
   .winera-softplay-roi-section {
     padding: 50px 5vw 55px !important;
-    background: #F5F5F9 !important; /* remove bg image */
+    background: #F5F5F9 !important;
+    /* remove bg image */
   }
+
   .winera-softplay-roi-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   .winera-softplay-roi-text {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-softplay-roi-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-softplay-roi-text h2 {
     font-size: 1.8rem !important;
     text-align: center !important;
   }
+
   .winera-softplay-roi-text p {
     text-align: center !important;
   }
+
   .winera-softplay-roi-text a {
     margin: 0 auto !important;
   }
+
   .winera-softplay-roi-img {
     order: -1 !important;
     width: 100% !important;
     max-width: 440px !important;
     margin: 0 auto !important;
   }
-  .winera-softplay-roi-img > div:nth-child(1) {
+
+  .winera-softplay-roi-img>div:nth-child(1) {
     height: 180px !important;
     border-radius: 60px 20px 20px 20px !important;
   }
-  .winera-softplay-roi-img > div:nth-child(2) > div {
+
+  .winera-softplay-roi-img>div:nth-child(2)>div {
     height: 130px !important;
   }
-  .winera-softplay-roi-img > div:nth-child(2) > div:nth-child(1) {
+
+  .winera-softplay-roi-img>div:nth-child(2)>div:nth-child(1) {
     border-radius: 20px 20px 20px 60px !important;
   }
-  .winera-softplay-roi-img > div:nth-child(2) > div:nth-child(2) {
+
+  .winera-softplay-roi-img>div:nth-child(2)>div:nth-child(2) {
     border-radius: 20px 60px 20px 20px !important;
   }
 
   .winera-softplay-whyus-section {
     padding: 50px 5vw 55px !important;
   }
+
   .winera-softplay-whyus-section h2 {
     font-size: 1.8rem !important;
   }
+
   .winera-softplay-whyus-section img {
     margin: 0 auto 10px !important;
   }
+
   .winera-softplay-whyus-row {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
@@ -1766,26 +2170,52 @@ html {
     padding-bottom: 0 !important;
     padding-top: 0 !important;
   }
+
   .winera-softplay-whyus-top-row {
     border-bottom: none !important;
     padding-bottom: 0 !important;
   }
+
   .winera-softplay-whyus-bottom-row {
     padding-top: 24px !important;
   }
+
   .winera-softplay-whyus-card {
     border-right: none !important;
     border-bottom: 1.5px solid #bae6fd !important;
     padding: 0 0 24px 0 !important;
   }
+
   .winera-softplay-whyus-bottom-row .winera-softplay-whyus-card:last-child {
     border-bottom: none !important;
     padding-bottom: 0 !important;
   }
 
+  .winera-softplay-whyus-divider,
+  .winera-softplay-whyus-horizontal-divider,
+  .winera-vr-whyus-vertical-divider,
+  .winera-vr-whyus-horizontal-divider,
+  .winera-ar-whyus-vertical-divider,
+  .winera-ar-whyus-horizontal-divider,
+  .winera-hypergrid-whyus-vertical-divider,
+  .winera-hypergrid-whyus-horizontal-divider,
+  .winera-amusement-whyus-vertical-divider,
+  .winera-amusement-whyus-horizontal-divider {
+    display: none !important;
+  }
+
   /* Global Hero Banner Responsive Sizing overrides */
-  .winera-home-hero-section,
+  .winera-home-hero-section {
+    background-size: cover !important;
+    background-position: center !important;
+    aspect-ratio: auto !important;
+    min-height: auto !important;
+    padding-top: 140px !important;
+    padding-bottom: 95px !important;
+  }
+
   .winera-about-hero-section,
+  .winera-contact-hero-section,
   .winera-vr-hero-section,
   .winera-ar-hero-section,
   .winera-arcade-hero-section,
@@ -1812,11 +2242,11 @@ html {
   }
 
   .winera-about-welcome-collage {
-    height: 300px !important;
+    height: auto !important;
     width: 100% !important;
   }
 
-  .winera-about-welcome-collage > div:first-child {
+  .winera-about-welcome-collage>div:first-child {
     width: 85% !important;
     height: 240px !important;
   }
@@ -1865,7 +2295,7 @@ html {
     display: none !important;
   }
 
-  .winera-about-purpose-grid > div > div:first-child {
+  .winera-about-purpose-grid>div>div:first-child {
     margin-left: 20px !important;
   }
 
@@ -1879,7 +2309,7 @@ html {
     padding-bottom: 50px !important;
   }
 
-  .winera-about-mindmap-section > div:first-child {
+  .winera-about-mindmap-section>div:first-child {
     padding-bottom: 50px !important;
     min-height: auto !important;
     background-size: cover !important;
@@ -1913,8 +2343,8 @@ html {
     gap: 12px !important;
   }
 
-  .winera-about-mindmap-left > div,
-  .winera-about-mindmap-right > div {
+  .winera-about-mindmap-left>div,
+  .winera-about-mindmap-right>div {
     width: 100% !important;
     box-sizing: border-box !important;
     justify-content: flex-start !important;
@@ -1961,9 +2391,1571 @@ html {
 }
 
 @media (max-width: 480px) {
-  h1, h2 {
+
+  h1,
+  h2 {
     font-size: 1.8rem !important;
     line-height: 1.25 !important;
   }
 }
 
+/* Home Hero CTA Button (Exact design from user screenshot) */
+.winera-hero-cta-wrapper {
+  position: relative;
+  display: inline-block;
+  background: #ffcd00;
+  border-radius: 18px;
+  padding: 3px 4px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.winera-hero-cta-wrapper:hover {
+  transform: translateY(-3px) scale(1.025);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+}
+
+.winera-hero-cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 32px 10px 12px;
+  background: #ffffff;
+  border-radius: 14px;
+  transform: rotate(-1.5deg);
+  transform-origin: center;
+  color: #0b1320;
+  font-weight: 800;
+  font-size: 18.5px;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.winera-hero-cta-wrapper:hover .winera-hero-cta-btn {
+  transform: rotate(-0.5deg);
+}
+
+.winera-hero-cta-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(37, 211, 102, 0.4);
+  flex-shrink: 0;
+}
+
+.winera-hero-cta-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Cyan Blue Offset CTA Button (Exact design from Talk to an ROI Expert screenshot) */
+.winera-cyan-cta-wrapper {
+  position: relative;
+  display: inline-block;
+  background: #ffcd00;
+  border-radius: 18px;
+  padding: 3px 4px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.winera-cyan-cta-wrapper:hover {
+  transform: translateY(-2.5px) scale(1.025);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+}
+
+.winera-cyan-cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 36px;
+  background: #38bdf8;
+  border-radius: 14px;
+  transform: rotate(-1.5deg);
+  transform-origin: center;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.winera-cyan-cta-wrapper:hover .winera-cyan-cta-btn {
+  transform: rotate(-0.5deg);
+}
+
+/* Small variant for card/inline CTAs */
+.winera-cyan-cta-wrapper-sm {
+  border-radius: 13px !important;
+  padding: 2px 3px !important;
+}
+
+.winera-cyan-cta-btn-sm {
+  padding: 7px 22px !important;
+  font-size: 13px !important;
+  border-radius: 10px !important;
+}
+
+/* White Button with Cyan Border & Offset Backdrop Tab (Safety-Certified Installation Card) */
+.winera-white-cyan-cta-wrapper {
+  position: relative;
+  display: inline-block;
+  background: #38bdf8;
+  border-radius: 12px;
+  padding: 0 0 4px 5px;
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.winera-white-cyan-cta-wrapper:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.35);
+}
+
+.winera-white-cyan-cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 22px;
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 13px;
+  border-radius: 10px;
+  border: 1.5px solid #00a8ff;
+  transform: rotate(-1.5deg);
+  transform-origin: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.25s ease;
+}
+
+.winera-white-cyan-cta-wrapper:hover .winera-white-cyan-cta-btn {
+  transform: rotate(-0.5deg);
+}
+
+/* Process Cards Offset Accent Backdrops */
+.winera-process-card-wrapper-cyan {
+  position: relative;
+  height: 100%;
+}
+
+.winera-process-card-wrapper-cyan::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: -11px;
+  width: calc(100% - 48px);
+  height: calc(100% - 45px);
+  background: #38bdf8;
+  border-radius: 28px;
+  border-bottom-left-radius: 18px;
+  border-top-right-radius: 18px;
+  z-index: 0;
+}
+
+.winera-process-card-wrapper-yellow {
+  position: relative;
+  height: 100%;
+}
+
+.winera-process-card-wrapper-yellow::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  right: -11px;
+  width: calc(100% - 48px);
+  height: calc(100% - 45px);
+  background: #ffcd00;
+  border-radius: 28px;
+  border-bottom-right-radius: 18px;
+  border-top-left-radius: 18px;
+  z-index: 0;
+}
+
+.winera-process-inner-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
+}
+
+/* Partner Section Box Offset Accent Wrappers */
+.winera-partner-box-wrapper-yellow {
+  position: relative;
+  width: 100%;
+}
+
+.winera-partner-box-wrapper-yellow::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -5px;
+  width: calc(100% - 40px);
+  height: calc(100% - 35px);
+  background: #ffcd00;
+  border-radius: 22px;
+  border-bottom-left-radius: 16px;
+  border-top-right-radius: 16px;
+  z-index: 0;
+}
+
+.winera-partner-box-yellow {
+  position: relative;
+  z-index: 1;
+  background: #fffdf0;
+  border: 1.5px solid #fef08a;
+  border-radius: 20px;
+  padding: 20px 24px;
+  text-align: left;
+  box-shadow: 0 8px 25px rgba(255, 205, 0, 0.08);
+}
+
+.winera-partner-box-wrapper-cyan {
+  position: relative;
+  width: 100%;
+}
+
+.winera-partner-box-wrapper-cyan::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -5px;
+  width: calc(100% - 40px);
+  height: calc(100% - 35px);
+  background: #38bdf8;
+  border-radius: 22px;
+  border-bottom-left-radius: 16px;
+  border-top-right-radius: 16px;
+  z-index: 0;
+}
+
+.winera-partner-box-cyan {
+  position: relative;
+  z-index: 1;
+  background: #e0f2fe;
+  border: 1.5px solid #bae6fd;
+  border-radius: 20px;
+  padding: 20px 24px;
+  text-align: left;
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.08);
+}
+
+@media (max-width: 992px) {
+  .winera-contact-page-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
+/* CONTACT US CARDS ACCENT TABS MATCHING SCREENSHOT 1:1 */
+.winera-contact-card-wrapper-cyan {
+  position: relative;
+  width: 100%;
+}
+
+.winera-contact-card-wrapper-yellow {
+  position: relative;
+  width: 100%;
+}
+
+/* FORM PLACEHOLDER SOFT OPACITY STYLING */
+input::placeholder,
+textarea::placeholder,
+.winera-form-input::placeholder {
+  color: #94a3b8 !important;
+  opacity: 0.55 !important;
+}
+
+/* WHY CHOOSE WINERA INTERNATIONAL GRID RESPONSIVE STYLING */
+@media (max-width: 900px) {
+  .winera-why-winera-grid-wrapper {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .winera-why-winera-grid-wrapper > div {
+    border-right: none !important;
+    border-bottom: 1.5px solid #7dd3fc !important;
+  }
+}
+@media (max-width: 992px) {
+  .winera-bowling-premium-title {
+    white-space: normal !important;
+    font-size: 2.1rem !important;
+  }
+}
+
+/* ==========================================================================
+   PROJECT PAGE & HYPERGRID PAGE FULL RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 992px) {
+  /* Hero Sections Padding Fix across all sub-hero pages */
+  .winera-project-hero-section,
+  .winera-hypergrid-hero-section,
+  .winera-ar-hero-section,
+  .winera-vr-hero-section,
+  .winera-bumpercar-hero-section,
+  .winera-softplay-hero-section,
+  .winera-arcade-hero-section,
+  .winera-amusement-hero-section,
+  .winera-bowling-hero-section,
+  section[class*="hero"] {
+    padding-top: 210px !important;
+    padding-bottom: 60px !important;
+    min-height: 260px !important;
+  }
+
+  /* Project Page Responsiveness */
+  .winera-project-block-grid,
+  .winera-project-client-grid,
+  .winera-project-solution-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    text-align: center !important;
+  }
+
+  .winera-project-block-text,
+  .winera-project-client-text,
+  .winera-project-solution-text {
+    text-align: center !important;
+  }
+
+  .winera-project-block-text img,
+  .winera-project-client-text img,
+  .winera-project-solution-text img {
+    margin: 0 auto 12px !important;
+  }
+
+  .winera-project-client-text p,
+  .winera-project-solution-text p {
+    font-size: 17px !important;
+    line-height: 1.6 !important;
+    text-align: center !important;
+  }
+
+  .winera-project-basic-card {
+    padding: 35px 24px !important;
+    border-radius: 32px !important;
+    min-height: auto !important;
+  }
+
+  .winera-project-basic-card h3 {
+    font-size: 1.9rem !important;
+    text-align: center !important;
+  }
+
+  /* Hypergrid Page Responsiveness */
+  .winera-hypergrid-supplier-grid,
+  .winera-hypergrid-banner-grid,
+  .winera-hypergrid-whyus-grid,
+  .winera-hypergrid-roi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    text-align: center !important;
+  }
+
+  .winera-hypergrid-supplier-text,
+  .winera-hypergrid-banner-text,
+  .winera-hypergrid-roi-text {
+    text-align: center !important;
+  }
+
+  .winera-hypergrid-supplier-text p,
+  .winera-hypergrid-banner-text p,
+  .winera-hypergrid-roi-text p {
+    text-align: center !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .winera-hypergrid-supplier-img,
+  .winera-hypergrid-banner-img,
+  .winera-hypergrid-roi-img {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .winera-hypergrid-supplier-img img,
+  .winera-hypergrid-banner-img img,
+  .winera-hypergrid-roi-img img {
+    width: 100% !important;
+    max-width: 520px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  /* Hypergrid Why Us & Specs Mobile Background Fixes */
+  .winera-hypergrid-whyus-section {
+    background: #e0f2fe !important;
+    padding: 45px 4vw !important;
+  }
+
+  .winera-hypergrid-specs-container {
+    background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%) !important;
+    background-size: cover !important;
+    padding: 35px 16px !important;
+  }
+
+  /* Project Page Image Responsiveness */
+  .winera-project-block-img,
+  .winera-project-client-img,
+  .winera-project-solution-img {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 20px 0 !important;
+  }
+
+  .winera-project-block-img img,
+  .winera-project-client-img img,
+  .winera-project-solution-img img {
+    width: 100% !important;
+    max-width: 520px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  /* Project Gallery Section Mobile Background Fix */
+  .winera-project-gallery-section {
+    background: #e0f2fe !important;
+    padding: 45px 4vw !important;
+    margin: 0 !important;
+  }
+
+  /* Safety Standards Page Responsiveness */
+  .winera-safety-hero-section {
+    padding-top: 210px !important;
+    padding-bottom: 60px !important;
+    min-height: 260px !important;
+  }
+
+  .winera-safety-intro-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    text-align: center !important;
+  }
+
+  .winera-safety-intro-text {
+    text-align: center !important;
+  }
+
+  .winera-safety-intro-text p {
+    text-align: center !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .winera-safety-intro-img {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .winera-safety-intro-img img {
+    width: 100% !important;
+    max-width: 580px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-safety-standards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .winera-safety-card-wide {
+    grid-column: auto !important;
+    max-width: 100% !important;
+  }
+
+  .winera-safety-standards-h2,
+  .winera-safety-material-h2 {
+    white-space: normal !important;
+    flex-wrap: wrap !important;
+    font-size: 1.8rem !important;
+  }
+
+  .winera-safety-card h3 {
+    white-space: normal !important;
+  }
+
+  .winera-safety-material-section {
+    background: #e0f2fe !important;
+    padding: 45px 4vw !important;
+  }
+
+  .winera-safety-material-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  .winera-safety-material-img {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .winera-safety-material-img img {
+    width: 100% !important;
+    max-width: 520px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-safety-electrical-section {
+    padding: 45px 4vw !important;
+  }
+
+  .winera-safety-electrical-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  .winera-safety-electrical-img {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .winera-safety-electrical-img img {
+    width: 100% !important;
+    max-width: 520px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-safety-structure-section {
+    padding: 50px 4vw !important;
+  }
+
+  .winera-safety-structure-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .winera-safety-structure-h2 {
+    font-size: 1.8rem !important;
+  }
+
+  /* Amusement Park Page Responsiveness */
+  .winera-amusement-supplier-grid,
+  .winera-amusement-options-grid,
+  .winera-amusement-roi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    text-align: center !important;
+  }
+
+  .winera-amusement-supplier-text,
+  .winera-amusement-supplier-text h2,
+  .winera-amusement-options-section h2,
+  .winera-amusement-roi-grid h2 {
+    text-align: center !important;
+  }
+
+  .winera-amusement-supplier-text p,
+  .winera-amusement-options-section p,
+  .winera-amusement-roi-grid p {
+    text-align: center !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .winera-amusement-supplier-text img,
+  .winera-amusement-options-section img,
+  .winera-amusement-roi-grid img {
+    margin: 0 auto 10px !important;
+  }
+
+  .winera-amusement-options-section {
+    padding: 50px 5vw 55px !important;
+    background: #f0f9ff !important; /* solid fallback light blue on mobile */
+  }
+
+  .winera-amusement-title-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+}
+
+/* Safety Cards Gradient Border & Background Shading (Matching Reference Screenshot 1:1) */
+.winera-safety-card {
+  position: relative !important;
+  background: linear-gradient(180deg, #cce8ff 0%, #eaf5ff 55%, #ffffff 100%) !important;
+  border-radius: 18px !important;
+  border: none !important;
+  padding: 22px 28px !important;
+  box-shadow: 0 10px 28px rgba(0, 174, 239, 0.1), 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+  overflow: hidden !important;
+}
+
+.winera-safety-card p {
+  font-size: 14.5px !important;
+}
+
+.winera-safety-rect-card,
+.winera-safety-rect-card h3,
+.winera-safety-rect-card p {
+  text-align: left !important;
+}
+
+.winera-safety-card::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 18px !important;
+  padding: 1px !important;
+  background: linear-gradient(180deg, #00AEEF 0%, rgba(0, 174, 239, 0.35) 60%, #FFFFFF 100%) !important;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  -webkit-mask-composite: xor !important;
+  mask-composite: exclude !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 600px) {
+  /* Project Page Mobile Adjustments */
+  .winera-project-hero-section {
+    padding-top: 150px !important;
+    padding-bottom: 60px !important;
+    min-height: 380px !important;
+  }
+
+  .winera-project-hero-section h2 {
+    font-size: 1.55rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .winera-project-block-section,
+  .winera-project-client-section,
+  .winera-project-solution-section,
+  .winera-project-basic-section,
+  .winera-project-gallery-section {
+    padding: 30px 4vw 45px !important;
+  }
+
+  .winera-project-block-text h2 {
+    font-size: 1.55rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .winera-project-client-section h3,
+  .winera-project-solution-section h3,
+  .winera-project-gallery-section h3 {
+    font-size: 1.65rem !important;
+  }
+
+  .winera-project-client-text p,
+  .winera-project-solution-text p {
+    font-size: 14.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  .winera-project-basic-card {
+    padding: 24px 14px !important;
+    border-radius: 24px !important;
+  }
+
+  /* Hypergrid Specs & Project Basic Info Mobile Table Fixes */
+  .winera-hypergrid-specs-container,
+  .winera-project-basic-card {
+    padding: 30px 14px !important;
+    border-radius: 24px !important;
+    min-height: auto !important;
+  }
+
+  .winera-hypergrid-specs-card,
+  .winera-project-basic-table-box {
+    padding: 16px 12px !important;
+    border-radius: 18px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-hypergrid-specs-card table {
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
+
+  .winera-hypergrid-specs-card table th,
+  .winera-hypergrid-specs-card table td {
+    padding: 10px 4px !important;
+    font-size: 12px !important;
+    word-break: break-word !important;
+  }
+
+  .winera-project-basic-table-box > div {
+    padding: 12px 10px !important;
+  }
+
+  .winera-project-basic-table-box span {
+    font-size: 12px !important;
+    word-break: break-word !important;
+  }
+
+  .winera-project-basic-card div[style*="padding: '16px 36px'"] {
+    padding: 12px 14px !important;
+  }
+
+  .winera-project-frame-bg {
+    top: -12px !important;
+    right: -12px !important;
+    bottom: 12px !important;
+    left: 12px !important;
+    border-radius: 14px !important;
+  }
+
+  .winera-project-gallery-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Hypergrid Page Mobile Adjustments */
+  .winera-hypergrid-hero-section {
+    padding-top: 210px !important;
+    padding-bottom: 55px !important;
+    min-height: 260px !important;
+  }
+
+  .winera-hypergrid-intro-section,
+  .winera-hypergrid-banner-section,
+  .winera-hypergrid-specs-section,
+  .winera-hypergrid-why-us-section,
+  .winera-hypergrid-roi-section,
+  .winera-hypergrid-why-winera {
+    padding: 35px 4vw 45px !important;
+  }
+
+  .winera-hypergrid-intro-section h2,
+  .winera-hypergrid-banner-section h2,
+  .winera-hypergrid-specs-section h2,
+  .winera-hypergrid-why-us-section h2,
+  .winera-hypergrid-roi-section h2,
+  .winera-hypergrid-why-winera h2 {
+    font-size: 1.65rem !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .winera-project-hero-section,
+  .winera-hypergrid-hero-section,
+  .winera-ar-hero-section,
+  .winera-vr-hero-section,
+  .winera-bumpercar-hero-section,
+  .winera-softplay-hero-section,
+  .winera-arcade-hero-section,
+  .winera-amusement-hero-section,
+  .winera-bowling-hero-section,
+  section[class*="hero"] {
+    padding-top: 140px !important;
+    padding-bottom: 70px !important;
+    min-height: 320px !important;
+  }
+
+  .winera-hypergrid-hero-title,
+  .winera-project-hero-h1,
+  .winera-ar-hero-h1,
+  .winera-safety-hero-h1 {
+    font-size: 1.45rem !important;
+    gap: 8px !important;
+  }
+
+  .winera-hypergrid-intro-section h2,
+  .winera-hypergrid-banner-section h2,
+  .winera-hypergrid-specs-section h2,
+  .winera-hypergrid-why-us-section h2,
+  .winera-hypergrid-roi-section h2,
+  .winera-hypergrid-why-winera h2,
+  .winera-project-block-text h2,
+  .winera-project-client-section h3,
+  .winera-project-solution-section h3,
+  .winera-project-gallery-section h3,
+  .winera-safety-intro-text h2 {
+    font-size: 1.4rem !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .winera-project-hero-section,
+  .winera-hypergrid-hero-section,
+  .winera-safety-hero-section,
+  .winera-ar-hero-section,
+  .winera-vr-hero-section,
+  .winera-bumpercar-hero-section,
+  .winera-softplay-hero-section,
+  .winera-arcade-hero-section,
+  .winera-amusement-hero-section,
+  .winera-bowling-hero-section,
+  section[class*="hero"] {
+    padding-top: 130px !important;
+    padding-bottom: 60px !important;
+    min-height: 300px !important;
+  }
+
+  .winera-hypergrid-hero-title,
+  .winera-project-hero-h1,
+  .winera-ar-hero-h1,
+  .winera-safety-hero-h1 {
+    font-size: 1.25rem !important;
+    gap: 6px !important;
+  }
+
+  .winera-hypergrid-intro-section h2,
+  .winera-hypergrid-banner-section h2,
+  .winera-hypergrid-specs-section h2,
+  .winera-hypergrid-why-us-section h2,
+  .winera-hypergrid-roi-section h2,
+  .winera-hypergrid-why-winera h2,
+  .winera-project-block-text h2,
+  .winera-project-client-section h3,
+  .winera-project-solution-section h3,
+  .winera-project-gallery-section h3,
+  .winera-safety-intro-text h2 {
+    font-size: 1.25rem !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+  }
+}
+
+/* ==========================================================================
+   SAFETY STANDARDS PAGE RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Desktop Base Rules */
+.winera-safety-material-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.winera-safety-material-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 580px;
+  position: relative;
+  margin-left: 8%;
+  z-index: 1;
+}
+
+.winera-safety-material-img {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-left: -50%;
+  position: relative;
+  z-index: 10;
+}
+
+.winera-safety-material-img img {
+  width: 125%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Tablet & Laptop Adjustments (<= 992px) */
+@media (max-width: 992px) {
+  .winera-safety-intro-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .winera-safety-intro-img {
+    margin: 0 auto !important;
+  }
+
+  .winera-safety-intro-text {
+    text-align: center !important;
+  }
+
+  .winera-safety-intro-text div[style*="position: relative"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .winera-safety-intro-text img {
+    margin: 0 auto 10px !important;
+  }
+
+  .winera-safety-material-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .winera-safety-material-cards {
+    margin-left: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .winera-safety-material-img {
+    margin-left: 0 !important;
+    justify-content: center !important;
+  }
+
+  .winera-safety-material-img img {
+    width: 100% !important;
+    max-width: 420px !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-safety-electrical-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .winera-safety-electrical-img {
+    margin-top: 10px !important;
+  }
+
+  .winera-safety-structure-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px 20px !important;
+  }
+}
+
+/* Mobile Devices (<= 768px) */
+@media (max-width: 768px) {
+  .winera-safety-hero-section {
+    padding-top: 170px !important;
+    padding-bottom: 50px !important;
+  }
+
+  .winera-safety-intro-section,
+  .winera-safety-standards-section,
+  .winera-safety-material-section,
+  .winera-safety-electrical-section,
+  .winera-safety-structure-section,
+  .winera-safety-why-matters-section {
+    padding: 45px 5vw !important;
+  }
+
+  .winera-safety-standards-h2,
+  .winera-safety-material-h2,
+  .winera-safety-electrical-h2,
+  .winera-safety-structure-h2,
+  .winera-safety-why-h2 {
+    font-size: 1.85rem !important;
+    line-height: 1.25 !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    white-space: normal !important;
+    gap: 6px 8px !important;
+  }
+
+  .winera-safety-material-h2,
+  .winera-safety-electrical-h2 {
+    justify-content: flex-start !important;
+  }
+
+  .winera-safety-standards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .winera-safety-card {
+    padding: 22px 18px !important;
+  }
+
+  .winera-safety-card h3 {
+    font-size: 1.05rem !important;
+  }
+
+  .winera-safety-structure-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .winera-cta-banner-container {
+    padding: 40px 16px !important;
+    min-height: auto !important;
+  }
+
+  .winera-cta-banner-container img[alt*="Build Yours Now"] {
+    display: none !important;
+  }
+
+  .winera-cta-banner-container h2 {
+    font-size: 2rem !important;
+    margin-bottom: 20px !important;
+  }
+}
+
+/* Small Mobile (<= 480px) */
+@media (max-width: 480px) {
+  .winera-safety-standards-h2,
+  .winera-safety-material-h2,
+  .winera-safety-electrical-h2,
+  .winera-safety-structure-h2,
+  .winera-safety-why-h2 {
+    font-size: 1.55rem !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .winera-safety-material-h2,
+  .winera-safety-electrical-h2 {
+    text-align: left !important;
+    justify-content: flex-start !important;
+  }
+
+  .winera-safety-watermark-num {
+    font-size: 5.5rem !important;
+  }
+
+  .winera-cta-banner-container h2 {
+    font-size: 1.65rem !important;
+  }
+
+  .winera-cta-banner-container a {
+    font-size: 13.5px !important;
+    padding: 12px 24px !important;
+  }
+}
+
+/* ==========================================================================
+   TRAMPOLINE PARK PAGE RESPONSIVE STYLES
+   ========================================================================== */
+@media (max-width: 992px) {
+  .winera-trampoline-intro-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .winera-trampoline-intro-text {
+    text-align: center !important;
+  }
+  .winera-trampoline-intro-text img {
+    margin: 0 auto 10px !important;
+  }
+  .winera-trampoline-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .winera-trampoline-why-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .winera-trampoline-roi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .winera-trampoline-custom-container {
+    padding-right: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .winera-trampoline-mascot-img {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    margin: 24px auto 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  .winera-trampoline-mascot-img img {
+    width: 140px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .winera-trampoline-custom-container {
+    padding-right: 0 !important;
+  }
+  .winera-trampoline-custom-container h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+  .winera-trampoline-custom-container h2 br {
+    display: inline !important;
+  }
+  .winera-trampoline-custom-container p {
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+    text-align: center !important;
+  }
+  .winera-trampoline-hero-section {
+    padding-top: 140px !important;
+    padding-bottom: 50px !important;
+    min-height: auto !important;
+  }
+  .winera-trampoline-hero-h1 {
+    font-size: 1.15rem !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    gap: 6px !important;
+  }
+
+@media (max-width: 480px) {
+  .winera-trampoline-hero-h1 {
+    font-size: 1rem !important;
+    white-space: nowrap !important;
+    gap: 4px !important;
+  }
+}
+  .winera-trampoline-hero-p {
+    font-size: 14px !important;
+    margin-bottom: 24px !important;
+  }
+  .winera-section-title {
+    font-size: 1.5rem !important;
+    line-height: 1.25 !important;
+  }
+  .winera-trampoline-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .winera-trampoline-custom-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    text-align: center !important;
+  }
+  .winera-mascot-img {
+    max-width: 120px !important;
+    margin: 0 auto !important;
+  }
+  .winera-trampoline-specs-card {
+    padding: 24px 16px !important;
+    background-size: cover !important;
+    border-radius: 18px !important;
+  }
+  .winera-specs-table-container {
+    padding: 14px 12px !important;
+    border-radius: 14px !important;
+  }
+  .winera-spec-label {
+    width: 44% !important;
+    font-size: 13px !important;
+    padding: 8px 6px !important;
+  }
+  .winera-spec-val {
+    font-size: 13px !important;
+    padding: 8px 6px !important;
+  }
+  .winera-trampoline-inside-frame {
+    padding: 30px 16px 24px !important;
+    background-size: cover !important;
+  }
+  .winera-zone-tabs-bar {
+    justify-content: flex-start !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-bottom: 20px !important;
+  }
+  .winera-trampoline-zone-card {
+    grid-template-columns: 1fr !important;
+    padding: 24px 18px !important;
+    gap: 20px !important;
+  }
+  .winera-why-top-grid, .winera-why-bottom-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+  .winera-why-h2 {
+    font-size: 1.6rem !important;
+    white-space: normal !important;
+    line-height: 1.25 !important;
+  }
+  .winera-v-line {
+    display: none !important;
+  }
+  .winera-trampoline-cta-card {
+    padding: 36px 16px !important;
+    border-radius: 18px !important;
+  }
+  .winera-cta-h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+  .winera-cta-p {
+    font-size: 14px !important;
+  }
+  .winera-cta-p br {
+    display: none !important;
+  }
+}
+
+/* Zone Navigation Arrow Buttons Hover Effects */
+.winera-zone-nav-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #28b4ee;
+  border: none;
+  box-shadow: 0 4px 14px rgba(40, 180, 238, 0.35);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #ffffff;
+  flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.winera-zone-nav-btn:hover {
+  background: #0284c7;
+  transform: scale(1.12);
+  box-shadow: 0 6px 22px rgba(2, 132, 199, 0.55);
+}
+
+.winera-zone-nav-btn:active {
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+   EXTRA SMALL MOBILE DEVICES (320px, 375px, 425px) FULL RESPONSIVE OVERRIDES
+   ========================================================================== */
+@media (max-width: 992px) {
+  .winera-home-hero-section h1 {
+    font-size: 2.1rem !important;
+    line-height: 1.22 !important;
+    display: block !important;
+    text-align: center !important;
+  }
+  .winera-home-hero-section h1 > span {
+    display: block !important;
+  }
+  .winera-home-hero-section h1 span span {
+    display: inline !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .winera-home-hero-section {
+    padding-top: 130px !important;
+    padding-bottom: 85px !important;
+  }
+
+  .winera-about-hero-section h1 {
+    font-size: 1.8rem !important;
+    line-height: 1.22 !important;
+  }
+
+  .winera-section-heading-container h2 {
+    font-size: 1.55rem !important;
+    line-height: 1.22 !important;
+  }
+
+  .winera-contact-svg-border {
+    display: none !important;
+  }
+
+  .winera-contact-phones-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .winera-contact-form-card {
+    padding: 24px 16px !important;
+  }
+
+  .winera-contact-form-card .winera-cyan-cta-btn {
+    padding: 11px 18px !important;
+    font-size: 13px !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .winera-home-hero-section h1 {
+    font-size: 1.65rem !important;
+    line-height: 1.22 !important;
+    text-shadow: 0 3px 15px rgba(0,0,0,0.95) !important;
+    display: block !important;
+    text-align: center !important;
+  }
+
+  .winera-home-hero-section h1 > span {
+    display: block !important;
+  }
+  
+  .winera-home-hero-section h1 span span {
+    display: inline !important;
+  }
+
+  .winera-about-bullets-grid {
+    grid-template-columns: 1fr !important;
+    justify-items: flex-start !important;
+    text-align: left !important;
+    gap: 10px !important;
+  }
+
+  .winera-about-bullets-grid > div {
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  .winera-home-cta-card {
+    padding: 28px 14px !important;
+    border-radius: 16px !important;
+  }
+
+  .winera-home-cta-h2 {
+    font-size: 1.55rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .winera-home-cta-h3 {
+    font-size: 1.05rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .winera-home-cta-p {
+    font-size: 12.5px !important;
+  }
+}
+
+/* Responsive utility for all yellow stroke line images across the entire app */
+img[src*="yellow-stroke-line"] {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* ==========================================================================
+   ROI PAGE RESPONSIVE STYLES
+   ========================================================================== */
+@media (max-width: 992px) {
+  .winera-roi-hero-section {
+    padding-top: 210px !important;
+    padding-bottom: 60px !important;
+    min-height: 260px !important;
+  }
+
+  .winera-roi-intro-grid,
+  .winera-roi-pain-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    text-align: center !important;
+  }
+
+  .winera-roi-intro-text,
+  .winera-roi-pain-text {
+    text-align: center !important;
+  }
+
+  .winera-roi-intro-text img,
+  .winera-roi-pain-text img {
+    margin: 0 auto 12px !important;
+  }
+
+  .winera-roi-intro-text p,
+  .winera-roi-pain-text p {
+    text-align: center !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .winera-roi-intro-text a {
+    margin: 0 auto !important;
+  }
+
+  .winera-roi-intro-img {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .winera-roi-intro-img img {
+    width: 100% !important;
+    max-width: 380px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-roi-pain-cards {
+    max-width: 100% !important;
+  }
+
+  .winera-roi-comparison-section {
+    background: #F5F5F9 !important;
+    padding: 50px 4vw 60px !important;
+  }
+
+  .winera-roi-comparison-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .winera-roi-wrong-side,
+  .winera-roi-right-side {
+    align-items: center !important;
+  }
+
+  .winera-roi-wrong-side > div,
+  .winera-roi-right-side > div {
+    align-items: center !important;
+  }
+
+  .winera-roi-pill-red,
+  .winera-roi-pill-green {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-roi-center-circle-red,
+  .winera-roi-center-circle-green {
+    display: none !important;
+  }
+
+  .winera-roi-process-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  .winera-roi-get-grid {
+    grid-template-columns: 1fr !important;
+    gap: 45px !important;
+  }
+
+  .winera-roi-get-card-box {
+    flex-direction: column !important;
+    gap: 30px !important;
+    padding: 30px 20px !important;
+  }
+
+  .winera-roi-get-content {
+    padding-left: 0 !important;
+    text-align: center !important;
+  }
+
+  .winera-roi-get-content img {
+    margin: 0 auto 14px !important;
+  }
+
+  .winera-roi-get-content h2,
+  .winera-roi-get-content p {
+    text-align: center !important;
+  }
+
+  .winera-roi-checklist-grid {
+    grid-template-columns: 1fr !important;
+    gap: 50px !important;
+  }
+
+  .winera-roi-checklist-card {
+    padding: 60px 24px 40px !important;
+    margin-top: 40px !important;
+  }
+
+  .winera-roi-checklist-col-left,
+  .winera-roi-checklist-col-right {
+    align-items: center !important;
+  }
+
+  .winera-roi-checklist-col-right {
+    margin-top: 30px !important;
+  }
+
+  .winera-roi-checklist-pill-left,
+  .winera-roi-checklist-pill-right {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin-bottom: 20px !important;
+    margin-top: 10px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .winera-roi-get-section {
+    padding: 50px 4vw 60px !important;
+  }
+
+  .winera-roi-get-content h2 {
+    font-size: 1.65rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .winera-roi-process-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .winera-roi-process-section {
+    padding: 50px 4vw 60px !important;
+  }
+
+  .winera-roi-process-card {
+    height: 240px !important;
+  }
+
+  .winera-roi-hero-section {
+    padding-top: 180px !important;
+    padding-bottom: 50px !important;
+    min-height: 220px !important;
+  }
+
+  .winera-roi-hero-h1 {
+    font-size: 1.8rem !important;
+    gap: 8px !important;
+  }
+
+  .winera-roi-intro-section,
+  .winera-roi-pain-section {
+    padding: 40px 4vw 50px !important;
+  }
+
+  .winera-roi-intro-text h2,
+  .winera-roi-pain-text h2 {
+    font-size: 1.55rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .winera-roi-intro-text p,
+  .winera-roi-pain-text p {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .winera-roi-hero-section {
+    padding-top: 160px !important;
+    padding-bottom: 45px !important;
+    min-height: 200px !important;
+  }
+
+  .winera-roi-hero-h1 {
+    font-size: 1.45rem !important;
+    gap: 6px !important;
+  }
+
+  .winera-roi-intro-text h2,
+  .winera-roi-pain-text h2 {
+    font-size: 1.35rem !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+  }
+}

@@ -12,6 +12,7 @@ import whyChooseBottomBg from '../assets/why-choose-bottom-bg.png';
 import wineraWBadge from '../assets/winera-w-badge.png';
 import founderUnnit from '../assets/founder-unnit.png';
 import aboutLounge from '../assets/about-lounge.png';
+import welcomeWineraImg from '../assets/welcome-to-winera.png';
 import { Shield, Users, Target, Eye, TrendingUp, Maximize2, Clock, RefreshCw, Award, Headset, Settings } from 'lucide-react';
 
 export default function AboutUs({ siteData }) {
@@ -28,9 +29,9 @@ export default function AboutUs({ siteData }) {
       <section className="winera-about-hero-section" style={{
         position: 'relative',
         width: '100%',
-        aspectRatio: '1920 / 640',
-        paddingTop: '160px',
-        paddingBottom: '80px',
+        aspectRatio: '1920 / 460',
+        paddingTop: '120px',
+        paddingBottom: '50px',
         background: `url(${aboutHeroBg}) center/100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
@@ -41,10 +42,10 @@ export default function AboutUs({ siteData }) {
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <h1 style={{
-            fontSize: '3.8rem',
+            fontSize: '3.0rem',
             fontWeight: '900',
             letterSpacing: '-1px',
-            marginBottom: '10px',
+            marginBottom: '8px',
             lineHeight: 1.15
           }}>
             {(() => {
@@ -89,55 +90,17 @@ export default function AboutUs({ siteData }) {
           gap: '60px',
           alignItems: 'center'
         }}>
-          <div className="winera-about-welcome-collage" style={{ position: 'relative', width: '100%', height: '480px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{
-              position: 'relative',
-              width: '82%',
-              height: '360px',
-              borderRadius: '28px',
-              overflow: 'hidden',
-              boxShadow: '0 20px 45px rgba(0,0,0,0.15)',
-              background: `url(${siteData?.aboutWelcome?.mainImgUrl || aboutLounge}) center/cover no-repeat`
-            }}></div>
-            <div className="winera-about-collage-sub-1" style={{
-              position: 'absolute',
-              top: '10px',
-              right: '25px',
-              width: '180px',
-              height: '145px',
-              borderRadius: '20px',
-              overflow: 'hidden',
-              boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
-              border: '4px solid #ffffff',
-              background: `url(${siteData?.aboutWelcome?.topRightImgUrl || about1}) center/cover no-repeat`,
-              zIndex: 10
-            }}></div>
-            <div className="winera-about-collage-sub-2" style={{
-              position: 'absolute',
-              top: '160px',
-              right: '-10px',
-              width: '200px',
-              height: '150px',
-              borderRadius: '20px',
-              overflow: 'hidden',
-              boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
-              border: '4px solid #ffffff',
-              background: `url(${siteData?.aboutWelcome?.midRightImgUrl || about4}) center/cover no-repeat`,
-              zIndex: 15
-            }}></div>
-            <div className="winera-about-collage-sub-3" style={{
-              position: 'absolute',
-              bottom: '10px',
-              left: '10px',
-              width: '210px',
-              height: '165px',
-              borderRadius: '20px',
-              overflow: 'hidden',
-              boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
-              border: '4px solid #ffffff',
-              background: `url(${siteData?.aboutWelcome?.bottomLeftImgUrl || about3}) center/cover no-repeat`,
-              zIndex: 20
-            }}></div>
+          <div className="winera-about-welcome-collage" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <img
+              src={welcomeWineraImg}
+              alt="Welcome to Winera International 13+ Years Experience"
+              style={{
+                width: '100%',
+                maxHeight: '480px',
+                objectFit: 'contain',
+                display: 'block'
+              }}
+            />
           </div>
 
           <div style={{ textAlign: 'left' }}>
@@ -163,21 +126,28 @@ export default function AboutUs({ siteData }) {
             </p>
 
             <div className="winera-about-welcome-box-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '32px' }}>
-              <div style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 20px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
+              <div style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 18px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
                 <div style={{ color: '#00a8ff', marginBottom: '10px' }}><Shield style={{ width: '24px', height: '24px', fill: '#00a8ff', color: '#00a8ff' }} /></div>
-                <h4 style={{ fontSize: '0.98rem', fontWeight: '800', color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box1Title || "Quality Assurance"}</h4>
+                <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box1Title || "Quality Assurance"}</h4>
                 <p style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '500', lineHeight: 1.45 }}>{siteData?.aboutWelcome?.box1Desc || "At Winera International, Quality Is Key. Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety. We Don't Just Build Equipment; We Build Experiences You Can Trust."}</p>
               </div>
-              <div style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 20px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
+              <div style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 18px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
                 <div style={{ color: '#00a8ff', marginBottom: '10px' }}><Users style={{ width: '24px', height: '24px', color: '#00a8ff' }} /></div>
-                <h4 style={{ fontSize: '0.98rem', fontWeight: '800', color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box2Title || "Your Success, Our Commitment"}</h4>
+                <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box2Title || "Your Success, Our Commitment"}</h4>
                 <p style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '500', lineHeight: 1.45 }}>{siteData?.aboutWelcome?.box2Desc || "At Winera International, We Prioritize Your Satisfaction. From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step."}</p>
               </div>
             </div>
 
-            <a href={siteData?.aboutWelcome?.btnLink || "https://wa.me/919428989488"} target="_blank" rel="noreferrer" style={{ background: '#00a8ff', color: '#ffffff', fontSize: '13px', fontWeight: '800', padding: '12px 36px', borderRadius: '25px', border: '2px solid #ffcd00', boxShadow: '0 8px 22px rgba(0, 168, 255, 0.3)', display: 'inline-block', textDecoration: 'none' }}>
-              {siteData?.aboutWelcome?.btnText || "Contact Us Now"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.aboutWelcome?.btnLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                <span>{siteData?.aboutWelcome?.btnText || "Contact Us Now"}</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -188,10 +158,10 @@ export default function AboutUs({ siteData }) {
           <div className="winera-about-stats-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
             {(() => {
               const defaultStats = [
-                { number: "14+", label: "YEARS OF EXPERIENCE" },
-                { number: "200+", label: "Project Completed" },
-                { number: "98%", label: "Happy Clients" },
-                { number: "50+", label: "Cities Covered" }
+                { number: "14+", label: "YEARS EXPERIENCE" },
+                { number: "200+", label: "Installation" },
+                { number: "50+", label: "Country Served" },
+                { number: "98%", label: "CUSTOMER SATISFACTION" }
               ];
 
               const dbStats = Array.isArray(siteData?.aboutStats?.items)
@@ -207,9 +177,16 @@ export default function AboutUs({ siteData }) {
               });
 
               return stats.map((stat, idx) => (
-                <div key={idx} style={{ background: '#F5F5F9', borderRadius: '16px', padding: '24px 20px', boxShadow: '0 12px 35px rgba(0, 168, 255, 0.12)', borderTop: '3px solid #38bdf8', textAlign: 'left' }}>
-                  <h3 style={{ fontSize: '2.2rem', fontWeight: '900', color: '#0284c7', lineHeight: 1, marginBottom: '6px' }}>{stat.number}</h3>
-                  <p style={{ fontSize: '11px', fontWeight: '800', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{stat.label}</p>
+                <div key={idx} style={{
+                  background: '#ffffff',
+                  borderRadius: '18px',
+                  padding: '24px 22px 20px',
+                  boxShadow: '0 12px 30px rgba(56, 189, 248, 0.12)',
+                  borderLeft: '4px solid #38bdf8',
+                  textAlign: 'left'
+                }}>
+                  <h3 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0284c7', lineHeight: 1, marginBottom: '10px' }}>{stat.number}</h3>
+                  <p style={{ fontSize: '12.5px', fontWeight: '700', color: '#475569', lineHeight: 1.35, margin: 0 }}>{stat.label}</p>
                 </div>
               ));
             })()}
@@ -235,24 +212,94 @@ export default function AboutUs({ siteData }) {
           </SectionHeading>
 
           <div className="winera-about-purpose-grid" style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '50px', alignItems: 'center' }}>
-            <div className="winera-about-purpose-divider" style={{ position: 'absolute', left: '50%', top: '0', bottom: '0', width: '1.5px', background: '#38bdf8', transform: 'translateX(-50%)', zIndex: 1 }}></div>
+            <div className="winera-about-purpose-divider" style={{ position: 'absolute', left: '50%', top: '0', bottom: '0', width: '1.5px', background: '#7dd3fc', transform: 'translateX(-50%)', zIndex: 1 }}></div>
 
+            {/* Left Mission Card */}
             <div style={{ position: 'relative', textAlign: 'left' }}>
-              <div style={{ display: 'inline-block', background: '#00a8ff', color: '#ffffff', fontSize: '13px', fontWeight: '800', padding: '6px 28px', borderRadius: '8px 8px 0 0', marginLeft: '60px' }}>{siteData?.aboutMissionVision?.missionLabel || "Mission"}</div>
-              <div style={{ position: 'relative', background: 'linear-gradient(135deg, #7dd3fc 0%, #38bdf8 100%)', borderRadius: '24px', padding: '36px 32px', boxShadow: '0 20px 45px rgba(56, 189, 248, 0.25)', color: '#0f172a', zIndex: 5 }}>
-                <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}><Target style={{ width: '22px', height: '22px', color: '#0369a1' }} /></div>
-                <p style={{ fontSize: '1.05rem', fontWeight: '600', color: '#0f172a', lineHeight: 1.6 }}>{siteData?.aboutMissionVision?.missionText || "To be India's most trusted partner in building world-class indoor entertainment destinations where every space we touch becomes a thriving hub of joy, play, and business success."}</p>
+              <div style={{ display: 'inline-block', background: '#38bdf8', color: '#ffffff', fontSize: '13px', fontWeight: '800', padding: '6px 28px', borderRadius: '10px 10px 0 0', marginLeft: '50px' }}>
+                {siteData?.aboutMissionVision?.missionLabel || "Mission"}
               </div>
-              <div style={{ position: 'absolute', top: '20px', left: '160px', width: '75%', height: '100%', border: '1.5px solid #7dd3fc', borderRadius: '24px', pointerEvents: 'none', zIndex: 2 }} className="winera-about-purpose-frame"></div>
+              <div style={{
+                position: 'relative',
+                background: 'linear-gradient(135deg, #00b4d8 0%, #38bdf8 20%, #e0f2fe 55%, #ffffff 100%)',
+                borderRadius: '24px',
+                padding: '36px 32px',
+                border: '1.5px solid #e0f2fe',
+                boxShadow: '0 10px 30px rgba(56, 189, 248, 0.08)',
+                color: '#334155',
+                zIndex: 5
+              }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                  <Target style={{ width: '22px', height: '22px', color: '#0284c7' }} />
+                </div>
+                <p style={{ fontSize: '0.94rem', fontWeight: '500', color: '#334155', lineHeight: 1.65, margin: 0 }}>
+                  {siteData?.aboutMissionVision?.missionText || "We deliver premium-quality game zone and indoor playground solutions to B2B clients across India combining expert design, international equipment, and seamless project execution to create entertainment spaces that last."}
+                </p>
+              </div>
+              {/* Overlapping Glass Frame Front Mission */}
+              <div className="winera-about-purpose-frame" style={{
+                position: 'absolute',
+                top: '-5px',
+                left: '210px',
+                width: '55%',
+                height: '100%',
+                border: '1.5px solid #7dd3fc',
+                borderRadius: '24px',
+                background: 'transparent',
+                pointerEvents: 'none',
+                zIndex: 10
+              }}></div>
             </div>
 
+            {/* Right Vision Card */}
             <div style={{ position: 'relative', textAlign: 'left' }}>
-              <div style={{ display: 'inline-block', background: '#ffcd00', color: '#0f172a', fontSize: '13px', fontWeight: '800', padding: '6px 28px', borderRadius: '8px 8px 0 0', marginLeft: '60px' }}>{siteData?.aboutMissionVision?.visionLabel || "Vision"}</div>
-              <div style={{ position: 'relative', background: 'linear-gradient(135deg, #fef08a 0%, #fde047 100%)', borderRadius: '24px', padding: '36px 32px', boxShadow: '0 20px 45px rgba(250, 204, 21, 0.25)', color: '#0f172a', zIndex: 5 }}>
-                <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}><Eye style={{ width: '22px', height: '22px', color: '#854d0e' }} /></div>
-                <p style={{ fontSize: '1.05rem', fontWeight: '600', color: '#0f172a', lineHeight: 1.6 }}>{siteData?.aboutMissionVision?.visionText || "To be India's most trusted partner in building world-class indoor entertainment destinations where every space we touch becomes a thriving hub of joy, play, and business success."}</p>
+              <div style={{ display: 'inline-block', background: '#ffcd00', color: '#0f172a', fontSize: '13px', fontWeight: '800', padding: '6px 28px', borderRadius: '10px 10px 0 0', marginLeft: '50px' }}>
+                {siteData?.aboutMissionVision?.visionLabel || "Vision"}
               </div>
-              <div style={{ position: 'absolute', top: '20px', right: '160px', width: '75%', height: '100%', border: '1.5px solid #fde047', borderRadius: '24px', pointerEvents: 'none', zIndex: 2 }}></div>
+              <div style={{
+                position: 'relative',
+                background: 'linear-gradient(135deg, #facc15 0%, #fde047 20%, #fef9c3 55%, #ffffff 100%)',
+                borderRadius: '24px',
+                padding: '36px 32px',
+                border: '1.5px solid #fef9c3',
+                boxShadow: '0 10px 30px rgba(250, 204, 21, 0.08)',
+                color: '#334155',
+                zIndex: 5
+              }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                  <Eye style={{ width: '22px', height: '22px', color: '#854d0e' }} />
+                </div>
+                <p style={{ fontSize: '0.94rem', fontWeight: '500', color: '#334155', lineHeight: 1.65, margin: 0 }}>
+                  {siteData?.aboutMissionVision?.visionText || "To be India's most trusted partner in building world-class indoor entertainment destinations where every space we touch becomes a thriving hub of joy, play, and business success."}
+                </p>
+              </div>
+              {/* Overlapping Glass Frame Front Vision */}
+              <div className="winera-about-purpose-frame" style={{
+                position: 'absolute',
+                top: '40px',
+                left: '15px',
+                width: '58%',
+                height: '90%',
+                border: '1.5px solid #fde047',
+                borderRadius: '24px',
+                background: 'transparent',
+                pointerEvents: 'none',
+                zIndex: 10
+              }}></div>
+              {/* Bottom Center Small Overlapping Box */}
+              <div className="winera-about-purpose-frame" style={{
+                position: 'absolute',
+                bottom: '-22px',
+                top: '230px',
+                left: '-60px',
+                width: '135px',
+                height: '60px',
+                border: '1.5px solid #facc15',
+                borderRadius: '20px',
+                background: 'transparent',
+                pointerEvents: 'none',
+                zIndex: 10
+              }}></div>
             </div>
           </div>
         </div>
@@ -310,16 +357,62 @@ export default function AboutUs({ siteData }) {
                 <>
                   <div className="winera-about-mindmap-left" style={{ position: 'absolute', left: '40px', top: 0, bottom: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 5 }}>
                     {leftItems.map((item, idx) => (
-                      <div key={idx} style={{ background: '#F5F5F9', borderRadius: '30px', padding: '10px 24px 10px 14px', boxShadow: '0 10px 25px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><item.icon style={{ width: '16px', height: '16px', color: '#0284c7' }} /></div>
+                      <div key={idx} style={{
+                        position: 'relative',
+                        background: '#ffffff',
+                        borderRadius: '30px',
+                        padding: '10px 24px 10px 18px',
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.06)',
+                        border: '1px solid #e2e8f0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        overflow: 'hidden'
+                      }}>
+                        {/* Left Side Blue Accent Line */}
+                        <div style={{
+                          position: 'absolute',
+                          left: 0,
+                          top: '18%',
+                          bottom: '18%',
+                          width: '4px',
+                          background: '#38bdf8',
+                          borderRadius: '0 4px 4px 0'
+                        }} />
+                        <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <item.icon style={{ width: '16px', height: '16px', color: '#0284c7' }} />
+                        </div>
                         <span style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>{item.text}</span>
                       </div>
                     ))}
                   </div>
                   <div className="winera-about-mindmap-right" style={{ position: 'absolute', right: '40px', top: 0, bottom: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 5 }}>
                     {rightItems.map((item, idx) => (
-                      <div key={idx} style={{ background: '#F5F5F9', borderRadius: '30px', padding: '10px 24px 10px 14px', boxShadow: '0 10px 25px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><item.icon style={{ width: '16px', height: '16px', color: '#d97706' }} /></div>
+                      <div key={idx} style={{
+                        position: 'relative',
+                        background: '#ffffff',
+                        borderRadius: '30px',
+                        padding: '10px 24px 10px 18px',
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.06)',
+                        border: '1px solid #e2e8f0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        overflow: 'hidden'
+                      }}>
+                        {/* Left Side Yellow Accent Line */}
+                        <div style={{
+                          position: 'absolute',
+                          left: 0,
+                          top: '18%',
+                          bottom: '18%',
+                          width: '4px',
+                          background: '#eab308',
+                          borderRadius: '0 4px 4px 0'
+                        }} />
+                        <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <item.icon style={{ width: '16px', height: '16px', color: '#d97706' }} />
+                        </div>
                         <span style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>{item.text}</span>
                       </div>
                     ))}
@@ -333,9 +426,9 @@ export default function AboutUs({ siteData }) {
           <div className="winera-about-whyus-cards-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px', textAlign: 'left' }}>
             {(() => {
               const defaultCards = [
-                { title: "Sales", desc: "From the moment you choose Winera International, our dedicated sales team works closely with you to discuss your game zone needs in detail.", icon: Headset, bg: '#00a8ff', color: '#ffffff' },
-                { title: "Service", desc: "Our professional installation team takes complete ownership of your project. We ensure smooth assembly, safety compliance, and zero compromise on quality.", icon: Settings, bg: '#7dd3fc', color: '#0284c7' },
-                { title: "Satisfaction", desc: "Our team manages everything from delivery to live handover. Every game zone we install is set up with precision and care.", icon: Award, bg: '#ffcd00', color: '#0f172a' }
+                { title: "Sales", desc: "From the moment you choose Winera International, our dedicated sales team works closely with you to finalize the right game zone solution for your space and budget. We're an ROI-focused partner. Before any project begins, every client receives a complete ROI report covering projected footfall, revenue potential, and payback period. We handle product selection, project scoping, pricing, and documentation, making your buying experience smooth, transparent, and completely hassle-free.", icon: Headset, bg: '#00a8ff', color: '#ffffff' },
+                { title: "Service", desc: "Our professional installation team takes complete ownership of your project from equipment delivery and assembly to safety testing and final handover. Every game zone we install is set up with precision, care, and zero compromise on quality standards so your entertainment space is ready to welcome visitors from day one.", icon: Settings, bg: '#7dd3fc', color: '#0284c7' },
+                { title: "Satisfaction", desc: "At Winera International, a completed project is just the beginning of our relationship. We measure our success by yours whether it's children laughing in our soft play zones, families enjoying our bowling alleys, or teenagers competing on our arcade machines. Your visitors' joy and your business's growth are what drive everything we do.", icon: Award, bg: '#ffcd00', color: '#0f172a' }
               ];
 
               const cardsList = Array.isArray(siteData?.aboutWhyUsDetail?.cards) && siteData.aboutWhyUsDetail.cards.length >= 3
@@ -364,49 +457,67 @@ export default function AboutUs({ siteData }) {
           </div>
 
           {/* CTA Buttons: Get Started & View Our Products */}
-          <div style={{ textAlign: 'center', marginTop: '55px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <a
-              href={siteData?.aboutWhyUsDetail?.ctaPrimaryLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: 'linear-gradient(90deg, #00a8ff 0%, #0284c7 100%)',
-                color: '#ffffff',
-                fontSize: '14px',
-                fontWeight: '900',
-                padding: '14px 38px',
-                borderRadius: '16px',
-                border: '2.5px solid #ffcd00',
-                boxShadow: '0 8px 25px rgba(0, 168, 255, 0.35)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                textDecoration: 'none',
-                transition: 'all 0.25s ease'
-              }}
-            >
-              {siteData?.aboutWhyUsDetail?.ctaPrimaryText || "Get Started"}
-            </a>
+          <div style={{ textAlign: 'center', marginTop: '55px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+            {/* Primary Button: Get Started with Offset Rotated Yellow Backdrop (Protrudes Left-Bottom & Right-Top) */}
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <div style={{
+                position: 'absolute',
+                top: '-4px',
+                bottom: '-4px',
+                left: '-5px',
+                right: '-5px',
+                background: '#ffcd00',
+                borderRadius: '18px',
+                transform: 'rotate(-1.8deg)',
+                zIndex: 1
+              }} />
+              <a
+                href={siteData?.aboutWhyUsDetail?.ctaPrimaryLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: 'linear-gradient(90deg, #28b4ee 0%, #0284c7 100%)',
+                  color: '#ffffff',
+                  fontSize: '15px',
+                  fontWeight: '900',
+                  padding: '14px 40px',
+                  borderRadius: '16px',
+                  textDecoration: 'none',
+                  boxShadow: '0 6px 20px rgba(40, 180, 238, 0.35)',
+                  transition: 'all 0.25s ease'
+                }}
+                className="winera-cta-btn-hover"
+              >
+                <span>{siteData?.aboutWhyUsDetail?.ctaPrimaryText || "Get Started"}</span>
+              </a>
+            </div>
 
+            {/* Secondary Button: View Our Products */}
             <a
               href={siteData?.aboutWhyUsDetail?.ctaSecondaryLink || "/arcade-game"}
               style={{
-                background: '#ffffff',
-                color: '#0f172a',
-                fontSize: '14px',
-                fontWeight: '900',
-                padding: '14px 38px',
-                borderRadius: '16px',
-                border: '2px solid #00a8ff',
-                boxShadow: '0 6px 20px rgba(0, 0, 0, 0.05)',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
+                background: '#ffffff',
+                color: '#0f172a',
+                fontSize: '15px',
+                fontWeight: '900',
+                padding: '14px 40px',
+                borderRadius: '16px',
+                border: '2.5px solid #28b4ee',
+                boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)',
                 textDecoration: 'none',
                 transition: 'all 0.25s ease'
               }}
+              className="winera-cta-btn-hover"
             >
-              {siteData?.aboutWhyUsDetail?.ctaSecondaryText || "View Our Products"}
+              <span>{siteData?.aboutWhyUsDetail?.ctaSecondaryText || "View Our Products"}</span>
             </a>
           </div>
         </div>
@@ -415,11 +526,47 @@ export default function AboutUs({ siteData }) {
       {/* 6. OUR FOUNDER SECTION */}
       <section id="founder" style={{ padding: '80px 4vw 110px', background: '#F5F5F9', position: 'relative' }}>
         <div className="winera-about-founder-grid" style={{ maxWidth: '1180px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: '60px', alignItems: 'center' }}>
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
-            <img src={siteData?.founder?.image || founderUnnit} alt={`${siteData?.founder?.name || 'Mr. Unnit Jogani'} - Founder & CEO`} style={{ position: 'relative', zIndex: 10, maxHeight: '460px', objectFit: 'contain', filter: 'drop-shadow(0 15px 35px rgba(0,0,0,0.12))' }} />
-            <div className="winera-about-founder-badge" style={{ position: 'absolute', bottom: '15px', right: '20px', zIndex: 20, width: '115px', height: '115px', borderRadius: '50%', background: '#F5F5F9', border: '3px solid #0f172a', boxShadow: '0 12px 30px rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '10px' }}>
-              <span style={{ fontSize: '1.8rem', fontWeight: '900', color: '#ec4899', lineHeight: 1 }}>{siteData?.founder?.yearsOfExperience || '14+'}</span>
-              <span style={{ fontSize: '10.5px', fontWeight: '800', color: '#ec4899', lineHeight: 1.15, marginTop: '2px' }}>Years<br />Experience</span>
+          <div style={{ position: 'relative', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
+            <img
+              src={siteData?.founder?.image || founderUnnit}
+              alt={`${siteData?.founder?.name || 'Mr. Unnit Jogani'} - Founder & CEO`}
+              style={{
+                position: 'relative',
+                zIndex: 10,
+                maxHeight: '460px',
+                width: 'auto',
+                display: 'block',
+                filter: 'drop-shadow(0 15px 35px rgba(0,0,0,0.12))'
+              }}
+            />
+            {/* 14+ Years Experience Circular Badge Attached to Image */}
+            <div
+              className="winera-about-founder-badge"
+              style={{
+                position: 'absolute',
+                bottom: '10px',
+                right: '20px',
+                zIndex: 20,
+                width: '120px',
+                height: '120px',
+                borderRadius: '50%',
+                background: '#ffffff',
+                border: '4px solid #0f172a',
+                boxShadow: '0 12px 30px rgba(0,0,0,0.18)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                padding: '8px'
+              }}
+            >
+              <span style={{ fontSize: '1.9rem', fontWeight: '900', color: '#ec4899', lineHeight: 1 }}>
+                {siteData?.founder?.yearsOfExperience || '14+'}
+              </span>
+              <span style={{ fontSize: '11px', fontWeight: '800', color: '#ec4899', lineHeight: 1.15, marginTop: '2px' }}>
+                Years<br />Experience
+              </span>
             </div>
           </div>
           <div style={{ textAlign: 'left' }}>
@@ -444,25 +591,34 @@ export default function AboutUs({ siteData }) {
             <div style={{ color: '#475569', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '32px', whiteSpace: 'pre-line' }}>
               {siteData?.founder?.aboutDetails || (
                 <>
-                  <p style={{ marginBottom: '16px' }}>Mr. Unnit Jogani is the Founder &amp; CEO of Winera International Pvt. Ltd. One of India's most trusted <strong>game zone equipment manufacturers and indoor amusement park solution providers</strong>.</p>
-                  <p>Since establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.</p>
+                  <p style={{ marginBottom: '16px' }}>Mr. Unnit Jogani is the Founder &amp; CEO of Winera International Pvt. Ltd. One of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.</p>
+                  <p>Since establishing WinEra in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader successfully delivering projects across India with an uncompromising focus on quality, safety, and client satisfaction.</p>
                 </>
               )}
             </div>
 
-            <a href={siteData?.founder?.linkedinUrl || "https://linkedin.com"} target="_blank" rel="noreferrer" style={{ background: '#00a8ff', color: '#ffffff', fontSize: '13.5px', fontWeight: '800', padding: '12px 36px', borderRadius: '25px', border: '2px solid #ffcd00', boxShadow: '0 8px 22px rgba(0, 168, 255, 0.3)', display: 'inline-block', textDecoration: 'none' }}>Linkedin Profile</a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.founder?.linkedinUrl || "https://linkedin.com"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                <span>Linkedin Profile</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 7. CTA BANNER SECTION */}
       <CtaBanner
-        tagline={siteData?.ctaBanner?.tagline}
-        title={siteData?.ctaBanner?.title}
-        subtitle={siteData?.ctaBanner?.subtitle}
-        description={siteData?.ctaBanner?.description}
-        buttonText={siteData?.ctaBanner?.buttonText}
-        buttonLink={siteData?.ctaBanner?.buttonLink}
+        tagline={siteData?.ctaBanner?.tagline ?? "Ready to Get Started?"}
+        title={siteData?.ctaBanner?.title ?? "Take the Next Step Towards Your Perfect Game Zone"}
+        subtitle=""
+        description={siteData?.ctaBanner?.description ?? "Whether you're starting from scratch or upgrading an existing space our team is ready to help you plan, build, and launch a game zone that drives real revenue."}
+        buttonText={siteData?.ctaBanner?.buttonText ?? "Book Consultation"}
+        buttonLink={siteData?.ctaBanner?.buttonLink ?? "https://wa.me/919428989488"}
         bgUrl={siteData?.ctaBanner?.bgUrl}
       />
 

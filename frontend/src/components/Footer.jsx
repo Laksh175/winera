@@ -27,10 +27,10 @@ export default function Footer({ footerData }) {
         }}>
           {/* Column 1: Logo & Tagline Description */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-              <img src={logo} alt="Winera International" style={{ height: '44px', objectFit: 'contain' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '18px' }}>
+              <img src={logo} alt="Winera International" style={{ height: '62px', maxWidth: '240px', objectFit: 'contain' }} />
             </div>
-            <p style={{ fontSize: '12.5px', color: '#334155', fontWeight: '500', lineHeight: 1.6, maxWidth: '280px' }}>
+            <p style={{ fontSize: '13px', color: '#334155', fontWeight: '500', lineHeight: 1.6, maxWidth: '310px', margin: '0 0 24px' }}>
               Winera is a professional solution provider and builder specializing in indoor amusement parks and playground equipment.
             </p>
           </div>
@@ -238,15 +238,15 @@ export default function Footer({ footerData }) {
               Get in Touch
             </h5>
             <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
-              <a href="tel:+919428989488" style={{ fontSize: '12.5px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+              <a href="tel:+919512356766" style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
                 <Phone style={{ width: '16px', height: '16px', color: '#0f172a' }} />
-                <span>+91 94289 89488</span>
+                <span>+91 9512356766</span>
               </a>
-              <a href="tel:+919512356766" style={{ fontSize: '12.5px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+              <a href="tel:+919157873576" style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
                 <Phone style={{ width: '16px', height: '16px', color: '#0f172a' }} />
-                <span>+91 95123 56766</span>
+                <span>+91 9157873576</span>
               </a>
-              <a href="mailto:info@winera.in" style={{ fontSize: '12.5px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+              <a href="mailto:info@winera.in" style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
                 <Mail style={{ width: '16px', height: '16px', color: '#0f172a' }} />
                 <span>info@winera.in</span>
               </a>

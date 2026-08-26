@@ -16,6 +16,7 @@ import doodleArrow from '../assets/doodle-arrow.png';
 import bikeArcade from '../assets/bike-arcade.png';
 import builtCommercialBg from '../assets/built-commercial-bg.png';
 import commercialTeam from '../assets/commercial-team.png';
+import aboutUsSectionImg from '../assets/about-us-section.png';
 import needConsultationsBg from '../assets/need-consultations-bg.png';
 import yellowBrushAccent from '../assets/yellow-stroke-line.png';
 import about1 from '../assets/about-1.png';
@@ -49,40 +50,44 @@ export default function ArcadeGame({ siteData }) {
 
   const arcadeFaqs = [
     {
-      q: "1. How Do I Set Up A Game Zone In India?",
-      a: "Start with a consultation and share your available space, budget, and location with our team. As a trusted gaming zone setup company in India, Winera International handles everything from ROI analysis and layout design to equipment selection, installation, and post-launch support across 50+ cities."
+      q: "Where Can I Buy Arcade Game Machines In India?",
+      a: "Winera International is a trusted arcade games manufacturer and supplier in India — supplying claw machines, redemption games, racing simulators, shooting games, and kiddy rides for malls, hotels, FECs, and amusement parks, with complete installation across 50+ cities by our own team."
     },
     {
-      q: "2. What Is The Cost Of A Game Zone Setup In India?",
-      a: "The cost depends on your venue size, equipment mix (arcade, VR, bowling, softplay), and customization level. Winera provides transparent pricing and flexible packages tailored to your budget."
+      q: "Do You Supply Coin Operated Arcade Machines In India?",
+      a: "Yes. Winera International supplies a wide range of coin operated arcade machines in India, card-based systems, and ticket redemption arcade machines, built for commercial environments such as malls, hotels, resorts, and family entertainment centres."
     },
     {
-      q: "3. Does Winera Handle The Complete Game Zone Setup?",
-      a: "Yes! We provide complete end-to-end turnkey solutions including 2D/3D layout planning, equipment manufacturing/sourcing, shipping, site installation, card system setup, and staff training."
+      q: "Can Winera International Set Up A Complete Arcade Game Zone Setup?",
+      a: "Yes. We handle space planning, machine selection, delivery, installation, and staff training as one connected arcade game zone setup process, not separate transactions with different vendors."
     },
     {
-      q: "4. Which Cities Does Winera Cover In India?",
-      a: "We execute projects pan-India across 50+ major cities including Mumbai, Delhi NCR, Bangalore, Hyderabad, Surat, Indore, Ahmedabad, Pune, and Chennai."
+      q: "What Happens If A Machine Breaks Down After Installation?",
+      a: "Our own technicians handle servicing directly, with coverage across 50+ cities in India. You are not waiting on an overseas supplier or a disconnected logistics partner to respond."
     },
     {
-      q: "5. What Makes Winera International Different From Other Game Zone Suppliers?",
-      a: "We prioritize ROI consultancy first before selling equipment. Our safety-certified machines, dedicated technical support team, and custom venue branding give our clients higher profitability."
+      q: "Which Businesses Typically Install Arcade Game Machines In India?",
+      a: "Malls, hotels, resorts, and family entertainment centres are the most common buyers of arcade machines."
     },
     {
-      q: "6. Do You Provide After-Sales Support After Installation?",
-      a: "Absolutely. We offer lifetime technical support, spare parts assistance, machine maintenance guidance, and periodic software updates."
+      q: "How Long Does It Take To Install Arcade Machines?",
+      a: "Installation timelines depend on the number of machines, your venue's readiness, and your location. We share an exact schedule as part of your quote, so you know precisely when your arcade zone will be ready."
     },
     {
-      q: "7. Can Game Zone Equipment Be Customised For My Venue's Theme?",
-      a: "Yes, all our amusement rides, softplay structures, neon lighting, and machine cabinet graphics can be customized to align with your brand identity."
+      q: "What Is The Price Of Arcade Machines In India?",
+      a: "Arcade machine pricing in India depends on the machine category, payment mechanism, and customisation level. Because Winera International sources directly at scale, our pricing avoids the markup typical of multi-layer resellers."
     },
     {
-      q: "8. How Do I Get Started With My Game Zone Project?",
-      a: "Simply reach out to us via call or WhatsApp. Our team will analyze your space drawings and prepare a customized ROI & layout proposal."
+      q: "How Do I Get Started With Ordering Arcade Machines From Winera?",
+      a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Our team will recommend the right machine mix for your space and send a quote ASAP."
     },
     {
-      q: "9. Can Winers International Help Me Plan My Game Zone From Scratch?",
-      a: "Yes, even if you only have a bare commercial hall, we design full spatial layouts, electrical routing, interior lighting, and equipment placement from scratch."
+      q: "Which Arcade Games Give The Best ROI For FECs And Malls In India?",
+      a: "Ticket redemption games, claw machines, and racing simulators consistently deliver the strongest revenue per square foot in Indian FECs and malls. Winera International helps you choose the right arcade game zone machine mix based on your specific footfall, floor size, and visitor demographic — not a generic recommendation."
+    },
+    {
+      q: "What Is The Difference Between Coin-Operated And Card-Based Arcade Machines?",
+      a: "Coin-operated arcade machines accept physical tokens and suit venues with casual walk-in visitors. Card-based systems use rechargeable cards — better for revenue tracking, reducing cash handling, and encouraging repeat visits through balance top-ups. Winera supplies both and advises on the right system for your venue."
     }
   ];
 
@@ -92,13 +97,13 @@ export default function ArcadeGame({ siteData }) {
       {/* 1. HEADER NAVBAR */}
       <Header headerData={header} />
 
-      {/* 2. ARCADE GAME HERO BANNER MATCHING FIGMA SCREENSHOT 1:1 */}
+      {/* 2. ARCADE GAME HERO BANNER MATCHING SECOND IMAGE 1:1 */}
       <section className="winera-arcade-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '180px',
-        paddingBottom: '90px',
-        background: `url(${siteData?.arcadeHero?.bgUrl || arcadeHeroBg}) center/100% 100% no-repeat`,
+        paddingTop: '165px',
+        paddingBottom: '75px',
+        background: `url(${siteData?.arcadeHero?.bgUrl || arcadeHeroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -107,46 +112,25 @@ export default function ArcadeGame({ siteData }) {
         color: '#ffffff'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          {/* Main Title: Arcade Game with Yellow 'Arcade' */}
+          {/* Centered Title / Breadcrumb: Home › Arcade Game */}
           <h1 className="winera-arcade-hero-h1" style={{
-            fontSize: '3.8rem',
-            fontWeight: '900',
-            letterSpacing: '-1px',
-            marginBottom: '10px',
-            lineHeight: 1.15
-          }}>
-            {(() => {
-              const rawTitle = siteData?.arcadeHero?.title || "*Arcade* Game";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#ffcd00' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </h1>
-
-          {/* Breadcrumb: Products > Arcade Games */}
-          <p className="winera-arcade-hero-breadcrumb" style={{
-            fontSize: '14px',
-            fontWeight: '700',
+            fontSize: '1.45rem',
+            fontWeight: '800',
             color: '#ffffff',
-            opacity: 0.9,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
-            flexWrap: 'wrap'
+            margin: 0,
+            lineHeight: 1.2,
+            textAlign: 'center'
           }}>
-            <a href="/products" style={{ color: '#ffffff', textDecoration: 'none' }}>Products</a>
-            <span style={{ color: '#ffcd00' }}>&gt;</span>
-            <span style={{ color: '#ffffff' }}>{siteData?.arcadeHero?.breadcrumbText || "Arcade Games"}</span>
-          </p>
+            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+            <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+            <span style={{ color: '#ffcd00', fontWeight: '900' }}>
+              {siteData?.arcadeHero?.breadcrumbText || "Arcade Game"}
+            </span>
+          </h1>
         </div>
       </section>
 
@@ -299,14 +283,14 @@ export default function ArcadeGame({ siteData }) {
                   width: '36px',
                   height: '36px',
                   borderRadius: '10px',
-                  background: fIdx === 0 ? '#e0f2fe' : '#f1f5f9',
+                  background: '#f1f5f9',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexShrink: 0
                 }}>
                   {fIdx === 0 ? (
-                    <Shield style={{ width: '18px', height: '18px', color: '#0284c7' }} />
+                    <Shield style={{ width: '18px', height: '18px', color: '#475569' }} />
                   ) : (
                     <Wrench style={{ width: '18px', height: '18px', color: '#475569' }} />
                   )}
@@ -323,48 +307,85 @@ export default function ArcadeGame({ siteData }) {
             ))}
 
             {/* Action Buttons Row */}
-            <div style={{ display: 'flex', gap: '18px', alignItems: 'center' }}>
-              <a
-                href={siteData?.arcadeIntro?.videoLink || "https://youtube.com"}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  background: '#38bdf8',
-                  color: '#ffffff',
-                  fontSize: '13px',
-                  fontWeight: '800',
-                  padding: '12px 32px',
-                  borderRadius: '25px',
-                  border: '2px solid #ffcd00',
-                  boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  textDecoration: 'none'
-                }}
-              >
-                {siteData?.arcadeIntro?.videoBtnText || "Watch Video"}
-              </a>
+            <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
+              {/* Button 1: Watch Video with Offset Rotated Yellow Backdrop */}
+              <div style={{ position: 'relative', display: 'inline-block' }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '-3px',
+                  bottom: '-3px',
+                  left: '-4px',
+                  right: '-4px',
+                  background: '#ffcd00',
+                  borderRadius: '14px',
+                  transform: 'rotate(-1.8deg)',
+                  zIndex: 1
+                }} />
+                <a
+                  href={siteData?.arcadeIntro?.videoLink || "https://youtube.com"}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    position: 'relative',
+                    zIndex: 2,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'linear-gradient(90deg, #28b4ee 0%, #0284c7 100%)',
+                    color: '#ffffff',
+                    fontSize: '14px',
+                    fontWeight: '800',
+                    padding: '11px 28px',
+                    borderRadius: '12px',
+                    textDecoration: 'none',
+                    boxShadow: '0 6px 18px rgba(40, 180, 238, 0.3)',
+                    transition: 'all 0.25s ease'
+                  }}
+                  className="winera-cta-btn-hover"
+                >
+                  <span>{siteData?.arcadeIntro?.videoBtnText || "Watch Video"}</span>
+                </a>
+              </div>
 
-              <a
-                href={siteData?.arcadeIntro?.quoteLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  background: '#e0f2fe',
-                  color: '#0f172a',
-                  fontSize: '13px',
-                  fontWeight: '800',
-                  padding: '12px 32px',
-                  borderRadius: '25px',
-                  border: '2px solid #38bdf8',
-                  boxShadow: '0 6px 18px rgba(56, 189, 248, 0.15)',
-                  display: 'inline-block',
-                  textDecoration: 'none'
-                }}
-              >
-                {siteData?.arcadeIntro?.quoteBtnText || "Get a Quote"}
-              </a>
+              {/* Button 2: Get a Quote with Offset Rotated Cyan Backdrop */}
+              <div style={{ position: 'relative', display: 'inline-block' }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '-3px',
+                  bottom: '-3px',
+                  left: '-4px',
+                  right: '-4px',
+                  background: '#38bdf8',
+                  borderRadius: '14px',
+                  transform: 'rotate(-1.8deg)',
+                  zIndex: 1
+                }} />
+                <a
+                  href={siteData?.arcadeIntro?.quoteLink || "https://wa.me/919428989488"}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    position: 'relative',
+                    zIndex: 2,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: '#e0f2fe',
+                    color: '#0f172a',
+                    fontSize: '14px',
+                    fontWeight: '800',
+                    padding: '11px 28px',
+                    borderRadius: '12px',
+                    border: '1.5px solid #38bdf8',
+                    textDecoration: 'none',
+                    boxShadow: '0 6px 18px rgba(0, 0, 0, 0.05)',
+                    transition: 'all 0.25s ease'
+                  }}
+                  className="winera-cta-btn-hover"
+                >
+                  <span>{siteData?.arcadeIntro?.quoteBtnText || "Get a Quote"}</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -412,115 +433,103 @@ export default function ArcadeGame({ siteData }) {
             </select>
           </div>
 
-          {/* Main Layout Grid: Left Category Sidebar + Right Product Cards Display */}
           <div className="winera-categories-grid" style={{
             display: 'grid',
             gridTemplateColumns: '260px 1fr',
             gap: '24px',
-            alignItems: 'start'
+            alignItems: 'stretch'
           }}>
-            {/* LEFT CATEGORY SIDEBAR CARD (Hidden on mobile via CSS, accessible via top dropdown) */}
+            {/* LEFT CATEGORY SIDEBAR CARD WITH DARK TO LIGHT GRADIENT */}
             <div className="winera-categories-sidebar" style={{
-              background: '#dcf0fa',
-              borderRadius: '24px',
-              padding: '24px 18px',
-              boxShadow: '0 10px 30px rgba(0, 168, 255, 0.05)',
+              background: 'linear-gradient(180deg, #b3e5fc 0%, #e8f7fe 100%)',
+              border: '1.5px solid #e8f7fe',
+              borderRadius: '28px',
+              padding: '24px 18px 50px',
+              boxShadow: '0 8px 25px rgba(56, 189, 248, 0.08)',
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px'
+              gap: '12px',
+              height: '100%'
             }}>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px', paddingLeft: '8px' }}>
+              <h3 style={{ fontSize: '0.80rem', fontWeight: '800', color: '#0f172a', marginBottom: '6px', paddingLeft: '4px' }}>
                 Discover our Products
               </h3>
 
-              {(() => {
-                const defaultCategories = [
-                  { name: "Arcade Games", count: 12, subcategories: ["Claw Machine", "Redemption Game", "Kiddy Ride", "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"] },
-                  { name: "Claw Machine", count: 8 },
-                  { name: "Redemption Game", count: 15 },
-                  { name: "Kiddy Ride", count: 10 },
-                  { name: "Bike Racing Game", count: 6 },
-                  { name: "Car Racing Game", count: 7 },
-                  { name: "Shooting Games", count: 9 },
-                  { name: "Strength Based Games", count: 4 }
-                ];
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                {/* Parent Category Button: Arcade Games */}
+                <button
+                  onClick={() => {
+                    setActiveCategory("Arcade Games");
+                    setExpandedCat(expandedCat === "Arcade Games" ? null : "Arcade Games");
+                  }}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '10px 14px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    fontSize: '13px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    marginBottom: '4px',
+                    boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)'
+                  }}
+                >
+                  <span>Arcade Games</span>
+                  <ChevronDown style={{ width: '14px', height: '14px', color: '#ffffff', transform: expandedCat === "Arcade Games" ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+                </button>
 
-                const categoriesList = (Array.isArray(siteData?.arcadeCategories?.categoriesList) && siteData.arcadeCategories.categoriesList.length > 0)
-                  ? siteData.arcadeCategories.categoriesList
-                  : defaultCategories;
-
-                return categoriesList.map((cat, idx) => {
-                  const isActive = activeCategory === cat.name || (activeCategory === "All" && idx === 0);
-                  const isExpanded = expandedCat === cat.name;
+                {/* Subcategories List */}
+                {[
+                  "Claw Machine",
+                  "Redemption Game",
+                  "Kiddy Ride",
+                  "Bike Racing Game",
+                  "Car Racing Game",
+                  "Shooting Games",
+                  "Strength Based Games"
+                ].map((subName, subIdx, array) => {
+                  const isSelected = activeCategory === subName;
+                  const isLast = subIdx === array.length - 1;
 
                   return (
-                    <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <button
-                        onClick={() => {
-                          setActiveCategory(cat.name);
-                          if (cat.subcategories) {
-                            setExpandedCat(isExpanded ? null : cat.name);
-                          }
-                        }}
-                        style={{
-                          width: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '12px 16px',
-                          borderRadius: '14px',
-                          border: 'none',
-                          background: isActive ? '#38bdf8' : 'transparent',
-                          color: isActive ? '#ffffff' : '#64748b',
-                          fontSize: '13px',
-                          fontWeight: '800',
-                          cursor: 'pointer',
-                          textAlign: 'left',
-                          transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                          boxShadow: isActive ? '0 4px 14px rgba(56, 189, 248, 0.35)' : 'none'
-                        }}
-                      >
-                        <span>{cat.name}</span>
-                        {cat.subcategories ? (
-                          <ChevronDown style={{ width: '16px', height: '16px', transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
-                        ) : (
-                          <ChevronRight style={{ width: '14px', height: '14px', opacity: isActive ? 1 : 0.4 }} />
-                        )}
-                      </button>
-
-                      {/* Subcategories Dropdown list */}
-                      {cat.subcategories && isExpanded && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', paddingLeft: '12px', marginTop: '4px' }}>
-                          {cat.subcategories.map((sub, subIdx) => (
-                            <button
-                              key={subIdx}
-                              onClick={() => setActiveCategory(sub)}
-                              style={{
-                                width: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                padding: '8px 14px',
-                                borderRadius: '10px',
-                                border: 'none',
-                                background: activeCategory === sub ? '#00a8ff' : 'transparent',
-                                color: activeCategory === sub ? '#ffffff' : '#475569',
-                                fontSize: '12px',
-                                fontWeight: activeCategory === sub ? '800' : '600',
-                                cursor: 'pointer',
-                                textAlign: 'left'
-                              }}
-                            >
-                              <span>{sub}</span>
-                              <ChevronRight style={{ width: '12px', height: '12px', opacity: activeCategory === sub ? 1 : 0.3 }} />
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
+                    <button
+                      key={subIdx}
+                      onClick={() => setActiveCategory(subName)}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: isSelected ? '10px 14px' : '10px 8px 10px 4px',
+                        borderRadius: isSelected ? '10px' : '0px',
+                        border: 'none',
+                        borderBottom: isSelected ? 'none' : (isLast ? 'none' : '1px solid rgba(255, 255, 255, 0.85)'),
+                        background: isSelected ? '#38bdf8' : 'transparent',
+                        color: isSelected ? '#ffffff' : '#475569',
+                        fontSize: '12.5px',
+                        fontWeight: isSelected ? '700' : '500',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <span>{subName}</span>
+                      <ChevronRight style={{
+                        width: '12px',
+                        height: '12px',
+                        color: isSelected ? '#ffffff' : '#94a3b8',
+                        opacity: isSelected ? 1 : 0.5
+                      }} />
+                    </button>
                   );
-                });
-              })()}
+                })}
+              </div>
             </div>
 
             {/* RIGHT DISPLAY AREA: PRODUCT CARDS GRID + PAGINATION */}
@@ -552,10 +561,11 @@ export default function ArcadeGame({ siteData }) {
                         <div
                           key={idx}
                           style={{
-                            background: '#dcf0fa',
+                            background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
                             borderRadius: '24px',
                             padding: '16px',
-                            boxShadow: '0 10px 25px rgba(0,0,0,0.03)',
+                            boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
+                            border: '1.5px solid #e0f2fe',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
@@ -567,15 +577,17 @@ export default function ArcadeGame({ siteData }) {
                           <div style={{
                             width: '100%',
                             height: '180px',
-                            borderRadius: '16px',
+                            borderRadius: '18px',
                             overflow: 'hidden',
                             marginBottom: '16px',
                             background: '#ffffff',
-                            boxShadow: '0 6px 18px rgba(0,0,0,0.06)'
+                            boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
+                            border: '4px solid #ffffff'
                           }}>
                             <img
                               src={card.imageUrl || card.img}
                               alt={card.name}
+                              loading="lazy"
                               style={{
                                 width: '100%',
                                 height: '100%',
@@ -586,7 +598,7 @@ export default function ArcadeGame({ siteData }) {
 
                           <h4 style={{
                             fontSize: '1rem',
-                            fontWeight: '800',
+                            fontWeight: '600',
                             color: '#0f172a',
                             lineHeight: 1.3,
                             margin: '4px 0 8px',
@@ -605,10 +617,11 @@ export default function ArcadeGame({ siteData }) {
                     {prodCards[mobileProdIndex] && (
                       <div className="winera-mobile-single-product-card" style={{ display: 'none' }}>
                         <div style={{
-                          background: '#dcf0fa',
+                          background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
                           borderRadius: '24px',
                           padding: '20px',
-                          boxShadow: '0 10px 25px rgba(0,0,0,0.06)',
+                          boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
+                          border: '1.5px solid #e0f2fe',
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center',
@@ -637,7 +650,7 @@ export default function ArcadeGame({ siteData }) {
 
                           <h4 style={{
                             fontSize: '1.1rem',
-                            fontWeight: '800',
+                            fontWeight: '600',
                             color: '#0f172a',
                             lineHeight: 1.3,
                             margin: '4px 0'
@@ -700,45 +713,47 @@ export default function ArcadeGame({ siteData }) {
                 );
               })()}
 
-              {/* Bottom Centered Pagination Toolbar matching screenshot */}
-              <div className="winera-desktop-pagination" style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                <div style={{
-                  background: '#dcf0fa',
-                  borderRadius: '30px',
-                  padding: '8px 24px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  boxShadow: '0 6px 20px rgba(0, 168, 255, 0.06)'
-                }}>
-                  <button style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                    <ChevronLeft style={{ width: '16px', height: '16px' }} />
-                  </button>
-                  <span style={{
-                    width: '28px',
-                    height: '28px',
-                    borderRadius: '50%',
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    fontSize: '13px',
-                    fontWeight: '800',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: '0 4px 10px rgba(56, 189, 248, 0.4)'
-                  }}>
-                    1
-                  </span>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#64748b', cursor: 'pointer', padding: '0 4px' }}>2</span>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#64748b', cursor: 'pointer', padding: '0 4px' }}>3</span>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#64748b', cursor: 'pointer', padding: '0 4px' }}>4</span>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#64748b', padding: '0 2px' }}>...</span>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#64748b', cursor: 'pointer', padding: '0 4px' }}>71</span>
-                  <button style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                    <ChevronRight style={{ width: '16px', height: '16px' }} />
-                  </button>
-                </div>
-              </div>
+            </div>
+          </div>
+
+          {/* Bottom Centered Pagination Toolbar matching screenshot 1:1 */}
+          <div className="winera-desktop-pagination" style={{ display: 'flex', justifyContent: 'center', marginTop: '32px' }}>
+            <div style={{
+              background: '#e3f2fd',
+              border: '1.5px solid #7dd3fc',
+              borderRadius: '24px',
+              padding: '8px 26px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '18px',
+              boxShadow: 'none'
+            }}>
+              <button style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
+                <ChevronLeft style={{ width: '16px', height: '16px', color: '#475569' }} />
+              </button>
+              <span style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '12px',
+                background: '#38bdf8',
+                color: '#ffffff',
+                fontSize: '15px',
+                fontWeight: '800',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 10px rgba(56, 189, 248, 0.25)'
+              }}>
+                1
+              </span>
+              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>2</span>
+              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>3</span>
+              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>4</span>
+              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', padding: '0 2px' }}>...</span>
+              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>71</span>
+              <button style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
+                <ChevronRight style={{ width: '16px', height: '16px', color: '#475569' }} />
+              </button>
             </div>
           </div>
         </div>
@@ -784,9 +799,9 @@ export default function ArcadeGame({ siteData }) {
               })()}
             </SectionHeading>
 
-            {/* Mobile Image Render (Shown after heading on mobile screens) */}
+            {/* Mobile Image Render */}
             <div className="winera-commercial-mobile-img" style={{ display: 'none', margin: '20px auto 24px', width: '100%', maxWidth: '340px', height: '240px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 12px 30px rgba(0,0,0,0.15)' }}>
-              <img src={siteData?.arcadeCommercial?.imgUrl || commercialTeam} alt="Commercial Team" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={aboutUsSectionImg} alt="Commercial Team" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
 
             {/* Dynamic Commercial Points List */}
@@ -836,100 +851,79 @@ export default function ArcadeGame({ siteData }) {
             ))}
 
             {/* WhatsApp CTA Button: Talk to an ROI Expert */}
-            <a
-              href={siteData?.arcadeCommercial?.ctaLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: '#ffffff',
-                color: '#0f172a',
-                fontSize: '13.5px',
-                fontWeight: '800',
-                padding: '10px 28px 10px 14px',
-                borderRadius: '30px',
-                border: '2.5px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(255, 205, 0, 0.3)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '10px',
-                textDecoration: 'none',
-                transition: 'transform 0.2s'
-              }}
-            >
+            <div style={{ position: 'relative', display: 'inline-block', marginTop: '10px' }}>
               <div style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: '#25d366',
-                color: '#ffffff',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                </svg>
-              </div>
-              <span>{siteData?.arcadeCommercial?.ctaBtnText || "Talk to an ROI Expert"}</span>
-            </a>
+                position: 'absolute',
+                top: '-3px',
+                bottom: '-3px',
+                left: '-4px',
+                right: '-4px',
+                background: '#ffcd00',
+                borderRadius: '14px',
+                transform: 'rotate(-1.8deg)',
+                zIndex: 1
+              }} />
+              <a
+                href={siteData?.arcadeCommercial?.ctaLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  background: '#ffffff',
+                  color: '#0f172a',
+                  fontSize: '14px',
+                  fontWeight: '800',
+                  padding: '10px 26px 10px 14px',
+                  borderRadius: '12px',
+                  border: '1.5px solid #ffcd00',
+                  textDecoration: 'none',
+                  boxShadow: '0 6px 18px rgba(0, 0, 0, 0.05)',
+                  transition: 'all 0.25s ease'
+                }}
+                className="winera-cta-btn-hover"
+              >
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: '#25d366',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                  </svg>
+                </div>
+                <span>{siteData?.arcadeCommercial?.ctaBtnText || "Talk to an ROI Expert"}</span>
+              </a>
+            </div>
           </div>
 
-          {/* Right Image Graphic Area matching screenshot framing */}
+          {/* Right Image Graphic Area rendering about-us-section.png */}
           <div className="winera-commercial-desktop-img" style={{
             position: 'relative',
             width: '100%',
-            height: '380px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            {/* Top Left Diagonal Decorative Blue Lines Accent */}
-            <div style={{
-              position: 'absolute',
-              top: '10px',
-              left: '10px',
-              width: '70px',
-              height: '70px',
-              zIndex: 1,
-              display: 'flex',
-              gap: '6px'
-            }}>
-              <div style={{ width: '2.5px', height: '100%', background: '#38bdf8', transform: 'rotate(28deg)' }}></div>
-              <div style={{ width: '2.5px', height: '100%', background: '#38bdf8', transform: 'rotate(28deg)' }}></div>
-              <div style={{ width: '2.5px', height: '100%', background: '#38bdf8', transform: 'rotate(28deg)' }}></div>
-              <div style={{ width: '2.5px', height: '100%', background: '#38bdf8', transform: 'rotate(28deg)' }}></div>
-            </div>
-
-            {/* Bottom Right Diagonal Decorative Blue Lines Accent */}
-            <div style={{
-              position: 'absolute',
-              bottom: '10px',
-              right: '10px',
-              width: '70px',
-              height: '70px',
-              zIndex: 1,
-              display: 'flex',
-              gap: '6px'
-            }}>
-              <div style={{ width: '2.5px', height: '100%', background: '#38bdf8', transform: 'rotate(28deg)' }}></div>
-              <div style={{ width: '2.5px', height: '100%', background: '#38bdf8', transform: 'rotate(28deg)' }}></div>
-              <div style={{ width: '2.5px', height: '100%', background: '#38bdf8', transform: 'rotate(28deg)' }}></div>
-              <div style={{ width: '2.5px', height: '100%', background: '#38bdf8', transform: 'rotate(28deg)' }}></div>
-            </div>
-
-            {/* Main Team Photo Container with Green Border and Diagonal Cut Corners */}
-            <div style={{
-              width: '90%',
-              height: '340px',
-              borderRadius: '24px',
-              overflow: 'hidden',
-              border: '3px solid #86efac',
-              boxShadow: '0 20px 45px rgba(0,0,0,0.15)',
-              position: 'relative',
-              zIndex: 10,
-              background: `url(${siteData?.arcadeCommercial?.teamImgUrl || commercialTeam}) center/cover no-repeat`
-            }}></div>
+            <img
+              src={aboutUsSectionImg}
+              alt="Winera Commercial Arcade Game Team"
+              style={{
+                width: '100%',
+                maxHeight: '460px',
+                objectFit: 'contain',
+                display: 'block'
+              }}
+            />
           </div>
         </div>
       </section>
@@ -993,8 +987,7 @@ export default function ArcadeGame({ siteData }) {
                   display: 'grid',
                   gridTemplateColumns: `repeat(${topRow.length}, 1fr)`,
                   position: 'relative',
-                  paddingBottom: bottomRow.length > 0 ? '40px' : '0px',
-                  borderBottom: bottomRow.length > 0 ? '1.5px solid #7dd3fc' : 'none'
+                  paddingBottom: bottomRow.length > 0 ? '36px' : '0px'
                 }}>
                   {topRow.map((item, idx) => (
                     <div key={idx} className="winera-arcade-why-card" style={{
@@ -1003,8 +996,21 @@ export default function ArcadeGame({ siteData }) {
                       flexDirection: 'column',
                       alignItems: 'center',
                       textAlign: 'center',
-                      borderRight: idx < topRow.length - 1 ? '1.5px solid #7dd3fc' : 'none'
+                      position: 'relative'
                     }}>
+                      {/* Vertical Divider Line (Gradient Shade: light at top, dark cyan at bottom meeting horizontal line) */}
+                      {idx < topRow.length - 1 && (
+                        <div className="winera-arcade-why-divider" style={{
+                          position: 'absolute',
+                          right: 0,
+                          top: '10px',
+                          bottom: '-36px',
+                          width: '2px',
+                          background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.1) 0%, #38bdf8 100%)',
+                          zIndex: 2
+                        }} />
+                      )}
+
                       <div style={{
                         width: '46px',
                         height: '46px',
@@ -1034,13 +1040,26 @@ export default function ArcadeGame({ siteData }) {
                   ))}
                 </div>
 
+                 {/* Central Horizontal Joining Partition Line with Dark-to-Light Fade */}
+                {bottomRow.length > 0 && (
+                  <div className="winera-arcade-why-divider" style={{
+                    width: '100%',
+                    height: '2px',
+                    background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.15) 0%, #38bdf8 20%, #38bdf8 80%, rgba(56, 189, 248, 0.15) 100%)',
+                    margin: '0 auto',
+                    position: 'relative',
+                    zIndex: 3
+                  }} />
+                )}
+
                 {/* Bottom Row */}
                 {bottomRow.length > 0 && (
                   <div className="winera-arcade-why-row" style={{
                     display: 'grid',
                     gridTemplateColumns: `repeat(${bottomRow.length}, 1fr)`,
-                    paddingTop: '40px',
-                    justifyContent: 'center'
+                    paddingTop: '36px',
+                    justifyContent: 'center',
+                    position: 'relative'
                   }}>
                     {bottomRow.map((item, idx) => (
                       <div key={idx} className="winera-arcade-why-card" style={{
@@ -1049,8 +1068,21 @@ export default function ArcadeGame({ siteData }) {
                         flexDirection: 'column',
                         alignItems: 'center',
                         textAlign: 'center',
-                        borderRight: idx < bottomRow.length - 1 ? '1.5px solid #7dd3fc' : 'none'
+                        position: 'relative'
                       }}>
+                        {/* Vertical Divider Line (Gradient Shade: dark cyan at top meeting horizontal line, fading light to bottom) */}
+                        {idx < bottomRow.length - 1 && (
+                          <div className="winera-arcade-why-divider" style={{
+                            position: 'absolute',
+                            right: 0,
+                            top: '-36px',
+                            bottom: '10px',
+                            width: '2px',
+                            background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.1) 100%)',
+                            zIndex: 2
+                          }} />
+                        )}
+
                         <div style={{
                           width: '46px',
                           height: '46px',
@@ -1089,8 +1121,10 @@ export default function ArcadeGame({ siteData }) {
 
       {/* 7. OUR RECENT PROJECT SHOWCASE SECTION */}
       <ProjectsMarqueeSection
-        showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Project</span></>}
+        showTopHeader={true}
+        title={<>GAME ZONES WE HAVE<br />BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span></>}
+        subtext="Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers."
+        projects={siteData?.builtProjects}
       />
 
       {/* 8. WHAT OUR CLIENTS SAY SECTION (USES HOME PAGE MONGO PERSISTED DATA) */}

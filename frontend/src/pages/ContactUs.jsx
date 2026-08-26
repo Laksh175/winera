@@ -3,7 +3,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
-import { Phone, Mail, MapPin, Send, CheckCircle2, Globe, Building2 } from 'lucide-react';
+import FaqSection from '../components/FaqSection';
+import { Phone, Mail, Building2, Globe, CheckCircle2 } from 'lucide-react';
+import contactUsHeroBg from '../assets/Contact-us.png';
+import aboutHeroBg from '../assets/about-hero-bg.png';
+import arcadeHeroBg from '../assets/arcade-hero-bg.png';
 
 export default function ContactUs({ siteData }) {
   const [formData, setFormData] = useState({
@@ -26,283 +30,404 @@ export default function ContactUs({ siteData }) {
       {/* 1. HEADER */}
       <Header headerData={siteData?.header} />
 
-      {/* 2. HERO BANNER */}
-      <section style={{
-        padding: '140px 4vw 70px',
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-        color: '#ffffff',
+      {/* 2. CONTACT US HERO BANNER (MATCHING PRODUCT HEROES 1:1) */}
+      <section className="winera-contact-hero-section" style={{
+        position: 'relative',
+        width: '100%',
+        paddingTop: '165px',
+        paddingBottom: '75px',
+        background: `url(${contactUsHeroBg}) center top / 100% 100% no-repeat`,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         textAlign: 'center',
-        position: 'relative'
+        color: '#ffffff'
       }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <span style={{
-            background: 'rgba(56, 189, 248, 0.15)',
-            color: '#38bdf8',
-            fontSize: '12px',
-            fontWeight: '900',
-            padding: '6px 18px',
-            borderRadius: '20px',
-            textTransform: 'uppercase',
-            letterSpacing: '1px',
-            display: 'inline-block',
-            marginBottom: '16px'
+        <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
+          <h1 className="winera-contact-hero-h1" style={{
+            fontSize: '1.45rem',
+            fontWeight: '800',
+            color: '#ffffff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            margin: 0,
+            lineHeight: 1.2,
+            textAlign: 'center'
           }}>
-            Contact Us
-          </span>
-          <h1 style={{ fontSize: '2.6rem', fontWeight: '900', color: '#ffffff', marginBottom: '16px', lineHeight: 1.2 }}>
-            Get in Touch with <span style={{ color: '#38bdf8' }}>Winera International</span>
+            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+            <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+            <span style={{ color: '#ffcd00', fontWeight: '900' }}>Contact Us</span>
           </h1>
-          <p style={{ color: '#94a3b8', fontSize: '14.5px', fontWeight: '500', lineHeight: 1.7, maxWidth: '780px', margin: '0 auto' }}>
-            Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations.
-          </p>
         </div>
       </section>
 
-      {/* 3. CONTACT FORM & QUICK INFO SECTION */}
-      <section style={{ padding: '70px 4vw 80px', background: '#F5F5F9' }}>
-        <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
-          {/* Contact Form Card */}
-          <div style={{
-            background: '#ffffff',
-            borderRadius: '28px',
-            padding: '44px 48px',
-            border: '1px solid #e2e8f0',
-            boxShadow: '0 20px 45px rgba(0, 0, 0, 0.05)',
-            textAlign: 'left',
-            marginBottom: '60px'
-          }}>
-            <SectionHeading align="left" marginBottom="20px" accentWidth="40%" accentMaxWidth="220px">
-              Contact <span style={{ color: '#00a8ff' }}>Form</span>
+      {/* 3. MAIN CONTACT US 2-COLUMN SIDE-BY-SIDE SECTION */}
+      <section style={{ padding: '80px 4vw 100px', background: '#F5F5F9' }}>
+        <div className="winera-contact-page-grid" style={{
+          maxWidth: '1240px',
+          margin: '0 auto',
+          display: 'grid',
+          gridTemplateColumns: '1.05fr 1fr',
+          gap: '60px',
+          alignItems: 'flex-start'
+        }}>
+          {/* LEFT COLUMN: Section Title, Subtext & Stacked Contact Info Cards */}
+          <div style={{ textAlign: 'left' }}>
+            <SectionHeading align="left" marginBottom="20px" accentWidth="240px" accentMaxWidth="400px">
+              {(() => {
+                const rawTitle = siteData?.contactPage?.title || "Get in Touch with *Winera International*";
+                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                return parts.map((part, index) => {
+                  if (index % 2 === 1) {
+                    return (
+                      <span key={index} style={{ color: '#0f172a' }}>
+                        {part}
+                      </span>
+                    );
+                  }
+                  return <span key={index} style={{ color: '#38bdf8' }}>{part} </span>;
+                });
+              })()}
             </SectionHeading>
+
+            <p style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '36px', maxWidth: '540px' }}>
+              {siteData?.contactPage?.desc || "Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations."}
+            </p>
+
+            {/* Stack of 2 Contact Info Cards (Call Us & Email Our Team) */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+
+              {/* CALL US card — white + cyan diagonal swoosh */}
+              <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+                <div style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  background: '#ffffff',
+                  borderRadius: '20px',
+                  padding: '22px 26px',
+                  boxShadow: '0 10px 28px rgba(56, 189, 248, 0.12)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '18px',
+                  overflow: 'hidden'
+                }}>
+                  {/* Diagonal filled swoosh — inside card, clipped to border-radius */}
+                  <svg
+                    viewBox="0 0 500 100"
+                    preserveAspectRatio="none"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
+                  >
+                    <defs>
+                      <linearGradient id="cuCyanSwoosh" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#28b4ee" stopOpacity="1" />
+                        <stop offset="40%" stopColor="#38bdf8" stopOpacity="0.7" />
+                        <stop offset="58%" stopColor="#38bdf8" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M 0 0 L 220 0 C 220 0 190 6 190 6 L 28 6 C 18 6 6 18 6 28 L 6 72 C 6 82 18 94 28 94 L 165 94 C 165 94 200 100 200 100 L 0 100 Z"
+                      fill="url(#cuCyanSwoosh)"
+                    />
+                  </svg>
+
+                  <div style={{ position: 'relative', zIndex: 1, width: '46px', height: '46px', borderRadius: '50%', background: '#38bdf8', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Phone style={{ width: '22px', height: '22px' }} />
+                  </div>
+                  <div style={{ position: 'relative', zIndex: 1 }}>
+                    <h5 style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
+                      CALL US DIRECTLY
+                    </h5>
+                    <div className="winera-contact-phones-row" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+                      <a href="tel:+919428989488" style={{ fontSize: '13.5px', fontWeight: '700', color: '#475569', textDecoration: 'none' }}>+91 94289 89488</a>
+                      <a href="tel:+919512356766" style={{ fontSize: '13.5px', fontWeight: '700', color: '#475569', textDecoration: 'none' }}>+91 95123 56766</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* EMAIL card — white + yellow diagonal swoosh */}
+              <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+                <div style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  background: '#ffffff',
+                  borderRadius: '20px',
+                  padding: '22px 26px',
+                  boxShadow: '0 10px 28px rgba(255, 205, 0, 0.14)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '18px',
+                  overflow: 'hidden'
+                }}>
+                  {/* Diagonal filled swoosh — inside card, clipped to border-radius */}
+                  <svg
+                    viewBox="0 0 500 100"
+                    preserveAspectRatio="none"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
+                  >
+                    <defs>
+                      <linearGradient id="cuYellowSwoosh" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#e6a800" stopOpacity="1" />
+                        <stop offset="40%" stopColor="#ffcd00" stopOpacity="0.7" />
+                        <stop offset="58%" stopColor="#ffcd00" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M 0 0 L 220 0 C 220 0 190 6 190 6 L 28 6 C 18 6 6 18 6 28 L 6 72 C 6 82 18 94 28 94 L 165 94 C 165 94 200 100 200 100 L 0 100 Z"
+                      fill="url(#cuYellowSwoosh)"
+                    />
+                  </svg>
+
+                  <div style={{ position: 'relative', zIndex: 1, width: '46px', height: '46px', borderRadius: '50%', background: '#ffcd00', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Mail style={{ width: '22px', height: '22px' }} />
+                  </div>
+                  <div style={{ position: 'relative', zIndex: 1 }}>
+                    <h5 style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
+                      EMAIL OUR TEAM
+                    </h5>
+                    <a href="mailto:info@winera.in" style={{ fontSize: '13.5px', fontWeight: '700', color: '#475569', textDecoration: 'none' }}>info@winera.in</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Contact Form Card ("Let’s Start Your Project") */}
+          <div className="winera-contact-form-card" style={{
+            position: 'relative',
+            background: '#ffffff',
+            borderRadius: '24px',
+            padding: '36px 32px',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.06)',
+            overflow: 'hidden',
+            textAlign: 'left',
+            maxWidth: '480px',
+            margin: '0 auto',
+            width: '100%'
+          }}>
+            {/* Top Multi-Color Gradient Line (Cyan -> Lime -> Yellow) */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '7px',
+              background: 'linear-gradient(90deg, #38bdf8 0%, #a3e635 50%, #ffcd00 100%)'
+            }}></div>
+
+            <h3 style={{ fontSize: '1.45rem', fontWeight: '800', color: '#0f172a', marginBottom: '24px', marginTop: '4px' }}>
+              Let’s Start Your Project
+            </h3>
 
             {submitted ? (
               <div style={{
                 background: '#f0fdf4',
                 border: '1.5px solid #86efac',
                 borderRadius: '20px',
-                padding: '40px 24px',
+                padding: '36px 20px',
                 textAlign: 'center'
               }}>
-                <CheckCircle2 style={{ width: '56px', height: '56px', color: '#16a34a', margin: '0 auto 16px' }} />
-                <h4 style={{ fontSize: '1.3rem', fontWeight: '900', color: '#14532d', marginBottom: '8px' }}>Inquiry Submitted Successfully!</h4>
-                <p style={{ color: '#166534', fontSize: '14px', lineHeight: 1.6, maxWidth: '440px', margin: '0 auto 20px' }}>
-                  Thank you for your interest. Our game zone specialist will connect with you shortly.
+                <CheckCircle2 style={{ width: '50px', height: '50px', color: '#16a34a', margin: '0 auto 14px' }} />
+                <h4 style={{ fontSize: '1.2rem', fontWeight: '900', color: '#14532d', marginBottom: '8px' }}>Inquiry Submitted!</h4>
+                <p style={{ color: '#166534', fontSize: '13.5px', lineHeight: 1.6, margin: '0 auto 18px' }}>
+                  Thank you for reaching out. Our specialist will contact you shortly.
                 </p>
                 <button
                   onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', email: '', inquiry: '' }); }}
-                  style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '10px 24px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer' }}
+                  style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '10px 22px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer' }}
                 >
-                  Send Another Inquiry
+                  Send Another Message
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#475569', marginBottom: '8px' }}>Name *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Enter your name"
-                      style={{ width: '100%', padding: '13px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#475569', marginBottom: '8px' }}>Phone Number *</label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="Enter your phone number"
-                      style={{ width: '100%', padding: '13px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#475569', marginBottom: '8px' }}>Email</label>
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="Enter your email address"
-                      style={{ width: '100%', padding: '13px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                    />
-                  </div>
-                </div>
-
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#475569', marginBottom: '8px' }}>Inquiry *</label>
-                  <textarea
-                    rows={5}
+                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    FULL NAME
+                  </label>
+                  <input
+                    type="text"
                     required
-                    value={formData.inquiry}
-                    onChange={(e) => setFormData({ ...formData, inquiry: e.target.value })}
-                    placeholder="Describe your inquiry, space requirements, or questions..."
-                    style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.6 }}
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="John Doe"
+                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '500', color: '#0f172a', outline: 'none' }}
                   />
                 </div>
 
-                <div style={{ textAlign: 'left', marginTop: '6px' }}>
-                  <button
-                    type="submit"
-                    style={{
-                      background: '#38bdf8',
-                      color: '#ffffff',
-                      fontSize: '14.5px',
-                      fontWeight: '900',
-                      padding: '14px 36px',
-                      borderRadius: '14px',
-                      border: '2px solid #ffcd00',
-                      boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}
-                  >
-                    <Send style={{ width: '18px', height: '18px' }} /> Request Free Consultation
-                  </button>
+                <div>
+                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    PHONE NUMBER
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="+1 (555) 000-0000"
+                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '500', color: '#0f172a', outline: 'none' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    EMAIL ADDRESS
+                  </label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="john@company.com"
+                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '500', color: '#0f172a', outline: 'none' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    PROJECT DETAILS / INQUIRY
+                  </label>
+                  <textarea
+                    rows={4}
+                    required
+                    value={formData.inquiry}
+                    onChange={(e) => setFormData({ ...formData, inquiry: e.target.value })}
+                    placeholder="Tell us about your venue requirements, space dimensions, or technical questions..."
+                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '500', color: '#0f172a', outline: 'none', resize: 'vertical' }}
+                  />
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '14px' }}>
+                  <div className="winera-cyan-cta-wrapper">
+                    <button
+                      type="submit"
+                      className="winera-cyan-cta-btn"
+                      style={{ border: 'none', cursor: 'pointer', padding: '13px 32px', fontSize: '15.5px', borderRadius: '14px' }}
+                    >
+                      <span>Request Free Consultation</span>
+                    </button>
+                  </div>
                 </div>
               </form>
             )}
           </div>
+        </div>
 
-          {/* PHONE & EMAIL STRIP */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '30px',
-            marginBottom: '60px'
-          }}>
-            {/* Phone No. Box */}
-            <div style={{
-              background: '#ffffff',
-              borderRadius: '24px',
-              padding: '32px 36px',
-              border: '1px solid #e2e8f0',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '20px',
-              textAlign: 'left'
-            }}>
-              <div style={{
-                width: '56px',
-                height: '56px',
-                borderRadius: '16px',
-                background: '#e0f2fe',
-                color: '#0284c7',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}>
-                <Phone style={{ width: '26px', height: '26px' }} />
-              </div>
-              <div>
-                <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>Phone No.</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <a href="tel:+919428989488" style={{ color: '#00a8ff', fontWeight: '800', fontSize: '16px', textDecoration: 'none' }}>+91 94289 89488</a>
-                  <a href="tel:+919512356766" style={{ color: '#00a8ff', fontWeight: '800', fontSize: '16px', textDecoration: 'none' }}>+91 95123 56766</a>
-                </div>
-              </div>
-            </div>
-
-            {/* Email Us Box */}
-            <div style={{
-              background: '#ffffff',
-              borderRadius: '24px',
-              padding: '32px 36px',
-              border: '1px solid #e2e8f0',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '20px',
-              textAlign: 'left'
-            }}>
-              <div style={{
-                width: '56px',
-                height: '56px',
-                borderRadius: '16px',
-                background: '#fef3c7',
-                color: '#d97706',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}>
-                <Mail style={{ width: '26px', height: '26px' }} />
-              </div>
-              <div>
-                <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>Email Us</h4>
-                <a href="mailto:info@winera.in" style={{ color: '#0f172a', fontWeight: '800', fontSize: '16px', textDecoration: 'none' }}>info@winera.in</a>
-              </div>
-            </div>
-          </div>
-
-          {/* OUR 2 ADDRESSES: SURAT AND CHINA */}
-          <div style={{ marginBottom: '60px', textAlign: 'left' }}>
-            <SectionHeading align="left" marginBottom="24px" accentWidth="50%" accentMaxWidth="320px">
-              Our 2 <span style={{ color: '#00a8ff' }}>Global Locations</span>
+        {/* 4. OUR 2 GLOBAL LOCATIONS & MAP SECTION */}
+        <div style={{ maxWidth: '1240px', margin: '80px auto 0' }}>
+          <div style={{ marginBottom: '50px', textAlign: 'center' }}>
+            <SectionHeading align="center" marginBottom="28px" accentWidth="240px" accentMaxWidth="400px">
+              <span style={{ color: '#0f172a' }}>Where We’re </span>
+              <span style={{ color: '#38bdf8' }}>Globally Present</span>
             </SectionHeading>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
-              {/* Surat India Office */}
-              <div style={{
-                background: '#ffffff',
-                borderRadius: '24px',
-                padding: '32px',
-                border: '1.5px solid #38bdf8',
-                boxShadow: '0 15px 40px rgba(56, 189, 248, 0.08)'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Building2 style={{ width: '20px', height: '20px' }} />
+
+              {/* Surat HQ — white + cyan diagonal swoosh */}
+              <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+                <div style={{
+                  position: 'relative',
+                  background: '#ffffff',
+                  borderRadius: '24px',
+                  padding: '32px',
+                  boxShadow: '0 10px 28px rgba(56, 189, 248, 0.12)',
+                  textAlign: 'left',
+                  height: '100%',
+                  overflow: 'hidden'
+                }}>
+                  {/* Diagonal filled swoosh — inside card, clipped to border-radius */}
+                  <svg
+                    viewBox="0 0 500 160"
+                    preserveAspectRatio="none"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
+                  >
+                    <defs>
+                      <linearGradient id="suratCyanSwoosh" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#28b4ee" stopOpacity="1" />
+                        <stop offset="40%" stopColor="#38bdf8" stopOpacity="0.7" />
+                        <stop offset="58%" stopColor="#38bdf8" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M 0 0 L 220 0 C 220 0 190 6 190 6 L 28 6 C 18 6 6 18 6 28 L 6 132 C 6 142 18 152 28 152 L 165 152 C 165 152 200 160 200 160 L 0 160 Z"
+                      fill="url(#suratCyanSwoosh)"
+                    />
+                  </svg>
+
+                  <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+                    <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#38bdf8', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Building2 style={{ width: '22px', height: '22px' }} />
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Surat Headquarters (India)</h3>
+                      <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>Corporate & Sales Office</span>
+                    </div>
                   </div>
-                  <div>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Surat Headquarters (India)</h3>
-                    <span style={{ fontSize: '12px', color: '#38bdf8', fontWeight: '800' }}>Corporate & Sales Office</span>
-                  </div>
+                  <p style={{ position: 'relative', zIndex: 1, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                    Winera International Pvt. Ltd.<br />
+                    Surat, Gujarat, India.<br />
+                    Hotline: +91 94289 89488 / +91 95123 56766
+                  </p>
                 </div>
-                <p style={{ color: '#475569', fontSize: '13.5px', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
-                  Winera International Pvt. Ltd.<br />
-                  Surat, Gujarat, India.<br />
-                  Hotline: +91 94289 89488 / +91 95123 56766
-                </p>
               </div>
 
-              {/* China Manufacturing Facility */}
-              <div style={{
-                background: '#ffffff',
-                borderRadius: '24px',
-                padding: '32px',
-                border: '1.5px solid #ffcd00',
-                boxShadow: '0 15px 40px rgba(255, 205, 0, 0.12)'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Globe style={{ width: '20px', height: '20px' }} />
+              {/* China Facility — white + yellow diagonal swoosh */}
+              <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+                <div style={{
+                  position: 'relative',
+                  background: '#ffffff',
+                  borderRadius: '24px',
+                  padding: '32px',
+                  boxShadow: '0 10px 28px rgba(255, 205, 0, 0.14)',
+                  textAlign: 'left',
+                  height: '100%',
+                  overflow: 'hidden'
+                }}>
+                  {/* Diagonal filled swoosh — inside card, clipped to border-radius */}
+                  <svg
+                    viewBox="0 0 500 160"
+                    preserveAspectRatio="none"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
+                  >
+                    <defs>
+                      <linearGradient id="chinaYellowSwoosh" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#e6a800" stopOpacity="1" />
+                        <stop offset="40%" stopColor="#ffcd00" stopOpacity="0.7" />
+                        <stop offset="58%" stopColor="#ffcd00" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M 0 0 L 220 0 C 220 0 190 6 190 6 L 28 6 C 18 6 6 18 6 28 L 6 132 C 6 142 18 152 28 152 L 165 152 C 165 152 200 160 200 160 L 0 160 Z"
+                      fill="url(#chinaYellowSwoosh)"
+                    />
+                  </svg>
+
+                  <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+                    <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#ffcd00', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Globe style={{ width: '22px', height: '22px' }} />
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>China Manufacturing Facility</h3>
+                      <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>Sourcing & Assembly Hub</span>
+                    </div>
                   </div>
-                  <div>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>China Manufacturing Facility</h3>
-                    <span style={{ fontSize: '12px', color: '#d97706', fontWeight: '800' }}>Sourcing & Assembly Hub</span>
-                  </div>
+                  <p style={{ position: 'relative', zIndex: 1, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                    Winera International Global Assembly Base<br />
+                    Guangzhou / Panyu Amusement Equipment Zone,<br />
+                    Guangdong Province, China.
+                  </p>
                 </div>
-                <p style={{ color: '#475569', fontSize: '13.5px', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
-                  Winera International Global Assembly Base<br />
-                  Guangzhou / Panyu Amusement Equipment Zone,<br />
-                  Guangdong Province, China.
-                </p>
               </div>
             </div>
           </div>
 
-          {/* INTERACTIVE MAP EMBED */}
-          <div style={{ textAlign: 'left' }}>
-            <SectionHeading align="left" marginBottom="20px" accentWidth="40%" accentMaxWidth="240px">
-              Location <span style={{ color: '#00a8ff' }}>Map</span>
+          {/* Location Map */}
+          <div style={{ textAlign: 'center', marginTop: '60px' }}>
+            <SectionHeading align="center" marginBottom="28px" accentWidth="220px" accentMaxWidth="360px">
+              <span style={{ color: '#38bdf8' }}>Discover Our </span>
+              <span style={{ color: '#0f172a' }}>Locations</span>
             </SectionHeading>
 
             <div style={{
@@ -310,7 +435,7 @@ export default function ContactUs({ siteData }) {
               height: '420px',
               borderRadius: '28px',
               overflow: 'hidden',
-              boxShadow: '0 20px 45px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0 20px 45px rgba(0, 0, 0, 0.08)',
               border: '4px solid #ffffff'
             }}>
               <iframe
@@ -325,14 +450,21 @@ export default function ContactUs({ siteData }) {
               ></iframe>
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* 4. CTA BANNER */}
+      {/* 5. FREQUENTLY ASKED QUESTIONS SECTION (DYNAMIC MONGO PERSISTED DATA) */}
+      <FaqSection
+        faqList={Array.isArray(siteData?.contactFaqs) && siteData.contactFaqs.length > 0 ? siteData.contactFaqs : (Array.isArray(siteData?.faqs) && siteData.faqs.length > 0 ? siteData.faqs : [])}
+        title={siteData?.contactFaqsHeader?.title || "Frequently Asked *Questions*"}
+        subtitle={siteData?.contactFaqsHeader?.subtitle}
+        highlightColor="#38bdf8"
+      />
+
+      {/* 6. CTA BANNER */}
       <CtaBanner />
 
-      {/* 5. FOOTER */}
+      {/* 6. FOOTER */}
       <Footer footerData={footer} />
     </div>
   );

@@ -31,8 +31,8 @@ export default function Header({ headerData }) {
 
   const resourcesSubMenu = [
     { label: 'Blog', href: '/#blog' },
-    { label: 'ROI', href: '/#roi' },
-    { label: 'Safety Standard', href: '/#safety-standard' }
+    { label: 'ROI', href: '/roi' },
+    { label: 'Safety Standard', href: '/resources/safety-standards' }
   ];
 
   return (
@@ -49,7 +49,7 @@ export default function Header({ headerData }) {
         .winera-hamburger { display: none; }
         .winera-logo-img { height: 48px; }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1150px) {
           .winera-header {
             width: 94% !important;
             padding: 10px 16px !important;
@@ -178,9 +178,17 @@ export default function Header({ headerData }) {
           </div>
 
           {/* Project Link */}
-          <a href="/#projects" style={{ fontSize: '14px', fontWeight: '700', color: '#1e293b', textDecoration: 'none' }}>
+          <Link
+            to="/project"
+            style={{
+              fontSize: '14px',
+              fontWeight: currentPath.startsWith('/project') ? '800' : '700',
+              color: currentPath.startsWith('/project') ? '#0084ff' : '#1e293b',
+              textDecoration: 'none'
+            }}
+          >
             Project
-          </a>
+          </Link>
 
           {/* Resources Dropdown */}
           <div
@@ -462,19 +470,20 @@ export default function Header({ headerData }) {
               )}
             </div>
 
-            <a
-              href="/#projects"
+            <Link
+              to="/project"
               onClick={() => setMobileMenuOpen(false)}
               style={{
                 fontSize: '16px',
                 fontWeight: '800',
                 color: '#0f172a',
                 textDecoration: 'none',
-                padding: '4px 0'
+                padding: '8px 0',
+                borderBottom: '1px solid #f1f5f9'
               }}
             >
-              Projects
-            </a>
+              Project
+            </Link>
 
             {/* Mobile Accordion - Resources */}
             <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '12px' }}>

@@ -29,10 +29,711 @@ import {
   Star,
   Video,
   Trophy,
-  Sparkles
+  Sparkles,
+  Calculator
 } from 'lucide-react';
 import yellowBrushAccent from '../assets/yellow-stroke-line.png';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.png';
+
+import projectBanner from '../assets/project-banner.png';
+import projectImage01 from '../assets/project-image01.png';
+import projectImage2Bg from '../assets/project-image2-bg.png';
+import projectImage3 from '../assets/project-image-3.png';
+import projectImage4 from '../assets/project-image-4.png';
+import projectImagesBg from '../assets/project-images-bg.png';
+import projectBlock1 from '../assets/project-block1.png';
+import projectBlock2 from '../assets/project-block2.png';
+import projectBlock3 from '../assets/project-block3.png';
+import projectSectionVideo from '../assets/project-section-video.png';
+import yellowStrokeLine from '../assets/yellow-stroke-line.png';
+
+import hypergridHeroBg from '../assets/hypergrid-hero-bg.png';
+import trampolineParkBg from '../assets/trampoline-park-bg.png';
+import trampolineParkImg1 from '../assets/trampoline-park-img1.png';
+import trampolineParkImg2 from '../assets/trampoline-park-img-2.png';
+import trampolineImg3 from '../assets/trampoline-img-3.png';
+import tampolineImg4 from '../assets/tampoline-img-4.png';
+import tampolineImg5 from '../assets/tampoline-img-5.png';
+import tampolineImage6 from '../assets/tampoline-image-6.png';
+import tampolineImage7 from '../assets/tampoline-image-7.png';
+import hypergridSupplierCollage from '../assets/hypergrid-supplier-collage.png';
+import hypergridBannerImg from '../assets/hypergrid-banner-img.png';
+import hypergridSpecsBg from '../assets/hypergrid-specs-bg.png';
+import hypergridWhyUsBg from '../assets/hypergrid-why-us-bg.png';
+import hypergridImage from '../assets/hypergrid-image.png';
+import hypergridWineraLastblock from '../assets/hypergrid-winera-lastblock.png';
+import arImage from '../assets/AR-image.png';
+
+import safetyBg from '../assets/safety-bg.png';
+import safetyStandardImg1 from '../assets/safety-standard-img1.png';
+import safetyStandard2 from '../assets/safety-standard-2.png';
+import safetyStandardImg3 from '../assets/safety-standard-img3.png';
+
+import roiBgImage from '../assets/roi-bg-image.png';
+import roiImg1 from '../assets/roi-img1.png';
+import roiImage3bg from '../assets/roi-image-3bg.png';
+import roiBlock5Img1 from '../assets/roi-block5-img1.png';
+import roiBlock5Img2 from '../assets/roi-block5-img2.png';
+import roiBlock5Img3 from '../assets/roi-block5-img3.png';
+import roiBlock5Img4 from '../assets/roi-block5-img4.png';
+import roiBlock5Img5 from '../assets/roi-block5-img5.png';
+import roiBlock5Img6 from '../assets/roi-block5-img6.png';
+import roiBlock6 from '../assets/roi-block6.png';
+import roiBlock7Bg from '../assets/roi-block7-bg.png';
+import homeBlockBg from '../assets/home-block.png';
+
+const defaultHypergridHero = {
+  bgUrl: hypergridHeroBg,
+  breadcrumbText: 'Hypergrid'
+};
+
+const defaultHypergridIntro = {
+  title: '*Hypergrid Game*<br/>Supplier in India',
+  desc: "India's trusted Hypergrid game supplier commercial-grade interactive LED floor systems, installed and serviced by our own team across 50+ cities.",
+  buttonText: 'Get A Quote',
+  buttonLink: 'https://wa.me/919428989488',
+  mainImgUrl: hypergridSupplierCollage
+};
+
+const defaultHypergridBanner = {
+  title: 'Interactive LED Floor Games<br/>*for High-Footfall Venues*',
+  paragraph1: 'Winera International is a trusted Hypergrid game supplier in India, sourcing and installing commercial Hypergrid interactive LED floor systems for malls, family entertainment centres, hotels, schools, trampoline parks, and bowling alleys since 2014. Every Hypergrid unit we supply is sourced from established global manufacturers — configured specifically for sustained daily commercial use in high-footfall Indian venues.',
+  paragraph2: 'As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order to opening day',
+  imgUrl: hypergridBannerImg
+};
+
+const defaultHypergridSpecs = {
+  bgUrl: hypergridSpecsBg,
+  title: '*Technical* Specifications',
+  rows: [
+    { spec: "Players", details: "1 to 6 simultaneously" },
+    { spec: "Game modes", details: "5+ repeatable modes" },
+    { spec: "Attendant required", details: "No — fully self-operated" },
+    { spec: "Minimum space required", details: "200 sq ft onwards" },
+    { spec: "Expected lifespan", details: "8+ years — commercial grade" }
+  ],
+  buttonText: 'Download Our Brochure',
+  buttonLink: 'https://wa.me/919428989488'
+};
+
+const defaultHypergridWhyUs = {
+  bgUrl: hypergridWhyUsBg,
+  title: '*What Makes Hypergrid* the Right<br/>Choice for Your Venue',
+  subtitle: 'Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:',
+  leftImgUrl: arImage,
+  cards: [
+    {
+      title: "An Attraction That Draws a Crowd Without Marketing",
+      desc: "Hypergrid's illuminated floor is visible from across a venue visitors stop, watch, and join without any promotion needed. The combination of moving lights, real-time competition, and full-body play creates a natural spectator effect that draws walk-in visitors throughout the day."
+    },
+    {
+      title: "Every Visitor Has a Reason to Play",
+      desc: "From a young child learning through colour-based games or a teenager competing for the top score, Hypergrid keeps players engaged with adjustable difficulty levels and multiple game modes. One attraction appeals to different age groups, helping your venue attract and entertain more visitors."
+    },
+    {
+      title: "Revenue Without the Overhead",
+      desc: "Visitors can start and play Hypergrid on their own without needing staff assistance. This helps reduce operating costs while generating consistent revenue, making it an ideal attraction for Indian FECs, malls, and hotels."
+    }
+  ]
+};
+
+const defaultHypergridRoi = {
+  title: 'Is Hypergrid a Smart<br/>*Investment for Your Venue?*',
+  paragraph1: "Most interactive LED floor game suppliers quote a unit price and leave the business decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any Hypergrid order, our team prepares a complete ROI report for your specific venue — covering equipment cost, projected daily sessions, estimated revenue per session, maintenance costs, and break-even timeline.",
+  paragraph2: "Every figure is calculated around your venue type, daily footfall, and target visitor demographic — not an industry average. Very few Hypergrid game suppliers in India include this as a standard part of their process. For Winera, it is where every project starts.",
+  buttonText: 'Talk to an ROI Expert',
+  buttonLink: 'https://wa.me/919428989488',
+  imgUrl: hypergridImage
+};
+
+const defaultHypergridWhyWineraItems = [
+  {
+    icon: 'award',
+    title: "Commercial-Grade Equipment",
+    desc: "Made To Run Every Day In Busy Places Without Breaking Down."
+  },
+  {
+    icon: 'settings',
+    title: "Customized For Your Venue",
+    desc: "We Set Up The Games, Levels, And Branding To Fit Your Space."
+  },
+  {
+    icon: 'coins',
+    title: "ROI Planning Before You Invest",
+    desc: "We Show You The Cost And Profit Before You Spend Any Money."
+  },
+  {
+    icon: 'headphones',
+    title: "Professional Installation",
+    desc: "Our Own Team Comes And Sets Everything Up For You."
+  },
+  {
+    icon: 'calendar',
+    title: "Operator Training Included",
+    desc: "We Train Your Staff So They're Ready Before You Open."
+  },
+  {
+    icon: 'package',
+    title: "Reliable After-Sales Support",
+    desc: "We Fix, Update, And Service It Whenever You Need Help."
+  }
+];
+
+const defaultHypergridWhyWinera = {
+  title: 'Why Choose *Winera International*',
+  items: defaultHypergridWhyWineraItems
+};
+
+const defaultHypergridFaqs = [
+  {
+    question: "Who is a reliable Hypergrid game supplier in India?",
+    answer: "Winera International is a trusted Hypergrid game supplier in India, sourcing commercial interactive LED floor systems from established global manufacturers for malls, FECs, hotels, schools, and trampoline parks — installed across 50+ cities by our own team since 2014."
+  },
+  {
+    question: "What is a Hypergrid interactive LED floor game?",
+    answer: "Hypergrid is a commercial interactive LED floor system using pressure-sensitive RGB tiles. Players step, jump, and sprint across the glowing grid — reacting to colour patterns, memory sequences, and speed challenges in real time. It supports 1 to 6 players simultaneously, requires no attendant, and offers 5+ game modes for consistent repeat engagement."
+  },
+  {
+    question: "Is Hypergrid a good business investment for an FEC or mall?",
+    answer: "As a Hypergrid FEC game, it generates revenue through per-session fees with zero consumable costs and no attendant requirement — keeping operating costs low. Its self-operated design and high repeat-play appeal make it one of the strongest revenue-per-square-foot attractions for Indian FECs and malls."
+  },
+  {
+    question: "What is the price of a Hypergrid game in India?",
+    answer: "Hypergrid game pricing depends on configuration, tile count, and installation requirements. Winera provides a complete cost breakdown — equipment, installation, and projected maintenance — before confirming any order. Contact our team for a venue-specific quote and free ROI report."
+  },
+  {
+    question: "How much space does Hypergrid require?",
+    answer: "A commercial Hypergrid installation starts from 200 sq ft of flat floor space — compact enough to fit within an existing trampoline park, bowling alley, or mall entertainment zone without requiring a dedicated standalone room."
+  },
+  {
+    question: "What game modes does Hypergrid offer?",
+    answer: "Hypergrid offers 5+ game modes including colour-matching, memory sequences, speed reaction challenges, and competitive multiplayer formats — with adjustable difficulty settings for children through adults. Game modes can be configured through the 24\" operator control panel."
+  },
+  {
+    question: "Does Hypergrid require a dedicated staff member to operate?",
+    answer: "No. Hypergrid is fully self-operated — players start and control sessions through the intuitive interface without staff involvement."
+  },
+  {
+    question: "How long does Hypergrid installation take?",
+    answer: "A standard Hypergrid installation is typically completed within 1–2 days depending on floor configuration. Winera confirms an exact timeline at the quote stage covering delivery, calibration, and staff training."
+  },
+  {
+    question: "What after-sales support does Winera provide for Hypergrid?",
+    answer: "Winera International provides software updates, hardware servicing, tile replacement, and on-site support for all Hypergrid installations — directly through our own team across 50+ cities."
+  }
+];
+
+const defaultHypergridCta = {
+  bgUrl: hypergridWineraLastblock,
+  buttonLink: 'https://wa.me/919428989488'
+};
+
+const defaultHypergridSeo = {
+  pageTitle: "Interactive LED Hypergrid Arena Manufacturer in India | Winera International",
+  metaDescription: "Winera International is India's leading manufacturer of Interactive LED Hypergrid active gaming arenas, offering high-ROI illuminated floor tile systems and turnkey game zone setups."
+};
+
+const defaultProjectHero = {
+  bannerImg: projectBanner,
+  breadcrumbHome: 'Home',
+  breadcrumbPage: 'Project'
+};
+
+const defaultProjectBlock = {
+  strokeImg: yellowStrokeLine,
+  titleLine1: 'FifthAlley Sport Bowling: A',
+  titleLine2: 'Complete ',
+  titleLine2Black: 'Bowling Alley Setup',
+  titleLine3: 'in the Heart of Surat',
+  description: 'How we designed and installed a professional-grade bowling alley across 3,000 sq. ft., transforming an empty space in Katargam into a destination entertainment venue in Surat.',
+  buttonText: 'Get A Quote',
+  buttonLink: 'https://wa.me/919428989488',
+  image: projectImage01
+};
+
+const defaultProjectBasicInfo = {
+  bgImg: projectImage2Bg,
+  yellowTitle: 'Basic ',
+  whiteTitle: 'Information',
+  rows: [
+    { label: 'Project Name', val: 'FifthAlley Sport Bowling' },
+    { label: 'Project Type', val: 'Bowling Alley Setup' },
+    { label: 'Location', val: 'Surat, Gujarat' },
+    { label: 'Total Area', val: '3,000 sq. ft.' }
+  ]
+};
+
+const defaultProjectClientWanted = {
+  titlePrefix: 'What the ',
+  titleCyan: 'Client Wanted',
+  paragraph1: 'The client had an empty 3,000 sq. ft. space in Katargam and a clear goal: to open a professional bowling venue.',
+  paragraph2: "They didn't want a supplier who only supplied the equipment. They wanted one partner to handle everything, plan the space, install the lanes, and hand over a venue that was ready for opening day. In short, they needed one team they could trust from start to finish.",
+  image: projectImage3
+};
+
+const defaultProjectSolution = {
+  titleCyan: 'What Solution ',
+  titleSuffix: 'We Provide',
+  paragraph1: 'We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue. Across the 3,000 sq. ft. space in Katargam, we planned the layout so the professional lanes had enough room around them for people to walk, sit, and relax.',
+  paragraph2: 'The result is a venue that is fun to play in and comfortable to spend time in — just like a good family entertainment center should feel.',
+  image: projectImage4
+};
+
+const defaultProjectGallery = {
+  titleCyan: 'Project ',
+  titleDark: 'Gallery',
+  bgImg: projectImagesBg,
+  images: [
+    projectBlock1,
+    projectBlock2,
+    projectBlock3,
+    projectBlock1,
+    projectBlock2,
+    projectBlock3
+  ]
+};
+
+const defaultProjectVideo = {
+  image: projectSectionVideo,
+  videoUrl: 'https://wa.me/919428989488'
+};
+
+const defaultProjectSeo = {
+  title: 'Our Projects | Turnkey Game Zone & Entertainment Venues by Winera International',
+  description: 'Explore turnkey bowling alley and entertainment venue setup projects by Winera International.'
+};
+
+const defaultRoiHero = {
+  breadcrumbPage: "ROI",
+  bgUrl: roiBgImage
+};
+
+const defaultRoiIntro = {
+  tagline: "Return on Investment (ROI)",
+  titleLine1: "You don't need a game zone…",
+  titleLine2: "you need a",
+  titleLine2Blue: "profit machine.",
+  paragraph1: "Anyone can fill a room with arcade machines. Very few build a game zone that pays back your investment and keeps printing profit month after month.",
+  paragraph2: "Most game zone owners lose money in year one — not because gaming is dead, but because the setup, game mix, and management were wrong from day one.",
+  buttonText: "Book Your Free ROI Consultation",
+  buttonLink: "https://wa.me/919428989488",
+  image: roiImg1
+};
+
+const defaultRoiMatters = {
+  title: "Opening a game zone is easy. Making it profitable is a system.",
+  paragraph1: "You've seen the crowds. You know the demand is real. So you're tempted to invest. But here's what nobody tells you:",
+  cards: [
+    "₹40–80 lakh invested, and the zone still runs at a loss.",
+    "Machines that look exciting but nobody plays twice.",
+    "Empty floors on weekdays, chaos on weekends, no system in between.",
+    "No idea what your actual return per square foot is."
+  ],
+  warningTextLine1: "A cheap or random setup doesn't save you money.",
+  warningTextLine2: "It quietly kills your ROI."
+};
+
+const defaultRoiComparison = {
+  title: "Why most game zones fail vs. why ours profit",
+  subCaption: "The difference isn't the games. It's the system behind them.",
+  wrongItems: [
+    { num: "01", text: "Random game selection", offset: "20px" },
+    { num: "02", text: "No space planning", offset: "65px" },
+    { num: "03", text: "Buy machines, then figure it out", offset: "95px" },
+    { num: "04", text: "No pricing strategy", offset: "95px" },
+    { num: "05", text: "Owner manages everything manually", offset: "65px" },
+    { num: "06", text: "Guessing monthly income", offset: "20px" }
+  ],
+  rightItems: [
+    { num: "01", text: "Data-backed game mix (high footfall + high margin)", offset: "20px" },
+    { num: "02", text: "Optimized layout for max games per sq. ft.", offset: "65px" },
+    { num: "03", text: "ROI modeled before you spend a rupee", offset: "95px" },
+    { num: "04", text: "Dynamic pricing + package systems", offset: "95px" },
+    { num: "05", text: "Full management + POS + reporting system", offset: "65px" },
+    { num: "06", text: "Predictable, tracked revenue", offset: "20px" }
+  ]
+};
+
+const defaultRoiProcess = {
+  title: "From empty space to profit we handle everything",
+  cards: [
+    { title: "Location & Feasibility", desc: "We analyze your space and market and then project your ROI.", img: roiBlock5Img1 },
+    { title: "Design & Layout", desc: "Maximum games, best flow, optimized experience per sq. ft.", img: roiBlock5Img2 },
+    { title: "Game Selection", desc: "The right mix of high-demand + high-margin games.", img: roiBlock5Img3 },
+    { title: "Setup & Installation", desc: "You don't have to touch a single wire.", img: roiBlock5Img4 },
+    { title: "Management System", desc: "POS, pricing, staff training, reporting, and maintenance.", img: roiBlock5Img5 },
+    { title: "Ongoing Growth", desc: "We help you scale revenue, not just open doors.", img: roiBlock5Img6 }
+  ]
+};
+
+const defaultRoiGet = {
+  title: "What you get with Winera International",
+  subtitle: "Three things that turn your investment into predictable, growing profit.",
+  badgeText: "Built for Profit.",
+  image: roiBlock6,
+  steps: [
+    { title: "Predictable ROI", desc: "Know your returns before you invest." },
+    { title: "Zero Guesswork", desc: "We handle setup + management end-to-end." },
+    { title: "Ongoing Profit", desc: "Systems that keep revenue growing." }
+  ]
+};
+
+const defaultRoiChecklist = {
+  title: "This is for you if",
+  bgImage: roiBlock7Bg,
+  fitPill: "You're a fit",
+  unfitPill: "You're a fit",
+  fitItems: [
+    "You want to invest ₹XX Lakh+ in a proven, growing business",
+    "You want returns backed by data, not hope",
+    "You'd rather have experts build it than learn by losing money",
+    "You want a zone that runs as a system, not a headache"
+  ],
+  unfitItems: [
+    "You want to invest ₹XX Lakh+ in a proven, growing business",
+    "You want the cheapest possible setup",
+    "You're not serious about returns",
+    "You expect profit without a proper system"
+  ]
+};
+
+const defaultRoiCta = {
+  yellowText: "READY TO",
+  whiteText: "SEE YOUR",
+  cyanText: "NUMBERS?",
+  subtitle: "Book A Free Consultation With Winera International. We'll Walk You Through The ROI Projection For Your Space, Your Budget, And Your City — Before You Spend Anything.",
+  buttonText: "Book Your Free ROI Call",
+  buttonLink: "https://wa.me/919428989488",
+  bgUrl: homeBlockBg
+};
+
+const defaultRoiSeo = {
+  pageTitle: "ROI Calculator for Game Zones | Return on Investment | Winera International",
+  metaDescription: "Calculate your game zone ROI before investing. Winera International provides free ROI consultations, data-backed game mix planning, and complete setup services across India."
+};
+
+const defaultSafetyHero = {
+  bgUrl: safetyBg,
+  breadcrumbText: 'Safety Standards'
+};
+
+const defaultSafetyIntro = {
+  titleLine1: 'Game Zone & Kids Play',
+  titleLine2: 'Equipment Safety Standards',
+  p1: 'When you invest in a game zone or family entertainment center, the safety of your equipment protects your visitors, your reputation, and your investment. At Winera International, product safety and quality is our highest priority. Every product we supply — from arcade games to trampoline parks and climbing walls is certified to international safety standards for commercial, high-footfall use, and every venue is installed by our own trained team and inspected on-site before handover.',
+  p2: "As a complete game zone developer, our safety commitment covers four areas: the attractions themselves, the materials they're made of, the electrical systems that power them, and the structure and operation of the finished venue.",
+  mainImgUrl: safetyStandardImg1
+};
+
+const defaultSafetyCertificationsCards = [
+  {
+    title: "EN 1176 — Play Structures & Ninja Courses (Europe)",
+    desc: "EN 1176 is the European Standard for Playground Equipment, published by CEN. It sets safety requirements for structural strength, heights, gaps, and entrapment protection so children play without hidden risks. Winera International supplies and installs soft play and ninja course equipment that complies with EN 1176 — helping your venue pass inspections."
+  },
+  {
+    title: "EN 1177 — Impact-Absorbing Surfaces (Europe)",
+    desc: "EN 1177 is the European Standard for playground impact-absorbing surfaces, published by CEN. It defines how flooring must cushion falls, setting critical fall heights for different materials to reduce injury. Winera International supplies installs safety flooring around play, ninja, and climbing areas that complies with EN 1177 — keeping falls safe."
+  },
+  {
+    title: "ASTM F1918 — Soft Contained Play (International)",
+    desc: "ASTM F1918 is the Standard Safety Performance Specification for Soft Contained Play Equipment, published by ASTM International. It sets safety rules for enclosed, padded play structures used in indoor kids zones, covering design, padding, and fall protection. Winera International supplies and installs soft play equipment that complies with ASTM F1918 — helping your venue pass inspections."
+  },
+  {
+    title: "ASTM F2970 — Trampoline Parks (International)",
+    desc: "ASTM F2970 is the international Standard Practice for Trampoline Courts, published by ASTM International. It sets safety requirements for net enclosures, frame padding, spacing, and impact zones to prevent falls and collisions. Winera International supplies and installs trampoline parks certified to ASTM F2970 — helping your venue stay safe and pass inspections."
+  },
+  {
+    title: "EN 12572 — Climbing Walls (Europe)",
+    desc: "EN 12572 is the European Standard for artificial climbing structures, published by CEN. It sets safety requirements for wall stability, holds, heights, anchor points, and fall zones so climbers stay protected. Winera International supplies and installs wall climbing setups that comply with EN 12572 — helping your venue meet safety standards and pass inspections."
+  },
+  {
+    title: "IS 15475 & IS 15492 — Amusement Rides (India / BIS)",
+    desc: "IS 15475 and IS 15492 are Indian Standards published by the Bureau of Indian Standards (BIS). They set safety rules for the design, construction, and operation of amusement rides and devices in India. Winera International supplies amusement park rides and bumper cars that follow these BIS standards — keeping your venue compliant."
+  },
+  {
+    title: "EN 13814 / ISO 17842 — Amusement Devices (International)",
+    desc: "EN 13814 and ISO 17842 are the international standards for amusement rides and machinery safety. They specify structural strength, emergency stops, mechanical locks, and maintenance protocols. Winera International supplies rides and equipment that comply with these standards — keeping your operating staff and visitors safe."
+  }
+];
+
+const defaultSafetyCertifications = {
+  title1: "Play & Attraction",
+  title2: "Equipment Safety",
+  subtitle: "These standards make sure every attraction people play on is safe by design.",
+  cards: defaultSafetyCertificationsCards
+};
+
+const defaultSafetyMaterialsCards = [
+  {
+    title: "Fire-Safe Materials (India)",
+    desc: "In India, game zone materials must not catch fire easily. The padding, nets, and finishes we use are fire-safe, so they slow down flames instead of feeding them. This keeps your visitors safer and helps your venue follow the law."
+  },
+  {
+    title: "NFPA 701 & UL 94 — Fire Safety (International)",
+    desc: "These two tests check how well materials resist fire. NFPA 701 tests cloth and nets, and UL 94 tests plastic parts, to make sure they don't burn quickly. The materials we use pass these fire-safety tests."
+  },
+  {
+    title: "EN 71 — Safe Play Materials (Europe)",
+    desc: "EN 71 is a European rule that makes sure play materials are safe for children. It checks that they don't catch fire easily and don't contain harmful chemicals. Our kids' equipment meets the EN 71 standard."
+  },
+  {
+    title: "EU REACH & CPSIA — Non-Toxic Materials",
+    desc: "These rules keep harmful chemicals, lead, and other unsafe substances out of children's products. The materials in our kids' equipment follow these rules, so they are safe for kids to touch and play on."
+  }
+];
+
+const defaultSafetyMaterials = {
+  title1: "Material &",
+  title2: "Fire Safety",
+  subtitle: "These standards make sure everything is made from safe materials that don't catch fire easily and are not harmful to touch which is also a legal rule for game zones in India.",
+  imgUrl: safetyStandard2,
+  cards: defaultSafetyMaterialsCards
+};
+
+const defaultSafetyElectricalItems = [
+  {
+    num: "1",
+    title: "CE Marking — European Safety Mark",
+    desc: "The CE mark means a machine has passed Europe's health and safety checks. It shows the product is safe to use. Our arcade games, VR systems, laser tag, hypergrid, and bumper cars all carry the CE mark."
+  },
+  {
+    num: "2",
+    title: "RoHS — Safe Electronics",
+    desc: "RoHS makes sure machines are not made with harmful materials inside their electronics. This keeps them safer and cleaner to use. All our electronic machines are RoHS-safe."
+  },
+  {
+    num: "3",
+    title: "IS / IEC — Electrical Safety Rules (India & International)",
+    desc: "These rules make sure the wiring and power setup of every machine is safe. Our equipment — bowling pinsetters, scoring screens, VR, arcade games, and LED hypergrid floors — follows both Indian and international electrical safety rules for safe wiring, earthing, and power."
+  }
+];
+
+const defaultSafetyElectrical = {
+  title1: "Electrical &",
+  title2: "Machine Safety",
+  subtitle: "These rules make sure all machines that run on electricity are safe to use — like arcade games, VR, laser tag, bumper cars, hypergrid, bowling, and rides.",
+  imgUrl: safetyStandardImg3,
+  items: defaultSafetyElectricalItems
+};
+
+const defaultSafetyStructureCards = [
+  {
+    num: "01",
+    accent: "#00aeef",
+    title: "Strong and Stable Setup (India)",
+    desc: "In India, a game zone must pass a check for strong, stable structure before it can get a licence. We build and fix everything properly so your venue is ready to pass that check. This matters most for climbing walls, ninja courses, trampolines, and rides, where the structure has to hold real weight safely."
+  },
+  {
+    num: "02",
+    accent: "#ffd600",
+    title: "Quality Checks (ISO 9001)",
+    desc: "ISO 9001 is a worldwide standard for good quality work. It makes sure the design, sourcing, and installation are done to a consistent, high standard every time. We follow these quality practices in all our projects."
+  },
+  {
+    num: "03",
+    accent: "#00aeef",
+    title: "Full Safety Check Before Handover",
+    desc: "Good equipment alone is not enough. Once all the games and machines are installed, our trained team runs a full safety check on the complete setup. We hand it over only after everything passes."
+  },
+  {
+    num: "04",
+    accent: "#ffd600",
+    title: "Safe Running & Maintenance (ISO 17842-2 / EN 13814-2)",
+    desc: "These standards are about running and looking after the attractions safely after they are built. We set up your venue the right way and show your team how to run and maintain each attraction safely."
+  }
+];
+
+const defaultSafetyStructure = {
+  title1: "Structure, Installation &",
+  title2: "Operational Safety",
+  subtitle: "These standards make sure the finished venue is strong, set up correctly, and safe to run every day — and ready to pass the local safety check needed for a licence.",
+  cards: defaultSafetyStructureCards
+};
+
+const defaultSafetyWhyMatters = {
+  title1: "Why This Matters",
+  title2: "for Your Business",
+  subtitle: "Good, certified equipment is a smart investment. It keeps visitors safe, protects your money, and helps you get your licence easier. In India, every game zone must pass checks for strong structure, fire safety, and electrical safety before it can open. Because we supply you certified equipment, fire-safe materials, and proper installation, your game zone is ready to pass these checks. The result: you open on time, stay within the rules, and win the trust of every family.",
+  ctaTitle1: "BUILD",
+  ctaTitle2: "YOURS NOW",
+  buttonText: "Talk to an ROI Expert",
+  buttonLink: "https://wa.me/919428989488"
+};
+
+const defaultSafetySeo = {
+  pageTitle: "Equipment Safety Standards | Winera International",
+  metaDescription: "Winera International equipment safety standards, international certifications, commercial-grade materials, and on-site inspection protocols for game zones in India."
+};
+
+const defaultTrampolineHero = {
+  bgUrl: trampolineParkBg,
+  breadcrumbText: 'Trampoline Park'
+};
+
+const defaultTrampolineIntro = {
+  title: 'Trampoline Park *Manufacturer in India*',
+  desc: "India's trusted trampoline park manufacturer — safety-certified equipment, custom-designed layouts, and installed by our own team across India.",
+  buttonText: 'Get Quote From Expert',
+  buttonLink: 'https://wa.me/919999999999?text=Hi%20Winera%2C%20I%20want%20to%20get%20a%20quote%20for%20a%20Trampoline%20Park',
+  mainImgUrl: trampolineParkImg1
+};
+
+const defaultTrampolineCustom = {
+  title1: 'Custom Trampoline Parks ',
+  title2: 'by Winera',
+  title3: 'International',
+  paragraph: "At Winera International, we design and manufacture commercial-grade trampoline parks tailored to your exact venue space, target audience, and business goals. From high-energy free jump zones and dodgeball courts to ninja warrior courses and interactive foam pits, every setup is engineered for maximum safety, durability, and operational ROI.",
+  imgUrl: trampolineParkImg2
+};
+
+const defaultTrampolineSpecs = {
+  title: 'Technical Specifications — *Commercial Trampoline Parks*',
+  specsData: [
+    { label: "Steel Frame", value: "80x80mm / 100x50mm Galvanized Steel (2.5mm–3.0mm thickness)" },
+    { label: "Jump Mat", value: "Commercial-Grade PP Mesh (Polypropylene), Anti-UV, High Tensile" },
+    { label: "Safety Padding", value: "0.45mm PVC Surface + 70mm EPE High-Density Foam Padding" },
+    { label: "Spring Systems", value: "3.2mm Oil-Quenched Manganese Steel Wire (21.5cm length)" },
+    { label: "Enclosure Net", value: "High-Strength PE Netting, Flame Retardant, Anti-Drop" },
+    { label: "Foam Pit Pits", value: "200x200x200mm High-Density Flame-Retardant Foam Cubes" },
+    { label: "Certifications", value: "TUV / CE / ASTM F2970 Safety Standard Compliant" },
+    { label: "Target Lifespan", value: "8–12 Years Commercial Operation with Routine Maintenance" }
+  ]
+};
+
+const defaultTrampolineInside = {
+  title: 'What is inside a *custom trampoline park?*',
+  subtitle: 'Explore the high-turnover jump zones, foam pits, and action courts engineered into every Winera build.',
+  zones: [
+    {
+      name: "Free Jump Zones",
+      title: "Main Free Jump Arena",
+      desc: "Interconnected wall-to-wall trampoline courts with high-bounce mats designed for open jumping, tricks, and high-energy fun.",
+      img: trampolineParkImg1
+    },
+    {
+      name: "Dunk Hoops",
+      title: "Basketball Slam Dunk Lanes",
+      desc: "High-action basketball dunk lanes with trampoline launch pads and adjustable hoops for epic slam dunks.",
+      img: trampolineImg3
+    },
+    {
+      name: "Dodgeball Arenas",
+      title: "Competitive Dodgeball Courts",
+      desc: "Angled wall trampolines and netted bounds engineered for fast-paced dodgeball team competitions.",
+      img: tampolineImg4
+    },
+    {
+      name: "Foam Pits & Airbags",
+      title: "Stunt Airbags & Foam Pits",
+      desc: "Deep foam cube pits and commercial stunt airbags for jumpers to practice flips and tricks with guaranteed soft landings.",
+      img: tampolineImg5
+    },
+    {
+      name: "Ninja Courses",
+      title: "Ninja Warrior Obstacle Course",
+      desc: "Multi-tier obstacle challenges featuring balance beams, monkey bars, climbing walls, and warped walls.",
+      img: tampolineImage6
+    }
+  ]
+};
+
+const defaultTrampolineRoi = {
+  title: 'What Will Your *Trampoline Park Actually Earn?*',
+  subtitle: 'Most trampoline park suppliers in India send a price list and wait for you to decide.',
+  paragraph1: "As India's ROI-First Game Zone Developer, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact trampoline park setup cost, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline.",
+  paragraph2: "Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average. Very few indoor trampoline park suppliers in India include this as a standard part of their process. For Winera, the ROI report is not an add-on, it is how every project starts.",
+  buttonText: 'Talk to an ROI Expert',
+  buttonLink: 'https://wa.me/919999999999?text=Hi%20Winera%2C%20I%20want%20to%20talk%20to%20an%20ROI%20Expert%20for%20a%20Trampoline%20Park',
+  imgUrl: tampolineImage6
+};
+
+const defaultTrampolineWhyChoose = {
+  title: 'Why Choose *Winera International*',
+  items: [
+    { title: "Premium Quality", desc: "Commercial-Grade Materials Built To Survive Years Of Heavy Daily Jumping." },
+    { title: "Safety First", desc: "Foam-Padded Frames, Safety Nets, And Certified Equipment On Every Build." },
+    { title: "Custom Solutions", desc: "Layouts And Zone Mixes Designed Around Your Space, Budget, And Visitors." },
+    { title: "Competitive Pricing", desc: "Factory-Direct Pricing With No Distributor Markup, Plus A Free ROI Report." },
+    { title: "Prompt Delivery", desc: "Manufactured In-House And Installed On Schedule By Our Own Team." }
+  ]
+};
+
+const defaultTrampolineFaqs = [
+  {
+    q: "Why does Winera International stand out as the best trampoline park manufacturer in India?",
+    a: "Winera International manufactures every trampoline park in-house, offers a free ROI report before every project, and installs across 50+ cities through our own team, not a third-party contractor. One partner, from 3D design to after-sales support."
+  },
+  {
+    q: "What is the trampoline park setup cost in India?",
+    a: "Trampoline park setup cost in India depends on the facility size, number of attractions, and materials selected. Winera provides a complete cost breakdown — equipment, installation, and maintenance — before confirming any project. Contact our team for a quote specific to your space."
+  },
+  {
+    q: "Is a trampoline park a profitable business in India?",
+    a: "Yes, when located in a suitable venue with the right zone mix and pricing model. Trampoline parks generate revenue through entry fees, birthday party packages, school group bookings, corporate events, and membership plans. Winera prepares a free ROI report before every project showing your specific venue's projected daily capacity, estimated monthly revenue, and break-even timeline."
+  },
+  {
+    q: "What licenses or permissions are required to open a trampoline park in India?",
+    a: "Requirements vary by state and municipality but typically include a trade license, fire safety NOC, building use permission, and public liability insurance. Winera's team can guide you on general requirements based on your city and consult a local legal advisor for state-specific compliance."
+  },
+  {
+    q: "What maintenance does a commercial trampoline park require?",
+    a: "Winera trampoline parks are designed for 8–12 years of commercial operation with regular maintenance. Routine checks include: jump mat tension and condition, spring integrity, foam padding wear, safety net inspection, and frame connection points. A standard maintenance schedule and checklist is provided with every installation. Annual professional servicing is recommended."
+  },
+  {
+    q: "What is the ideal target audience for a trampoline park in India?",
+    a: "Children aged 5–15 years form the core audience, but modern trampoline parks increasingly serve teenagers, young adults, and corporate groups through ninja courses, dodgeball arenas, and team-building packages — making them viable for a much wider demographic than traditional play zones."
+  }
+];
+
+const defaultBowlingFaqs = [
+  {
+    q: "Why Choose Refurbished Brunswick Bowling Alley Equipment?",
+    a: "We offer refurbished Brunswick bowling equipment that is well-known for its long-term reliability and performance. As one of the most preferred brands worldwide, Brunswick is valued for its stable mechanical capacity and low failure rate making it a top choice for bowling alley equipment globally. One of Brunswick’s standout features is its advanced scoring system that automatically identifies potential issues and provides user-friendly troubleshooting guides. This helps keep your lanes running smoothly with minimal downtime."
+  },
+  {
+    q: "How is Brunswick Equipment Refurbished to Perfection?",
+    a: "Our skilled engineers refurbish each set of Brunswick equipment with precision, replacing all worn parts using original Brunswick components. The result? A product that performs like new, at a fraction of the cost."
+  },
+  {
+    q: "Why is the quality of refurbished Brunswick equipment trustworthy?",
+    a: "Many bowling centers in India have shut down in recent years due to shifts in the sport's popularity. However, the equipment from these venues often remains in excellent condition, with many systems being only 2–5 years old. Considering Brunswick equipment is built to last 40–50 years, even lightly used units are still in their prime."
+  },
+  {
+    q: "Why Opt for Refurbished Equipment?",
+    a: "By choosing our refurbished Brunswick bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that’s been expertly restored, you’ll enjoy top-tier performance, low maintenance, and durability."
+  },
+  {
+    q: "What is the Bowling Alley Setup Cost in India?",
+    a: "The bowling alley setup cost in India depends on the number of lanes, equipment condition, and venue size. Winera International provides refurbished Brunswick bowling equipment at a fraction of new equipment cost making it possible to set up a high-end bowling center within a realistic budget. Contact our team for a complete cost-to-revenue report for your specific space."
+  },
+  {
+    q: "What After-Sales Support Does Winera Provide for Bowling Alley Equipment?",
+    a: "Our relationship with clients continues well after installation. We provide comprehensive maintenance, servicing, and support for all Brunswick bowling alley equipment we supply ensuring your lanes run smoothly with minimal downtime for years to come."
+  },
+  {
+    q: "How much space is required to set up a bowling alley?",
+    a: "A standard bowling lane requires 89 feet in length and 6 feet in width; a minimum of 2 lanes is recommended for commercial setups. Winera assesses your exact dimensions and provides a complete layout plan along with a free ROI report before confirming any equipment."
+  },
+  {
+    q: "What is the difference between a free-fall bowling system and a string bowling system?",
+    a: "Free-Fall Bowling System: In this system, the pins fall freely when the bowling ball hits them. It feels just like real bowling played in professional bowling centers.\n\nString Bowling System: In this system, each pin has a string attached at the top. After the ball hits the pins, the strings lift them back into place. It is easier to maintain and more affordable."
+  }
+];
+
+const defaultTrampolineCta = {
+  titleLine1: "Plan your trampoline park",
+  titleLine2: "with Winera",
+  descLine1: "Our team will assess your venue, prepare a free ROI report, and",
+  descLine2: "recommend the right zone mix for your space.",
+  buttonText: "Get Quote Now",
+  buttonLink: "https://wa.me/919999999999?text=Hi%20Winera%2C%20I%20want%20to%20plan%20a%20Trampoline%20Park",
+  bgUrl: tampolineImage7
+};
+
+const defaultTrampolineSeo = {
+  pageTitle: "Trampoline Park Manufacturer in India | Winera International",
+  metaDescription: "India's trusted trampoline park manufacturer — safety-certified equipment, custom-designed layouts, and installed by our own team across India."
+};
 
 export default function AdminDashboard({ siteData, refreshContent }) {
   const { admin, logout } = useAuth();
@@ -136,6 +837,53 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'softplayCta', name: 'Soft Play CTA Banner' }
       ]
     },
+    trampolinePark: {
+      label: 'Trampoline Park Page',
+      icon: <Sparkles style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'trampolineHero', name: 'Hero Banner & Breadcrumb' },
+        { id: 'trampolineIntro', name: 'Manufacturer Intro Section' },
+        { id: 'trampolineCustom', name: 'Custom Trampoline Parks Section' },
+        { id: 'trampolineSpecs', name: 'Technical Specifications Card' },
+        { id: 'trampolineInside', name: 'What is inside Custom Park (Zones)' },
+        { id: 'trampolineRoi', name: 'What Will Your Park Earn (ROI)' },
+        { id: 'trampolineWhyChoose', name: 'Why Choose Winera International' },
+        { id: 'trampolineFaqs', name: 'Trampoline Park FAQs' },
+        { id: 'trampolineCta', name: 'Plan Trampoline Park CTA Banner' },
+        { id: 'trampolineSeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
+    amusementPark: {
+      label: 'Amusement Park Page',
+      icon: <Gamepad2 style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'amusementHero', name: 'Amusement Hero Banner' },
+        { id: 'amusementIntro', name: 'Amusement Park Ride Manufacturer' },
+        { id: 'amusementBanner', name: 'Complete Amusement Park Setups' },
+        { id: 'amusementOptions', name: 'Rides & Attractions We Supply' },
+        { id: 'amusementRoi', name: 'Before You Build ROI Section' },
+        { id: 'amusementWhyUs', name: 'Why Choose Winera Section' },
+        { id: 'amusementFaqs', name: 'Amusement Park FAQs' },
+        { id: 'amusementCta', name: 'Amusement Park CTA Banner' },
+        { id: 'amusementSeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
+    hypergrid: {
+      label: 'Hypergrid Page',
+      icon: <Gamepad2 style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'hypergridHero', name: 'Hypergrid Hero Banner' },
+        { id: 'hypergridIntro', name: 'Hypergrid Manufacturer Section' },
+        { id: 'hypergridBanner', name: 'High-Footfall Venues Section' },
+        { id: 'hypergridSpecs', name: 'Technical Specifications' },
+        { id: 'hypergridWhyUs', name: 'Why Choose Hypergrid' },
+        { id: 'hypergridRoi', name: 'Smart Investment ROI' },
+        { id: 'hypergridWhyWinera', name: 'Why Choose Winera Section' },
+        { id: 'hypergridFaqs', name: 'Hypergrid FAQs Management' },
+        { id: 'hypergridCta', name: 'Hypergrid CTA Banner' },
+        { id: 'hypergridSeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
     bumpercar: {
       label: 'Bumper Car Page',
       icon: <Gamepad2 style={{ width: '18px', height: '18px' }} />,
@@ -184,6 +932,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'arCta', name: 'CTA Consultations Banner' }
       ]
     },
+    projectPage: {
+      label: 'Projects Page',
+      icon: <Trophy style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'projectHero', name: 'Projects Hero Banner' },
+        { id: 'projectBlock', name: 'Main Project Details' },
+        { id: 'projectBasicInfo', name: 'Basic Information Table' },
+        { id: 'projectClientWanted', name: 'What the Client Wanted' },
+        { id: 'projectSolution', name: 'What Solution We Provide' },
+        { id: 'projectGallery', name: 'Project Gallery Grid' },
+        { id: 'projectVideo', name: 'Project Video Showcase' },
+        { id: 'projectSeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
+    roiPage: {
+      label: 'ROI Page',
+      icon: <Calculator style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'roiHero', name: 'ROI Hero Banner' },
+        { id: 'roiIntro', name: 'Know Your Numbers Section' },
+        { id: 'roiMatters', name: 'Why Setup Matters Section' },
+        { id: 'roiComparison', name: 'Game Zones Fail vs. Profit' },
+        { id: 'roiProcess', name: 'Working Process Steps' },
+        { id: 'roiGet', name: 'What You Get Section' },
+        { id: 'roiChecklist', name: 'This is for you if Checklist' },
+        { id: 'roiCta', name: 'Ready to See Your Numbers CTA' },
+        { id: 'roiSeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
     about: {
       label: 'About Us Page',
       icon: <Info style={{ width: '18px', height: '18px' }} />,
@@ -194,6 +971,28 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'aboutWhyUsDetail', name: 'Why Choose Us Mindmap' },
         { id: 'founder', name: 'Founder Profile Data' },
         { id: 'ctaBanner', name: 'CTA Consultation Banner' }
+      ]
+    },
+    contact: {
+      label: 'Contact Us Page',
+      icon: <PhoneCall style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'contactPage', name: 'Contact Info & Form' },
+        { id: 'contactFaqs', name: 'Contact Page FAQs' }
+      ]
+    },
+    safetyStandards: {
+      label: 'Safety Standards Page',
+      icon: <ShieldCheck style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'safetyHero', name: 'Safety Hero Banner' },
+        { id: 'safetyIntro', name: 'Safety Standards Intro' },
+        { id: 'safetyCertifications', name: '7 Certified Standards Cards' },
+        { id: 'safetyMaterials', name: 'Material & Fire Safety' },
+        { id: 'safetyElectrical', name: 'Electrical & Machine Safety' },
+        { id: 'safetyStructure', name: 'Structure & Installation Safety' },
+        { id: 'safetyWhyMatters', name: 'Why This Matters & CTA Banner' },
+        { id: 'safetySeo', name: 'SEO Meta Title & Description' }
       ]
     },
     header_footer: {
@@ -289,7 +1088,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       else if (sec === 'clientLogos') setModalItemData({ name: '', logoUrl: '' });
       else if (sec === 'channelPartners') setModalItemData({ name: '', logoUrl: '' });
       else if (sec === 'builtProjects') setModalItemData({ name: '', city: '', imageUrl: '' });
-      else if (sec === 'faqs' || sec === 'arcadeFaqs' || sec === 'bowlingFaqs' || sec === 'softplayFaqs') setModalItemData({ q: '', a: '' });
+      else if (sec && sec.toLowerCase().includes('faq')) setModalItemData({ q: '', a: '' });
       else if (sec === 'testimonials') setModalItemData({ founderImage: '', gameZoneName: '', reviewerRole: '', starRating: 5, youtubeVideoUrl: '', quote: '' });
       else setModalItemData({});
     }
@@ -308,6 +1107,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const saveModalItem = async () => {
     const secKey = modalTargetSection || activeSection;
     let currentList = [...(formData[secKey] || [])];
+
+    if (secKey === 'bowlingFaqs' && currentList.length < 8) {
+      currentList = [...defaultBowlingFaqs];
+    }
 
     if (secKey === 'stats') {
       const defaultHomeStats = [
@@ -4588,6 +5391,1650 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
+
+          {/* AMUSEMENT HERO BANNER FORM */}
+
+          {/* AMUSEMENT HERO BANNER FORM */}
+          {activeSection === 'amusementHero' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Amusement Park Hero Banner</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Breadcrumb Active Page Text</label>
+                <input
+                  type="text"
+                  value={formData.amusementHero?.breadcrumbText || 'Amusement Park'}
+                  onChange={(e) => handleFieldChange('amusementHero', 'breadcrumbText', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Hero Background Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading hero background image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.amusementHero || {}), bgUrl: res.url };
+                          setFormData(prev => ({ ...prev, amusementHero: updated }));
+                          await persistSectionToDatabase('amusementHero', updated);
+                          setStatusMsg('Image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.amusementHero?.bgUrl && (
+                    <img src={formData.amusementHero.bgUrl} alt="Hero Background Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                  )}
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('amusementHero', formData.amusementHero || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Amusement Hero Banner
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* AMUSEMENT INTRO / RIDE MANUFACTURER FORM */}
+          {activeSection === 'amusementIntro' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Amusement Park Ride Manufacturer Section</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Section Title (*word* for cyan, &lt;br/&gt; for linebreaks)</label>
+                <input
+                  type="text"
+                  value={formData.amusementIntro?.title || '*Amusement Park Ride*<br/>Manufacturer in India'}
+                  onChange={(e) => handleFieldChange('amusementIntro', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Description Paragraph</label>
+                <textarea
+                  rows={3}
+                  value={formData.amusementIntro?.desc || "India's ROI-first amusement park partner rides and attractions sourced, installed, and serviced by our own team across 50+ cities."}
+                  onChange={(e) => handleFieldChange('amusementIntro', 'desc', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Button Text</label>
+                  <input
+                    type="text"
+                    value={formData.amusementIntro?.buttonText || 'Get Quote From Expert'}
+                    onChange={(e) => handleFieldChange('amusementIntro', 'buttonText', e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Button Link</label>
+                  <input
+                    type="text"
+                    value={formData.amusementIntro?.buttonLink || 'https://wa.me/919428989488'}
+                    onChange={(e) => handleFieldChange('amusementIntro', 'buttonLink', e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Left Collage Graphic Image</label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Left Collage Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading left collage image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.amusementIntro || {}), mainImgUrl: res.url };
+                          setFormData(prev => ({ ...prev, amusementIntro: updated }));
+                          await persistSectionToDatabase('amusementIntro', updated);
+                          setStatusMsg('Image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.amusementIntro?.mainImgUrl && (
+                    <img src={formData.amusementIntro.mainImgUrl} alt="Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                  )}
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('amusementIntro', formData.amusementIntro || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Manufacturer Section
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* AMUSEMENT BANNER / COMPLETE SETUPS FORM */}
+          {activeSection === 'amusementBanner' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Complete Amusement Park Setups Section</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Section Title (*word* for cyan, &lt;br/&gt; for linebreaks)</label>
+                <input
+                  type="text"
+                  value={formData.amusementBanner?.title || 'Complete Amusement Park<br/>*Setups, Built for Indian Venues*'}
+                  onChange={(e) => handleFieldChange('amusementBanner', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Paragraph 1</label>
+                <textarea
+                  rows={3}
+                  value={formData.amusementBanner?.paragraph1 || 'Winera International has been supplying and installing amusement park rides and attractions across India since 2014...'}
+                  onChange={(e) => handleFieldChange('amusementBanner', 'paragraph1', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Paragraph 2</label>
+                <textarea
+                  rows={3}
+                  value={formData.amusementBanner?.paragraph2 || 'From a few signature rides to a full park layout...'}
+                  onChange={(e) => handleFieldChange('amusementBanner', 'paragraph2', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Graphic Image</label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Right Graphic Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading graphic image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.amusementBanner || {}), imgUrl: res.url };
+                          setFormData(prev => ({ ...prev, amusementBanner: updated }));
+                          await persistSectionToDatabase('amusementBanner', updated);
+                          setStatusMsg('Image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.amusementBanner?.imgUrl && (
+                    <img src={formData.amusementBanner.imgUrl} alt="Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                  )}
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('amusementBanner', formData.amusementBanner || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Complete Setups Section
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* AMUSEMENT OPTIONS / RIDES WE SUPPLY FORM */}
+          {activeSection === 'amusementOptions' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Rides & Attractions We Supply Section</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Section Title (*word* for cyan, &lt;br/&gt; for linebreaks)</label>
+                <input
+                  type="text"
+                  value={formData.amusementOptions?.title || '*Rides & Attractions*<br/>We Supply'}
+                  onChange={(e) => handleFieldChange('amusementOptions', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Subtitle</label>
+                <input
+                  type="text"
+                  value={formData.amusementOptions?.subtitle || 'We Supply Many Types Of Rides So You Can Build The Right Experience For Your Space And Visitors.'}
+                  onChange={(e) => handleFieldChange('amusementOptions', 'subtitle', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Footer Safety Note</label>
+                <textarea
+                  rows={2}
+                  value={formData.amusementOptions?.footerText || 'Every Ride Comes With Strong Safety Belts, Automatic Sensors That Stop The Ride If Something Goes Wrong...'}
+                  onChange={(e) => handleFieldChange('amusementOptions', 'footerText', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Top Collage Graphic Image</label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Top Collage Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading collage image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.amusementOptions || {}), topImgUrl: res.url };
+                          setFormData(prev => ({ ...prev, amusementOptions: updated }));
+                          await persistSectionToDatabase('amusementOptions', updated);
+                          setStatusMsg('Image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.amusementOptions?.topImgUrl && (
+                    <img src={formData.amusementOptions.topImgUrl} alt="Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                  )}
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('amusementOptions', formData.amusementOptions || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Rides We Supply Section
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* AMUSEMENT ROI / BEFORE YOU BUILD FORM */}
+          {activeSection === 'amusementRoi' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Before You Build ROI Section</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Section Title (*word* for cyan, &lt;br/&gt; for linebreaks)</label>
+                <input
+                  type="text"
+                  value={formData.amusementRoi?.title || 'Before You Build,<br/>*Know What It Will Earn*'}
+                  onChange={(e) => handleFieldChange('amusementRoi', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Paragraph 1</label>
+                <textarea
+                  rows={3}
+                  value={formData.amusementRoi?.paragraph1 || 'Every Figure Is Calculated Around Your Land Size...'}
+                  onChange={(e) => handleFieldChange('amusementRoi', 'paragraph1', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Paragraph 2</label>
+                <textarea
+                  rows={3}
+                  value={formData.amusementRoi?.paragraph2 || 'Most Amusement Park Equipment Suppliers In India Hand You A Catalogue...'}
+                  onChange={(e) => handleFieldChange('amusementRoi', 'paragraph2', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Button Text</label>
+                  <input
+                    type="text"
+                    value={formData.amusementRoi?.buttonText || 'Talk to an ROI Expert'}
+                    onChange={(e) => handleFieldChange('amusementRoi', 'buttonText', e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Button Link</label>
+                  <input
+                    type="text"
+                    value={formData.amusementRoi?.buttonLink || 'https://wa.me/919428989488'}
+                    onChange={(e) => handleFieldChange('amusementRoi', 'buttonLink', e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Bottom Inflatable Graphic Image</label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Bottom Inflatable Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading inflatable image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.amusementRoi || {}), bottomImgUrl: res.url };
+                          setFormData(prev => ({ ...prev, amusementRoi: updated }));
+                          await persistSectionToDatabase('amusementRoi', updated);
+                          setStatusMsg('Image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.amusementRoi?.bottomImgUrl && (
+                    <img src={formData.amusementRoi.bottomImgUrl} alt="Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                  )}
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('amusementRoi', formData.amusementRoi || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save ROI Section
+                </button>
+              </div>
+            </div>
+          )}
+
+          
+          {/* AMUSEMENT PARK FAQS MANAGEMENT FORM (MATCHING BUMPER CAR FAQS 1:1) */}
+          {activeSection === 'amusementFaqs' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Amusement Park FAQs Management</h3>
+                <button
+                  onClick={() => {
+                    const currentList = Array.isArray(formData.amusementFaqs) && formData.amusementFaqs.length > 0
+                      ? formData.amusementFaqs
+                      : [
+                        {
+                          question: "What types of amusement park rides do you supply and install?",
+                          answer: "We supply a complete range of amusement park attractions including thrill rides, family rides, kids' rides, bumper cars, Ferris wheels, carousel rides, and custom themed attractions engineered for indoor & outdoor venues."
+                        },
+                        {
+                          question: "Do you handle complete end-to-end park setup and installation?",
+                          answer: "Yes! Winera International handles full turnkey project management — from space planning and layout design to ride sourcing, civil foundation guidance, structural assembly, safety testing, and final handover."
+                        },
+                        {
+                          question: "What safety standards and certifications do Winera amusement rides comply with?",
+                          answer: "All our rides are built to international safety benchmarks. They feature reinforced structural steel, emergency automatic stop sensors, dual-lock safety harnesses/belts, and undergo rigorous load and performance testing prior to public operation."
+                        },
+                        {
+                          question: "Can Winera provide a venue-specific ROI and financial projection report?",
+                          answer: "Absolutely. Before finalizing any purchase, our ROI experts prepare a comprehensive financial model detailing ride capacities, daily throughput, operational costs, estimated ticket revenue, and projected break-even timelines customized to your land size and city demographic."
+                        },
+                        {
+                          question: "What after-sales service and spare parts support do you offer?",
+                          answer: "We maintain an in-house engineering and service team across 50+ Indian cities. We provide routine maintenance support, operator training, and stocked replacement spare parts to ensure zero extended downtime for your venue."
+                        }
+                      ];
+                    const updated = [...currentList, { question: '', answer: '' }];
+                    setFormData((prev) => ({ ...prev, amusementFaqs: updated }));
+                  }}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                >
+                  + Add FAQ Item
+                </button>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {(Array.isArray(formData.amusementFaqs) && formData.amusementFaqs.length > 0
+                  ? formData.amusementFaqs
+                  : [
+                    {
+                      question: "What types of amusement park rides do you supply and install?",
+                      answer: "We supply a complete range of amusement park attractions including thrill rides, family rides, kids' rides, bumper cars, Ferris wheels, carousel rides, and custom themed attractions engineered for indoor & outdoor venues."
+                    },
+                    {
+                      question: "Do you handle complete end-to-end park setup and installation?",
+                      answer: "Yes! Winera International handles full turnkey project management — from space planning and layout design to ride sourcing, civil foundation guidance, structural assembly, safety testing, and final handover."
+                    },
+                    {
+                      question: "What safety standards and certifications do Winera amusement rides comply with?",
+                      answer: "All our rides are built to international safety benchmarks. They feature reinforced structural steel, emergency automatic stop sensors, dual-lock safety harnesses/belts, and undergo rigorous load and performance testing prior to public operation."
+                    },
+                    {
+                      question: "Can Winera provide a venue-specific ROI and financial projection report?",
+                      answer: "Absolutely. Before finalizing any purchase, our ROI experts prepare a comprehensive financial model detailing ride capacities, daily throughput, operational costs, estimated ticket revenue, and projected break-even timelines customized to your land size and city demographic."
+                    },
+                    {
+                      question: "What after-sales service and spare parts support do you offer?",
+                      answer: "We maintain an in-house engineering and service team across 50+ Indian cities. We provide routine maintenance support, operator training, and stocked replacement spare parts to ensure zero extended downtime for your venue."
+                    }
+                  ]
+                ).map((faq, idx) => (
+                  <div key={idx} style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontWeight: '800', fontSize: '13px', color: '#0369a1' }}>FAQ #{idx + 1}</span>
+                      <button
+                        onClick={() => {
+                          const currentList = [...(formData.amusementFaqs || [])];
+                          currentList.splice(idx, 1);
+                          setFormData((prev) => ({ ...prev, amusementFaqs: currentList }));
+                        }}
+                        style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '900' }}
+                      >
+                        ×
+                      </button>
+                    </div>
+
+                    <input
+                      type="text"
+                      placeholder="Question"
+                      value={faq.question || faq.q || ''}
+                      onChange={(e) => {
+                        const currentList = [...(formData.amusementFaqs || [])];
+                        currentList[idx] = { ...(currentList[idx] || {}), question: e.target.value, q: e.target.value };
+                        setFormData((prev) => ({ ...prev, amusementFaqs: currentList }));
+                      }}
+                      style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
+                    />
+
+                    <textarea
+                      rows={3}
+                      placeholder="Answer"
+                      value={faq.answer || faq.a || ''}
+                      onChange={(e) => {
+                        const currentList = [...(formData.amusementFaqs || [])];
+                        currentList[idx] = { ...(currentList[idx] || {}), answer: e.target.value, a: e.target.value };
+                        setFormData((prev) => ({ ...prev, amusementFaqs: currentList }));
+                      }}
+                      style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('amusementFaqs', formData.amusementFaqs || [])}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Amusement Park FAQs
+                </button>
+              </div>
+            </div>
+          )}
+
+          
+          {/* AMUSEMENT PARK CTA BANNER FORM */}
+          {activeSection === 'amusementCta' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Amusement Park CTA Banner Settings</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Banner Background Image</label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Banner Background Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading banner background...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.amusementCta || {}), bgUrl: res.url };
+                          setFormData(prev => ({ ...prev, amusementCta: updated }));
+                          await persistSectionToDatabase('amusementCta', updated);
+                          setStatusMsg('Image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.amusementCta?.bgUrl && (
+                    <img
+                      src={formData.amusementCta.bgUrl}
+                      alt="Banner Background Preview"
+                      style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Yellow Title Text</label>
+                  <input
+                    type="text"
+                    value={formData.amusementCta?.yellowText || 'NEED ANY'}
+                    onChange={(e) => handleFieldChange('amusementCta', 'yellowText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Cyan Title Text</label>
+                  <input
+                    type="text"
+                    value={formData.amusementCta?.cyanText || 'CONSULTATIONS?'}
+                    onChange={(e) => handleFieldChange('amusementCta', 'cyanText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Text (White Subtitle Text)</label>
+                <input
+                  type="text"
+                  value={formData.amusementCta?.subtitle || "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
+                  onChange={(e) => handleFieldChange('amusementCta', 'subtitle', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Label</label>
+                  <input
+                    type="text"
+                    value={formData.amusementCta?.buttonText || 'Talk to an ROI Expert'}
+                    onChange={(e) => handleFieldChange('amusementCta', 'buttonText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link</label>
+                  <input
+                    type="text"
+                    value={formData.amusementCta?.buttonLink || 'https://wa.me/919428989488'}
+                    onChange={(e) => handleFieldChange('amusementCta', 'buttonLink', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('amusementCta', formData.amusementCta || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Amusement Park CTA Banner
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* AMUSEMENT SEO FORM */}
+          {activeSection === 'amusementSeo' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Amusement Park SEO Meta Tags</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Page Title Tag (&lt;title&gt;)</label>
+                <input
+                  type="text"
+                  value={formData.amusementSeo?.pageTitle || 'Amusement Park Equipment Manufacturer in India | Winera International'}
+                  onChange={(e) => handleFieldChange('amusementSeo', 'pageTitle', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Meta Description (&lt;meta name="description"&gt;)</label>
+                <textarea
+                  rows={3}
+                  value={formData.amusementSeo?.metaDescription || 'As a premier Amusement Park Equipment Manufacturer in India, Winera International Pvt Ltd crafts thrilling, safe, and world-class amusement park rides and attractions.'}
+                  onChange={(e) => handleFieldChange('amusementSeo', 'metaDescription', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                />
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('amusementSeo', formData.amusementSeo || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Amusement SEO Meta Tags
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* HYPERGRID HERO BANNER FORM */}
+          {activeSection === 'hypergridHero' && (() => {
+            const currentSec = formData.hypergridHero || defaultHypergridHero;
+            const heroImg = currentSec.bgUrl || defaultHypergridHero.bgUrl;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Hypergrid Hero Banner</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={heroImg} alt="Hero Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), bgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Active Page Text</label>
+                    <input
+                      type="text"
+                      value={currentSec.breadcrumbText !== undefined ? currentSec.breadcrumbText : defaultHypergridHero.breadcrumbText}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), breadcrumbText: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('hypergridHero', formData.hypergridHero || defaultHypergridHero)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Hero Banner
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* HYPERGRID INTRO FORM */}
+          {activeSection === 'hypergridIntro' && (() => {
+            const currentSec = formData.hypergridIntro || defaultHypergridIntro;
+            const mainImg = currentSec.mainImgUrl || defaultHypergridIntro.mainImgUrl;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Hypergrid Manufacturer Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan, &lt;br/&gt; for linebreaks)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultHypergridIntro.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.desc !== undefined ? currentSec.desc : defaultHypergridIntro.desc}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), desc: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultHypergridIntro.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultHypergridIntro.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Left Graphic Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.mainImgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), mainImgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), mainImgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('hypergridIntro', formData.hypergridIntro || defaultHypergridIntro)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Manufacturer Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* HYPERGRID BANNER FORM */}
+          {activeSection === 'hypergridBanner' && (() => {
+            const currentSec = formData.hypergridBanner || defaultHypergridBanner;
+            const bannerImg = currentSec.imgUrl || defaultHypergridBanner.imgUrl;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Interactive LED Floor Games Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan, &lt;br/&gt; for linebreaks)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultHypergridBanner.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultHypergridBanner.paragraph1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), paragraph1: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultHypergridBanner.paragraph2}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), paragraph2: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Graphic Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={bannerImg} alt="Banner Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.imgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), imgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), imgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('hypergridBanner', formData.hypergridBanner || defaultHypergridBanner)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save High-Footfall Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* HYPERGRID SPECS FORM */}
+          {activeSection === 'hypergridSpecs' && (() => {
+            const currentSec = formData.hypergridSpecs || defaultHypergridSpecs;
+            const bgImg = currentSec.bgUrl || defaultHypergridSpecs.bgUrl;
+            const rowsList = Array.isArray(currentSec.rows) && currentSec.rows.length > 0 ? currentSec.rows : defaultHypergridSpecs.rows;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Technical Specifications Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={bgImg} alt="BG Preview" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), bgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload BG
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for yellow highlight)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultHypergridSpecs.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  {/* Specification Table Rows */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Specification Table Rows</label>
+                      <button
+                        onClick={() => {
+                          const currentRows = [...rowsList];
+                          currentRows.push({ spec: 'New Spec', details: 'New Value' });
+                          setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), rows: currentRows } }));
+                        }}
+                        style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', color: '#0f172a', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        <Plus style={{ width: '14px', height: '14px' }} /> Add Row
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {rowsList.map((row, rIdx) => (
+                        <div key={rIdx} style={{ display: 'flex', gap: '12px', alignItems: 'center', background: '#f8fafc', padding: '10px 14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                          <input
+                            type="text"
+                            value={row.spec || ''}
+                            placeholder="Specification"
+                            onChange={(e) => {
+                              const newRows = [...rowsList];
+                              newRows[rIdx] = { ...(newRows[rIdx] || row), spec: e.target.value };
+                              setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), rows: newRows } }));
+                            }}
+                            style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <input
+                            type="text"
+                            value={row.details || ''}
+                            placeholder="Details"
+                            onChange={(e) => {
+                              const newRows = [...rowsList];
+                              newRows[rIdx] = { ...(newRows[rIdx] || row), details: e.target.value };
+                              setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), rows: newRows } }));
+                            }}
+                            style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                          <button
+                            onClick={() => {
+                              const newRows = rowsList.filter((_, i) => i !== rIdx);
+                              setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), rows: newRows } }));
+                            }}
+                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                          >
+                            <Trash2 style={{ width: '16px', height: '16px' }} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultHypergridSpecs.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultHypergridSpecs.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('hypergridSpecs', formData.hypergridSpecs || defaultHypergridSpecs)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Technical Specs
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* HYPERGRID WHY US FORM */}
+          {activeSection === 'hypergridWhyUs' && (() => {
+            const currentSec = formData.hypergridWhyUs || defaultHypergridWhyUs;
+            const bgImg = currentSec.bgUrl || defaultHypergridWhyUs.bgUrl;
+            const leftImg = currentSec.leftImgUrl || defaultHypergridWhyUs.leftImgUrl;
+            const cardsList = Array.isArray(currentSec.cards) && currentSec.cards.length > 0 ? currentSec.cards : defaultHypergridWhyUs.cards;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What Makes Hypergrid the Right Choice</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image</label>
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                        <img src={bgImg} alt="BG Preview" style={{ width: '60px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
+                        <input
+                          type="text"
+                          value={currentSec.bgUrl || ''}
+                          onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), bgUrl: e.target.value } }))}
+                          placeholder="Background Image URL"
+                          style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Left Column Image</label>
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                        <img src={leftImg} alt="Left Preview" style={{ width: '60px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
+                        <input
+                          type="text"
+                          value={currentSec.leftImgUrl || ''}
+                          onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), leftImgUrl: e.target.value } }))}
+                          placeholder="Left Image URL"
+                          style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan highlight, &lt;br/&gt; for linebreaks)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultHypergridWhyUs.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
+                    <textarea
+                      rows={2}
+                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultHypergridWhyUs.subtitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), subtitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                    />
+                  </div>
+
+                  {/* Features List */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Feature Cards ({cardsList.length})</label>
+                      <button
+                        onClick={() => {
+                          const currentCards = [...cardsList];
+                          currentCards.push({ title: 'New Feature Title', desc: 'New feature description text...' });
+                          setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), cards: currentCards } }));
+                        }}
+                        style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', color: '#0f172a', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        <Plus style={{ width: '14px', height: '14px' }} /> Add Feature Card
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {cardsList.map((card, cIdx) => (
+                        <div key={cIdx} style={{ background: '#f8fafc', padding: '14px', borderRadius: '14px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Feature #{cIdx + 1}</span>
+                            <button
+                              onClick={() => {
+                                const newCards = cardsList.filter((_, i) => i !== cIdx);
+                                setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), cards: newCards } }));
+                              }}
+                              style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                          <input
+                            type="text"
+                            value={card.title || ''}
+                            placeholder="Feature Title"
+                            onChange={(e) => {
+                              const newCards = [...cardsList];
+                              newCards[cIdx] = { ...(newCards[cIdx] || card), title: e.target.value };
+                              setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), cards: newCards } }));
+                            }}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <textarea
+                            rows={2}
+                            value={card.desc || ''}
+                            placeholder="Feature Description"
+                            onChange={(e) => {
+                              const newCards = [...cardsList];
+                              newCards[cIdx] = { ...(newCards[cIdx] || card), desc: e.target.value };
+                              setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), cards: newCards } }));
+                            }}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', lineHeight: 1.5 }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('hypergridWhyUs', formData.hypergridWhyUs || defaultHypergridWhyUs)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Why Choose Hypergrid
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* HYPERGRID ROI FORM */}
+          {activeSection === 'hypergridRoi' && (() => {
+            const currentSec = formData.hypergridRoi || defaultHypergridRoi;
+            const roiImg = currentSec.imgUrl || defaultHypergridRoi.imgUrl;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Is Hypergrid a Smart Investment Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan highlight, &lt;br/&gt; for linebreaks)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultHypergridRoi.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultHypergridRoi.paragraph1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), paragraph1: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultHypergridRoi.paragraph2}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), paragraph2: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultHypergridRoi.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultHypergridRoi.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Graphic Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={roiImg} alt="Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.imgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), imgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), imgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('hypergridRoi', formData.hypergridRoi || defaultHypergridRoi)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Smart Investment Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* HYPERGRID WHY WINERA FORM */}
+          {activeSection === 'hypergridWhyWinera' && (() => {
+            const currentSec = formData.hypergridWhyWinera || defaultHypergridWhyWinera;
+            const itemsList = Array.isArray(currentSec.items) && currentSec.items.length > 0 ? currentSec.items : defaultHypergridWhyWineraItems;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Why Choose Winera International Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan highlight)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultHypergridWhyWinera.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyWinera: { ...(prev.hypergridWhyWinera || defaultHypergridWhyWinera), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  {/* Feature Items List */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Feature Cards ({itemsList.length})</label>
+                      <button
+                        onClick={() => {
+                          const newItems = [...itemsList, { icon: 'award', title: 'New Benefit Title', desc: 'Description of the benefit...' }];
+                          setFormData(prev => ({ ...prev, hypergridWhyWinera: { ...(prev.hypergridWhyWinera || defaultHypergridWhyWinera), items: newItems } }));
+                        }}
+                        style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        <Plus style={{ width: '14px', height: '14px' }} /> Add Feature Card
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '14px' }}>
+                      {itemsList.map((item, iIdx) => (
+                        <div key={iIdx} style={{ background: '#f8fafc', padding: '14px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Card #{iIdx + 1}</span>
+                            <button
+                              onClick={() => {
+                                const newItems = itemsList.filter((_, i) => i !== iIdx);
+                                setFormData(prev => ({ ...prev, hypergridWhyWinera: { ...(prev.hypergridWhyWinera || defaultHypergridWhyWinera), items: newItems } }));
+                              }}
+                              style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                            >
+                              <Trash2 style={{ width: '12px', height: '12px' }} /> Delete
+                            </button>
+                          </div>
+
+                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <label style={{ fontSize: '11.5px', fontWeight: '700', color: '#64748b' }}>Icon:</label>
+                            <select
+                              value={item.icon || 'award'}
+                              onChange={(e) => {
+                                const newItems = [...itemsList];
+                                newItems[iIdx] = { ...(newItems[iIdx] || item), icon: e.target.value };
+                                setFormData(prev => ({ ...prev, hypergridWhyWinera: { ...(prev.hypergridWhyWinera || defaultHypergridWhyWinera), items: newItems } }));
+                              }}
+                              style={{ padding: '6px 10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px', fontWeight: '700', flex: 1 }}
+                            >
+                              <option value="award">Award / Equipment</option>
+                              <option value="settings">Settings / Custom</option>
+                              <option value="coins">Coins / ROI</option>
+                              <option value="headphones">Headphones / Installation</option>
+                              <option value="calendar">Calendar / Training</option>
+                              <option value="package">Package / Support</option>
+                            </select>
+                          </div>
+
+                          <input
+                            type="text"
+                            value={item.title || ''}
+                            placeholder="Card Title"
+                            onChange={(e) => {
+                              const newItems = [...itemsList];
+                              newItems[iIdx] = { ...(newItems[iIdx] || item), title: e.target.value };
+                              setFormData(prev => ({ ...prev, hypergridWhyWinera: { ...(prev.hypergridWhyWinera || defaultHypergridWhyWinera), items: newItems } }));
+                            }}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+
+                          <textarea
+                            rows={2}
+                            value={item.desc || ''}
+                            placeholder="Card Description"
+                            onChange={(e) => {
+                              const newItems = [...itemsList];
+                              newItems[iIdx] = { ...(newItems[iIdx] || item), desc: e.target.value };
+                              setFormData(prev => ({ ...prev, hypergridWhyWinera: { ...(prev.hypergridWhyWinera || defaultHypergridWhyWinera), items: newItems } }));
+                            }}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', lineHeight: 1.5 }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('hypergridWhyWinera', formData.hypergridWhyWinera || defaultHypergridWhyWinera)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Why Choose Winera Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* HYPERGRID FAQS MANAGEMENT FORM */}
+          {activeSection === 'hypergridFaqs' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Hypergrid FAQs Management ({Array.isArray(formData.hypergridFaqs) && formData.hypergridFaqs.length > 0 ? formData.hypergridFaqs.length : defaultHypergridFaqs.length})</h3>
+                <button
+                  onClick={() => {
+                    const currentList = Array.isArray(formData.hypergridFaqs) && formData.hypergridFaqs.length > 0
+                      ? formData.hypergridFaqs
+                      : defaultHypergridFaqs;
+                    const updated = [...currentList, { question: '', answer: '' }];
+                    setFormData((prev) => ({ ...prev, hypergridFaqs: updated }));
+                  }}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                >
+                  + Add FAQ Item
+                </button>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {(Array.isArray(formData.hypergridFaqs) && formData.hypergridFaqs.length > 0
+                  ? formData.hypergridFaqs
+                  : defaultHypergridFaqs
+                ).map((faq, idx) => (
+                  <div key={idx} style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontWeight: '800', fontSize: '13px', color: '#0369a1' }}>FAQ #{idx + 1}</span>
+                      <button
+                        onClick={() => {
+                          const currentList = [...(formData.hypergridFaqs || [])];
+                          currentList.splice(idx, 1);
+                          setFormData((prev) => ({ ...prev, hypergridFaqs: currentList }));
+                        }}
+                        style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '900' }}
+                      >
+                        ×
+                      </button>
+                    </div>
+
+                    <input
+                      type="text"
+                      placeholder="Question"
+                      value={faq.question || faq.q || ''}
+                      onChange={(e) => {
+                        const currentList = [...(formData.hypergridFaqs || [])];
+                        currentList[idx] = { ...(currentList[idx] || {}), question: e.target.value, q: e.target.value };
+                        setFormData((prev) => ({ ...prev, hypergridFaqs: currentList }));
+                      }}
+                      style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
+                    />
+
+                    <textarea
+                      rows={3}
+                      placeholder="Answer"
+                      value={faq.answer || faq.a || ''}
+                      onChange={(e) => {
+                        const currentList = [...(formData.hypergridFaqs || [])];
+                        currentList[idx] = { ...(currentList[idx] || {}), answer: e.target.value, a: e.target.value };
+                        setFormData((prev) => ({ ...prev, hypergridFaqs: currentList }));
+                      }}
+                      style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('hypergridFaqs', formData.hypergridFaqs || [])}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Hypergrid FAQs
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* HYPERGRID CTA BANNER FORM */}
+          {activeSection === 'hypergridCta' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Hypergrid CTA Banner Settings</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Banner Background Image</label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Banner Background Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading banner background...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.hypergridCta || {}), bgUrl: res.url };
+                          setFormData(prev => ({ ...prev, hypergridCta: updated }));
+                          await persistSectionToDatabase('hypergridCta', updated);
+                          setStatusMsg('Image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.hypergridCta?.bgUrl && (
+                    <img
+                      src={formData.hypergridCta.bgUrl}
+                      alt="Banner Background Preview"
+                      style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Yellow Title Text</label>
+                  <input
+                    type="text"
+                    value={formData.hypergridCta?.yellowText || 'NEED ANY'}
+                    onChange={(e) => handleFieldChange('hypergridCta', 'yellowText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Cyan Title Text</label>
+                  <input
+                    type="text"
+                    value={formData.hypergridCta?.cyanText || 'HYPERGRID CONSULTATIONS?'}
+                    onChange={(e) => handleFieldChange('hypergridCta', 'cyanText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Text (White Subtitle Text)</label>
+                <input
+                  type="text"
+                  value={formData.hypergridCta?.subtitle || "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
+                  onChange={(e) => handleFieldChange('hypergridCta', 'subtitle', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Label</label>
+                  <input
+                    type="text"
+                    value={formData.hypergridCta?.buttonText || 'Talk to an ROI Expert'}
+                    onChange={(e) => handleFieldChange('hypergridCta', 'buttonText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link</label>
+                  <input
+                    type="text"
+                    value={formData.hypergridCta?.buttonLink || 'https://wa.me/919428989488'}
+                    onChange={(e) => handleFieldChange('hypergridCta', 'buttonLink', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('hypergridCta', formData.hypergridCta || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Hypergrid CTA Banner
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* HYPERGRID SEO FORM */}
+          {activeSection === 'hypergridSeo' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Hypergrid Page SEO Meta Tags</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Page Title Tag (&lt;title&gt;)</label>
+                <input
+                  type="text"
+                  value={formData.hypergridSeo?.pageTitle || 'Interactive LED Hypergrid Arena Manufacturer in India | Winera International'}
+                  onChange={(e) => handleFieldChange('hypergridSeo', 'pageTitle', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Meta Description (&lt;meta name="description"&gt;)</label>
+                <textarea
+                  rows={3}
+                  value={formData.hypergridSeo?.metaDescription || "Winera International is India's leading manufacturer of Interactive LED Hypergrid active gaming arenas, offering high-ROI illuminated floor tile systems and turnkey game zone setups."}
+                  onChange={(e) => handleFieldChange('hypergridSeo', 'metaDescription', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                />
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('hypergridSeo', formData.hypergridSeo || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Hypergrid SEO Meta Tags
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* BUMPER CAR HERO BANNER FORM */}
           {activeSection === 'bumpercarHero' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -8183,6 +10630,86 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
+
+          {/* AMUSEMENT PARK WHY CHOOSE US FORM */}
+          {activeSection === 'amusementWhyUs' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Amusement Park Why Choose Us Section</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>
+                  Section Heading Title (Use *word* for Cyan Accent)
+                </label>
+                <input
+                  type="text"
+                  value={formData.amusementWhyUs?.title || 'Why Choose *Winera International*'}
+                  onChange={(e) => handleFieldChange('amusementWhyUs', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              {/* 5 Feature Cards */}
+              <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '18px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', marginBottom: '14px' }}>5 Feature Cards</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  {[
+                    { defaultTitle: "Full Project, Not Just Equipment", defaultDesc: "We Handle Everything From Layout To Installation, So You're Not Left Coordinating Vendors." },
+                    { defaultTitle: "Right Attractions For Your Space", defaultDesc: "We Recommend Rides That Fit Your Land, Footfall, And Visitors Not A Catalogue Guess" },
+                    { defaultTitle: "One Team, Zero Confusion", defaultDesc: "Sourcing, Installation, And Service Handled By Our Own Dedicated Team" },
+                    { defaultTitle: "Ready To Open From Day One", defaultDesc: "Every Ride Is Tested On-Site Before Handover, So Opening Day Runs Smoothly" },
+                    { defaultTitle: "We Know What Keeps Visitors Coming Back", defaultDesc: "Years Of Real Projects Tell Us Which Attractions Drive Repeat Footfall" }
+                  ].map((cDef, cIdx) => {
+                    const cardsList = Array.isArray(formData.amusementWhyUs?.cards) ? formData.amusementWhyUs.cards : [];
+                    const currentCard = cardsList[cIdx] || cDef;
+
+                    return (
+                      <div key={cIdx} style={{ background: '#ffffff', padding: '12px 16px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
+                        <div style={{ fontWeight: '800', fontSize: '12px', color: '#38bdf8', marginBottom: '6px' }}>Card #{cIdx + 1}</div>
+                        <input
+                          type="text"
+                          placeholder="Title"
+                          value={currentCard.title || ''}
+                          onChange={(e) => {
+                            const newCards = [...cardsList];
+                            newCards[cIdx] = { ...(newCards[cIdx] || cDef), title: e.target.value };
+                            setFormData(prev => ({
+                              ...prev,
+                              amusementWhyUs: { ...(prev.amusementWhyUs || {}), cards: newCards }
+                            }));
+                          }}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}
+                        />
+                        <textarea
+                          rows={2}
+                          placeholder="Description"
+                          value={currentCard.desc || ''}
+                          onChange={(e) => {
+                            const newCards = [...cardsList];
+                            newCards[cIdx] = { ...(newCards[cIdx] || cDef), desc: e.target.value };
+                            setFormData(prev => ({
+                              ...prev,
+                              amusementWhyUs: { ...(prev.amusementWhyUs || {}), cards: newCards }
+                            }));
+                          }}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('amusementWhyUs', formData.amusementWhyUs || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Why Choose Us Section
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* BOWLING MANUFACTURERS SECTION FORM */}
           {activeSection === 'bowlingIntro' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -8824,11 +11351,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {(formData.bowlingFaqs || []).map((item, idx) => (
+                    {(formData.bowlingFaqs && formData.bowlingFaqs.length >= 8 ? formData.bowlingFaqs : defaultBowlingFaqs).map((item, idx) => (
                       <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
                         <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
-                        <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.q}</td>
-                        <td style={{ padding: '14px 18px', color: '#475569', fontSize: '12.5px', lineHeight: '1.4' }}>{item.a}</td>
+                        <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.q || item.question}</td>
+                        <td style={{ padding: '14px 18px', color: '#475569', fontSize: '12.5px', lineHeight: '1.4' }}>{item.a || item.answer}</td>
                         <td style={{ padding: '14px 18px', textAlign: 'right' }}>
                           <button
                             onClick={() => openModal('edit', idx, item, 'bowlingFaqs')}
@@ -8838,7 +11365,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           </button>
                           <button
                             onClick={async () => {
-                              const updated = (formData.bowlingFaqs || []).filter((_, i) => i !== idx);
+                              const list = formData.bowlingFaqs && formData.bowlingFaqs.length >= 8 ? formData.bowlingFaqs : defaultBowlingFaqs;
+                              const updated = list.filter((_, i) => i !== idx);
                               setFormData(prev => ({ ...prev, bowlingFaqs: updated }));
                               await persistSectionToDatabase('bowlingFaqs', updated);
                             }}
@@ -9485,8 +12013,3379 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
+          {/* PROJECT HERO BANNER SECTION */}
+          {activeSection === 'projectHero' && (() => {
+            const currentSec = formData.projectHero || defaultProjectHero;
+            const heroImg = currentSec.bannerImg || defaultProjectHero.bannerImg;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Projects Hero Banner</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Hero Banner Background Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={heroImg} alt="Hero Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bannerImg || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), bannerImg: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), bannerImg: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Home Label</label>
+                      <input
+                        type="text"
+                        value={currentSec.breadcrumbHome !== undefined ? currentSec.breadcrumbHome : defaultProjectHero.breadcrumbHome}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), breadcrumbHome: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Current Page</label>
+                      <input
+                        type="text"
+                        value={currentSec.breadcrumbPage !== undefined ? currentSec.breadcrumbPage : defaultProjectHero.breadcrumbPage}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), breadcrumbPage: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('projectHero', formData.projectHero || defaultProjectHero)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Hero Banner
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* MAIN PROJECT DETAILS SECTION */}
+          {activeSection === 'projectBlock' && (() => {
+            const currentSec = formData.projectBlock || defaultProjectBlock;
+            const mainImg = currentSec.image || defaultProjectBlock.image;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Main Project Details Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Line 1 (Cyan Highlighted)</label>
+                    <input
+                      type="text"
+                      value={currentSec.titleLine1 !== undefined ? currentSec.titleLine1 : defaultProjectBlock.titleLine1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), titleLine1: e.target.value } }))}
+                      placeholder="FifthAlley Sport Bowling: A"
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Line 2 (Cyan Part)</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleLine2 !== undefined ? currentSec.titleLine2 : defaultProjectBlock.titleLine2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), titleLine2: e.target.value } }))}
+                        placeholder="Complete "
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Line 2 (Dark Part)</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleLine2Black !== undefined ? currentSec.titleLine2Black : defaultProjectBlock.titleLine2Black}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), titleLine2Black: e.target.value } }))}
+                        placeholder="Bowling Alley Setup"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Line 3 (Dark Part)</label>
+                    <input
+                      type="text"
+                      value={currentSec.titleLine3 !== undefined ? currentSec.titleLine3 : defaultProjectBlock.titleLine3}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), titleLine3: e.target.value } }))}
+                      placeholder="in the Heart of Surat"
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
+                    <textarea
+                      rows={4}
+                      value={currentSec.description !== undefined ? currentSec.description : defaultProjectBlock.description}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), description: e.target.value } }))}
+                      placeholder="Enter project summary description..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultProjectBlock.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), buttonText: e.target.value } }))}
+                        placeholder="Get A Quote"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link / WhatsApp URL</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultProjectBlock.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), buttonLink: e.target.value } }))}
+                        placeholder="https://wa.me/919428989488"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Card Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={mainImg} alt="Card Preview" style={{ width: '70px', height: '70px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.image || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), image: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), image: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('projectBlock', formData.projectBlock || defaultProjectBlock)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Main Project Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* BASIC INFORMATION TABLE SECTION */}
+          {activeSection === 'projectBasicInfo' && (() => {
+            const currentSec = formData.projectBasicInfo || defaultProjectBasicInfo;
+            const bgImg = currentSec.bgImg || defaultProjectBasicInfo.bgImg;
+            const rowsList = Array.isArray(currentSec.rows) && currentSec.rows.length > 0 ? currentSec.rows : defaultProjectBasicInfo.rows;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Basic Information Table Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Card Background Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={bgImg} alt="BG Preview" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgImg || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), bgImg: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload BG
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), bgImg: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title (Yellow Text)</label>
+                      <input
+                        type="text"
+                        value={currentSec.yellowTitle !== undefined ? currentSec.yellowTitle : defaultProjectBasicInfo.yellowTitle}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), yellowTitle: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title (White Text)</label>
+                      <input
+                        type="text"
+                        value={currentSec.whiteTitle !== undefined ? currentSec.whiteTitle : defaultProjectBasicInfo.whiteTitle}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), whiteTitle: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Table Data Rows */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Table Data Rows</label>
+                      <button
+                        onClick={() => {
+                          const currentRows = [...rowsList];
+                          currentRows.push({ label: 'New Field', val: 'New Value' });
+                          setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), rows: currentRows } }));
+                        }}
+                        style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', color: '#0f172a', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        <Plus style={{ width: '14px', height: '14px' }} /> Add Row
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {rowsList.map((row, rIdx) => (
+                        <div key={rIdx} style={{ display: 'flex', gap: '12px', alignItems: 'center', background: '#f8fafc', padding: '10px 14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                          <input
+                            type="text"
+                            value={row.label || ''}
+                            placeholder="Field Name"
+                            onChange={(e) => {
+                              const newRows = [...rowsList];
+                              newRows[rIdx] = { ...(newRows[rIdx] || row), label: e.target.value };
+                              setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), rows: newRows } }));
+                            }}
+                            style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <input
+                            type="text"
+                            value={row.val || ''}
+                            placeholder="Field Value"
+                            onChange={(e) => {
+                              const newRows = [...rowsList];
+                              newRows[rIdx] = { ...(newRows[rIdx] || row), val: e.target.value };
+                              setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), rows: newRows } }));
+                            }}
+                            style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                          <button
+                            onClick={() => {
+                              const newRows = rowsList.filter((_, i) => i !== rIdx);
+                              setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), rows: newRows } }));
+                            }}
+                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                          >
+                            <Trash2 style={{ width: '16px', height: '16px' }} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('projectBasicInfo', formData.projectBasicInfo || defaultProjectBasicInfo)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Basic Info Table
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* WHAT THE CLIENT WANTED SECTION */}
+          {activeSection === 'projectClientWanted' && (() => {
+            const currentSec = formData.projectClientWanted || defaultProjectClientWanted;
+            const clientImg = currentSec.image || defaultProjectClientWanted.image;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What the Client Wanted Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Prefix (Dark)</label>
+                      <input
+                        type="text"
+                        value={currentSec.titlePrefix !== undefined ? currentSec.titlePrefix : defaultProjectClientWanted.titlePrefix}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), titlePrefix: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Cyan Highlight</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleCyan !== undefined ? currentSec.titleCyan : defaultProjectClientWanted.titleCyan}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), titleCyan: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultProjectClientWanted.paragraph1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), paragraph1: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultProjectClientWanted.paragraph2}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), paragraph2: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={clientImg} alt="Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.image || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), image: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), image: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('projectClientWanted', formData.projectClientWanted || defaultProjectClientWanted)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Client Wanted Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* WHAT SOLUTION WE PROVIDE SECTION */}
+          {activeSection === 'projectSolution' && (() => {
+            const currentSec = formData.projectSolution || defaultProjectSolution;
+            const solutionImg = currentSec.image || defaultProjectSolution.image;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What Solution We Provide Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Cyan Highlight</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleCyan !== undefined ? currentSec.titleCyan : defaultProjectSolution.titleCyan}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), titleCyan: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Suffix (Dark)</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleSuffix !== undefined ? currentSec.titleSuffix : defaultProjectSolution.titleSuffix}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), titleSuffix: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultProjectSolution.paragraph1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), paragraph1: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultProjectSolution.paragraph2}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), paragraph2: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={solutionImg} alt="Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.image || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), image: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), image: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('projectSolution', formData.projectSolution || defaultProjectSolution)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Solution Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* PROJECT GALLERY GRID SECTION */}
+          {activeSection === 'projectGallery' && (() => {
+            const currentSec = formData.projectGallery || defaultProjectGallery;
+            const bgImg = currentSec.bgImg || defaultProjectGallery.bgImg;
+            const galleryImgs = Array.isArray(currentSec.images) && currentSec.images.length > 0 ? currentSec.images : defaultProjectGallery.images;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Project Gallery Grid Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Background Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={bgImg} alt="BG Preview" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgImg || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectGallery: { ...(prev.projectGallery || defaultProjectGallery), bgImg: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload BG
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, projectGallery: { ...(prev.projectGallery || defaultProjectGallery), bgImg: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title (Cyan Word)</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleCyan !== undefined ? currentSec.titleCyan : defaultProjectGallery.titleCyan}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectGallery: { ...(prev.projectGallery || defaultProjectGallery), titleCyan: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title (Dark Word)</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleDark !== undefined ? currentSec.titleDark : defaultProjectGallery.titleDark}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectGallery: { ...(prev.projectGallery || defaultProjectGallery), titleDark: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Gallery Images List */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Gallery Images List ({galleryImgs.length} Images)</label>
+                      <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Plus style={{ width: '16px', height: '16px' }} /> Upload New Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              const newImgs = [...galleryImgs, res.url];
+                              setFormData(prev => ({ ...prev, projectGallery: { ...(prev.projectGallery || defaultProjectGallery), images: newImgs } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px' }}>
+                      {galleryImgs.map((imgUrl, iIdx) => (
+                        <div key={iIdx} style={{ position: 'relative', background: '#f8fafc', padding: '10px', borderRadius: '14px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+                          <img src={imgUrl} alt={`Gallery item ${iIdx + 1}`} style={{ width: '100%', height: '140px', objectFit: 'cover', borderRadius: '10px', marginBottom: '8px', display: 'block' }} />
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '11px', fontWeight: '800', color: '#64748b' }}>Image #{iIdx + 1}</span>
+                            <button
+                              onClick={() => {
+                                const newImgs = galleryImgs.filter((_, i) => i !== iIdx);
+                                setFormData(prev => ({ ...prev, projectGallery: { ...(prev.projectGallery || defaultProjectGallery), images: newImgs } }));
+                              }}
+                              style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '5px 10px', borderRadius: '8px', fontWeight: '800', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                            >
+                              <Trash2 style={{ width: '13px', height: '13px' }} /> Delete
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('projectGallery', formData.projectGallery || defaultProjectGallery)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Project Gallery
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* PROJECT VIDEO SHOWCASE SECTION */}
+          {activeSection === 'projectVideo' && (() => {
+            const currentSec = formData.projectVideo || defaultProjectVideo;
+            const videoImg = currentSec.image || defaultProjectVideo.image;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Project Video Showcase Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Video Thumbnail Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={videoImg} alt="Thumbnail Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.image || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectVideo: { ...(prev.projectVideo || defaultProjectVideo), image: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Thumbnail
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, projectVideo: { ...(prev.projectVideo || defaultProjectVideo), image: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Video Target Link / WhatsApp Link</label>
+                    <input
+                      type="text"
+                      value={currentSec.videoUrl !== undefined ? currentSec.videoUrl : defaultProjectVideo.videoUrl}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectVideo: { ...(prev.projectVideo || defaultProjectVideo), videoUrl: e.target.value } }))}
+                      placeholder="https://wa.me/919428989488 or Youtube link"
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('projectVideo', formData.projectVideo || defaultProjectVideo)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Project Video Showcase
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* PROJECT SEO SECTION */}
+          {activeSection === 'projectSeo' && (() => {
+            const currentSec = formData.projectSeo || defaultProjectSeo;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Projects Page SEO Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>SEO Meta Title</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultProjectSeo.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectSeo: { ...(prev.projectSeo || defaultProjectSeo), title: e.target.value } }))}
+                      placeholder="Our Projects | Turnkey Game Zone & Entertainment Venues by Winera International"
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>SEO Meta Description</label>
+                    <textarea
+                      rows={4}
+                      value={currentSec.description !== undefined ? currentSec.description : defaultProjectSeo.description}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectSeo: { ...(prev.projectSeo || defaultProjectSeo), description: e.target.value } }))}
+                      placeholder="Enter meta description for projects page..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('projectSeo', formData.projectSeo || defaultProjectSeo)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save SEO Settings
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* SAFETY HERO BANNER FORM */}
+          {activeSection === 'safetyHero' && (() => {
+            const currentSec = formData.safetyHero || defaultSafetyHero;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Safety Hero Banner Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Text</label>
+                    <input
+                      type="text"
+                      value={currentSec.breadcrumbText !== undefined ? currentSec.breadcrumbText : defaultSafetyHero.breadcrumbText}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), breadcrumbText: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={currentSec.bgUrl || safetyBg} alt="Hero Bg" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), bgUrl: e.target.value } }))}
+                        placeholder="Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('safetyHero', formData.safetyHero || defaultSafetyHero)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Safety Hero Banner
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* SAFETY INTRO FORM */}
+          {activeSection === 'safetyIntro' && (() => {
+            const currentSec = formData.safetyIntro || defaultSafetyIntro;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Safety Standards Intro Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Line 1 (Dark Text)</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleLine1 !== undefined ? currentSec.titleLine1 : defaultSafetyIntro.titleLine1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), titleLine1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Line 2 (Cyan Text)</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleLine2 !== undefined ? currentSec.titleLine2 : defaultSafetyIntro.titleLine2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), titleLine2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.p1 !== undefined ? currentSec.p1 : defaultSafetyIntro.p1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), p1: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.p2 !== undefined ? currentSec.p2 : defaultSafetyIntro.p2}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), p2: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Left Graphic Collage Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={currentSec.mainImgUrl || safetyStandardImg1} alt="Intro Img" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
+                      <input
+                        type="text"
+                        value={currentSec.mainImgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), mainImgUrl: e.target.value } }))}
+                        placeholder="Main Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), mainImgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('safetyIntro', formData.safetyIntro || defaultSafetyIntro)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Safety Intro Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* SAFETY CERTIFICATIONS FORM */}
+          {activeSection === 'safetyCertifications' && (() => {
+            const currentSec = formData.safetyCertifications || defaultSafetyCertifications;
+            const cardsList = Array.isArray(currentSec.cards) && currentSec.cards.length > 0 ? currentSec.cards : defaultSafetyCertificationsCards;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Certified Safety Standards (7 Cards)</h3>
+                  <button
+                    onClick={() => {
+                      const updated = [...cardsList, { title: "New Certified Standard", desc: "Standard description..." }];
+                      setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), cards: updated } }));
+                    }}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer' }}
+                  >
+                    + Add Card
+                  </button>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 1</label>
+                      <input
+                        type="text"
+                        value={currentSec.title1 !== undefined ? currentSec.title1 : defaultSafetyCertifications.title1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), title1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 2 (Cyan)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title2 !== undefined ? currentSec.title2 : defaultSafetyCertifications.title2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), title2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
+                    <input
+                      type="text"
+                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyCertifications.subtitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), subtitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '10px' }}>
+                    {cardsList.map((card, idx) => (
+                      <div key={idx} style={{ background: '#f8fafc', padding: '16px 20px', borderRadius: '14px', border: '1px solid #e2e8f0', position: 'relative' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>Card #{idx + 1}</span>
+                          <button
+                            onClick={() => {
+                              const updated = cardsList.filter((_, i) => i !== idx);
+                              setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), cards: updated } }));
+                            }}
+                            style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '2px 8px', fontSize: '12px', cursor: 'pointer' }}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                          <input
+                            type="text"
+                            placeholder="Card Title (e.g. EN 1176)"
+                            value={card.title || ''}
+                            onChange={(e) => {
+                              const updated = [...cardsList];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), cards: updated } }));
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
+                          />
+                          <textarea
+                            rows={2}
+                            placeholder="Card Description..."
+                            value={card.desc || ''}
+                            onChange={(e) => {
+                              const updated = [...cardsList];
+                              updated[idx] = { ...updated[idx], desc: e.target.value };
+                              setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), cards: updated } }));
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('safetyCertifications', formData.safetyCertifications || defaultSafetyCertifications)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Certified Standards
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* SAFETY MATERIALS FORM */}
+          {activeSection === 'safetyMaterials' && (() => {
+            const currentSec = formData.safetyMaterials || defaultSafetyMaterials;
+            const cardsList = Array.isArray(currentSec.cards) && currentSec.cards.length > 0 ? currentSec.cards : defaultSafetyMaterialsCards;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Material & Fire Safety Section</h3>
+                  <button
+                    onClick={() => {
+                      const updated = [...cardsList, { title: "New Material Standard", desc: "Description..." }];
+                      setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), cards: updated } }));
+                    }}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer' }}
+                  >
+                    + Add Card
+                  </button>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 1 (Cyan)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title1 !== undefined ? currentSec.title1 : defaultSafetyMaterials.title1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), title1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 2 (Dark)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title2 !== undefined ? currentSec.title2 : defaultSafetyMaterials.title2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), title2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
+                    <textarea
+                      rows={2}
+                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyMaterials.subtitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), subtitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Shield Graphic Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={currentSec.imgUrl || safetyStandard2} alt="Materials Img" style={{ width: '100px', height: '60px', objectFit: 'contain', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
+                      <input
+                        type="text"
+                        value={currentSec.imgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), imgUrl: e.target.value } }))}
+                        placeholder="Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), imgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '10px' }}>
+                    {cardsList.map((card, idx) => (
+                      <div key={idx} style={{ background: '#f8fafc', padding: '16px 20px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>Material Card #{idx + 1}</span>
+                          <button
+                            onClick={() => {
+                              const updated = cardsList.filter((_, i) => i !== idx);
+                              setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), cards: updated } }));
+                            }}
+                            style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '2px 8px', fontSize: '12px', cursor: 'pointer' }}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Card Title"
+                          value={card.title || ''}
+                          onChange={(e) => {
+                            const updated = [...cardsList];
+                            updated[idx] = { ...updated[idx], title: e.target.value };
+                            setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), cards: updated } }));
+                          }}
+                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700', marginBottom: '10px' }}
+                        />
+                        <textarea
+                          rows={2}
+                          placeholder="Card Description..."
+                          value={card.desc || ''}
+                          onChange={(e) => {
+                            const updated = [...cardsList];
+                            updated[idx] = { ...updated[idx], desc: e.target.value };
+                            setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), cards: updated } }));
+                          }}
+                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('safetyMaterials', formData.safetyMaterials || defaultSafetyMaterials)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Material Safety Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* SAFETY ELECTRICAL FORM */}
+          {activeSection === 'safetyElectrical' && (() => {
+            const currentSec = formData.safetyElectrical || defaultSafetyElectrical;
+            const itemsList = Array.isArray(currentSec.items) && currentSec.items.length > 0 ? currentSec.items : defaultSafetyElectricalItems;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Electrical & Machine Safety Section</h3>
+                  <button
+                    onClick={() => {
+                      const updated = [...itemsList, { num: `${itemsList.length + 1}`, title: "New Item", desc: "Description..." }];
+                      setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), items: updated } }));
+                    }}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer' }}
+                  >
+                    + Add List Item
+                  </button>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 1 (Dark)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title1 !== undefined ? currentSec.title1 : defaultSafetyElectrical.title1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), title1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 2 (Cyan)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title2 !== undefined ? currentSec.title2 : defaultSafetyElectrical.title2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), title2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
+                    <textarea
+                      rows={2}
+                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyElectrical.subtitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), subtitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Machine Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={currentSec.imgUrl || safetyStandardImg3} alt="Electrical Img" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
+                      <input
+                        type="text"
+                        value={currentSec.imgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), imgUrl: e.target.value } }))}
+                        placeholder="Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), imgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '10px' }}>
+                    {itemsList.map((item, idx) => (
+                      <div key={idx} style={{ background: '#f8fafc', padding: '16px 20px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>List Item #{item.num || idx + 1}</span>
+                          <button
+                            onClick={() => {
+                              const updated = itemsList.filter((_, i) => i !== idx);
+                              setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), items: updated } }));
+                            }}
+                            style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '2px 8px', fontSize: '12px', cursor: 'pointer' }}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '10px', marginBottom: '10px' }}>
+                          <input
+                            type="text"
+                            placeholder="Num (1)"
+                            value={item.num || ''}
+                            onChange={(e) => {
+                              const updated = [...itemsList];
+                              updated[idx] = { ...updated[idx], num: e.target.value };
+                              setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), items: updated } }));
+                            }}
+                            style={{ padding: '10px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '800', textAlign: 'center' }}
+                          />
+                          <input
+                            type="text"
+                            placeholder="Item Title"
+                            value={item.title || ''}
+                            onChange={(e) => {
+                              const updated = [...itemsList];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), items: updated } }));
+                            }}
+                            style={{ padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
+                          />
+                        </div>
+                        <textarea
+                          rows={2}
+                          placeholder="Item Description..."
+                          value={item.desc || ''}
+                          onChange={(e) => {
+                            const updated = [...itemsList];
+                            updated[idx] = { ...updated[idx], desc: e.target.value };
+                            setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), items: updated } }));
+                          }}
+                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('safetyElectrical', formData.safetyElectrical || defaultSafetyElectrical)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Electrical Safety Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* SAFETY STRUCTURE FORM */}
+          {activeSection === 'safetyStructure' && (() => {
+            const currentSec = formData.safetyStructure || defaultSafetyStructure;
+            const cardsList = Array.isArray(currentSec.cards) && currentSec.cards.length > 0 ? currentSec.cards : defaultSafetyStructureCards;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Structure & Installation Safety Section</h3>
+                  <button
+                    onClick={() => {
+                      const nextNum = cardsList.length + 1 < 10 ? `0${cardsList.length + 1}` : `${cardsList.length + 1}`;
+                      const updated = [...cardsList, { num: nextNum, accent: "#00aeef", title: "New Structure Standard", desc: "Description..." }];
+                      setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), cards: updated } }));
+                    }}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer' }}
+                  >
+                    + Add Card
+                  </button>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 1 (Cyan)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title1 !== undefined ? currentSec.title1 : defaultSafetyStructure.title1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), title1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 2 (Dark)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title2 !== undefined ? currentSec.title2 : defaultSafetyStructure.title2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), title2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
+                    <textarea
+                      rows={2}
+                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyStructure.subtitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), subtitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '10px' }}>
+                    {cardsList.map((card, idx) => (
+                      <div key={idx} style={{ background: '#f8fafc', padding: '16px 20px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>Structure Card #{card.num || idx + 1}</span>
+                          <button
+                            onClick={() => {
+                              const updated = cardsList.filter((_, i) => i !== idx);
+                              setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), cards: updated } }));
+                            }}
+                            style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '2px 8px', fontSize: '12px', cursor: 'pointer' }}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '80px 140px 1fr', gap: '10px', marginBottom: '10px' }}>
+                          <input
+                            type="text"
+                            placeholder="Num (01)"
+                            value={card.num || ''}
+                            onChange={(e) => {
+                              const updated = [...cardsList];
+                              updated[idx] = { ...updated[idx], num: e.target.value };
+                              setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), cards: updated } }));
+                            }}
+                            style={{ padding: '10px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '800', textAlign: 'center' }}
+                          />
+                          <input
+                            type="text"
+                            placeholder="Accent (#00aeef)"
+                            value={card.accent || ''}
+                            onChange={(e) => {
+                              const updated = [...cardsList];
+                              updated[idx] = { ...updated[idx], accent: e.target.value };
+                              setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), cards: updated } }));
+                            }}
+                            style={{ padding: '10px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <input
+                            type="text"
+                            placeholder="Card Title"
+                            value={card.title || ''}
+                            onChange={(e) => {
+                              const updated = [...cardsList];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), cards: updated } }));
+                            }}
+                            style={{ padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
+                          />
+                        </div>
+                        <textarea
+                          rows={2}
+                          placeholder="Card Description..."
+                          value={card.desc || ''}
+                          onChange={(e) => {
+                            const updated = [...cardsList];
+                            updated[idx] = { ...updated[idx], desc: e.target.value };
+                            setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), cards: updated } }));
+                          }}
+                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('safetyStructure', formData.safetyStructure || defaultSafetyStructure)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Structure Safety Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* SAFETY WHY MATTERS & CTA FORM */}
+          {activeSection === 'safetyWhyMatters' && (() => {
+            const currentSec = formData.safetyWhyMatters || defaultSafetyWhyMatters;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Why This Matters & Build Yours Now CTA Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title Part 1 (Cyan)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title1 !== undefined ? currentSec.title1 : defaultSafetyWhyMatters.title1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), title1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title Part 2 (Dark)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title2 !== undefined ? currentSec.title2 : defaultSafetyWhyMatters.title2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), title2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph Description</label>
+                    <textarea
+                      rows={4}
+                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyWhyMatters.subtitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), subtitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Title Part 1 (Yellow)</label>
+                      <input
+                        type="text"
+                        value={currentSec.ctaTitle1 !== undefined ? currentSec.ctaTitle1 : defaultSafetyWhyMatters.ctaTitle1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), ctaTitle1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Title Part 2 (Cyan)</label>
+                      <input
+                        type="text"
+                        value={currentSec.ctaTitle2 !== undefined ? currentSec.ctaTitle2 : defaultSafetyWhyMatters.ctaTitle2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), ctaTitle2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultSafetyWhyMatters.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button WhatsApp Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultSafetyWhyMatters.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('safetyWhyMatters', formData.safetyWhyMatters || defaultSafetyWhyMatters)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Why Matters Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* SAFETY SEO FORM */}
+          {activeSection === 'safetySeo' && (() => {
+            const currentSec = formData.safetySeo || defaultSafetySeo;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Safety Standards SEO Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>SEO Meta Title</label>
+                    <input
+                      type="text"
+                      value={currentSec.pageTitle !== undefined ? currentSec.pageTitle : defaultSafetySeo.pageTitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetySeo: { ...(prev.safetySeo || defaultSafetySeo), pageTitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>SEO Meta Description</label>
+                    <textarea
+                      rows={4}
+                      value={currentSec.metaDescription !== undefined ? currentSec.metaDescription : defaultSafetySeo.metaDescription}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetySeo: { ...(prev.safetySeo || defaultSafetySeo), metaDescription: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('safetySeo', formData.safetySeo || defaultSafetySeo)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Safety SEO Settings
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE PARK HERO BANNER FORM */}
+          {activeSection === 'trampolineHero' && (() => {
+            const currentSec = formData.trampolineHero || defaultTrampolineHero;
+            const heroImg = currentSec.bgUrl || defaultTrampolineHero.bgUrl;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Trampoline Park Hero Banner</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={heroImg} alt="Hero Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), bgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Active Page Text</label>
+                    <input
+                      type="text"
+                      value={currentSec.breadcrumbText !== undefined ? currentSec.breadcrumbText : defaultTrampolineHero.breadcrumbText}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), breadcrumbText: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineHero', formData.trampolineHero || defaultTrampolineHero)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Hero Banner
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE INTRO FORM */}
+          {activeSection === 'trampolineIntro' && (() => {
+            const currentSec = formData.trampolineIntro || defaultTrampolineIntro;
+            const mainImg = currentSec.mainImgUrl || defaultTrampolineIntro.mainImgUrl;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Trampoline Park Manufacturer Intro Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan, &lt;br/&gt; for linebreaks)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultTrampolineIntro.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.desc !== undefined ? currentSec.desc : defaultTrampolineIntro.desc}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), desc: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultTrampolineIntro.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultTrampolineIntro.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Graphic Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.mainImgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), mainImgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), mainImgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineIntro', formData.trampolineIntro || defaultTrampolineIntro)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Intro Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE CUSTOM FORM */}
+          {activeSection === 'trampolineCustom' && (() => {
+            const currentSec = formData.trampolineCustom || defaultTrampolineCustom;
+            const mascotImg = currentSec.imgUrl || defaultTrampolineCustom.imgUrl;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Custom Trampoline Parks Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 1 (Black)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title1 !== undefined ? currentSec.title1 : defaultTrampolineCustom.title1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), title1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 2 (Cyan)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title2 !== undefined ? currentSec.title2 : defaultTrampolineCustom.title2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), title2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 3 (Cyan Line 2)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title3 !== undefined ? currentSec.title3 : defaultTrampolineCustom.title3}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), title3: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph Content</label>
+                    <textarea
+                      rows={4}
+                      value={currentSec.paragraph !== undefined ? currentSec.paragraph : defaultTrampolineCustom.paragraph}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), paragraph: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Panda Mascot / Graphic Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={mascotImg} alt="Mascot Preview" style={{ width: '60px', height: '60px', objectFit: 'contain', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.imgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), imgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), imgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineCustom', formData.trampolineCustom || defaultTrampolineCustom)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Custom Parks Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE SPECS FORM */}
+          {activeSection === 'trampolineSpecs' && (() => {
+            const currentSec = formData.trampolineSpecs || defaultTrampolineSpecs;
+            const specsList = currentSec.specsData || defaultTrampolineSpecs.specsData;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Technical Specifications Card</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Specs Card Title (*word* for yellow highlight)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultTrampolineSpecs.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>Specifications Table Rows</label>
+                      <button
+                        onClick={() => {
+                          const updatedRows = [...specsList, { label: 'New Parameter', value: 'Details here' }];
+                          setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), specsData: updatedRows } }));
+                        }}
+                        style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
+                      >
+                        + Add Spec Row
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {specsList.map((row, idx) => (
+                        <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 40px', gap: '10px', alignItems: 'center' }}>
+                          <input
+                            type="text"
+                            value={row.label}
+                            onChange={(e) => {
+                              const updatedRows = [...specsList];
+                              updatedRows[idx] = { ...updatedRows[idx], label: e.target.value };
+                              setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), specsData: updatedRows } }));
+                            }}
+                            placeholder="Label (e.g. Steel Frame)"
+                            style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <input
+                            type="text"
+                            value={row.value}
+                            onChange={(e) => {
+                              const updatedRows = [...specsList];
+                              updatedRows[idx] = { ...updatedRows[idx], value: e.target.value };
+                              setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), specsData: updatedRows } }));
+                            }}
+                            placeholder="Specification detail"
+                            style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                          <button
+                            onClick={() => {
+                              const updatedRows = specsList.filter((_, i) => i !== idx);
+                              setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), specsData: updatedRows } }));
+                            }}
+                            style={{ background: '#fef2f2', color: '#dc2626', border: 'none', width: '36px', height: '36px', borderRadius: '8px', cursor: 'pointer', fontWeight: '800' }}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineSpecs', formData.trampolineSpecs || defaultTrampolineSpecs)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Technical Specifications
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE INSIDE ZONES FORM */}
+          {activeSection === 'trampolineInside' && (() => {
+            const currentSec = formData.trampolineInside || defaultTrampolineInside;
+            const zonesList = currentSec.zones || defaultTrampolineInside.zones;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What is inside a Custom Trampoline Park (Zones Carousel)</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan highlight)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultTrampolineInside.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
+                    <input
+                      type="text"
+                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultTrampolineInside.subtitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), subtitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>Park Attractions & Zones ({zonesList.length})</label>
+                      <button
+                        onClick={() => {
+                          const updated = [...zonesList, { name: 'New Zone', title: 'Zone Title', desc: 'Zone description here.', img: trampolineParkImg1 }];
+                          setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                        }}
+                        style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
+                      >
+                        + Add Zone Card
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      {zonesList.map((z, idx) => (
+                        <div key={idx} style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Zone #{idx + 1} Tab: {z.name}</span>
+                            <button
+                              onClick={() => {
+                                const updated = zonesList.filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                              }}
+                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
+                            >
+                              Delete Zone
+                            </button>
+                          </div>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                            <input
+                              type="text"
+                              value={z.name}
+                              onChange={(e) => {
+                                const updated = [...zonesList];
+                                updated[idx] = { ...updated[idx], name: e.target.value };
+                                setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                              }}
+                              placeholder="Tab Name (e.g. Free Jump Zones)"
+                              style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                            />
+                            <input
+                              type="text"
+                              value={z.title}
+                              onChange={(e) => {
+                                const updated = [...zonesList];
+                                updated[idx] = { ...updated[idx], title: e.target.value };
+                                setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                              }}
+                              placeholder="Full Card Title"
+                              style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                            />
+                          </div>
+                          <textarea
+                            rows={2}
+                            value={z.desc}
+                            onChange={(e) => {
+                              const updated = [...zonesList];
+                              updated[idx] = { ...updated[idx], desc: e.target.value };
+                              setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                            }}
+                            placeholder="Description"
+                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <img src={z.img} alt="" style={{ width: '50px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
+                            <input
+                              type="text"
+                              value={z.img || ''}
+                              onChange={(e) => {
+                                const updated = [...zonesList];
+                                updated[idx] = { ...updated[idx], img: e.target.value };
+                                setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                              }}
+                              placeholder="Image URL"
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                            />
+                            <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}>
+                              Upload
+                              <input
+                                type="file"
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                onChange={async (e) => {
+                                  const file = e.target.files[0];
+                                  if (file) {
+                                    const res = await uploadImageFile(file, admin.token);
+                                    const updated = [...zonesList];
+                                    updated[idx] = { ...updated[idx], img: res.url };
+                                    setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                                  }
+                                }}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineInside', formData.trampolineInside || defaultTrampolineInside)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Park Zones Carousel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE ROI FORM */}
+          {activeSection === 'trampolineRoi' && (() => {
+            const currentSec = formData.trampolineRoi || defaultTrampolineRoi;
+            const mainImg = currentSec.imgUrl || defaultTrampolineRoi.imgUrl;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What Will Your Trampoline Park Earn (ROI Section)</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for yellow highlight)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultTrampolineRoi.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
+                    <input
+                      type="text"
+                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultTrampolineRoi.subtitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), subtitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultTrampolineRoi.paragraph1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), paragraph1: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultTrampolineRoi.paragraph2}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), paragraph2: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultTrampolineRoi.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultTrampolineRoi.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Image Graphic</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.imgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), imgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), imgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineRoi', formData.trampolineRoi || defaultTrampolineRoi)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save ROI Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE WHY CHOOSE FORM */}
+          {activeSection === 'trampolineWhyChoose' && (() => {
+            const currentSec = formData.trampolineWhyChoose || defaultTrampolineWhyChoose;
+            const itemsList = currentSec.items || defaultTrampolineWhyChoose.items;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Why Choose Winera International Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan highlight)</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultTrampolineWhyChoose.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineWhyChoose: { ...(prev.trampolineWhyChoose || defaultTrampolineWhyChoose), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>Value Proposition Cards ({itemsList.length})</label>
+                      <button
+                        onClick={() => {
+                          const updated = [...itemsList, { title: 'New Value', desc: 'Description here.' }];
+                          setFormData(prev => ({ ...prev, trampolineWhyChoose: { ...(prev.trampolineWhyChoose || defaultTrampolineWhyChoose), items: updated } }));
+                        }}
+                        style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
+                      >
+                        + Add Card
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {itemsList.map((item, idx) => (
+                        <div key={idx} style={{ background: '#f8fafc', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0284c7' }}>Item #{idx + 1}</span>
+                            <button
+                              onClick={() => {
+                                const updated = itemsList.filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, trampolineWhyChoose: { ...(prev.trampolineWhyChoose || defaultTrampolineWhyChoose), items: updated } }));
+                              }}
+                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '3px 8px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '11px' }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                          <input
+                            type="text"
+                            value={item.title}
+                            onChange={(e) => {
+                              const updated = [...itemsList];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              setFormData(prev => ({ ...prev, trampolineWhyChoose: { ...(prev.trampolineWhyChoose || defaultTrampolineWhyChoose), items: updated } }));
+                            }}
+                            placeholder="Card Title"
+                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <textarea
+                            rows={2}
+                            value={item.desc}
+                            onChange={(e) => {
+                              const updated = [...itemsList];
+                              updated[idx] = { ...updated[idx], desc: e.target.value };
+                              setFormData(prev => ({ ...prev, trampolineWhyChoose: { ...(prev.trampolineWhyChoose || defaultTrampolineWhyChoose), items: updated } }));
+                            }}
+                            placeholder="Card Description"
+                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineWhyChoose', formData.trampolineWhyChoose || defaultTrampolineWhyChoose)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Why Choose Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE FAQS FORM */}
+          {activeSection === 'trampolineFaqs' && (() => {
+            const currentFaqs = (formData.trampolineFaqs && formData.trampolineFaqs.length > 0) ? formData.trampolineFaqs : defaultTrampolineFaqs;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Trampoline Park FAQs Management ({currentFaqs.length})</h3>
+                  <button
+                    onClick={() => {
+                      const updated = [...currentFaqs, { q: 'New Question?', a: 'Answer here.' }];
+                      setFormData(prev => ({ ...prev, trampolineFaqs: updated }));
+                    }}
+                    style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '8px 18px', borderRadius: '10px', fontSize: '13px', fontWeight: '800', cursor: 'pointer' }}
+                  >
+                    + Add New FAQ
+                  </button>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {currentFaqs.map((faq, idx) => (
+                    <div key={idx} style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>FAQ #{idx + 1}</span>
+                        <button
+                          onClick={() => {
+                            const updated = currentFaqs.filter((_, i) => i !== idx);
+                            setFormData(prev => ({ ...prev, trampolineFaqs: updated }));
+                          }}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                      <input
+                        type="text"
+                        value={faq.q}
+                        onChange={(e) => {
+                          const updated = [...currentFaqs];
+                          updated[idx] = { ...updated[idx], q: e.target.value };
+                          setFormData(prev => ({ ...prev, trampolineFaqs: updated }));
+                        }}
+                        placeholder="Question"
+                        style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
+                      />
+                      <textarea
+                        rows={3}
+                        value={faq.a}
+                        onChange={(e) => {
+                          const updated = [...currentFaqs];
+                          updated[idx] = { ...updated[idx], a: e.target.value };
+                          setFormData(prev => ({ ...prev, trampolineFaqs: updated }));
+                        }}
+                        placeholder="Answer"
+                        style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      />
+                    </div>
+                  ))}
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineFaqs', formData.trampolineFaqs || defaultTrampolineFaqs)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save FAQs List
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE CTA FORM */}
+          {activeSection === 'trampolineCta' && (() => {
+            const currentSec = formData.trampolineCta || defaultTrampolineCta;
+            const bgImg = currentSec.bgUrl || defaultTrampolineCta.bgUrl;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Plan Trampoline Park CTA Banner</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Line 1</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleLine1 !== undefined ? currentSec.titleLine1 : defaultTrampolineCta.titleLine1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), titleLine1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Line 2</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleLine2 !== undefined ? currentSec.titleLine2 : defaultTrampolineCta.titleLine2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), titleLine2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Line 1</label>
+                      <input
+                        type="text"
+                        value={currentSec.descLine1 !== undefined ? currentSec.descLine1 : defaultTrampolineCta.descLine1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), descLine1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Line 2</label>
+                      <input
+                        type="text"
+                        value={currentSec.descLine2 !== undefined ? currentSec.descLine2 : defaultTrampolineCta.descLine2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), descLine2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultTrampolineCta.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultTrampolineCta.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image</label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={bgImg} alt="CTA Preview" style={{ width: '100px', height: '55px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), bgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineCta', formData.trampolineCta || defaultTrampolineCta)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save CTA Banner
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ROI HERO FORM */}
+          {activeSection === 'roiHero' && (() => {
+            const currentSec = formData.roiHero || defaultRoiHero;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>ROI Hero Banner</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Page Name</label>
+                    <input
+                      type="text"
+                      value={currentSec.breadcrumbPage !== undefined ? currentSec.breadcrumbPage : defaultRoiHero.breadcrumbPage}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), breadcrumbPage: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image URL</label>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl !== undefined ? currentSec.bgUrl : defaultRoiHero.bgUrl}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), bgUrl: e.target.value } }))}
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                        <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            if (e.target.files?.[0]) {
+                              const res = await uploadImageFile(e.target.files[0], admin.token);
+                              setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('roiHero', formData.roiHero || defaultRoiHero)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Hero Banner
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ROI INTRO FORM */}
+          {activeSection === 'roiIntro' && (() => {
+            const currentSec = formData.roiIntro || defaultRoiIntro;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Know Your Numbers Intro Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Tagline</label>
+                      <input
+                        type="text"
+                        value={currentSec.tagline !== undefined ? currentSec.tagline : defaultRoiIntro.tagline}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), tagline: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 1</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleLine1 !== undefined ? currentSec.titleLine1 : defaultRoiIntro.titleLine1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), titleLine1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Part 2</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleLine2 !== undefined ? currentSec.titleLine2 : defaultRoiIntro.titleLine2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), titleLine2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Blue Part</label>
+                      <input
+                        type="text"
+                        value={currentSec.titleLine2Blue !== undefined ? currentSec.titleLine2Blue : defaultRoiIntro.titleLine2Blue}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), titleLine2Blue: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultRoiIntro.paragraph1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), paragraph1: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultRoiIntro.paragraph2}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), paragraph2: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultRoiIntro.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultRoiIntro.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Right Image URL</label>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      <input
+                        type="text"
+                        value={currentSec.image !== undefined ? currentSec.image : defaultRoiIntro.image}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), image: e.target.value } }))}
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                        <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            if (e.target.files?.[0]) {
+                              const res = await uploadImageFile(e.target.files[0], admin.token);
+                              setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), image: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('roiIntro', formData.roiIntro || defaultRoiIntro)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Intro Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ROI MATTERS FORM */}
+          {activeSection === 'roiMatters' && (() => {
+            const currentSec = formData.roiMatters || defaultRoiMatters;
+            const cardsList = Array.isArray(currentSec.cards) ? currentSec.cards : defaultRoiMatters.cards;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Why Setup Matters Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Main Title</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultRoiMatters.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle / Paragraph 1</label>
+                    <textarea
+                      rows={2}
+                      value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultRoiMatters.paragraph1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), paragraph1: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.6 }}
+                    />
+                  </div>
+
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '900', color: '#0f172a', margin: 0 }}>Pain Point Cards (Total {cardsList.length})</label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const copy = [...cardsList, ""];
+                          setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), cards: copy } }));
+                        }}
+                        style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        <Plus style={{ width: '14px', height: '14px' }} /> Add Point
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {cardsList.map((cardVal, idx) => (
+                        <div key={idx} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                          <span style={{ fontWeight: 'bold', fontSize: '13px', color: '#64748b', width: '20px' }}>{idx+1}.</span>
+                          <input
+                            type="text"
+                            value={cardVal}
+                            onChange={(e) => {
+                              const copy = [...cardsList];
+                              copy[idx] = e.target.value;
+                              setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), cards: copy } }));
+                            }}
+                            style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const copy = [...cardsList];
+                              copy.splice(idx, 1);
+                              setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), cards: copy } }));
+                            }}
+                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                          >
+                            <Trash2 style={{ width: '15px', height: '15px' }} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '10px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Bottom Warning Line 1</label>
+                      <input
+                        type="text"
+                        value={currentSec.warningTextLine1 !== undefined ? currentSec.warningTextLine1 : defaultRoiMatters.warningTextLine1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), warningTextLine1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Bottom Warning Line 2 (Red Accent)</label>
+                      <input
+                        type="text"
+                        value={currentSec.warningTextLine2 !== undefined ? currentSec.warningTextLine2 : defaultRoiMatters.warningTextLine2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), warningTextLine2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('roiMatters', formData.roiMatters || defaultRoiMatters)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Matters Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ROI COMPARISON FORM */}
+          {activeSection === 'roiComparison' && (() => {
+            const currentSec = formData.roiComparison || defaultRoiComparison;
+            const wrongItems = Array.isArray(currentSec.wrongItems) ? currentSec.wrongItems : defaultRoiComparison.wrongItems;
+            const rightItems = Array.isArray(currentSec.rightItems) ? currentSec.rightItems : defaultRoiComparison.rightItems;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Game Zones Fail vs. Profit Comparison</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Section Title</label>
+                      <input
+                        type="text"
+                        value={currentSec.title !== undefined ? currentSec.title : defaultRoiComparison.title}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), title: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Sub Caption Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.subCaption !== undefined ? currentSec.subCaption : defaultRoiComparison.subCaption}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), subCaption: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
+                    {/* Wrong Side */}
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                        <h4 style={{ fontSize: '14px', fontWeight: '900', color: '#ef4444', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Why Most Game Zones Fail ({wrongItems.length})</h4>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newNum = (wrongItems.length + 1).toString().padStart(2, '0');
+                            const copy = [...wrongItems, { num: newNum, text: "", offset: "20px" }];
+                            setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), wrongItems: copy } }));
+                          }}
+                          style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <Plus style={{ width: '14px', height: '14px' }} /> Add Point
+                        </button>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {wrongItems.map((item, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8', width: '20px' }}>{item.num}</span>
+                            <input
+                              type="text"
+                              value={item.text}
+                              onChange={(e) => {
+                                const copy = [...wrongItems];
+                                copy[idx] = { ...copy[idx], text: e.target.value };
+                                setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), wrongItems: copy } }));
+                              }}
+                              placeholder="Point Text"
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #fca5a5', fontSize: '13px' }}
+                            />
+                            <input
+                              type="text"
+                              value={item.offset || ''}
+                              onChange={(e) => {
+                                const copy = [...wrongItems];
+                                copy[idx] = { ...copy[idx], offset: e.target.value };
+                                setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), wrongItems: copy } }));
+                              }}
+                              placeholder="Offset"
+                              style={{ width: '70px', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #fca5a5', fontSize: '13px' }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const copy = [...wrongItems];
+                                copy.splice(idx, 1);
+                                const reindexed = copy.map((x, i) => ({ ...x, num: (i + 1).toString().padStart(2, '0') }));
+                                setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), wrongItems: reindexed } }));
+                              }}
+                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                            >
+                              <Trash2 style={{ width: '15px', height: '15px' }} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right Side */}
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                        <h4 style={{ fontSize: '14px', fontWeight: '900', color: '#22c55e', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Why Ours Profit ({rightItems.length})</h4>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newNum = (rightItems.length + 1).toString().padStart(2, '0');
+                            const copy = [...rightItems, { num: newNum, text: "", offset: "20px" }];
+                            setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), rightItems: copy } }));
+                          }}
+                          style={{ background: '#22c55e', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <Plus style={{ width: '14px', height: '14px' }} /> Add Point
+                        </button>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {rightItems.map((item, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8', width: '20px' }}>{item.num}</span>
+                            <input
+                              type="text"
+                              value={item.text}
+                              onChange={(e) => {
+                                const copy = [...rightItems];
+                                copy[idx] = { ...copy[idx], text: e.target.value };
+                                setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), rightItems: copy } }));
+                              }}
+                              placeholder="Point Text"
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #86efac', fontSize: '13px' }}
+                            />
+                            <input
+                              type="text"
+                              value={item.offset || ''}
+                              onChange={(e) => {
+                                const copy = [...rightItems];
+                                copy[idx] = { ...copy[idx], offset: e.target.value };
+                                setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), rightItems: copy } }));
+                              }}
+                              placeholder="Offset"
+                              style={{ width: '70px', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #86efac', fontSize: '13px' }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const copy = [...rightItems];
+                                copy.splice(idx, 1);
+                                const reindexed = copy.map((x, i) => ({ ...x, num: (i + 1).toString().padStart(2, '0') }));
+                                setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), rightItems: reindexed } }));
+                              }}
+                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                            >
+                              <Trash2 style={{ width: '15px', height: '15px' }} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('roiComparison', formData.roiComparison || defaultRoiComparison)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Comparison Data
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ROI PROCESS FORM */}
+          {activeSection === 'roiProcess' && (() => {
+            const currentSec = formData.roiProcess || defaultRoiProcess;
+            const cardsList = Array.isArray(currentSec.cards) ? currentSec.cards : defaultRoiProcess.cards;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Working Process Steps (Cards)</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Section Title</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultRoiProcess.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <label style={{ fontSize: '13px', fontWeight: '900', color: '#0f172a', margin: 0 }}>Process Steps Cards (Total {cardsList.length})</label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const copy = [...cardsList, { title: "", desc: "", img: "" }];
+                        setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                      }}
+                      style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    >
+                      <Plus style={{ width: '14px', height: '14px' }} /> Add Step
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                    {cardsList.map((card, idx) => (
+                      <div key={idx} style={{ padding: '20px', borderRadius: '16px', border: '1.5px solid #e2e8f0', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontWeight: '900', fontSize: '14px', color: '#00aeef' }}>Step {idx+1}</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const copy = [...cardsList];
+                              copy.splice(idx, 1);
+                              setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                            }}
+                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '6px 10px', borderRadius: '8px', cursor: 'pointer', fontSize: '12px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                          >
+                            <Trash2 style={{ width: '13px', height: '13px' }} /> Delete
+                          </button>
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>Card Title</label>
+                          <input
+                            type="text"
+                            value={card.title}
+                            onChange={(e) => {
+                              const copy = [...cardsList];
+                              copy[idx] = { ...copy[idx], title: e.target.value };
+                              setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                            }}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>Card Description</label>
+                          <textarea
+                            rows={2}
+                            value={card.desc}
+                            onChange={(e) => {
+                              const copy = [...cardsList];
+                              copy[idx] = { ...copy[idx], desc: e.target.value };
+                              setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                            }}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', lineHeight: 1.4 }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>Background Image URL</label>
+                          <div style={{ display: 'flex', gap: '6px' }}>
+                            <input
+                              type="text"
+                              value={card.img}
+                              onChange={(e) => {
+                                const copy = [...cardsList];
+                                copy[idx] = { ...copy[idx], img: e.target.value };
+                                setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                              }}
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                            />
+                            <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '6px 12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', fontSize: '11px' }}>
+                              <Upload style={{ width: '12px', height: '12px', marginRight: '4px' }} />
+                              Upload
+                              <input
+                                type="file"
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                onChange={async (e) => {
+                                  if (e.target.files?.[0]) {
+                                    const res = await uploadImageFile(e.target.files[0], admin.token);
+                                    const copy = [...cardsList];
+                                    copy[idx] = { ...copy[idx], img: res.url };
+                                    setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                                  }
+                                }}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('roiProcess', formData.roiProcess || defaultRoiProcess)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Process Cards
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ROI GET FORM */}
+          {activeSection === 'roiGet' && (() => {
+            const currentSec = formData.roiGet || defaultRoiGet;
+            const steps = Array.isArray(currentSec.steps) ? currentSec.steps : defaultRoiGet.steps;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What You Get Section</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Main Title</label>
+                      <input
+                        type="text"
+                        value={currentSec.title !== undefined ? currentSec.title : defaultRoiGet.title}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), title: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultRoiGet.subtitle}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), subtitle: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Blue Badge Text Sticker</label>
+                      <input
+                        type="text"
+                        value={currentSec.badgeText !== undefined ? currentSec.badgeText : defaultRoiGet.badgeText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), badgeText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Left Image URL</label>
+                      <div style={{ display: 'flex', gap: '10px' }}>
+                        <input
+                          type="text"
+                          value={currentSec.image !== undefined ? currentSec.image : defaultRoiGet.image}
+                          onChange={(e) => setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), image: e.target.value } }))}
+                          style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                        />
+                        <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                          <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                          Upload
+                          <input
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={async (e) => {
+                              if (e.target.files?.[0]) {
+                                const res = await uploadImageFile(e.target.files[0], admin.token);
+                                setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), image: res.url } }));
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '900', color: '#0f172a', margin: 0 }}>List Features (Total {steps.length})</label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const copy = [...steps, { title: "", desc: "" }];
+                          setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), steps: copy } }));
+                        }}
+                        style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        <Plus style={{ width: '14px', height: '14px' }} /> Add Feature
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      {steps.map((step, idx) => (
+                        <div key={idx} style={{ padding: '16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px', background: '#f8fafc' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#64748b' }}>Feature #{idx+1}</span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const copy = [...steps];
+                                copy.splice(idx, 1);
+                                setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), steps: copy } }));
+                              }}
+                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}
+                            >
+                              <Trash2 style={{ width: '12px', height: '12px' }} /> Delete
+                            </button>
+                          </div>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px' }}>
+                            <div>
+                              <label style={{ display: 'block', fontSize: '11px', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>Feature Title</label>
+                              <input
+                                type="text"
+                                value={step.title}
+                                onChange={(e) => {
+                                  const copy = [...steps];
+                                  copy[idx] = { ...copy[idx], title: e.target.value };
+                                  setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), steps: copy } }));
+                                }}
+                                style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                              />
+                            </div>
+                            <div>
+                              <label style={{ display: 'block', fontSize: '11px', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>Feature Description</label>
+                              <input
+                                type="text"
+                                value={step.desc}
+                                onChange={(e) => {
+                                  const copy = [...steps];
+                                  copy[idx] = { ...copy[idx], desc: e.target.value };
+                                  setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), steps: copy } }));
+                                }}
+                                style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ textHeading: 'right', textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('roiGet', formData.roiGet || defaultRoiGet)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Section Data
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ROI CHECKLIST FORM */}
+          {activeSection === 'roiChecklist' && (() => {
+            const currentSec = formData.roiChecklist || defaultRoiChecklist;
+            const fitItems = Array.isArray(currentSec.fitItems) ? currentSec.fitItems : defaultRoiChecklist.fitItems;
+            const unfitItems = Array.isArray(currentSec.unfitItems) ? currentSec.unfitItems : defaultRoiChecklist.unfitItems;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Checklist (This is for you if)</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Section Title</label>
+                      <input
+                        type="text"
+                        value={currentSec.title !== undefined ? currentSec.title : defaultRoiChecklist.title}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), title: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Inner Card Background Image URL</label>
+                      <div style={{ display: 'flex', gap: '10px' }}>
+                        <input
+                          type="text"
+                          value={currentSec.bgImage !== undefined ? currentSec.bgImage : defaultRoiChecklist.bgImage}
+                          onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), bgImage: e.target.value } }))}
+                          style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                        />
+                        <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                          <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                          Upload
+                          <input
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={async (e) => {
+                              if (e.target.files?.[0]) {
+                                const res = await uploadImageFile(e.target.files[0], admin.token);
+                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), bgImage: res.url } }));
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Fit Pill Text Label</label>
+                      <input
+                        type="text"
+                        value={currentSec.fitPill !== undefined ? currentSec.fitPill : defaultRoiChecklist.fitPill}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), fitPill: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Unfit Pill Text Label</label>
+                      <input
+                        type="text"
+                        value={currentSec.unfitPill !== undefined ? currentSec.unfitPill : defaultRoiChecklist.unfitPill}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), unfitPill: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
+                    {/* Fit Items */}
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                        <h4 style={{ fontSize: '14px', fontWeight: '900', color: '#38bdf8', margin: 0 }}>You're a Fit Checklist Items (Total {fitItems.length})</h4>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const copy = [...fitItems, ""];
+                            setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), fitItems: copy } }));
+                          }}
+                          style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <Plus style={{ width: '14px', height: '14px' }} /> Add Point
+                        </button>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {fitItems.map((item, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8' }}>{idx+1}.</span>
+                            <input
+                              type="text"
+                              value={item}
+                              onChange={(e) => {
+                                const copy = [...fitItems];
+                                copy[idx] = e.target.value;
+                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), fitItems: copy } }));
+                              }}
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const copy = [...fitItems];
+                                copy.splice(idx, 1);
+                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), fitItems: copy } }));
+                              }}
+                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                            >
+                              <Trash2 style={{ width: '15px', height: '15px' }} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Unfit Items */}
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                        <h4 style={{ fontSize: '14px', fontWeight: '900', color: '#ef4444', margin: 0 }}>You're Not a Fit Checklist Items (Total {unfitItems.length})</h4>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const copy = [...unfitItems, ""];
+                            setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), unfitItems: copy } }));
+                          }}
+                          style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <Plus style={{ width: '14px', height: '14px' }} /> Add Point
+                        </button>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {unfitItems.map((item, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8' }}>{idx+1}.</span>
+                            <input
+                              type="text"
+                              value={item}
+                              onChange={(e) => {
+                                const copy = [...unfitItems];
+                                copy[idx] = e.target.value;
+                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), unfitItems: copy } }));
+                              }}
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const copy = [...unfitItems];
+                                copy.splice(idx, 1);
+                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), unfitItems: copy } }));
+                              }}
+                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                            >
+                              <Trash2 style={{ width: '15px', height: '15px' }} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('roiChecklist', formData.roiChecklist || defaultRoiChecklist)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Checklist
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ROI CTA FORM */}
+          {activeSection === 'roiCta' && (() => {
+            const currentSec = formData.roiCta || defaultRoiCta;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Ready to See Your Numbers CTA Banner</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Accent Yellow</label>
+                      <input
+                        type="text"
+                        value={currentSec.yellowText !== undefined ? currentSec.yellowText : defaultRoiCta.yellowText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), yellowText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Middle White</label>
+                      <input
+                        type="text"
+                        value={currentSec.whiteText !== undefined ? currentSec.whiteText : defaultRoiCta.whiteText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), whiteText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Title Accent Cyan</label>
+                      <input
+                        type="text"
+                        value={currentSec.cyanText !== undefined ? currentSec.cyanText : defaultRoiCta.cyanText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), cyanText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultRoiCta.subtitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), subtitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultRoiCta.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultRoiCta.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image URL</label>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl !== undefined ? currentSec.bgUrl : defaultRoiCta.bgUrl}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), bgUrl: e.target.value } }))}
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                        <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            if (e.target.files?.[0]) {
+                              const res = await uploadImageFile(e.target.files[0], admin.token);
+                              setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('roiCta', formData.roiCta || defaultRoiCta)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save CTA Banner
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ROI SEO FORM */}
+          {activeSection === 'roiSeo' && (() => {
+            const currentSec = formData.roiSeo || defaultRoiSeo;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>SEO Meta Title & Description</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Page Title Tag</label>
+                    <input
+                      type="text"
+                      value={currentSec.pageTitle !== undefined ? currentSec.pageTitle : defaultRoiSeo.pageTitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiSeo: { ...(prev.roiSeo || defaultRoiSeo), pageTitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Meta Description Tag</label>
+                    <textarea
+                      rows={4}
+                      value={currentSec.metaDescription !== undefined ? currentSec.metaDescription : defaultRoiSeo.metaDescription}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiSeo: { ...(prev.roiSeo || defaultRoiSeo), metaDescription: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('roiSeo', formData.roiSeo || defaultRoiSeo)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save SEO Settings
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TRAMPOLINE SEO FORM */}
+          {activeSection === 'trampolineSeo' && (() => {
+            const currentSec = formData.trampolineSeo || defaultTrampolineSeo;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>SEO Meta Title & Description</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Page Title Tag</label>
+                    <input
+                      type="text"
+                      value={currentSec.pageTitle !== undefined ? currentSec.pageTitle : defaultTrampolineSeo.pageTitle}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineSeo: { ...(prev.trampolineSeo || defaultTrampolineSeo), pageTitle: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Meta Description Tag</label>
+                    <textarea
+                      rows={4}
+                      value={currentSec.metaDescription !== undefined ? currentSec.metaDescription : defaultTrampolineSeo.metaDescription}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineSeo: { ...(prev.trampolineSeo || defaultTrampolineSeo), metaDescription: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('trampolineSeo', formData.trampolineSeo || defaultTrampolineSeo)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save SEO Settings
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* FALLBACK FOR OTHER UNCHECKED SECTIONS */}
-          {!['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder'].includes(activeSection) && (
+          {!['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo'].includes(activeSection) && (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               <FileText style={{ width: '48px', height: '48px', color: '#38bdf8', marginBottom: '14px' }} />
               <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -9693,7 +15592,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               )}
 
               {/* 4. FAQ FIELDS */}
-              {(activeSection === 'faqs' || activeSection === 'arcadeFaqs' || activeSection === 'bowlingFaqs' || activeSection === 'softplayFaqs' || modalTargetSection === 'arcadeFaqs' || modalTargetSection === 'bowlingFaqs' || modalTargetSection === 'softplayFaqs') && (
+              {((activeSection && activeSection.toLowerCase().includes('faq')) || (modalTargetSection && modalTargetSection.toLowerCase().includes('faq'))) && (
                 <>
                   <div>
                     <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Question Text</label>

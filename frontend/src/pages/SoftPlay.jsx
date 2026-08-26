@@ -21,6 +21,9 @@ import softplaySpecsBg from '../assets/softplay-specs-bg.png';
 import softplayMaterialsBg from '../assets/softplay-materials-bg.png';
 import softplayRoiBg from '../assets/softplay-roi-bg.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.png';
+import softPlayImg from '../assets/soft-play.png';
+import allImg from '../assets/all.png';
+import groupImg from '../assets/group-image.png';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -65,9 +68,9 @@ export default function SoftPlay({ siteData }) {
       <section className="winera-softplay-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '180px',
-        paddingBottom: '90px',
-        background: `url(${heroBgImage}) center/100% 100% no-repeat`,
+        paddingTop: '165px',
+        paddingBottom: '75px',
+        background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -75,46 +78,24 @@ export default function SoftPlay({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', padding: '0 20px' }}>
-          {/* Main Title: Soft Play */}
+        <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
+          {/* Main Title / Breadcrumb: Home › Soft Play */}
           <h1 className="winera-softplay-hero-h1" style={{
-            fontSize: '3.8rem',
-            fontWeight: '900',
-            letterSpacing: '-1px',
-            marginBottom: '10px',
-            lineHeight: 1.15
-          }}>
-            {(() => {
-              const rawTitle = siteData?.softplayHero?.title || "*Soft* Play";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#ffcd00' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </h1>
-
-          {/* Breadcrumb Navigation: Home > Soft Play */}
-          <p className="winera-softplay-hero-breadcrumb" style={{
-            fontSize: '15px',
-            fontWeight: '700',
+            fontSize: '1.45rem',
+            fontWeight: '800',
             color: '#ffffff',
-            opacity: 0.9,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px'
+            gap: '8px',
+            margin: 0,
+            lineHeight: 1.2,
+            textAlign: 'center'
           }}>
-            <a href="/products" style={{ color: '#ffffff', textDecoration: 'none' }}>Products</a>
-            <span style={{ color: '#ffcd00' }}>&gt;</span>
-            <span style={{ color: '#ffcd00' }}>{siteData?.softplayHero?.breadcrumbText || "Soft Play"}</span>
-          </p>
+            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+            <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+            <span style={{ color: '#ffcd00', fontWeight: '900' }}>{siteData?.softplayHero?.breadcrumbText || "Soft Play"}</span>
+          </h1>
         </div>
       </section>
 
@@ -128,68 +109,19 @@ export default function SoftPlay({ siteData }) {
           gap: '70px',
           alignItems: 'center'
         }}>
-          {/* Left Collage Image with Cyan Border & Circular Winera Center Badge */}
-          <div className="winera-softplay-supplier-img" style={{ position: 'relative', width: '100%', minHeight: '380px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {/* Outer Cyan Line Outline Frame */}
-            <div style={{
-              position: 'absolute',
-              top: '30px',
-              left: '90px',
-              width: '400px',
-              height: '310px',
-              border: '2.5px solid #38bdf8',
-              borderRadius: '160px 40px 40px 40px',
-              zIndex: 1,
-              pointerEvents: 'none'
-            }}></div>
-
-            {/* Top Left Main Play Area Image (Arch Top Left) */}
-            <div style={{
-              width: '400px',
-              height: '310px',
-              borderRadius: '150px 30px 30px 30px',
-              overflow: 'hidden',
-              boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-              background: `url(${siteData?.softplayIntro?.mainImgUrl || about1}) center/cover no-repeat`,
-              position: 'relative',
-              zIndex: 2,
-              border: '4px solid #f5f5f9'
-            }}></div>
-
-            {/* Bottom Right Overlapping Image (Arch Bottom Right) */}
-            <div style={{
-              position: 'absolute',
-              bottom: '-20px',
-              right: '30px',
-              width: '280px',
-              height: '240px',
-              borderRadius: '30px 30px 140px 30px',
-              overflow: 'hidden',
-              boxShadow: '0 20px 45px rgba(0,0,0,0.18)',
-              border: '5px solid #ffffff',
-              background: `url(${siteData?.softplayIntro?.secondaryImgUrl || projSoft1}) center/cover no-repeat`,
-              zIndex: 10
-            }}></div>
-
-            {/* Central Circular Cyan Gradient Winera Logo Badge */}
-            <div style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '105px',
-              height: '105px',
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #a3e635 0%, #38bdf8 60%, #0284c7 100%)',
-              boxShadow: '0 10px 25px rgba(56, 189, 248, 0.4)',
-              border: '4px solid #ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 20
-            }}>
-              <img src={siteData?.header?.logoUrl || logoImg} alt="Winera Logo" style={{ width: '75px', objectFit: 'contain' }} />
-            </div>
+          {/* Left Side Direct Soft Play Image */}
+          <div className="winera-softplay-supplier-img" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <img
+              src={softPlayImg}
+              alt="Indoor Soft Play Equipment Manufacturer"
+              style={{
+                width: '100%',
+                maxWidth: '540px',
+                height: 'auto',
+                objectFit: 'contain',
+                display: 'block'
+              }}
+            />
           </div>
 
           {/* Right Text Content Column */}
@@ -211,26 +143,16 @@ export default function SoftPlay({ siteData }) {
               {siteData?.softplayIntro?.desc || "India's trusted soft play equipment manufacturer custom designed, safety certified, and installed by our own team across India."}
             </p>
 
-            {/* Action Button: Get Quote From Expert */}
-            <a
-              href={siteData?.softplayIntro?.buttonLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                color: '#ffffff',
-                fontSize: '13.5px',
-                fontWeight: '900',
-                padding: '13px 32px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
-            >
-              {siteData?.softplayIntro?.buttonText || "Get Quote From Expert"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.softplayIntro?.buttonLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                {siteData?.softplayIntro?.buttonText || "Get Quote From Expert"}
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -266,25 +188,16 @@ export default function SoftPlay({ siteData }) {
               {siteData?.softplayManufacture?.p2 || "Whether you are setting up a compact 500 sq ft play corner or a large-scale interactive soft play zone, we deliver indoor kids play zone equipment tailored precisely to your space, budget, and audience, not a pre-packaged, off-the-shelf solution."}
             </p>
 
-            <a
-              href={siteData?.softplayManufacture?.videoUrl || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                color: '#ffffff',
-                fontSize: '13.5px',
-                fontWeight: '900',
-                padding: '13px 36px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
-            >
-              {siteData?.softplayManufacture?.btnText || "Watch Video"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.softplayManufacture?.videoUrl || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                {siteData?.softplayManufacture?.btnText || "Watch Video"}
+              </a>
+            </div>
           </div>
 
           {/* Right 3D Soft Play Castle Equipment Render */}
@@ -332,19 +245,22 @@ export default function SoftPlay({ siteData }) {
             </h2>
           </div>
 
-          {/* Center Table Card with White Background & Rounded Corners */}
+          {/* Center Table Card with White Background & Yellow Border Stroke matching Screenshot 1:1 */}
           <div className="winera-softplay-specs-table-card" style={{
-            maxWidth: '520px',
+            width: '100%',
+            maxWidth: '560px',
+            boxSizing: 'border-box',
             background: '#ffffff',
-            borderRadius: '24px',
-            padding: '24px 28px',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)'
+            borderRadius: '28px',
+            border: '2.5px solid #ffcd00',
+            padding: '28px 32px',
+            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.25)'
           }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
-                <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
-                  <th style={{ paddingBottom: '14px', fontSize: '18px', fontWeight: '900', color: '#0f172a', width: '42%' }}>Specification</th>
-                  <th style={{ paddingBottom: '14px', fontSize: '18px', fontWeight: '900', color: '#0f172a' }}>Details</th>
+                <tr style={{ borderBottom: '1.5px solid #e2e8f0' }}>
+                  <th style={{ paddingBottom: '16px', fontSize: '22px', fontWeight: '800', color: '#0f172a', width: '44%' }}>Specification</th>
+                  <th style={{ paddingBottom: '16px', fontSize: '22px', fontWeight: '800', color: '#0f172a' }}>Details</th>
                 </tr>
               </thead>
               <tbody>
@@ -353,8 +269,8 @@ export default function SoftPlay({ siteData }) {
                   : defaultSpecsList
                 ).map((row, idx, arr) => (
                   <tr key={idx} style={{ borderBottom: idx === arr.length - 1 ? 'none' : '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '10px 0', fontWeight: '700', color: '#475569' }}>{row.spec}</td>
-                    <td style={{ padding: '10px 0', fontWeight: '600', color: '#1e293b', fontSize: '12.5px' }}>{row.details}</td>
+                    <td style={{ padding: '12px 12px 12px 0', fontWeight: '500', color: '#334155', fontSize: '14px', lineHeight: 1.5, wordBreak: 'break-word' }}>{row.spec}</td>
+                    <td style={{ padding: '12px 0', fontWeight: '500', color: '#334155', fontSize: '14px', lineHeight: 1.5, wordBreak: 'break-word' }}>{row.details}</td>
                   </tr>
                 ))}
               </tbody>
@@ -367,21 +283,24 @@ export default function SoftPlay({ siteData }) {
       <section className="winera-softplay-materials-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '70px 4vw 90px',
+        padding: '90px 4vw',
         background: `url(${siteData?.softplayMaterials?.bgUrl || softplayMaterialsBg}) center/100% 100% no-repeat`,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center'
       }}>
         <div style={{
           maxWidth: '1240px',
           margin: '0 auto',
+          width: '100%',
           position: 'relative'
         }}>
-          {/* Equal 2-Column Grid Layout: Left Column (Title, Subtitle & Image Card), Right Column (Subpoints List) */}
+          {/* Equal 2-Column Grid Layout Vertically Centered */}
           <div className="winera-softplay-materials-grid" style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             gap: '60px',
-            alignItems: 'flex-start'
+            alignItems: 'center'
           }}>
             {/* Left Column: Heading, Subtitle & Below Image */}
             <div className="winera-softplay-materials-text">
@@ -402,39 +321,24 @@ export default function SoftPlay({ siteData }) {
                 {siteData?.softplayMaterials?.desc || "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:"}
               </p>
 
-              {/* Left Photo Card with Embedded Pill Badge */}
+              {/* Left Photo Card with all.png */}
               <div style={{ position: 'relative', width: '100%' }}>
-                <div style={{
-                  width: '100%',
-                  height: '340px',
-                  borderRadius: '24px',
-                  overflow: 'hidden',
-                  boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                  background: `url(${siteData?.softplayMaterials?.imgUrl || about1}) center/cover no-repeat`
-                }}></div>
-
-                {/* Floating Pill Tag at bottom right of image */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: '20px',
-                  right: '-15px',
-                  background: '#ffffff',
-                  border: '2px solid #e2e8f0',
-                  borderRadius: '18px',
-                  padding: '12px 22px',
-                  boxShadow: '0 12px 28px rgba(0,0,0,0.15)',
-                  zIndex: 10
-                }}>
-                  <p style={{ fontSize: '14px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.25 }}>
-                    Premium Materials.<br />
-                    Exceptional Durability.
-                  </p>
-                </div>
+                <img
+                  src={allImg}
+                  alt="Premium Materials Exceptional Durability Soft Play"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '24px',
+                    display: 'block',
+                    boxShadow: '0 15px 35px rgba(0,0,0,0.12)'
+                  }}
+                />
               </div>
             </div>
 
-            {/* Right Column: Subpoints List */}
-            <div className="winera-softplay-materials-points" style={{ display: 'flex', flexDirection: 'column', gap: '22px', paddingTop: '10px' }}>
+            {/* Right Column: Subpoints List Vertically Centered */}
+            <div className="winera-softplay-materials-points" style={{ display: 'flex', flexDirection: 'column', gap: '22px', justifyContent: 'center' }}>
               {(Array.isArray(siteData?.softplayMaterials?.subpoints) && siteData.softplayMaterials.subpoints.length > 0
                 ? siteData.softplayMaterials.subpoints
                 : defaultMaterialsSubpoints
@@ -509,6 +413,18 @@ export default function SoftPlay({ siteData }) {
                     zIndex: 2
                   }}
                 >
+                  {/* Horizontal Rule Connector Line between Number Badge & Image Box */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: alignLeft ? '50%' : 'calc(50% - 40px)',
+                    width: '40px',
+                    height: '2px',
+                    background: '#64748b',
+                    transform: 'translateY(-50%)',
+                    zIndex: 5
+                  }}></div>
+
                   {/* Number Badge Pill directly on the Center Vertical Line */}
                   <div className="winera-softplay-timeline-badge" style={{
                     position: 'absolute',
@@ -581,27 +497,15 @@ export default function SoftPlay({ siteData }) {
             })}
           </div>
 
-          {/* Download Our Brochure Action Button */}
-          <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
             <a
               href={siteData?.softplaySpecs?.brochureUrl || siteData?.softplayTypes?.brochureUrl || "#"}
               target="_blank"
               rel="noreferrer"
               download
-              style={{
-                background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                color: '#ffffff',
-                fontSize: '13.5px',
-                fontWeight: '900',
-                padding: '13px 36px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
+              className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
             >
-              {siteData?.softplaySpecs?.buttonText || "Download Our Brochure"}
+              Download Our Brochure
             </a>
           </div>
         </div>
@@ -648,72 +552,47 @@ export default function SoftPlay({ siteData }) {
               {siteData?.softplayRoi?.p3 || "No other soft play manufacturer or supplier in India currently offers this as a standard part of their process. For Winera, it is not an add-on, it is how every project starts."}
             </p>
 
-            {/* Talk to an ROI Expert Button */}
-            <a
-              href={siteData?.softplayRoi?.buttonLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: '#ffffff',
-                color: '#0f172a',
-                fontSize: '13.5px',
-                fontWeight: '900',
-                padding: '12px 28px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(255, 205, 0, 0.4)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '10px',
-                textDecoration: 'none'
-              }}
-            >
-              {/* Official 1:1 WhatsApp Logo SVG Icon */}
-              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="16" cy="16" r="16" fill="#25D366" />
-                <path d="M16 6.5C10.76 6.5 6.5 10.76 6.5 16C6.5 17.84 7.03 19.56 7.94 21.02L6.84 25.16L11.08 24.08C12.49 24.91 14.17 25.5 16 25.5C21.24 25.5 25.5 21.24 25.5 16C25.5 10.76 21.24 6.5 16 6.5ZM16 23.95C14.48 23.95 13.06 23.51 11.85 22.75L11.56 22.58L8.98 23.24L9.67 20.72L9.48 20.42C8.63 19.14 8.16 17.62 8.16 16C8.16 11.68 11.68 8.16 16 8.16C20.32 8.16 23.84 11.68 23.84 16C23.84 20.32 20.32 23.95 16 23.95ZM20.29 18.06C20.06 17.94 18.91 17.38 18.7 17.3C18.49 17.22 18.34 17.18 18.18 17.41C18.03 17.64 17.58 18.18 17.44 18.34C17.3 18.49 17.16 18.51 16.93 18.39C16.7 18.28 15.96 18.04 15.08 17.26C14.39 16.65 13.93 15.89 13.8 15.66C13.67 15.43 13.78 15.3 13.9 15.19C14 15.09 14.13 14.92 14.24 14.79C14.35 14.66 14.39 14.56 14.47 14.41C14.54 14.26 14.5 14.13 14.45 14.02C14.39 13.9 13.93 12.78 13.75 12.32C13.56 11.87 13.37 11.93 13.23 11.92C13.1 11.91 12.95 11.91 12.8 11.91C12.64 11.91 12.4 11.97 12.19 12.2C11.98 12.43 11.38 12.99 11.38 14.13C11.38 15.27 12.21 16.37 12.33 16.53C12.45 16.68 13.97 19.01 16.29 20.01C16.84 20.25 17.27 20.39 17.6 20.5C18.16 20.67 18.66 20.65 19.07 20.59C19.53 20.52 20.48 20.01 20.68 19.45C20.88 18.89 20.88 18.42 20.82 18.32C20.76 18.22 20.53 18.17 20.29 18.06Z" fill="white" />
-              </svg>
-              {siteData?.softplayRoi?.buttonText || "Talk to an ROI Expert"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.softplayRoi?.buttonLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+              >
+                {/* Official 1:1 WhatsApp Logo SVG Icon */}
+                <div style={{
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '50%',
+                  background: '#25d366',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                  </svg>
+                </div>
+                <span>{siteData?.softplayRoi?.buttonText || "Talk to an ROI Expert"}</span>
+              </a>
+            </div>
           </div>
 
-          {/* Right Overlapping 3-Photo Collage Grid */}
-          <div className="winera-softplay-roi-img" style={{ display: 'flex', flexDirection: 'column', gap: '16px', position: 'relative' }}>
-            {/* Top Large Photo: Arch Top-Left & Bottom-Right */}
-            <div style={{
-              width: '100%',
-              height: '240px',
-              borderRadius: '120px 24px 24px 24px',
-              overflow: 'hidden',
-              boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-              border: '4px solid #38bdf8',
-              background: `url(${siteData?.softplayRoi?.topImgUrl || about1}) center/cover no-repeat`
-            }}></div>
-
-            {/* Bottom Row 2 Side-by-Side Photos */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-              {/* Bottom Left Photo */}
-              <div style={{
+          {/* Right Column: direct rendering of group-image.png */}
+          <div className="winera-softplay-roi-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <img
+              src={groupImg}
+              alt="Know Your Returns ROI Report"
+              style={{
                 width: '100%',
-                height: '180px',
-                borderRadius: '24px 24px 24px 100px',
-                overflow: 'hidden',
-                boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                border: '4px solid #38bdf8',
-                background: `url(${siteData?.softplayRoi?.bottomLeftImgUrl || about2}) center/cover no-repeat`
-              }}></div>
-
-              {/* Bottom Right Photo */}
-              <div style={{
-                width: '100%',
-                height: '180px',
-                borderRadius: '24px 100px 24px 24px',
-                overflow: 'hidden',
-                boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                border: '4px solid #ffcd00',
-                background: `url(${siteData?.softplayRoi?.bottomRightImgUrl || about2}) center/cover no-repeat`
-              }}></div>
-            </div>
+                height: 'auto',
+                display: 'block',
+                objectFit: 'contain'
+              }}
+            />
           </div>
         </div>
       </section>
@@ -766,43 +645,41 @@ export default function SoftPlay({ siteData }) {
               ];
 
               return (
-                <>
-                  {/* Horizontal Light Blue Divider Line */}
-                  {bottomCards.length > 0 && (
-                    <div style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: 0,
-                      right: 0,
-                      height: '1.5px',
-                      background: '#e2e8f0',
-                      zIndex: 1,
-                      transform: 'translateY(-50%)'
-                    }}></div>
-                  )}
-
+                <div style={{ position: 'relative' }}>
                   {/* TOP ROW */}
                   <div className="winera-softplay-whyus-row winera-softplay-whyus-top-row" style={{
                     display: 'grid',
                     gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
                     gap: '0px',
                     position: 'relative',
-                    zIndex: 2,
-                    paddingBottom: bottomCards.length > 0 ? '40px' : '0'
+                    zIndex: 2
                   }}>
                     {topCards.map((card, cIdx) => (
                       <div
                         key={cIdx}
                         className="winera-softplay-whyus-card"
                         style={{
-                          padding: '0 35px',
+                          padding: '0 35px 30px',
                           textAlign: 'center',
-                          borderRight: cIdx === topCards.length - 1 ? 'none' : '1.5px solid #e2e8f0',
+                          position: 'relative',
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center'
                         }}
                       >
+                        {/* Vertical Shade/Gradient Divider Line for Top Row */}
+                        {cIdx < topCards.length - 1 && (
+                          <div className="winera-softplay-whyus-divider" style={{
+                            position: 'absolute',
+                            right: 0,
+                            top: '20px',
+                            bottom: 0,
+                            width: '2px',
+                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
+                            zIndex: 3
+                          }}></div>
+                        )}
+
                         {/* Cyan Icon Pill Badge */}
                         <div style={{
                           width: '46px',
@@ -832,6 +709,18 @@ export default function SoftPlay({ siteData }) {
                     ))}
                   </div>
 
+                  {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                  {bottomCards.length > 0 && (
+                    <div className="winera-softplay-whyus-horizontal-divider" style={{
+                      width: '100%',
+                      height: '2px',
+                      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                      position: 'relative',
+                      zIndex: 3,
+                      margin: '0 0 30px'
+                    }}></div>
+                  )}
+
                   {/* BOTTOM ROW */}
                   {bottomCards.length > 0 && (
                     <div className="winera-softplay-whyus-row winera-softplay-whyus-bottom-row" style={{
@@ -841,8 +730,7 @@ export default function SoftPlay({ siteData }) {
                       margin: '0 auto',
                       gap: '0px',
                       position: 'relative',
-                      zIndex: 2,
-                      paddingTop: '20px'
+                      zIndex: 2
                     }}>
                       {bottomCards.map((card, cIdx) => (
                         <div
@@ -851,12 +739,25 @@ export default function SoftPlay({ siteData }) {
                           style={{
                             padding: '0 35px',
                             textAlign: 'center',
-                            borderRight: cIdx === bottomCards.length - 1 ? 'none' : '1.5px solid #e2e8f0',
+                            position: 'relative',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center'
                           }}
                         >
+                          {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
+                          {cIdx < bottomCards.length - 1 && (
+                            <div className="winera-softplay-whyus-divider" style={{
+                              position: 'absolute',
+                              right: 0,
+                              top: '-30px',
+                              bottom: '20px',
+                              width: '2px',
+                              background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                              zIndex: 3
+                            }}></div>
+                          )}
+
                           {/* Cyan Icon Pill Badge */}
                           <div style={{
                             width: '46px',
@@ -873,7 +774,7 @@ export default function SoftPlay({ siteData }) {
                             {card.iconUrl ? (
                               <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
                             ) : (
-                              defaultIcons[(cIdx + topCount) % defaultIcons.length]
+                              defaultIcons[(topCards.length + cIdx) % defaultIcons.length]
                             )}
                           </div>
                           <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -886,7 +787,7 @@ export default function SoftPlay({ siteData }) {
                       ))}
                     </div>
                   )}
-                </>
+                </div>
               );
             })()}
           </div>

@@ -19,7 +19,9 @@ export default function ProjectsMarqueeSection({
   showTopHeader = true,
   subtext = "Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers.",
   projects = defaultProjects,
-  bg = '#F5F5F9'
+  bg = '#F5F5F9',
+  buttonText = "View All",
+  showBottomButton = false
 }) {
   return (
     <section id={id} style={{ padding: '80px 0 100px', background: bg, overflow: 'hidden' }}>
@@ -30,49 +32,42 @@ export default function ProjectsMarqueeSection({
             margin: '0 auto 45px',
             padding: '0 4vw',
             display: 'flex',
-            alignItems: 'flex-start',
+            alignItems: 'center',
             justifyContent: 'space-between',
             gap: '30px',
             flexWrap: 'wrap'
           }}>
-            <SectionHeading align="left" marginBottom="0" accentWidth="60%" accentMaxWidth="360px">
-              {typeof title === 'string' ? (
-                (() => {
-                  const parts = title.split(/\*{1,2}(.*?)\*{1,2}/g);
-                  return parts.map((part, index) => {
-                    if (index % 2 === 1) {
-                      return (
-                        <span key={index} style={{ color: '#00a8ff' }}>
-                          {part}
-                        </span>
-                      );
-                    }
-                    return part;
-                  });
-                })()
-              ) : (
-                title
-              )}
-            </SectionHeading>
+            <div style={{ flex: '1 1 500px', minWidth: '280px' }}>
+              <SectionHeading align="left" marginBottom="0" accentWidth="220px" accentMaxWidth="320px">
+                {typeof title === 'string' ? (
+                  (() => {
+                    const parts = title.split(/\*{1,2}(.*?)\*{1,2}/g);
+                    return parts.map((part, index) => {
+                      if (index % 2 === 1) {
+                        return (
+                          <span key={index} style={{ color: '#38bdf8' }}>
+                            {part}
+                          </span>
+                        );
+                      }
+                      return part;
+                    });
+                  })()
+                ) : (
+                  title
+                )}
+              </SectionHeading>
+            </div>
 
-            <div style={{ textAlign: 'left', maxWidth: '420px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '16px' }}>
-              <p style={{ color: '#64748b', fontSize: '13px', lineHeight: 1.6, fontWeight: '500' }}>
+            <div style={{ textAlign: 'left', maxWidth: '420px', flex: '0 1 420px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '14px' }}>
+              <p style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
                 {subtext}
               </p>
-              <a href="https://wa.me/919428989488" target="_blank" rel="noreferrer" style={{
-                background: '#00a8ff',
-                color: '#ffffff',
-                fontSize: '13px',
-                fontWeight: '800',
-                padding: '10px 32px',
-                borderRadius: '25px',
-                border: '2px solid #ffcd00',
-                boxShadow: '0 6px 18px rgba(0, 168, 255, 0.3)',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}>
-                View All
-              </a>
+              <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+                <a href="/project" className="winera-cyan-cta-btn winera-cyan-cta-btn-sm">
+                  <span>{buttonText}</span>
+                </a>
+              </div>
             </div>
           </div>
         ) : (
@@ -138,6 +133,16 @@ export default function ProjectsMarqueeSection({
           </div>
         </div>
       </div>
+
+      {showBottomButton && (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '35px' }}>
+          <div className="winera-cyan-cta-wrapper">
+            <a href="/project" className="winera-cyan-cta-btn" style={{ textDecoration: 'none', padding: '12px 36px', fontSize: '15.5px' }}>
+              <span>{buttonText}</span>
+            </a>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

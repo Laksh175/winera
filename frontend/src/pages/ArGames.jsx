@@ -539,13 +539,13 @@ export default function ArGames({ siteData }) {
       {/* 1. HEADER NAVBAR */}
       <Header headerData={header} />
 
-      {/* 2. AR GAMES HERO BANNER SECTION */}
+      {/* 2. AR GAMES HERO BANNER SECTION (MATCHING 1:1 SECOND IMAGE UI) */}
       <section className="winera-ar-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '180px',
-        paddingBottom: '90px',
-        background: `url(${heroBgImage}) center/100% 100% no-repeat`,
+        paddingTop: '165px',
+        paddingBottom: '75px',
+        background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -553,34 +553,26 @@ export default function ArGames({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', padding: '0 20px' }}>
-          {/* Main Title: AR Games */}
+        <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
+          {/* Centered Single Line Heading: Home › AR Games */}
           <h1 className="winera-ar-hero-h1" style={{
-            fontSize: '3.8rem',
-            fontWeight: '900',
-            letterSpacing: '-1px',
-            marginBottom: '10px',
-            lineHeight: 1.15
-          }}>
-            {renderTitleMarkup(siteData?.arHero?.title, "*AR* Games", '#ffcd00')}
-          </h1>
-
-          {/* Breadcrumb Navigation: Products > AR Games */}
-          <p className="winera-ar-hero-breadcrumb" style={{
-            fontSize: '15px',
-            fontWeight: '700',
+            fontSize: '1.45rem',
+            fontWeight: '800',
             color: '#ffffff',
-            opacity: 0.9,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
-            flexWrap: 'wrap'
+            margin: 0,
+            lineHeight: 1.2,
+            textAlign: 'center'
           }}>
-            <a href="/products" style={{ color: '#ffffff', textDecoration: 'none' }}>Products</a>
-            <span style={{ color: '#ffcd00' }}>&gt;</span>
-            <span style={{ color: '#ffcd00' }}>{siteData?.arHero?.breadcrumbText || "AR Games"}</span>
-          </p>
+            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+            <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+            <span style={{ color: '#ffcd00', fontWeight: '900' }}>
+              {siteData?.arHero?.breadcrumbText || "AR Games"}
+            </span>
+          </h1>
         </div>
       </section>
 
@@ -611,25 +603,16 @@ export default function ArGames({ siteData }) {
               {siteData?.arIntro?.desc || "India's ROI-first AR games supplier — we source, install, and service interactive gaming attractions that draw crowds."}
             </p>
 
-            <a
-              href={siteData?.arIntro?.buttonLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                color: '#ffffff',
-                fontSize: '13.5px',
-                fontWeight: '900',
-                padding: '13px 32px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
-            >
-              {siteData?.arIntro?.buttonText || "Get Quote From Expert"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.arIntro?.buttonLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                {siteData?.arIntro?.buttonText || "Get Quote From Expert"}
+              </a>
+            </div>
           </div>
 
           {/* Right Collage Graphic Container */}
@@ -713,25 +696,16 @@ export default function ArGames({ siteData }) {
               </p>
             </div>
 
-            <a
-              href={siteData?.arMatchedVenue?.buttonLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                color: '#ffffff',
-                fontSize: '14px',
-                fontWeight: '900',
-                padding: '14px 36px',
-                borderRadius: '14px',
-                border: '3px solid #ffcd00',
-                boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
-            >
-              {siteData?.arMatchedVenue?.buttonText || "Get Quote From Expert"}
-            </a>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <a
+                href={siteData?.arMatchedVenue?.buttonLink || "https://wa.me/919428989488"}
+                target="_blank"
+                rel="noreferrer"
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              >
+                {siteData?.arMatchedVenue?.buttonText || "Get Quote From Expert"}
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -1051,79 +1025,78 @@ export default function ArGames({ siteData }) {
       </section>
 
       {/* 7. KNOW YOUR RETURNS BEFORE YOU INVEST IN AR GAMING EQUIPMENT SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-ar-earn-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-ar-earn-section" style={{
+        position: 'relative',
+        width: '100%',
+        padding: '70px 4vw 80px',
+        background: '#F8FAFC',
+        overflow: 'hidden'
+      }}>
+        {/* Top Decorative Color Accent Tabs (Figma 1:1) */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: '5vw',
+          width: '140px',
+          height: '14px',
+          background: '#38bdf8',
+          clipPath: 'polygon(0 0, 100% 0, 80% 100%, 0 100%)'
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          right: '5vw',
+          width: '260px',
+          height: '16px',
+          background: '#ffcd00',
+          clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0 100%)'
+        }}></div>
+
         <div style={{
           maxWidth: '1240px',
           margin: '0 auto',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center'
+          position: 'relative'
         }}>
-          {/* Yellow Stroke Line Accent Above Heading */}
-          <img
-            src={yellowStrokeLine}
-            alt=""
-            style={{ display: 'block', width: '320px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
-          />
+          {/* Centered Heading */}
+          <div style={{ textAlign: 'center', marginBottom: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img
+              src={yellowStrokeLine}
+              alt=""
+              style={{ display: 'block', width: '320px', height: '10px', marginBottom: '14px', objectFit: 'fill' }}
+            />
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: '900',
+              color: '#0f172a',
+              lineHeight: 1.2,
+              margin: 0,
+              maxWidth: '950px',
+              letterSpacing: '-0.5px'
+            }}>
+              {renderTitleMarkup(
+                siteData?.arEarn?.title,
+                "*Know Your Returns Before* You Invest in<br/>AR Gaming Equipment",
+                '#38bdf8'
+              )}
+            </h2>
+          </div>
 
-          {/* Heading */}
-          <h2 style={{
-            fontSize: '3rem',
-            fontWeight: '900',
-            color: '#0f172a',
-            lineHeight: 1.15,
-            margin: '0 0 35px 0',
-            maxWidth: '1000px',
-            letterSpacing: '-0.5px'
-          }}>
-            {renderTitleMarkup(
-              siteData?.arEarn?.title,
-              "*Know Your Returns Before* You Invest in<br/>AR Gaming Equipment",
-              '#38bdf8'
-            )}
-          </h2>
-
-          {/* Grid Container for Paragraphs & Right Floating Gamers Image */}
+          {/* Grid Container: Centered Paragraphs + Right Side Gamers Graphic */}
           <div className="winera-ar-earn-grid" style={{
             display: 'grid',
             gridTemplateColumns: '1fr 280px',
-            gap: '40px',
+            gap: '30px',
             alignItems: 'center',
-            textAlign: 'center',
             width: '100%'
           }}>
             {/* Paragraphs */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'center', maxWidth: '880px', margin: '0 auto' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', textAlign: 'center', maxWidth: '850px', margin: '0 auto' }}>
               <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: 0 }}>
                 {siteData?.arEarn?.p1 || "Most AR games suppliers in India present a product catalogue and a price list the financial planning is left entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before recommending any product or configuration, our team prepares a complete ROI report for your specific venue covering equipment cost, projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline."}
               </p>
               <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: 0 }}>
                 {siteData?.arEarn?.p2 || "Every figure is calculated around your venue type, available floor space, and visitor demographic, not an industry benchmark that may have no relevance to your actual situation. Very few interactive gaming setup suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
               </p>
-
-              <div style={{ marginTop: '10px' }}>
-                <a
-                  href={siteData?.arEarn?.buttonLink || siteData?.header?.whatsAppUrl || "https://wa.me/919428989488"}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                    color: '#ffffff',
-                    fontSize: '14px',
-                    fontWeight: '900',
-                    padding: '14px 36px',
-                    borderRadius: '14px',
-                    border: '3px solid #ffcd00',
-                    boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-                    display: 'inline-block',
-                    textDecoration: 'none'
-                  }}
-                >
-                  {siteData?.arEarn?.buttonText || "Talk to an ROI Expert"}
-                </a>
-              </div>
             </div>
 
             {/* Right Side Gamers Graphic */}
@@ -1133,7 +1106,7 @@ export default function ArGames({ siteData }) {
                 alt="AR Gaming Experience Gamers"
                 style={{
                   width: '100%',
-                  maxWidth: '280px',
+                  maxWidth: '260px',
                   height: 'auto',
                   display: 'block'
                 }}
@@ -1198,27 +1171,41 @@ export default function ArGames({ siteData }) {
               const bottomCards = cards.slice(topCount);
 
               return (
-                <>
+                <div style={{ position: 'relative' }}>
                   {/* TOP ROW */}
                   <div className="winera-ar-whyus-row winera-ar-whyus-top-row" style={{
                     display: 'grid',
                     gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
-                    borderBottom: bottomCards.length > 0 ? '1.5px solid #bae6fd' : 'none',
-                    paddingBottom: bottomCards.length > 0 ? '40px' : '0'
+                    gap: '0px',
+                    position: 'relative',
+                    zIndex: 2
                   }}>
                     {topCards.map((card, cIdx) => (
                       <div
                         key={cIdx}
                         className="winera-ar-whyus-card"
                         style={{
-                          padding: '0 30px',
+                          padding: '0 35px 30px',
                           textAlign: 'center',
-                          borderRight: cIdx === topCards.length - 1 ? 'none' : '1.5px solid #bae6fd',
+                          position: 'relative',
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center'
                         }}
                       >
+                        {/* Vertical Shade/Gradient Divider Line for Top Row */}
+                        {cIdx < topCards.length - 1 && (
+                          <div className="winera-ar-whyus-vertical-divider" style={{
+                            position: 'absolute',
+                            right: 0,
+                            top: '20px',
+                            bottom: 0,
+                            width: '2px',
+                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
+                            zIndex: 3
+                          }}></div>
+                        )}
+
                         {/* Cyan Icon Box */}
                         <div style={{
                           width: '48px',
@@ -1241,22 +1228,35 @@ export default function ArGames({ siteData }) {
                         <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
                           {card.title}
                         </h4>
-                        <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+                        <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                           {card.desc}
                         </p>
                       </div>
                     ))}
                   </div>
 
+                   {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                   {bottomCards.length > 0 && (
+                     <div className="winera-ar-whyus-horizontal-divider" style={{
+                       width: '100%',
+                       height: '2px',
+                       background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                       position: 'relative',
+                       zIndex: 3,
+                       margin: '0 0 30px'
+                     }}></div>
+                   )}
+
                   {/* BOTTOM ROW */}
                   {bottomCards.length > 0 && (
                     <div className="winera-ar-whyus-row winera-ar-whyus-bottom-row" style={{
                       display: 'grid',
                       gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
-                      paddingTop: '40px',
-                      maxWidth: bottomCards.length === 2 ? '780px' : '100%',
+                      maxWidth: bottomCards.length <= 3 ? '780px' : '100%',
                       margin: '0 auto',
-                      width: '100%'
+                      gap: '0px',
+                      position: 'relative',
+                      zIndex: 2
                     }}>
                       {bottomCards.map((card, bIdx) => (
                         <div
@@ -1265,12 +1265,25 @@ export default function ArGames({ siteData }) {
                           style={{
                             padding: '0 35px',
                             textAlign: 'center',
-                            borderRight: bIdx === bottomCards.length - 1 ? 'none' : '1.5px solid #bae6fd',
+                            position: 'relative',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center'
                           }}
                         >
+                          {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
+                          {bIdx < bottomCards.length - 1 && (
+                            <div className="winera-ar-whyus-vertical-divider" style={{
+                              position: 'absolute',
+                              right: 0,
+                              top: '-30px',
+                              bottom: '20px',
+                              width: '2px',
+                              background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                              zIndex: 3
+                            }}></div>
+                          )}
+
                           {/* Cyan Icon Box */}
                           <div style={{
                             width: '48px',
@@ -1293,14 +1306,14 @@ export default function ArGames({ siteData }) {
                           <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
                             {card.title}
                           </h4>
-                          <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+                          <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                             {card.desc}
                           </p>
                         </div>
                       ))}
                     </div>
                   )}
-                </>
+                </div>
               );
             })()}
           </div>
@@ -1376,25 +1389,16 @@ export default function ArGames({ siteData }) {
             {siteData?.arCta?.whiteText || "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
           </p>
 
-          <a
-            href={siteData?.arCta?.buttonLink || siteData?.header?.whatsAppUrl || "https://wa.me/919428989488"}
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              background: '#ffcd00',
-              color: '#0f172a',
-              fontSize: '13.5px',
-              fontWeight: '900',
-              padding: '12px 30px',
-              borderRadius: '12px',
-              border: '3px solid #38bdf8',
-              boxShadow: '0 8px 22px rgba(56, 189, 248, 0.35)',
-              display: 'inline-block',
-              textDecoration: 'none'
-            }}
-          >
-            {siteData?.arCta?.buttonText || "Talk to an ROI Expert"}
-          </a>
+          <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+            <a
+              href={siteData?.arCta?.buttonLink || siteData?.header?.whatsAppUrl || "https://wa.me/919428989488"}
+              target="_blank"
+              rel="noreferrer"
+              className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+            >
+              {siteData?.arCta?.buttonText || "Talk to an ROI Expert"}
+            </a>
+          </div>
         </div>
       </section>
 

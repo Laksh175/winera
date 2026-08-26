@@ -14,6 +14,12 @@ import SoftPlay from './pages/SoftPlay';
 import BumperCar from './pages/BumperCar';
 import VrGames from './pages/VrGames';
 import ArGames from './pages/ArGames';
+import AmusementPark from './pages/AmusementPark';
+import Hypergrid from './pages/Hypergrid';
+import Project from './pages/Project';
+import SafetyStandards from './pages/SafetyStandards';
+import TrampolinePark from './pages/TrampolinePark';
+import Roi from './pages/Roi';
 
 export default function App() {
   const [siteData, setSiteData] = useState(null);
@@ -54,6 +60,20 @@ export default function App() {
           <Route path="/products/vr-games" element={<VrGames siteData={siteData} />} />
           <Route path="/ar-games" element={<ArGames siteData={siteData} />} />
           <Route path="/products/ar-games" element={<ArGames siteData={siteData} />} />
+          <Route path="/amusement-park" element={<AmusementPark siteData={siteData} />} />
+          <Route path="/products/amusement-park" element={<AmusementPark siteData={siteData} />} />
+          <Route path="/trampoline-park" element={<TrampolinePark siteData={siteData} />} />
+          <Route path="/products/trampoline-park" element={<TrampolinePark siteData={siteData} />} />
+          <Route path="/products/trampoline-parks" element={<TrampolinePark siteData={siteData} />} />
+          <Route path="/hypergrid" element={<Hypergrid siteData={siteData} />} />
+          <Route path="/products/hypergrid" element={<Hypergrid siteData={siteData} />} />
+          <Route path="/project" element={<Project siteData={siteData} />} />
+          <Route path="/projects" element={<Project siteData={siteData} />} />
+          <Route path="/roi" element={<Roi siteData={siteData} />} />
+          <Route path="/resources/roi" element={<Roi siteData={siteData} />} />
+          <Route path="/safety-standards" element={<SafetyStandards siteData={siteData} />} />
+          <Route path="/resources/safety-standards" element={<SafetyStandards siteData={siteData} />} />
+          <Route path="/resources/safety-standard" element={<SafetyStandards siteData={siteData} />} />
           <Route path="/contact" element={<ContactUs siteData={siteData} />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard siteData={siteData} refreshContent={loadData} />} />
