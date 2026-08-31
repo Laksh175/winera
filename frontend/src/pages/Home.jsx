@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
@@ -7,26 +8,44 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import ClientsMarqueeSection from '../components/ClientsMarqueeSection';
 import CtaBanner from '../components/CtaBanner';
-import heroBg from '../assets/hero-bg.png';
-import about1 from '../assets/about-1.png';
-import about2 from '../assets/about-2.png';
-import about3 from '../assets/about-3.png';
-import aboutCollage from '../assets/about-collage.png';
-import qualityBadge from '../assets/quality-badge.png';
-import productsBg from '../assets/products-bg.png';
-import partnerBg from '../assets/partner-bg.png';
-import whyChooseBg from '../assets/why-choose-bg.png';
-import indMall from '../assets/ind-mall.png';
-import indResort from '../assets/ind-resort.png';
-import indSchool from '../assets/ind-school.png';
-import homeBlockBg from '../assets/home-block.png';
-import homeBlock1 from '../assets/home-block-1.png';
-import homeBlock2 from '../assets/home-block-2.png';
+import heroBg from '../assets/hero-bg.webp';
+import about1 from '../assets/about-1.webp';
+import about2 from '../assets/about-2.webp';
+import about3 from '../assets/about-3.webp';
+import aboutCollage from '../assets/about-collage.webp';
+import qualityBadge from '../assets/quality-badge.webp';
+import productsBg from '../assets/products-bg.webp';
+import partnerBg from '../assets/partner-bg.webp';
+import whyChooseBg from '../assets/why-choose-bg.webp';
+import indMall from '../assets/ind-mall.webp';
+import indResort from '../assets/ind-resort.webp';
+import indSchool from '../assets/ind-school.webp';
+import homeBlockBg from '../assets/home-block.webp';
+import homeBlock1 from '../assets/home-block-1.webp';
+import homeBlock2 from '../assets/home-block-2.webp';
 import { Check, ArrowRight, ShieldCheck, ChevronLeft, ChevronRight, LayoutGrid, ShoppingBag, Palette, Wrench, CheckCheck, UserCheck } from 'lucide-react';
 
 export default function Home({ siteData }) {
+  const navigate = useNavigate();
   const [activeProductIndex, setActiveProductIndex] = React.useState(0);
   const [activeIndustryIndex, setActiveIndustryIndex] = React.useState(2);
+
+  const resolveProductLink = (prod) => {
+    const title = (prod.title || '').toLowerCase();
+    const rawLink = (prod.link || '').toLowerCase();
+    if (title.includes('bumper') || rawLink.includes('bumper')) return '/products/bumper-car';
+    if (title.includes('arcade') || rawLink.includes('arcade')) return '/products/arcade-games';
+    if (title.includes('vr') || rawLink.includes('vr')) return '/products/vr-games';
+    if (title.includes('ar') || rawLink.includes('ar')) return '/products/ar-games';
+    if (title.includes('bowling') || rawLink.includes('bowling')) return '/products/bowling-alley';
+    if (title.includes('soft') || rawLink.includes('soft')) return '/products/soft-play';
+    if (title.includes('trampoline') || rawLink.includes('trampoline')) return '/products/trampoline-park';
+    if (title.includes('hyper') || rawLink.includes('hyper')) return '/products/hypergrid';
+    if (title.includes('laser') || rawLink.includes('laser')) return '/products/laser-tag';
+    if (title.includes('amusement') || rawLink.includes('amusement')) return '/products/amusement-park';
+    if (title.includes('decorative') || title.includes('light') || rawLink.includes('light')) return '/products/lights';
+    return prod.link || '/products/bumper-car';
+  };
 
   const homeSeo = siteData?.homeSeo || {
     pageTitle: "Game Zone Equipment Manufacturer in India | Winera International",
@@ -200,7 +219,7 @@ export default function Home({ siteData }) {
         </div>
       </section>
 
-      <section style={{ padding: '75px 5vw 70px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section style={{ padding: '70px 5vw 35px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           <SectionHeading marginBottom="12px" accentWidth="320px" accentMaxWidth="420px">
             {(() => {
@@ -290,9 +309,9 @@ export default function Home({ siteData }) {
       </section>
 
       {/* ABOUT WINERA INTERNATIONAL SECTION */}
-      <section id="about" style={{ padding: '70px 5vw 90px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section id="about" style={{ padding: '35px 5vw 70px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1220px', margin: '0 auto' }}>
-          <SectionHeading marginBottom="45px" accentWidth="55%" accentMaxWidth="400px">
+          <SectionHeading marginBottom="45px" accentWidth="280px" accentMaxWidth="320px">
             {(() => {
               const rawTitle = siteData?.aboutHome?.title || "*About* Winera International";
               const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -366,10 +385,13 @@ export default function Home({ siteData }) {
                 alt="About Winera International"
                 loading="lazy"
                 decoding="async"
+                width={520}
+                height={480}
                 style={{
                   width: '100%',
                   maxWidth: '520px',
                   height: 'auto',
+                  aspectRatio: '520 / 480',
                   display: 'block',
                   filter: 'drop-shadow(0 15px 35px rgba(0, 0, 0, 0.12))'
                 }}
@@ -381,7 +403,7 @@ export default function Home({ siteData }) {
 
       <section id="products" className="winera-products-section" style={{
         position: 'relative',
-        padding: '60px 4vw 80px',
+        padding: '70px 4vw 85px',
         background: `url(${productsBg}) center/100% 100% no-repeat`,
         minHeight: '760px',
         display: 'flex',
@@ -390,7 +412,7 @@ export default function Home({ siteData }) {
         justifyContent: 'flex-start'
       }}>
         <div style={{ maxWidth: '1240px', width: '100%', margin: '0 auto', textAlign: 'center' }}>
-          <SectionHeading marginBottom="6px" accentWidth="65%" accentMaxWidth="440px">
+          <SectionHeading marginBottom="6px" accentWidth="280px" accentMaxWidth="340px">
             {(() => {
               const rawTitle = siteData?.productsHome?.title || "Take a look At *Our Best Products*";
               const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -421,28 +443,39 @@ export default function Home({ siteData }) {
           }}>
             {(() => {
               const defaultProductsCards = [
-                { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/product/arcade-games" },
-                { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/product/vr-games" },
-                { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/product/ar-games" },
-                { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/product/bowling-alley" },
-                { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/product/soft-play" },
-                { id: "trampoline", title: "Trampoline", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/product/trampoline-park" },
-                { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/product/hypergrid" },
-                { id: "lasertag", title: "Laser Tag & Spy", desc: "High-adrenaline commercial laser tag arena setup delivering competitive team battles for malls & venues.", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80", link: "/product/laser-tag" },
-                { id: "ride", title: "Amusement Ride", desc: "Exhilarating blend of collisions and smooth handling designed with top commercial safety.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/product/amusement-park" },
-                { id: "decorative", title: "Decorative Items", desc: "Custom themed lights, sculptures, reception desks, and ambient furniture to elevate your game zone.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80", link: "/product/arcade-games" }
+                { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
+                { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
+                { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
+                { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
+                { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
+                { id: "trampoline", title: "Trampoline", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
+                { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
+                { id: "lasertag", title: "Laser Tag & Spy", desc: "High-adrenaline commercial laser tag arena setup delivering competitive team battles for malls & venues.", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80", link: "/products/laser-tag" },
+                { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" },
+                { id: "decorative", title: "Decorative Items", desc: "Custom themed lights, sculptures, reception desks, and ambient furniture to elevate your game zone.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80", link: "/products/lights" }
               ];
 
-              const cards = (Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
+              const rawCards = (Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
                 ? siteData.productsHome.cardsList
                 : defaultProductsCards;
 
+              // Filter out Decorative items for now
+              const cards = rawCards.filter(prod => prod.id !== 'decorative' && !prod.title?.toLowerCase().includes('decorative'));
+
               return cards.map((prod, idx) => {
                 const isExpanded = activeProductIndex === idx;
+                const targetLink = resolveProductLink(prod);
+
                 return (
                   <div
                     key={idx}
-                    onClick={() => setActiveProductIndex(idx)}
+                    onClick={() => {
+                      if (isExpanded) {
+                        navigate(targetLink);
+                      } else {
+                        setActiveProductIndex(idx);
+                      }
+                    }}
                     onMouseEnter={() => setActiveProductIndex(idx)}
                     className={`winera-product-card ${isExpanded ? 'is-expanded' : ''}`}
                     style={{
@@ -481,18 +514,24 @@ export default function Home({ siteData }) {
                           <p style={{ fontSize: '11px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }}>
                             {prod.desc}
                           </p>
-                          <a href={prod.link || '/products/arcade-games'} style={{
-                            color: '#00a8ff',
-                            fontSize: '11px',
-                            fontWeight: '800',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                            textDecoration: 'none'
-                          }}>
+                          <Link
+                            to={targetLink}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                            style={{
+                              color: '#00a8ff',
+                              fontSize: '11px',
+                              fontWeight: '800',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              textDecoration: 'none'
+                            }}
+                          >
                             <span>View More Info</span>
                             <ArrowRight style={{ width: '12px', height: '12px' }} />
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     ) : (
@@ -529,7 +568,7 @@ export default function Home({ siteData }) {
       <section className="winera-partner-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '70px 5vw 130px',
+        padding: '95px 5vw 175px',
         background: `url(${partnerBg}) center top / 100% 100% no-repeat`,
         minHeight: '660px',
         display: 'flex',
@@ -611,13 +650,13 @@ export default function Home({ siteData }) {
       </section>
 
       <section id="industries" style={{
-        padding: '80px 5vw 100px',
+        padding: '70px 5vw 75px',
         background: '#F5F5F9',
         textAlign: 'center',
         position: 'relative'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          <SectionHeading marginBottom="8px" accentWidth="60%" accentMaxWidth="400px">
+          <SectionHeading marginBottom="8px" accentWidth="280px" accentMaxWidth="320px">
             {(() => {
               const rawTitle = siteData?.industriesHeader?.title || "INDUSTRIES *WE SERVE*";
               const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -794,9 +833,9 @@ export default function Home({ siteData }) {
         </div>
       </section>
 
-      <section id="process" className="winera-process-section" style={{ padding: '80px 4vw 100px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section id="process" className="winera-process-section" style={{ padding: '70px 4vw 75px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          <SectionHeading marginBottom="8px" accentWidth="65%" accentMaxWidth="440px">
+          <SectionHeading marginBottom="8px" accentWidth="280px" accentMaxWidth="320px">
             {(() => {
               const rawTitle = siteData?.processHome?.title || "*OUR WORKING* PROCESS";
               const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -948,7 +987,7 @@ export default function Home({ siteData }) {
         subtext={siteData?.builtProjectsHeader?.subtext}
       />
 
-      <section id="partners" className="winera-channel-partners-section" style={{ padding: '80px 5vw 100px', background: '#f5F5F9' }}>
+      <section id="partners" className="winera-channel-partners-section" style={{ padding: '70px 5vw 75px', background: '#f5F5F9' }}>
         <div className="winera-channel-partners-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -1140,7 +1179,7 @@ export default function Home({ siteData }) {
       />
 
       {/* 15. READY TO GET STARTED CTA BANNER SECTION */}
-      <section className="winera-home-cta-section" style={{ padding: '60px 4vw 90px', background: '#F8FAFC' }}>
+      <section className="winera-home-cta-section" style={{ padding: '60px 4vw 70px', background: '#F8FAFC' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           <div style={{
             backgroundImage: `url(${siteData?.ctaBanner?.bgUrl || homeBlockBg})`,
@@ -1166,9 +1205,12 @@ export default function Home({ siteData }) {
                 alt="Game Zone Experience"
                 loading="lazy"
                 decoding="async"
+                width={210}
+                height={280}
                 style={{
                   width: '210px',
                   height: 'auto',
+                  aspectRatio: '210 / 280',
                   display: 'block',
                   borderRadius: '16px',
                   boxShadow: '0 8px 24px rgba(0,0,0,0.3)'
@@ -1268,9 +1310,12 @@ export default function Home({ siteData }) {
                 alt="Game Zone Setup"
                 loading="lazy"
                 decoding="async"
+                width={210}
+                height={280}
                 style={{
                   width: '210px',
                   height: 'auto',
+                  aspectRatio: '210 / 280',
                   display: 'block',
                   borderRadius: '16px',
                   boxShadow: '0 8px 24px rgba(0,0,0,0.3)'

@@ -3,20 +3,34 @@ import { Link } from 'react-router-dom';
 import { BarChart2, Edit3, Shield, Database, Users, Settings, AlertTriangle, TrendingDown, UserX } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import roiBgImage from '../assets/roi-bg-image.png';
-import roiImg1 from '../assets/roi-img1.png';
-import roiImage3bg from '../assets/roi-image-3bg.png';
-import roiBlock5Img1 from '../assets/roi-block5-img1.png';
-import roiBlock5Img2 from '../assets/roi-block5-img2.png';
-import roiBlock5Img3 from '../assets/roi-block5-img3.png';
-import roiBlock5Img4 from '../assets/roi-block5-img4.png';
-import roiBlock5Img5 from '../assets/roi-block5-img5.png';
-import roiBlock5Img6 from '../assets/roi-block5-img6.png';
-import roiBlock6 from '../assets/roi-block6.png';
-import roiBlock7Bg from '../assets/roi-block7-bg.png';
-import homeBlockBg from '../assets/home-block.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
+import roiBgImage from '../assets/roi-bg-image.webp';
+import roiImg1 from '../assets/roi-img1.webp';
+import roiImage3bg from '../assets/roi-image-3bg.webp';
+import roiBlock5Img1 from '../assets/roi-block5-img1.webp';
+import roiBlock5Img2 from '../assets/roi-block5-img2.webp';
+import roiBlock5Img3 from '../assets/roi-block5-img3.webp';
+import roiBlock5Img4 from '../assets/roi-block5-img4.webp';
+import roiBlock5Img5 from '../assets/roi-block5-img5.webp';
+import roiBlock5Img6 from '../assets/roi-block5-img6.webp';
+import roiBlock6 from '../assets/roi-block6.webp';
+import roiBlock7Bg from '../assets/roi-block7-bg.webp';
+import homeBlockBg from '../assets/home-block.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import TestimonialsSection from '../components/TestimonialsSection';
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
 
 export default function Roi({ siteData }) {
   const header = siteData?.header || null;
@@ -165,7 +179,7 @@ export default function Roi({ siteData }) {
         width: '100%',
         paddingTop: '165px',
         paddingBottom: '75px',
-        background: `url(${roiHero.bgUrl || roiBgImage}) center top / 100% 100% no-repeat`,
+        background: `url(${getValidImageUrl(roiHero.bgUrl, roiBgImage)}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -273,7 +287,7 @@ export default function Roi({ siteData }) {
             alignItems: 'center'
           }}>
             <img
-              src={roiIntro.image || roiImg1}
+              src={getValidImageUrl(roiIntro.image, roiImg1)}
               alt="ROI Investment Growth"
               style={{
                 width: '100%',
@@ -516,7 +530,7 @@ export default function Roi({ siteData }) {
                       borderRadius: '40px',
                       fontSize: '13px',
                       fontWeight: '700',
-                      boxShadow: '0 6px 18px rgba(239, 68, 68, 0.25)',
+                      boxShadow: 'none',
                       marginRight: item.offset,
                       width: '260px'
                     }}
@@ -534,7 +548,7 @@ export default function Roi({ siteData }) {
                       justifyContent: 'center',
                       fontWeight: '800',
                       fontSize: '12px',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.15)'
+                      boxShadow: 'none'
                     }}>
                       {item.num}
                     </span>
@@ -611,7 +625,7 @@ export default function Roi({ siteData }) {
                       borderRadius: '40px',
                       fontSize: '13px',
                       fontWeight: '800',
-                      boxShadow: '0 6px 18px rgba(34, 197, 94, 0.25)',
+                      boxShadow: 'none',
                       marginLeft: item.offset,
                       width: '280px'
                     }}
@@ -628,7 +642,7 @@ export default function Roi({ siteData }) {
                       justifyContent: 'center',
                       fontWeight: '800',
                       fontSize: '12px',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.15)'
+                      boxShadow: 'none'
                     }}>
                       {item.num}
                     </span>
@@ -808,7 +822,7 @@ export default function Roi({ siteData }) {
                   fontWeight: '800',
                   padding: '6px 14px',
                   borderRadius: '30px',
-                  boxShadow: '0 4px 10px rgba(0, 174, 239, 0.3)',
+                  boxShadow: 'none',
                   border: '2.5px solid #ffffff',
                   fontFamily: "'Inter', sans-serif"
                 }}>
@@ -983,7 +997,7 @@ export default function Roi({ siteData }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+                    boxShadow: 'none',
                     zIndex: 2
                   }}>
                     <span style={{ color: '#38bdf8', fontSize: '20px', fontWeight: '900', lineHeight: 1 }}>✓</span>
@@ -1074,7 +1088,7 @@ export default function Roi({ siteData }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+                    boxShadow: 'none',
                     zIndex: 2
                   }}>
                     <span style={{ color: '#ef4444', fontSize: '18px', fontWeight: '900', lineHeight: 1 }}>✕</span>

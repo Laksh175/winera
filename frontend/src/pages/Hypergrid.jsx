@@ -6,18 +6,18 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
-import hypergridHeroBg from '../assets/hypergrid-hero-bg.png';
-import hypergridSupplierCollage from '../assets/hypergrid-supplier-collage.png';
-import hypergridBannerImg from '../assets/hypergrid-banner-img.png';
-import hypergridSpecsBg from '../assets/hypergrid-specs-bg.png';
-import hypergridWhyUsBg from '../assets/hypergrid-why-us-bg.png';
-import hypergridWhyUsLeft from '../assets/hypergrid-why-us-left.png';
-import hypergridImage from '../assets/hypergrid-image.png';
-import hypergridWineraLastblock from '../assets/hypergrid-winera-lastblock.png';
-import leftTiltedCard from '../assets/Left Tilted Card.png';
-import rightTiltedCard from '../assets/Right Tilted Card.png';
-import arImage from '../assets/AR-image.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
+import hypergridHeroBg from '../assets/hypergrid-hero-bg.webp';
+import hypergridSupplierCollage from '../assets/hypergrid-supplier-collage.webp';
+import hypergridBannerImg from '../assets/hypergrid-banner-img.webp';
+import hypergridSpecsBg from '../assets/hypergrid-specs-bg.webp';
+import hypergridWhyUsBg from '../assets/hypergrid-why-us-bg.webp';
+import hypergridWhyUsLeft from '../assets/hypergrid-why-us-left.webp';
+import hypergridImage from '../assets/hypergrid-image.webp';
+import hypergridWineraLastblock from '../assets/hypergrid-winera-lastblock.webp';
+import leftTiltedCard from '../assets/Left Tilted Card.webp';
+import rightTiltedCard from '../assets/Right Tilted Card.webp';
+import arImage from '../assets/AR-image.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
 const defaultHypergridWhyWineraItems = [
   {
@@ -113,10 +113,24 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
   });
 };
 
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
 export default function Hypergrid({ siteData }) {
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
-  const heroBgImage = siteData?.hypergridHero?.bgUrl || hypergridHeroBg;
+  const heroBgImage = getValidImageUrl(siteData?.hypergridHero?.bgUrl, hypergridHeroBg);
 
   // SEO Title & Meta Description update
   useEffect(() => {
@@ -188,7 +202,7 @@ export default function Hypergrid({ siteData }) {
           {/* Left Collage Graphic Column */}
           <div className="winera-hypergrid-supplier-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
-              src={siteData?.hypergridIntro?.mainImgUrl || hypergridSupplierCollage}
+              src={getValidImageUrl(siteData?.hypergridIntro?.mainImgUrl, hypergridSupplierCollage)}
               alt="Hypergrid Game Supplier in India"
               style={{
                 width: '100%',
@@ -271,7 +285,7 @@ export default function Hypergrid({ siteData }) {
           {/* Right Collage Graphic Column */}
           <div className="winera-hypergrid-banner-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
-              src={siteData?.hypergridBanner?.imgUrl || hypergridBannerImg}
+              src={getValidImageUrl(siteData?.hypergridBanner?.imgUrl, hypergridBannerImg)}
               alt="Interactive LED Floor Games for High-Footfall Venues"
               style={{
                 width: '100%',
@@ -292,71 +306,71 @@ export default function Hypergrid({ siteData }) {
           position: 'relative',
           borderRadius: '40px',
           overflow: 'hidden',
-          background: `url(${siteData?.hypergridSpecs?.bgUrl || hypergridSpecsBg}) center center / 100% 100% no-repeat`,
+          background: `url(${getValidImageUrl(siteData?.hypergridSpecs?.bgUrl, hypergridSpecsBg)}) center center / 100% 100% no-repeat`,
           boxShadow: '0 25px 60px rgba(0,0,0,0.25)',
-          padding: '50px 55px',
-          minHeight: '480px'
+          padding: '60px 60px 50px',
+          minHeight: '520px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between'
         }}>
-          {/* Inner Content Grid */}
-          <div style={{ maxWidth: '620px', position: 'relative', zIndex: 5 }}>
-            {/* Title with Yellow Stroke Line */}
-            <div style={{ position: 'relative', display: 'block', marginBottom: '28px' }}>
-              <img
-                src={yellowStrokeLine}
-                alt=""
-                style={{ display: 'block', maxWidth: '100%', width: '220px', height: '9px', marginBottom: '10px', objectFit: 'fill' }}
-              />
-              <h2 style={{ fontSize: '2.6rem', fontWeight: '900', color: '#ffffff', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.hypergridSpecs?.title, "*Technical* Specifications", '#ffcd00')}
-              </h2>
-            </div>
+          {/* Top Title: Technical Specifications */}
+          <div style={{ position: 'relative', display: 'inline-block', marginBottom: '35px' }}>
+            <img
+              src={yellowStrokeLine}
+              alt=""
+              style={{ display: 'block', maxWidth: '100%', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
+            />
+            <h2 style={{ fontSize: '3rem', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
+              {renderTitleMarkup(siteData?.hypergridSpecs?.title, "*Technical* Specifications", '#ffcd00')}
+            </h2>
+          </div>
 
-            {/* White Table Card with Yellow Border */}
-            <div className="winera-hypergrid-specs-card" style={{
-              background: '#ffffff',
-              borderRadius: '26px',
-              border: '2px solid #ffcd00',
-              padding: '28px 36px',
-              boxShadow: '0 20px 45px rgba(0, 0, 0, 0.25)',
-              marginBottom: '35px'
-            }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-                <thead>
-                  <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                    <th style={{ padding: '10px 0 16px', fontSize: '1.35rem', fontWeight: '800', color: '#0f172a', width: '45%' }}>Specification</th>
-                    <th style={{ padding: '10px 0 16px', fontSize: '1.35rem', fontWeight: '800', color: '#0f172a' }}>Details</th>
+          {/* Yellow Border Container for Table */}
+          <div className="winera-hypergrid-specs-table-wrapper" style={{
+            border: '2px solid #ffcd00',
+            borderRadius: '24px',
+            background: '#ffffff',
+            padding: '24px 30px',
+            maxWidth: '520px',
+            marginBottom: '35px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+          }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+                  <th style={{ textAlign: 'left', padding: '10px 12px 14px 0', fontSize: '1.25rem', fontWeight: '900', color: '#0f172a' }}>Specification</th>
+                  <th style={{ textAlign: 'left', padding: '10px 0 14px 12px', fontSize: '1.25rem', fontWeight: '900', color: '#0f172a' }}>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(siteData?.hypergridSpecs?.rows || [
+                  { spec: "Players", detail: "1 to 6 simultaneously" },
+                  { spec: "Game modes", detail: "5+ repeatable modes" },
+                  { spec: "Attendant required", detail: "No — fully self-operated" },
+                  { spec: "Minimum space required", detail: "200 sq ft onwards" },
+                  { spec: "Expected lifespan", detail: "8+ years — commercial grade" }
+                ]).map((row, idx) => (
+                  <tr key={idx} style={{ borderBottom: idx < 4 ? '1px solid #f1f5f9' : 'none' }}>
+                    <td style={{ padding: '12px 12px 12px 0', fontSize: '13px', fontWeight: '700', color: '#0f172a' }}>{row.spec}</td>
+                    <td style={{ padding: '12px 0 12px 12px', fontSize: '13px', fontWeight: '700', color: '#334155' }}>{row.detail}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {(siteData?.hypergridSpecs?.rows || [
-                    { spec: "Players", details: "1 to 6 simultaneously" },
-                    { spec: "Game modes", details: "5+ repeatable modes" },
-                    { spec: "Attendant required", details: "No — fully self-operated" },
-                    { spec: "Minimum space required", details: "200 sq ft onwards" },
-                    { spec: "Expected lifespan", details: "8+ years — commercial grade" }
-                  ]).map((row, idx, arr) => (
-                    <tr key={idx} style={{ borderBottom: idx < arr.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
-                      <td style={{ padding: '12px 0', fontSize: '13.5px', fontWeight: '500', color: '#334155' }}>{row.spec}</td>
-                      <td style={{ padding: '12px 0', fontSize: '13.5px', fontWeight: '500', color: '#334155' }}>{row.details}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-            {/* Action Button: Download Our Brochure with Yellow Offset Tab Backdrop Wrapper */}
-            <div>
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.hypergridSpecs?.buttonLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                {siteData?.hypergridSpecs?.buttonText || "Download Our Brochure"}
-              </a>
-            </div>
-            </div>
+          {/* Bottom CTA Button: Download Our Brochure */}
+          <div>
+            <a
+              href={siteData?.hypergridSpecs?.buttonLink || "https://wa.me/919428989488"}
+              target="_blank"
+              rel="noreferrer"
+              className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              style={{ padding: '12px 28px', fontSize: '13.5px' }}
+            >
+              {siteData?.hypergridSpecs?.buttonText || "Download Our Brochure"}
+            </a>
           </div>
         </div>
       </section>
@@ -366,7 +380,7 @@ export default function Hypergrid({ siteData }) {
         position: 'relative',
         width: '100%',
         padding: '80px 4vw',
-        background: `url(${siteData?.hypergridWhyUs?.bgUrl || hypergridWhyUsBg}) center center / 100% 100% no-repeat`,
+        background: `url(${getValidImageUrl(siteData?.hypergridWhyUs?.bgUrl, hypergridWhyUsBg)}) center center / 100% 100% no-repeat`,
         overflow: 'hidden'
       }}>
         <div className="winera-hypergrid-whyus-container" style={{
@@ -401,7 +415,7 @@ export default function Hypergrid({ siteData }) {
             {/* Left Graphic Image Column */}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <img
-                src={siteData?.hypergridWhyUs?.leftImgUrl || arImage}
+                src={getValidImageUrl(siteData?.hypergridWhyUs?.leftImgUrl, arImage)}
                 alt="What Makes Hypergrid the Right Choice for Your Venue"
                 style={{
                   width: '100%',
@@ -517,14 +531,13 @@ export default function Hypergrid({ siteData }) {
             {/* Right Graphic Image Column */}
             <div className="winera-hypergrid-roi-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '-20%' }}>
               <img
-                src={siteData?.hypergridRoi?.imgUrl || hypergridImage}
+                src={getValidImageUrl(siteData?.hypergridRoi?.imgUrl, hypergridImage)}
                 alt="Is Hypergrid a Smart Investment for Your Venue?"
                 style={{
                   width: '100%',
                   maxWidth: '380px',
                   maxHeight: '310px',
                   height: 'auto',
-                  objectFit: 'contain',
                   display: 'block'
                 }}
               />
@@ -534,63 +547,50 @@ export default function Hypergrid({ siteData }) {
       </section>
 
       {/* 8. WHY CHOOSE WINERA INTERNATIONAL SECTION */}
-      <section className="winera-hypergrid-why-winera" style={{ padding: '30px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
-        <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
-          {/* Header */}
-          <div style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 50px' }}>
+      <section className="winera-hypergrid-whywinera-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
+        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+          {/* Centered Heading with Yellow Accent */}
+          <div style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 60px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '9px', marginBottom: '12px', objectFit: 'fill' }}
+              style={{ display: 'inline-block', width: '280px', height: '9px', marginBottom: '12px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.hypergridWhyWinera?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>
 
-          {/* 6-Card Grid Layout Matching Figma / Uploaded Second Reference Image 1:1 */}
-          {(() => {
-            const cards = Array.isArray(siteData?.hypergridWhyWinera?.items) && siteData.hypergridWhyWinera.items.length > 0
-              ? siteData.hypergridWhyWinera.items
-              : defaultHypergridWhyWineraItems;
+          {/* 6 Cards Grid (Matching Figma 1:1) */}
+          <div style={{ position: 'relative', maxWidth: '1100px', margin: '0 auto' }}>
+            {(() => {
+              const cards = Array.isArray(siteData?.hypergridWhyWinera?.items) && siteData.hypergridWhyWinera.items.length > 0
+                ? siteData.hypergridWhyWinera.items
+                : defaultHypergridWhyWineraItems;
 
-            const topCards = cards.slice(0, 3);
-            const bottomCards = cards.slice(3);
-
-            return (
-              <div style={{ position: 'relative', maxWidth: '1120px', margin: '0 auto' }}>
-                {/* TOP ROW */}
-                <div className="winera-hypergrid-whyus-top-row" style={{
+              return (
+                <div style={{
                   display: 'grid',
-                  gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
-                  gap: '0px',
-                  position: 'relative',
-                  zIndex: 2
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                  gap: '30px'
                 }}>
-                  {topCards.map((item, idx) => (
+                  {cards.map((item, idx) => (
                     <div
                       key={idx}
+                      className="winera-whywinera-card-hover"
                       style={{
-                        padding: '36px 28px',
-                        textAlign: 'center',
+                        background: '#ffffff',
+                        borderRadius: '24px',
+                        padding: '36px 30px',
+                        boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
+                        border: '1px solid #f1f5f9',
+                        transition: 'all 0.3s ease',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        position: 'relative'
+                        textAlign: 'center'
                       }}
                     >
-                      {/* Right Vertical Divider Line */}
-                      {idx < topCards.length - 1 && (
-                        <div className="winera-hypergrid-whyus-vertical-divider" style={{
-                          position: 'absolute',
-                          right: 0,
-                          top: '20px',
-                          bottom: 0,
-                          width: '1.5px',
-                          background: 'linear-gradient(to bottom, rgba(56, 189, 248, 0) 0%, rgba(56, 189, 248, 0.85) 45%, rgba(56, 189, 248, 0.85) 100%)'
-                        }} />
-                      )}
-
                       {/* Cyan Icon Box with Rounded Corners and Soft Glow */}
                       <div style={{
                         width: '58px',
@@ -601,7 +601,7 @@ export default function Hypergrid({ siteData }) {
                         alignItems: 'center',
                         justifyContent: 'center',
                         marginBottom: '20px',
-                        boxShadow: '0 10px 24px rgba(56, 189, 248, 0.38)'
+                        boxShadow: 'none'
                       }}>
                         {renderWhyWineraIcon(item.icon, idx)}
                       </div>
@@ -623,106 +623,16 @@ export default function Hypergrid({ siteData }) {
                         fontWeight: '500',
                         color: '#64748b',
                         lineHeight: 1.55,
-                        margin: 0,
-                        maxWidth: '300px'
+                        margin: 0
                       }}>
                         {item.desc}
                       </p>
                     </div>
                   ))}
                 </div>
-
-                {/* Horizontal Center Cyan Divider Line with Shade Fading */}
-                {bottomCards.length > 0 && (
-                  <div className="winera-hypergrid-whyus-horizontal-divider" style={{
-                    width: '100%',
-                    height: '1.5px',
-                    background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, rgba(56, 189, 248, 0.85) 12%, rgba(56, 189, 248, 0.85) 88%, rgba(56, 189, 248, 0.08) 100%)',
-                    position: 'relative',
-                    zIndex: 3,
-                    margin: '0 0 10px'
-                  }}></div>
-                )}
-
-                {/* BOTTOM ROW */}
-                {bottomCards.length > 0 && (
-                  <div className="winera-hypergrid-whyus-bottom-row" style={{
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
-                    maxWidth: bottomCards.length <= 3 ? '780px' : '100%',
-                    margin: '0 auto',
-                    gap: '0px',
-                    position: 'relative',
-                    zIndex: 2
-                  }}>
-                    {bottomCards.map((item, idx) => (
-                      <div
-                        key={idx}
-                        style={{
-                          padding: '36px 28px',
-                          textAlign: 'center',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          position: 'relative'
-                        }}
-                      >
-                        {/* Right Vertical Divider Line */}
-                        {idx < bottomCards.length - 1 && (
-                          <div className="winera-hypergrid-whyus-vertical-divider" style={{
-                            position: 'absolute',
-                            right: 0,
-                            top: '-10px',
-                            bottom: '20px',
-                            width: '1.5px',
-                            background: 'linear-gradient(to bottom, rgba(56, 189, 248, 0.85) 0%, rgba(56, 189, 248, 0.85) 55%, rgba(56, 189, 248, 0) 100%)'
-                          }} />
-                        )}
-
-                        {/* Cyan Icon Box with Rounded Corners and Soft Glow */}
-                        <div style={{
-                          width: '58px',
-                          height: '58px',
-                          borderRadius: '18px',
-                          background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          marginBottom: '20px',
-                          boxShadow: '0 10px 24px rgba(56, 189, 248, 0.38)'
-                        }}>
-                          {renderWhyWineraIcon(item.icon, topCards.length + idx)}
-                        </div>
-
-                        {/* Card Title */}
-                        <h3 style={{
-                          fontSize: '1.25rem',
-                          fontWeight: '800',
-                          color: '#0f172a',
-                          margin: '0 0 10px 0',
-                          lineHeight: 1.3
-                        }}>
-                          {item.title}
-                        </h3>
-
-                        {/* Card Description Paragraph */}
-                        <p style={{
-                          fontSize: '13.5px',
-                          fontWeight: '500',
-                          color: '#64748b',
-                          lineHeight: 1.55,
-                          margin: 0,
-                          maxWidth: '300px'
-                        }}>
-                          {item.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })()}
+              );
+            })()}
+          </div>
         </div>
       </section>
 
@@ -860,13 +770,10 @@ export default function Hypergrid({ siteData }) {
               lineHeight: 1.2,
               marginBottom: '16px',
               textShadow: '0 4px 20px rgba(0,0,0,0.8)',
-              letterSpacing: '0.5px'
+              letterSpacing: '0.5px',
+              color: '#ffcd00'
             }}>
-              <span style={{ color: '#ffcd00' }}>READY TO ADD </span>
-              <span style={{ color: '#38bdf8' }}>HYPERGRID</span>
-              <br />
-              <span style={{ color: '#ffcd00' }}>TO YOUR </span>
-              <span style={{ color: '#38bdf8' }}>VENUE?</span>
+              {renderTitleMarkup(siteData?.hypergridCta?.title, "*READY TO ADD* HYPERGRID<br/>*TO YOUR* VENUE?", '#38bdf8')}
             </h2>
 
             <p style={{
@@ -879,9 +786,7 @@ export default function Hypergrid({ siteData }) {
               margin: '0 auto 26px',
               textShadow: '0 4px 15px rgba(0,0,0,0.8)'
             }}>
-              Get In Touch With India's Trusted Hypergrid Game Supplier For A Free
-              <br />
-              ROI Report, Space Assessment, And Project Quote.
+              {siteData?.hypergridCta?.subtitle || "Get In Touch With India's Trusted Hypergrid Game Supplier For A Free ROI Report, Space Assessment, And Project Quote."}
             </p>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
@@ -891,7 +796,7 @@ export default function Hypergrid({ siteData }) {
                 rel="noreferrer"
                 className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
               >
-                Talk to an ROI Expert
+                {siteData?.hypergridCta?.buttonText || "Talk to an ROI Expert"}
               </a>
             </div>
           </div>

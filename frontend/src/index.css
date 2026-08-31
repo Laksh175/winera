@@ -44,6 +44,22 @@ button {
   font-family: inherit;
 }
 
+/* ==========================================
+   GLOBAL STANDARDIZED SECTION & BLOCK SPACING
+   Balanced 70px Top & 75px Bottom Default Spacing
+   ========================================== */
+section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*="winera-partner-section"]):not([class*="winera-vr-hero-section"]):not([class*="winera-ar-hero-section"]):not([class*="winera-arcade-hero-section"]) {
+  padding-top: 70px;
+  padding-bottom: 75px;
+}
+
+@media (max-width: 768px) {
+  section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*="winera-partner-section"]):not([class*="winera-vr-hero-section"]):not([class*="winera-ar-hero-section"]):not([class*="winera-arcade-hero-section"]) {
+    padding-top: 40px;
+    padding-bottom: 50px;
+  }
+}
+
 /* Custom Shape Divider & Diagonal Cuts */
 .hero-clip-shape {
   clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 100%, 0 88%);
@@ -1027,17 +1043,40 @@ html {
   }
 
   .winera-desktop-products-grid {
-    display: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .winera-desktop-products-grid a {
+    padding: 10px !important;
+    border-radius: 18px !important;
+  }
+
+  .winera-desktop-products-grid a > div {
+    height: 130px !important;
+    border-radius: 14px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .winera-desktop-products-grid h4 {
+    font-size: 0.85rem !important;
+    min-height: 36px !important;
+    margin: 2px 0 4px !important;
   }
 
   .winera-mobile-single-product-card {
-    display: block !important;
-    width: 100% !important;
+    display: none !important;
   }
 
-  /* About Us */
-  .winera-desktop-pagination {
+  .winera-mobile-products-carousel-toolbar {
     display: none !important;
+  }
+
+  .winera-desktop-pagination {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 24px !important;
   }
 
   /* Contact Us Page Mobile Adjustments */
@@ -2461,13 +2500,13 @@ html {
   background: #ffcd00;
   border-radius: 18px;
   padding: 3px 4px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none !important;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .winera-cyan-cta-wrapper:hover {
   transform: translateY(-2.5px) scale(1.025);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+  box-shadow: none !important;
 }
 
 .winera-cyan-cta-btn {
@@ -2513,13 +2552,13 @@ html {
   background: #38bdf8;
   border-radius: 12px;
   padding: 0 0 4px 5px;
-  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: none !important;
+  transition: transform 0.25s ease;
 }
 
 .winera-white-cyan-cta-wrapper:hover {
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.35);
+  box-shadow: none !important;
 }
 
 .winera-white-cyan-cta-btn {
@@ -3610,7 +3649,7 @@ textarea::placeholder,
   border-radius: 50%;
   background: #28b4ee;
   border: none;
-  box-shadow: 0 4px 14px rgba(40, 180, 238, 0.35);
+  box-shadow: none !important;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -3624,7 +3663,7 @@ textarea::placeholder,
 .winera-zone-nav-btn:hover {
   background: #0284c7;
   transform: scale(1.12);
-  box-shadow: 0 6px 22px rgba(2, 132, 199, 0.55);
+  box-shadow: none !important;
 }
 
 .winera-zone-nav-btn:active {
@@ -4002,5 +4041,193 @@ img[src*="yellow-stroke-line"] {
     width: 27px !important;
     height: 27px !important;
     font-size: 11px !important;
+  }
+}
+
+/* Hero Section Padding so Breadcrumb is always 100% visible */
+.winera-arcade-hero-section {
+  padding-top: 175px !important;
+  padding-bottom: 50px !important;
+}
+
+/* Arrow Icon Visibility: Up/Down on Desktop, Left/Right on Mobile */
+.winera-arrow-up,
+.winera-arrow-down {
+  display: block !important;
+}
+.winera-arrow-left,
+.winera-arrow-right {
+  display: none !important;
+}
+
+/* Arcade Game Detail Responsive Layout Styles */
+@media (min-width: 1200px) {
+  .winera-arcade-specs-grid {
+    grid-template-columns: minmax(480px, 550px) 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+/* Medium / Tablet / 1024px Screens (<= 1199px) - Center Details Section */
+@media (max-width: 1199px) {
+  .winera-arcade-specs-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .winera-arcade-left-group {
+    width: 100% !important;
+    max-width: 580px !important;
+    margin: 0 auto !important;
+  }
+  .winera-arcade-main-card {
+    height: 420px !important;
+  }
+  .winera-arcade-thumb-column {
+    height: 420px !important;
+  }
+  .winera-arcade-thumb-box {
+    width: 76px !important;
+    height: 76px !important;
+  }
+  .winera-arcade-details-col {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding-left: 0 !important;
+    margin-top: 10px !important;
+    width: 100% !important;
+  }
+  .winera-arcade-details-col img {
+    margin: 0 auto 4px !important;
+  }
+  .winera-arcade-details-col h2 {
+    text-align: center !important;
+  }
+  .winera-arcade-banner-pill {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+  .winera-arcade-specs-list {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .winera-arcade-dim-container {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+  .winera-arcade-cta-row {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+  .winera-spec-details-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .winera-arcade-hero-section {
+    padding-top: 165px !important;
+    padding-bottom: 45px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .winera-arrow-up,
+  .winera-arrow-down {
+    display: none !important;
+  }
+  .winera-arrow-left,
+  .winera-arrow-right {
+    display: block !important;
+    width: 28px !important;
+    height: 28px !important;
+    color: #0284c7 !important;
+    flex-shrink: 0 !important;
+  }
+  .winera-arcade-hero-section {
+    padding-top: 140px !important;
+    padding-bottom: 35px !important;
+  }
+  .winera-arcade-hero-h1 {
+    font-size: 1.15rem !important;
+  }
+  .winera-arcade-specs-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+  .winera-arcade-left-group {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .winera-arcade-main-card {
+    order: 1 !important;
+    height: 270px !important;
+    width: 100% !important;
+  }
+  .winera-arcade-thumb-column {
+    order: 2 !important;
+    flex-direction: row !important;
+    height: auto !important;
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 0 !important;
+  }
+  .winera-arcade-thumb-inner {
+    flex-direction: row !important;
+    height: auto !important;
+    width: auto !important;
+    gap: 8px !important;
+  }
+  .winera-arcade-thumb-box {
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 14px !important;
+    flex-shrink: 0 !important;
+  }
+  .winera-arcade-details-col {
+    order: 3 !important;
+    padding-left: 0 !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .winera-arcade-details-col h2 {
+    font-size: 1.9rem !important;
+    text-align: center !important;
+  }
+  .winera-arcade-details-col img {
+    margin: 0 auto 4px !important;
+  }
+  .winera-arcade-banner-pill {
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: center !important;
+  }
+  .winera-arcade-specs-list {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .winera-arcade-dim-container {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+  .winera-arcade-dim-card {
+    width: 95px !important;
+  }
+  .winera-arcade-cta-row {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+  .winera-spec-details-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .winera-spec-detail-card-hover {
+    padding: 22px 18px !important;
   }
 }

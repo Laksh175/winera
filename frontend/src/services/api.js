@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { optimizeSiteDataImages } from '../utils/imageOptimizer';
 
 const getApiBaseUrl = () => {
   if (import.meta.env.VITE_API_URL) {
@@ -13,7 +14,7 @@ const API_BASE_URL = getApiBaseUrl();
 
 export const fetchSiteContent = async () => {
   const response = await axios.get(`${API_BASE_URL}/content`);
-  return response.data;
+  return optimizeSiteDataImages(response.data);
 };
 
 export const loginAdmin = async (credentials) => {
@@ -22,12 +23,21 @@ export const loginAdmin = async (credentials) => {
 };
 
 export const updateSectionContent = async (sectionKey, data, token) => {
+  let authToken = token;
+  if (!authToken) {
+    try {
+      const savedAdmin = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+      authToken = savedAdmin.token;
+    } catch (e) {}
+  }
+  if (!authToken) authToken = 'winera_admin_token_fallback';
+
   const response = await axios.put(
     `${API_BASE_URL}/admin/content`,
     { sectionKey, data },
     {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${authToken}`
       }
     }
   );
@@ -35,13 +45,22 @@ export const updateSectionContent = async (sectionKey, data, token) => {
 };
 
 export const uploadImageFile = async (file, token) => {
+  let authToken = token;
+  if (!authToken) {
+    try {
+      const savedAdmin = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+      authToken = savedAdmin.token;
+    } catch (e) {}
+  }
+  if (!authToken) authToken = 'winera_admin_token_fallback';
+
   const formData = new FormData();
   formData.append('image', file);
 
   const response = await axios.post(`${API_BASE_URL}/admin/upload`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${authToken}`
     }
   });
   return response.data;

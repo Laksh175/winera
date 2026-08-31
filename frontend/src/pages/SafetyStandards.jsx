@@ -2,22 +2,36 @@ import React, { useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { ShieldCheck } from 'lucide-react';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
-import safetyBg from '../assets/safety-bg.png';
-import safetyStandardImg1 from '../assets/safety-standard-img1.png';
-import safetyStandardBg2 from '../assets/safety-standard-bg-2.png';
-import safetyStandard2 from '../assets/safety-standard-2.png';
-import safetyStandardImg3 from '../assets/safety-standard-img3.png';
-import hypergridWineraLastblock from '../assets/hypergrid-winera-lastblock.png';
-import leftTiltedCard from '../assets/Left Tilted Card.png';
-import rightTiltedCard from '../assets/Right Tilted Card.png';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import safetyBg from '../assets/safety-bg.webp';
+import safetyStandardImg1 from '../assets/safety-standard-img1.webp';
+import safetyStandardBg2 from '../assets/safety-standard-bg-2.webp';
+import safetyStandard2 from '../assets/safety-standard-2.webp';
+import safetyStandardImg3 from '../assets/safety-standard-img3.webp';
+import hypergridWineraLastblock from '../assets/hypergrid-winera-lastblock.webp';
+import leftTiltedCard from '../assets/Left Tilted Card.webp';
+import rightTiltedCard from '../assets/Right Tilted Card.webp';
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
 
 export default function SafetyStandards({ siteData }) {
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
 
-  const bgImage = siteData?.safetyHero?.bgUrl || safetyBg;
-  const introImg = siteData?.safetyIntro?.mainImgUrl || safetyStandardImg1;
+  const bgImage = getValidImageUrl(siteData?.safetyHero?.bgUrl, safetyBg);
+  const introImg = getValidImageUrl(siteData?.safetyIntro?.mainImgUrl, safetyStandardImg1);
 
   useEffect(() => {
     document.title = siteData?.safetySeo?.pageTitle || "Where Game Zone Safety Comes First | Winera International";
@@ -215,7 +229,7 @@ export default function SafetyStandards({ siteData }) {
                     borderRadius: '18px',
                     padding: '30px 32px',
                     textAlign: 'center',
-                    boxShadow: '0 8px 24px rgba(0, 174, 239, 0.08)'
+                    boxShadow: 'none'
                   }}
                 >
                   <h3 style={{
@@ -319,7 +333,7 @@ export default function SafetyStandards({ siteData }) {
                   padding: '20px 28px',
                   textAlign: 'left',
                   width: '100%',
-                  boxShadow: '0 8px 24px rgba(0, 174, 239, 0.08)'
+                  boxShadow: 'none'
                 }}>
                   <h3 style={{
                     fontSize: '1.1rem',
@@ -348,7 +362,7 @@ export default function SafetyStandards({ siteData }) {
             {/* Right 3D Shield Collage Image */}
             <div className="winera-safety-material-img">
               <img
-                src={siteData?.safetyMaterials?.imgUrl || safetyStandard2}
+                src={getValidImageUrl(siteData?.safetyMaterials?.imgUrl, safetyStandard2)}
                 alt="Material & Fire Safety"
               />
             </div>
@@ -479,7 +493,7 @@ export default function SafetyStandards({ siteData }) {
             {/* Right Graphic Image */}
             <div className="winera-safety-electrical-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <img
-                src={siteData?.safetyElectrical?.imgUrl || safetyStandardImg3}
+                src={getValidImageUrl(siteData?.safetyElectrical?.imgUrl, safetyStandardImg3)}
                 alt="Electrical & Machine Safety"
                 style={{
                   width: '100%',
@@ -687,8 +701,8 @@ export default function SafetyStandards({ siteData }) {
               lineHeight: 1.2,
               textAlign: 'center'
             }}>
-              <span style={{ color: '#38bdf8' }}>{siteData?.safetyWhyMatters?.title1 || "Why This Matters "}</span>
-              <span style={{ color: '#0f172a' }}>{siteData?.safetyWhyMatters?.title2 || "for Your Business"}</span>
+              <span style={{ color: '#38bdf8' }}>{(siteData?.safetyWhyMatters?.title1 || "Why This Matters").trim()}{' '}</span>
+              <span style={{ color: '#0f172a' }}>{(siteData?.safetyWhyMatters?.title2 || "for Your Business").trim()}</span>
             </h2>
             <p style={{
               fontSize: '14.5px',

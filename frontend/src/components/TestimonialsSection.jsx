@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Star, Play } from 'lucide-react';
+import { useVideoModal } from '../context/VideoModalContext';
 import SectionHeading from './SectionHeading';
-import testiOwner from '../assets/testi-owner.png';
-import projHulaboo from '../assets/proj-hulaboo.png';
-import projNeon1 from '../assets/proj-neonpanda1.png';
+import testiOwner from '../assets/testi-owner.webp';
+import projHulaboo from '../assets/proj-hulaboo.webp';
+import projNeon1 from '../assets/proj-neonpanda1.webp';
 
 const defaultTestimonials = [
   {
@@ -42,6 +43,7 @@ export default function TestimonialsSection({
 }) {
   const list = Array.isArray(testimonials) && testimonials.length > 0 ? testimonials : defaultTestimonials;
   const [activeIndex, setActiveIndex] = useState(0);
+  const { openVideoModal } = useVideoModal();
   const currentItem = list[activeIndex % list.length] || defaultTestimonials[0];
 
   // Extract YouTube video ID to fetch official HQ thumbnail
@@ -60,7 +62,7 @@ export default function TestimonialsSection({
   const goPrev = () => setActiveIndex((prev) => (prev > 0 ? prev - 1 : list.length - 1));
 
   return (
-    <section id={id} style={{ padding: '40px 4vw 40px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+    <section id={id} style={{ padding: '70px 4vw 35px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         <SectionHeading marginBottom="10px">
           {(() => {
@@ -230,12 +232,10 @@ export default function TestimonialsSection({
                 position: 'relative',
                 background: `url(${videoThumbnail}) center/cover no-repeat`
               }}>
-                <a
-                  href={currentItem.youtubeVideoUrl || "https://www.youtube.com"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Watch Review Video on YouTube"
-                  title="Watch Review Video on YouTube"
+                <button
+                  onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}
+                  aria-label="Watch Review Video"
+                  title="Watch Review Video"
                   style={{
                     position: 'absolute',
                     inset: 0,
@@ -243,7 +243,10 @@ export default function TestimonialsSection({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    textDecoration: 'none'
+                    border: 'none',
+                    cursor: 'pointer',
+                    width: '100%',
+                    height: '100%'
                   }}
                 >
                   <div style={{
@@ -259,7 +262,7 @@ export default function TestimonialsSection({
                   }}>
                     <Play style={{ width: '22px', height: '22px', color: '#000000', fill: '#000000', marginLeft: '3px' }} />
                   </div>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -350,11 +353,9 @@ export default function TestimonialsSection({
               background: `url(${videoThumbnail}) center/cover no-repeat`,
               aspectRatio: '16/9'
             }}>
-              <a
-                href={currentItem.youtubeVideoUrl || "https://www.youtube.com"}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Watch Review Video on YouTube"
+              <button
+                onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}
+                title="Watch Review Video"
                 style={{
                   position: 'absolute',
                   inset: 0,
@@ -362,7 +363,10 @@ export default function TestimonialsSection({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  textDecoration: 'none'
+                  border: 'none',
+                  cursor: 'pointer',
+                  width: '100%',
+                  height: '100%'
                 }}
               >
                 <div style={{
@@ -377,7 +381,7 @@ export default function TestimonialsSection({
                 }}>
                   <Play style={{ width: '20px', height: '20px', color: '#000000', fill: '#000000', marginLeft: '3px' }} />
                 </div>
-              </a>
+              </button>
             </div>
           </div>
 

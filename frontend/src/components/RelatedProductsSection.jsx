@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import SectionHeading from './SectionHeading';
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 
-import ctaArcade from '../assets/cta-arcade.png';
-import projNeon1 from '../assets/proj-neonpanda1.png';
-import projSoft1 from '../assets/proj-softplay1.png';
+import ctaArcade from '../assets/cta-arcade.webp';
+import projNeon1 from '../assets/proj-neonpanda1.webp';
+import projSoft1 from '../assets/proj-softplay1.webp';
 
 export default function RelatedProductsSection({ sectionData, accentColor = '#38bdf8' }) {
   const defaultCategories = [
@@ -64,10 +64,10 @@ export default function RelatedProductsSection({ sectionData, accentColor = '#38
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       className="winera-related-section"
-      style={{ padding: '90px 4vw 110px', background: '#F5F5F9', textAlign: 'center' }}
+      style={{ padding: '35px 4vw 35px', background: '#F5F5F9', textAlign: 'center' }}
     >
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-        <SectionHeading marginBottom="50px" accentWidth="65%" accentMaxWidth="400px">
+        <SectionHeading marginBottom="40px" accentWidth="220px" accentMaxWidth="260px">
           {(() => {
             const rawTitle = sectionData?.title || "*Related* Products";
             const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);

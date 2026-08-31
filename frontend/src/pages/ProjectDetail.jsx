@@ -4,24 +4,41 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
-import projectBanner from '../assets/project-banner.png';
-import projectImage01 from '../assets/project-image01.png';
-import projectImage2Bg from '../assets/project-image2-bg.png';
-import projectImage3 from '../assets/project-image-3.png';
-import projectImage4 from '../assets/project-image-4.png';
-import projectImagesBg from '../assets/project-images-bg.png';
-import projectBlock1 from '../assets/project-block1.png';
-import projectBlock2 from '../assets/project-block2.png';
-import projectBlock3 from '../assets/project-block3.png';
-import projectSectionVideo from '../assets/project-section-video.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
+import projectBanner from '../assets/project-banner.webp';
+import projectImage01 from '../assets/project-image01.webp';
+import projectImage2Bg from '../assets/project-image2-bg.webp';
+import projectImage3 from '../assets/project-image-3.webp';
+import projectImage4 from '../assets/project-image-4.webp';
+import projectImagesBg from '../assets/project-images-bg.webp';
+import projectBlock1 from '../assets/project-block1.webp';
+import projectBlock2 from '../assets/project-block2.webp';
+import projectBlock3 from '../assets/project-block3.webp';
+import projectSectionVideo from '../assets/project-section-video.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import CtaBanner from '../components/CtaBanner';
-import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.png';
-import projHulaboo from '../assets/proj-hulaboo.png';
-import projNeon1 from '../assets/proj-neonpanda1.png';
-import projSoft1 from '../assets/proj-softplay1.png';
+import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
+import projHulaboo from '../assets/proj-hulaboo.webp';
+import projNeon1 from '../assets/proj-neonpanda1.webp';
+import projSoft1 from '../assets/proj-softplay1.webp';
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
+import { useVideoModal } from '../context/VideoModalContext';
 
 export default function ProjectDetail({ siteData }) {
+  const { openVideoModal } = useVideoModal();
   const { slug } = useParams();
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
@@ -171,9 +188,9 @@ export default function ProjectDetail({ siteData }) {
     clientWanted2: cmsItem.clientWanted2 || defaultProject.clientWanted2,
     solution1: cmsItem.solution1 || defaultProject.solution1,
     solution2: cmsItem.solution2 || defaultProject.solution2,
-    mainImg: cmsItem.img || cmsItem.imageUrl || defaultProject.mainImg,
-    clientImg: cmsItem.clientImg || cmsItem.clientImageUrl || defaultProject.clientImg,
-    solutionImg: cmsItem.solutionImg || cmsItem.solutionImageUrl || defaultProject.solutionImg,
+    mainImg: getValidImageUrl(cmsItem.img || cmsItem.imageUrl, defaultProject.mainImg),
+    clientImg: getValidImageUrl(cmsItem.clientImg || cmsItem.clientImageUrl, defaultProject.clientImg),
+    solutionImg: getValidImageUrl(cmsItem.solutionImg || cmsItem.solutionImageUrl, defaultProject.solutionImg),
     galleryImages: [
       cmsItem.galleryImage1,
       cmsItem.galleryImage2,
@@ -192,7 +209,7 @@ export default function ProjectDetail({ siteData }) {
   const galleryData = siteData?.projectGallery || {};
   const videoData = siteData?.projectVideo || {};
 
-  const bannerImg = heroData.bannerImg || projectBanner;
+  const bannerImg = getValidImageUrl(heroData.bannerImg, projectBanner);
   const breadcrumbHome = heroData.breadcrumbHome || 'Home';
 
   const strokeImg = yellowStrokeLine;
@@ -205,7 +222,7 @@ export default function ProjectDetail({ siteData }) {
   const buttonLink = 'https://wa.me/919428989488';
   const mainImage = currentProject.mainImg;
 
-  const basicBg = basicData.bgImg || projectImage2Bg;
+  const basicBg = getValidImageUrl(basicData.bgImg, projectImage2Bg);
   const basicRows = [
     { label: 'Project Name', val: currentProject.name },
     { label: 'Project Type', val: currentProject.type },
@@ -227,19 +244,25 @@ export default function ProjectDetail({ siteData }) {
 
   const galleryTitleCyan = 'Project ';
   const galleryTitleDark = 'Gallery';
-  const galleryBg = galleryData.bgImg || projectImagesBg;
-
-  const cmsGalleryImages = Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0 ? currentProject.galleryImages : null;
-  const galleryImages = cmsGalleryImages || (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : [
+  const galleryBg = getValidImageUrl(galleryData.bgImg, projectImagesBg);
+  const defaultGalleryList = [
     projectBlock1,
     projectBlock2,
     projectBlock3,
     projectBlock1,
     projectBlock2,
     projectBlock3
-  ]);
+  ];
 
-  const videoImg = currentProject.videoImg || videoData.image || projectSectionVideo;
+  const cmsGalleryImages = Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0
+    ? currentProject.galleryImages
+    : (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : defaultGalleryList);
+
+  const galleryImages = cmsGalleryImages.map((imgUrl, idx) => {
+    return getValidImageUrl(imgUrl, defaultGalleryList[idx % defaultGalleryList.length]);
+  });
+
+  const videoImg = getValidImageUrl(currentProject.videoImg || videoData.image, projectSectionVideo);
   const videoLink = currentProject.videoUrl || videoData.videoUrl || siteData?.header?.whatsAppUrl || 'https://wa.me/919428989488';
 
   // Set page title and meta description for SEO
@@ -390,13 +413,13 @@ export default function ProjectDetail({ siteData }) {
             }}>
               <div className="winera-project-frame-bg" style={{
                 position: 'absolute',
-                top: '-35px',
-                right: '-35px',
-                bottom: '35px',
-                left: '35px',
+                top: '-15px',
+                right: '-15px',
+                bottom: '15px',
+                left: '15px',
                 border: '2px solid #38bdf8',
-                borderRadius: '22px',
-                background: '#F0F7FF',
+                borderRadius: '24px',
+                background: 'rgba(56, 189, 248, 0.08)',
                 zIndex: 1,
                 pointerEvents: 'none'
               }}></div>
@@ -407,7 +430,7 @@ export default function ProjectDetail({ siteData }) {
                 style={{
                   width: '100%',
                   height: '100%',
-                  borderRadius: '0px',
+                  borderRadius: '20px',
                   display: 'block',
                   position: 'relative',
                   zIndex: 2,
@@ -666,17 +689,17 @@ export default function ProjectDetail({ siteData }) {
 
       {/* 7. PROJECT VIDEO SHOWCASE SECTION */}
       <section style={{ padding: '60px 4vw 90px', maxWidth: '1060px', margin: '0 auto', textAlign: 'center' }}>
-        <a
-          href={videoLink}
-          target="_blank"
-          rel="noreferrer"
+        <button
+          onClick={() => openVideoModal(videoLink, `${currentProject.name} Showcase`)}
           style={{
             display: 'block',
             position: 'relative',
             width: '100%',
             borderRadius: '28px',
             overflow: 'hidden',
-            boxShadow: '0 20px 45px rgba(0,0,0,0.15)',
+            boxShadow: 'none',
+            border: 'none',
+            padding: 0,
             cursor: 'pointer'
           }}
         >
@@ -685,7 +708,7 @@ export default function ProjectDetail({ siteData }) {
             alt="Project Showcase Video"
             style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '28px' }}
           />
-        </a>
+        </button>
       </section>
 
       {/* 8. OUR RECENT PROJECTS MARQUEE */}

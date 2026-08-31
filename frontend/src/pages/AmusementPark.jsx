@@ -6,15 +6,15 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import amusementHeroBg from '../assets/amusement-hero-bg.png';
-import amusementSupplierCollage from '../assets/amusement-supplier-collage.png';
-import amusementSetupsCollage from '../assets/amusement-setups-collage.png';
-import amusementOptionsBg from '../assets/amusement-options-bg.png';
-import amusementOptionsTopCollage from '../assets/amusement-options-top-collage.png';
-import amusementOptionsBottomImg from '../assets/amusement-options-bottom-img.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
-import ctaConsultationsBanner from '../assets/cta-consultations-banner.png';
-import amusementParkLastImage from '../assets/amusement-park-lastImage.png';
+import amusementHeroBg from '../assets/amusement-hero-bg.webp';
+import amusementSupplierCollage from '../assets/amusement-supplier-collage.webp';
+import amusementSetupsCollage from '../assets/amusement-setups-collage.webp';
+import amusementOptionsBg from '../assets/amusement-options-bg.webp';
+import amusementOptionsTopCollage from '../assets/amusement-options-top-collage.webp';
+import amusementOptionsBottomImg from '../assets/amusement-options-bottom-img.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
+import amusementParkLastImage from '../assets/amusement-park-lastImage.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -41,6 +41,51 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
     return <React.Fragment key={pIdx}>{renderedContent}</React.Fragment>;
   });
 };
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
+const defaultAmusementFaqs = [
+  {
+    q: "Who is a reliable amusement park manufacturer in India?",
+    a: "Winera International is a direct amusement park manufacturer in India, supplying and installing rides and equipment for theme parks, malls, and family entertainment centres since 2014 installed across 50+ cities by our own team."
+  },
+  {
+    q: "What is the cost of setting up an amusement park in India?",
+    a: "Amusement park setup cost in India depends on land size, number of rides, ride category, and customisation. Winera provides a complete cost breakdown, installation, and maintenance before confirming any project."
+  },
+  {
+    q: "What safety standards do Winera's amusement park rides meet?",
+    a: "Every ride is built with load-rated restraints, sensor-based safety stops, and commercial-grade structural materials, then tested on-site before handover."
+  },
+  {
+    q: "How much land is needed to start an amusement park in India?",
+    a: "Land requirements vary significantly by ride mix and target capacity Winera's team assesses your available space and recommends an attraction layout that fits it."
+  },
+  {
+    q: "Which businesses typically work with an amusement park equipment manufacturer in India?",
+    a: "Theme parks, malls, resorts, family entertainment centres, and tourism developments are the most common buyers of amusement park equipment in India."
+  },
+  {
+    q: "How long does amusement park ride installation take?",
+    a: "Timelines depend on ride complexity and project scale. Winera confirms an exact schedule covering manufacturing, delivery, and installation at the quote stage."
+  },
+  {
+    q: "What after-sales support does Winera provide for amusement park rides?",
+    a: "Winera provides ongoing maintenance, spare parts, and on-site servicing support for all rides and equipment installed available directly through our after-sales team."
+  }
+];
 
 export default function AmusementPark({ siteData }) {
   useEffect(() => {
@@ -69,7 +114,7 @@ export default function AmusementPark({ siteData }) {
   }
 
   const { header, footer } = siteData;
-  const heroBgImage = siteData?.amusementHero?.bgUrl || amusementHeroBg;
+  const heroBgImage = getValidImageUrl(siteData?.amusementHero?.bgUrl, amusementHeroBg);
 
   const defaultRideItems = [
     { boldText: "Thrill Rides", desc: "For Teens And Adults Chasing Excitement" },
@@ -181,7 +226,7 @@ export default function AmusementPark({ siteData }) {
           {/* Left Collage Graphic Column */}
           <div className="winera-amusement-supplier-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
-              src={siteData?.amusementIntro?.mainImgUrl || amusementSupplierCollage}
+              src={getValidImageUrl(siteData?.amusementIntro?.mainImgUrl || siteData?.amusementIntro?.imgUrl, amusementSupplierCollage)}
               alt="Amusement Park Ride Manufacturer in India"
               style={{
                 width: '100%',
@@ -264,7 +309,7 @@ export default function AmusementPark({ siteData }) {
           {/* Right Collage Graphic Column */}
           <div className="winera-amusement-banner-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
-              src={siteData?.amusementBanner?.imgUrl || amusementSetupsCollage}
+              src={getValidImageUrl(siteData?.amusementBanner?.imgUrl, amusementSetupsCollage)}
               alt="Complete Amusement Park Setups Built for Indian Venues"
               style={{
                 width: '100%',
@@ -281,7 +326,7 @@ export default function AmusementPark({ siteData }) {
       <section className="winera-amusement-options-section" style={{
         width: '100%',
         padding: '70px 4vw 90px',
-        background: `url(${amusementOptionsBg}) center top / 100% 100% no-repeat`,
+        background: `url(${getValidImageUrl(siteData?.amusementOptions?.bgUrl, amusementOptionsBg)}) center top / 100% 100% no-repeat`,
         overflow: 'hidden'
       }}>
         <div className="winera-amusement-options-container" style={{
@@ -336,7 +381,7 @@ export default function AmusementPark({ siteData }) {
             {/* Right Collage Image Column */}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <img
-                src={siteData?.amusementOptions?.topImgUrl || amusementOptionsTopCollage}
+                src={getValidImageUrl(siteData?.amusementOptions?.topImgUrl || siteData?.amusementOptions?.imgUrl, amusementOptionsTopCollage)}
                 alt="Rides and Attractions We Supply"
                 style={{ width: '100%', maxWidth: '520px', height: 'auto', display: 'block' }}
               />
@@ -353,7 +398,7 @@ export default function AmusementPark({ siteData }) {
             {/* Left Image Column */}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <img
-                src={siteData?.amusementRoi?.bottomImgUrl || amusementOptionsBottomImg}
+                src={getValidImageUrl(siteData?.amusementRoi?.bottomImgUrl || siteData?.amusementRoi?.imgUrl, amusementOptionsBottomImg)}
                 alt="Before You Build Know What It Will Earn"
                 style={{ width: '100%', maxWidth: '520px', height: 'auto', display: 'block' }}
               />
@@ -373,11 +418,11 @@ export default function AmusementPark({ siteData }) {
               </div>
 
               <p style={{ fontSize: '13px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '16px' }}>
-                {siteData?.amusementRoi?.paragraph1 || "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins."}
+                {siteData?.amusementRoi?.paragraph1 || "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline."}
               </p>
 
               <p style={{ fontSize: '13px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '26px' }}>
-                {siteData?.amusementRoi?.paragraph2 || "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline."}
+                {siteData?.amusementRoi?.paragraph2 || "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins."}
               </p>
 
               {/* Action Button: Talk to an ROI Expert */}
@@ -478,7 +523,7 @@ export default function AmusementPark({ siteData }) {
                       alignItems: 'center',
                       justifyContent: 'center',
                       marginBottom: '16px',
-                      boxShadow: '0 8px 18px rgba(56, 189, 248, 0.3)'
+                      boxShadow: 'none'
                     }}>
                       {card.iconUrl ? (
                         <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
@@ -554,7 +599,7 @@ export default function AmusementPark({ siteData }) {
                         alignItems: 'center',
                         justifyContent: 'center',
                         marginBottom: '16px',
-                        boxShadow: '0 8px 18px rgba(56, 189, 248, 0.3)'
+                        boxShadow: 'none'
                       }}>
                         {card.iconUrl ? (
                           <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
@@ -585,7 +630,7 @@ export default function AmusementPark({ siteData }) {
       />
       <TestimonialsSection siteData={siteData} />
       <RelatedProductsSection sectionData={siteData?.amusementRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
-      <FaqSection faqsList={siteData?.amusementFaqs || siteData?.faqs || defaultAmusementFaqs} highlightColor="#38bdf8" />
+      <FaqSection faqsList={(Array.isArray(siteData?.amusementFaqs) && siteData.amusementFaqs.length >= 7) ? siteData.amusementFaqs : defaultAmusementFaqs} highlightColor="#38bdf8" />
 
       {/* CTA GRAPHIC BANNER IMAGE */}
       <section style={{ padding: '60px 4vw', background: '#F5F5F9', display: 'flex', justifyContent: 'center' }}>
@@ -597,7 +642,7 @@ export default function AmusementPark({ siteData }) {
             style={{ display: 'block', width: '100%', position: 'relative' }}
           >
             <img
-              src={siteData?.amusementCta?.bgUrl || amusementParkLastImage}
+              src={getValidImageUrl(siteData?.amusementCta?.bgUrl || siteData?.amusementCta?.imgUrl, amusementParkLastImage)}
               alt="Need Any Consultations - Amusement Park"
               style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '24px' }}
             />

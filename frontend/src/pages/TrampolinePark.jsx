@@ -6,18 +6,18 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import trampolineParkBg from '../assets/trampoline-park-bg.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
-import ctaConsultationsBanner from '../assets/cta-consultations-banner.png';
-import qualityBadge from '../assets/quality-badge.png';
-import projNeonPanda from '../assets/proj-neonpanda1.png';
-import trampolineParkImg1 from '../assets/trampoline-park-img1.png';
-import trampolineParkImg2 from '../assets/trampoline-park-img-2.png';
-import trampolineImg3 from '../assets/trampoline-img-3.png';
-import tampolineImg4 from '../assets/tampoline-img-4.png';
-import tampolineImg5 from '../assets/tampoline-img-5.png';
-import tampolineImage6 from '../assets/tampoline-image-6.png';
-import tampolineImage7 from '../assets/tampoline-image-7.png';
+import trampolineParkBg from '../assets/trampoline-park-bg.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
+import qualityBadge from '../assets/quality-badge.webp';
+import projNeonPanda from '../assets/proj-neonpanda1.webp';
+import trampolineParkImg1 from '../assets/trampoline-park-img1.webp';
+import trampolineParkImg2 from '../assets/trampoline-park-img-2.webp';
+import trampolineImg3 from '../assets/trampoline-img-3.webp';
+import tampolineImg4 from '../assets/tampoline-img-4.webp';
+import tampolineImg5 from '../assets/tampoline-img-5.webp';
+import tampolineImage6 from '../assets/tampoline-image-6.webp';
+import tampolineImage7 from '../assets/tampoline-image-7.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -70,7 +70,7 @@ export default function TrampolinePark({ siteData }) {
 
   const bgImage = siteData?.trampolineHero?.bgUrl || trampolineParkBg;
 
-  const customParkZones = [
+  const defaultParkZones = [
     {
       id: "free-jump",
       title: "Free Jump Zones",
@@ -120,6 +120,16 @@ export default function TrampolinePark({ siteData }) {
       img: tampolineImg5
     }
   ];
+
+  const cmsInsideZones = siteData?.trampolineInside?.zones || siteData?.trampolineInside?.items;
+  const customParkZones = (Array.isArray(cmsInsideZones) && cmsInsideZones.length > 0)
+    ? cmsInsideZones.map((z, idx) => ({
+        id: z.id || `zone-${idx}`,
+        title: z.name || z.title || z.tabName || `Zone ${idx + 1}`,
+        desc: z.desc || z.description || '',
+        img: z.img || z.imageUrl || tampolineImg5
+      }))
+    : defaultParkZones;
 
   const handlePrevZone = () => {
     setActiveZoneIndex((prev) => (prev === 0 ? customParkZones.length - 1 : prev - 1));
@@ -369,7 +379,7 @@ export default function TrampolinePark({ siteData }) {
       <section className="winera-trampoline-specs-section" style={{ padding: '30px 4vw 75px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           
-          {/* Main Card Wrapper with trampoline-img-3.png Background */}
+          {/* Main Card Wrapper with trampoline-img-3.webp Background */}
           <div className="winera-trampoline-specs-card" style={{
             position: 'relative',
             width: '100%',
@@ -403,7 +413,8 @@ export default function TrampolinePark({ siteData }) {
                 borderRadius: '24px',
                 padding: '24px 28px',
                 boxShadow: '0 12px 35px rgba(0, 0, 0, 0.15)',
-                width: '100%'
+                width: '100%',
+                marginBottom: '28px'
               }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
@@ -442,7 +453,7 @@ export default function TrampolinePark({ siteData }) {
                 </table>
               </div>
 
-              <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+              <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm" style={{ marginTop: '24px' }}>
                 <a
                   href={siteData?.trampolineSpecs?.buttonLink || siteData?.trampolineSpecs?.brochureLink || siteData?.trampolineIntro?.buttonLink || "https://wa.me/919428989488"}
                   target="_blank"
@@ -464,7 +475,7 @@ export default function TrampolinePark({ siteData }) {
         overflow: 'hidden',
         width: '100%'
       }}>
-        {/* Outer Frame Container with tampoline-img-4.png Full 100% Width Edge-to-Edge Background */}
+        {/* Outer Frame Container with tampoline-img-4.webp Full 100% Width Edge-to-Edge Background */}
         <div className="winera-trampoline-inside-frame" style={{
           position: 'relative',
           width: '100%',
@@ -515,7 +526,7 @@ export default function TrampolinePark({ siteData }) {
                 backdropFilter: 'blur(10px)',
                 borderRadius: '0px',
                 border: 'none',
-                boxShadow: '0px 12px 35px rgba(0, 130, 200, 0.38), 0px 4px 15px rgba(0, 80, 140, 0.25)',
+                boxShadow: 'none',
                 padding: '35px 45px',
                 gap: '45px',
                 display: 'grid',
@@ -737,7 +748,7 @@ export default function TrampolinePark({ siteData }) {
                         height: '50px',
                         borderRadius: '14px',
                         background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                        boxShadow: '0 6px 16px rgba(56, 189, 248, 0.3)',
+                        boxShadow: 'none',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -793,7 +804,7 @@ export default function TrampolinePark({ siteData }) {
                           height: '50px',
                           borderRadius: '14px',
                           background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                          boxShadow: '0 6px 16px rgba(56, 189, 248, 0.3)',
+                          boxShadow: 'none',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',

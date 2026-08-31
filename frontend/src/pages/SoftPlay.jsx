@@ -7,23 +7,23 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import needConsultationsBg from '../assets/need-consultations-bg.png';
-import ctaSoftplayBg from '../assets/cta-softplay-bg.png';
-import softplayHeroBg from '../assets/softplay-hero-bg.png';
-import logoImg from '../assets/logo.png';
-import about1 from '../assets/about-1.png';
-import about2 from '../assets/about-2.png';
-import about3 from '../assets/about-3.png';
-import about4 from '../assets/about-4.png';
-import projSoft1 from '../assets/proj-softplay1.png';
-import softplayCastle3d from '../assets/softplay-castle-3d.png';
-import softplaySpecsBg from '../assets/softplay-specs-bg.png';
-import softplayMaterialsBg from '../assets/softplay-materials-bg.png';
-import softplayRoiBg from '../assets/softplay-roi-bg.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
-import softPlayImg from '../assets/soft-play.png';
-import allImg from '../assets/all.png';
-import groupImg from '../assets/group-image.png';
+import needConsultationsBg from '../assets/need-consultations-bg.webp';
+import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
+import softplayHeroBg from '../assets/softplay-hero-bg.webp';
+import logoImg from '../assets/logo.webp';
+import about1 from '../assets/about-1.webp';
+import about2 from '../assets/about-2.webp';
+import about3 from '../assets/about-3.webp';
+import about4 from '../assets/about-4.webp';
+import projSoft1 from '../assets/proj-softplay1.webp';
+import softplayCastle3d from '../assets/softplay-castle-3d.webp';
+import softplaySpecsBg from '../assets/softplay-specs-bg.webp';
+import softplayMaterialsBg from '../assets/softplay-materials-bg.webp';
+import softplayRoiBg from '../assets/softplay-roi-bg.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import softPlayImg from '../assets/soft-play.webp';
+import allImg from '../assets/all.webp';
+import groupImg from '../assets/group-image.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -53,7 +53,24 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
   });
 };
 
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
+import { useVideoModal } from '../context/VideoModalContext';
+
 export default function SoftPlay({ siteData }) {
+  const { openVideoModal } = useVideoModal();
   const softplaySeo = siteData?.softplaySeo || {
     pageTitle: "Top Soft Play Equipment Manufacturers in India | Winera International",
     metaDescription: "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget."
@@ -130,10 +147,15 @@ export default function SoftPlay({ siteData }) {
             <img
               src={softPlayImg}
               alt="Indoor Soft Play Equipment Manufacturer"
+              loading="lazy"
+              decoding="async"
+              width={540}
+              height={360}
               style={{
                 width: '100%',
                 maxWidth: '540px',
                 height: 'auto',
+                aspectRatio: '540 / 360',
                 objectFit: 'contain',
                 display: 'block'
               }}
@@ -147,6 +169,9 @@ export default function SoftPlay({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
+                aria-hidden="true"
+                width={320}
+                height={10}
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
@@ -189,6 +214,9 @@ export default function SoftPlay({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
+                aria-hidden="true"
+                width={320}
+                height={10}
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '2.7rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
@@ -205,14 +233,13 @@ export default function SoftPlay({ siteData }) {
             </p>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.softplayManufacture?.videoUrl || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
+              <button
+                onClick={() => openVideoModal(siteData?.softplayManufacture?.videoUrl, "Soft Play Equipment Showcase")}
                 className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                style={{ border: 'none', cursor: 'pointer' }}
               >
                 {siteData?.softplayManufacture?.btnText || "Watch Video"}
-              </a>
+              </button>
             </div>
           </div>
 
@@ -221,10 +248,15 @@ export default function SoftPlay({ siteData }) {
             <img
               src={siteData?.softplayManufacture?.imgUrl || softplayCastle3d}
               alt="Soft Play Equipment Manufacture 3D Castle Render"
+              loading="lazy"
+              decoding="async"
+              width={560}
+              height={420}
               style={{
                 width: '100%',
                 maxWidth: '560px',
                 height: 'auto',
+                aspectRatio: '560 / 420',
                 objectFit: 'contain',
                 filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.12))'
               }}
@@ -337,7 +369,7 @@ export default function SoftPlay({ siteData }) {
                 {siteData?.softplayMaterials?.desc || "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:"}
               </p>
 
-              {/* Left Photo Card with all.png */}
+              {/* Left Photo Card with all.webp */}
               <div style={{ position: 'relative', width: '100%' }}>
                 <img
                   src={allImg}
@@ -457,7 +489,7 @@ export default function SoftPlay({ siteData }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 4px 14px rgba(56, 189, 248, 0.45)',
+                    boxShadow: 'none',
                     zIndex: 10
                   }}>
                     {idx + 1}
@@ -597,10 +629,10 @@ export default function SoftPlay({ siteData }) {
             </div>
           </div>
 
-          {/* Right Column: direct rendering of group-image.png */}
+          {/* Right Column: direct rendering of single image */}
           <div className="winera-softplay-roi-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
-              src={groupImg}
+              src={getValidImageUrl(siteData?.softplayRoi?.imgUrl || siteData?.softplayRoi?.topImgUrl, groupImg)}
               alt="Know Your Returns ROI Report"
               style={{
                 width: '100%',
@@ -707,7 +739,7 @@ export default function SoftPlay({ siteData }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           marginBottom: '16px',
-                          boxShadow: '0 6px 16px rgba(56, 189, 248, 0.35)'
+                          boxShadow: 'none'
                         }}>
                           {card.iconUrl ? (
                             <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
@@ -785,7 +817,7 @@ export default function SoftPlay({ siteData }) {
                             alignItems: 'center',
                             justifyContent: 'center',
                             marginBottom: '16px',
-                            boxShadow: '0 6px 16px rgba(56, 189, 248, 0.35)'
+                            boxShadow: 'none'
                           }}>
                             {card.iconUrl ? (
                               <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />

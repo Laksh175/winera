@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import arHeroBg from '../assets/ar-hero-bg.png';
+import arHeroBg from '../assets/ar-hero-bg.webp';
 
 export default function LaserTag({ siteData }) {
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Laser Tag...</div>;

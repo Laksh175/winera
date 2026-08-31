@@ -1,9 +1,18 @@
 import path from 'path';
 import fs from 'fs';
 import multer from 'multer';
+import sharp from 'sharp';
+import { v2 as cloudinary } from 'cloudinary';
 import Admin from '../models/Admin.js';
 import Content from '../models/Content.js';
 import jwt from 'jsonwebtoken';
+
+// Configure Cloudinary from environment variables
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 if (!fs.existsSync('uploads')) {
   fs.mkdirSync('uploads', { recursive: true });
@@ -690,32 +699,40 @@ export const defaultSiteData = {
   },
   amusementRoi: {
     title: "Before You Build,<br/>*Know What It Will Earn*",
-    paragraph1: "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins.",
-    paragraph2: "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline.",
+    paragraph1: "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline.",
+    paragraph2: "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins.",
     buttonText: "Talk to an ROI Expert",
     buttonLink: "https://wa.me/919428989488",
     bottomImgUrl: ""
   },
   amusementFaqs: [
     {
-      q: "What types of amusement park rides do you supply and install?",
-      a: "We supply a complete range of amusement park attractions including thrill rides, family rides, kids' rides, bumper cars, Ferris wheels, carousel rides, and custom themed attractions engineered for indoor & outdoor venues."
+      q: "Who is a reliable amusement park manufacturer in India?",
+      a: "Winera International is a direct amusement park manufacturer in India, supplying and installing rides and equipment for theme parks, malls, and family entertainment centres since 2014 installed across 50+ cities by our own team."
     },
     {
-      q: "Do you handle complete end-to-end park setup and installation?",
-      a: "Yes! Winera International handles full turnkey project management — from space planning and layout design to ride sourcing, civil foundation guidance, structural assembly, safety testing, and final handover."
+      q: "What is the cost of setting up an amusement park in India?",
+      a: "Amusement park setup cost in India depends on land size, number of rides, ride category, and customisation. Winera provides a complete cost breakdown, installation, and maintenance before confirming any project."
     },
     {
-      q: "What safety standards and certifications do Winera amusement rides comply with?",
-      a: "All our rides are built to international safety benchmarks. They feature reinforced structural steel, emergency automatic stop sensors, dual-lock safety harnesses/belts, and undergo rigorous load and performance testing prior to public operation."
+      q: "What safety standards do Winera's amusement park rides meet?",
+      a: "Every ride is built with load-rated restraints, sensor-based safety stops, and commercial-grade structural materials, then tested on-site before handover."
     },
     {
-      q: "Can Winera provide a venue-specific ROI and financial projection report?",
-      a: "Absolutely. Before finalizing any purchase, our ROI experts prepare a comprehensive financial model detailing ride capacities, daily throughput, operational costs, estimated ticket revenue, and projected break-even timelines customized to your land size and city demographic."
+      q: "How much land is needed to start an amusement park in India?",
+      a: "Land requirements vary significantly by ride mix and target capacity Winera's team assesses your available space and recommends an attraction layout that fits it."
     },
     {
-      q: "What after-sales service and spare parts support do you offer?",
-      a: "We maintain an in-house engineering and service team across 50+ Indian cities. We provide routine maintenance support, operator training, and stocked replacement spare parts to ensure zero extended downtime for your venue."
+      q: "Which businesses typically work with an amusement park equipment manufacturer in India?",
+      a: "Theme parks, malls, resorts, family entertainment centres, and tourism developments are the most common buyers of amusement park equipment in India."
+    },
+    {
+      q: "How long does amusement park ride installation take?",
+      a: "Timelines depend on ride complexity and project scale. Winera confirms an exact schedule covering manufacturing, delivery, and installation at the quote stage."
+    },
+    {
+      q: "What after-sales support does Winera provide for amusement park rides?",
+      a: "Winera provides ongoing maintenance, spare parts, and on-site servicing support for all rides and equipment installed available directly through our after-sales team."
     }
   ],
   hypergridHero: {
@@ -1083,6 +1100,10 @@ export const defaultSiteData = {
   projectSeo: {
     title: "Our Projects | Turnkey Game Zone & Entertainment Venues by Winera International",
     description: "Explore turnkey bowling alley and entertainment venue setup projects by Winera International."
+  },
+  projectCta: {
+    bgUrl: "",
+    buttonLink: "https://wa.me/919428989488"
   },
   safetyHero: {
     bgUrl: "/src/assets/safety-bg.png",
@@ -1560,6 +1581,75 @@ export const getContent = async (req, res) => {
       );
     }
 
+    // Ensure amusementFaqs in MongoDB has all 7 items
+    if (!Array.isArray(siteData.amusementFaqs) || siteData.amusementFaqs.length < 7) {
+      siteData.amusementFaqs = defaultSiteData.amusementFaqs;
+      await Content.findOneAndUpdate(
+        { sectionKey: 'amusementFaqs' },
+        { sectionKey: 'amusementFaqs', data: defaultSiteData.amusementFaqs },
+        { upsert: true, new: true }
+      );
+    }
+
+    // Ensure vrFaqs in MongoDB has all 8 items
+    const defaultVrFaqsList = [
+      {
+        question: "What is included in a commercial VR gaming set?",
+        answer: "A complete commercial VR gaming set from Winera includes the VR machine unit, motion platform (where applicable), VR headsets, a pre-loaded and commercially licensed game library, safety barriers, installation by our own team, and post-installation support. Exact components vary by machine model — confirmed at the quote stage."
+      },
+      {
+        question: "Which businesses typically need a VR games supplier in India?",
+        answer: "Family entertainment centres, malls, amusement parks, hotels, resorts, bowling centers, and standalone gaming zones are the most common businesses that work with a VR games supplier in India."
+      },
+      {
+        question: "What is the VR gaming setup cost in India?",
+        answer: "VR gaming setup cost in India depends on the number of machines, machine category, motion system complexity, and game library size. Pricing varies significantly between a single compact platform and a multi-machine zone with group rides."
+      },
+      {
+        question: "Do VR gaming machines require a minimum ceiling height or floor space?",
+        answer: "Yes. Motion platforms and group rides typically need higher ceiling clearance than solo simulators, and floor space requirements scale with player count. Winera assesses your venue's exact dimensions before recommending machine models, since not every machine fits every space."
+      },
+      {
+        question: "How long does VR gaming machine installation take?",
+        answer: "Installation timelines depend on machine count and complexity; a single solo platform can be operational within days, while a multi-machine zone with group rides takes longer for setup and software configuration. We confirm an exact schedule at the quote stage."
+      },
+      {
+        question: "Can VR gaming machines be customised with branded content or specific game libraries?",
+        answer: "Yes. Game library selection, branding wraps, and venue-specific configuration can be tailored per machine. We confirm available customisation options for each model during the consultation."
+      },
+      {
+        question: "What happens if a VR machine breaks down after installation?",
+        answer: "Our own technicians handle servicing directly, with coverage across 50+ cities in India. For software issues, remote diagnostics are available for most machines. For hardware faults, our own team visits your site; you're not waiting on an overseas manufacturer or a disconnected logistics partner."
+      },
+      {
+        question: "How do I get started with a VR gaming machine order from Winera?",
+        answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
+      }
+    ];
+    if (!Array.isArray(siteData.vrFaqs) || siteData.vrFaqs.length < 8) {
+      siteData.vrFaqs = defaultVrFaqsList;
+      await Content.findOneAndUpdate(
+        { sectionKey: 'vrFaqs' },
+        { sectionKey: 'vrFaqs', data: defaultVrFaqsList },
+        { upsert: true, new: true }
+      );
+    }
+
+    const defaultArFaqsList = [
+      { question: "What is an AR Gaming Setup and how does it work?", answer: "Augmented Reality (AR) gaming combines physical play spaces with interactive digital projections, sensors, and motion tracking to create immersive experiences for players without needing heavy headsets." },
+      { question: "What type of venues are AR games best suited for?", answer: "AR games are ideal for Family Entertainment Centres (FECs), shopping malls, amusement parks, sports bars, resorts, trampoline parks, and indoor play zones." },
+      { question: "Do you provide installation and technical support across India?", answer: "Yes, Winera International provides end-to-end site inspection, custom installation, game software setup, staff training, and nationwide maintenance support." },
+      { question: "What is the expected ROI for an AR gaming setup?", answer: "With high repeat play rates and low operator maintenance, most commercial venue operators achieve full break-even within 6 to 12 months depending on footfall." }
+    ];
+    if (!Array.isArray(siteData.arFaqs) || siteData.arFaqs.length < 4) {
+      siteData.arFaqs = defaultArFaqsList;
+      await Content.findOneAndUpdate(
+        { sectionKey: 'arFaqs' },
+        { sectionKey: 'arFaqs', data: defaultArFaqsList },
+        { upsert: true, new: true }
+      );
+    }
+
     res.json(siteData);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -1589,14 +1679,59 @@ export const updateContent = async (req, res) => {
   }
 };
 
-export const uploadImage = (req, res) => {
+export const uploadImage = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });
   }
+
+  // Attempt upload to Cloudinary if credentials are configured
+  if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
+    try {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'winera_uploads',
+        transformation: [
+          { quality: 'auto', fetch_format: 'auto' }
+        ]
+      });
+      // Remove temporary local file after Cloudinary upload
+      if (fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
+      let optUrl = result.secure_url;
+      if (optUrl && optUrl.includes('/upload/') && !optUrl.includes('/f_auto,q_auto/')) {
+        optUrl = optUrl.replace('/upload/', '/upload/f_auto,q_auto/');
+      }
+      return res.json({ url: optUrl, filename: result.public_id });
+    } catch (err) {
+      console.error('Cloudinary upload error, falling back to local storage:', err);
+    }
+  }
+
+  // Local fallback: auto-convert image to .webp format via sharp
   const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'http';
   const host = req.get('host');
-  const fileUrl = `${protocol}://${host}/uploads/${req.file.filename}`;
-  res.json({ url: fileUrl, filename: req.file.filename });
+  let finalFilename = req.file.filename;
+
+  try {
+    const ext = path.extname(req.file.path).toLowerCase();
+    if (ext !== '.webp') {
+      const webpFilename = `${path.basename(req.file.path, ext)}.webp`;
+      const webpPath = path.join(path.dirname(req.file.path), webpFilename);
+      await sharp(req.file.path)
+        .webp({ quality: 85 })
+        .toFile(webpPath);
+      // Remove original file after successful WebP conversion
+      if (fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
+      finalFilename = webpFilename;
+    }
+  } catch (sharpErr) {
+    console.error('Sharp WebP conversion error:', sharpErr);
+  }
+
+  const fileUrl = `${protocol}://${host}/uploads/${finalFilename}`;
+  res.json({ url: fileUrl, filename: finalFilename });
 };
 
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import SectionHeading from './SectionHeading';
-import projHulaboo from '../assets/proj-hulaboo.png';
-import projNeon1 from '../assets/proj-neonpanda1.png';
-import projSoft1 from '../assets/proj-softplay1.png';
+import projHulaboo from '../assets/proj-hulaboo.webp';
+import projNeon1 from '../assets/proj-neonpanda1.webp';
+import projSoft1 from '../assets/proj-softplay1.webp';
 
 const defaultProjects = [
   { title: "Hulaboo", location: "Surat", img: projHulaboo },
@@ -26,7 +26,7 @@ export default function ProjectsMarqueeSection({
   const items = Array.isArray(projects) && projects.length > 0 ? projects : defaultProjects;
 
   return (
-    <section id={id} style={{ padding: '80px 0 100px', background: bg, overflow: 'hidden' }}>
+    <section id={id} style={{ padding: '50px 0 60px', background: bg, overflow: 'hidden' }}>
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
         {showTopHeader ? (
           <div style={{
@@ -74,7 +74,7 @@ export default function ProjectsMarqueeSection({
           </div>
         ) : (
           <div style={{ maxWidth: '1240px', margin: '0 auto 50px', textAlign: 'center' }}>
-            <SectionHeading marginBottom="0" accentWidth="65%" accentMaxWidth="400px">
+            <SectionHeading marginBottom="0" accentWidth="220px" accentMaxWidth="260px">
               {simpleTitle || title}
             </SectionHeading>
           </div>
@@ -91,45 +91,53 @@ export default function ProjectsMarqueeSection({
           <div className="marquee-track">
             {[...Array(4)].map((_, setIdx) => (
               <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '24px', paddingRight: '24px' }}>
-                {items.map((proj, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      width: '280px',
-                      height: '340px',
-                      borderRadius: '24px',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      boxShadow: '0 12px 30px rgba(0,0,0,0.12)',
-                      background: `url(${proj.imageUrl || proj.img || projHulaboo}) center/cover no-repeat`,
-                      cursor: 'pointer',
-                      flexShrink: 0
-                    }}
-                  >
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%)',
-                      display: 'flex',
-                      alignItems: 'flex-end',
-                      justifyContent: 'space-between',
-                      padding: '20px 22px'
-                    }}>
-                      <div style={{ textAlign: 'left' }}>
-                        <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#ffffff', marginBottom: '2px', textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
-                          {proj.name || proj.title}
-                        </h3>
-                        <p style={{ fontSize: '12px', color: '#cbd5e1', fontWeight: '600', textTransform: 'capitalize' }}>
-                          {proj.city || proj.location}
-                        </p>
-                      </div>
+                {items.map((proj, idx) => {
+                  const cardSlug = proj.slug || (proj.name || proj.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                  const href = cardSlug ? `/project/${cardSlug}` : '/project';
 
-                      <div style={{ color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <ArrowRight style={{ width: '18px', height: '18px', color: '#ffffff' }} />
+                  return (
+                    <a
+                      key={idx}
+                      href={href}
+                      style={{
+                        width: '280px',
+                        height: '340px',
+                        borderRadius: '24px',
+                        overflow: 'hidden',
+                        position: 'relative',
+                        boxShadow: '0 12px 30px rgba(0,0,0,0.12)',
+                        background: `url(${proj.imageUrl || proj.img || projHulaboo}) center/cover no-repeat`,
+                        cursor: 'pointer',
+                        flexShrink: 0,
+                        textDecoration: 'none',
+                        display: 'block'
+                      }}
+                    >
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%)',
+                        display: 'flex',
+                        alignItems: 'flex-end',
+                        justifyContent: 'space-between',
+                        padding: '20px 22px'
+                      }}>
+                        <div style={{ textAlign: 'left' }}>
+                          <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#ffffff', marginBottom: '2px', textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
+                            {proj.name || proj.title}
+                          </h3>
+                          <p style={{ fontSize: '12px', color: '#cbd5e1', fontWeight: '600', textTransform: 'capitalize' }}>
+                            {proj.city || proj.location}
+                          </p>
+                        </div>
+
+                        <div style={{ color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <ArrowRight style={{ width: '18px', height: '18px', color: '#ffffff' }} />
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </a>
+                  );
+                })}
               </div>
             ))}
           </div>

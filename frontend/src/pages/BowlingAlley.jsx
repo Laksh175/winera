@@ -8,42 +8,60 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import CtaBanner from '../components/CtaBanner';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 
-import wineraLogo from '../assets/logo.png';
-import arcadeHeroBg from '../assets/arcade-hero-bg.png';
-import bowlingHeroBg from '../assets/bowling-hero-bg.png';
-import bowlingImg from '../assets/bowling.png';
-import maskGroupImg from '../assets/Mask-group.png';
-import maskGroup01Img from '../assets/Mask-group-01.png';
-import vectorImg from '../assets/Vector.png';
-import bowlingPinsExplode from '../assets/bowling-pins-explode.png';
-import bowlingBallPinsBlue from '../assets/bowling-ball-pins-blue.png';
-import bowlingTypesBg from '../assets/bowling-types-bg.png';
-import ctaGamersBg from '../assets/cta-gamers-bg.png';
-import ctaArcade from '../assets/cta-arcade.png';
-import arcadeBoy from '../assets/arcade-boy.png';
-import arcadeHall from '../assets/arcade-hall.png';
-import doodleArrow from '../assets/doodle-arrow.png';
-import bikeArcade from '../assets/bike-arcade.png';
-import builtCommercialBg from '../assets/built-commercial-bg.png';
-import commercialTeam from '../assets/commercial-team.png';
-import needConsultationsBg from '../assets/need-consultations-bg.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
-import ctaSoftplayBg from '../assets/cta-softplay-bg.png';
-import bowlingLastImageBg from '../assets/bowling-last-image-bg.png';
-import yellowBrushAccent from '../assets/yellow-stroke-line.png';
-import about1 from '../assets/about-1.png';
-import about2 from '../assets/about-2.png';
-import about3 from '../assets/about-3.png';
-import about4 from '../assets/about-4.png';
-import projHulaboo from '../assets/proj-hulaboo.png';
-import projNeon1 from '../assets/proj-neonpanda1.png';
-import projSoft1 from '../assets/proj-softplay1.png';
+import wineraLogo from '../assets/logo.webp';
+import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
+import bowlingHeroBg from '../assets/bowling-hero-bg.webp';
+import bowlingImg from '../assets/bowling.webp';
+import maskGroupImg from '../assets/Mask-group.webp';
+import maskGroup01Img from '../assets/Mask-group-01.webp';
+import vectorImg from '../assets/Vector.webp';
+import bowlingPinsExplode from '../assets/bowling-pins-explode.webp';
+import bowlingBallPinsBlue from '../assets/bowling-ball-pins-blue.webp';
+import bowlingTypesBg from '../assets/bowling-types-bg.webp';
+import ctaGamersBg from '../assets/cta-gamers-bg.webp';
+import ctaArcade from '../assets/cta-arcade.webp';
+import arcadeBoy from '../assets/arcade-boy.webp';
+import arcadeHall from '../assets/arcade-hall.webp';
+import doodleArrow from '../assets/doodle-arrow.webp';
+import bikeArcade from '../assets/bike-arcade.webp';
+import builtCommercialBg from '../assets/built-commercial-bg.webp';
+import commercialTeam from '../assets/commercial-team.webp';
+import needConsultationsBg from '../assets/need-consultations-bg.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
+import bowlingLastImageBg from '../assets/bowling-last-image-bg.webp';
+import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
+import about1 from '../assets/about-1.webp';
+import about2 from '../assets/about-2.webp';
+import about3 from '../assets/about-3.webp';
+import about4 from '../assets/about-4.webp';
+import projHulaboo from '../assets/proj-hulaboo.webp';
+import projNeon1 from '../assets/proj-neonpanda1.webp';
+import projSoft1 from '../assets/proj-softplay1.webp';
 
 import { Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight } from 'lucide-react';
 
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
+import { useVideoModal } from '../context/VideoModalContext';
+
 export default function BowlingAlley({ siteData }) {
+  const { openVideoModal } = useVideoModal();
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Bowling Alley...</div>;
 
+  const [activeFaqIndex, setActiveFaqIndex] = useState(null);
   const { header, footer } = siteData;
   const [activeCategory, setActiveCategory] = useState("Standard 10-Pin Bowling");
   const [expandedCat, setExpandedCat] = useState("Standard 10-Pin Bowling");
@@ -64,7 +82,7 @@ export default function BowlingAlley({ siteData }) {
   }, [siteData]);
 
   // Hero background asset constant
-  const heroBgImage = bowlingHeroBg;
+  const heroBgImage = getValidImageUrl(siteData?.bowlingHero?.bgUrl, bowlingHeroBg);
 
   // Bowling Machine categories/cards fallback
   const defaultBowlingCategories = [
@@ -278,7 +296,7 @@ export default function BowlingAlley({ siteData }) {
                   padding: '12px 28px',
                   borderRadius: '10px',
                   border: '1.5px solid #ffcd00',
-                  boxShadow: '0 6px 16px rgba(56, 189, 248, 0.25)',
+                  boxShadow: 'none',
                   display: 'inline-block',
                   textDecoration: 'none'
                 }}
@@ -288,7 +306,7 @@ export default function BowlingAlley({ siteData }) {
             </div>
           </div>
 
-          {/* Right Column: direct rendering of bowling.png graphic */}
+          {/* Right Column: direct rendering of bowling.webp graphic */}
           <div className="winera-bowling-supplier-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
             <img
               src={bowlingImg}
@@ -424,11 +442,9 @@ export default function BowlingAlley({ siteData }) {
                     transform: 'rotate(-1.8deg)',
                     zIndex: 1
                   }} />
-                  <a
-                    href={siteData?.bowlingFreeFall?.videoUrl || "https://wa.me/919428989488"}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Watch Free Fall Bowling Video on WhatsApp"
+                  <button
+                    onClick={() => openVideoModal(siteData?.bowlingFreeFall?.videoUrl, "Free Fall Bowling Showcase")}
+                    aria-label="Watch Free Fall Bowling Video"
                     style={{
                       position: 'relative',
                       zIndex: 2,
@@ -439,13 +455,13 @@ export default function BowlingAlley({ siteData }) {
                       padding: '12px 28px',
                       borderRadius: '10px',
                       border: '1.5px solid #38bdf8',
-                      boxShadow: '0 6px 16px rgba(56, 189, 248, 0.25)',
+                      boxShadow: 'none',
                       display: 'inline-block',
-                      textDecoration: 'none'
+                      cursor: 'pointer'
                     }}
                   >
                     {siteData?.bowlingFreeFall?.btnText || "Watch Video"}
-                  </a>
+                  </button>
                 </div>
 
                 <a
@@ -461,7 +477,7 @@ export default function BowlingAlley({ siteData }) {
                     fontWeight: '900',
                     padding: '12px 32px',
                     borderRadius: '14px',
-                    boxShadow: '0 6px 20px rgba(56, 189, 248, 0.35)',
+                    boxShadow: 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '8px',
@@ -484,7 +500,7 @@ export default function BowlingAlley({ siteData }) {
 
             {/* Right Photo Collage with Overlapping Cyan Pill Specification Badges */}
             <div className="winera-bowling-types-pills-col" style={{ position: 'relative', width: '100%', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {/* Main Oval Free-Fall Pins Image: Mask-group.png */}
+              {/* Main Oval Free-Fall Pins Image: Mask-group.webp */}
               <img
                 src={maskGroupImg}
                 alt="Free Fall Bowling Pinsetter"
@@ -665,7 +681,7 @@ export default function BowlingAlley({ siteData }) {
           <div className="winera-bowling-types-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '30px', alignItems: 'center' }}>
             {/* Left Photo Collage with Overlapping Yellow Specification Badges */}
             <div className="winera-bowling-types-pills-col" style={{ position: 'relative', width: '100%', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {/* Main Friends Bowling Photo: Mask-group-01.png */}
+              {/* Main Friends Bowling Photo: Mask-group-01.webp */}
               <img
                 src={maskGroup01Img}
                 alt="String Bowling Friends"
@@ -871,11 +887,9 @@ export default function BowlingAlley({ siteData }) {
                   transform: 'rotate(-1.8deg)',
                   zIndex: 1
                 }} />
-                <a
-                  href={siteData?.bowlingString?.videoUrl || "https://wa.me/919428989488"}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Watch String Bowling Video on WhatsApp"
+                <button
+                  onClick={() => openVideoModal(siteData?.bowlingString?.videoUrl, "String Bowling Showcase")}
+                  aria-label="Watch String Bowling Video"
                   style={{
                     position: 'relative',
                     zIndex: 2,
@@ -886,13 +900,13 @@ export default function BowlingAlley({ siteData }) {
                     padding: '12px 28px',
                     borderRadius: '10px',
                     border: '1.5px solid #38bdf8',
-                    boxShadow: '0 6px 16px rgba(56, 189, 248, 0.25)',
+                    boxShadow: 'none',
                     display: 'inline-block',
-                    textDecoration: 'none'
+                    cursor: 'pointer'
                   }}
                 >
                   {siteData?.bowlingString?.btnText || "Watch Video"}
-                </a>
+                </button>
               </div>
 
               {/* Mobile Specs List */}
@@ -984,7 +998,7 @@ export default function BowlingAlley({ siteData }) {
                     padding: '10px 24px 10px 14px',
                     borderRadius: '12px',
                     border: '1.5px solid #38bdf8',
-                    boxShadow: '0 6px 16px rgba(56, 189, 248, 0.2)',
+                    boxShadow: 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '12px',
@@ -1012,7 +1026,7 @@ export default function BowlingAlley({ siteData }) {
             </div>
           </div>
 
-          {/* Right Column: High-Tech Bowling Alley Image (Vector.png) */}
+          {/* Right Column: High-Tech Bowling Alley Image (Vector.webp) */}
           <div className="winera-bowling-roi-img" style={{
             position: 'relative',
             width: '100%',

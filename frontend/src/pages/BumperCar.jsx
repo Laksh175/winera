@@ -7,16 +7,16 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import ctaSoftplayBg from '../assets/cta-softplay-bg.png';
-import bumpercarHeroBg from '../assets/bumpercar-hero-bg.png';
-import bumpercarCollageFrame from '../assets/bumpercar-collage-frame.png';
-import bumpercar3dNeon from '../assets/bumpercar-3d-neon.png';
+import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
+import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
+import bumpercarCollageFrame from '../assets/bumpercar-collage-frame.webp';
+import bumpercar3dNeon from '../assets/bumpercar-3d-neon.webp';
 import bumpercarSpecsBg from '../assets/bumpercar-specs-bg.jpg';
-import bumpercarOptionsBg from '../assets/bumpercar-options-bg.png';
+import bumpercarOptionsBg from '../assets/bumpercar-options-bg.webp';
 import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.jpg';
-import bumpercarInvestmentCollage from '../assets/bumpercar-investment-collage.png';
-import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
+import bumpercarInvestmentCollage from '../assets/bumpercar-investment-collage.webp';
+import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
@@ -44,6 +44,20 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => 
   });
 };
 
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
 export default function BumperCar({ siteData }) {
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Bumper Car...</div>;
 
@@ -65,7 +79,7 @@ export default function BumperCar({ siteData }) {
   }, [siteData]);
 
   const { header, footer } = siteData;
-  const heroBgImage = siteData?.bumpercarHero?.bgUrl || bumpercarHeroBg;
+  const heroBgImage = getValidImageUrl(siteData?.bumpercarHero?.bgUrl, bumpercarHeroBg);
   const [activeThrillIndex, setActiveThrillIndex] = React.useState(0);
 
   const defaultThrillCards = [
@@ -171,10 +185,15 @@ export default function BumperCar({ siteData }) {
             <img
               src={siteData?.bumpercarIntro?.mainImgUrl || bumpercarCollageFrame}
               alt="Bumper Car Manufacturer in India"
+              fetchpriority="high"
+              decoding="async"
+              width={560}
+              height={380}
               style={{
                 width: '100%',
                 maxWidth: '560px',
                 height: 'auto',
+                aspectRatio: '560 / 380',
                 display: 'block'
               }}
             />
@@ -292,6 +311,7 @@ export default function BumperCar({ siteData }) {
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-start', alignItems: 'center' }}>
             <button
               onClick={() => setActiveThrillIndex((prev) => (prev > 0 ? prev - 1 : thrillCards.length - 1))}
+              aria-label="Previous Thrill Option"
               style={{
                 width: '32px',
                 height: '32px',
@@ -310,6 +330,7 @@ export default function BumperCar({ siteData }) {
             </button>
             <button
               onClick={() => setActiveThrillIndex((prev) => (prev < thrillCards.length - 1 ? prev + 1 : 0))}
+              aria-label="Next Thrill Option"
               style={{
                 width: '32px',
                 height: '32px',
@@ -554,7 +575,7 @@ export default function BumperCar({ siteData }) {
                       background: 'linear-gradient(135deg, #fef08a 0%, #fde047 100%)',
                       borderRadius: '30px',
                       padding: '8px 14px 8px 18px',
-                      boxShadow: '0 6px 16px rgba(250, 204, 21, 0.25)',
+                      boxShadow: 'none',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '10px',
@@ -598,7 +619,7 @@ export default function BumperCar({ siteData }) {
                 padding: '8px',
                 flexShrink: 0,
                 background: '#ffffff',
-                boxShadow: '0 8px 20px rgba(250, 204, 21, 0.2)',
+                boxShadow: 'none',
                 marginLeft: '15px',
                 zIndex: 1
               }}>
@@ -645,7 +666,7 @@ export default function BumperCar({ siteData }) {
                 padding: '8px',
                 flexShrink: 0,
                 background: '#ffffff',
-                boxShadow: '0 8px 20px rgba(56, 189, 248, 0.2)',
+                boxShadow: 'none',
                 marginRight: '15px',
                 zIndex: 1
               }}>
@@ -667,7 +688,7 @@ export default function BumperCar({ siteData }) {
                       background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
                       borderRadius: '30px',
                       padding: '8px 18px 8px 14px',
-                      boxShadow: '0 6px 16px rgba(56, 189, 248, 0.3)',
+                      boxShadow: 'none',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '10px',
@@ -922,7 +943,7 @@ export default function BumperCar({ siteData }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           marginBottom: '16px',
-                          boxShadow: '0 8px 18px rgba(56, 189, 248, 0.3)'
+                          boxShadow: 'none'
                         }}>
                           {card.iconUrl ? (
                             <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
@@ -999,7 +1020,7 @@ export default function BumperCar({ siteData }) {
                             alignItems: 'center',
                             justifyContent: 'center',
                             marginBottom: '16px',
-                            boxShadow: '0 8px 18px rgba(56, 189, 248, 0.3)'
+                            boxShadow: 'none'
                           }}>
                             {card.iconUrl ? (
                               <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />

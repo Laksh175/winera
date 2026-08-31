@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import blogHeroBg from '../assets/blog-image-bg.png';
-import blogCardImg from '../assets/blog-images.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
+import blogHeroBg from '../assets/blog-image-bg.webp';
+import blogCardImg from '../assets/blog-images.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
 const DEFAULT_BLOG_POSTS = Array.from({ length: 27 }, (_, i) => ({
   id: i + 1,
@@ -16,6 +16,20 @@ const DEFAULT_BLOG_POSTS = Array.from({ length: 27 }, (_, i) => ({
   image: blogCardImg,
 }));
 
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
 export default function Blog({ siteData }) {
   const header = siteData?.header || {};
   const footer = siteData?.footer || {};
@@ -24,6 +38,7 @@ export default function Blog({ siteData }) {
     breadcrumbText: 'Blog',
     bgUrl: blogHeroBg,
   };
+  const heroBg = getValidImageUrl(blogHero.bgUrl, blogHeroBg);
 
   const blogPosts = Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0
     ? siteData.blogPosts
@@ -64,8 +79,6 @@ export default function Blog({ siteData }) {
       blogSeo.metaDescription || 'Read the Winera International blog for expert insights on game zone setup, ROI tips, soft play trends, VR gaming, trampoline parks, and indoor amusement equipment.'
     );
   }, [blogSeo]);
-
-  const heroBg = blogHero.bgUrl || blogHeroBg;
 
   return (
     <div style={{ background: '#F5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Inter', 'Montserrat', sans-serif", overflowX: 'hidden' }}>
@@ -136,25 +149,25 @@ export default function Blog({ siteData }) {
                   border: '1.5px solid #38bdf8',
                   borderRadius: '24px',
                   padding: '16px',
-                  boxShadow: '0 10px 30px rgba(56, 189, 248, 0.08)',
+                  boxShadow: 'none',
                   display: 'flex',
                   flexDirection: 'column',
-                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+                  transition: 'transform 0.25s ease',
                   cursor: 'pointer',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-6px)';
-                  e.currentTarget.style.boxShadow = '0 18px 40px rgba(56, 189, 248, 0.18)';
+                  e.currentTarget.style.boxShadow = 'none';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(56, 189, 248, 0.08)';
+                  e.currentTarget.style.boxShadow = 'none';
                 }}
               >
                 {/* Card Top Image */}
                 <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '18px', overflow: 'hidden', height: '240px', flexShrink: 0 }}>
                   <img
-                    src={post.image || blogCardImg}
+                    src={getValidImageUrl(post.image || post.imgUrl, blogCardImg)}
                     alt={post.title}
                     style={{ width: '100%', height: '100%', objectFit: 'fill', display: 'block' }}
                   />
@@ -214,7 +227,7 @@ export default function Blog({ siteData }) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '10px',
-                  boxShadow: '0 4px 20px rgba(0, 174, 239, 0.05)',
+                  boxShadow: 'none',
                   maxWidth: '90vw',
                   overflowX: 'auto',
                   WebkitOverflowScrolling: 'touch',
@@ -265,7 +278,7 @@ export default function Blog({ siteData }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: isActive ? '0 4px 12px rgba(56, 189, 248, 0.4)' : '0 2px 6px rgba(0, 0, 0, 0.03)',
+                        boxShadow: 'none',
                         transition: 'all 0.2s ease',
                         flexShrink: 0,
                       }}

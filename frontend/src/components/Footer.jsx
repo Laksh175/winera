@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from '../assets/logo.png';
-import footerBg from '../assets/footer-bg.png';
+import logo from '../assets/logo.webp';
+import footerBg from '../assets/footer-bg.webp';
 import { Phone, Mail } from 'lucide-react';
 
 export default function Footer({ footerData }) {
@@ -9,7 +9,7 @@ export default function Footer({ footerData }) {
       position: 'relative',
       width: '100%',
       background: `url(${footerBg}) center/100% 100% no-repeat`,
-      padding: '100px 4vw 35px',
+      padding: '70px 4vw 35px',
       color: '#0f172a',
       minHeight: '440px',
       display: 'flex',
@@ -128,7 +128,8 @@ export default function Footer({ footerData }) {
             </div>
           </div>
 
-          {/* Column 5: Decorative */}
+          {/* Column 5: Decorative (Hidden for now) */}
+          {/*
           <div>
             <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '18px' }}>
               Decorative
@@ -151,6 +152,7 @@ export default function Footer({ footerData }) {
               ))}
             </div>
           </div>
+          */}
         </div>
 
         {/* Social Icons Row & Get in Touch Bar */}

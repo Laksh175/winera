@@ -3,16 +3,16 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
-import aboutHeroBg from '../assets/about-hero-bg.png';
-import about1 from '../assets/about-1.png';
-import about3 from '../assets/about-3.png';
-import about4 from '../assets/about-4.png';
-import whyChooseTopBg from '../assets/why-choose-top-bg.png';
-import whyChooseBottomBg from '../assets/why-choose-bottom-bg.png';
-import wineraWBadge from '../assets/winera-w-badge.png';
-import founderUnnit from '../assets/founder-unnit.png';
-import aboutLounge from '../assets/about-lounge.png';
-import welcomeWineraImg from '../assets/welcome-to-winera.png';
+import aboutHeroBg from '../assets/about-hero-bg.webp';
+import about1 from '../assets/about-1.webp';
+import about3 from '../assets/about-3.webp';
+import about4 from '../assets/about-4.webp';
+import whyChooseTopBg from '../assets/why-choose-top-bg.webp';
+import whyChooseBottomBg from '../assets/why-choose-bottom-bg.webp';
+import wineraWBadge from '../assets/winera-w-badge.webp';
+import founderUnnit from '../assets/founder-unnit.webp';
+import aboutLounge from '../assets/about-lounge.webp';
+import welcomeWineraImg from '../assets/welcome-to-winera.webp';
 import { Shield, Users, Target, Eye, TrendingUp, Maximize2, Clock, RefreshCw, Award, Headset, Settings } from 'lucide-react';
 
 export default function AboutUs({ siteData }) {
@@ -210,7 +210,7 @@ export default function AboutUs({ siteData }) {
         </div>
 
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 4vw' }}>
-          <SectionHeading marginBottom="60px" accentWidth="60%" accentMaxWidth="400px">
+          <SectionHeading marginBottom="40px" accentWidth="240px" accentMaxWidth="300px">
             {(() => {
               const rawTitle = siteData?.aboutMissionVision?.title || "*Our Purpose* & Promise";
               const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -324,7 +324,7 @@ export default function AboutUs({ siteData }) {
       {/* 5. WHY CHOOSE US MINDMAP & 3-CARD SECTION */}
       <section id="why-choose-us-detail" className="winera-about-mindmap-section" style={{ position: 'relative', width: '100%', padding: '0 0 100px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ position: 'relative', width: '100%', background: `url(${whyChooseTopBg}) center top / 100% 100% no-repeat`, padding: '80px 4vw 160px', minHeight: '620px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <SectionHeading marginBottom="60px" accentWidth="60%" accentMaxWidth="400px" style={{ zIndex: 10 }}>
+          <SectionHeading marginBottom="40px" accentWidth="260px" accentMaxWidth="320px" style={{ zIndex: 10 }}>
             {(() => {
               const rawTitle = siteData?.aboutWhyUsDetail?.title || "Why *Choose Us?*";
               const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -504,7 +504,7 @@ export default function AboutUs({ siteData }) {
                   padding: '14px 40px',
                   borderRadius: '16px',
                   textDecoration: 'none',
-                  boxShadow: '0 6px 20px rgba(40, 180, 238, 0.35)',
+                  boxShadow: 'none',
                   transition: 'all 0.25s ease'
                 }}
                 className="winera-cta-btn-hover"
@@ -527,7 +527,7 @@ export default function AboutUs({ siteData }) {
                 padding: '14px 40px',
                 borderRadius: '16px',
                 border: '2.5px solid #28b4ee',
-                boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)',
+                boxShadow: 'none',
                 textDecoration: 'none',
                 transition: 'all 0.25s ease'
               }}

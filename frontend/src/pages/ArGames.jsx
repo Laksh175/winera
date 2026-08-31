@@ -6,13 +6,13 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
-import arHeroBg from '../assets/ar-hero-bg.png';
-import arSupplierCollage from '../assets/ar-supplier-collage.png';
-import arAttractionsGraphic from '../assets/ar-attractions-graphic.png';
-import arFeaturesBg from '../assets/ar-features-bg.png';
-import arEarnGamers from '../assets/ar-earn-gamers.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
-import ctaConsultationsBanner from '../assets/cta-consultations-banner.png';
+import arHeroBg from '../assets/ar-hero-bg.webp';
+import arSupplierCollage from '../assets/ar-supplier-collage.webp';
+import arAttractionsGraphic from '../assets/ar-attractions-graphic.webp';
+import arFeaturesBg from '../assets/ar-features-bg.webp';
+import arEarnGamers from '../assets/ar-earn-gamers.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
 
 // Helper function to render text with *highlighted* words in specific colors and <br/> linebreaks
 function renderTitleMarkup(rawText, defaultText, highlightColor = '#ffcd00') {
@@ -802,7 +802,7 @@ export default function ArGames({ siteData }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        boxShadow: isActive ? '0 4px 14px rgba(56, 189, 248, 0.35)' : 'none',
+                        boxShadow: 'none',
                         transition: 'all 0.2s ease'
                       }}
                     >
@@ -1236,7 +1236,7 @@ export default function ArGames({ siteData }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           marginBottom: '16px',
-                          boxShadow: '0 8px 18px rgba(56, 189, 248, 0.3)'
+                          boxShadow: 'none'
                         }}>
                           {card.iconUrl ? (
                             <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
@@ -1314,7 +1314,7 @@ export default function ArGames({ siteData }) {
                             alignItems: 'center',
                             justifyContent: 'center',
                             marginBottom: '16px',
-                            boxShadow: '0 8px 18px rgba(56, 189, 248, 0.3)'
+                            boxShadow: 'none'
                           }}>
                             {card.iconUrl ? (
                               <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />

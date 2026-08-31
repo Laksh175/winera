@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
@@ -7,35 +8,52 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import CtaBanner from '../components/CtaBanner';
 import RelatedProductsSection from '../components/RelatedProductsSection';
-import arcadeHeroBg from '../assets/arcade-hero-bg.png';
-import ctaGamersBg from '../assets/cta-gamers-bg.png';
-import ctaArcade from '../assets/cta-arcade.png';
-import arcadeBoy from '../assets/arcade-boy.png';
-import arcadeHall from '../assets/arcade-hall.png';
-import doodleArrow from '../assets/doodle-arrow.png';
-import bikeArcade from '../assets/bike-arcade.png';
-import builtCommercialBg from '../assets/built-commercial-bg.png';
-import commercialTeam from '../assets/commercial-team.png';
-import aboutUsSectionImg from '../assets/about-us-section.png';
-import needConsultationsBg from '../assets/need-consultations-bg.png';
-import yellowBrushAccent from '../assets/yellow-stroke-line.png';
-import about1 from '../assets/about-1.png';
-import about2 from '../assets/about-2.png';
-import about3 from '../assets/about-3.png';
-import about4 from '../assets/about-4.png';
+import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
+import ctaGamersBg from '../assets/cta-gamers-bg.webp';
+import ctaArcade from '../assets/cta-arcade.webp';
+import arcadeBoy from '../assets/arcade-boy.webp';
+import arcadeHall from '../assets/arcade-hall.webp';
+import doodleArrow from '../assets/doodle-arrow.webp';
+import bikeArcade from '../assets/bike-arcade.webp';
+import builtCommercialBg from '../assets/built-commercial-bg.webp';
+import commercialTeam from '../assets/commercial-team.webp';
+import aboutUsSectionImg from '../assets/about-us-section.webp';
+import needConsultationsBg from '../assets/need-consultations-bg.webp';
+import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
+import about1 from '../assets/about-1.webp';
+import about2 from '../assets/about-2.webp';
+import about3 from '../assets/about-3.webp';
+import about4 from '../assets/about-4.webp';
 import superAirHockeyImg from '../assets/super-air-hockey.jpg';
 import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.jpg';
 import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.jpg';
 import auroraAirHockeyImg from '../assets/aurora-air-hockey.jpg';
 import ochaAirHockeyImg from '../assets/ocha-air-hockey.jpg';
 import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.jpg';
-import projHulaboo from '../assets/proj-hulaboo.png';
-import projNeon1 from '../assets/proj-neonpanda1.png';
-import projSoft1 from '../assets/proj-softplay1.png';
-import testiOwner from '../assets/testi-owner.png';
+import projHulaboo from '../assets/proj-hulaboo.webp';
+import projNeon1 from '../assets/proj-neonpanda1.webp';
+import projSoft1 from '../assets/proj-softplay1.webp';
+import testiOwner from '../assets/testi-owner.webp';
 import { Gamepad2, Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight } from 'lucide-react';
 
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
+import { useVideoModal } from '../context/VideoModalContext';
+
 export default function ArcadeGame({ siteData }) {
+  const { openVideoModal } = useVideoModal();
   const [activeFaqIndex, setActiveFaqIndex] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Arcade Games");
   const [expandedCat, setExpandedCat] = useState("Arcade Games");
@@ -131,7 +149,7 @@ export default function ArcadeGame({ siteData }) {
         width: '100%',
         paddingTop: '165px',
         paddingBottom: '75px',
-        background: `url(${siteData?.arcadeHero?.bgUrl || arcadeHeroBg}) center top / 100% 100% no-repeat`,
+        background: `url(${getValidImageUrl(siteData?.arcadeHero?.bgUrl, arcadeHeroBg)}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -163,7 +181,7 @@ export default function ArcadeGame({ siteData }) {
       </section>
 
       {/* 3. ARCADE GAME MACHINES IN INDIA SECTION (1:1 FIGMA SCREENSHOT MATCH) */}
-      <section className="winera-arcade-intro-section" style={{ padding: '90px 4vw 100px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-arcade-intro-section" style={{ padding: '90px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -209,7 +227,7 @@ export default function ArcadeGame({ siteData }) {
               zIndex: 25,
               background: '#F5F5F9',
               border: '2px solid #38bdf8',
-              boxShadow: '0 10px 25px rgba(56, 189, 248, 0.25)',
+              boxShadow: 'none',
               borderRadius: '30px',
               padding: '8px 22px',
               color: '#0284c7',
@@ -349,10 +367,8 @@ export default function ArcadeGame({ siteData }) {
                   transform: 'rotate(-1.8deg)',
                   zIndex: 1
                 }} />
-                <a
-                  href={siteData?.arcadeIntro?.videoLink || "https://youtube.com"}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  onClick={() => openVideoModal(siteData?.arcadeIntro?.videoLink, "Arcade Games Showcase")}
                   style={{
                     position: 'relative',
                     zIndex: 2,
@@ -365,14 +381,15 @@ export default function ArcadeGame({ siteData }) {
                     fontWeight: '800',
                     padding: '11px 28px',
                     borderRadius: '12px',
-                    textDecoration: 'none',
-                    boxShadow: '0 6px 18px rgba(40, 180, 238, 0.3)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: 'none',
                     transition: 'all 0.25s ease'
                   }}
                   className="winera-cta-btn-hover"
                 >
                   <span>{siteData?.arcadeIntro?.videoBtnText || "Watch Video"}</span>
-                </a>
+                </button>
               </div>
 
               {/* Button 2: Get a Quote with Offset Rotated Cyan Backdrop */}
@@ -406,7 +423,7 @@ export default function ArcadeGame({ siteData }) {
                     borderRadius: '12px',
                     border: '1.5px solid #38bdf8',
                     textDecoration: 'none',
-                    boxShadow: '0 6px 18px rgba(0, 0, 0, 0.05)',
+                    boxShadow: 'none',
                     transition: 'all 0.25s ease'
                   }}
                   className="winera-cta-btn-hover"
@@ -420,10 +437,10 @@ export default function ArcadeGame({ siteData }) {
       </section>
 
       {/* 4. CATEGORIES: SIDEBAR & PRODUCT CARDS GRID SECTION (1:1 MATCHING USER DESIGN) */}
-      <section id="categories" className="winera-categories-section" style={{ padding: '80px 4vw 100px', background: '#F5F5F9' }}>
+      <section id="categories" className="winera-categories-section" style={{ padding: '35px 4vw 75px', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading for Categories */}
-          <SectionHeading marginBottom="36px" accentWidth="50%" accentMaxWidth="300px">
+          <SectionHeading marginBottom="32px" accentWidth="200px" accentMaxWidth="240px">
             Discover our *Products*
           </SectionHeading>
 
@@ -451,7 +468,7 @@ export default function ArcadeGame({ siteData }) {
                 fontSize: '14px',
                 fontWeight: '800',
                 outline: 'none',
-                boxShadow: '0 8px 20px rgba(56, 189, 248, 0.15)',
+                boxShadow: 'none',
                 cursor: 'pointer'
               }}
             >
@@ -508,7 +525,7 @@ export default function ArcadeGame({ siteData }) {
                     cursor: 'pointer',
                     textAlign: 'left',
                     marginBottom: '4px',
-                    boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)'
+                    boxShadow: 'none'
                   }}
                 >
                   <span>Arcade Games</span>
@@ -568,15 +585,19 @@ export default function ArcadeGame({ siteData }) {
               {/* Product Cards Grid */}
               {(() => {
                 const defaultProdCards = [
-                  { name: "Super Air Hockey", title: "Super Air Hockey", img: superAirHockeyImg },
-                  { name: "Puck Carnival Air Hockey", title: "Puck Carnival Air Hockey", img: puckCarnivalAirHockeyImg },
-                  { name: "Dazzling Air Hockey - Multi Puck", title: "Dazzling Air Hockey - Multi Puck", img: dazzlingAirHockeyImg },
-                  { name: "Aurora Air Hockey", title: "Aurora Air Hockey", img: auroraAirHockeyImg },
-                  { name: "Ocha Air Hockey", title: "Ocha Air Hockey", img: ochaAirHockeyImg },
-                  { name: "Aero X Air Hockey", title: "Aero X Air Hockey", img: aeroXAirHockeyImg }
+                  { name: "Parkour Motor II (DX)", title: "Parkour Motor II (DX)", slug: "parkour-motor-2-dx", img: bikeArcade },
+                  { name: "MANX TT 32\"", title: "MANX TT 32\"", slug: "manx-tt-32", img: bikeArcade },
+                  { name: "Super Air Hockey", title: "Super Air Hockey", slug: "super-air-hockey", img: superAirHockeyImg },
+                  { name: "Puck Carnival Air Hockey", title: "Puck Carnival Air Hockey", slug: "puck-carnival-air-hockey", img: puckCarnivalAirHockeyImg },
+                  { name: "Dazzling Air Hockey - Multi Puck", title: "Dazzling Air Hockey - Multi Puck", slug: "dazzling-air-hockey-multi-puck", img: dazzlingAirHockeyImg },
+                  { name: "Aurora Air Hockey", title: "Aurora Air Hockey", slug: "aurora-air-hockey", img: auroraAirHockeyImg },
+                  { name: "Ocha Air Hockey", title: "Ocha Air Hockey", slug: "ocha-air-hockey", img: ochaAirHockeyImg },
+                  { name: "Aero X Air Hockey", title: "Aero X Air Hockey", slug: "aero-x-air-hockey", img: aeroXAirHockeyImg }
                 ];
 
                 const imageMap = {
+                  "Parkour Motor II (DX)": bikeArcade,
+                  "MANX TT 32\"": bikeArcade,
                   "Super Air Hockey": superAirHockeyImg,
                   "Puck Carnival Air Hockey": puckCarnivalAirHockeyImg,
                   "Dazzling Air Hockey - Multi Puck": dazzlingAirHockeyImg,
@@ -606,6 +627,12 @@ export default function ArcadeGame({ siteData }) {
                   }
                 }
 
+                const getCardSlug = (card) => {
+                  if (card.slug) return card.slug;
+                  const title = card.name || card.title || '';
+                  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'parkour-motor-2-dx';
+                };
+
                 return (
                   <>
                     {/* Desktop Product Cards Grid */}
@@ -614,77 +641,92 @@ export default function ArcadeGame({ siteData }) {
                       gridTemplateColumns: 'repeat(3, 1fr)',
                       gap: '20px'
                     }}>
-                      {prodCards.map((card, idx) => (
-                        <div
-                          key={idx}
+                      {prodCards.map((card, idx) => {
+                        const cardSlug = getCardSlug(card);
+                        return (
+                          <Link
+                            key={idx}
+                            to={`/product/${cardSlug}`}
+                            style={{
+                              textDecoration: 'none',
+                              color: 'inherit',
+                              background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
+                              borderRadius: '24px',
+                              padding: '16px',
+                              boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
+                              border: '1.5px solid #e0f2fe',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                              textAlign: 'center',
+                              transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), boxShadow 0.25s',
+                              cursor: 'pointer'
+                            }}
+                            className="winera-cta-btn-hover"
+                          >
+                            <div style={{
+                              width: '100%',
+                              height: '180px',
+                              borderRadius: '18px',
+                              overflow: 'hidden',
+                              marginBottom: '16px',
+                              background: '#ffffff',
+                              boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
+                              border: '4px solid #ffffff'
+                            }}>
+                              <img
+                                src={card.imageUrl || card.img}
+                                alt={card.name}
+                                loading="lazy"
+                                decoding="async"
+                                width={300}
+                                height={180}
+                                style={{
+                                  width: '100%',
+                                  height: '100%',
+                                  objectFit: 'cover'
+                                }}
+                              />
+                            </div>
+
+                            <h4 style={{
+                              fontSize: '1rem',
+                              fontWeight: '600',
+                              color: '#0f172a',
+                              lineHeight: 1.3,
+                              margin: '4px 0 8px',
+                              minHeight: '42px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}>
+                              {card.name}
+                            </h4>
+                          </Link>
+                        );
+                      })}
+                    </div>
+
+                    {/* Mobile Single Active Product Card Display */}
+                    {prodCards[mobileProdIndex] && (
+                      <div className="winera-mobile-single-product-card" style={{ display: 'none' }}>
+                        <Link
+                          to={`/product/${getCardSlug(prodCards[mobileProdIndex])}`}
                           style={{
+                            textDecoration: 'none',
+                            color: 'inherit',
                             background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
                             borderRadius: '24px',
-                            padding: '16px',
+                            padding: '20px',
                             boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
                             border: '1.5px solid #e0f2fe',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
                             textAlign: 'center',
-                            transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), boxShadow 0.25s',
-                            cursor: 'pointer'
+                            width: '100%'
                           }}
                         >
-                          <div style={{
-                            width: '100%',
-                            height: '180px',
-                            borderRadius: '18px',
-                            overflow: 'hidden',
-                            marginBottom: '16px',
-                            background: '#ffffff',
-                            boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
-                            border: '4px solid #ffffff'
-                          }}>
-                            <img
-                              src={card.imageUrl || card.img}
-                              alt={card.name}
-                              loading="lazy"
-                              style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover'
-                              }}
-                            />
-                          </div>
-
-                          <h4 style={{
-                            fontSize: '1rem',
-                            fontWeight: '600',
-                            color: '#0f172a',
-                            lineHeight: 1.3,
-                            margin: '4px 0 8px',
-                            minHeight: '42px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}>
-                            {card.name}
-                          </h4>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Mobile Single Active Product Card Display */}
-                    {prodCards[mobileProdIndex] && (
-                      <div className="winera-mobile-single-product-card" style={{ display: 'none' }}>
-                        <div style={{
-                          background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
-                          borderRadius: '24px',
-                          padding: '20px',
-                          boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
-                          border: '1.5px solid #e0f2fe',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          textAlign: 'center',
-                          width: '100%'
-                        }}>
                           <div style={{
                             width: '100%',
                             height: '210px',
@@ -714,7 +756,7 @@ export default function ArcadeGame({ siteData }) {
                           }}>
                             {prodCards[mobileProdIndex].name}
                           </h4>
-                        </div>
+                        </Link>
                       </div>
                     )}
 
@@ -736,7 +778,7 @@ export default function ArcadeGame({ siteData }) {
                           justifyContent: 'center',
                           opacity: mobileProdIndex === 0 ? 0.4 : 1,
                           cursor: mobileProdIndex === 0 ? 'not-allowed' : 'pointer',
-                          boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                          boxShadow: 'none'
                         }}
                       >
                         <ChevronLeft style={{ width: '22px', height: '22px' }} />
@@ -762,51 +804,11 @@ export default function ArcadeGame({ siteData }) {
                           justifyContent: 'center',
                           opacity: mobileProdIndex >= prodCards.length - 1 ? 0.4 : 1,
                           cursor: mobileProdIndex >= prodCards.length - 1 ? 'not-allowed' : 'pointer',
-                          boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                          boxShadow: 'none'
                         }}
                       >
                         <ChevronRight style={{ width: '22px', height: '22px' }} />
                       </button>
-                    </div>
-
-                    {/* Pagination Bar */}
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
-                      <div style={{
-                        background: '#ffffff',
-                        border: '1.5px solid #7dd3fc',
-                        borderRadius: '24px',
-                        padding: '8px 26px',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '18px',
-                        boxShadow: 'none'
-                      }}>
-                        <button aria-label="Previous Page" style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
-                          <ChevronLeft style={{ width: '16px', height: '16px', color: '#475569' }} />
-                        </button>
-                        <span style={{
-                          width: '38px',
-                          height: '38px',
-                          borderRadius: '12px',
-                          background: '#38bdf8',
-                          color: '#ffffff',
-                          fontSize: '15px',
-                          fontWeight: '800',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 4px 10px rgba(56, 189, 248, 0.25)'
-                        }}>
-                          1
-                        </span>
-                        <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>2</span>
-                        <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>3</span>
-                        <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>4</span>
-                        <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>71</span>
-                        <button aria-label="Next Page" style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
-                          <ChevronRight style={{ width: '16px', height: '16px', color: '#475569' }} />
-                        </button>
-                      </div>
                     </div>
                   </>
                 );
@@ -841,7 +843,7 @@ export default function ArcadeGame({ siteData }) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 4px 10px rgba(56, 189, 248, 0.25)'
+                boxShadow: 'none'
               }}>
                 1
               </span>
@@ -861,7 +863,7 @@ export default function ArcadeGame({ siteData }) {
       <section className="winera-commercial-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '90px 4vw 110px',
+        padding: '70px 4vw 75px',
         background: `url(${siteData?.arcadeCommercial?.bgUrl || builtCommercialBg}) center/100% 100% no-repeat`,
         minHeight: '560px',
         display: 'flex',
@@ -979,7 +981,7 @@ export default function ArcadeGame({ siteData }) {
                   borderRadius: '12px',
                   border: '1.5px solid #ffcd00',
                   textDecoration: 'none',
-                  boxShadow: '0 6px 18px rgba(0, 0, 0, 0.05)',
+                  boxShadow: 'none',
                   transition: 'all 0.25s ease'
                 }}
                 className="winera-cta-btn-hover"
@@ -1004,7 +1006,7 @@ export default function ArcadeGame({ siteData }) {
             </div>
           </div>
 
-          {/* Right Image Graphic Area rendering about-us-section.png */}
+          {/* Right Image Graphic Area rendering about-us-section.webp */}
           <div className="winera-commercial-desktop-img" style={{
             position: 'relative',
             width: '100%',
@@ -1027,10 +1029,10 @@ export default function ArcadeGame({ siteData }) {
       </section>
 
       {/* 6. WHY CHOOSE WINERA INTERNATIONAL SECTION (1:1 UI MATCH WITH SCREENSHOT) */}
-      <section className="winera-arcade-why-section" style={{ padding: '90px 4vw 110px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section className="winera-arcade-why-section" style={{ padding: '70px 4vw 75px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading with Yellow Accent Line Above */}
-          <SectionHeading marginBottom="60px" accentWidth="65%" accentMaxWidth="440px">
+          <SectionHeading marginBottom="40px" accentWidth="260px" accentMaxWidth="300px">
             {(() => {
               const rawTitle = typeof siteData?.arcadeWhyUs?.title === 'string' ? siteData.arcadeWhyUs.title : "Why Choose *Winera International*";
               const parts = String(rawTitle).split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -1119,7 +1121,7 @@ export default function ArcadeGame({ siteData }) {
                         alignItems: 'center',
                         justifyContent: 'center',
                         marginBottom: '16px',
-                        boxShadow: '0 8px 20px rgba(56, 189, 248, 0.35)'
+                        boxShadow: 'none'
                       }}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
@@ -1191,7 +1193,7 @@ export default function ArcadeGame({ siteData }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           marginBottom: '16px',
-                          boxShadow: '0 8px 20px rgba(56, 189, 248, 0.35)'
+                          boxShadow: 'none'
                         }}>
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />

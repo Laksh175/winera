@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { loginAdmin } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { Lock, ShieldCheck, User, Key, Gamepad2, ArrowRight } from 'lucide-react';
-import yellowBrushAccent from '../assets/yellow-stroke-line.png';
+import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('admin');

@@ -5,25 +5,67 @@ import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 
-import projectBanner from '../assets/project-banner.png';
-import projHulaboo from '../assets/proj-hulaboo.png';
-import projNeon1 from '../assets/proj-neonpanda1.png';
-import projSoft1 from '../assets/proj-softplay1.png';
-import projectImage01 from '../assets/project-image01.png';
-import projectImage3 from '../assets/project-image-3.png';
-import projectImage4 from '../assets/project-image-4.png';
-import projectLastBg from '../assets/project-lastbg.png';
+import projectBanner from '../assets/project-banner.webp';
+import projHulaboo from '../assets/proj-hulaboo.webp';
+import projNeon1 from '../assets/proj-neonpanda1.webp';
+import projSoft1 from '../assets/proj-softplay1.webp';
+import projectImage01 from '../assets/project-image01.webp';
+import projectImage3 from '../assets/project-image-3.webp';
+import projectImage4 from '../assets/project-image-4.webp';
+import projectLastBg from '../assets/project-lastbg.webp';
 import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
+
+const resolveProjectImg = (proj) => {
+  const slug = (proj?.slug || '').toLowerCase();
+  const name = (proj?.name || '').toLowerCase();
+  const category = (proj?.category || '').toLowerCase();
+  const url = proj?.img || proj?.imgUrl || '';
+
+  if (url && typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:'))) {
+    return url;
+  }
+  if (url && typeof url === 'string' && url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+
+  if (slug.includes('hulaboo') || name.includes('hulaboo')) return projHulaboo;
+  if (slug.includes('neon') || name.includes('neon')) return projNeon1;
+  if (slug.includes('softplay') || slug.includes('playzonia') || name.includes('playzonia') || name.includes('soft play') || name.includes('softplay') || name.includes('hoppers') || name.includes('kidzonation') || name.includes('pepe')) return projSoft1;
+  if (slug.includes('fifthalley') || name.includes('fifthalley') || slug.includes('bowling') || name.includes('bowling') || name.includes('lanex') || name.includes('rock and bowl') || name.includes('funevers')) return projectImage01;
+  if (category.includes('bowling')) return projectImage01;
+  if (category.includes('soft play') || category.includes('softplay')) return projSoft1;
+  if (category.includes('arcade') || category.includes('game zone') || category.includes('gamezone')) return projHulaboo;
+
+  return projectImage01;
+};
 
 export default function Project({ siteData }) {
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
   const heroData = siteData?.projectHero || {};
   const seoData = siteData?.projectSeo || {};
+  const ctaData = siteData?.projectCta || {};
 
-  const bannerImg = heroData.bannerImg || projectBanner;
+  const getValidImageUrl = (url, fallback) => {
+    if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+      return fallback;
+    }
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+      return url;
+    }
+    if (url.startsWith('/uploads')) {
+      const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+      return `http://${hostname}:5001${url}`;
+    }
+    return fallback;
+  };
+
+  const bannerImg = getValidImageUrl(heroData.bannerImg, projectBanner);
   const breadcrumbHome = heroData.breadcrumbHome || 'Home';
   const breadcrumbPage = heroData.breadcrumbPage || 'Project';
+  const ctaBg = getValidImageUrl(ctaData.bgUrl, projectLastBg);
+  const ctaLink = ctaData.buttonLink || "https://wa.me/919428989488";
 
   const [activeCategory, setActiveCategory] = useState("All");
 
@@ -290,7 +332,7 @@ export default function Project({ siteData }) {
       {/* 3. MAIN CATALOG & FILTER TABS SECTION */}
       <section style={{ padding: '70px 4vw 100px', maxWidth: '1240px', margin: '0 auto' }}>
         {/* Title: Crafting India's Best Play Destinations */}
-        <SectionHeading marginBottom="45px" accentWidth="65%" accentMaxWidth="440px">
+        <SectionHeading marginBottom="45px" accentWidth="220px" accentMaxWidth="260px">
           {sectionTitle}
         </SectionHeading>
 
@@ -305,7 +347,7 @@ export default function Project({ siteData }) {
           justifyContent: 'space-between',
           maxWidth: '880px',
           margin: '0 auto 50px',
-          boxShadow: '0 4px 18px rgba(56, 189, 248, 0.1)'
+          boxShadow: 'none'
         }}>
           <div style={{
             display: 'flex',
@@ -333,7 +375,7 @@ export default function Project({ siteData }) {
                     fontWeight: '800',
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
-                    boxShadow: isSelected ? '0 4px 14px rgba(56, 189, 248, 0.35)' : '0 2px 6px rgba(0,0,0,0.03)',
+                    boxShadow: 'none',
                     transition: 'all 0.25s ease',
                     flex: '1 0 auto',
                     textAlign: 'center'
@@ -383,17 +425,20 @@ export default function Project({ siteData }) {
           gap: '30px'
         }}>
           {filteredProjects.map((proj) => (
-            <div
+            <Link
               key={proj.id}
+              to={`/project/${proj.slug}`}
               style={{
+                display: 'block',
                 borderRadius: '28px',
                 overflow: 'hidden',
                 position: 'relative',
                 height: '360px',
                 boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                background: `url(${proj.img}) center/cover no-repeat`,
+                background: `url(${resolveProjectImg(proj)}) center/cover no-repeat`,
                 transition: 'transform 0.3s cubic-bezier(0.34, 1.25, 0.64, 1), boxShadow 0.3s',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                textDecoration: 'none'
               }}
               className="winera-project-card-hover"
             >
@@ -416,8 +461,8 @@ export default function Project({ siteData }) {
                   </p>
                 </div>
 
-                <Link
-                  to={`/project/${proj.slug}`}
+                <div
+                  aria-label={`View details for ${proj.name}`}
                   style={{
                     width: '42px',
                     height: '42px',
@@ -429,14 +474,13 @@ export default function Project({ siteData }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     border: '1.5px solid rgba(255,255,255,0.4)',
-                    textDecoration: 'none',
                     transition: 'all 0.25s ease'
                   }}
                 >
                   <ArrowRight style={{ width: '20px', height: '20px', color: '#ffffff' }} />
-                </Link>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -445,13 +489,13 @@ export default function Project({ siteData }) {
       <section style={{ padding: '60px 4vw', background: '#F5F5F9', display: 'flex', justifyContent: 'center' }}>
         <div style={{ maxWidth: '1240px', width: '100%', position: 'relative', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
           <a
-            href="https://wa.me/919428989488"
+            href={ctaLink}
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: 'block', width: '100%', position: 'relative' }}
           >
             <img
-              src={projectLastBg}
+              src={ctaBg}
               alt="Need Any Consultations - Project"
               style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '24px' }}
             />

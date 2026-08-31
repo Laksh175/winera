@@ -8,30 +8,30 @@ import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import { ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity } from 'lucide-react';
 
-import vrHeroBg from '../assets/vr-hero-bg.png';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
-import ctaGamersBg from '../assets/cta-gamers-bg.png';
-import ctaArcade from '../assets/cta-arcade.png';
-import arcadeBoy from '../assets/arcade-boy.png';
-import arcadeHall from '../assets/arcade-hall.png';
-import about1 from '../assets/about-1.png';
-import about2 from '../assets/about-2.png';
-import about3 from '../assets/about-3.png';
-import about4 from '../assets/about-4.png';
-import bumpercarCollageFrame from '../assets/bumpercar-collage-frame.png';
-import vrCollageGraphic from '../assets/vr-collage-graphic.png';
-import vrSupplierCollage from '../assets/vr-supplier-collage.png';
-import vrMatchedVenue from '../assets/vr-matched-venue.png';
-import vrMatchedVenueDirect from '../assets/vr-matched-venue-direct.png';
-import vrRangeTheater from '../assets/vr-range-theater.png';
-import vrCommercialReliability from '../assets/vr-commercial-reliability.png';
-import vrRoiFrame from '../assets/vr-roi-frame.png';
-import vrRoiContent from '../assets/vr-roi-content.png';
+import vrHeroBg from '../assets/vr-hero-bg.webp';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import ctaGamersBg from '../assets/cta-gamers-bg.webp';
+import ctaArcade from '../assets/cta-arcade.webp';
+import arcadeBoy from '../assets/arcade-boy.webp';
+import arcadeHall from '../assets/arcade-hall.webp';
+import about1 from '../assets/about-1.webp';
+import about2 from '../assets/about-2.webp';
+import about3 from '../assets/about-3.webp';
+import about4 from '../assets/about-4.webp';
+import bumpercarCollageFrame from '../assets/bumpercar-collage-frame.webp';
+import vrCollageGraphic from '../assets/vr-collage-graphic.webp';
+import vrSupplierCollage from '../assets/vr-supplier-collage.webp';
+import vrMatchedVenue from '../assets/vr-matched-venue.webp';
+import vrMatchedVenueDirect from '../assets/vr-matched-venue-direct.webp';
+import vrRangeTheater from '../assets/vr-range-theater.webp';
+import vrCommercialReliability from '../assets/vr-commercial-reliability.webp';
+import vrRoiFrame from '../assets/vr-roi-frame.webp';
+import vrRoiContent from '../assets/vr-roi-content.webp';
 import vrEarnPlayer from '../assets/vr-earn-player.jpg';
-import vrImg from '../assets/VR.png';
-import vectorVr from '../assets/Vector-VR.png';
-import vector01 from '../assets/Vector-01.png';
-import ctaConsultationsBanner from '../assets/cta-consultations-banner.png';
+import vrImg from '../assets/VR.webp';
+import vectorVr from '../assets/Vector-VR.webp';
+import vector01 from '../assets/Vector-01.webp';
+import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -103,6 +103,15 @@ const renderRangeIcon = (iconVal, idx, isSelected) => {
   ];
 
   return defaultIcons[idx % defaultIcons.length];
+};
+
+// Helper to resolve valid image URLs or fallback
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '') return fallback;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (url.startsWith('/uploads/')) return `http://localhost:5001${url}`;
+  if (url.startsWith('/assets/') || url.startsWith('/src/assets/')) return fallback;
+  return url;
 };
 
 export default function VrGames({ siteData }) {
@@ -510,7 +519,7 @@ export default function VrGames({ siteData }) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      boxShadow: isSelected ? '0 10px 25px rgba(56, 189, 248, 0.25)' : '0 4px 12px rgba(0,0,0,0.02)',
+                      boxShadow: 'none',
                       transition: 'all 0.25s ease',
                       textAlign: 'left'
                     }}
@@ -713,7 +722,7 @@ export default function VrGames({ siteData }) {
             </div>
           </div>
 
-          {/* Right Image Feature with Vector-01.png and Vector-VR backdrop on left (FIGMA 1:1) */}
+          {/* Right Image Feature with Vector-01.webp and Vector-VR backdrop on left (FIGMA 1:1) */}
           <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
             <img
               src={vectorVr}
@@ -729,7 +738,7 @@ export default function VrGames({ siteData }) {
               }}
             />
             <img
-              src={siteData?.vrEarn?.imgUrl || vector01}
+              src={getValidImageUrl(siteData?.vrEarn?.imgUrl, vrEarnPlayer)}
               alt="VR Gaming Zone ROI Player"
               style={{
                 position: 'relative',
@@ -843,7 +852,7 @@ export default function VrGames({ siteData }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           marginBottom: '16px',
-                          boxShadow: '0 8px 18px rgba(56, 189, 248, 0.3)'
+                          boxShadow: 'none'
                         }}>
                           {card.iconUrl ? (
                             <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
@@ -921,7 +930,7 @@ export default function VrGames({ siteData }) {
                             alignItems: 'center',
                             justifyContent: 'center',
                             marginBottom: '16px',
-                            boxShadow: '0 8px 18px rgba(56, 189, 248, 0.3)'
+                            boxShadow: 'none'
                           }}>
                             {card.iconUrl ? (
                               <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />

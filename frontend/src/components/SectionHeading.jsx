@@ -1,5 +1,5 @@
 import React from 'react';
-import yellowStrokeLine from '../assets/yellow-stroke-line.png';
+import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
 function parseStarText(children) {
   // If children is not a plain string, return as-is (e.g. already JSX)
@@ -23,10 +23,10 @@ function parseStarText(children) {
 export default function SectionHeading({
   children,
   subtitle,
-  accentWidth = '320px',
-  accentMaxWidth = '450px',
+  accentWidth = '220px',
+  accentMaxWidth = '260px',
   align = 'center',
-  marginBottom = '40px',
+  marginBottom = '32px',
   style = {}
 }) {
   const isLeft = align === 'left';

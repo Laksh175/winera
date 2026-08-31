@@ -1,5 +1,5 @@
 import React from 'react';
-import ctaGamersBg from '../assets/cta-gamers-bg.png';
+import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 
 export default function CtaBanner({
   tagline = "READY TO GET STARTED?",

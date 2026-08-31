@@ -5,9 +5,9 @@ import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import FaqSection from '../components/FaqSection';
 import { Phone, Mail, Building2, Globe, CheckCircle2 } from 'lucide-react';
-import contactUsHeroBg from '../assets/Contact-us.png';
-import aboutHeroBg from '../assets/about-hero-bg.png';
-import arcadeHeroBg from '../assets/arcade-hero-bg.png';
+import contactUsHeroBg from '../assets/Contact-us.webp';
+import aboutHeroBg from '../assets/about-hero-bg.webp';
+import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 
 export default function ContactUs({ siteData }) {
   const [formData, setFormData] = useState({
@@ -105,10 +105,11 @@ export default function ContactUs({ siteData }) {
                 <div style={{
                   position: 'relative',
                   zIndex: 2,
-                  background: '#ffffff',
-                  borderRadius: '20px',
+                  background: '#e0f2fe',
+                  border: '1.5px solid #38bdf8',
+                  borderRadius: '24px',
                   padding: '22px 26px',
-                  boxShadow: '0 10px 28px rgba(56, 189, 248, 0.12)',
+                  boxShadow: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '18px',
@@ -153,10 +154,11 @@ export default function ContactUs({ siteData }) {
                 <div style={{
                   position: 'relative',
                   zIndex: 2,
-                  background: '#ffffff',
-                  borderRadius: '20px',
+                  background: '#fefce8',
+                  border: '1.5px solid #facc15',
+                  borderRadius: '24px',
                   padding: '22px 26px',
-                  boxShadow: '0 10px 28px rgba(255, 205, 0, 0.14)',
+                  boxShadow: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '18px',
@@ -201,7 +203,7 @@ export default function ContactUs({ siteData }) {
             background: '#ffffff',
             borderRadius: '24px',
             padding: '36px 32px',
-            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.06)',
+            boxShadow: 'none',
             overflow: 'hidden',
             textAlign: 'left',
             maxWidth: '480px',
@@ -329,22 +331,22 @@ export default function ContactUs({ siteData }) {
 
         {/* 4. OUR 2 GLOBAL LOCATIONS & MAP SECTION */}
         <div style={{ maxWidth: '1240px', margin: '80px auto 0' }}>
-          <div style={{ marginBottom: '50px', textAlign: 'center' }}>
+          <div style={{ marginBottom: '80px', textAlign: 'center' }}>
             <SectionHeading align="center" marginBottom="28px" accentWidth="240px" accentMaxWidth="400px">
               <span style={{ color: '#0f172a' }}>Where We’re </span>
               <span style={{ color: '#38bdf8' }}>Globally Present</span>
             </SectionHeading>
-
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
 
               {/* Surat HQ — white + cyan diagonal swoosh */}
               <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
                 <div style={{
                   position: 'relative',
-                  background: '#ffffff',
+                  background: '#e0f2fe',
+                  border: '1.5px solid #38bdf8',
                   borderRadius: '24px',
                   padding: '32px',
-                  boxShadow: '0 10px 28px rgba(56, 189, 248, 0.12)',
+                  boxShadow: 'none',
                   textAlign: 'left',
                   height: '100%',
                   overflow: 'hidden'
@@ -387,10 +389,11 @@ export default function ContactUs({ siteData }) {
               <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
                 <div style={{
                   position: 'relative',
-                  background: '#ffffff',
+                  background: '#fefce8',
+                  border: '1.5px solid #facc15',
                   borderRadius: '24px',
                   padding: '32px',
-                  boxShadow: '0 10px 28px rgba(255, 205, 0, 0.14)',
+                  boxShadow: 'none',
                   textAlign: 'left',
                   height: '100%',
                   overflow: 'hidden'
@@ -432,7 +435,7 @@ export default function ContactUs({ siteData }) {
           </div>
 
           {/* Location Map */}
-          <div style={{ textAlign: 'center', marginTop: '60px' }}>
+          <div style={{ textAlign: 'center', marginTop: '80px' }}>
             <SectionHeading align="center" marginBottom="28px" accentWidth="220px" accentMaxWidth="360px">
               <span style={{ color: '#38bdf8' }}>Discover Our </span>
               <span style={{ color: '#0f172a' }}>Locations</span>
@@ -443,7 +446,7 @@ export default function ContactUs({ siteData }) {
               height: '420px',
               borderRadius: '28px',
               overflow: 'hidden',
-              boxShadow: '0 20px 45px rgba(0, 0, 0, 0.08)',
+              boxShadow: 'none',
               border: '4px solid #ffffff'
             }}>
               <iframe

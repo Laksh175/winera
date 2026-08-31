@@ -1,6 +1,6 @@
 import React from 'react';
 import SectionHeading from './SectionHeading';
-import clientsBg from '../assets/clients-bg.png';
+import clientsBg from '../assets/clients-bg.webp';
 
 export default function ClientsMarqueeSection({
   id = 'clients',
@@ -13,9 +13,9 @@ export default function ClientsMarqueeSection({
     <section id={id} className="winera-clients-section" style={{
       position: 'relative',
       width: '100%',
-      padding: '70px 0 90px',
+      padding: '45px 0 55px',
       background: `url(${bg}) center/100% 100% no-repeat`,
-      minHeight: '400px',
+      minHeight: '360px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -24,7 +24,7 @@ export default function ClientsMarqueeSection({
       overflow: 'hidden'
     }}>
       <div style={{ maxWidth: '100%', width: '100%', margin: '0 auto' }}>
-        <SectionHeading marginBottom="8px" accentWidth="65%">
+        <SectionHeading marginBottom="8px" accentWidth="280px" accentMaxWidth="340px">
           {(() => {
             const rawTitle = title || "*Our Clients* Section";
             const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);

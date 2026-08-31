@@ -7,6 +7,7 @@ import { fetchSiteContent } from './services/api';
 const Home = lazy(() => import('./pages/Home'));
 const AboutUs = lazy(() => import('./pages/AboutUs'));
 const ArcadeGame = lazy(() => import('./pages/ArcadeGame'));
+const ArcadeGameDetail = lazy(() => import('./pages/ArcadeGameDetail'));
 const BowlingAlley = lazy(() => import('./pages/BowlingAlley'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
@@ -38,6 +39,9 @@ function ScrollToTop() {
   return null;
 }
 
+import { VideoModalProvider } from './context/VideoModalContext';
+import WhatsAppFloat from './components/WhatsAppFloat';
+
 export default function App() {
   const [siteData, setSiteData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -59,9 +63,11 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <Router>
-        <ScrollToTop />
-        <Suspense fallback={<div style={{ minHeight: '100vh', background: '#F5F5F9' }} />}>
+      <VideoModalProvider>
+        <Router>
+          <ScrollToTop />
+          <WhatsAppFloat whatsAppUrl={siteData?.header?.whatsAppUrl} />
+          <Suspense fallback={<div style={{ minHeight: '100vh', background: '#F5F5F9' }} />}>
           <Routes>
             {/* 1. Home Page */}
             <Route path="/" element={<Home siteData={siteData} />} />
@@ -101,6 +107,10 @@ export default function App() {
             <Route path="/product/vr-games" element={<VrGames siteData={siteData} />} />
             <Route path="/products/vr-games" element={<VrGames siteData={siteData} />} />
             <Route path="/vr-games" element={<VrGames siteData={siteData} />} />
+            <Route path="/product/vr-game" element={<VrGames siteData={siteData} />} />
+            <Route path="/products/vr-game" element={<VrGames siteData={siteData} />} />
+            <Route path="/vr-game" element={<VrGames siteData={siteData} />} />
+            <Route path="/vr" element={<VrGames siteData={siteData} />} />
 
             {/* 9. Bumper Car */}
             <Route path="/product/bumper-car" element={<BumperCar siteData={siteData} />} />
@@ -117,6 +127,9 @@ export default function App() {
             <Route path="/product/ar-games" element={<ArGames siteData={siteData} />} />
             <Route path="/products/ar-games" element={<ArGames siteData={siteData} />} />
             <Route path="/ar-games" element={<ArGames siteData={siteData} />} />
+            <Route path="/product/ar-game" element={<ArGames siteData={siteData} />} />
+            <Route path="/products/ar-game" element={<ArGames siteData={siteData} />} />
+            <Route path="/ar-game" element={<ArGames siteData={siteData} />} />
 
             {/* 12. Hypergrid */}
             <Route path="/product/hypergrid" element={<Hypergrid siteData={siteData} />} />
@@ -127,6 +140,10 @@ export default function App() {
             <Route path="/product/laser-tag" element={<LaserTag siteData={siteData} />} />
             <Route path="/products/laser-tag" element={<LaserTag siteData={siteData} />} />
             <Route path="/laser-tag" element={<LaserTag siteData={siteData} />} />
+
+            {/* Arcade Detail Dynamic Route */}
+            <Route path="/product/:slug" element={<ArcadeGameDetail siteData={siteData} />} />
+            <Route path="/arcade-game/:slug" element={<ArcadeGameDetail siteData={siteData} />} />
 
             {/* 14. Safety Standards */}
             <Route path="/resource/safety-standards" element={<SafetyStandards siteData={siteData} />} />
@@ -157,7 +174,8 @@ export default function App() {
             <Route path="/admin" element={<AdminDashboard siteData={siteData} refreshContent={loadData} />} />
           </Routes>
         </Suspense>
-      </Router>
+        </Router>
+      </VideoModalProvider>
     </AuthProvider>
   );
 }
