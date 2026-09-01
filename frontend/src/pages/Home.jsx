@@ -25,6 +25,20 @@ import homeBlock1 from '../assets/home-block-1.webp';
 import homeBlock2 from '../assets/home-block-2.webp';
 import { Check, ArrowRight, ShieldCheck, ChevronLeft, ChevronRight, LayoutGrid, ShoppingBag, Palette, Wrench, CheckCheck, UserCheck } from 'lucide-react';
 
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
 export default function Home({ siteData }) {
   const navigate = useNavigate();
   const [activeProductIndex, setActiveProductIndex] = React.useState(0);
@@ -1179,152 +1193,23 @@ export default function Home({ siteData }) {
       />
 
       {/* 15. READY TO GET STARTED CTA BANNER SECTION */}
-      <section className="winera-home-cta-section" style={{ padding: '60px 4vw 70px', background: '#F8FAFC' }}>
-        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          <div style={{
-            backgroundImage: `url(${siteData?.ctaBanner?.bgUrl || homeBlockBg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            borderRadius: '24px',
-            padding: '55px 30px',
-            textAlign: 'center',
-            color: '#ffffff',
-            boxShadow: '0 12px 36px rgba(0,0,0,0.12)',
-            position: 'relative',
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '30px'
-          }} className="winera-home-cta-card">
-            
-            {/* Left Tilted Card Image */}
-            <div className="winera-home-cta-left-img" style={{ flexShrink: 0, zIndex: 2 }}>
-              <img
-                src={homeBlock1}
-                alt="Game Zone Experience"
-                loading="lazy"
-                decoding="async"
-                width={210}
-                height={280}
-                style={{
-                  width: '210px',
-                  height: 'auto',
-                  aspectRatio: '210 / 280',
-                  display: 'block',
-                  borderRadius: '16px',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)'
-                }}
-              />
-            </div>
-
-            {/* Center Content Area */}
-            <div style={{ flex: 1, maxWidth: '680px', zIndex: 2, margin: '0 auto' }}>
-              <h2 style={{
-                fontSize: '3.2rem',
-                fontWeight: '900',
-                margin: '0 0 10px 0',
-                lineHeight: 1.15,
-                letterSpacing: '0.5px'
-              }} className="winera-home-cta-h2">
-                <span style={{ color: '#ffcd00' }}>READY TO </span>
-                <span style={{ color: '#38bdf8' }}>GET STARTED?</span>
-              </h2>
-
-              <h3 style={{
-                fontSize: '1.6rem',
-                fontWeight: '900',
-                color: '#ffffff',
-                margin: '0 0 16px 0',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-                lineHeight: 1.25
-              }} className="winera-home-cta-h3">
-                {siteData?.ctaBanner?.subtitle || "Start Your Game Zone Journey"}
-              </h3>
-
-              <p style={{
-                fontSize: '14.5px',
-                color: '#cbd5e1',
-                lineHeight: 1.6,
-                fontWeight: '500',
-                margin: '0 auto 28px auto',
-                maxWidth: '620px'
-              }} className="winera-home-cta-p">
-                <span style={{ fontWeight: '700', color: '#ffffff' }}>
-                  Game Zones Are India's Fastest Growing Business Are You In?
-                </span>
-                <br />
-                <span>
-                  Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company
-                </span>
-              </p>
-
-              {/* Offset Rotated Backdrop Button with WhatsApp Icon (Left-Bottom & Right-Top Protrusion) */}
-              <div style={{ position: 'relative', display: 'inline-block' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-3px',
-                  bottom: '-3px',
-                  left: '-4px',
-                  right: '-4px',
-                  background: '#ffcd00',
-                  borderRadius: '14px',
-                  transform: 'rotate(-1.8deg)',
-                  zIndex: 1
-                }} />
-                <a
-                  href={siteData?.ctaBanner?.buttonLink || siteData?.header?.whatsAppUrl || "https://wa.me/919428989488?text=Hi%20Winera%2C%20I%20want%20to%20talk%20to%20an%20expert"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    position: 'relative',
-                    zIndex: 2,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    background: '#ffffff',
-                    color: '#0f172a',
-                    padding: '10px 24px',
-                    borderRadius: '12px',
-                    fontWeight: '800',
-                    fontSize: '13.5px',
-                    textDecoration: 'none',
-                    boxShadow: '0 6px 18px rgba(0,0,0,0.15)',
-                    transition: 'all 0.25s ease'
-                  }}
-                  className="winera-cta-btn-hover"
-                >
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="#25D366" style={{ display: 'block', flexShrink: 0 }}>
-                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.763.459 3.486 1.332 5.003L2 22l5.127-1.343c1.46.797 3.107 1.217 4.881 1.217h.004c5.505 0 9.988-4.478 9.989-9.985 0-2.669-1.039-5.178-2.924-7.063C17.192 3.042 14.682 2 12.012 2zm5.824 14.073c-.244.688-1.428 1.32-1.97 1.397-.506.071-1.157.126-3.704-.925-3.08-1.272-5.068-4.398-5.221-4.602-.153-.204-1.246-1.66-1.246-3.166 0-1.506.786-2.247 1.066-2.553.28-.306.611-.382.815-.382.204 0 .408.002.586.01.191.008.446-.073.697.531.255.613.867 2.117.943 2.27.076.153.127.331.025.535-.102.204-.153.331-.306.51-.153.178-.321.398-.459.535-.153.153-.313.319-.135.625.178.306.792 1.306 1.7 2.115 1.169 1.042 2.155 1.365 2.461 1.518.306.153.484.127.663-.076.178-.204.764-.892.968-1.198.204-.306.408-.255.688-.153.28.102 1.784.841 2.09 1.019.306.178.51.255.586.382.076.127.076.739-.168 1.427z"/>
-                  </svg>
-                  <span>{siteData?.ctaBanner?.buttonText || "Talk to an Expert"}</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Right Tilted Card Image */}
-            <div className="winera-home-cta-right-img" style={{ flexShrink: 0, zIndex: 2 }}>
-              <img
-                src={homeBlock2}
-                alt="Game Zone Setup"
-                loading="lazy"
-                decoding="async"
-                width={210}
-                height={280}
-                style={{
-                  width: '210px',
-                  height: 'auto',
-                  aspectRatio: '210 / 280',
-                  display: 'block',
-                  borderRadius: '16px',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)'
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <CtaBanner
+        align="center"
+        gradientTagline={true}
+        gradientTitle={false}
+        bgUrl={siteData?.ctaBanner?.bgUrl !== undefined ? siteData.ctaBanner.bgUrl : null}
+        bg={homeBlockBg}
+        leftImgUrl={siteData?.ctaBanner?.leftImgUrl !== undefined ? siteData.ctaBanner.leftImgUrl : null}
+        leftImg={homeBlock1}
+        rightImgUrl={siteData?.ctaBanner?.rightImgUrl !== undefined ? siteData.ctaBanner.rightImgUrl : null}
+        rightImg={homeBlock2}
+        tagline={siteData?.ctaBanner?.tagline !== undefined ? siteData.ctaBanner.tagline : "READY TO GET STARTED?"}
+        title={siteData?.ctaBanner?.title || "Start Your Game Zone Journey"}
+        subtitle={siteData?.ctaBanner?.subtitle || "Game Zones Are India's Fastest Growing Business Are You In?"}
+        description={siteData?.ctaBanner?.description || "Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company"}
+        buttonText={siteData?.ctaBanner?.buttonText || "Talk to an Expert"}
+        buttonLink={siteData?.ctaBanner?.buttonLink || "https://wa.me/919428989488"}
+      />
       </main>
 
       {/* 16. FOOTER SECTION */}

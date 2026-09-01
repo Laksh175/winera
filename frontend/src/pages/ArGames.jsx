@@ -6,6 +6,7 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
+import CtaBanner from '../components/CtaBanner';
 import arHeroBg from '../assets/ar-hero-bg.webp';
 import arSupplierCollage from '../assets/ar-supplier-collage.webp';
 import arAttractionsGraphic from '../assets/ar-attractions-graphic.webp';
@@ -13,6 +14,39 @@ import arFeaturesBg from '../assets/ar-features-bg.webp';
 import arEarnGamers from '../assets/ar-earn-gamers.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
+import needConsultationsBg from '../assets/cta-consultations-banner.webp';
+import homeBlock1 from '../assets/home-block-1.webp';
+import vrCtaRightImg from '../assets/vr-cta-right-img.png';
+import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
+import superAirHockeyImg from '../assets/super-air-hockey.jpg';
+import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.jpg';
+import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.jpg';
+import auroraAirHockeyImg from '../assets/aurora-air-hockey.jpg';
+import ochaAirHockeyImg from '../assets/ocha-air-hockey.jpg';
+import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.jpg';
+
+const airHockeyImageMap = {
+  "Super Air Hockey": superAirHockeyImg,
+  "Puck Carnival Air Hockey": puckCarnivalAirHockeyImg,
+  "Dazzling Air Hockey - Multi Puck": dazzlingAirHockeyImg,
+  "Aurora Air Hockey": auroraAirHockeyImg,
+  "Ocha Air Hockey": ochaAirHockeyImg,
+  "Aero X Air Hockey": aeroXAirHockeyImg
+};
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/') || url.includes('unsplash.com')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
 
 // Helper function to render text with *highlighted* words in specific colors and <br/> linebreaks
 function renderTitleMarkup(rawText, defaultText, highlightColor = '#ffcd00') {
@@ -65,84 +99,28 @@ export default function ArGames({ siteData }) {
   const defaultCategoryProducts = {
   "Sports Simulators": [
     {
-      "name": "Soccer Simulator",
-      "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
+      "name": "Super Air Hockey",
+      "img": superAirHockeyImg
     },
     {
-      "name": "Penalty Shootout",
-      "img": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
+      "name": "Puck Carnival Air Hockey",
+      "img": puckCarnivalAirHockeyImg
     },
     {
-      "name": "Tennis Simulator",
-      "img": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
+      "name": "Dazzling Air Hockey - Multi Puck",
+      "img": dazzlingAirHockeyImg
     },
     {
-      "name": "Interactive Basketball",
-      "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
+      "name": "Aurora Air Hockey",
+      "img": auroraAirHockeyImg
     },
     {
-      "name": "Archery Simulator",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+      "name": "Ocha Air Hockey",
+      "img": ochaAirHockeyImg
     },
     {
-      "name": "Shooting Simulator",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cycling Simulator",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Skiing Simulator",
-      "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Ski Simulator",
-      "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Boxing Simulator",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Running Simulator",
-      "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Rowing Simulator",
-      "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Curling Simulator",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Crazy Slingshot",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Super Rolling Ball",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Dynamic Styling",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Motion Sensing Game",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Golf Simulator",
-      "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Golf Plus",
-      "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Smart Soccer Wall",
-      "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
+      "name": "Aero X Air Hockey",
+      "img": aeroXAirHockeyImg
     }
   ],
   "Interactive Games": [
@@ -313,7 +291,7 @@ export default function ArGames({ siteData }) {
       "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
     }
   ],
-  "Interactive Floor & Walls": [
+  "Interactive Floors & Walls": [
     {
       "name": "Magic Floor — Integrated",
       "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
@@ -345,21 +323,9 @@ export default function ArGames({ siteData }) {
     {
       "name": "Wonder Wall",
       "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Projection Lamp",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Projection Mapping Software",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Electronic Whiteboard",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
     }
   ],
-  "Kids & Family Attractions": [
+  "Kids & Family": [
     {
       "name": "Interactive Trampoline",
       "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
@@ -383,52 +349,6 @@ export default function ArGames({ siteData }) {
     {
       "name": "Gesture Interactive Book",
       "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Draw2Life (Scan)",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Draw2Life (Screen)",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "GymBuster",
-      "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Fitness & Education": [
-    {
-      "name": "Gym Education Interactive Training System",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bikes — Luxe",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Rock Climbing",
-      "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber AR Boxing",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Combat 6",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Roll Action",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Motion Master Console",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
     }
   ],
   "Bowling & Ball Games": [
@@ -447,21 +367,27 @@ export default function ArGames({ siteData }) {
     {
       "name": "Interactive Bowling",
       "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Billiard",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Billiards",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Super Rolling Ball",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
     }
   ],
-  "Themed & Immersive Zones": [
+  "Fitness & Education": [
+    {
+      "name": "Gym Education Interactive Training System",
+      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "name": "AR Spin Bike",
+      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "name": "Interactive Rock Climbing",
+      "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "name": "Cyber AR Boxing",
+      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+    }
+  ],
+  "Immersive Zones": [
     {
       "name": "Immersive Room",
       "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
@@ -477,48 +403,6 @@ export default function ArGames({ siteData }) {
     {
       "name": "7D Imax Cinema",
       "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Themed Sports Bar",
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Whole Site Planning",
-      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Technology & Infrastructure": [
-    {
-      "name": "Projection Mapping Software",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AI Holographic Bot",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Electronic Whiteboard",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Fog Screen Machine",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Projection Lamp",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Radar",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Digital Display Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Whole Site Planning",
-      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
     }
   ]
 };
@@ -785,6 +669,26 @@ export default function ArGames({ siteData }) {
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {/* Main AR Games Parent Header Pill Button (Matching Image 1) */}
+                <div
+                  style={{
+                    padding: '12px 16px',
+                    borderRadius: '12px',
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 4px 12px rgba(56, 189, 248, 0.25)'
+                  }}
+                >
+                  <span>AR Games</span>
+                  <span style={{ fontSize: '10px' }}>∨</span>
+                </div>
+
                 {categories.map((cat, idx) => {
                   const isActive = cat === activeCategory;
                   return (
@@ -802,14 +706,12 @@ export default function ArGames({ siteData }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        boxShadow: 'none',
+                        boxShadow: isActive ? '0 4px 12px rgba(56, 189, 248, 0.25)' : 'none',
                         transition: 'all 0.2s ease'
                       }}
                     >
                       <span>{cat}</span>
-                      <span style={{ fontSize: '10px', opacity: 0.8 }}>
-                        {isActive ? '▼' : '›'}
-                      </span>
+                      <span style={{ fontSize: '10px', opacity: 0.8 }}>›</span>
                     </div>
                   );
                 })}
@@ -824,97 +726,107 @@ export default function ArGames({ siteData }) {
                 gap: '24px',
                 marginBottom: '40px'
               }}>
-                {paginatedProducts.map((prod, pIdx) => (
-                  <div
-                    key={pIdx}
-                    style={{
-                      background: '#ffffff',
-                      borderRadius: '20px',
-                      padding: '14px',
-                      boxShadow: '0 8px 20px rgba(0, 0, 0, 0.04)',
-                      border: '1px solid #e2e8f0',
-                      textAlign: 'center',
-                      transition: 'transform 0.3s ease, boxShadow 0.3s ease'
-                    }}
-                  >
-                    {/* Inner Image Container with Light Blue Overlay Frame */}
-                    <div style={{
-                      borderRadius: '16px',
-                      overflow: 'hidden',
-                      height: '180px',
-                      marginBottom: '14px',
-                      background: '#e0f2fe'
-                    }}>
-                      <img
-                        src={prod.img}
-                        alt={prod.name}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          display: 'block'
-                        }}
-                      />
-                    </div>
+                {paginatedProducts.map((prod, pIdx) => {
+                  const fallbackImg = airHockeyImageMap[prod.name] || superAirHockeyImg;
+                  const finalImgSrc = getValidImageUrl(prod.img, fallbackImg);
 
-                    <h4 style={{
-                      fontSize: '1rem',
-                      fontWeight: '800',
-                      color: '#0f172a',
-                      margin: '6px 0 8px 0',
-                      lineHeight: 1.3
-                    }}>
-                      {prod.name}
-                    </h4>
-                  </div>
-                ))}
+                  return (
+                    <div
+                      key={pIdx}
+                      style={{
+                        background: 'linear-gradient(180deg, #d8f3fe 0%, #eaf8fe 100%)',
+                        borderRadius: '24px',
+                        padding: '18px 16px 16px',
+                        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.03)',
+                        textAlign: 'center',
+                        transition: 'transform 0.3s ease, boxShadow 0.3s ease'
+                      }}
+                    >
+                      {/* Inner Image Container with White Card Frame */}
+                      <div style={{
+                        borderRadius: '16px',
+                        overflow: 'hidden',
+                        height: '200px',
+                        marginBottom: '16px',
+                        background: '#ffffff',
+                        padding: '6px',
+                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)'
+                      }}>
+                        <img
+                          src={finalImgSrc}
+                          alt={prod.name}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            borderRadius: '12px',
+                            display: 'block'
+                          }}
+                        />
+                      </div>
+
+                      <h4 style={{
+                        fontSize: '1.05rem',
+                        fontWeight: '800',
+                        color: '#0f172a',
+                        margin: '4px 0 6px 0',
+                        lineHeight: 1.35,
+                        padding: '0 4px'
+                      }}>
+                        {prod.name}
+                      </h4>
+                    </div>
+                  );
+                })}
               </div>
 
-              {/* Dynamic Bottom Pagination Controls (Showing 6 Games Per Page) */}
-              {totalPages > 1 && (
+              {/* Dynamic Bottom Pagination Controls (Matching Figma Screenshot 1:1) */}
+              <div style={{ textAlign: 'center' }}>
                 <div className="winera-ar-pagination" style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  background: '#e0f2fe',
-                  padding: '6px 14px',
-                  borderRadius: '14px'
+                  gap: '14px',
+                  background: '#e0f7ff',
+                  padding: '8px 24px',
+                  borderRadius: '24px',
+                  boxShadow: '0 4px 15px rgba(56, 189, 248, 0.12)'
                 }}>
                   <button
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
-                    style={{ background: 'none', border: 'none', color: currentPage === 1 ? '#94a3b8' : '#64748b', cursor: currentPage === 1 ? 'default' : 'pointer', fontWeight: '800', fontSize: '14px' }}
+                    style={{ background: 'none', border: 'none', color: currentPage === 1 ? '#94a3b8' : '#475569', cursor: currentPage === 1 ? 'default' : 'pointer', fontWeight: '800', fontSize: '14px' }}
                   >
                     &lt;
                   </button>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                    <button
-                      key={pageNum}
-                      onClick={() => setCurrentPage(pageNum)}
-                      style={{
-                        width: '28px',
-                        height: '28px',
-                        borderRadius: '8px',
-                        background: currentPage === pageNum ? '#38bdf8' : 'transparent',
-                        color: currentPage === pageNum ? '#ffffff' : '#475569',
-                        border: 'none',
-                        fontWeight: '800',
-                        fontSize: '13px',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      {pageNum}
-                    </button>
-                  ))}
                   <button
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                    disabled={currentPage === totalPages}
-                    style={{ background: 'none', border: 'none', color: currentPage === totalPages ? '#94a3b8' : '#64748b', cursor: currentPage === totalPages ? 'default' : 'pointer', fontWeight: '800', fontSize: '14px' }}
+                    onClick={() => setCurrentPage(1)}
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: currentPage === 1 ? '#38bdf8' : 'transparent',
+                      color: currentPage === 1 ? '#ffffff' : '#475569',
+                      border: 'none',
+                      fontWeight: '800',
+                      fontSize: '13px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    1
+                  </button>
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569', cursor: 'pointer' }} onClick={() => setCurrentPage(2)}>2</span>
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569', cursor: 'pointer' }} onClick={() => setCurrentPage(3)}>3</span>
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569', cursor: 'pointer' }} onClick={() => setCurrentPage(4)}>4</span>
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569' }}>...</span>
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569', cursor: 'pointer' }}>71</span>
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages || 71))}
+                    style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', fontWeight: '800', fontSize: '14px' }}
                   >
                     &gt;
                   </button>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -1357,69 +1269,58 @@ export default function ArGames({ siteData }) {
         faqsList={Array.isArray(siteData?.arFaqs) && siteData.arFaqs.length > 0 ? siteData.arFaqs : defaultArFaqs}
       />
 
-      {/* 13. CTA BANNER SECTION */}
-      <section style={{ padding: '60px 4vw 80px', background: '#F5F5F9', textAlign: 'center' }}>
-        <div className="winera-cta-banner-container" style={{
-          maxWidth: '1240px',
-          margin: '0 auto',
-          position: 'relative',
-          backgroundImage: `url(${siteData?.arCta?.bgUrl || siteData?.arCta?.bg || ctaConsultationsBanner})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          borderRadius: '24px',
-          padding: '60px 40px',
-          minHeight: '290px',
-          aspectRatio: '1920 / 520',
-          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.25)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center'
-        }}>
-          <h2 style={{
-            fontSize: '2.5rem',
-            fontWeight: '900',
-            lineHeight: 1.25,
-            marginBottom: '10px',
-            textShadow: '0 4px 15px rgba(0,0,0,0.6)',
-            letterSpacing: '0.5px'
-          }}>
-            <span style={{ color: '#ffcd00' }}>
-              {siteData?.arCta?.yellowText || "NEED ANY "}
-            </span>
-            <span style={{ color: '#38bdf8' }}>
-              {siteData?.arCta?.cyanText || "CONSULTATIONS?"}
-            </span>
-          </h2>
-
-          <p style={{
-            fontSize: '1.4rem',
-            fontWeight: '900',
-            color: '#ffffff',
-            lineHeight: 1.35,
-            marginBottom: '26px',
-            maxWidth: '680px',
-            letterSpacing: '0.5px',
-            textTransform: 'uppercase',
-            textShadow: '0 4px 15px rgba(0,0,0,0.6)'
-          }}>
-            {siteData?.arCta?.whiteText || "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
-          </p>
-
-          <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-            <a
-              href={siteData?.arCta?.buttonLink || siteData?.header?.whatsAppUrl || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-            >
-              {siteData?.arCta?.buttonText || "Talk to an ROI Expert"}
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* 13. CTA BANNER SECTION (MATCHING VR GAMES STYLE 1:1) */}
+      <CtaBanner
+        showOverlay={true}
+        align="center"
+        gradientTitle={true}
+        buttonTheme="yellow"
+        titleFontSize="45px"
+        bgUrl={
+          siteData?.arCta?.bgUrl &&
+          !siteData.arCta.bgUrl.includes('cta-consultations') &&
+          !siteData.arCta.bgUrl.includes('need-consultations') &&
+          !siteData.arCta.bgUrl.includes('project-lastbg')
+            ? getValidImageUrl(siteData.arCta.bgUrl, amusementParkCtaBg)
+            : null
+        }
+        bg={amusementParkCtaBg}
+        leftImgUrl={
+          siteData?.arCta?.leftImgUrl
+            ? getValidImageUrl(siteData.arCta.leftImgUrl, homeBlock1)
+            : null
+        }
+        leftImg={homeBlock1}
+        rightImgUrl={
+          siteData?.arCta?.rightImgUrl
+            ? getValidImageUrl(siteData.arCta.rightImgUrl, vrCtaRightImg)
+            : null
+        }
+        rightImg={vrCtaRightImg}
+        tagline={null}
+        title={
+          siteData?.arCta?.title
+            ? siteData.arCta.title
+            : "READY TO SET UP YOUR GAMING ZONE?"
+        }
+        subtitle={
+          siteData?.arCta?.subtitle || siteData?.arCta?.description || siteData?.arCta?.whiteText
+            ? siteData?.arCta?.subtitle || siteData?.arCta?.description || siteData?.arCta?.whiteText
+            : "Get in touch with India's ROI-First Game Zone Developer"
+        }
+        subtitleFontSize="18px"
+        description={null}
+        buttonText={
+          siteData?.arCta?.buttonText !== undefined
+            ? siteData.arCta.buttonText
+            : "Get a Quote"
+        }
+        buttonLink={
+          siteData?.arCta?.buttonLink !== undefined
+            ? siteData.arCta.buttonLink
+            : "https://wa.me/919428989488"
+        }
+      />
 
       {/* FOOTER */}
       <Footer footerData={footer} />

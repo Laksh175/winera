@@ -16,6 +16,9 @@ import bumpercarOptionsBg from '../assets/bumpercar-options-bg.webp';
 import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.jpg';
 import bumpercarInvestmentCollage from '../assets/bumpercar-investment-collage.webp';
 import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
+import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
+import bumperCarCtaLeft from '../assets/bumperCar-cta-left.png';
+import bumperCarCtaRight from '../assets/bumperCar-cta-right.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
@@ -555,49 +558,56 @@ export default function BumperCar({ siteData }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '10px',
+            gap: '12px',
             position: 'relative',
             maxWidth: '1150px',
             margin: '0 auto'
           }}>
             {/* LEFT COLUMN: Electric Floor Points (Yellow Arc Curve Layout) */}
             <div style={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'flex-end', position: 'relative' }}>
-              {/* Point Pills List arranged in a outward curve */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-end', zIndex: 2 }}>
+              {/* Point Pills List arranged in an outward curve */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-end', zIndex: 3, marginRight: '-80px'}}>
                 {(siteData?.bumpercarComparison?.electricPoints || defaultElectricPoints).map((pt, idx) => {
-                  // Calculate curve offset for 6 items: top/bottom pushed right, middle items pushed left
-                  // idx 0 & 5: offset 80px right; idx 1 & 4: offset 30px right; idx 2 & 3: offset 0px
-                  const curveOffsets = [0, 30, 80, 80, 30, 0];
+                  const curveOffsets = [0, 45, 90, 75, 40, 0];
                   const offsetRight = curveOffsets[idx] || 0;
 
                   return (
                     <div key={idx} style={{
-                      background: 'linear-gradient(135deg, #fef08a 0%, #fde047 100%)',
-                      borderRadius: '30px',
-                      padding: '8px 14px 8px 18px',
-                      boxShadow: 'none',
+                      background: 'linear-gradient(135deg, #fef08a 0%, #fde047 50%, #facc15 100%)',
+                      borderRadius: '24px',
+                      padding: '5px 12px 5px 16px',
+                      boxShadow: '0 6px 16px rgba(250, 204, 21, 0.2)',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '10px',
-                      maxWidth: '280px',
+                      justifyContent: 'flex-end',
                       marginRight: `${offsetRight}px`,
+                      minHeight: '38px',
                       transition: 'all 0.3s ease'
                     }}>
-                      <span style={{ fontSize: '12px', fontWeight: '500', color: '#0f172a', textAlign: 'right' }}>
-                        {pt.text}
+                      <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#0f172a', textAlign: 'left', lineHeight: 1.3, marginRight: '30px'}}>
+                        {pt.text && typeof pt.text === 'string'
+                          ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                              <React.Fragment key={lIdx}>
+                                {lIdx > 0 && <br />}
+                                {line}
+                              </React.Fragment>
+                            ))
+                          : pt.text}
                       </span>
                       <span style={{
-                        width: '24px',
-                        height: '24px',
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '50%',
                         background: '#ffffff',
                         color: '#0f172a',
                         fontSize: '11px',
-                        fontWeight: '600',
+                        fontWeight: '800',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        flexShrink: 0
+                        flexShrink: 0,
+                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
                       }}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
@@ -611,7 +621,7 @@ export default function BumperCar({ siteData }) {
                 width: '110px',
                 height: '110px',
                 borderRadius: '50%',
-                border: '2.5px dashed #facc15',
+                border: '2px dashed #facc15',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -619,33 +629,49 @@ export default function BumperCar({ siteData }) {
                 padding: '8px',
                 flexShrink: 0,
                 background: '#ffffff',
-                boxShadow: 'none',
+                boxShadow: '0 8px 20px rgba(234, 179, 8, 0.12)',
                 marginLeft: '15px',
-                zIndex: 1
+                marginRight: '8px',
+                zIndex: 2,
+                position: 'relative'
               }}>
-                <span style={{ fontSize: '11px', fontWeight: '700', color: '#ca8a04', lineHeight: 1.25 }}>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#ca8a04', lineHeight: 1.25, letterSpacing: '0.3px' }}>
                   BATTERY-<br />OPERATED
                 </span>
               </div>
+
+              {/* Big Outer Yellow Dotted Circle Graphic Centered on Inner Badge */}
+              <div style={{
+                position: 'absolute',
+                right: '-80px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '275px',
+                height: '275px',
+                borderRadius: '50%',
+                border: '2px dashed #fde047',
+                zIndex: 1,
+                pointerEvents: 'none'
+              }}></div>
             </div>
 
             {/* CENTER COLUMN: Features Pill Column (Gradient Pill Card with Pill Ends) */}
             <div style={{
-              width: '210px',
-              borderRadius: '40px',
-              background: 'linear-gradient(180deg, #dcfce7 0%, #7dd3fc 50%, #38bdf8 100%)',
-              padding: '35px 15px',
+              width: '270px',
+              minHeight: '440px',
+              borderRadius: '24px',
+              background: 'linear-gradient(180deg, #dcfce7 0%, #a7f3d0 25%, #7dd3fc 65%, #38bdf8 100%)',
+              padding: '34px 16px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              gap: '26px',
               textAlign: 'center',
-              boxShadow: '0 15px 35px rgba(56, 189, 248, 0.25)',
-              zIndex: 3,
+              boxShadow: '0 15px 35px rgba(56, 189, 248, 0.2)',
+              zIndex: 4,
               flexShrink: 0
             }}>
               {(siteData?.bumpercarComparison?.features || defaultComparisonFeatures).map((fText, idx) => (
-                <div key={idx} style={{ fontSize: '15px', fontWeight: '600', color: '#0f172a' }}>
+                <div key={idx} style={{ fontSize: '14.5px', fontWeight: '800', color: '#0f172a' }}>
                   {fText}
                 </div>
               ))}
@@ -658,7 +684,7 @@ export default function BumperCar({ siteData }) {
                 width: '110px',
                 height: '110px',
                 borderRadius: '50%',
-                border: '2.5px dashed #38bdf8',
+                border: '2px dashed #38bdf8',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -666,54 +692,75 @@ export default function BumperCar({ siteData }) {
                 padding: '8px',
                 flexShrink: 0,
                 background: '#ffffff',
-                boxShadow: 'none',
+                boxShadow: '0 8px 20px rgba(56, 189, 248, 0.12)',
                 marginRight: '15px',
-                zIndex: 1
+                marginLeft: '8px',
+                zIndex: 2,
+                position: 'relative'
               }}>
-                <span style={{ fontSize: '11px', fontWeight: '700', color: '#0284c7', lineHeight: 1.25 }}>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#0284c7', lineHeight: 1.25, letterSpacing: '0.3px'}}>
                   BATTERY-<br />OPERATED
                 </span>
               </div>
 
+              {/* Big Outer Cyan Dotted Circle Graphic Centered on Inner Badge */}
+              <div style={{
+                position: 'absolute',
+                left: '-80px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '275px',
+                height: '275px',
+                borderRadius: '50%',
+                border: '2px dashed #7dd3fc',
+                zIndex: 1,
+                pointerEvents: 'none'
+              }}></div>
+
               {/* Point Pills List arranged in an outward curve */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', zIndex: 2 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', zIndex: 3, marginLeft: '-80px' }}>
                 {(siteData?.bumpercarComparison?.batteryPoints || defaultBatteryPoints).map((pt, idx) => {
-                  // Calculate curve offset for 6 items: top/bottom pushed left, middle items pushed right
-                  // idx 0 & 5: offset 80px left; idx 1 & 4: offset 30px left; idx 2 & 3: offset 0px
-                  const curveOffsets = [0, 30, 80, 80, 30, 0];
+                  const curveOffsets = [0, 45, 90, 75, 40, 0];
                   const offsetLeft = curveOffsets[idx] || 0;
 
                   return (
                     <div key={idx} style={{
-                      background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                      borderRadius: '30px',
-                      padding: '8px 18px 8px 14px',
-                      boxShadow: 'none',
+                      background: 'linear-gradient(135deg, #7dd3fc 0%, #38bdf8 50%, #0284c7 100%)',
+                      borderRadius: '24px',
+                      padding: '5px 16px 5px 12px',
+                      boxShadow: '0 6px 16px rgba(56, 189, 248, 0.2)',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '10px',
-                      maxWidth: '280px',
-                      color: '#ffffff',
                       marginLeft: `${offsetLeft}px`,
+                      minHeight: '38px',
                       transition: 'all 0.3s ease'
                     }}>
                       <span style={{
-                        width: '24px',
-                        height: '24px',
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '50%',
                         background: '#ffffff',
                         color: '#0284c7',
                         fontSize: '11px',
-                        fontWeight: '600',
+                        fontWeight: '800',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        flexShrink: 0
+                        flexShrink: 0,
+                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
                       }}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <span style={{ fontSize: '12px', fontWeight: '500', textAlign: 'left' }}>
-                        {pt.text}
+                      <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#ffffff', textAlign: 'left', lineHeight: 1.3, marginLeft: '12px'}}>
+                        {pt.text && typeof pt.text === 'string'
+                          ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                              <React.Fragment key={lIdx}>
+                                {lIdx > 0 && <br />}
+                                {line}
+                              </React.Fragment>
+                            ))
+                          : pt.text}
                       </span>
                     </div>
                   );
@@ -859,7 +906,7 @@ export default function BumperCar({ siteData }) {
       </section>
 
       {/* 10. WHY CHOOSE WINERA INTERNATIONAL SECTION */}
-      <section className="winera-bumpercar-whyus-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-bumpercar-whyus-section" style={{ padding: '0px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
           {/* Section Heading */}
           <div style={{ textAlign: 'center', marginBottom: '60px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -1072,19 +1119,33 @@ export default function BumperCar({ siteData }) {
         highlightColor="#38bdf8"
       />
 
-      {/* 15. CTA BANNER SECTION (MATCHING BOWLING ALLEY PAGE 1:1) */}
+      {/* 15. CTA BANNER SECTION (MATCHING FIGMA SPEC EXACTLY) */}
       <CtaBanner
         align="center"
+        gradientTagline={true}
+        gradientTitle={true}
+        buttonTheme="yellow"
+        subtitleFontSize="16px"
         bgUrl={siteData?.bumpercarCta?.bgUrl}
-        bg={bumpercarCtaBannerBg || ctaSoftplayBg}
-        subtitle={siteData?.bumpercarCta?.whiteText || siteData?.bumpercarCta?.subtitle || "Get in touch with India's trusted bumper car equipment manufacturer for a free 3D layout design, complete ROI report, and project quote tailored to your venue."}
+        bg={amusementParkCtaBg}
+        leftImgUrl={siteData?.bumpercarCta?.leftImgUrl}
+        leftImg={bumperCarCtaLeft}
+        rightImgUrl={siteData?.bumpercarCta?.rightImgUrl}
+        rightImg={bumperCarCtaRight}
+        tagline={siteData?.bumpercarCta?.tagline || "GET IN TOUCH"}
         title={
-          <>
-            <span style={{ color: '#ffcd00' }}>{siteData?.bumpercarCta?.yellowText ?? "NEED ANY"}</span> <span style={{ color: '#ffffff' }}>{siteData?.bumpercarCta?.cyanText ?? "BUMPER CAR CONSULTATIONS ?"}</span>
-          </>
+          siteData?.bumpercarCta?.title
+            ? siteData.bumpercarCta.title
+            : "READY TO EXPLORE A BUMPER CAR<br/>ATTRACTION FOR YOUR VENUE?"
         }
-        buttonText={siteData?.bumpercarCta?.buttonText ?? "Get a Quote From an Expert"}
-        buttonLink={siteData?.bumpercarCta?.buttonLink ?? "https://wa.me/919428989488"}
+        subtitle={
+          siteData?.bumpercarCta?.subtitle || siteData?.bumpercarCta?.whiteText
+            ? siteData?.bumpercarCta?.subtitle || siteData?.bumpercarCta?.whiteText
+            : "We'll assess your space and send a free<br/>ROI report before you spend anything."
+        }
+        description={null}
+        buttonText={siteData?.bumpercarCta?.buttonText || "Get a Quote From an Expert"}
+        buttonLink={siteData?.bumpercarCta?.buttonLink || "https://wa.me/919428989488"}
       />
 
       {/* FOOTER */}
@@ -1113,21 +1174,21 @@ const defaultComparisonFeatures = [
 ];
 
 const defaultElectricPoints = [
-  { text: "Conductive floor + ceiling grid" },
-  { text: "None — continuous supply" },
-  { text: "Permanent amusement parks, FECs" },
+  { text: "Conductive floor +<br/>ceiling grid" },
+  { text: "None — continuous<br/>supply" },
+  { text: "Permanent amusement<br/>parks, FECs" },
   { text: "Fixed installation" },
-  { text: "Higher (floor infrastructure)" },
+  { text: "Higher (floor<br/>infrastructure)" },
   { text: "Lower per session" }
 ];
 
 const defaultBatteryPoints = [
-  { text: "Flat surface only — no modification needed" },
-  { text: "Recharge between sessions" },
-  { text: "Malls, gaming zones, events" },
-  { text: "Can be moved to new venues" },
-  { text: "Lower initial investment" },
-  { text: "Battery replacement over time" }
+  { text: "Flat surface only — no<br/>modification needed" },
+  { text: "Recharge between<br/>sessions" },
+  { text: "Malls, gaming zones,<br/>events" },
+  { text: "Can be moved to new<br/>venues" },
+  { text: "Lower initial<br/>investment" },
+  { text: "Battery replacement<br/>over time" }
 ];
 
 const defaultInvestmentBullets = [

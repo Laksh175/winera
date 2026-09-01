@@ -13,8 +13,13 @@ const getApiBaseUrl = () => {
 const API_BASE_URL = getApiBaseUrl();
 
 export const fetchSiteContent = async () => {
-  const response = await axios.get(`${API_BASE_URL}/content`);
-  return optimizeSiteDataImages(response.data);
+  try {
+    const response = await axios.get(`${API_BASE_URL}/content`, { timeout: 3000 });
+    return optimizeSiteDataImages(response.data);
+  } catch (err) {
+    console.warn('Backend server response timeout/unavailable, falling back to default site data:', err?.message);
+    return {};
+  }
 };
 
 export const loginAdmin = async (credentials) => {

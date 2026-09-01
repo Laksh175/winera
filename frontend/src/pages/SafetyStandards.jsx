@@ -722,7 +722,7 @@ export default function SafetyStandards({ siteData }) {
             maxWidth: '1240px',
             margin: '0 auto',
             position: 'relative',
-            backgroundImage: `url(${hypergridWineraLastblock})`,
+            backgroundImage: `url(${getValidImageUrl(siteData?.safetyWhyMatters?.bgUrl || siteData?.safetyWhyMatters?.bg, hypergridWineraLastblock)})`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
@@ -745,9 +745,9 @@ export default function SafetyStandards({ siteData }) {
               zIndex: 1
             }}></div>
 
-            {/* Left Tilted Card Image (Using rightTiltedCard asset matching screenshot) */}
+            {/* Left Tilted Card Image */}
             <img
-              src={rightTiltedCard}
+              src={getValidImageUrl(siteData?.safetyWhyMatters?.leftImgUrl, rightTiltedCard)}
               alt="Build Yours Now Left"
               style={{
                 position: 'absolute',
@@ -762,9 +762,9 @@ export default function SafetyStandards({ siteData }) {
               }}
             />
 
-            {/* Right Tilted Card Image (Using leftTiltedCard asset matching screenshot) */}
+            {/* Right Tilted Card Image */}
             <img
-              src={leftTiltedCard}
+              src={getValidImageUrl(siteData?.safetyWhyMatters?.rightImgUrl, leftTiltedCard)}
               alt="Build Yours Now Right"
               style={{
                 position: 'absolute',

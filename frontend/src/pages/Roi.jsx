@@ -1182,8 +1182,18 @@ export default function Roi({ siteData }) {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          textAlign: 'center'
+          textAlign: 'center',
+          overflow: 'hidden'
         }}>
+          {/* Dark Background Overlay matching Hypergrid (rgba 8, 12, 22, 0.85) */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'rgba(8, 12, 22, 0.85)',
+            borderRadius: '24px',
+            zIndex: 1
+          }} />
+
           {/* Heading */}
           <h2 style={{
             fontSize: 'clamp(1.8rem, 3.8vw, 2.5rem)',
@@ -1191,11 +1201,19 @@ export default function Roi({ siteData }) {
             lineHeight: 1.25,
             marginBottom: '14px',
             letterSpacing: '0.5px',
-            textShadow: '0 4px 15px rgba(0,0,0,0.6)'
+            position: 'relative',
+            zIndex: 2,
+            background: 'linear-gradient(90deg, rgba(255, 212, 0, 1) 0%, rgba(238, 229, 183, 1) 30%, rgba(0, 174, 239, 1) 68%, rgba(167, 229, 245, 1) 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.85))',
+            display: 'inline-block'
           }}>
-            <span style={{ color: '#ffcd00' }}>{roiCta.yellowText || "READY TO"} </span>
-            <span style={{ color: '#ffffff' }}>{roiCta.whiteText || "SEE YOUR"} </span>
-            <span style={{ color: '#38bdf8' }}>{roiCta.cyanText || "NUMBERS?"}</span>
+            {roiCta.title || (
+              <>
+                {roiCta.yellowText || "READY TO"} {roiCta.whiteText || "SEE YOUR"} {roiCta.cyanText || "NUMBERS?"}
+              </>
+            )}
           </h2>
 
           {/* Description */}
@@ -1208,13 +1226,15 @@ export default function Roi({ siteData }) {
             maxWidth: '780px',
             letterSpacing: '0.5px',
             textShadow: '0 2px 8px rgba(0,0,0,0.5)',
-            textTransform: 'none'
+            textTransform: 'none',
+            position: 'relative',
+            zIndex: 2
           }}>
             {roiCta.subtitle}
           </p>
 
           {/* Styled Button offset wrap */}
-          <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+          <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm" style={{ position: 'relative', zIndex: 2 }}>
             <a
               href={roiCta.buttonLink}
               target="_blank"

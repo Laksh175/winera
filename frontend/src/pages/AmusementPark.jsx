@@ -14,7 +14,9 @@ import amusementOptionsTopCollage from '../assets/amusement-options-top-collage.
 import amusementOptionsBottomImg from '../assets/amusement-options-bottom-img.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
-import amusementParkLastImage from '../assets/amusement-park-lastImage.webp';
+import amusementCtaBg from '../assets/cta-consultations-banner.webp';
+import amusementLeftImg from '../assets/amusement-park-left-img.webp';
+import amusementRightImg from '../assets/amusement-park-right-img.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -214,7 +216,7 @@ export default function AmusementPark({ siteData }) {
       </section>
 
       {/* 3. AMUSEMENT PARK RIDE MANUFACTURER IN INDIA SECTION */}
-      <section className="winera-amusement-supplier-section" style={{ padding: '80px 4vw 60px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-amusement-supplier-section" style={{ paddingTop: '0px', paddingBottom: '20px', paddingLeft: '4vw', paddingRight: '4vw', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-amusement-supplier-grid" style={{
           maxWidth: '1280px',
           margin: '0 auto',
@@ -272,7 +274,7 @@ export default function AmusementPark({ siteData }) {
       </section>
 
       {/* 4. COMPLETE AMUSEMENT PARK SETUPS, BUILT FOR INDIAN VENUES SECTION */}
-      <section className="winera-amusement-banner-section" style={{ padding: '40px 4vw 80px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-amusement-banner-section" style={{ paddingTop: '20px', paddingBottom: '30px', paddingLeft: '4vw', paddingRight: '4vw', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-amusement-banner-grid" style={{
           maxWidth: '1280px',
           margin: '0 auto',
@@ -325,7 +327,7 @@ export default function AmusementPark({ siteData }) {
       {/* 5. RIDES & ATTRACTIONS WE SUPPLY & BEFORE YOU BUILD ROI SECTION */}
       <section className="winera-amusement-options-section" style={{
         width: '100%',
-        padding: '70px 4vw 90px',
+        padding: '75px 4vw',
         background: `url(${getValidImageUrl(siteData?.amusementOptions?.bgUrl, amusementOptionsBg)}) center top / 100% 100% no-repeat`,
         overflow: 'hidden'
       }}>
@@ -334,7 +336,7 @@ export default function AmusementPark({ siteData }) {
           margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
-          gap: '70px'
+          gap: '45px'
         }}>
           {/* SUB-BLOCK 1: RIDES & ATTRACTIONS WE SUPPLY */}
           <div className="winera-amusement-options-grid" style={{
@@ -459,7 +461,7 @@ export default function AmusementPark({ siteData }) {
       </section>
 
       {/* 6. WHY CHOOSE WINERA INTERNATIONAL SECTION */}
-      <section className="winera-amusement-whyus-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section className="winera-amusement-whyus-section" style={{ paddingTop: '35px', paddingBottom: '45px', paddingLeft: '4vw', paddingRight: '4vw', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading Title */}
           <div style={{ position: 'relative', display: 'inline-block', marginBottom: '60px' }}>
@@ -632,23 +634,36 @@ export default function AmusementPark({ siteData }) {
       <RelatedProductsSection sectionData={siteData?.amusementRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
       <FaqSection faqsList={(Array.isArray(siteData?.amusementFaqs) && siteData.amusementFaqs.length >= 7) ? siteData.amusementFaqs : defaultAmusementFaqs} highlightColor="#38bdf8" />
 
-      {/* CTA GRAPHIC BANNER IMAGE */}
-      <section style={{ padding: '60px 4vw', background: '#F5F5F9', display: 'flex', justifyContent: 'center' }}>
-        <div style={{ maxWidth: '1240px', width: '100%', position: 'relative', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
-          <a
-            href={siteData?.amusementCta?.buttonLink || siteData?.ctaBanner?.buttonLink || "https://wa.me/919428989488"}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'block', width: '100%', position: 'relative' }}
-          >
-            <img
-              src={getValidImageUrl(siteData?.amusementCta?.bgUrl || siteData?.amusementCta?.imgUrl, amusementParkLastImage)}
-              alt="Need Any Consultations - Amusement Park"
-              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '24px' }}
-            />
-          </a>
-        </div>
-      </section>
+      {/* CTA BANNER SECTION WITH DYNAMIC CONTENT & EXACT TILTED CARDS MATCHING UI 1:1 */}
+      <CtaBanner
+        showOverlay={true}
+        align="center"
+        gradientTitle={true}
+        buttonTheme="yellow"
+        titleFontSize="45px"
+        subtitleFontSize="24px"
+        subtitleFontWeight="900"
+        bgUrl={siteData?.amusementCta?.bgUrl}
+        bg={amusementCtaBg}
+        leftImgUrl={siteData?.amusementCta?.leftImgUrl}
+        leftImg={amusementLeftImg}
+        rightImgUrl={siteData?.amusementCta?.rightImgUrl}
+        rightImg={amusementRightImg}
+        tagline={null}
+        title={
+          siteData?.amusementCta?.title
+            ? siteData.amusementCta.title
+            : "NEED ANY CONSULTATIONS?"
+        }
+        subtitle={
+          siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
+            ? siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
+            : "WE'RE READY TO GIVE ANSWERS TO<br/>YOUR QUESTIONS."
+        }
+        description={null}
+        buttonText={siteData?.amusementCta?.buttonText || "Talk to an ROI Expert"}
+        buttonLink={siteData?.amusementCta?.buttonLink || "https://wa.me/919428989488"}
+      />
 
       {/* FOOTER */}
       <Footer footerData={footer} />

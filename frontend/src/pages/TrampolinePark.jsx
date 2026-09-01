@@ -17,7 +17,21 @@ import trampolineImg3 from '../assets/trampoline-img-3.webp';
 import tampolineImg4 from '../assets/tampoline-img-4.webp';
 import tampolineImg5 from '../assets/tampoline-img-5.webp';
 import tampolineImage6 from '../assets/tampoline-image-6.webp';
-import tampolineImage7 from '../assets/tampoline-image-7.webp';
+import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.png';
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return url;
+};
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -256,7 +270,7 @@ export default function TrampolinePark({ siteData }) {
       </section>
 
       {/* 3. TRAMPOLINE PARK MANUFACTURER IN INDIA SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-trampoline-intro-section" style={{ padding: '90px 4vw 70px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-trampoline-intro-section" style={{ padding: '45px 4vw', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-trampoline-intro-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -313,7 +327,7 @@ export default function TrampolinePark({ siteData }) {
       </section>
 
       {/* 4. CUSTOM TRAMPOLINE PARKS BY WINERA INTERNATIONAL BLOCK (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-trampoline-custom-section" style={{ padding: '55px 4vw 65px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-trampoline-custom-section" style={{ padding: '45px 4vw', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative' }}>
           {/* Main Content Layout Container */}
           <div className="winera-trampoline-custom-container" style={{
@@ -376,7 +390,7 @@ export default function TrampolinePark({ siteData }) {
       </section>
 
       {/* 5. TECHNICAL SPECIFICATIONS BLOCK (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-trampoline-specs-section" style={{ padding: '30px 4vw 75px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-trampoline-specs-section" style={{ padding: '45px 4vw', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           
           {/* Main Card Wrapper with trampoline-img-3.webp Background */}
@@ -480,7 +494,7 @@ export default function TrampolinePark({ siteData }) {
           position: 'relative',
           width: '100%',
           background: `url(${tampolineImg4}) center center / 100% 100% no-repeat`,
-          padding: '50px 0 35px 0',
+          padding: '45px 0',
           overflow: 'hidden'
         }}>
           {/* Inner Content Centered Container */}
@@ -613,7 +627,7 @@ export default function TrampolinePark({ siteData }) {
 
       {/* 6.5 WHAT WILL YOUR TRAMPOLINE PARK ACTUALLY EARN? (ROI SECTION MATCHING SCREENSHOT) */}
       <section className="winera-trampoline-roi-earn-section" style={{
-        padding: '65px 4vw 80px',
+        padding: '45px 4vw',
         background: '#F8FAFC',
         position: 'relative'
       }}>
@@ -701,7 +715,7 @@ export default function TrampolinePark({ siteData }) {
 
       {/* 6.6 WHY CHOOSE WINERA INTERNATIONAL SECTION (MATCHING SECOND SCREENSHOT 1:1) */}
       <section className="winera-trampoline-why-choose-section" style={{
-        padding: '35px 4vw 65px',
+        padding: '45px 4vw',
         background: '#F8FAFC',
         position: 'relative'
       }}>
@@ -889,14 +903,19 @@ export default function TrampolinePark({ siteData }) {
       />
 
       {/* TRAMPOLINE PARK CTA SECTION */}
-      <section style={{ padding: '60px 4vw 90px', background: '#F8FAFC' }}>
+      <section style={{ padding: '45px 4vw', background: '#F8FAFC' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           <div style={{
-            backgroundImage: `url(${siteData?.trampolineCta?.bgUrl || tampolineImage7})`,
+            backgroundImage: `url(${getValidImageUrl(
+              siteData?.trampolineCta?.bgUrl && !siteData.trampolineCta.bgUrl.includes('tampoline-image-7')
+                ? siteData.trampolineCta.bgUrl
+                : null,
+              trampolineParkCtaBg
+            )})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             borderRadius: '24px',
-            padding: '65px 30px',
+            padding: '20px 30px',
             textAlign: 'center',
             color: '#ffffff',
             boxShadow: '0 12px 36px rgba(0,0,0,0.12)',
@@ -906,15 +925,19 @@ export default function TrampolinePark({ siteData }) {
             <h2 style={{
               fontSize: '2.5rem',
               fontWeight: '900',
-              color: '#ffcd00',
               margin: '0 0 16px 0',
               textTransform: 'uppercase',
               letterSpacing: '0.5px',
-              lineHeight: 1.25
+              lineHeight: 1.25,
+              background: 'linear-gradient(90deg, rgba(255, 212, 0, 1) 0%, rgba(238, 229, 183, 1) 32%, rgba(255, 255, 255, 1) 68%, rgba(202, 244, 255, 1) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.85))',
+              display: 'inline-block'
             }} className="winera-cta-h2">
-              <span>{siteData?.trampolineCta?.titleLine1 || "Plan your trampoline park "}</span>
+              <span>{siteData?.trampolineCta?.titleLine1 !== undefined ? siteData.trampolineCta.titleLine1 : "PLAN YOUR TRAMPOLINE PARK"}</span>
               <br />
-              <span>{siteData?.trampolineCta?.titleLine2 || "with Winera"}</span>
+              <span>{siteData?.trampolineCta?.titleLine2 !== undefined ? siteData.trampolineCta.titleLine2 : "WITH WINERA"}</span>
             </h2>
             <p style={{
               fontSize: '15.5px',
@@ -929,13 +952,13 @@ export default function TrampolinePark({ siteData }) {
               <span>{siteData?.trampolineCta?.descLine2 || "recommend the right zone mix for your space."}</span>
             </p>
 
-            {/* Offset Rotated Backdrop Button with WhatsApp Icon */}
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+            {/* Offset Rotated Backdrop Button with Yellow BG & White Border */}
+            <div className="winera-yellow-white-cta-wrapper winera-yellow-white-cta-wrapper-sm">
               <a
                 href={siteData?.trampolineCta?.buttonLink || "https://wa.me/919999999999?text=Hi%20Winera%2C%20I%20want%20to%20plan%20a%20Trampoline%20Park"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                className="winera-yellow-white-cta-btn winera-yellow-white-cta-btn-sm"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               >
                 {/* Proper contrasted WhatsApp Icon wrapper */}

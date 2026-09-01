@@ -32,6 +32,9 @@ import vrImg from '../assets/VR.webp';
 import vectorVr from '../assets/Vector-VR.webp';
 import vector01 from '../assets/Vector-01.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
+import vrgameCtaBg from '../assets/vrgame-cta-bg.png';
+import vrCtaRightImg from '../assets/vr-cta-right-img.png';
+import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -266,7 +269,7 @@ export default function VrGames({ siteData }) {
       </section>
 
       {/* 3. VR GAMING MACHINE SUPPLIER IN INDIA SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-vr-supplier-section" style={{ padding: '90px 4vw 80px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-vr-supplier-section" style={{ padding: '90px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-vr-supplier-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -321,7 +324,7 @@ export default function VrGames({ siteData }) {
       </section>
 
       {/* 4. COMMERCIAL VR MACHINES, MATCHED TO YOUR VENUE SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-vr-attractions-section" style={{ padding: '70px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-vr-attractions-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-vr-attractions-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -398,7 +401,7 @@ export default function VrGames({ siteData }) {
       </section>
 
       {/* 5. OUR VR GAMING MACHINE RANGE SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section style={{ padding: '80px 4vw 90px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section style={{ padding: '35px 4vw 35px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
           <div style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -583,7 +586,7 @@ export default function VrGames({ siteData }) {
       </section>
 
       {/* 6. COMMERCIAL-GRADE QUALITY AND RELIABILITY SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-vr-reliability-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-vr-reliability-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-vr-reliability-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -754,7 +757,7 @@ export default function VrGames({ siteData }) {
       </section>
 
       {/* 8. WHY CHOOSE WINERA INTERNATIONAL SECTION (MATCHING BUMPER CAR PAGE 1:1) */}
-      <section className="winera-vr-whyus-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-vr-whyus-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
           {/* Section Heading */}
           <div style={{ textAlign: 'center', marginBottom: '60px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -996,82 +999,58 @@ export default function VrGames({ siteData }) {
         highlightColor="#38bdf8"
       />
 
-      {/* 9. CTA BANNER SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section style={{ padding: '60px 4vw 80px', background: '#F5F5F9', textAlign: 'center' }}>
-        <div className="winera-cta-banner-container" style={{
-          maxWidth: '1240px',
-          margin: '0 auto',
-          position: 'relative',
-          backgroundImage: `url(${siteData?.vrCta?.bgUrl || siteData?.vrCta?.bg || ctaConsultationsBanner})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          borderRadius: '24px',
-          padding: '60px 40px',
-          minHeight: '290px',
-          aspectRatio: '1920 / 520',
-          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.25)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center'
-        }}>
-          <h2 style={{
-            fontSize: '2.5rem',
-            fontWeight: '900',
-            lineHeight: 1.25,
-            marginBottom: '10px',
-            textShadow: '0 4px 15px rgba(0,0,0,0.6)',
-            letterSpacing: '0.5px'
-          }}>
-            <span style={{ color: '#ffcd00' }}>
-              {siteData?.vrCta?.yellowText || "NEED ANY "}
-            </span>
-            <span style={{ color: '#38bdf8' }}>
-              {siteData?.vrCta?.cyanText || "CONSULTATIONS?"}
-            </span>
-          </h2>
-
-          <p style={{
-            fontSize: '1.4rem',
-            fontWeight: '900',
-            color: '#ffffff',
-            lineHeight: 1.35,
-            marginBottom: '12px',
-            maxWidth: '680px',
-            letterSpacing: '0.5px',
-            textTransform: 'uppercase',
-            textShadow: '0 4px 15px rgba(0,0,0,0.6)'
-          }}>
-            {siteData?.vrCta?.whiteText || "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
-          </p>
-
-          <p style={{
-            fontSize: '12.5px',
-            fontWeight: '500',
-            color: '#e2e8f0',
-            lineHeight: 1.6,
-            marginBottom: '26px',
-            maxWidth: '620px',
-            textShadow: '0 2px 4px rgba(0,0,0,0.5)'
-          }}>
-            {(siteData?.vrCta?.description && siteData.vrCta.description.trim() !== '') ? siteData.vrCta.description : "Partner with India's trusted VR gaming machine supplier for a complete VR zone setup across India."}
-          </p>
-
-
-          <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-            <a
-              href={siteData?.header?.whatsAppUrl || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
-              className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-            >
-              {siteData?.vrCta?.buttonText || "Talk to an ROI Expert"}
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* 9. NEED ANY CONSULTATIONS CTA BANNER SECTION */}
+      <CtaBanner
+        showOverlay={true}
+        align="center"
+        gradientTitle={true}
+        buttonTheme="yellow"
+        titleFontSize="45px"
+        subtitleFontSize="24px"
+        subtitleFontWeight="900"
+        bgUrl={
+          siteData?.vrCta?.bgUrl &&
+          !siteData.vrCta.bgUrl.includes('cta-consultations') &&
+          !siteData.vrCta.bgUrl.includes('project-lastbg')
+            ? getValidImageUrl(siteData.vrCta.bgUrl, amusementParkCtaBg)
+            : null
+        }
+        bg={amusementParkCtaBg}
+        leftImgUrl={
+          siteData?.vrCta?.leftImgUrl && !siteData.vrCta.leftImgUrl.includes('home-block-1')
+            ? getValidImageUrl(siteData.vrCta.leftImgUrl, vrgameCtaBg)
+            : null
+        }
+        leftImg={vrgameCtaBg}
+        rightImgUrl={
+          siteData?.vrCta?.rightImgUrl
+            ? getValidImageUrl(siteData.vrCta.rightImgUrl, vrCtaRightImg)
+            : null
+        }
+        rightImg={vrCtaRightImg}
+        tagline={null}
+        title={
+          siteData?.vrCta?.title
+            ? siteData.vrCta.title
+            : "NEED ANY CONSULTATIONS?"
+        }
+        subtitle={
+          siteData?.vrCta?.subtitle || siteData?.vrCta?.whiteText
+            ? siteData?.vrCta?.subtitle || siteData?.vrCta?.whiteText
+            : "WE'RE READY TO GIVE ANSWERS TO<br/>YOUR QUESTIONS."
+        }
+        description={null}
+        buttonText={
+          siteData?.vrCta?.buttonText !== undefined
+            ? siteData.vrCta.buttonText
+            : "Talk to an ROI Expert"
+        }
+        buttonLink={
+          siteData?.vrCta?.buttonLink !== undefined
+            ? siteData.vrCta.buttonLink
+            : "https://wa.me/919428989488"
+        }
+      />
 
       {/* 10. FOOTER SECTION */}
       <Footer footerData={footer} />

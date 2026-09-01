@@ -13,7 +13,44 @@ import wineraWBadge from '../assets/winera-w-badge.webp';
 import founderUnnit from '../assets/founder-unnit.webp';
 import aboutLounge from '../assets/about-lounge.webp';
 import welcomeWineraImg from '../assets/welcome-to-winera.webp';
+import aboutusCtaBg from '../assets/aboutus-cta-bg.png';
 import { Shield, Users, Target, Eye, TrendingUp, Maximize2, Clock, RefreshCw, Award, Headset, Settings } from 'lucide-react';
+
+// Helper function to render title with *word* highlights, <cyan>cyan words</cyan> and <br/> linebreaks
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
+  const text = rawText || defaultText;
+  const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
+
+  return parts.map((part, pIdx) => {
+    const isHighlighted = pIdx % 2 === 1;
+    const subParts = part.split(/<cyan>(.*?)<\/cyan>/gi);
+
+    const renderedSub = subParts.map((sub, sIdx) => {
+      const isCyan = sIdx % 2 === 1;
+      const lines = sub.split(/<br\s*\/?>/i);
+      const lineElements = lines.map((line, lIdx) => (
+        <React.Fragment key={lIdx}>
+          {lIdx > 0 && <br />}
+          {line}
+        </React.Fragment>
+      ));
+
+      if (isCyan) {
+        return <span key={sIdx} style={{ color: '#38bdf8' }}>{lineElements}</span>;
+      }
+      return <React.Fragment key={sIdx}>{lineElements}</React.Fragment>;
+    });
+
+    if (isHighlighted) {
+      return (
+        <span key={pIdx} style={{ color: highlightColor }}>
+          {renderedSub}
+        </span>
+      );
+    }
+    return <React.Fragment key={pIdx}>{renderedSub}</React.Fragment>;
+  });
+};
 
 export default function AboutUs({ siteData }) {
   const aboutSeo = siteData?.aboutSeo || {
@@ -97,7 +134,7 @@ export default function AboutUs({ siteData }) {
       </section>
 
       {/* 3. WELCOME TO WINERA INTERNATIONAL SECTION */}
-      <section id="welcome" style={{ padding: '90px 4vw 100px', background: '#f5f5f9' }}>
+      <section id="welcome" style={{ padding: '60px 4vw 60px', background: '#f5f5f9' }}>
         <div className="winera-about-welcome-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -169,7 +206,7 @@ export default function AboutUs({ siteData }) {
       </section>
 
       {/* 4. STATS & OUR PURPOSE & PROMISE SECTION */}
-      <section style={{ padding: '0 0 100px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section style={{ padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ background: 'linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%)', padding: '40px 4vw 50px', marginBottom: '50px' }}>
           <div className="winera-about-stats-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
             {(() => {
@@ -322,7 +359,7 @@ export default function AboutUs({ siteData }) {
       </section>
 
       {/* 5. WHY CHOOSE US MINDMAP & 3-CARD SECTION */}
-      <section id="why-choose-us-detail" className="winera-about-mindmap-section" style={{ position: 'relative', width: '100%', padding: '0 0 100px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section id="why-choose-us-detail" className="winera-about-mindmap-section" style={{ position: 'relative', width: '100%', padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ position: 'relative', width: '100%', background: `url(${whyChooseTopBg}) center top / 100% 100% no-repeat`, padding: '80px 4vw 160px', minHeight: '620px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <SectionHeading marginBottom="40px" accentWidth="260px" accentMaxWidth="320px" style={{ zIndex: 10 }}>
             {(() => {
@@ -540,7 +577,7 @@ export default function AboutUs({ siteData }) {
       </section>
 
       {/* 6. OUR FOUNDER SECTION */}
-      <section id="founder" style={{ padding: '80px 4vw 110px', background: '#F5F5F9', position: 'relative' }}>
+      <section id="founder" style={{ padding: '50px 4vw 50px', background: '#F5F5F9', position: 'relative' }}>
         <div className="winera-about-founder-grid" style={{ maxWidth: '1180px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: '60px', alignItems: 'center' }}>
           <div style={{ position: 'relative', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
             <img
@@ -629,13 +666,38 @@ export default function AboutUs({ siteData }) {
 
       {/* 7. CTA BANNER SECTION */}
       <CtaBanner
-        tagline={siteData?.ctaBanner?.tagline ?? "Ready to Get Started?"}
-        title={siteData?.ctaBanner?.title ?? "Take the Next Step Towards Your Perfect Game Zone"}
+        showOverlay={false}
+        align="left"
+        gradientTagline={false}
+        gradientTitle={true}
+        bgUrl={siteData?.aboutCta?.bgUrl !== undefined ? siteData.aboutCta.bgUrl : null}
+        bg={aboutusCtaBg}
+        tagline={
+          siteData?.aboutCta?.tagline !== undefined
+            ? siteData.aboutCta.tagline
+            : "READY TO GET STARTED?"
+        }
+        title={
+          siteData?.aboutCta?.title !== undefined
+            ? siteData.aboutCta.title
+            : "TAKE THE NEXT STEP TOWARDS<br />YOUR PERFECT GAME ZONE"
+        }
         subtitle=""
-        description={siteData?.ctaBanner?.description ?? "Whether you're starting from scratch or upgrading an existing space our team is ready to help you plan, build, and launch a game zone that drives real revenue."}
-        buttonText={siteData?.ctaBanner?.buttonText ?? "Book Consultation"}
-        buttonLink={siteData?.ctaBanner?.buttonLink ?? "https://wa.me/919428989488"}
-        bgUrl={siteData?.ctaBanner?.bgUrl}
+        description={
+          siteData?.aboutCta?.description !== undefined
+            ? siteData.aboutCta.description
+            : "Whether you're starting from scratch or upgrading an existing space our team is ready to help you plan, build, and launch a game zone that drives real revenue."
+        }
+        buttonText={
+          siteData?.aboutCta?.buttonText !== undefined
+            ? siteData.aboutCta.buttonText
+            : "Talk to an ROI Expert"
+        }
+        buttonLink={
+          siteData?.aboutCta?.buttonLink !== undefined
+            ? siteData.aboutCta.buttonLink
+            : "https://wa.me/919428989488"
+        }
       />
 
       {/* 8. FOOTER */}

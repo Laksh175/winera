@@ -26,10 +26,10 @@ import doodleArrow from '../assets/doodle-arrow.webp';
 import bikeArcade from '../assets/bike-arcade.webp';
 import builtCommercialBg from '../assets/built-commercial-bg.webp';
 import commercialTeam from '../assets/commercial-team.webp';
-import needConsultationsBg from '../assets/need-consultations-bg.webp';
+import needConsultationsBg from '../assets/cta-consultations-banner.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
-import bowlingLastImageBg from '../assets/bowling-last-image-bg.webp';
+import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.png';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 import about1 from '../assets/about-1.webp';
 import about2 from '../assets/about-2.webp';
@@ -53,6 +53,42 @@ const getValidImageUrl = (url, fallback) => {
     return `http://${hostname}:5001${url}`;
   }
   return fallback;
+};
+
+// Helper function to render title with *word* highlights, <cyan>cyan words</cyan> and <br/> linebreaks
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
+  const text = rawText || defaultText;
+  const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
+
+  return parts.map((part, pIdx) => {
+    const isHighlighted = pIdx % 2 === 1;
+    const subParts = part.split(/<cyan>(.*?)<\/cyan>/gi);
+
+    const renderedSub = subParts.map((sub, sIdx) => {
+      const isCyan = sIdx % 2 === 1;
+      const lines = sub.split(/<br\s*\/?>/i);
+      const lineElements = lines.map((line, lIdx) => (
+        <React.Fragment key={lIdx}>
+          {lIdx > 0 && <br />}
+          {line}
+        </React.Fragment>
+      ));
+
+      if (isCyan) {
+        return <span key={sIdx} style={{ color: '#38bdf8' }}>{lineElements}</span>;
+      }
+      return <React.Fragment key={sIdx}>{lineElements}</React.Fragment>;
+    });
+
+    if (isHighlighted) {
+      return (
+        <span key={pIdx} style={{ color: highlightColor }}>
+          {renderedSub}
+        </span>
+      );
+    }
+    return <React.Fragment key={pIdx}>{renderedSub}</React.Fragment>;
+  });
 };
 
 import { useVideoModal } from '../context/VideoModalContext';
@@ -204,7 +240,7 @@ export default function BowlingAlley({ siteData }) {
       </section>
 
       {/* 3. BOWLING ALLEY MANUFACTURERS IN INDIA SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-bowling-supplier-section" style={{ padding: '100px 4vw 110px', background: '#F5F5F9' }}>
+      <section className="winera-bowling-supplier-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
         <div className="winera-bowling-supplier-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -309,7 +345,7 @@ export default function BowlingAlley({ siteData }) {
           {/* Right Column: direct rendering of bowling.webp graphic */}
           <div className="winera-bowling-supplier-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
             <img
-              src={bowlingImg}
+              src={getValidImageUrl(siteData?.bowlingIntro?.mainImgUrl || siteData?.bowlingIntro?.imgUrl, bowlingImg)}
               alt="Bowling Alley Manufacturer Winera International"
               loading="lazy"
               decoding="async"
@@ -325,7 +361,7 @@ export default function BowlingAlley({ siteData }) {
       </section>
 
       {/* 3.5 PREMIUM BOWLING ALLEY MANUFACTURER IN INDIA SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-bowling-premium-section" style={{ padding: '70px 4vw 80px', background: '#F5F5F9', position: 'relative', overflow: 'hidden' }}>
+      <section className="winera-bowling-premium-section" style={{ padding: '45px 4vw', background: '#F5F5F9', position: 'relative', overflow: 'hidden' }}>
         <div className="winera-bowling-premium-container" style={{ maxWidth: '1280px', margin: '0 auto' }}>
           {/* Section Title with Yellow Brush Accent Line in 1 Single Line */}
           <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px', textAlign: 'center', width: '100%' }}>
@@ -377,7 +413,7 @@ export default function BowlingAlley({ siteData }) {
             {/* Right Side: Exploding Bowling Pins & Ball Graphic fully visible */}
             <div className="winera-bowling-pins-explode" style={{ flex: '0 0 250px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <img
-                src={bowlingPinsExplode}
+                src={getValidImageUrl(siteData?.bowlingManufacturer?.mainImgUrl || siteData?.bowlingManufacturer?.imgUrl, bowlingPinsExplode)}
                 alt="Exploding Bowling Pins"
                 style={{
                   width: '100%',
@@ -396,7 +432,7 @@ export default function BowlingAlley({ siteData }) {
       {/* 3.6 FREE-FALL & STRING BOWLING MACHINES COMPARISON SECTION (FULL WIDTH FIGMA 1:1) */}
       <section className="winera-bowling-types-section" style={{
         width: '100%',
-        padding: '70px 5vw 90px',
+        padding: '45px 5vw',
         background: `url(${bowlingTypesBg}) center/100% 100% no-repeat`,
         textAlign: 'left'
       }}>
@@ -923,7 +959,7 @@ export default function BowlingAlley({ siteData }) {
       </section>
 
       {/* 3.7 INVESTMENT & ROI BANNER SECTION (FIGMA 1:1) */}
-      <section className="winera-bowling-roi-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9' }}>
+      <section className="winera-bowling-roi-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
         <div className="winera-bowling-roi-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -1037,7 +1073,7 @@ export default function BowlingAlley({ siteData }) {
             overflow: 'hidden'
           }}>
             <img
-              src={vectorImg}
+              src={getValidImageUrl(siteData?.bowlingRoi?.mainImgUrl || siteData?.bowlingRoi?.imgUrl, vectorImg)}
               alt="Bowling Alley Lanes ROI"
               loading="lazy"
               decoding="async"
@@ -1053,7 +1089,7 @@ export default function BowlingAlley({ siteData }) {
       </section>
 
       {/* 6. WHY CHOOSE WINERA INTERNATIONAL SECTION (MATCHING IMAGE 1:1) */}
-      <section className="winera-bowling-whyus-section" style={{ padding: '60px 4vw 70px', background: '#F5F5F9' }}>
+      <section className="winera-bowling-whyus-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Single row: Bowling pins left + Title & Content right */}
           <div className="winera-bowling-whyus-grid" style={{
@@ -1064,7 +1100,7 @@ export default function BowlingAlley({ siteData }) {
             {/* Left: Blue Bowling Ball & Exploding Pins PNG Graphic */}
             <div className="winera-bowling-whyus-img" style={{ flex: '0 0 360px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <img
-                src={siteData?.bowlingWhyUs?.graphicUrl || bowlingBallPinsBlue}
+                src={getValidImageUrl(siteData?.bowlingWhyUs?.mainImgUrl || siteData?.bowlingWhyUs?.graphicUrl || siteData?.bowlingWhyUs?.imgUrl, bowlingBallPinsBlue)}
                 alt="Blue Bowling Ball and Pins"
                 loading="lazy"
                 decoding="async"
@@ -1138,7 +1174,7 @@ export default function BowlingAlley({ siteData }) {
       />
 
       {/* SEO PARTNER PARAGRAPH */}
-      <div style={{ maxWidth: '1200px', margin: '30px auto 10px', padding: '0 20px', textAlign: 'center' }}>
+      <div style={{ maxWidth: '1200px', margin: '20px auto 10px', padding: '0 20px', textAlign: 'center' }}>
         <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', fontWeight: '500' }}>
           Partner with <a href="https://winera.in/" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}>Winera International</a>, your trusted bowling alley manufacturer in India and reliable bowling alley supplier, to set your centre up for long-term success.
         </p>
@@ -1146,16 +1182,31 @@ export default function BowlingAlley({ siteData }) {
 
       {/* 11. CTA BANNER SECTION (MATCHING FIGMA 1:1) */}
       <CtaBanner
+        showOverlay={false}
         align="center"
-        bg={siteData?.bowlingCta?.bgUrl || bowlingLastImageBg}
-        subtitle={siteData?.bowlingCta?.whiteText || "Invest in our quality bowling equipment and elevate your venue with long-lasting, world-class bowling gear without overspending."}
-        title={
-          <>
-            <span style={{ color: '#ffcd00' }}>{siteData?.bowlingCta?.yellowText ?? "NEED ANY"}</span> <span style={{ color: '#ffffff' }}>{siteData?.bowlingCta?.cyanText ?? "BOWLING CONSULTATIONS ?"}</span>
-          </>
+        gradientTitle={true}
+        minHeight="300px"
+        descriptionFontSize="18px"
+        bgUrl={siteData?.bowlingCta?.bgUrl && !siteData.bowlingCta.bgUrl.includes('bowling-last-image-bg') ? siteData.bowlingCta.bgUrl : null}
+        bg={trampolineParkCtaBg}
+        tagline={null}
+        title={siteData?.bowlingCta?.title || "NEED ANY CONSULTATIONS?"}
+        subtitle={null}
+        description={
+          siteData?.bowlingCta?.description !== undefined
+            ? siteData.bowlingCta.description
+            : "Invest in our quality bowling equipment and elevate your venue with long-lasting, world-class bowling gear without overspending."
         }
-        buttonText={siteData?.bowlingCta?.buttonText ?? "Request a Quote"}
-        buttonLink={siteData?.bowlingCta?.buttonLink ?? "https://wa.me/919428989488"}
+        buttonText={
+          siteData?.bowlingCta?.buttonText !== undefined
+            ? siteData.bowlingCta.buttonText
+            : "Request a Quote"
+        }
+        buttonLink={
+          siteData?.bowlingCta?.buttonLink !== undefined
+            ? siteData.bowlingCta.buttonLink
+            : "https://wa.me/919428989488"
+        }
       />
 
       {/* 12. FOOTER */}

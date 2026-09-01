@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import FaqSection from '../components/FaqSection';
-import { Phone, Mail, Building2, Globe, CheckCircle2 } from 'lucide-react';
+import { Phone, Mail, Building2, Globe, CheckCircle2, MapPin } from 'lucide-react';
 import contactUsHeroBg from '../assets/Contact-us.webp';
 import aboutHeroBg from '../assets/about-hero-bg.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
@@ -100,44 +100,37 @@ export default function ContactUs({ siteData }) {
             {/* Stack of 2 Contact Info Cards (Call Us & Email Our Team) */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
-              {/* CALL US card — white + cyan diagonal swoosh */}
+              {/* CALL US card — clean white background with top-left cyan accent wing */}
               <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+                {/* Top-Left Accent Backdrop Wing sticking out behind top-left corner */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-15px',
+                  left: '-7px',
+                  width: '290px',
+                  height: '113px',
+                  background: '#38bdf8',
+                  borderRadius: '10px 15px 0 30px',
+                  clipPath: 'polygon(0 0, 109% 16px, 50% 89%, 6px 94%)',
+                  zIndex: 1
+                }}></div>
+
                 <div style={{
                   position: 'relative',
                   zIndex: 2,
-                  background: '#e0f2fe',
-                  border: '1.5px solid #38bdf8',
-                  borderRadius: '24px',
+                  background: '#ffffff',
+                  borderRadius: '10px',
                   padding: '22px 26px',
-                  boxShadow: 'none',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.03)',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '18px',
                   overflow: 'hidden'
                 }}>
-                  {/* Diagonal filled swoosh — inside card, clipped to border-radius */}
-                  <svg
-                    viewBox="0 0 500 100"
-                    preserveAspectRatio="none"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
-                  >
-                    <defs>
-                      <linearGradient id="cuCyanSwoosh" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#28b4ee" stopOpacity="1" />
-                        <stop offset="40%" stopColor="#38bdf8" stopOpacity="0.7" />
-                        <stop offset="58%" stopColor="#38bdf8" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M 0 0 L 220 0 C 220 0 190 6 190 6 L 28 6 C 18 6 6 18 6 28 L 6 72 C 6 82 18 94 28 94 L 165 94 C 165 94 200 100 200 100 L 0 100 Z"
-                      fill="url(#cuCyanSwoosh)"
-                    />
-                  </svg>
-
-                  <div style={{ position: 'relative', zIndex: 1, width: '46px', height: '46px', borderRadius: '50%', background: '#38bdf8', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ position: 'relative', zIndex: 3, width: '46px', height: '46px', borderRadius: '50%', background: '#38bdf8', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Phone style={{ width: '22px', height: '22px' }} />
                   </div>
-                  <div style={{ position: 'relative', zIndex: 1 }}>
+                  <div style={{ position: 'relative', zIndex: 3 }}>
                     <h5 style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.callTitle || "CALL US DIRECTLY"}
                     </h5>
@@ -149,44 +142,37 @@ export default function ContactUs({ siteData }) {
                 </div>
               </div>
 
-              {/* EMAIL card — white + yellow diagonal swoosh */}
+              {/* EMAIL card — clean white background with top-left yellow accent wing */}
               <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+                {/* Top-Left Accent Backdrop Wing sticking out behind top-left corner */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-15px',
+                  left: '-7px',
+                  width: '290px',
+                  height: '113px',
+                  background: '#ffcd00',
+                  borderRadius: '10px 15px 0 30px',
+                  clipPath: 'polygon(0 0, 109% 16px, 50% 89%, 6px 94%)',
+                  zIndex: 1
+                }}></div>
+
                 <div style={{
                   position: 'relative',
                   zIndex: 2,
-                  background: '#fefce8',
-                  border: '1.5px solid #facc15',
-                  borderRadius: '24px',
+                  background: '#ffffff',
+                  borderRadius: '10px',
                   padding: '22px 26px',
-                  boxShadow: 'none',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.03)',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '18px',
                   overflow: 'hidden'
                 }}>
-                  {/* Diagonal filled swoosh — inside card, clipped to border-radius */}
-                  <svg
-                    viewBox="0 0 500 100"
-                    preserveAspectRatio="none"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
-                  >
-                    <defs>
-                      <linearGradient id="cuYellowSwoosh" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#e6a800" stopOpacity="1" />
-                        <stop offset="40%" stopColor="#ffcd00" stopOpacity="0.7" />
-                        <stop offset="58%" stopColor="#ffcd00" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M 0 0 L 220 0 C 220 0 190 6 190 6 L 28 6 C 18 6 6 18 6 28 L 6 72 C 6 82 18 94 28 94 L 165 94 C 165 94 200 100 200 100 L 0 100 Z"
-                      fill="url(#cuYellowSwoosh)"
-                    />
-                  </svg>
-
-                  <div style={{ position: 'relative', zIndex: 1, width: '46px', height: '46px', borderRadius: '50%', background: '#ffcd00', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ position: 'relative', zIndex: 3, width: '46px', height: '46px', borderRadius: '50%', background: '#ffcd00', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Mail style={{ width: '22px', height: '22px' }} />
                   </div>
-                  <div style={{ position: 'relative', zIndex: 1 }}>
+                  <div style={{ position: 'relative', zIndex: 3 }}>
                     <h5 style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.emailTitle || "EMAIL OUR TEAM"}
                     </h5>
@@ -338,87 +324,77 @@ export default function ContactUs({ siteData }) {
             </SectionHeading>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
 
-              {/* Surat HQ — white + cyan diagonal swoosh */}
+              {/* Surat HQ — light cyan background fill with top-left cyan accent wing */}
               <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+                {/* Top-Left Accent Backdrop Wing sticking out behind top-left corner */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-10px',
+                  left: '-10px',
+                  width: '250px',
+                  height: '115px',
+                  background: '#38bdf8',
+                  borderRadius: '14px',
+                  clipPath: 'polygon(0 0, 105% 11px, 100% 100%, 10px 100%)',
+                  zIndex: 1
+                }}></div>
+
                 <div style={{
                   position: 'relative',
+                  zIndex: 2,
                   background: '#e0f2fe',
                   border: '1.5px solid #38bdf8',
-                  borderRadius: '24px',
+                  borderRadius: '10px',
                   padding: '32px',
                   boxShadow: 'none',
                   textAlign: 'left',
                   height: '100%',
                   overflow: 'hidden'
                 }}>
-                  {/* Diagonal filled swoosh — inside card, clipped to border-radius */}
-                  <svg
-                    viewBox="0 0 500 160"
-                    preserveAspectRatio="none"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
-                  >
-                    <defs>
-                      <linearGradient id="suratCyanSwoosh" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#28b4ee" stopOpacity="1" />
-                        <stop offset="40%" stopColor="#38bdf8" stopOpacity="0.7" />
-                        <stop offset="58%" stopColor="#38bdf8" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M 0 0 L 220 0 C 220 0 190 6 190 6 L 28 6 C 18 6 6 18 6 28 L 6 132 C 6 142 18 152 28 152 L 165 152 C 165 152 200 160 200 160 L 0 160 Z"
-                      fill="url(#suratCyanSwoosh)"
-                    />
-                  </svg>
-
-                  <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
-                    <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#38bdf8', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Building2 style={{ width: '22px', height: '22px' }} />
+                  <div style={{ position: 'relative', zIndex: 3, display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+                    <div style={{ width: '46px', height: '46px', borderRadius: '14px', background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)' }}>
+                      <MapPin style={{ width: '22px', height: '22px' }} />
                     </div>
                     <div>
                       <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq1Name || "Surat Headquarters (India)"}</h3>
                       <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq1Badge || "Corporate & Sales Office"}</span>
                     </div>
                   </div>
-                  <p style={{ position: 'relative', zIndex: 1, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', margin: 0, whiteSpace: 'pre-line' }}>
+                  <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', margin: 0, whiteSpace: 'pre-line' }}>
                     {siteData?.contactPage?.hq1Address || "Winera International Pvt. Ltd.\nSurat, Gujarat, India.\nHotline: +91 94289 89488 / +91 95123 56766"}
                   </p>
                 </div>
               </div>
 
-              {/* China Facility — white + yellow diagonal swoosh */}
+              {/* China Facility — light yellow background fill with top-left yellow accent wing */}
               <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+                {/* Top-Left Accent Backdrop Wing sticking out behind top-left corner */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-10px',
+                  left: '-10px',
+                  width: '250px',
+                  height: '115px',
+                  background: '#ffcd00',
+                  borderRadius: '15px',
+                  clipPath: 'polygon(0 0, 105% 11px, 100% 100%, 10px 100%)',
+                  zIndex: 1
+                }}></div>
+
                 <div style={{
                   position: 'relative',
+                  zIndex: 2,
                   background: '#fefce8',
                   border: '1.5px solid #facc15',
-                  borderRadius: '24px',
+                  borderRadius: '10px',
                   padding: '32px',
                   boxShadow: 'none',
                   textAlign: 'left',
                   height: '100%',
                   overflow: 'hidden'
                 }}>
-                  {/* Diagonal filled swoosh — inside card, clipped to border-radius */}
-                  <svg
-                    viewBox="0 0 500 160"
-                    preserveAspectRatio="none"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
-                  >
-                    <defs>
-                      <linearGradient id="chinaYellowSwoosh" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#e6a800" stopOpacity="1" />
-                        <stop offset="40%" stopColor="#ffcd00" stopOpacity="0.7" />
-                        <stop offset="58%" stopColor="#ffcd00" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M 0 0 L 220 0 C 220 0 190 6 190 6 L 28 6 C 18 6 6 18 6 28 L 6 132 C 6 142 18 152 28 152 L 165 152 C 165 152 200 160 200 160 L 0 160 Z"
-                      fill="url(#chinaYellowSwoosh)"
-                    />
-                  </svg>
-
-                  <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
-                    <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#ffcd00', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ position: 'relative', zIndex: 3, display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+                    <div style={{ width: '46px', height: '46px', borderRadius: '14px', background: 'linear-gradient(135deg, #ffcd00 0%, #e6a800 100%)', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 12px rgba(255, 205, 0, 0.3)' }}>
                       <Globe style={{ width: '22px', height: '22px' }} />
                     </div>
                     <div>
@@ -426,7 +402,7 @@ export default function ContactUs({ siteData }) {
                       <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq2Badge || "Sourcing & Assembly Hub"}</span>
                     </div>
                   </div>
-                  <p style={{ position: 'relative', zIndex: 1, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', margin: 0, whiteSpace: 'pre-line' }}>
+                  <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', margin: 0, whiteSpace: 'pre-line' }}>
                     {siteData?.contactPage?.hq2Address || "Winera International Global Assembly Base\nGuangzhou / Panyu Amusement Equipment Zone,\nGuangdong Province, China."}
                   </p>
                 </div>
@@ -464,10 +440,7 @@ export default function ContactUs({ siteData }) {
         </div>
       </section>
 
-      {/* 5. CTA BANNER */}
-      <CtaBanner />
-
-      {/* 6. FOOTER */}
+      {/* 5. FOOTER */}
       <Footer footerData={footer} />
     </div>
   );

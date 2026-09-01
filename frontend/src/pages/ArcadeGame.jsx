@@ -18,7 +18,7 @@ import bikeArcade from '../assets/bike-arcade.webp';
 import builtCommercialBg from '../assets/built-commercial-bg.webp';
 import commercialTeam from '../assets/commercial-team.webp';
 import aboutUsSectionImg from '../assets/about-us-section.webp';
-import needConsultationsBg from '../assets/need-consultations-bg.webp';
+import arcadeCtaBg from '../assets/arcadegame-cta-bg.png';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 import about1 from '../assets/about-1.webp';
 import about2 from '../assets/about-2.webp';
@@ -59,6 +59,7 @@ export default function ArcadeGame({ siteData }) {
   const [expandedCat, setExpandedCat] = useState("Arcade Games");
   const [relatedIndex, setRelatedIndex] = useState(0);
   const [mobileProdIndex, setMobileProdIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const arcadeSeo = siteData?.arcadeSeo || {
     pageTitle: "Arcade Games Manufacturer in India | Winera International",
@@ -457,6 +458,7 @@ export default function ArcadeGame({ siteData }) {
               onChange={(e) => {
                 setActiveCategory(e.target.value);
                 setMobileProdIndex(0);
+                setCurrentPage(1);
               }}
               style={{
                 width: '100%',
@@ -492,7 +494,7 @@ export default function ArcadeGame({ siteData }) {
               background: 'linear-gradient(180deg, #b3e5fc 0%, #e8f7fe 100%)',
               border: '1.5px solid #e8f7fe',
               borderRadius: '28px',
-              padding: '24px 18px 50px',
+              padding: '24px 18px 24px',
               boxShadow: '0 8px 25px rgba(56, 189, 248, 0.08)',
               display: 'flex',
               flexDirection: 'column',
@@ -509,6 +511,7 @@ export default function ArcadeGame({ siteData }) {
                   onClick={() => {
                     setActiveCategory("Arcade Games");
                     setExpandedCat(expandedCat === "Arcade Games" ? null : "Arcade Games");
+                    setCurrentPage(1);
                   }}
                   style={{
                     width: '100%',
@@ -548,7 +551,10 @@ export default function ArcadeGame({ siteData }) {
                   return (
                     <button
                       key={subIdx}
-                      onClick={() => setActiveCategory(subName)}
+                      onClick={() => {
+                        setActiveCategory(subName);
+                        setCurrentPage(1);
+                      }}
                       style={{
                         width: '100%',
                         display: 'flex',
@@ -633,6 +639,12 @@ export default function ArcadeGame({ siteData }) {
                   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'parkour-motor-2-dx';
                 };
 
+                const itemsPerPage = 6;
+                const totalPages = Math.max(1, Math.ceil(prodCards.length / itemsPerPage));
+                const validPage = Math.min(currentPage, totalPages);
+                const startIndex = (validPage - 1) * itemsPerPage;
+                const visibleCards = prodCards.slice(startIndex, startIndex + itemsPerPage);
+
                 return (
                   <>
                     {/* Desktop Product Cards Grid */}
@@ -641,7 +653,7 @@ export default function ArcadeGame({ siteData }) {
                       gridTemplateColumns: 'repeat(3, 1fr)',
                       gap: '20px'
                     }}>
-                      {prodCards.map((card, idx) => {
+                      {visibleCards.map((card, idx) => {
                         const cardSlug = getCardSlug(card);
                         return (
                           <Link
@@ -760,7 +772,7 @@ export default function ArcadeGame({ siteData }) {
                       </div>
                     )}
 
-                    {/* Mobile Carousel Left/Right Arrow Toolbar (Visible only on mobile) */}
+                    {/* Mobile Carousel Left/Right Arrow Toolbar */}
                     <div className="winera-mobile-products-carousel-toolbar" style={{ display: 'none', justifyContent: 'center', alignItems: 'center', gap: '16px', marginTop: '12px' }}>
                       <button
                         onClick={() => setMobileProdIndex((prev) => Math.max(0, prev - 1))}
@@ -813,49 +825,114 @@ export default function ArcadeGame({ siteData }) {
                   </>
                 );
               })()}
-
             </div>
           </div>
 
-          {/* Bottom Centered Pagination Toolbar matching screenshot 1:1 */}
-          <div className="winera-desktop-pagination" style={{ display: 'flex', justifyContent: 'center', marginTop: '32px' }}>
-            <div style={{
-              background: '#e3f2fd',
-              border: '1.5px solid #7dd3fc',
-              borderRadius: '24px',
-              padding: '8px 26px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '18px',
-              boxShadow: 'none'
-            }}>
-              <button aria-label="Previous Page" style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
-                <ChevronLeft style={{ width: '16px', height: '16px', color: '#475569' }} />
-              </button>
-              <span style={{
-                width: '38px',
-                height: '38px',
-                borderRadius: '12px',
-                background: '#38bdf8',
-                color: '#ffffff',
-                fontSize: '15px',
-                fontWeight: '800',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: 'none'
-              }}>
-                1
-              </span>
-              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>2</span>
-              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>3</span>
-              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>4</span>
-              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', cursor: 'pointer', padding: '0 2px' }}>71</span>
-              <button style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0 2px' }}>
-                <ChevronRight style={{ width: '16px', height: '16px', color: '#475569' }} />
-              </button>
-            </div>
-          </div>
+          {/* Dynamic Pagination Toolbar (Centered across full section width) */}
+          {(() => {
+            const defaultProdCards = [
+              { name: "Parkour Motor II (DX)" }, { name: "MANX TT 32\"" }, { name: "Super Air Hockey" },
+              { name: "Puck Carnival Air Hockey" }, { name: "Dazzling Air Hockey - Multi Puck" },
+              { name: "Aurora Air Hockey" }, { name: "Ocha Air Hockey" }, { name: "Aero X Air Hockey" }
+            ];
+            const rawCards = (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0)
+              ? siteData.arcadeCategories.cards
+              : (Array.isArray(siteData?.arcadeCategories) && siteData.arcadeCategories.length > 0 ? siteData.arcadeCategories : defaultProdCards);
+            const itemsPerPage = 6;
+            const totalPages = Math.max(1, Math.ceil(rawCards.length / itemsPerPage));
+            const validPage = Math.min(currentPage, totalPages);
+
+            if (totalPages <= 1) return null;
+
+            return (
+              <div className="winera-desktop-pagination" style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '32px' }}>
+                <div style={{
+                  background: '#e3f2fd',
+                  border: '1.5px solid #7dd3fc',
+                  borderRadius: '24px',
+                  padding: '6px 18px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  boxShadow: 'none'
+                }}>
+                  <button
+                    aria-label="Previous Page"
+                    onClick={() => {
+                      if (validPage > 1) {
+                        setCurrentPage(validPage - 1);
+                        document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    disabled={validPage <= 1}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: validPage <= 1 ? '#cbd5e1' : '#475569',
+                      cursor: validPage <= 1 ? 'not-allowed' : 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '4px'
+                    }}
+                  >
+                    <ChevronLeft style={{ width: '18px', height: '18px' }} />
+                  </button>
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                    const isActive = pageNum === validPage;
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => {
+                          setCurrentPage(pageNum);
+                          document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        style={{
+                          width: '36px',
+                          height: '36px',
+                          borderRadius: '12px',
+                          background: isActive ? '#38bdf8' : 'transparent',
+                          color: isActive ? '#ffffff' : '#475569',
+                          fontSize: '14.5px',
+                          fontWeight: isActive ? '800' : '600',
+                          border: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease'
+                        }}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+
+                  <button
+                    aria-label="Next Page"
+                    onClick={() => {
+                      if (validPage < totalPages) {
+                        setCurrentPage(validPage + 1);
+                        document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    disabled={validPage >= totalPages}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: validPage >= totalPages ? '#cbd5e1' : '#475569',
+                      cursor: validPage >= totalPages ? 'not-allowed' : 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '4px'
+                    }}
+                  >
+                    <ChevronRight style={{ width: '18px', height: '18px' }} />
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </section>
 
@@ -1248,17 +1325,37 @@ export default function ArcadeGame({ siteData }) {
 
       {/* 11. CTA BANNER SECTION (DYNAMIC MONGO PERSISTED DATA) */}
       <CtaBanner
+        showOverlay={false}
         align="center"
-        bg={siteData?.arcadeCta?.bgUrl || needConsultationsBg}
-        subtitle={null}
+        gradientTitle={true}
+        buttonTheme="yellow"
+        titleFontSize="45px"
+        subtitleFontSize="24px"
+        subtitleFontWeight="900"
+        bgUrl={siteData?.arcadeCta?.bgUrl && !siteData.arcadeCta.bgUrl.includes('need-consultations-bg') ? siteData.arcadeCta.bgUrl : null}
+        bg={arcadeCtaBg}
+        tagline={null}
         title={
-          <>
-            <span style={{ color: '#ffcd00' }}>{siteData?.arcadeCta?.yellowText ?? "NEED ANY"}</span> <span style={{ color: '#38bdf8' }}>{siteData?.arcadeCta?.cyanText ?? "CONSULTATIONS ?"}</span><br />
-            <span style={{ color: '#ffffff' }}>{siteData?.arcadeCta?.whiteText ?? "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTION."}</span>
-          </>
+          siteData?.arcadeCta?.yellowText && siteData?.arcadeCta?.cyanText
+            ? `${siteData.arcadeCta.yellowText} ${siteData.arcadeCta.cyanText}`
+            : "NEED ANY CONSULTATIONS ?"
         }
-        buttonText={siteData?.arcadeCta?.buttonText ?? "Get Quote Now"}
-        buttonLink={siteData?.arcadeCta?.buttonLink ?? "https://wa.me/919428989488"}
+        subtitle={
+          siteData?.arcadeCta?.whiteText !== undefined
+            ? siteData.arcadeCta.whiteText
+            : "WE'RE READY TO GIVE ANSWERS TO<br/>YOUR QUESTION."
+        }
+        description={null}
+        buttonText={
+          siteData?.arcadeCta?.buttonText !== undefined
+            ? siteData.arcadeCta.buttonText
+            : "Get Quote Now"
+        }
+        buttonLink={
+          siteData?.arcadeCta?.buttonLink !== undefined
+            ? siteData.arcadeCta.buttonLink
+            : "https://wa.me/919428989488"
+        }
       />
       </main>
 

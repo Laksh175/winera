@@ -7,8 +7,8 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import needConsultationsBg from '../assets/need-consultations-bg.webp';
-import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
+import needConsultationsBg from '../assets/cta-consultations-banner.webp';
+import softplayCtaBg from '../assets/softplay-cta-bg.png';
 import softplayHeroBg from '../assets/softplay-hero-bg.webp';
 import logoImg from '../assets/logo.webp';
 import about1 from '../assets/about-1.webp';
@@ -24,6 +24,9 @@ import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import softPlayImg from '../assets/soft-play.webp';
 import allImg from '../assets/all.webp';
 import groupImg from '../assets/group-image.webp';
+import roiBlock5Img1 from '../assets/roi-block5-img1.webp';
+import roiBlock5Img4 from '../assets/roi-block5-img4.webp';
+import softPalyImage from '../assets/soft-paly-image.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -133,7 +136,7 @@ export default function SoftPlay({ siteData }) {
       </section>
 
       {/* 3. INDOOR SOFT PLAY EQUIPMENT MANUFACTURER IN INDIA SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-softplay-supplier-section" style={{ padding: '90px 4vw 100px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-softplay-supplier-section" style={{ padding: '45px 4vw', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-softplay-supplier-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -199,7 +202,7 @@ export default function SoftPlay({ siteData }) {
       </section>
 
       {/* 4. SOFT PLAY EQUIPMENT MANUFACTURE SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-softplay-intro-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-softplay-intro-section" style={{ padding: '45px 4vw', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-softplay-intro-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -266,7 +269,7 @@ export default function SoftPlay({ siteData }) {
       </section>
 
       {/* 5. TECHNICAL SPECIFICATIONS SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-softplay-specs-section" style={{ padding: '40px 4vw 90px', background: '#F5F5F9' }}>
+      <section className="winera-softplay-specs-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
         <div className="winera-softplay-specs-container" style={{
           maxWidth: '1200px',
           margin: '0 auto',
@@ -331,7 +334,7 @@ export default function SoftPlay({ siteData }) {
       <section className="winera-softplay-materials-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '90px 4vw',
+        padding: '85px 4vw',
         background: `url(${siteData?.softplayMaterials?.bgUrl || softplayMaterialsBg}) center/100% 100% no-repeat`,
         overflow: 'hidden',
         display: 'flex',
@@ -410,10 +413,10 @@ export default function SoftPlay({ siteData }) {
       </section>
 
       {/* 7. TYPES OF SOFT PLAY ZONES WE DESIGN & INSTALL SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-softplay-timeline-section" style={{ padding: '90px 4vw 100px', background: '#F5F5F9' }}>
+      <section className="winera-softplay-timeline-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
-          <div style={{ textAlign: 'center', marginBottom: '70px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -456,7 +459,7 @@ export default function SoftPlay({ siteData }) {
                     gridTemplateColumns: '1fr 1fr',
                     gap: '80px',
                     alignItems: 'center',
-                    marginBottom: idx === arr.length - 1 ? 0 : '80px',
+                    marginBottom: idx === arr.length - 1 ? 0 : '45px',
                     position: 'relative',
                     zIndex: 2
                   }}
@@ -545,16 +548,43 @@ export default function SoftPlay({ siteData }) {
             })}
           </div>
 
-          <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-            <a
-              href={siteData?.softplaySpecs?.brochureUrl || siteData?.softplayTypes?.brochureUrl || "#"}
-              target="_blank"
-              rel="noreferrer"
-              download
-              className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-            >
-              Download Our Brochure
-            </a>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px', width: '100%' }}>
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <div style={{
+                position: 'absolute',
+                top: '-3px',
+                bottom: '-3px',
+                left: '-4px',
+                right: '-4px',
+                background: '#ffcd00',
+                borderRadius: '10px',
+                transform: 'rotate(-1.8deg)',
+                zIndex: 1
+              }} />
+              <a
+                href={siteData?.softplaySpecs?.brochureUrl || siteData?.softplayTypes?.brochureUrl || "#"}
+                target="_blank"
+                rel="noreferrer"
+                download
+                aria-label="Download Our Brochure"
+                style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  background: '#38bdf8',
+                  color: '#ffffff',
+                  fontSize: '14.5px',
+                  fontWeight: '800',
+                  padding: '12px 28px',
+                  borderRadius: '10px',
+                  border: '1.5px solid #ffcd00',
+                  boxShadow: 'none',
+                  display: 'inline-block',
+                  textDecoration: 'none'
+                }}
+              >
+                {siteData?.softplayTypes?.buttonText || "Download Our Brochure"}
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -563,7 +593,7 @@ export default function SoftPlay({ siteData }) {
       <section className="winera-softplay-roi-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '70px 4vw 90px',
+        padding: '75px 4vw',
         background: `url(${siteData?.softplayRoi?.bgUrl || softplayRoiBg}) center/100% 100% no-repeat`,
         overflow: 'hidden'
       }}>
@@ -629,16 +659,20 @@ export default function SoftPlay({ siteData }) {
             </div>
           </div>
 
-          {/* Right Column: direct rendering of single image */}
-          <div className="winera-softplay-roi-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {/* Right Column: soft-paly-image graphic matching exact UI screenshot */}
+          <div className="winera-softplay-roi-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
             <img
-              src={getValidImageUrl(siteData?.softplayRoi?.imgUrl || siteData?.softplayRoi?.topImgUrl, groupImg)}
+              src={siteData?.softplayRoi?.mainImgUrl ? getValidImageUrl(siteData.softplayRoi.mainImgUrl, softPalyImage) : softPalyImage}
               alt="Know Your Returns ROI Report"
+              loading="lazy"
+              decoding="async"
               style={{
                 width: '100%',
+                maxWidth: '560px',
                 height: 'auto',
                 display: 'block',
-                objectFit: 'contain'
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 15px 35px rgba(0,0,0,0.12))'
               }}
             />
           </div>
@@ -646,10 +680,10 @@ export default function SoftPlay({ siteData }) {
       </section>
 
       {/* 9. WHY CHOOSE WINERA INTERNATIONAL SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-softplay-whyus-section" style={{ padding: '90px 4vw 100px', background: '#F5F5F9' }}>
+      <section className="winera-softplay-whyus-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
-          <div style={{ textAlign: 'center', marginBottom: '60px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -869,25 +903,37 @@ export default function SoftPlay({ siteData }) {
 
       {/* 14. READY TO BUILD YOUR SOFT PLAY ZONE CTA BANNER SECTION */}
       <CtaBanner
+        showOverlay={false}
         align="center"
-        bg={siteData?.softplayCta?.bgUrl || ctaSoftplayBg}
-        subtitle={siteData?.softplayCta?.subtitle ?? "Get in touch with India's trusted soft play equipment manufacturer for a free 3D design, complete ROI report, and project quote tailored to your exact space and budget"}
+        buttonTheme="yellow"
+        titleFontSize="45px"
+        titleFontWeight="900"
+        subtitleFontSize="15px"
+        subtitleFontWeight="500"
+        bgUrl={siteData?.softplayCta?.bgUrl && !siteData.softplayCta.bgUrl.includes('cta-softplay-bg') ? siteData.softplayCta.bgUrl : null}
+        bg={softplayCtaBg}
+        tagline={null}
         title={
-          <span style={{ color: '#ffffff', letterSpacing: '-0.5px' }}>
-            {(() => {
-              const rawTitle = siteData?.softplayCta?.mainTitle || siteData?.softplayCta?.whiteText || "READY TO BUILD YOUR SOFT PLAY ZONE?";
-              const lines = rawTitle.split(/<br\s*\/?>/i);
-              return lines.map((line, lIdx) => (
-                <React.Fragment key={lIdx}>
-                  {lIdx > 0 && <br />}
-                  {line}
-                </React.Fragment>
-              ));
-            })()}
-          </span>
+          siteData?.softplayCta?.title !== undefined
+            ? siteData.softplayCta.title
+            : "READY TO BUILD YOUR<br/>SOFT PLAY ZONE?"
         }
-        buttonText={siteData?.softplayCta?.buttonText ?? "Get Quote Now"}
-        buttonLink={siteData?.softplayCta?.buttonLink ?? "https://wa.me/919428989488"}
+        subtitle={
+          siteData?.softplayCta?.description !== undefined
+            ? siteData.softplayCta.description
+            : "Talk to India's trusted soft play manufacturer<br/>and get a setup made<br/>for your space and budget."
+        }
+        description={null}
+        buttonText={
+          siteData?.softplayCta?.buttonText !== undefined
+            ? siteData.softplayCta.buttonText
+            : "Get a Quote"
+        }
+        buttonLink={
+          siteData?.softplayCta?.buttonLink !== undefined
+            ? siteData.softplayCta.buttonLink
+            : "https://wa.me/919428989488"
+        }
       />
 
       {/* 15. FOOTER */}

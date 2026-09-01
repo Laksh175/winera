@@ -2545,6 +2545,56 @@ html {
   border-radius: 10px !important;
 }
 
+/* Yellow Main Button with White Offset Backdrop Border */
+.winera-yellow-white-cta-wrapper {
+  position: relative;
+  display: inline-block;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 3px 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.winera-yellow-white-cta-wrapper:hover {
+  transform: translateY(-2.5px) scale(1.025);
+}
+
+.winera-yellow-white-cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 32px;
+  background: #ffcd00;
+  border-radius: 14px;
+  transform: rotate(-1.5deg);
+  transform-origin: center;
+  color: #0f172a;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.winera-yellow-white-cta-wrapper:hover .winera-yellow-white-cta-btn {
+  transform: rotate(-0.5deg);
+}
+
+.winera-yellow-white-cta-wrapper-sm {
+  border-radius: 13px !important;
+  padding: 2px 3px !important;
+}
+
+.winera-yellow-white-cta-btn-sm {
+  padding: 7px 22px !important;
+  font-size: 13px !important;
+  border-radius: 10px !important;
+}
+
 /* White Button with Cyan Border & Offset Backdrop Tab (Safety-Certified Installation Card) */
 .winera-white-cyan-cta-wrapper {
   position: relative;

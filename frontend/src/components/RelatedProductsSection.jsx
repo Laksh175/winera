@@ -64,7 +64,7 @@ export default function RelatedProductsSection({ sectionData, accentColor = '#38
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       className="winera-related-section"
-      style={{ padding: '35px 4vw 35px', background: '#F5F5F9', textAlign: 'center' }}
+      style={{ padding: '25px 4vw 25px', background: '#F5F5F9', textAlign: 'center' }}
     >
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         <SectionHeading marginBottom="40px" accentWidth="220px" accentMaxWidth="260px">

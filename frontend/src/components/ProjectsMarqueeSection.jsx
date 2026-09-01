@@ -26,7 +26,7 @@ export default function ProjectsMarqueeSection({
   const items = Array.isArray(projects) && projects.length > 0 ? projects : defaultProjects;
 
   return (
-    <section id={id} style={{ padding: '50px 0 60px', background: bg, overflow: 'hidden' }}>
+    <section id={id} style={{ padding: '35px 0 35px', background: bg, overflow: 'hidden' }}>
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
         {showTopHeader ? (
           <div style={{

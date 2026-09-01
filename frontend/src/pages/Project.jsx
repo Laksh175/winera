@@ -12,7 +12,7 @@ import projSoft1 from '../assets/proj-softplay1.webp';
 import projectImage01 from '../assets/project-image01.webp';
 import projectImage3 from '../assets/project-image-3.webp';
 import projectImage4 from '../assets/project-image-4.webp';
-import projectLastBg from '../assets/project-lastbg.webp';
+import projectCtaBg from '../assets/project-cta-bg.png';
 import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
 
 const resolveProjectImg = (proj) => {
@@ -61,10 +61,22 @@ export default function Project({ siteData }) {
     return fallback;
   };
 
+  const renderTitleMarkup = (titleText, fallbackMarkup, accentColor = '#38bdf8') => {
+    const text = titleText !== undefined && titleText !== null && titleText !== '' ? titleText : fallbackMarkup;
+    if (typeof text !== 'string') return text;
+
+    let processed = text
+      .replace(/<cyan>(.*?)<\/cyan>/gi, `<span style="color: ${accentColor};">$1</span>`)
+      .replace(/\*(.*?)\*/g, '<span style="color: #ffcd00;">$1</span>')
+      .replace(/\n/g, '<br />');
+
+    return <span dangerouslySetInnerHTML={{ __html: processed }} />;
+  };
+
   const bannerImg = getValidImageUrl(heroData.bannerImg, projectBanner);
   const breadcrumbHome = heroData.breadcrumbHome || 'Home';
   const breadcrumbPage = heroData.breadcrumbPage || 'Project';
-  const ctaBg = getValidImageUrl(ctaData.bgUrl, projectLastBg);
+  const ctaBg = getValidImageUrl(ctaData.bgUrl, projectCtaBg);
   const ctaLink = ctaData.buttonLink || "https://wa.me/919428989488";
 
   const [activeCategory, setActiveCategory] = useState("All");
@@ -330,7 +342,7 @@ export default function Project({ siteData }) {
       </section>
 
       {/* 3. MAIN CATALOG & FILTER TABS SECTION */}
-      <section style={{ padding: '70px 4vw 100px', maxWidth: '1240px', margin: '0 auto' }}>
+      <section style={{ padding: '70px 4vw 35px', maxWidth: '1240px', margin: '0 auto' }}>
         {/* Title: Crafting India's Best Play Destinations */}
         <SectionHeading marginBottom="45px" accentWidth="220px" accentMaxWidth="260px">
           {sectionTitle}
@@ -485,23 +497,50 @@ export default function Project({ siteData }) {
         </div>
       </section>
 
-      {/* 4. CTA GRAPHIC BANNER SECTION */}
-      <section style={{ padding: '60px 4vw', background: '#F5F5F9', display: 'flex', justifyContent: 'center' }}>
-        <div style={{ maxWidth: '1240px', width: '100%', position: 'relative', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
-          <a
-            href={ctaLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'block', width: '100%', position: 'relative' }}
-          >
-            <img
-              src={ctaBg}
-              alt="Need Any Consultations - Project"
-              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '24px' }}
-            />
-          </a>
-        </div>
-      </section>
+      {/* 4. CTA BANNER SECTION */}
+      <CtaBanner
+        showOverlay={false}
+        align="center"
+        sectionPadding="20px 4vw 30px"
+        bgUrl={
+          siteData?.projectCta?.bgUrl && !siteData.projectCta.bgUrl.includes('project-lastbg')
+            ? getValidImageUrl(siteData.projectCta.bgUrl, projectCtaBg)
+            : null
+        }
+        bg={projectCtaBg}
+        tagline={null}
+        title={
+          siteData?.projectCta?.title ? (
+            renderTitleMarkup(siteData.projectCta.title, "*Planning a Game Zone* <cyan>of Your Own?</cyan>", "#ffcd00")
+          ) : (
+            <>
+              <span style={{ color: '#ffcd00', textShadow: '0 4px 18px rgba(0,0,0,0.85), 2px 2px 4px rgba(0,0,0,0.95)' }}>
+                Planning a Game Zone{' '}
+              </span>
+              <span style={{ color: '#38bdf8', textShadow: '0 4px 18px rgba(0,0,0,0.85), 2px 2px 4px rgba(0,0,0,0.95)' }}>
+                of Your Own?
+              </span>
+            </>
+          )
+        }
+        subtitle={null}
+        description={
+          siteData?.projectCta?.description !== undefined
+            ? siteData.projectCta.description
+            : "Give us the space, and we'll deliver a complete game zone — planned, built, and ready to play. Your only job is to open the doors."
+        }
+        descriptionFontSize="17px"
+        buttonText={
+          siteData?.projectCta?.buttonText !== undefined
+            ? siteData.projectCta.buttonText
+            : "Get a Free Consultation"
+        }
+        buttonLink={
+          siteData?.projectCta?.buttonLink !== undefined
+            ? siteData.projectCta.buttonLink
+            : "https://wa.me/919428989488"
+        }
+      />
 
       {/* 5. FOOTER */}
       <Footer footerData={footer} />

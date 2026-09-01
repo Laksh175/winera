@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
+import vrCtaRightImg from '../assets/vr-cta-right-img.png';
 
 import projectBanner from '../assets/project-banner.webp';
 import projectImage01 from '../assets/project-image01.webp';
@@ -47,7 +48,7 @@ import projectBlock2 from '../assets/project-block2.webp';
 import projectBlock3 from '../assets/project-block3.webp';
 import projectSectionVideo from '../assets/project-section-video.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
-import projectLastBg from '../assets/project-lastbg.webp';
+import projectCtaBg from '../assets/project-cta-bg.png';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
@@ -60,13 +61,14 @@ import trampolineImg3 from '../assets/trampoline-img-3.webp';
 import tampolineImg4 from '../assets/tampoline-img-4.webp';
 import tampolineImg5 from '../assets/tampoline-img-5.webp';
 import tampolineImage6 from '../assets/tampoline-image-6.webp';
-import tampolineImage7 from '../assets/tampoline-image-7.webp';
 import hypergridSupplierCollage from '../assets/hypergrid-supplier-collage.webp';
 import hypergridBannerImg from '../assets/hypergrid-banner-img.webp';
 import hypergridSpecsBg from '../assets/hypergrid-specs-bg.webp';
 import hypergridWhyUsBg from '../assets/hypergrid-why-us-bg.webp';
 import hypergridImage from '../assets/hypergrid-image.webp';
 import hypergridWineraLastblock from '../assets/hypergrid-winera-lastblock.webp';
+import leftTiltedCard from '../assets/Left Tilted Card.webp';
+import rightTiltedCard from '../assets/Right Tilted Card.webp';
 import arImage from '../assets/AR-image.webp';
 
 import safetyBg from '../assets/safety-bg.webp';
@@ -86,15 +88,22 @@ import roiBlock5Img6 from '../assets/roi-block5-img6.webp';
 import roiBlock6 from '../assets/roi-block6.webp';
 import roiBlock7Bg from '../assets/roi-block7-bg.webp';
 import homeBlockBg from '../assets/home-block.webp';
+import homeBlock1 from '../assets/home-block-1.webp';
+import homeBlock2 from '../assets/home-block-2.webp';
 import about1 from '../assets/about-1.webp';
 import about2 from '../assets/about-2.webp';
+import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.png';
 import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
+import aboutusCtaBg from '../assets/aboutus-cta-bg.png';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 import bowlingHeroBg from '../assets/bowling-hero-bg.webp';
 import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
 import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
+import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
+import bumperCarCtaLeft from '../assets/bumperCar-cta-left.png';
+import bumperCarCtaRight from '../assets/bumperCar-cta-right.png';
 import vrHeroBg from '../assets/vr-hero-bg.webp';
 import vrSupplierCollage from '../assets/vr-supplier-collage.webp';
 import vrMatchedVenueDirect from '../assets/vr-matched-venue-direct.webp';
@@ -107,7 +116,14 @@ import arAttractionsGraphic from '../assets/ar-attractions-graphic.webp';
 import arFeaturesBg from '../assets/ar-features-bg.webp';
 import arEarnGamers from '../assets/ar-earn-gamers.webp';
 import softPlayImg from '../assets/soft-play.webp';
+import softplayCastle3d from '../assets/softplay-castle-3d.webp';
+import allImg from '../assets/all.webp';
+import softPalyImage from '../assets/soft-paly-image.webp';
 import groupImg from '../assets/group-image.webp';
+import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
+import amusementCtaBg from '../assets/cta-consultations-banner.webp';
+import amusementLeftImg from '../assets/amusement-park-left-img.webp';
+import amusementRightImg from '../assets/amusement-park-right-img.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import superAirHockeyImg from '../assets/super-air-hockey.jpg';
 import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.jpg';
@@ -817,7 +833,7 @@ const defaultTrampolineCta = {
   descLine2: "recommend the right zone mix for your space.",
   buttonText: "Get Quote Now",
   buttonLink: "https://wa.me/919999999999?text=Hi%20Winera%2C%20I%20want%20to%20plan%20a%20Trampoline%20Park",
-  bgUrl: tampolineImage7
+  bgUrl: trampolineParkCtaBg
 };
 
 const defaultTrampolineSeo = {
@@ -1092,7 +1108,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'aboutMissionVision', name: 'Our Purpose & Promise' },
         { id: 'aboutWhyUsDetail', name: 'Why Choose Us Mindmap' },
         { id: 'founder', name: 'Founder Profile Data' },
-        { id: 'ctaBanner', name: 'CTA Consultation Banner' },
+        { id: 'aboutCta', name: 'About Us CTA Banner' },
         { id: 'aboutSeo', name: 'SEO Meta Title & Description' }
       ]
     },
@@ -1373,11 +1389,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         width: currentItem.width || knownDefault.width || '2140 mm',
         depth: currentItem.depth || knownDefault.depth || '2310 mm',
         height: currentItem.height || knownDefault.height || '2490 mm',
-        img: currentItem.img || currentItem.imageUrl || bikeArcade,
-        gallery1: currentItem.gallery1 || currentItem.img || bikeArcade,
-        gallery2: currentItem.gallery2 || currentItem.img || bikeArcade,
-        gallery3: currentItem.gallery3 || currentItem.img || bikeArcade,
-        gallery4: currentItem.gallery4 || currentItem.img || bikeArcade,
+        img: (currentItem.img && !currentItem.img.includes('/src/assets/')) ? currentItem.img : (currentItem.imageUrl && !currentItem.imageUrl.includes('/src/assets/') ? currentItem.imageUrl : ''),
+        gallery1: (currentItem.gallery1 && !currentItem.gallery1.includes('/src/assets/')) ? currentItem.gallery1 : '',
+        gallery2: (currentItem.gallery2 && !currentItem.gallery2.includes('/src/assets/')) ? currentItem.gallery2 : '',
+        gallery3: (currentItem.gallery3 && !currentItem.gallery3.includes('/src/assets/')) ? currentItem.gallery3 : '',
+        gallery4: (currentItem.gallery4 && !currentItem.gallery4.includes('/src/assets/')) ? currentItem.gallery4 : '',
         videoUrl: currentItem.videoUrl || knownDefault.videoUrl || 'https://youtube.com',
         quoteUrl: currentItem.quoteUrl || knownDefault.quoteUrl || 'https://wa.me/919428989488',
         feature1Title: currentItem.feature1Title || '12+ Years of Expertise',
@@ -1390,7 +1406,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         feature4Desc: currentItem.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.'
       };
 
-      setModalItemData({ ...defaultArcadeItem, ...currentItem });
+      const cleanedCurrentItem = { ...currentItem };
+      ['img', 'imageUrl', 'gallery1', 'gallery2', 'gallery3', 'gallery4'].forEach(k => {
+        if (cleanedCurrentItem[k] && typeof cleanedCurrentItem[k] === 'string' && cleanedCurrentItem[k].includes('/src/assets/')) {
+          delete cleanedCurrentItem[k];
+        }
+      });
+
+      setModalItemData({ ...defaultArcadeItem, ...cleanedCurrentItem });
       setIsModalOpen(true);
       return;
     }
@@ -1649,11 +1672,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         tag: modalItemData.tag || 'Popular',
         tagline: modalItemData.tagline || '',
         desc: modalItemData.desc || '',
-        img: modalItemData.img || modalItemData.imageUrl || '',
-        gallery1: modalItemData.gallery1 || modalItemData.img || '',
-        gallery2: modalItemData.gallery2 || modalItemData.img || '',
-        gallery3: modalItemData.gallery3 || modalItemData.img || '',
-        gallery4: modalItemData.gallery4 || modalItemData.img || '',
+        img: (modalItemData.img && !modalItemData.img.includes('/src/assets/')) ? modalItemData.img : (modalItemData.imageUrl && !modalItemData.imageUrl.includes('/src/assets/') ? modalItemData.imageUrl : ''),
+        gallery1: (modalItemData.gallery1 && !modalItemData.gallery1.includes('/src/assets/')) ? modalItemData.gallery1 : (modalItemData.img && !modalItemData.img.includes('/src/assets/') ? modalItemData.img : ''),
+        gallery2: (modalItemData.gallery2 && !modalItemData.gallery2.includes('/src/assets/')) ? modalItemData.gallery2 : '',
+        gallery3: (modalItemData.gallery3 && !modalItemData.gallery3.includes('/src/assets/')) ? modalItemData.gallery3 : '',
+        gallery4: (modalItemData.gallery4 && !modalItemData.gallery4.includes('/src/assets/')) ? modalItemData.gallery4 : '',
         power: modalItemData.power || '880 W',
         voltage: modalItemData.voltage || '220v',
         specsCategory: modalItemData.specsCategory || modalItemData.category || 'Bike Racing Game',
@@ -3924,7 +3947,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.ctaBanner?.tagline || "READY TO GET STARTED?"}
+                  value={formData.ctaBanner?.tagline !== undefined ? formData.ctaBanner.tagline : "READY TO GET STARTED?"}
                   onChange={(e) => handleFieldChange('ctaBanner', 'tagline', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -3936,7 +3959,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.ctaBanner?.title || "Start Your Game Zone Journey"}
+                  value={formData.ctaBanner?.title !== undefined ? formData.ctaBanner.title : "Start Your Game Zone Journey"}
                   onChange={(e) => handleFieldChange('ctaBanner', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '700' }}
                 />
@@ -3948,7 +3971,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.ctaBanner?.subtitle || "Game Zones Are India's Fastest Growing Business Are You In?"}
+                  value={formData.ctaBanner?.subtitle !== undefined ? formData.ctaBanner.subtitle : "Game Zones Are India's Fastest Growing Business Are You In?"}
                   onChange={(e) => handleFieldChange('ctaBanner', 'subtitle', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -3960,7 +3983,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <textarea
                   rows={2}
-                  value={formData.ctaBanner?.description || "Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company"}
+                  value={formData.ctaBanner?.description !== undefined ? formData.ctaBanner.description : "Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company"}
                   onChange={(e) => handleFieldChange('ctaBanner', 'description', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
                 />
@@ -3972,7 +3995,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.ctaBanner?.buttonText || "Talk to an Expert"}
+                  value={formData.ctaBanner?.buttonText !== undefined ? formData.ctaBanner.buttonText : "Talk to an Expert"}
                   onChange={(e) => handleFieldChange('ctaBanner', 'buttonText', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -3984,22 +4007,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.ctaBanner?.buttonLink || "https://wa.me/919428989488"}
+                  value={formData.ctaBanner?.buttonLink !== undefined ? formData.ctaBanner.buttonLink : "https://wa.me/919428989488"}
                   onChange={(e) => handleFieldChange('ctaBanner', 'buttonLink', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
 
+              {/* Background Banner Image */}
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
                   Background Banner Image
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                  {formData.ctaBanner?.bgUrl && (
-                    <div style={{ position: 'relative', width: '180px', height: '60px', borderRadius: '12px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
-                      <img src={formData.ctaBanner.bgUrl} alt="Banner Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                  )}
+                  <div style={{ position: 'relative', width: '140px', height: '60px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.ctaBanner?.bgUrl, homeBlockBg)}
+                      alt="Banner Background Preview"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
                   <label style={{
                     background: '#00a8ff',
                     color: '#ffffff',
@@ -4021,13 +4047,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       onChange={async (e) => {
                         const file = e.target.files[0];
                         if (!file) return;
-                        setStatusMsg('Uploading banner image...');
                         try {
                           const res = await uploadImageFile(file, admin.token);
-                          handleFieldChange('ctaBanner', 'bgUrl', res.url);
-                          setStatusMsg('Banner image uploaded successfully!');
+                          const updated = { ...(formData.ctaBanner || {}), bgUrl: res.url };
+                          setFormData(prev => ({ ...prev, ctaBanner: updated }));
+                          await persistSectionToDatabase('ctaBanner', updated);
                         } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          console.error(err);
                         }
                       }}
                     />
@@ -4035,10 +4061,136 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   {formData.ctaBanner?.bgUrl && (
                     <button
                       type="button"
-                      onClick={() => handleFieldChange('ctaBanner', 'bgUrl', '')}
+                      onClick={async () => {
+                        const updated = { ...(formData.ctaBanner || {}), bgUrl: '' };
+                        setFormData(prev => ({ ...prev, ctaBanner: updated }));
+                        await persistSectionToDatabase('ctaBanner', updated);
+                      }}
                       style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                     >
-                      Remove Custom Banner
+                      Reset to Default Banner
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Left Side Card Image */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Left Side Card Image (Tilted Card)
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+                  <div style={{ position: 'relative', width: '70px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.ctaBanner?.leftImgUrl || formData.ctaBanner?.leftImg, homeBlock1)}
+                      alt="Left Card Preview"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Left Card Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.ctaBanner || {}), leftImgUrl: res.url };
+                          setFormData(prev => ({ ...prev, ctaBanner: updated }));
+                          await persistSectionToDatabase('ctaBanner', updated);
+                        } catch (err) {
+                          console.error(err);
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.ctaBanner?.leftImgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.ctaBanner || {}), leftImgUrl: '' };
+                        setFormData(prev => ({ ...prev, ctaBanner: updated }));
+                        await persistSectionToDatabase('ctaBanner', updated);
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset to Default Left Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Side Card Image */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Side Card Image (Tilted Card)
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+                  <div style={{ position: 'relative', width: '70px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.ctaBanner?.rightImgUrl || formData.ctaBanner?.rightImg, homeBlock2)}
+                      alt="Right Card Preview"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Right Card Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.ctaBanner || {}), rightImgUrl: res.url };
+                          setFormData(prev => ({ ...prev, ctaBanner: updated }));
+                          await persistSectionToDatabase('ctaBanner', updated);
+                        } catch (err) {
+                          console.error(err);
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.ctaBanner?.rightImgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.ctaBanner || {}), rightImgUrl: '' };
+                        setFormData(prev => ({ ...prev, ctaBanner: updated }));
+                        await persistSectionToDatabase('ctaBanner', updated);
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset to Default Right Image
                     </button>
                   )}
                 </div>
@@ -5077,7 +5229,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.arcadeCta?.yellowText ?? "NEED ANY"}
+                  value={formData.arcadeCta?.yellowText !== undefined ? formData.arcadeCta.yellowText : "NEED ANY"}
                   onChange={(e) => handleFieldChange('arcadeCta', 'yellowText', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -5089,7 +5241,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.arcadeCta?.cyanText ?? "CONSULTATIONS ?"}
+                  value={formData.arcadeCta?.cyanText !== undefined ? formData.arcadeCta.cyanText : "CONSULTATIONS ?"}
                   onChange={(e) => handleFieldChange('arcadeCta', 'cyanText', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -5101,7 +5253,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.arcadeCta?.whiteText ?? "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTION."}
+                  value={formData.arcadeCta?.whiteText !== undefined ? formData.arcadeCta.whiteText : "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTION."}
                   onChange={(e) => handleFieldChange('arcadeCta', 'whiteText', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -5114,7 +5266,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.arcadeCta?.buttonText ?? "Get Quote Now"}
+                    value={formData.arcadeCta?.buttonText !== undefined ? formData.arcadeCta.buttonText : "Get Quote Now"}
                     onChange={(e) => handleFieldChange('arcadeCta', 'buttonText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -5125,7 +5277,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.arcadeCta?.buttonLink ?? "https://wa.me/919428989488"}
+                    value={formData.arcadeCta?.buttonLink !== undefined ? formData.arcadeCta.buttonLink : "https://wa.me/919428989488"}
                     onChange={(e) => handleFieldChange('arcadeCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -5433,7 +5585,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
                 <textarea
                   rows={3}
-                  value={formData.softplayIntro?.desc || "Design, manufacturing, and installation of indoor soft play equipment for malls, FECs, hotels, and play zones across India."}
+                  value={formData.softplayIntro?.desc || "India's trusted soft play equipment manufacturer custom designed, safety certified, and installed by our own team across India."}
                   onChange={(e) => handleFieldChange('softplayIntro', 'desc', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -5585,8 +5737,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
-                  {formData.softplayManufacture?.imgUrl && (
+                  {formData.softplayManufacture?.imgUrl ? (
                     <img src={formData.softplayManufacture.imgUrl} alt="" style={{ height: '50px', objectFit: 'contain' }} />
+                  ) : (
+                    <img src={softplayCastle3d} alt="Default Preview" style={{ height: '50px', objectFit: 'contain' }} />
                   )}
                 </div>
               </div>
@@ -5823,8 +5977,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ display: 'none' }}
                       />
                     </label>
-                    {formData.softplayMaterials?.imgUrl && (
+                    {formData.softplayMaterials?.imgUrl ? (
                       <img src={formData.softplayMaterials.imgUrl} alt="" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
+                    ) : (
+                      <img src={allImg} alt="Default Preview" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
                     )}
                   </div>
                 </div>
@@ -6215,7 +6371,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>Section Photo Upload</h4>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
-                    src={getAdminValidImageUrl(formData.softplayRoi?.imgUrl || formData.softplayRoi?.topImgUrl, groupImg)}
+                    src={getAdminValidImageUrl(formData.softplayRoi?.mainImgUrl || formData.softplayRoi?.imgUrl || formData.softplayRoi?.topImgUrl, softPalyImage)}
                     alt="Section Photo Preview"
                     style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
                   />
@@ -6515,22 +6671,27 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Soft Play CTA Banner</h3>
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Main Title Heading Text (White Color)</label>
-                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Main Title Heading Text</label>
                 <input
                   type="text"
-                  value={formData.softplayCta?.mainTitle || formData.softplayCta?.whiteText || 'READY TO BUILD YOUR SOFT PLAY ZONE?'}
-                  onChange={(e) => handleFieldChange('softplayCta', 'mainTitle', e.target.value)}
+                  value={formData.softplayCta?.title !== undefined ? formData.softplayCta.title : (formData.softplayCta?.mainTitle !== undefined ? formData.softplayCta.mainTitle : "Ready to Build Your Soft Play Zone?")}
+                  onChange={(e) => {
+                    handleFieldChange('softplayCta', 'title', e.target.value);
+                    handleFieldChange('softplayCta', 'mainTitle', e.target.value);
+                  }}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Text</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
                 <textarea
                   rows={2}
-                  value={formData.softplayCta?.subtitle ?? "Get in touch with India's trusted soft play equipment manufacturer for a free 3D design, complete ROI report, and project quote tailored to your exact space and budget"}
-                  onChange={(e) => handleFieldChange('softplayCta', 'subtitle', e.target.value)}
+                  value={formData.softplayCta?.description !== undefined ? formData.softplayCta.description : (formData.softplayCta?.subtitle !== undefined ? formData.softplayCta.subtitle : "Talk to India's trusted soft play manufacturer and get a setup made for your space and budget.")}
+                  onChange={(e) => {
+                    handleFieldChange('softplayCta', 'description', e.target.value);
+                    handleFieldChange('softplayCta', 'subtitle', e.target.value);
+                  }}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
                 />
               </div>
@@ -6540,7 +6701,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
                   <input
                     type="text"
-                    value={formData.softplayCta?.buttonText ?? 'Get Quote Now'}
+                    value={formData.softplayCta?.buttonText !== undefined ? formData.softplayCta.buttonText : "Get a Quote"}
                     onChange={(e) => handleFieldChange('softplayCta', 'buttonText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -6549,10 +6710,63 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.softplayCta?.buttonLink ?? 'https://wa.me/919428989488'}
+                    value={formData.softplayCta?.buttonLink !== undefined ? formData.softplayCta.buttonLink : "https://wa.me/919428989488"}
                     onChange={(e) => handleFieldChange('softplayCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
+                </div>
+              </div>
+
+              {/* Background Image Upload */}
+              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>CTA Banner Background Image Upload</h4>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.softplayCta?.bgUrl || formData.softplayCta?.bg, ctaSoftplayBg)}
+                    alt="CTA Background Preview"
+                    style={{ width: '120px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.softplayCta?.bgUrl || formData.softplayCta?.bg || ''}
+                    onChange={(e) => {
+                      handleFieldChange('softplayCta', 'bgUrl', e.target.value);
+                      handleFieldChange('softplayCta', 'bg', e.target.value);
+                    }}
+                    placeholder="Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload BG Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const res = await uploadImageFile(file, admin.token);
+                          handleFieldChange('softplayCta', 'bgUrl', res.url);
+                          handleFieldChange('softplayCta', 'bg', res.url);
+                          await persistSectionToDatabase('softplayCta', { ...(formData.softplayCta || {}), bgUrl: res.url, bg: res.url });
+                          setStatusMsg('Background image uploaded successfully!');
+                        }
+                      }}
+                    />
+                  </label>
+                  {(formData.softplayCta?.bgUrl || formData.softplayCta?.bg) && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        handleFieldChange('softplayCta', 'bgUrl', '');
+                        handleFieldChange('softplayCta', 'bg', '');
+                        await persistSectionToDatabase('softplayCta', { ...(formData.softplayCta || {}), bgUrl: '', bg: '' });
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom BG
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -7231,35 +7445,30 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Amusement Park CTA Banner Settings</h3>
 
-              <div>
+              {/* Banner Background Image Upload */}
+              <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Banner Background Image</label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <label style={{
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    padding: '10px 18px',
-                    borderRadius: '12px',
-                    fontWeight: '800',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Banner Background Image
+                  <img
+                    src={getAdminValidImageUrl(formData.amusementCta?.bgUrl, amusementCtaBg)}
+                    alt="Banner Background Preview"
+                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
+                  <label style={{ background: '#38bdf8', color: '#ffffff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
                     <input
                       type="file"
                       accept="image/*"
                       onChange={async (e) => {
                         const file = e.target.files[0];
                         if (!file) return;
-                        setStatusMsg('Uploading banner background...');
+                        setStatusMsg('Uploading background...');
                         try {
                           const res = await uploadImageFile(file, admin.token);
                           const updated = { ...(formData.amusementCta || {}), bgUrl: res.url };
                           setFormData(prev => ({ ...prev, amusementCta: updated }));
                           await persistSectionToDatabase('amusementCta', updated);
-                          setStatusMsg('Image uploaded successfully!');
+                          setStatusMsg('Background image uploaded successfully!');
                         } catch (err) {
                           setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
                         }
@@ -7267,13 +7476,73 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.amusementCta?.bgUrl && (
+                </div>
+              </div>
+
+              {/* Tilted Side Cards Image Uploads */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Left Tilted Card Image</label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <img
-                      src={formData.amusementCta.bgUrl}
-                      alt="Banner Background Preview"
-                      style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                      src={getAdminValidImageUrl(formData.amusementCta?.leftImgUrl, amusementLeftImg)}
+                      alt="Left Card Preview"
+                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
                     />
-                  )}
+                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.amusementCta || {}), leftImgUrl: res.url };
+                            setFormData(prev => ({ ...prev, amusementCta: updated }));
+                            await persistSectionToDatabase('amusementCta', updated);
+                            setStatusMsg('Left image uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Tilted Card Image</label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.amusementCta?.rightImgUrl, amusementRightImg)}
+                      alt="Right Card Preview"
+                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+                    />
+                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.amusementCta || {}), rightImgUrl: res.url };
+                            setFormData(prev => ({ ...prev, amusementCta: updated }));
+                            await persistSectionToDatabase('amusementCta', updated);
+                            setStatusMsg('Right image uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
 
@@ -7313,7 +7582,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Label</label>
                   <input
                     type="text"
-                    value={formData.amusementCta?.buttonText || 'Talk to an ROI Expert'}
+                    value={formData.amusementCta?.buttonText || 'Get Quote Now'}
                     onChange={(e) => handleFieldChange('amusementCta', 'buttonText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -8156,6 +8425,73 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     alt="Banner Background Preview"
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
+                </div>
+              </div>
+
+              {/* Tilted Side Cards Image Uploads */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Left Tilted Card Image</label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.hypergridCta?.leftImgUrl, leftTiltedCard)}
+                      alt="Left Card Preview"
+                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'contain', border: '1px solid #cbd5e1' }}
+                    />
+                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.hypergridCta || {}), leftImgUrl: res.url };
+                            setFormData(prev => ({ ...prev, hypergridCta: updated }));
+                            await persistSectionToDatabase('hypergridCta', updated);
+                            setStatusMsg('Left image uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Tilted Card Image</label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.hypergridCta?.rightImgUrl, rightTiltedCard)}
+                      alt="Right Card Preview"
+                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'contain', border: '1px solid #cbd5e1' }}
+                    />
+                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.hypergridCta || {}), rightImgUrl: res.url };
+                            setFormData(prev => ({ ...prev, hypergridCta: updated }));
+                            await persistSectionToDatabase('hypergridCta', updated);
+                            setStatusMsg('Right image uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
 
@@ -9315,79 +9651,173 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Bumper Car CTA Banner Settings</h3>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Banner Background Image</label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <label style={{
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    padding: '10px 18px',
-                    borderRadius: '12px',
-                    fontWeight: '800',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Banner Background Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        setStatusMsg('Uploading bumpercar CTA banner background...');
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.bumpercarCta || {}), bgUrl: res.url };
-                          setFormData(prev => ({ ...prev, bumpercarCta: updated }));
-                          await persistSectionToDatabase('bumpercarCta', updated);
-                          setStatusMsg('Image uploaded successfully!');
-                        } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                        }
-                      }}
-                      style={{ display: 'none' }}
+              {/* 3 Images Upload Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', background: '#F8FAFC', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                {/* 1. Background Image */}
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '8px' }}>1. Banner Background Image</label>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label style={{
+                      background: '#38bdf8',
+                      color: '#ffffff',
+                      padding: '8px 14px',
+                      borderRadius: '10px',
+                      fontWeight: '800',
+                      fontSize: '12px',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Background
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          setStatusMsg('Uploading banner background image...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.bumpercarCta || {}), bgUrl: res.url };
+                            setFormData(prev => ({ ...prev, bumpercarCta: updated }));
+                            await persistSectionToDatabase('bumpercarCta', updated);
+                            setStatusMsg('Background image uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                    <img
+                      src={getAdminValidImageUrl(formData.bumpercarCta?.bgUrl, amusementParkCtaBg)}
+                      alt="Background Preview"
+                      style={{ width: '100%', height: '70px', borderRadius: '8px', objectFit: 'cover', border: '1.5px solid #cbd5e1' }}
                     />
-                  </label>
-                  <img
-                    src={getAdminValidImageUrl(formData.bumpercarCta?.bgUrl, bumpercarCtaBannerBg)}
-                    alt="Banner Background Preview"
-                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
-                  />
+                  </div>
                 </div>
-              </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                {/* 2. Left Tilted Image */}
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Yellow Title Text</label>
-                  <input
-                    type="text"
-                    value={formData.bumpercarCta?.yellowText || 'NEED ANY'}
-                    onChange={(e) => handleFieldChange('bumpercarCta', 'yellowText', e.target.value)}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '8px' }}>2. Left Tilted Image Graphic</label>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label style={{
+                      background: '#38bdf8',
+                      color: '#ffffff',
+                      padding: '8px 14px',
+                      borderRadius: '10px',
+                      fontWeight: '800',
+                      fontSize: '12px',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          setStatusMsg('Uploading left CTA image graphic...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.bumpercarCta || {}), leftImgUrl: res.url };
+                            setFormData(prev => ({ ...prev, bumpercarCta: updated }));
+                            await persistSectionToDatabase('bumpercarCta', updated);
+                            setStatusMsg('Left image uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                    <img
+                      src={getAdminValidImageUrl(formData.bumpercarCta?.leftImgUrl, bumperCarCtaLeft)}
+                      alt="Left Image Preview"
+                      style={{ width: '100%', height: '70px', borderRadius: '8px', objectFit: 'contain', background: '#0f172a', border: '1.5px solid #cbd5e1' }}
+                    />
+                  </div>
                 </div>
+
+                {/* 3. Right Tilted Image */}
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>White/Cyan Title Text</label>
-                  <input
-                    type="text"
-                    value={formData.bumpercarCta?.cyanText || 'BUMPER CAR CONSULTATIONS ?'}
-                    onChange={(e) => handleFieldChange('bumpercarCta', 'cyanText', e.target.value)}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '8px' }}>3. Right Tilted Image Graphic</label>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label style={{
+                      background: '#38bdf8',
+                      color: '#ffffff',
+                      padding: '8px 14px',
+                      borderRadius: '10px',
+                      fontWeight: '800',
+                      fontSize: '12px',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          setStatusMsg('Uploading right CTA image graphic...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.bumpercarCta || {}), rightImgUrl: res.url };
+                            setFormData(prev => ({ ...prev, bumpercarCta: updated }));
+                            await persistSectionToDatabase('bumpercarCta', updated);
+                            setStatusMsg('Right image uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                    <img
+                      src={getAdminValidImageUrl(formData.bumpercarCta?.rightImgUrl, bumperCarCtaRight)}
+                      alt="Right Image Preview"
+                      style={{ width: '100%', height: '70px', borderRadius: '8px', objectFit: 'contain', background: '#0f172a', border: '1.5px solid #cbd5e1' }}
+                    />
+                  </div>
                 </div>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Description (White Subtitle Text)</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Top Tagline Text</label>
+                <input
+                  type="text"
+                  value={formData.bumpercarCta?.tagline || 'GET IN TOUCH'}
+                  onChange={(e) => handleFieldChange('bumpercarCta', 'tagline', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Main Title Heading</label>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Yellow.</p>
+                <input
+                  type="text"
+                  value={formData.bumpercarCta?.title || 'READY TO EXPLORE A *BUMPER CAR*<br />ATTRACTION *FOR YOUR VENUE?*'}
+                  onChange={(e) => handleFieldChange('bumpercarCta', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Description Text</label>
                 <textarea
                   rows={3}
-                  value={formData.bumpercarCta?.whiteText || formData.bumpercarCta?.subtitle || "Get in touch with India's trusted bumper car equipment manufacturer for a free 3D layout design, complete ROI report, and project quote tailored to your venue."}
+                  value={formData.bumpercarCta?.subtitle || formData.bumpercarCta?.whiteText || "We'll assess your space and send a free<br/>ROI report before you spend anything."}
                   onChange={(e) => {
-                    handleFieldChange('bumpercarCta', 'whiteText', e.target.value);
                     handleFieldChange('bumpercarCta', 'subtitle', e.target.value);
+                    handleFieldChange('bumpercarCta', 'whiteText', e.target.value);
                   }}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
                 />
@@ -9398,7 +9828,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
                   <input
                     type="text"
-                    value={formData.bumpercarCta?.buttonText || 'Get Quote Now'}
+                    value={formData.bumpercarCta?.buttonText || 'Get a Quote From an Expert'}
                     onChange={(e) => handleFieldChange('bumpercarCta', 'buttonText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -10938,85 +11368,154 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* AR GAMES CTA BANNER FORM */}
           {activeSection === 'arCta' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>CTA Consultations Banner Settings</h3>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Banner Background Image</label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <label style={{
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    padding: '10px 18px',
-                    borderRadius: '12px',
-                    fontWeight: '800',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Banner Background
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>AR Games CTA Banner Settings</h3>
+
+              {/* Background Image Upload */}
+              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>CTA Banner Background Image</h4>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <img
+                    src={getAdminValidImageUrl(
+                      (formData.arCta?.bgUrl && !formData.arCta.bgUrl.includes('cta-consultations') && !formData.arCta.bgUrl.includes('need-consultations') && !formData.arCta.bgUrl.includes('project-lastbg'))
+                        ? formData.arCta.bgUrl
+                        : (formData.arCta?.bg && !formData.arCta.bg.includes('cta-consultations') && !formData.arCta.bg.includes('need-consultations') && !formData.arCta.bg.includes('project-lastbg') ? formData.arCta.bg : ''),
+                      amusementParkCtaBg
+                    )}
+                    alt="CTA Background Preview"
+                    style={{ width: '140px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.arCta?.bgUrl || formData.arCta?.bg || ''}
+                    onChange={(e) => {
+                      handleFieldChange('arCta', 'bgUrl', e.target.value);
+                      handleFieldChange('arCta', 'bg', e.target.value);
+                    }}
+                    placeholder="Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload BG Image
                     <input
                       type="file"
                       accept="image/*"
+                      style={{ display: 'none' }}
                       onChange={async (e) => {
                         const file = e.target.files[0];
-                        if (!file) return;
-                        setStatusMsg('Uploading CTA banner background...');
-                        try {
+                        if (file) {
                           const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.arCta || {}), bgUrl: res.url };
-                          setFormData(prev => ({ ...prev, arCta: updated }));
-                          await persistSectionToDatabase('arCta', updated);
-                          setStatusMsg('Image uploaded successfully!');
-                        } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          handleFieldChange('arCta', 'bgUrl', res.url);
+                          handleFieldChange('arCta', 'bg', res.url);
+                          await persistSectionToDatabase('arCta', { ...(formData.arCta || {}), bgUrl: res.url, bg: res.url });
+                          setStatusMsg('Background image uploaded successfully!');
                         }
                       }}
-                      style={{ display: 'none' }}
                     />
                   </label>
-                  <img
-                    src={getAdminValidImageUrl(formData.arCta?.bgUrl, ctaConsultationsBanner)}
-                    alt="Banner Preview"
-                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
-                  />
+                  {(formData.arCta?.bgUrl || formData.arCta?.bg) && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        handleFieldChange('arCta', 'bgUrl', '');
+                        handleFieldChange('arCta', 'bg', '');
+                        await persistSectionToDatabase('arCta', { ...(formData.arCta || {}), bgUrl: '', bg: '' });
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom BG
+                    </button>
+                  )}
                 </div>
               </div>
+
+              {/* Side Images (Left & Right Tilted Cards) */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Yellow Text</label>
-                  <input
-                    type="text"
-                    value={formData.arCta?.yellowText || 'NEED ANY '}
-                    onChange={(e) => handleFieldChange('arCta', 'yellowText', e.target.value)}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Left Tilted Image Graphic</h4>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.arCta?.leftImgUrl, homeBlock1)}
+                      alt="Left Image Preview"
+                      style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                    />
+                    <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            const res = await uploadImageFile(file, admin.token);
+                            handleFieldChange('arCta', 'leftImgUrl', res.url);
+                            await persistSectionToDatabase('arCta', { ...(formData.arCta || {}), leftImgUrl: res.url });
+                            setStatusMsg('Left image uploaded successfully!');
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
                 </div>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Cyan Text</label>
-                  <input
-                    type="text"
-                    value={formData.arCta?.cyanText || 'CONSULTATIONS?'}
-                    onChange={(e) => handleFieldChange('arCta', 'cyanText', e.target.value)}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
+
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Right Tilted Image Graphic</h4>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.arCta?.rightImgUrl, vrCtaRightImg)}
+                      alt="Right Image Preview"
+                      style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                    />
+                    <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            const res = await uploadImageFile(file, admin.token);
+                            handleFieldChange('arCta', 'rightImgUrl', res.url);
+                            await persistSectionToDatabase('arCta', { ...(formData.arCta || {}), rightImgUrl: res.url });
+                            setStatusMsg('Right image uploaded successfully!');
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
+
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>White Heading Text</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Main Title Heading Text</label>
                 <input
                   type="text"
-                  value={formData.arCta?.whiteText || "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
-                  onChange={(e) => handleFieldChange('arCta', 'whiteText', e.target.value)}
+                  value={formData.arCta?.title !== undefined ? formData.arCta.title : "Ready to Set Up Your Gaming Zone?"}
+                  onChange={(e) => handleFieldChange('arCta', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
+                <textarea
+                  rows={2}
+                  value={formData.arCta?.description !== undefined ? formData.arCta.description : (formData.arCta?.whiteText !== undefined ? formData.arCta.whiteText : "Get in touch with India's ROI-First Game Zone Developer")}
+                  onChange={(e) => {
+                    handleFieldChange('arCta', 'description', e.target.value);
+                    handleFieldChange('arCta', 'whiteText', e.target.value);
+                  }}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                />
+              </div>
+
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
                   <input
                     type="text"
-                    value={formData.arCta?.buttonText || 'Talk to an ROI Expert'}
+                    value={formData.arCta?.buttonText !== undefined ? formData.arCta.buttonText : 'Get a Quote'}
                     onChange={(e) => handleFieldChange('arCta', 'buttonText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -11025,19 +11524,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link (Redirect URL)</label>
                   <input
                     type="text"
-                    value={formData.arCta?.buttonLink || 'https://wa.me/919428989488'}
+                    value={formData.arCta?.buttonLink !== undefined ? formData.arCta.buttonLink : 'https://wa.me/919428989488'}
                     onChange={(e) => handleFieldChange('arCta', 'buttonLink', e.target.value)}
                     placeholder="https://wa.me/919428989488"
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
               </div>
+
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('arCta', formData.arCta || {})}
                   style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                 >
-                  Save CTA Banner
+                  Save AR Games CTA Banner
                 </button>
               </div>
             </div>
@@ -12137,45 +12637,120 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>VR Games CTA Banner Settings</h3>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Banner Background Image</label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                    <img
-                      src={formData.vrCta?.bgUrl || formData.vrCta?.bg || ctaConsultationsBanner}
-                      alt="Banner Background Preview"
-                      style={{ width: '160px', height: '70px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #cbd5e1' }}
-                    />
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            if (res.url) {
-                              handleFieldChange('vrCta', 'bgUrl', res.url);
-                              handleFieldChange('vrCta', 'bg', res.url);
-                            }
-                          } catch (err) {
-                            console.error('Image upload failed', err);
-                          }
-                        }
-                      }}
-                      style={{ fontSize: '13px' }}
-                    />
-                  </div>
+              {/* Background Image Upload */}
+              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>CTA Banner Background Image</h4>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <img
+                    src={getAdminValidImageUrl(
+                      (formData.vrCta?.bgUrl && !formData.vrCta.bgUrl.includes('cta-consultations') && !formData.vrCta.bgUrl.includes('project-lastbg'))
+                        ? formData.vrCta.bgUrl
+                        : (formData.vrCta?.bg && !formData.vrCta.bg.includes('cta-consultations') && !formData.vrCta.bg.includes('project-lastbg') ? formData.vrCta.bg : ''),
+                      amusementParkCtaBg
+                    )}
+                    alt="CTA Background Preview"
+                    style={{ width: '140px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+                  />
                   <input
                     type="text"
-                    placeholder="Or enter Image URL (e.g. /src/assets/... or http://...)"
-                    value={formData.vrCta?.bgUrl || ''}
+                    value={formData.vrCta?.bgUrl || formData.vrCta?.bg || ''}
                     onChange={(e) => {
                       handleFieldChange('vrCta', 'bgUrl', e.target.value);
                       handleFieldChange('vrCta', 'bg', e.target.value);
                     }}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontWeight: '500' }}
+                    placeholder="Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
                   />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload BG Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const res = await uploadImageFile(file, admin.token);
+                          handleFieldChange('vrCta', 'bgUrl', res.url);
+                          handleFieldChange('vrCta', 'bg', res.url);
+                          await persistSectionToDatabase('vrCta', { ...(formData.vrCta || {}), bgUrl: res.url, bg: res.url });
+                          setStatusMsg('Background image uploaded successfully!');
+                        }
+                      }}
+                    />
+                  </label>
+                  {(formData.vrCta?.bgUrl || formData.vrCta?.bg) && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        handleFieldChange('vrCta', 'bgUrl', '');
+                        handleFieldChange('vrCta', 'bg', '');
+                        await persistSectionToDatabase('vrCta', { ...(formData.vrCta || {}), bgUrl: '', bg: '' });
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom BG
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Side Images (Left & Right Tilted Cards) */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Left Tilted Image Graphic</h4>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.vrCta?.leftImgUrl, homeBlock1)}
+                      alt="Left Image Preview"
+                      style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                    />
+                    <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            const res = await uploadImageFile(file, admin.token);
+                            handleFieldChange('vrCta', 'leftImgUrl', res.url);
+                            await persistSectionToDatabase('vrCta', { ...(formData.vrCta || {}), leftImgUrl: res.url });
+                            setStatusMsg('Left image uploaded successfully!');
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Right Tilted Image Graphic</h4>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.vrCta?.rightImgUrl, vrCtaRightImg)}
+                      alt="Right Image Preview"
+                      style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                    />
+                    <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            const res = await uploadImageFile(file, admin.token);
+                            handleFieldChange('vrCta', 'rightImgUrl', res.url);
+                            await persistSectionToDatabase('vrCta', { ...(formData.vrCta || {}), rightImgUrl: res.url });
+                            setStatusMsg('Right image uploaded successfully!');
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
 
@@ -12184,7 +12759,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Yellow Title Text</label>
                   <input
                     type="text"
-                    value={formData.vrCta?.yellowText || 'NEED ANY '}
+                    value={formData.vrCta?.yellowText !== undefined ? formData.vrCta.yellowText : 'NEED ANY '}
                     onChange={(e) => handleFieldChange('vrCta', 'yellowText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -12193,7 +12768,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Cyan Title Text</label>
                   <input
                     type="text"
-                    value={formData.vrCta?.cyanText || 'CONSULTATIONS?'}
+                    value={formData.vrCta?.cyanText !== undefined ? formData.vrCta.cyanText : 'CONSULTATIONS?'}
                     onChange={(e) => handleFieldChange('vrCta', 'cyanText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -12203,9 +12778,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>White Subtitle Text</label>
                 <textarea
-                  rows={3}
-                  value={formData.vrCta?.whiteText || "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
-                  onChange={(e) => handleFieldChange('vrCta', 'whiteText', e.target.value)}
+                  rows={2}
+                  value={formData.vrCta?.whiteText !== undefined ? formData.vrCta.whiteText : (formData.vrCta?.subtitle !== undefined ? formData.vrCta.subtitle : "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS.")}
+                  onChange={(e) => {
+                    handleFieldChange('vrCta', 'whiteText', e.target.value);
+                    handleFieldChange('vrCta', 'subtitle', e.target.value);
+                  }}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
                 />
               </div>
@@ -12213,8 +12791,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Text</label>
                 <textarea
-                  rows={3}
-                  value={formData.vrCta?.description || "Partner with India's trusted VR gaming machine supplier for a complete VR zone setup across India."}
+                  rows={2}
+                  value={formData.vrCta?.description !== undefined ? formData.vrCta.description : "Partner with India's trusted VR gaming machine supplier for a complete VR zone setup across India."}
                   onChange={(e) => handleFieldChange('vrCta', 'description', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
                 />
@@ -12225,7 +12803,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
                   <input
                     type="text"
-                    value={formData.vrCta?.buttonText || 'Talk to an ROI Expert'}
+                    value={formData.vrCta?.buttonText !== undefined ? formData.vrCta.buttonText : 'Talk to an ROI Expert'}
                     onChange={(e) => handleFieldChange('vrCta', 'buttonText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -12234,7 +12812,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.vrCta?.buttonLink || 'https://wa.me/919428989488'}
+                    value={formData.vrCta?.buttonLink !== undefined ? formData.vrCta.buttonLink : 'https://wa.me/919428989488'}
                     onChange={(e) => handleFieldChange('vrCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -12359,22 +12937,30 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Front Image (Group Friends Photo)</label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Section Main Graphic Image
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  {formData.bowlingIntro?.mainImgUrl && (
+                    <div style={{ position: 'relative', width: '120px', height: '80px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
+                      <img src={formData.bowlingIntro.mainImgUrl} alt="Bowling Intro Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    </div>
+                  )}
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Main Photo
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Main Graphic Image
                     <input
                       type="file"
                       accept="image/*"
                       onChange={async (e) => {
                         const file = e.target.files[0];
                         if (!file) return;
-                        setStatusMsg('Uploading main image...');
+                        setStatusMsg('Uploading main graphic image...');
                         try {
                           const res = await uploadImageFile(file, admin.token);
                           const updated = { ...(formData.bowlingIntro || {}), mainImgUrl: res.url };
                           setFormData(prev => ({ ...prev, bowlingIntro: updated }));
                           await persistSectionToDatabase('bowlingIntro', updated);
+                          setStatusMsg('Main graphic image uploaded successfully!');
                         } catch (err) {
                           setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
                         }
@@ -12383,37 +12969,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   {formData.bowlingIntro?.mainImgUrl && (
-                    <img src={formData.bowlingIntro.mainImgUrl} alt="" style={{ width: '60px', height: '40px', borderRadius: '6px', objectFit: 'cover' }} />
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Top-Right Frame Image (Dark Neon Lanes Photo)</label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Top-Right Photo
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        setStatusMsg('Uploading top-right image...');
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.bowlingIntro || {}), secondaryImgUrl: res.url };
-                          setFormData(prev => ({ ...prev, bowlingIntro: updated }));
-                          await persistSectionToDatabase('bowlingIntro', updated);
-                        } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                        }
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.bowlingIntro || {}), mainImgUrl: '' };
+                        setFormData(prev => ({ ...prev, bowlingIntro: updated }));
+                        await persistSectionToDatabase('bowlingIntro', updated);
                       }}
-                      style={{ display: 'none' }}
-                    />
-                  </label>
-                  {formData.bowlingIntro?.secondaryImgUrl && (
-                    <img src={formData.bowlingIntro.secondaryImgUrl} alt="" style={{ width: '60px', height: '40px', borderRadius: '6px', objectFit: 'cover' }} />
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom Image
+                    </button>
                   )}
                 </div>
               </div>
@@ -12463,6 +13029,54 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   onChange={(e) => handleFieldChange('bowlingManufacturer', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Side Graphic Image (Exploding Bowling Pins & Ball)
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  {formData.bowlingManufacturer?.mainImgUrl && (
+                    <div style={{ position: 'relative', width: '90px', height: '90px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
+                      <img src={formData.bowlingManufacturer.mainImgUrl} alt="Pins Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    </div>
+                  )}
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Pins Graphic Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading pins graphic image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.bowlingManufacturer || {}), mainImgUrl: res.url };
+                          setFormData(prev => ({ ...prev, bowlingManufacturer: updated }));
+                          await persistSectionToDatabase('bowlingManufacturer', updated);
+                          setStatusMsg('Pins graphic image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.bowlingManufacturer?.mainImgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.bowlingManufacturer || {}), mainImgUrl: '' };
+                        setFormData(prev => ({ ...prev, bowlingManufacturer: updated }));
+                        await persistSectionToDatabase('bowlingManufacturer', updated);
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom Image
+                    </button>
+                  )}
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -12692,6 +13306,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
+                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Lane Width Spec</label>
+                  <input
+                    type="text"
+                    value={formData.bowlingString?.specLaneWidth || '6 feet per lane'}
+                    onChange={(e) => handleFieldChange('bowlingString', 'specLaneWidth', e.target.value)}
+                    style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
+                <div>
                   <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Maintenance Spec</label>
                   <input
                     type="text"
@@ -12700,7 +13323,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px' }}
                   />
                 </div>
-                <div>
+                <div style={{ gridColumn: '1 / -1' }}>
                   <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Best For Spec</label>
                   <input
                     type="text"
@@ -12779,6 +13402,54 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
+              <div>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Column Image (High-Tech Bowling Alley Graphic)
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  {formData.bowlingRoi?.mainImgUrl && (
+                    <div style={{ position: 'relative', width: '120px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
+                      <img src={formData.bowlingRoi.mainImgUrl} alt="ROI Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                  )}
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload ROI Section Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading ROI section image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.bowlingRoi || {}), mainImgUrl: res.url };
+                          setFormData(prev => ({ ...prev, bowlingRoi: updated }));
+                          await persistSectionToDatabase('bowlingRoi', updated);
+                          setStatusMsg('ROI section image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.bowlingRoi?.mainImgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.bowlingRoi || {}), mainImgUrl: '' };
+                        setFormData(prev => ({ ...prev, bowlingRoi: updated }));
+                        await persistSectionToDatabase('bowlingRoi', updated);
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('bowlingRoi', formData.bowlingRoi || {})}
@@ -12826,6 +13497,54 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
+              <div>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Left Side Graphic Image (Blue Ball & Pins Graphic)
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  {(formData.bowlingWhyUs?.mainImgUrl || formData.bowlingWhyUs?.graphicUrl) && (
+                    <div style={{ position: 'relative', width: '90px', height: '90px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
+                      <img src={formData.bowlingWhyUs.mainImgUrl || formData.bowlingWhyUs.graphicUrl} alt="Why Choose Us Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    </div>
+                  )}
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Blue Ball & Pins Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading graphic image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.bowlingWhyUs || {}), mainImgUrl: res.url, graphicUrl: res.url };
+                          setFormData(prev => ({ ...prev, bowlingWhyUs: updated }));
+                          await persistSectionToDatabase('bowlingWhyUs', updated);
+                          setStatusMsg('Graphic image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {(formData.bowlingWhyUs?.mainImgUrl || formData.bowlingWhyUs?.graphicUrl) && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.bowlingWhyUs || {}), mainImgUrl: '', graphicUrl: '' };
+                        setFormData(prev => ({ ...prev, bowlingWhyUs: updated }));
+                        await persistSectionToDatabase('bowlingWhyUs', updated);
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('bowlingWhyUs', formData.bowlingWhyUs || {})}
@@ -12869,38 +13588,27 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Bowling CTA Banner Section</h3>
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Yellow Highlighted Words
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>
+                  Main Title Heading
                 </label>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> for Yellow, <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;cyan&gt;word&lt;/cyan&gt;</code> for Cyan.</p>
                 <input
                   type="text"
-                  value={formData.bowlingCta?.yellowText ?? "NEED ANY"}
-                  onChange={(e) => handleFieldChange('bowlingCta', 'yellowText', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  value={formData.bowlingCta?.title !== undefined ? formData.bowlingCta.title : "*Need Any* <cyan>Consultations?</cyan>"}
+                  onChange={(e) => handleFieldChange('bowlingCta', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '700' }}
                 />
               </div>
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Cyan Highlighted Words
+                  Description Paragraph
                 </label>
-                <input
-                  type="text"
-                  value={formData.bowlingCta?.cyanText ?? "BOWLING CONSULTATIONS ?"}
-                  onChange={(e) => handleFieldChange('bowlingCta', 'cyanText', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  White Subtitle Text
-                </label>
-                <input
-                  type="text"
-                  value={formData.bowlingCta?.whiteText ?? "Invest in our quality bowling equipment and elevate your venue with long-lasting, world-class bowling gear without overspending."}
-                  onChange={(e) => handleFieldChange('bowlingCta', 'whiteText', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                <textarea
+                  rows={2}
+                  value={formData.bowlingCta?.description !== undefined ? formData.bowlingCta.description : "Invest in our quality bowling equipment and elevate your venue with long-lasting, world-class bowling gear without overspending."}
+                  onChange={(e) => handleFieldChange('bowlingCta', 'description', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
                 />
               </div>
 
@@ -12909,7 +13617,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Label</label>
                   <input
                     type="text"
-                    value={formData.bowlingCta?.buttonText ?? "Get Quote Now"}
+                    value={formData.bowlingCta?.buttonText !== undefined ? formData.bowlingCta.buttonText : "Request a Quote"}
                     onChange={(e) => handleFieldChange('bowlingCta', 'buttonText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -12918,10 +13626,70 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link</label>
                   <input
                     type="text"
-                    value={formData.bowlingCta?.buttonLink ?? "https://wa.me/919428989488"}
+                    value={formData.bowlingCta?.buttonLink !== undefined ? formData.bowlingCta.buttonLink : "https://wa.me/919428989488"}
                     onChange={(e) => handleFieldChange('bowlingCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Background Banner Image
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+                  {formData.bowlingCta?.bgUrl && (
+                    <div style={{ position: 'relative', width: '180px', height: '60px', borderRadius: '12px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
+                      <img src={formData.bowlingCta.bgUrl} alt="CTA Banner Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                  )}
+                  <label style={{
+                    background: '#00a8ff',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    boxShadow: '0 4px 12px rgba(0, 168, 255, 0.3)'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Banner Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading CTA banner image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.bowlingCta || {}), bgUrl: res.url };
+                          setFormData(prev => ({ ...prev, bowlingCta: updated }));
+                          await persistSectionToDatabase('bowlingCta', updated);
+                          setStatusMsg('CTA banner image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.bowlingCta?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.bowlingCta || {}), bgUrl: '' };
+                        setFormData(prev => ({ ...prev, bowlingCta: updated }));
+                        await persistSectionToDatabase('bowlingCta', updated);
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom Banner
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -12991,6 +13759,158 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          )}
+
+          {/* ABOUT US CTA BANNER FORM */}
+          {activeSection === 'aboutCta' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>About Us CTA Banner Settings</h3>
+                <p style={{ fontSize: '12.5px', color: '#64748b', margin: '3px 0 0' }}>Manage top tagline, title heading, description text, CTA button, and background banner image for About Us page.</p>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Top Tagline (e.g. READY TO GET STARTED?)
+                </label>
+                <input
+                  type="text"
+                  value={formData.aboutCta?.tagline !== undefined ? formData.aboutCta.tagline : "READY TO GET STARTED?"}
+                  onChange={(e) => handleFieldChange('aboutCta', 'tagline', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>
+                  Main Title Heading
+                </label>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> for Yellow, <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;cyan&gt;word&lt;/cyan&gt;</code> for Cyan.</p>
+                <input
+                  type="text"
+                  value={formData.aboutCta?.title !== undefined ? formData.aboutCta.title : "*TAKE THE NEXT STEP* <cyan>TOWARDS</cyan><br />*YOUR PERFECT* <cyan>GAME ZONE</cyan>"}
+                  onChange={(e) => handleFieldChange('aboutCta', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '700' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Description Paragraph
+                </label>
+                <textarea
+                  rows={3}
+                  value={formData.aboutCta?.description !== undefined ? formData.aboutCta.description : "Whether you're starting from scratch or upgrading an existing space our team is ready to help you plan, build, and launch a game zone that drives real revenue."}
+                  onChange={(e) => handleFieldChange('aboutCta', 'description', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Button Text
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.aboutCta?.buttonText !== undefined ? formData.aboutCta.buttonText : "Talk to an ROI Expert"}
+                    onChange={(e) => handleFieldChange('aboutCta', 'buttonText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Button Link / WhatsApp URL
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.aboutCta?.buttonLink !== undefined ? formData.aboutCta.buttonLink : "https://wa.me/919428989488"}
+                    onChange={(e) => handleFieldChange('aboutCta', 'buttonLink', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+              </div>
+
+              {/* Background Banner Image */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Background Banner Image
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+                  <div style={{ position: 'relative', width: '180px', height: '65px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.aboutCta?.bgUrl, aboutusCtaBg)}
+                      alt="About Banner Background Preview"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                  <label style={{
+                    background: '#00a8ff',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    boxShadow: '0 4px 12px rgba(0, 168, 255, 0.3)'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Banner Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.aboutCta || {}), bgUrl: res.url };
+                          setFormData(prev => ({ ...prev, aboutCta: updated }));
+                          await persistSectionToDatabase('aboutCta', updated);
+                        } catch (err) {
+                          console.error(err);
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.aboutCta?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.aboutCta || {}), bgUrl: '' };
+                        setFormData(prev => ({ ...prev, aboutCta: updated }));
+                        await persistSectionToDatabase('aboutCta', updated);
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset to Default Banner
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('aboutCta', formData.aboutCta || {})}
+                  style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    border: 'none',
+                    padding: '12px 28px',
+                    borderRadius: '12px',
+                    fontWeight: '900',
+                    fontSize: '14px',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                  }}
+                >
+                  Save About Us CTA Banner
+                </button>
               </div>
             </div>
           )}
@@ -14712,16 +15632,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             );
           })()}
 
-          {/* BOTTOM CTA GRAPHIC BANNER SECTION */}
+          {/* PROJECT PAGE CTA BANNER SECTION */}
           {activeSection === 'projectCta' && (() => {
-            const currentSec = formData.projectCta || { bgUrl: projectLastBg, buttonLink: 'https://wa.me/919428989488' };
-            const bgImg = currentSec.bgUrl || projectLastBg;
+            const currentSec = formData.projectCta || {};
+            const bgImg = (currentSec.bgUrl && !currentSec.bgUrl.includes('project-lastbg'))
+              ? getAdminValidImageUrl(currentSec.bgUrl, projectCtaBg)
+              : projectCtaBg;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Bottom CTA Graphic Banner Section</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Project Page CTA Banner Section</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Graphic Banner Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Background Image</label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={bgImg} alt="CTA Banner Preview" style={{ width: '180px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -14748,22 +15670,55 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </label>
                     </div>
                   </div>
+
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Banner Click Target / WhatsApp URL</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Title Heading</label>
                     <input
                       type="text"
-                      value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : 'https://wa.me/919428989488'}
-                      onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), buttonLink: e.target.value } }))}
-                      placeholder="https://wa.me/919428989488"
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      value={currentSec.title !== undefined ? currentSec.title : "Planning a Game Zone of Your Own?"}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
                     />
                   </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
+                    <textarea
+                      rows={2}
+                      value={currentSec.description !== undefined ? currentSec.description : "Give us the space, and we'll deliver a complete game zone — planned, built, and ready to play. Your only job is to open the doors."}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), description: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontFamily: 'inherit' }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Button Label</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : "Get a Free Consultation"}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link (WhatsApp URL)</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : 'https://wa.me/919428989488'}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), buttonLink: e.target.value } }))}
+                        placeholder="https://wa.me/919428989488"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
-                      onClick={() => persistSectionToDatabase('projectCta', formData.projectCta || { bgUrl: projectLastBg, buttonLink: 'https://wa.me/919428989488' })}
+                      onClick={() => persistSectionToDatabase('projectCta', formData.projectCta || {})}
                       style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
                     >
-                      Save CTA Banner
+                      Save Project CTA Banner
                     </button>
                   </div>
                 </div>
@@ -15430,7 +16385,103 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Why This Matters & Build Yours Now CTA Section</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  
+                  {/* Banner Background Image Upload */}
+                  <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>CTA Banner Background Image</h4>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.bgUrl || currentSec.bg, hypergridWineraLastblock)}
+                        alt="CTA Background Preview"
+                        style={{ width: '140px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+                      />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl !== undefined ? currentSec.bgUrl : (currentSec.bg !== undefined ? currentSec.bg : hypergridWineraLastblock)}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), bgUrl: e.target.value, bg: e.target.value } }))}
+                        placeholder="Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload BG Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), bgUrl: res.url, bg: res.url } }));
+                              await persistSectionToDatabase('safetyWhyMatters', { ...(formData.safetyWhyMatters || defaultSafetyWhyMatters), bgUrl: res.url, bg: res.url });
+                              setStatusMsg('Background image uploaded successfully!');
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Side Tilted Card Images */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                      <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Left Tilted Image Graphic</h4>
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                        <img
+                          src={getAdminValidImageUrl(currentSec.leftImgUrl, rightTiltedCard)}
+                          alt="Left Image Preview"
+                          style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                        />
+                        <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                          <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
+                          <input
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={async (e) => {
+                              const file = e.target.files[0];
+                              if (file) {
+                                const res = await uploadImageFile(file, admin.token);
+                                setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), leftImgUrl: res.url } }));
+                                await persistSectionToDatabase('safetyWhyMatters', { ...(formData.safetyWhyMatters || defaultSafetyWhyMatters), leftImgUrl: res.url });
+                                setStatusMsg('Left image uploaded successfully!');
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                    </div>
+
+                    <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                      <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Right Tilted Image Graphic</h4>
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                        <img
+                          src={getAdminValidImageUrl(currentSec.rightImgUrl, leftTiltedCard)}
+                          alt="Right Image Preview"
+                          style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                        />
+                        <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                          <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
+                          <input
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={async (e) => {
+                              const file = e.target.files[0];
+                              if (file) {
+                                const res = await uploadImageFile(file, admin.token);
+                                setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), rightImgUrl: res.url } }));
+                                await persistSectionToDatabase('safetyWhyMatters', { ...(formData.safetyWhyMatters || defaultSafetyWhyMatters), rightImgUrl: res.url });
+                                setStatusMsg('Right image uploaded successfully!');
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title Part 1 (Cyan)</label>
@@ -15451,6 +16502,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   </div>
+
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph Description</label>
                     <textarea
@@ -18099,7 +19151,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <div>
                     <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Main Product Showcase Photo</label>
                     <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <label style={{ background: '#0284c7', color: '#fff', padding: '10px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <label style={{ background: '#0284c7', color: '#fff', padding: '10px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
                         <Upload style={{ width: '14px', height: '14px' }} /> Upload Main Photo
                         <input
                           type="file"
@@ -18112,40 +19164,73 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         type="text"
                         value={modalItemData.img || ''}
                         onChange={(e) => setModalItemData(prev => ({ ...prev, img: e.target.value }))}
-                        placeholder="Image URL..."
+                        placeholder="Image URL or upload above..."
                         style={{ flex: 1, padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
                       {modalItemData.img && (
-                        <img src={modalItemData.img} alt="" style={{ width: '50px', height: '36px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+                        <div style={{ width: '56px', height: '40px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #cbd5e1', flexShrink: 0, background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <img
+                            src={getAdminValidImageUrl(modalItemData.img)}
+                            alt=""
+                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                          />
+                        </div>
                       )}
                     </div>
                   </div>
 
                   {/* 4 Gallery Thumbnails */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                    {[1, 2, 3, 4].map(num => (
-                      <div key={num}>
-                        <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Thumbnail {num} Photo</label>
-                        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                          <label style={{ background: '#0284c7', color: '#fff', padding: '8px 10px', borderRadius: '8px', fontWeight: '800', fontSize: '11px', cursor: 'pointer' }}>
-                            Upload
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    {[1, 2, 3, 4].map(num => {
+                      const thumbVal = modalItemData[`gallery${num}`] || '';
+                      return (
+                        <div key={num} style={{ background: '#f8fafc', padding: '10px 12px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                            <label style={{ fontSize: '11.5px', fontWeight: '800', color: '#0f172a' }}>
+                              Thumbnail {num} Photo
+                            </label>
+                            {thumbVal && (
+                              <button
+                                type="button"
+                                onClick={() => setModalItemData(prev => ({ ...prev, [`gallery${num}`]: '' }))}
+                                style={{ background: 'none', border: 'none', color: '#ef4444', fontSize: '11px', fontWeight: '700', cursor: 'pointer', padding: 0 }}
+                              >
+                                Clear
+                              </button>
+                            )}
+                          </div>
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <label style={{ background: '#0284c7', color: '#fff', padding: '8px 12px', borderRadius: '8px', fontWeight: '800', fontSize: '11px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                              <Upload style={{ width: '12px', height: '12px' }} /> Upload
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleModalFileUpload(e, `gallery${num}`)}
+                                style={{ display: 'none' }}
+                              />
+                            </label>
                             <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => handleModalFileUpload(e, `gallery${num}`)}
-                              style={{ display: 'none' }}
+                              type="text"
+                              value={thumbVal}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, [`gallery${num}`]: e.target.value }))}
+                              placeholder="Image URL or upload..."
+                              style={{ flex: 1, padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px', minWidth: 0 }}
                             />
-                          </label>
-                          <input
-                            type="text"
-                            value={modalItemData[`gallery${num}`] || ''}
-                            onChange={(e) => setModalItemData(prev => ({ ...prev, [`gallery${num}`]: e.target.value }))}
-                            placeholder="Thumbnail URL..."
-                            style={{ flex: 1, padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px' }}
-                          />
+                            {thumbVal && (
+                              <div style={{ width: '42px', height: '34px', borderRadius: '6px', overflow: 'hidden', border: '1px solid #cbd5e1', flexShrink: 0, background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <img
+                                  src={getAdminValidImageUrl(thumbVal)}
+                                  alt=""
+                                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                                />
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', marginTop: '10px', marginBottom: '8px' }}>

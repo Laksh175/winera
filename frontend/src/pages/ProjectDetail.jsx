@@ -722,23 +722,6 @@ export default function ProjectDetail({ siteData }) {
       {/* 9. RELATED PRODUCTS SECTION */}
       <RelatedProductsSection />
 
-      {/* 10. CTA SECTION */}
-      <CtaBanner
-        bg={bumpercarCtaBannerBg}
-        tagline=""
-        title={
-          <>
-            Have a space to{' '}
-            <span style={{ color: '#ffcd00' }}>bring alive?</span>
-          </>
-        }
-        subtitle="Let's build your next project together"
-        description="Give us the space, and we'll deliver a complete setup — planned, built, and ready to open. Your only job is to open the doors."
-        buttonText="Contact Us"
-        buttonLink="/contact"
-        align="center"
-      />
-
       {/* FOOTER */}
       <Footer footerData={footer} />
     </div>

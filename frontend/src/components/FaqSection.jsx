@@ -18,7 +18,7 @@ export default function FaqSection({
   const col2 = items.slice(Math.ceil(items.length / 2));
 
   return (
-    <section id={id} className="winera-faq-section" style={{ padding: '35px 4vw 75px', background: bg, textAlign: 'center' }}>
+    <section id={id} className="winera-faq-section" style={{ padding: '25px 4vw 40px', background: bg, textAlign: 'center' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         <SectionHeading marginBottom="8px">
           {(() => {

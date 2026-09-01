@@ -49,9 +49,10 @@ export default function App() {
   const loadData = async () => {
     try {
       const data = await fetchSiteContent();
-      setSiteData(data);
+      setSiteData(data || {});
     } catch (err) {
       console.error('Failed to load content from backend, fallback to local', err);
+      setSiteData({});
     } finally {
       setLoading(false);
     }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import CtaBanner from '../components/CtaBanner';
 import arcadegame1Bg from '../assets/arcadegame1-bg.webp';
 import arcadegamesImg from '../assets/arcadegames-img.webp';
 import bikeArcade from '../assets/bike-arcade.webp';
@@ -12,11 +13,27 @@ import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.jpg';
 import auroraAirHockeyImg from '../assets/aurora-air-hockey.jpg';
 import ochaAirHockeyImg from '../assets/ocha-air-hockey.jpg';
 import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.jpg';
-import projectLastBg from '../assets/project-lastbg.webp';
+import arcadeCtaBg from '../assets/arcadegame-cta-bg.png';
+import ctaArcade from '../assets/cta-arcade.webp';
+import arcadeHall from '../assets/arcade-hall.webp';
 
 import { 
   ChevronUp, ChevronDown, ChevronLeft, ChevronRight, MoveHorizontal, Box, Ruler, MessageCircle, ArrowRight 
 } from 'lucide-react';
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
 
 // Arcade Products Database Mapping all dynamic game detail content
 export const arcadeProductsData = {
@@ -29,6 +46,7 @@ export const arcadeProductsData = {
     tagline: 'High-Performance Dual Player Commercial Motorbike Racing Simulator',
     img: arcadegamesImg,
     heroBg: arcadegame1Bg,
+    gallery: [arcadegamesImg, bikeArcade, ctaArcade, arcadeHall],
     specs: {
       power: '880 W',
       voltage: '220v',
@@ -49,8 +67,9 @@ export const arcadeProductsData = {
     nameHighlight: '32"',
     category: 'Bike Racing Game',
     tagline: 'Classic High-Velocity Arcade Motorcycle Simulator',
-    img: arcadegamesImg,
+    img: bikeArcade,
     heroBg: arcadegame1Bg,
+    gallery: [bikeArcade, arcadegamesImg, ctaArcade, arcadeHall],
     specs: {
       power: '500 W',
       voltage: '220v',
@@ -73,6 +92,7 @@ export const arcadeProductsData = {
     tagline: 'Commercial Grade Heavy-Duty Air Hockey Table',
     img: superAirHockeyImg,
     heroBg: arcadegame1Bg,
+    gallery: [superAirHockeyImg, puckCarnivalAirHockeyImg, dazzlingAirHockeyImg, aeroXAirHockeyImg],
     specs: {
       power: '450 W',
       voltage: '220v',
@@ -95,6 +115,7 @@ export const arcadeProductsData = {
     tagline: 'Multi-Puck Carnival Style Arcade Air Hockey Machine',
     img: puckCarnivalAirHockeyImg,
     heroBg: arcadegame1Bg,
+    gallery: [puckCarnivalAirHockeyImg, superAirHockeyImg, dazzlingAirHockeyImg, auroraAirHockeyImg],
     specs: {
       power: '600 W',
       voltage: '220v',
@@ -117,6 +138,7 @@ export const arcadeProductsData = {
     tagline: 'LED Illuminated Multi-Puck Arcade Air Hockey Table',
     img: dazzlingAirHockeyImg,
     heroBg: arcadegame1Bg,
+    gallery: [dazzlingAirHockeyImg, puckCarnivalAirHockeyImg, superAirHockeyImg, auroraAirHockeyImg],
     specs: {
       power: '700 W',
       voltage: '220v',
@@ -139,6 +161,7 @@ export const arcadeProductsData = {
     tagline: 'High-Power Blower Tournament Air Hockey Table',
     img: auroraAirHockeyImg,
     heroBg: arcadegame1Bg,
+    gallery: [auroraAirHockeyImg, dazzlingAirHockeyImg, superAirHockeyImg, ochaAirHockeyImg],
     specs: {
       power: '500 W',
       voltage: '220v',
@@ -161,6 +184,7 @@ export const arcadeProductsData = {
     tagline: 'Compact & Stylish Arcade Air Hockey Machine',
     img: ochaAirHockeyImg,
     heroBg: arcadegame1Bg,
+    gallery: [ochaAirHockeyImg, auroraAirHockeyImg, superAirHockeyImg, aeroXAirHockeyImg],
     specs: {
       power: '400 W',
       voltage: '220v',
@@ -183,6 +207,7 @@ export const arcadeProductsData = {
     tagline: 'Next-Gen Arcade Air Hockey Table with Ticket Dispenser',
     img: aeroXAirHockeyImg,
     heroBg: arcadegame1Bg,
+    gallery: [aeroXAirHockeyImg, ochaAirHockeyImg, puckCarnivalAirHockeyImg, superAirHockeyImg],
     specs: {
       power: '550 W',
       voltage: '220v',
@@ -206,6 +231,13 @@ export default function ArcadeGameDetail({ siteData }) {
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
 
+  // Selected image index for gallery thumbnails
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  useEffect(() => {
+    setSelectedImageIndex(0);
+  }, [slug]);
+
   // Helper to slugify text
   const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
@@ -221,6 +253,17 @@ export default function ArcadeGameDetail({ siteData }) {
 
   // Default fallback static product
   const defaultProduct = arcadeProductsData[slug] || arcadeProductsData['parkour-motor-2-dx'];
+  const defaultGallery = defaultProduct.gallery || [defaultProduct.img, bikeArcade, ctaArcade, arcadeHall];
+
+  // Resolve main image and gallery images safely
+  const resolvedMainImg = getValidImageUrl(cmsFoundCard?.img || cmsFoundCard?.imageUrl, defaultProduct.img);
+
+  const galleryList = [
+    getValidImageUrl(cmsFoundCard?.gallery1, resolvedMainImg || defaultGallery[0]),
+    getValidImageUrl(cmsFoundCard?.gallery2, defaultGallery[1] || resolvedMainImg),
+    getValidImageUrl(cmsFoundCard?.gallery3, defaultGallery[2] || resolvedMainImg),
+    getValidImageUrl(cmsFoundCard?.gallery4, defaultGallery[3] || resolvedMainImg)
+  ];
 
   // Construct dynamic product object
   const product = {
@@ -229,7 +272,7 @@ export default function ArcadeGameDetail({ siteData }) {
     nameHighlight: cmsFoundCard?.nameHighlight !== undefined ? cmsFoundCard.nameHighlight : defaultProduct.nameHighlight,
     category: cmsFoundCard?.category || cmsFoundCard?.specsCategory || defaultProduct.category,
     tagline: cmsFoundCard?.tagline || cmsFoundCard?.desc || defaultProduct.tagline,
-    img: cmsFoundCard?.img || cmsFoundCard?.imageUrl || defaultProduct.img,
+    img: resolvedMainImg,
     heroBg: defaultProduct.heroBg,
     specs: {
       power: cmsFoundCard?.power || defaultProduct.specs.power,
@@ -241,12 +284,7 @@ export default function ArcadeGameDetail({ siteData }) {
       depth: cmsFoundCard?.depth || defaultProduct.specs.depth,
       height: cmsFoundCard?.height || defaultProduct.specs.height
     },
-    gallery: [
-      cmsFoundCard?.gallery1 || cmsFoundCard?.img || defaultProduct.img,
-      cmsFoundCard?.gallery2 || cmsFoundCard?.img || defaultProduct.img,
-      cmsFoundCard?.gallery3 || cmsFoundCard?.img || defaultProduct.img,
-      cmsFoundCard?.gallery4 || cmsFoundCard?.img || defaultProduct.img
-    ],
+    gallery: galleryList,
     videoUrl: cmsFoundCard?.videoUrl || defaultProduct.videoUrl,
     quoteUrl: cmsFoundCard?.quoteUrl || defaultProduct.quoteUrl,
     features: [
@@ -354,7 +392,11 @@ export default function ArcadeGameDetail({ siteData }) {
                   flexShrink: 0
                 }} className="winera-arcade-thumb-column">
                   {/* Top / Left Arrow */}
-                  <button aria-label="Previous image" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <button
+                    onClick={() => setSelectedImageIndex(prev => (prev > 0 ? prev - 1 : product.gallery.length - 1))}
+                    aria-label="Previous image"
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
                     <ChevronUp className="winera-arrow-up" style={{ width: '35px', height: '35px', strokeWidth: 2.5 }} />
                     <ChevronLeft className="winera-arrow-left" style={{ width: '32px', height: '32px', strokeWidth: 2.5 }} />
                   </button>
@@ -369,37 +411,58 @@ export default function ArcadeGameDetail({ siteData }) {
                     width: '100%',
                     padding: '2px 0'
                   }} className="winera-arcade-thumb-inner">
-                    {[0, 1, 2, 3].map((thumbIdx) => (
-                      <div
-                        key={thumbIdx}
-                        style={{
-                          width: '85px',
-                          height: '85px',
-                          borderRadius: '20px',
-                          overflow: 'hidden',
-                          background: 'radial-gradient(circle at center, #1e293b 0%, #090d16 100%)',
-                          border: thumbIdx === 0 ? '2.5px solid #38bdf8' : '1px solid #cbd5e1',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          padding: '6px',
-                          transition: 'all 0.2s ease'
-                        }}
-                        className="winera-arcade-thumb-box"
-                      >
-                        <img
-                          src={product.gallery[thumbIdx] || product.img || arcadegamesImg}
-                          alt=""
-                          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                        />
-                      </div>
-                    ))}
+                    {product.gallery.map((thumbUrl, thumbIdx) => {
+                      const isSelected = selectedImageIndex === thumbIdx;
+                      return (
+                        <div
+                          key={thumbIdx}
+                          onClick={() => setSelectedImageIndex(thumbIdx)}
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`Select product view ${thumbIdx + 1}`}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              setSelectedImageIndex(thumbIdx);
+                            }
+                          }}
+                          style={{
+                            width: '85px',
+                            height: '85px',
+                            borderRadius: '20px',
+                            overflow: 'hidden',
+                            background: 'radial-gradient(circle at center, #1e293b 0%, #090d16 100%)',
+                            border: isSelected ? '2.5px solid #38bdf8' : '1px solid rgba(203, 213, 225, 0.4)',
+                            boxShadow: isSelected ? '0 0 16px rgba(56, 189, 248, 0.7)' : '0 4px 12px rgba(0,0,0,0.1)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '6px',
+                            transform: isSelected ? 'scale(1.04)' : 'scale(1)',
+                            transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
+                          }}
+                          className="winera-arcade-thumb-box"
+                        >
+                          <img
+                            src={thumbUrl}
+                            alt=""
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = defaultGallery[thumbIdx] || defaultProduct.img || arcadegamesImg;
+                            }}
+                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
 
                   {/* Bottom / Right Arrow */}
-                  <button aria-label="Next image" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <button
+                    onClick={() => setSelectedImageIndex(prev => (prev < product.gallery.length - 1 ? prev + 1 : 0))}
+                    aria-label="Next image"
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
                     <ChevronDown className="winera-arrow-down" style={{ width: '35px', height: '35px', strokeWidth: 2.5 }} />
                     <ChevronRight className="winera-arrow-right" style={{ width: '32px', height: '32px', strokeWidth: 2.5 }} />
                   </button>
@@ -421,14 +484,20 @@ export default function ArcadeGameDetail({ siteData }) {
                   padding: 0
                 }} className="winera-arcade-main-card">
                   <img
-                    src={product.img || arcadegamesImg}
+                    key={selectedImageIndex}
+                    src={product.gallery[selectedImageIndex] || product.img || arcadegamesImg}
                     alt={product.name}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = defaultProduct.img || arcadegamesImg;
+                    }}
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'contain',
                       position: 'relative',
-                      zIndex: 2
+                      zIndex: 2,
+                      transition: 'opacity 0.2s ease'
                     }}
                   />
                 </div>
@@ -705,23 +774,24 @@ export default function ArcadeGameDetail({ siteData }) {
           </div>
         </section>
 
-        {/* 5. NEED ANY CONSULTATIONS CTA BANNER SECTION (MATCHING PROJECT SECTION 1:1) */}
-        <section style={{ padding: '20px 4vw 80px', background: '#F5F5F9', display: 'flex', justifyContent: 'center' }}>
-          <div style={{ maxWidth: '1240px', width: '100%', position: 'relative', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
-            <a
-              href={product.quoteUrl || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'block', width: '100%', position: 'relative' }}
-            >
-              <img
-                src={projectLastBg}
-                alt="Need Any Consultations"
-                style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '24px' }}
-              />
-            </a>
-          </div>
-        </section>
+        {/* 5. NEED ANY CONSULTATIONS CTA BANNER SECTION */}
+        <CtaBanner
+          showOverlay={false}
+          align="center"
+          gradientTitle={true}
+          buttonTheme="yellow"
+          titleFontSize="45px"
+          subtitleFontSize="24px"
+          subtitleFontWeight="900"
+          bgUrl={siteData?.arcadeCta?.bgUrl && !siteData.arcadeCta.bgUrl.includes('project-cta-bg') && !siteData.arcadeCta.bgUrl.includes('need-consultations-bg') ? siteData.arcadeCta.bgUrl : null}
+          bg={arcadeCtaBg}
+          tagline={null}
+          title="NEED ANY CONSULTATIONS ?"
+          subtitle={"WE'RE READY TO GIVE ANSWERS TO<br/>YOUR QUESTION."}
+          description={null}
+          buttonText="Get Quote Now"
+          buttonLink={product.quoteUrl || "https://wa.me/919428989488"}
+        />
       </main>
 
       {/* FOOTER */}

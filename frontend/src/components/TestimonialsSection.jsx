@@ -62,7 +62,7 @@ export default function TestimonialsSection({
   const goPrev = () => setActiveIndex((prev) => (prev > 0 ? prev - 1 : list.length - 1));
 
   return (
-    <section id={id} style={{ padding: '70px 4vw 35px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+    <section id={id} style={{ padding: '40px 4vw 20px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         <SectionHeading marginBottom="10px">
           {(() => {

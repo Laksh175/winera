@@ -13,7 +13,7 @@ export default function ClientsMarqueeSection({
     <section id={id} className="winera-clients-section" style={{
       position: 'relative',
       width: '100%',
-      padding: '45px 0 55px',
+      padding: '95px 0 65px',
       background: `url(${bg}) center/100% 100% no-repeat`,
       minHeight: '360px',
       display: 'flex',
