@@ -787,10 +787,26 @@ export default function SafetyStandards({ siteData }) {
                 margin: '0 0 24px',
                 lineHeight: 1.15,
                 textTransform: 'uppercase',
-                letterSpacing: '1px'
+                letterSpacing: '1px',
+                background: 'linear-gradient(90deg, rgba(255, 212, 0, 1) 0%, rgba(238, 229, 183, 1) 30%, rgba(0, 174, 239, 1) 68%, rgba(167, 229, 245, 1) 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.85))',
+                display: 'inline-block'
               }}>
-                <span style={{ color: '#facc15' }}>{siteData?.safetyWhyMatters?.ctaTitle1 || "BUILD "}</span>
-                <span style={{ color: '#38bdf8' }}>{siteData?.safetyWhyMatters?.ctaTitle2 || "YOURS NOW"}</span>
+                {(() => {
+                  let combined = siteData?.safetyWhyMatters?.ctaTitle;
+                  if (!combined) {
+                    const t1 = siteData?.safetyWhyMatters?.ctaTitle1 || "BUILD";
+                    const t2 = siteData?.safetyWhyMatters?.ctaTitle2 || "YOURS NOW";
+                    combined = `${t1.trim()} ${t2.trim()}`;
+                  }
+                  combined = combined.replace(/\s+/g, ' ');
+                  if (combined.includes("BUILDYOURS")) {
+                    combined = combined.replace(/BUILDYOURS/g, "BUILD YOURS");
+                  }
+                  return combined;
+                })()}
               </h2>
 
               {/* Cyan Offset Backdrop Button Wrapper (Matching Image 2 100%) */}

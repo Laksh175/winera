@@ -3,7 +3,58 @@ import logo from '../assets/logo.webp';
 import footerBg from '../assets/footer-bg.webp';
 import { Phone, Mail } from 'lucide-react';
 
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
 export default function Footer({ footerData }) {
+  const defaultProductLinks = [
+    { name: "Arcade Games", link: "/product/arcade-games" },
+    { name: "Bowling Alley", link: "/product/bowling-alley" },
+    { name: "Soft Play", link: "/product/soft-play" },
+    { name: "Trampoline Park", link: "/product/trampoline-park" },
+    { name: "VR Games", link: "/product/vr-games" },
+    { name: "AR Games", link: "/product/ar-games" },
+    { name: "Bumper Car", link: "/product/bumper-car" },
+    { name: "Amusement Park", link: "/product/amusement-park" },
+    { name: "Hypergrid", link: "/product/hypergrid" },
+    { name: "Laser tag", link: "/product/laser-tag" }
+  ];
+
+  const defaultQuickLinks = [
+    { name: "About Us", link: "/why-us" },
+    { name: "Contact Us", link: "/contact" },
+    { name: "Privacy Policy", link: "/privacy-policy" },
+    { name: "Terms & Conditions", link: "/terms-and-conditions" }
+  ];
+
+  const defaultResourceLinks = [
+    { name: "Blog", link: "/blog" },
+    { name: "Project", link: "/project" },
+    { name: "ROI", link: "/resource/roi" },
+    { name: "Safety Standards", link: "/resource/safety-standards" }
+  ];
+
+  const logoSrc = getValidImageUrl(footerData?.logoUrl, logo);
+  const tagline = footerData?.tagline || "Winera is a professional solution provider and builder specializing in indoor amusement parks and playground equipment.";
+  const productLinks = Array.isArray(footerData?.productLinks) && footerData.productLinks.length > 0 ? footerData.productLinks : defaultProductLinks;
+  const quickLinks = Array.isArray(footerData?.quickLinks) && footerData.quickLinks.length > 0 ? footerData.quickLinks : defaultQuickLinks;
+  const resourceLinks = Array.isArray(footerData?.resourceLinks) && footerData.resourceLinks.length > 0 ? footerData.resourceLinks : defaultResourceLinks;
+  const phone1 = footerData?.phone1 || "+91 94289 89488";
+  const phone2 = footerData?.phone2 || "+91 95123 56766";
+  const email = footerData?.email || "info@winera.in";
+  const copyright = footerData?.copyright || "© 2026 Winera International Pvt. Ltd. All Rights Reserved.";
+
   return (
     <footer className="winera-footer-section" style={{
       position: 'relative',
@@ -28,10 +79,10 @@ export default function Footer({ footerData }) {
           {/* Column 1: Logo & Tagline Description */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '18px' }}>
-              <img src={logo} alt="Winera International" style={{ height: '62px', maxWidth: '240px', objectFit: 'contain' }} />
+              <img src={logoSrc} alt="Winera International" style={{ height: '62px', maxWidth: '240px', objectFit: 'contain' }} />
             </div>
             <p style={{ fontSize: '13px', color: '#334155', fontWeight: '500', lineHeight: 1.6, maxWidth: '310px', margin: '0 0 24px' }}>
-              Winera is a professional solution provider and builder specializing in indoor amusement parks and playground equipment.
+              {tagline}
             </p>
           </div>
 
@@ -41,18 +92,7 @@ export default function Footer({ footerData }) {
               Product
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
-              {[
-                { name: "Arcade Games", link: "/product/arcade-games" },
-                { name: "Bowling Alley", link: "/product/bowling-alley" },
-                { name: "Soft Play", link: "/product/soft-play" },
-                { name: "Trampoline Park", link: "/product/trampoline-park" },
-                { name: "VR Games", link: "/product/vr-games" },
-                { name: "AR Games", link: "/product/ar-games" },
-                { name: "Bumper Car", link: "/product/bumper-car" },
-                { name: "Amusement Park", link: "/product/amusement-park" },
-                { name: "Hypergrid", link: "/product/hypergrid" },
-                { name: "Laser tag", link: "/product/laser-tag" }
-              ].map((prod, idx) => (
+              {productLinks.map((prod, idx) => (
                 <a
                   key={idx}
                   href={prod.link}
@@ -76,12 +116,7 @@ export default function Footer({ footerData }) {
               Quick Links
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {[
-                { name: "About Us", link: "/why-us" },
-                { name: "Contact Us", link: "/contact" },
-                { name: "Privacy Policy", link: "/privacy-policy" },
-                { name: "Terms & Conditions", link: "/terms-and-conditions" }
-              ].map((item, idx) => (
+              {quickLinks.map((item, idx) => (
                 <a
                   key={idx}
                   href={item.link}
@@ -105,12 +140,7 @@ export default function Footer({ footerData }) {
               Resources
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {[
-                { name: "Blog", link: "/blog" },
-                { name: "Project", link: "/project" },
-                { name: "ROI", link: "/resource/roi" },
-                { name: "Safety Standards", link: "/resource/safety-standards" }
-              ].map((item, idx) => (
+              {resourceLinks.map((item, idx) => (
                 <a
                   key={idx}
                   href={item.link}
@@ -127,32 +157,6 @@ export default function Footer({ footerData }) {
               ))}
             </div>
           </div>
-
-          {/* Column 5: Decorative (Hidden for now) */}
-          {/*
-          <div>
-            <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '18px' }}>
-              Decorative
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {["Lights", "Sculpture", "Reception Table", "Other Furniture"].map((item, idx) => (
-                <a
-                  key={idx}
-                  href="#products"
-                  style={{
-                    fontSize: '12px',
-                    color: '#475569',
-                    fontWeight: '500',
-                    textDecoration: 'none',
-                    transition: 'color 0.2s'
-                  }}
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-          </div>
-          */}
         </div>
 
         {/* Social Icons Row & Get in Touch Bar */}
@@ -243,17 +247,17 @@ export default function Footer({ footerData }) {
               Get in Touch
             </h5>
             <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
-              <a href="tel:+919512356766" style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+              <a href={`tel:${phone1.replace(/\s+/g, '')}`} style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
                 <Phone style={{ width: '16px', height: '16px', color: '#0f172a' }} />
-                <span>+91 9512356766</span>
+                <span>{phone1}</span>
               </a>
-              <a href="tel:+919157873576" style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+              <a href={`tel:${phone2.replace(/\s+/g, '')}`} style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
                 <Phone style={{ width: '16px', height: '16px', color: '#0f172a' }} />
-                <span>+91 9157873576</span>
+                <span>{phone2}</span>
               </a>
-              <a href="mailto:info@winera.in" style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+              <a href={`mailto:${email}`} style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
                 <Mail style={{ width: '16px', height: '16px', color: '#0f172a' }} />
-                <span>info@winera.in</span>
+                <span>{email}</span>
               </a>
             </div>
           </div>
@@ -268,10 +272,9 @@ export default function Footer({ footerData }) {
           color: '#475569',
           fontWeight: '500'
         }}>
-          © 2026 Winera International Pvt. Ltd. All Rights Reserved.
+          {copyright}
         </div>
       </div>
     </footer>
   );
 }
-

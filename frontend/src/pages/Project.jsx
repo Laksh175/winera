@@ -352,7 +352,7 @@ export default function Project({ siteData }) {
         <div style={{
           background: 'rgba(224, 242, 254, 0.75)',
           border: '1px solid #bde0fe',
-          borderRadius: '26px',
+          borderRadius: '10px',
           padding: '8px 12px',
           display: 'flex',
           alignItems: 'center',
@@ -365,7 +365,7 @@ export default function Project({ siteData }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '8px',
+            gap: '12px',
             overflowX: 'auto',
             width: '100%',
             scrollbarWidth: 'none',
@@ -378,7 +378,7 @@ export default function Project({ siteData }) {
                   key={idx}
                   onClick={() => setActiveCategory(cat)}
                   style={{
-                    padding: '9px 22px',
+                    padding: '8px 24px',
                     borderRadius: '20px',
                     border: 'none',
                     background: isSelected ? '#38bdf8' : '#ffffff',
@@ -389,7 +389,7 @@ export default function Project({ siteData }) {
                     whiteSpace: 'nowrap',
                     boxShadow: 'none',
                     transition: 'all 0.25s ease',
-                    flex: '1 0 auto',
+                    flex: '0 0 auto',
                     textAlign: 'center'
                   }}
                 >
@@ -411,7 +411,7 @@ export default function Project({ siteData }) {
               width: '36px',
               height: '36px',
               minWidth: '36px',
-              borderRadius: '12px',
+              borderRadius: '8px',
               border: '1px solid #90caf9',
               background: '#bde0fe',
               color: '#0284c7',
@@ -501,6 +501,7 @@ export default function Project({ siteData }) {
       <CtaBanner
         showOverlay={false}
         align="center"
+        buttonTheme="yellow"
         sectionPadding="20px 4vw 30px"
         bgUrl={
           siteData?.projectCta?.bgUrl && !siteData.projectCta.bgUrl.includes('project-lastbg')

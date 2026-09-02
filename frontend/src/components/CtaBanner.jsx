@@ -84,9 +84,8 @@ export default function CtaBanner({
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         borderRadius: '24px',
-        padding: isCentered ? (hasSideImages ? '50px 30px' : '55px 40px') : '55px 48px',
-        minHeight: minHeight || '300px',
-        aspectRatio: '1920 / 480',
+        padding: isCentered ? (hasSideImages ? '48px 30px 48px' : '52px 40px 52px') : '52px 48px',
+        minHeight: minHeight || '320px',
         boxShadow: '0 20px 50px rgba(0, 0, 0, 0.15)',
         overflow: 'hidden',
         display: 'flex',
@@ -229,14 +228,26 @@ export default function CtaBanner({
           )}
 
           <div
-            className={buttonTheme === 'yellow' || buttonTheme === 'yellow_white' ? "winera-yellow-white-cta-wrapper" : "winera-cyan-cta-wrapper"}
+            className={
+              buttonTheme === 'yellow' || buttonTheme === 'yellow_cyan'
+                ? "winera-yellow-cyan-cta-wrapper"
+                : buttonTheme === 'yellow_white'
+                ? "winera-yellow-white-cta-wrapper"
+                : "winera-cyan-cta-wrapper"
+            }
           >
             <a
               href={buttonLink}
               target="_blank"
               rel="noreferrer"
               aria-label={typeof buttonText === 'string' ? buttonText : "Get a Quote"}
-              className={buttonTheme === 'yellow' || buttonTheme === 'yellow_white' ? "winera-yellow-white-cta-btn" : "winera-cyan-cta-btn"}
+              className={
+                buttonTheme === 'yellow' || buttonTheme === 'yellow_cyan'
+                  ? "winera-yellow-cyan-cta-btn"
+                  : buttonTheme === 'yellow_white'
+                  ? "winera-yellow-white-cta-btn"
+                  : "winera-cyan-cta-btn"
+              }
             >
               <span>{buttonText}</span>
             </a>

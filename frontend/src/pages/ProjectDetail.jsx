@@ -200,7 +200,8 @@ export default function ProjectDetail({ siteData }) {
       cmsItem.galleryImage6
     ].filter(Boolean),
     videoImg: cmsItem.videoImg || cmsItem.videoCoverUrl || defaultProject.videoImg,
-    videoUrl: cmsItem.videoUrl || cmsItem.videoLink || defaultProject.videoUrl
+    videoUrl: cmsItem.videoUrl || cmsItem.videoLink || defaultProject.videoUrl,
+    basicInfoBg: cmsItem.basicInfoBg || cmsItem.basicBg || ''
   } : defaultProject;
 
   // Dynamic content sections from CMS siteData
@@ -218,11 +219,15 @@ export default function ProjectDetail({ siteData }) {
   const titleLine2Black = currentProject.titleLine2Black;
   const titleLine3 = currentProject.titleLine3;
   const description = currentProject.description;
-  const buttonText = 'Get A Quote';
-  const buttonLink = 'https://wa.me/919428989488';
+  const buttonText = siteData?.projectBlock?.buttonText || 'Get A Quote';
+  const _rawButtonLink = siteData?.projectBlock?.buttonLink || 'https://wa.me/919428989488';
+  const _waMessage = siteData?.projectBlock?.waMessage || 'Hello Winera International! I want to get a project quote. Please share details. [Ref: Project Detail Page]';
+  const buttonLink = !_rawButtonLink.includes('text=')
+    ? `${_rawButtonLink.split('?')[0]}?text=${encodeURIComponent(_waMessage)}`
+    : _rawButtonLink;
   const mainImage = currentProject.mainImg;
 
-  const basicBg = getValidImageUrl(basicData.bgImg, projectImage2Bg);
+  const basicBg = getValidImageUrl(currentProject.basicInfoBg || basicData.bgImg, projectImage2Bg);
   const basicRows = [
     { label: 'Project Name', val: currentProject.name },
     { label: 'Project Type', val: currentProject.type },

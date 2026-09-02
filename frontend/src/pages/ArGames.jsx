@@ -501,14 +501,25 @@ export default function ArGames({ siteData }) {
             </p>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.arIntro?.buttonLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                {siteData?.arIntro?.buttonText || "Get Quote From Expert"}
-              </a>
+              {(() => {
+                const baseLink = siteData?.arIntro?.buttonLink || "https://wa.me/919428989488";
+                const defaultMsg = siteData?.arIntro?.waMessage || "Hello Winera International! I want to get a quote and details for AR Games setup. Please share details. [Ref: AR Games Page]";
+                let hrefLink = baseLink;
+                if (!baseLink.includes('text=')) {
+                  const separator = baseLink.includes('?') ? '&' : '?';
+                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+                return (
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                  >
+                    {siteData?.arIntro?.buttonText || "Get Quote From Expert"}
+                  </a>
+                );
+              })()}
             </div>
           </div>
 
@@ -594,14 +605,25 @@ export default function ArGames({ siteData }) {
             </div>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.arMatchedVenue?.buttonLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                {siteData?.arMatchedVenue?.buttonText || "Get Quote From Expert"}
-              </a>
+              {(() => {
+                const baseLink = siteData?.arMatchedVenue?.buttonLink || "https://wa.me/919428989488";
+                const defaultMsg = siteData?.arMatchedVenue?.waMessage || "Hello Winera International! I want to get a quote for Interactive AR Attractions setup for my venue. Please share details. [Ref: AR Games Page]";
+                let hrefLink = baseLink;
+                if (!baseLink.includes('text=')) {
+                  const separator = baseLink.includes('?') ? '&' : '?';
+                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+                return (
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                  >
+                    {siteData?.arMatchedVenue?.buttonText || "Get Quote From Expert"}
+                  </a>
+                );
+              })()}
             </div>
           </div>
         </div>

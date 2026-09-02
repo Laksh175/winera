@@ -25,6 +25,7 @@ import {
   Upload,
   Image as ImageIcon,
   Edit2,
+  Edit,
   X,
   Star,
   Video,
@@ -33,9 +34,12 @@ import {
   Calculator,
   Menu
 } from 'lucide-react';
+import blogCardImg from '../assets/blog-images.webp';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
 import vrCtaRightImg from '../assets/vr-cta-right-img.png';
+import vrBlock1 from '../assets/vr-block-1.png';
+import wineraLogo from '../assets/logo.webp';
 
 import projectBanner from '../assets/project-banner.webp';
 import projectImage01 from '../assets/project-image01.webp';
@@ -73,6 +77,7 @@ import arImage from '../assets/AR-image.webp';
 
 import safetyBg from '../assets/safety-bg.webp';
 import safetyStandardImg1 from '../assets/safety-standard-img1.webp';
+import safetyStandardBg2 from '../assets/safety-standard-bg-2.webp';
 import safetyStandard2 from '../assets/safety-standard-2.webp';
 import safetyStandardImg3 from '../assets/safety-standard-img3.webp';
 
@@ -90,7 +95,7 @@ import roiBlock7Bg from '../assets/roi-block7-bg.webp';
 import homeBlockBg from '../assets/home-block.webp';
 import homeBlock1 from '../assets/home-block-1.webp';
 import homeBlock2 from '../assets/home-block-2.webp';
-import about1 from '../assets/about-1.webp';
+import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
 import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.png';
 import about3 from '../assets/about-3.webp';
@@ -101,6 +106,8 @@ import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 import bowlingHeroBg from '../assets/bowling-hero-bg.webp';
 import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
 import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
+import bumpercarOptionsBg from '../assets/bumpercar-options-bg.webp';
+import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.jpg';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
 import bumperCarCtaLeft from '../assets/bumperCar-cta-left.png';
 import bumperCarCtaRight from '../assets/bumperCar-cta-right.png';
@@ -120,6 +127,7 @@ import softplayCastle3d from '../assets/softplay-castle-3d.webp';
 import allImg from '../assets/all.webp';
 import softPalyImage from '../assets/soft-paly-image.webp';
 import groupImg from '../assets/group-image.webp';
+import aboutCollage from '../assets/about-collage.webp';
 import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
 import amusementCtaBg from '../assets/cta-consultations-banner.webp';
 import amusementLeftImg from '../assets/amusement-park-left-img.webp';
@@ -131,6 +139,15 @@ import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.jpg';
 import auroraAirHockeyImg from '../assets/aurora-air-hockey.jpg';
 import ochaAirHockeyImg from '../assets/ocha-air-hockey.jpg';
 import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.jpg';
+import maskGroupImg from '../assets/Mask-group.webp';
+import maskGroup01Img from '../assets/Mask-group-01.webp';
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  return url;
+};
 import bikeArcade from '../assets/bike-arcade.webp';
 import founderUnnit from '../assets/founder-unnit.webp';
 import welcomeWineraImg from '../assets/welcome-to-winera.webp';
@@ -383,7 +400,18 @@ const defaultBlogPosts = Array.from({ length: 9 }, (_, i) => ({
   line2: "the key differences in investment, space",
   line3: "requirements, safety, and revenue.....",
   date: "Aug 22, 2026",
-  image: "/src/assets/blog-images.webp"
+  category: "Game Zone Setup & ROI",
+  readTime: "4 min read",
+  author: "Winera Experts",
+  image: "/src/assets/blog-images.webp",
+  content: "Planning a new game zone or family entertainment center requires critical decisions regarding layout design, equipment mix, safety standards, and overall investment strategy. Understanding the distinct operational and financial characteristics of each attraction model is vital to maximizing your long-term return on investment (ROI).",
+  section1Title: "1. Space Requirements & Architectural Layout",
+  section1Text: "Soft Play zones typically require a minimum ceiling height of 3.5 to 4.5 meters for multi-level tubular structures, whereas Trampoline Parks demand clear ceiling heights of 5.5 to 6.5 meters to accommodate high jumps, foam pits, and airbag stunt zones safely.",
+  takeawayText: "Soft play delivers higher throughput per square meter for toddlers and kids aged 2–8, while Trampoline Parks attract older kids, teens, and young adults with higher per-ticket pricing.",
+  section2Title: "2. Safety Standards & Commercial Durability",
+  section2Text: "All commercial equipment supplied by Winera International meets rigorous global standards including EN 1176 / ASTM F1918 for Soft Play and ASTM F2970 for Trampoline Parks. Flame-retardant PVC padding, high-density impact foams, and non-toxic materials ensure long-lasting commercial durability.",
+  section3Title: "3. Revenue Projection & Operating Costs",
+  section3Text: "Integrating a balanced game zone mix — combining Soft Play, Trampoline Courts, Arcade Games, and VR simulators — creates a comprehensive family destination that drives repeat visits and higher average spend per customer."
 }));
 
 const defaultBlogSeo = {
@@ -574,6 +602,7 @@ const defaultSafetyMaterials = {
   title1: "Material &",
   title2: "Fire Safety",
   subtitle: "These standards make sure everything is made from safe materials that don't catch fire easily and are not harmful to touch which is also a legal rule for game zones in India.",
+  bgUrl: safetyStandardBg2,
   imgUrl: safetyStandard2,
   cards: defaultSafetyMaterialsCards
 };
@@ -653,6 +682,80 @@ const defaultSafetySeo = {
   metaDescription: "Winera International equipment safety standards, international certifications, commercial-grade materials, and on-site inspection protocols for game zones in India."
 };
 
+const defaultHeaderNavLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'About Us', href: '/why-us' },
+  { label: 'Project', href: '/project' },
+  { label: 'Contact Us', href: '/contact' }
+];
+
+const defaultHeaderProductSubMenu = [
+  { label: 'Arcade Games', href: '/product/arcade-games' },
+  { label: 'VR Games', href: '/product/vr-games' },
+  { label: 'AR Games', href: '/product/ar-games' },
+  { label: 'Bowling Alley', href: '/product/bowling-alley' },
+  { label: 'Trampoline Park', href: '/product/trampoline-park' },
+  { label: 'Soft Play', href: '/product/soft-play' },
+  { label: 'Bumper Car', href: '/product/bumper-car' },
+  { label: 'Hypergrid', href: '/product/hypergrid' },
+  { label: 'Laser tag', href: '/product/laser-tag' },
+  { label: 'Amusement Park', href: '/product/amusement-park' }
+];
+
+const defaultHeaderResourcesSubMenu = [
+  { label: 'Blog', href: '/blog' },
+  { label: 'ROI', href: '/resource/roi' },
+  { label: 'Safety Standards', href: '/resource/safety-standards' }
+];
+
+const defaultHeaderData = {
+  logoUrl: wineraLogo,
+  navLinks: defaultHeaderNavLinks,
+  productSubMenu: defaultHeaderProductSubMenu,
+  resourcesSubMenu: defaultHeaderResourcesSubMenu,
+  ctaText: 'Free Consultation',
+  ctaLink: 'https://wa.me/919428989488'
+};
+
+const defaultFooterProductLinks = [
+  { name: "Arcade Games", link: "/product/arcade-games" },
+  { name: "Bowling Alley", link: "/product/bowling-alley" },
+  { name: "Soft Play", link: "/product/soft-play" },
+  { name: "Trampoline Park", link: "/product/trampoline-park" },
+  { name: "VR Games", link: "/product/vr-games" },
+  { name: "AR Games", link: "/product/ar-games" },
+  { name: "Bumper Car", link: "/product/bumper-car" },
+  { name: "Amusement Park", link: "/product/amusement-park" },
+  { name: "Hypergrid", link: "/product/hypergrid" },
+  { name: "Laser tag", link: "/product/laser-tag" }
+];
+
+const defaultFooterQuickLinks = [
+  { name: "About Us", link: "/why-us" },
+  { name: "Contact Us", link: "/contact" },
+  { name: "Privacy Policy", link: "/privacy-policy" },
+  { name: "Terms & Conditions", link: "/terms-and-conditions" }
+];
+
+const defaultFooterResourceLinks = [
+  { name: "Blog", link: "/blog" },
+  { name: "Project", link: "/project" },
+  { name: "ROI", link: "/resource/roi" },
+  { name: "Safety Standards", link: "/resource/safety-standards" }
+];
+
+const defaultFooterData = {
+  logoUrl: wineraLogo,
+  tagline: "Winera is a professional solution provider and builder specializing in indoor amusement parks and playground equipment.",
+  productLinks: defaultFooterProductLinks,
+  quickLinks: defaultFooterQuickLinks,
+  resourceLinks: defaultFooterResourceLinks,
+  phone1: "+91 94289 89488",
+  phone2: "+91 95123 56766",
+  email: "info@winera.in",
+  copyright: "© 2026 Winera International Pvt. Ltd. All Rights Reserved."
+};
+
 const defaultTrampolineHero = {
   bgUrl: trampolineParkBg,
   breadcrumbText: 'Trampoline Park'
@@ -676,6 +779,8 @@ const defaultTrampolineCustom = {
 
 const defaultTrampolineSpecs = {
   title: 'Technical Specifications — *Commercial Trampoline Parks*',
+  bgUrl: trampolineImg3,
+  imgUrl: trampolineImg3,
   specsData: [
     { label: "Steel Frame", value: "80x80mm / 100x50mm Galvanized Steel (2.5mm–3.0mm thickness)" },
     { label: "Jump Mat", value: "Commercial-Grade PP Mesh (Polypropylene), Anti-UV, High Tensile" },
@@ -865,6 +970,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const [modalTargetSection, setModalTargetSection] = useState(null);
   const [deleteConfirmModal, setDeleteConfirmModal] = useState(null);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [expandedBlogIdx, setExpandedBlogIdx] = useState(null);
 
   // Keep formData in sync when siteData is fetched or refreshed from MongoDB API
   useEffect(() => {
@@ -872,6 +978,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       setFormData(siteData);
     }
   }, [siteData]);
+
+  // Auto-dismiss status message toast notification after 3.5 seconds
+  useEffect(() => {
+    if (statusMsg) {
+      const timer = setTimeout(() => {
+        setStatusMsg('');
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [statusMsg]);
 
   if (!admin) {
     return <Navigate to="/admin/login" replace />;
@@ -1105,6 +1221,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       sections: [
         { id: 'aboutHero', name: 'About Hero Banner' },
         { id: 'aboutWelcome', name: 'Welcome To Winera Section' },
+        { id: 'aboutStats', name: 'Achievements & Counter Stats' },
         { id: 'aboutMissionVision', name: 'Our Purpose & Promise' },
         { id: 'aboutWhyUsDetail', name: 'Why Choose Us Mindmap' },
         { id: 'founder', name: 'Founder Profile Data' },
@@ -1148,12 +1265,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'termsSeo', name: 'SEO Meta Title & Description' }
       ]
     },
-    header_footer: {
-      label: 'Header & Footer',
+    footerPage: {
+      label: 'Footer Page',
       icon: <Layout style={{ width: '18px', height: '18px' }} />,
       sections: [
-        { id: 'header', name: 'Navigation Header' },
-        { id: 'footer', name: 'Footer & Links' }
+        { id: 'footer', name: 'Footer Details' }
       ]
     }
   };
@@ -1229,14 +1345,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
   // Open Modal Handler (Add or Edit)
   const openModal = (mode, index = null, currentItem = {}, targetSec = null) => {
+    const item = currentItem || {};
     const sec = targetSec || activeSection;
     setModalTargetSection(sec);
     setModalMode(mode);
     setEditingIndex(index);
     if (sec === 'arcadeCategories') {
       const slugifyText = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      const cardTitle = currentItem.title || currentItem.name || (mode === 'add' ? 'New Arcade Game' : 'Parkour Motor II (DX)');
-      const cardSlug = currentItem.slug || slugifyText(cardTitle);
+      const cardTitle = item.title || item.name || (mode === 'add' ? 'New Arcade Game' : 'Parkour Motor II (DX)');
+      const cardSlug = item.slug || slugifyText(cardTitle);
 
       const arcadeDefaultsLookup = {
         'parkour-motor-2-dx': {
@@ -1374,39 +1491,39 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       const defaultArcadeItem = {
         title: cardTitle,
         name: cardTitle,
-        nameBase: currentItem.nameBase !== undefined ? currentItem.nameBase : (knownDefault.nameBase || `${cardTitle} `),
-        nameHighlight: currentItem.nameHighlight !== undefined ? currentItem.nameHighlight : (knownDefault.nameHighlight || ''),
-        category: currentItem.category || knownDefault.category || 'Arcade Games',
-        tag: currentItem.tag || 'Popular',
-        tagline: currentItem.tagline || currentItem.desc || knownDefault.tagline || 'High-Performance Commercial Arcade Simulator Machine',
-        desc: currentItem.desc || currentItem.tagline || knownDefault.tagline || 'High-Performance Commercial Arcade Simulator Machine',
+        nameBase: item.nameBase !== undefined ? item.nameBase : (knownDefault.nameBase || `${cardTitle} `),
+        nameHighlight: item.nameHighlight !== undefined ? item.nameHighlight : (knownDefault.nameHighlight || ''),
+        category: item.category || knownDefault.category || (adminProjectFilterCat && adminProjectFilterCat !== 'All' ? adminProjectFilterCat : 'Arcade Games'),
+        tag: item.tag || 'Popular',
+        tagline: item.tagline || item.desc || knownDefault.tagline || 'High-Performance Commercial Arcade Simulator Machine',
+        desc: item.desc || item.tagline || knownDefault.tagline || 'High-Performance Commercial Arcade Simulator Machine',
         slug: cardSlug,
-        power: currentItem.power || knownDefault.power || '880 W',
-        voltage: currentItem.voltage || knownDefault.voltage || '220v',
-        specsCategory: currentItem.specsCategory || currentItem.category || knownDefault.specsCategory || 'Arcade Games',
-        players: currentItem.players || knownDefault.players || '2 Player',
-        material: currentItem.material || knownDefault.material || 'Imported Steel & ABS',
-        width: currentItem.width || knownDefault.width || '2140 mm',
-        depth: currentItem.depth || knownDefault.depth || '2310 mm',
-        height: currentItem.height || knownDefault.height || '2490 mm',
-        img: (currentItem.img && !currentItem.img.includes('/src/assets/')) ? currentItem.img : (currentItem.imageUrl && !currentItem.imageUrl.includes('/src/assets/') ? currentItem.imageUrl : ''),
-        gallery1: (currentItem.gallery1 && !currentItem.gallery1.includes('/src/assets/')) ? currentItem.gallery1 : '',
-        gallery2: (currentItem.gallery2 && !currentItem.gallery2.includes('/src/assets/')) ? currentItem.gallery2 : '',
-        gallery3: (currentItem.gallery3 && !currentItem.gallery3.includes('/src/assets/')) ? currentItem.gallery3 : '',
-        gallery4: (currentItem.gallery4 && !currentItem.gallery4.includes('/src/assets/')) ? currentItem.gallery4 : '',
-        videoUrl: currentItem.videoUrl || knownDefault.videoUrl || 'https://youtube.com',
-        quoteUrl: currentItem.quoteUrl || knownDefault.quoteUrl || 'https://wa.me/919428989488',
-        feature1Title: currentItem.feature1Title || '12+ Years of Expertise',
-        feature1Desc: currentItem.feature1Desc || 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.',
-        feature2Title: currentItem.feature2Title || 'Quality & Safety Standards',
-        feature2Desc: currentItem.feature2Desc || 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.',
-        feature3Title: currentItem.feature3Title || 'ROI-First Approach',
-        feature3Desc: currentItem.feature3Desc || 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.',
-        feature4Title: currentItem.feature4Title || 'Reliable Pan-India Service',
-        feature4Desc: currentItem.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.'
+        power: item.power || knownDefault.power || '880 W',
+        voltage: item.voltage || knownDefault.voltage || '220v',
+        specsCategory: item.specsCategory || item.category || knownDefault.specsCategory || 'Arcade Games',
+        players: item.players || knownDefault.players || '2 Player',
+        material: item.material || knownDefault.material || 'Imported Steel & ABS',
+        width: item.width || knownDefault.width || '2140 mm',
+        depth: item.depth || knownDefault.depth || '2310 mm',
+        height: item.height || knownDefault.height || '2490 mm',
+        img: (item.img && !item.img.includes('/src/assets/')) ? item.img : (item.imageUrl && !item.imageUrl.includes('/src/assets/') ? item.imageUrl : ''),
+        gallery1: (item.gallery1 && !item.gallery1.includes('/src/assets/')) ? item.gallery1 : '',
+        gallery2: (item.gallery2 && !item.gallery2.includes('/src/assets/')) ? item.gallery2 : '',
+        gallery3: (item.gallery3 && !item.gallery3.includes('/src/assets/')) ? item.gallery3 : '',
+        gallery4: (item.gallery4 && !item.gallery4.includes('/src/assets/')) ? item.gallery4 : '',
+        videoUrl: item.videoUrl || knownDefault.videoUrl || 'https://youtube.com',
+        quoteUrl: item.quoteUrl || knownDefault.quoteUrl || 'https://wa.me/919428989488',
+        feature1Title: item.feature1Title || '12+ Years of Expertise',
+        feature1Desc: item.feature1Desc || 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.',
+        feature2Title: item.feature2Title || 'Quality & Safety Standards',
+        feature2Desc: item.feature2Desc || 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.',
+        feature3Title: item.feature3Title || 'ROI-First Approach',
+        feature3Desc: item.feature3Desc || 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.',
+        feature4Title: item.feature4Title || 'Reliable Pan-India Service',
+        feature4Desc: item.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.'
       };
 
-      const cleanedCurrentItem = { ...currentItem };
+      const cleanedCurrentItem = { ...item };
       ['img', 'imageUrl', 'gallery1', 'gallery2', 'gallery3', 'gallery4'].forEach(k => {
         if (cleanedCurrentItem[k] && typeof cleanedCurrentItem[k] === 'string' && cleanedCurrentItem[k].includes('/src/assets/')) {
           delete cleanedCurrentItem[k];
@@ -1672,11 +1789,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         tag: modalItemData.tag || 'Popular',
         tagline: modalItemData.tagline || '',
         desc: modalItemData.desc || '',
-        img: (modalItemData.img && !modalItemData.img.includes('/src/assets/')) ? modalItemData.img : (modalItemData.imageUrl && !modalItemData.imageUrl.includes('/src/assets/') ? modalItemData.imageUrl : ''),
-        gallery1: (modalItemData.gallery1 && !modalItemData.gallery1.includes('/src/assets/')) ? modalItemData.gallery1 : (modalItemData.img && !modalItemData.img.includes('/src/assets/') ? modalItemData.img : ''),
-        gallery2: (modalItemData.gallery2 && !modalItemData.gallery2.includes('/src/assets/')) ? modalItemData.gallery2 : '',
-        gallery3: (modalItemData.gallery3 && !modalItemData.gallery3.includes('/src/assets/')) ? modalItemData.gallery3 : '',
-        gallery4: (modalItemData.gallery4 && !modalItemData.gallery4.includes('/src/assets/')) ? modalItemData.gallery4 : '',
+        img: modalItemData.img || modalItemData.imageUrl || '',
+        gallery1: modalItemData.gallery1 || modalItemData.img || modalItemData.imageUrl || '',
+        gallery2: modalItemData.gallery2 || '',
+        gallery3: modalItemData.gallery3 || '',
+        gallery4: modalItemData.gallery4 || '',
         power: modalItemData.power || '880 W',
         voltage: modalItemData.voltage || '220v',
         specsCategory: modalItemData.specsCategory || modalItemData.category || 'Bike Racing Game',
@@ -1698,15 +1815,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       };
 
       if (modalMode === 'add') {
-        cardsList.push(cardItem);
+        cardsList.unshift(cardItem);
       } else if (modalMode === 'edit' && editingIndex !== null) {
         cardsList[editingIndex] = cardItem;
       }
 
+      if (cardItem.category && !categoriesList.includes(cardItem.category)) {
+        categoriesList.push(cardItem.category);
+      }
+
+      setAdminProjectFilterCat("All");
       const updated = { categoriesList, cards: cardsList };
       setFormData(prev => ({ ...prev, arcadeCategories: updated }));
-      await persistSectionToDatabase('arcadeCategories', updated);
       closeModal();
+
+      try {
+        await persistSectionToDatabase('arcadeCategories', updated);
+      } catch (err) {
+        console.error("Save to MongoDB error:", err);
+      }
       return;
     }
 
@@ -1721,13 +1848,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { number: "98%", label: "Happy Clients" },
         { number: "50+", label: "Cities Covered" }
       ];
-      currentList = defaultHomeStats.map((def, i) => {
-        const existing = currentList[i] || {};
-        return {
-          number: existing.number || existing.num || def.number,
-          label: existing.label || existing.title || def.label
-        };
-      });
+      if (!Array.isArray(formData.stats) || formData.stats.length === 0) {
+        currentList = [...defaultHomeStats];
+      } else {
+        currentList = [...formData.stats];
+      }
     }
 
     if (modalMode === 'add') {
@@ -2235,24 +2360,61 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           </div>
         </div>
 
-        {/* Success / Status Message Notification Banner */}
+        {/* Floating Top-Right Success / Status Toast Notification */}
         {statusMsg && (
-          <div style={{
-            background: statusMsg.includes('Error') ? '#fef2f2' : '#f0fdf4',
-            border: statusMsg.includes('Error') ? '1.5px solid #fca5a5' : '1.5px solid #86efac',
-            color: statusMsg.includes('Error') ? '#dc2626' : '#166534',
-            padding: '14px 20px',
-            borderRadius: '16px',
-            fontSize: '13.5px',
-            fontWeight: '700',
-            marginBottom: '28px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px'
-          }}>
-            <CheckCircle style={{ width: '18px', height: '18px' }} />
-            <span>{statusMsg}</span>
-          </div>
+          <>
+            <style>{`
+              @keyframes toastSlideIn {
+                from { transform: translateX(100%) scale(0.9); opacity: 0; }
+                to { transform: translateX(0) scale(1); opacity: 1; }
+              }
+            `}</style>
+            <div style={{
+              position: 'fixed',
+              top: '24px',
+              right: '24px',
+              zIndex: 9999,
+              background: statusMsg.toLowerCase().includes('error') ? '#ef4444' : '#10b981',
+              color: '#ffffff',
+              padding: '14px 22px',
+              borderRadius: '16px',
+              fontSize: '14px',
+              fontWeight: '800',
+              boxShadow: statusMsg.toLowerCase().includes('error') 
+                ? '0 12px 30px rgba(239, 68, 68, 0.4)' 
+                : '0 12px 30px rgba(16, 185, 129, 0.4)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              maxWidth: '420px',
+              animation: 'toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+              transition: 'all 0.3s ease'
+            }}>
+              <CheckCircle style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+              <span style={{ flex: 1, lineHeight: '1.4' }}>{statusMsg}</span>
+              <button
+                onClick={() => setStatusMsg('')}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.25)',
+                  border: 'none',
+                  color: '#ffffff',
+                  width: '26px',
+                  height: '26px',
+                  borderRadius: '50%',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '12px',
+                  fontWeight: '900',
+                  marginLeft: '8px'
+                }}
+                title="Close"
+              >
+                ✕
+              </button>
+            </div>
+          </>
         )}
 
         {/* DYNAMIC EDIT FORM PANELS */}
@@ -2351,7 +2513,29 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Hero Background Image
+                  WhatsApp Auto Pre-filled Message <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>💬 Auto Text sent on WhatsApp</span>
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="e.g. Hello Winera International! I want to plan and setup a Game Zone for my space. Please share details and an ROI report. [Ref: Home Page]"
+                  value={formData.hero?.waMessage !== undefined && formData.hero.waMessage !== '' ? formData.hero.waMessage : "Hello Winera International! I want to plan and setup a Game Zone for my space. Please share details and an ROI report. [Ref: Home Page]"}
+                  onChange={(e) => handleFieldChange('hero', 'waMessage', e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    borderRadius: '14px',
+                    border: '1.5px solid #e2e8f0',
+                    background: '#F5F5F9',
+                    fontSize: '13.5px',
+                    fontWeight: '500',
+                    lineHeight: 1.5
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 840 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                   {formData.hero?.bgUrl && (
@@ -2462,6 +2646,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   }}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.6, fontFamily: 'monospace' }}
                 />
+              </div>
+
+              {/* About Section Side Photo */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  About Section Side Photo <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 520 × 480 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.aboutHome?.rightImgUrl, aboutCollage)}
+                    alt="About Section Preview"
+                    style={{ width: '80px', height: '60px', borderRadius: '8px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload About Photo
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading photo...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          handleFieldChange('aboutHome', 'rightImgUrl', res.url);
+                          setStatusMsg('About section photo uploaded!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -2625,7 +2843,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         </div>
 
                         <div>
-                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Image</label>
+                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>
+                            Card Image <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 600 × 600 px (Square 1:1)</span>
+                          </label>
                           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                             {card.img && (
                               <img
@@ -2909,7 +3129,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         </div>
 
                         <div>
-                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Industry Image</label>
+                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>
+                            Industry Image <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 800 × 600 px (4:3)</span>
+                          </label>
                           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                             {item.img && (
                               <img
@@ -3314,14 +3536,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               { number: "50+", label: "Cities Covered" }
             ];
 
-            const rawHomeStats = Array.isArray(formData.stats) ? formData.stats : [];
-            const homeStatsList = defaultHomeStats.map((def, idx) => {
-              const current = rawHomeStats[idx] || {};
-              return {
-                number: current.number || current.num || def.number,
-                label: current.label || current.title || def.label
-              };
-            });
+            const homeStatsList = (Array.isArray(formData.stats) && formData.stats.length > 0)
+              ? formData.stats.map(item => ({
+                  number: item.number || item.num || '',
+                  label: item.label || item.title || ''
+                }))
+              : defaultHomeStats;
 
             return (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -3330,6 +3550,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Company Stats</h3>
                     <p style={{ fontSize: '12.5px', color: '#64748b', margin: '2px 0 0' }}>Manage statistics heading, description, numbers, and labels displayed on the website.</p>
                   </div>
+                  <button
+                    onClick={() => openModal('add')}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '14px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.3)' }}
+                  >
+                    <Plus style={{ width: '16px', height: '16px' }} /> Add Stat
+                  </button>
                 </div>
 
                 {/* Section Header Controls */}
@@ -3395,9 +3621,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             <button
                               onClick={() => openModal('edit', idx, item)}
                               title="Edit Stat"
-                              style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 14px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
+                              style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
                             >
                               <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteItem('stats', idx)}
+                              title="Delete Stat"
+                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
                             </button>
                           </td>
                         </tr>
@@ -4016,7 +4249,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Background Banner Image */}
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Background Banner Image
+                  Background Banner Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
                   <div style={{ position: 'relative', width: '140px', height: '60px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
@@ -4077,7 +4310,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Left Side Card Image */}
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Left Side Card Image (Tilted Card)
+                  Left Side Card Image (Tilted Card) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (Portrait 4:5)</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
                   <div style={{ position: 'relative', width: '70px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
@@ -4138,7 +4371,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Right Side Card Image */}
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Right Side Card Image (Tilted Card)
+                  Right Side Card Image (Tilted Card) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (Portrait 4:5)</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
                   <div style={{ position: 'relative', width: '70px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
@@ -4246,7 +4479,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Hero Background Image Upload & Preview */}
               <div>
-                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
                     src={getAdminValidImageUrl(formData.arcadeHero?.bgUrl, arcadeHeroBg)}
@@ -4307,7 +4542,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Image 1 Upload: Main Top-Left Image */}
               <div>
-                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Top-Left Image (Racing/Boy Photo)</label>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Main Top-Left Image (Racing/Boy Photo) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 600 px (Square 1:1)</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -4349,7 +4586,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Image 2 Upload: Secondary Bottom-Right Image */}
               <div>
-                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Secondary Bottom-Right Image (Arcade Arena Overview)</label>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Secondary Bottom-Right Image (Arcade Arena Overview) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 500 × 380 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -4473,7 +4712,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
                 <div>
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    Watch Video Link URL
+                    Watch Video Link URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>🎬 Video Ratio: 16:9 Landscape (YouTube / MP4)</span>
                   </label>
                   <input
                     type="text"
@@ -4507,6 +4746,28 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>💬 Auto Text sent on WhatsApp</span>
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="e.g. Hello Winera International! I want to inquire about Commercial Arcade Game Machines. Please share catalog and details. [Ref: Arcade Games Page]"
+                  value={formData.arcadeIntro?.waMessage !== undefined && formData.arcadeIntro.waMessage !== '' ? formData.arcadeIntro.waMessage : "Hello Winera International! I want to inquire about Commercial Arcade Game Machines. Please share catalog and details. [Ref: Arcade Games Page]"}
+                  onChange={(e) => handleFieldChange('arcadeIntro', 'waMessage', e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    borderRadius: '14px',
+                    border: '1.5px solid #e2e8f0',
+                    background: '#F5F5F9',
+                    fontSize: '13.5px',
+                    fontWeight: '500',
+                    lineHeight: 1.5
+                  }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -4672,7 +4933,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
-                      User-Side Style Product Cards Grid ({filteredCards.length} Items)
+                      User-Side Style Product Cards Grid ({filteredCards.length} Items) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Card Image Recommended: 600 × 400 px (3:2) or 600 × 600 px (1:1)</span>
                     </h4>
                   </div>
 
@@ -4807,7 +5068,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Team Photo Upload */}
               <div>
-                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Team Photo (Right Graphic Frame)</label>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Team Photo (Right Graphic Frame) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -4912,11 +5175,48 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.arcadeCommercial?.ctaLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('arcadeCommercial', 'ctaLink', e.target.value)}
+                    value={(formData.arcadeCommercial?.ctaLink && formData.arcadeCommercial.ctaLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.arcadeCommercial?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for setup & commercial guidance. Please share details. [Ref: Arcade Game Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      handleFieldChange('arcadeCommercial', 'ctaLink', updatedLink);
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
+              </div>
+
+              <div style={{ marginTop: '14px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Talk to an ROI Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.arcadeCommercial?.waMessage !== undefined && formData.arcadeCommercial?.waMessage !== '') return formData.arcadeCommercial.waMessage;
+                    if (formData.arcadeCommercial?.ctaLink && formData.arcadeCommercial.ctaLink.includes('text=')) {
+                      try {
+                        const match = formData.arcadeCommercial.ctaLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to talk to an ROI Expert for setup & commercial guidance. Please share details. [Ref: Arcade Game Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.arcadeCommercial?.ctaLink && formData.arcadeCommercial.ctaLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    const updated = {
+                      ...(formData.arcadeCommercial || {}),
+                      waMessage: newMsg,
+                      ctaLink: updatedLink
+                    };
+                    setFormData(prev => ({ ...prev, arcadeCommercial: updated }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to talk to an ROI Expert..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500', lineHeight: 1.5 }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -5160,7 +5460,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                         {/* Image Upload Input */}
                         <div>
-                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Category Cover Photo</label>
+                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>
+                            Category Cover Photo <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 600 × 600 px (Square 1:1)</span>
+                          </label>
                           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                             <label style={{
                               background: '#38bdf8',
@@ -5287,7 +5589,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Background Banner Image Upload */}
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Background Banner Image
+                  Background Banner Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
                   {formData.arcadeCta?.bgUrl && (
@@ -5454,7 +5756,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Hero Background Image Upload & Preview */}
               <div>
-                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
                     src={getAdminValidImageUrl(formData.bowlingHero?.bgUrl, bowlingHeroBg)}
@@ -5526,7 +5830,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Custom Background Image
+                  Custom Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                   {formData.softplayHero?.bgUrl && (
@@ -5605,16 +5909,55 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link URL</label>
                   <input
                     type="text"
-                    value={formData.softplayIntro?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('softplayIntro', 'buttonLink', e.target.value)}
+                    value={(formData.softplayIntro?.buttonLink && formData.softplayIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.softplayIntro?.waMessage || "Hello Winera International! I want to get custom design & quote for Soft Play equipment. Please share details. [Ref: Soft Play Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      handleFieldChange('softplayIntro', 'buttonLink', updatedLink);
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
               </div>
 
+              <div style={{ marginTop: '14px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Quote From Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.softplayIntro?.waMessage !== undefined && formData.softplayIntro?.waMessage !== '') return formData.softplayIntro.waMessage;
+                    if (formData.softplayIntro?.buttonLink && formData.softplayIntro.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.softplayIntro.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to get custom design & quote for Soft Play equipment. Please share details. [Ref: Soft Play Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.softplayIntro?.buttonLink && formData.softplayIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    const updated = {
+                      ...(formData.softplayIntro || {}),
+                      waMessage: newMsg,
+                      buttonLink: updatedLink
+                    };
+                    setFormData(prev => ({ ...prev, softplayIntro: updated }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to get custom design..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500', lineHeight: 1.5 }}
+                />
+              </div>
+
               {/* Section Image Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>Section Photo Upload</h4>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Section Photo Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </h4>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
                     src={getAdminValidImageUrl(formData.softplayIntro?.mainImgUrl || formData.softplayIntro?.imgUrl, softPlayImg)}
@@ -5703,7 +6046,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Watch Video URL Link</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Watch Video URL Link <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>🎬 Video Ratio: 16:9 Landscape (YouTube / MP4)</span>
+                  </label>
                   <input
                     type="text"
                     value={formData.softplayManufacture?.videoUrl || 'https://wa.me/919428989488'}
@@ -5715,7 +6060,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* 3D Castle Image Upload */}
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>3D Castle Render Image Upload</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  3D Castle Render Image Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload 3D Render Image
@@ -5887,7 +6234,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Background Banner Image Upload */}
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Background Card Image Upload</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Background Card Image Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
@@ -5953,7 +6302,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Photo Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>Left Kids Play Area Photo Upload</h4>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Left Kids Play Area Photo Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </h4>
                 <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
                   <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>Play Area Photo</label>
                   <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -6158,7 +6509,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Types of Soft Play Zones List Manager */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Soft Play Zone Types (Title, Description & Image)</h4>
+                  <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                    Soft Play Zone Types (Title, Description & Image) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Card Image: 600 × 400 px (3:2)</span>
+                  </h4>
                   <button
                     type="button"
                     onClick={() => {
@@ -6282,8 +6635,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         {tItem.img && (
                           <img src={tItem.img} alt="" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
                         )}
-                        <span style={{ fontSize: '11.5px', color: '#64748b', fontWeight: '500' }}>
-                          {tItem.img ? 'Custom Image Uploaded' : 'Using default image'}
+                        <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>
+                          📐 600 × 400 px
                         </span>
                       </div>
                     </div>
@@ -6359,16 +6712,55 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link URL</label>
                   <input
                     type="text"
-                    value={formData.softplayRoi?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('softplayRoi', 'buttonLink', e.target.value)}
+                    value={(formData.softplayRoi?.buttonLink && formData.softplayRoi.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.softplayRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Soft Play setup & commercial ROI calculation. Please share details. [Ref: Soft Play Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      handleFieldChange('softplayRoi', 'buttonLink', updatedLink);
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
               </div>
 
+              <div style={{ marginTop: '14px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Talk to an ROI Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.softplayRoi?.waMessage !== undefined && formData.softplayRoi?.waMessage !== '') return formData.softplayRoi.waMessage;
+                    if (formData.softplayRoi?.buttonLink && formData.softplayRoi.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.softplayRoi.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to talk to an ROI Expert for Soft Play setup & commercial ROI calculation. Please share details. [Ref: Soft Play Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.softplayRoi?.buttonLink && formData.softplayRoi.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    const updated = {
+                      ...(formData.softplayRoi || {}),
+                      waMessage: newMsg,
+                      buttonLink: updatedLink
+                    };
+                    setFormData(prev => ({ ...prev, softplayRoi: updated }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to talk to an ROI Expert..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500', lineHeight: 1.5 }}
+                />
+              </div>
+
               {/* Section Image Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>Section Photo Upload</h4>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Section Photo Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </h4>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
                     src={getAdminValidImageUrl(formData.softplayRoi?.mainImgUrl || formData.softplayRoi?.imgUrl || formData.softplayRoi?.topImgUrl, softPalyImage)}
@@ -6719,7 +7111,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Background Image Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>CTA Banner Background Image Upload</h4>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  CTA Banner Background Image Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </h4>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   <img
                     src={getAdminValidImageUrl(formData.softplayCta?.bgUrl || formData.softplayCta?.bg, ctaSoftplayBg)}
@@ -6802,7 +7196,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -6893,15 +7289,56 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.amusementIntro?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('amusementIntro', 'buttonLink', e.target.value)}
+                    value={(formData.amusementIntro?.buttonLink && formData.amusementIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.amusementIntro?.waMessage || "Hello Winera International! I want to get a quote and details for Amusement Park Rides. Please share details. [Ref: Amusement Park Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      setFormData(prev => ({ ...prev, amusementIntro: { ...(prev.amusementIntro || {}), buttonLink: updatedLink } }));
+                    }}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
                   />
                 </div>
               </div>
 
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Quote From Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.amusementIntro?.waMessage !== undefined && formData.amusementIntro.waMessage !== '') return formData.amusementIntro.waMessage;
+                    if (formData.amusementIntro?.buttonLink && formData.amusementIntro.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.amusementIntro.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to get a quote and details for Amusement Park Rides. Please share details. [Ref: Amusement Park Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.amusementIntro?.buttonLink && formData.amusementIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      amusementIntro: {
+                        ...(prev.amusementIntro || {}),
+                        waMessage: newMsg,
+                        buttonLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to get a quote..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
+              </div>
+
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Left Collage Graphic Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Left Collage Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -6989,7 +7426,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Graphic Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -7150,7 +7589,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Top Collage Graphic Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Top Collage Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -7251,15 +7692,56 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.amusementRoi?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('amusementRoi', 'buttonLink', e.target.value)}
+                    value={(formData.amusementRoi?.buttonLink && formData.amusementRoi.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.amusementRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Amusement Park setup & commercial ROI calculation. Please share details. [Ref: Amusement Park Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      setFormData(prev => ({ ...prev, amusementRoi: { ...(prev.amusementRoi || {}), buttonLink: updatedLink } }));
+                    }}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
                   />
                 </div>
               </div>
 
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Talk to an ROI Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.amusementRoi?.waMessage !== undefined && formData.amusementRoi.waMessage !== '') return formData.amusementRoi.waMessage;
+                    if (formData.amusementRoi?.buttonLink && formData.amusementRoi.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.amusementRoi.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to talk to an ROI Expert for Amusement Park setup & commercial ROI calculation. Please share details. [Ref: Amusement Park Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.amusementRoi?.buttonLink && formData.amusementRoi.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      amusementRoi: {
+                        ...(prev.amusementRoi || {}),
+                        waMessage: newMsg,
+                        buttonLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to talk to an ROI Expert..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
+              </div>
+
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Bottom Inflatable Graphic Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Bottom Inflatable Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -7447,7 +7929,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Banner Background Image Upload */}
               <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Banner Background Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
                     src={getAdminValidImageUrl(formData.amusementCta?.bgUrl, amusementCtaBg)}
@@ -7482,7 +7966,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Tilted Side Cards Image Uploads */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Left Tilted Card Image</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Left Tilted Card Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <img
                       src={getAdminValidImageUrl(formData.amusementCta?.leftImgUrl, amusementLeftImg)}
@@ -7514,7 +8000,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
 
                 <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Tilted Card Image</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Right Tilted Card Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <img
                       src={getAdminValidImageUrl(formData.amusementCta?.rightImgUrl, amusementRightImg)}
@@ -7620,7 +8108,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Hypergrid Hero Banner</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={heroImg} alt="Hero Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -7709,14 +8199,55 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                       <input
                         type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultHypergridIntro.buttonLink}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), buttonLink: e.target.value } }))}
+                        value={(currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultHypergridIntro.buttonLink}
+                        onChange={(e) => {
+                          const baseLink = e.target.value;
+                          const msg = currentSec.waMessage || "Hello Winera International! I want to get a quote and details for Hypergrid LED Floor Game setup. Please share details. [Ref: Hypergrid Page]";
+                          const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                          setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), buttonLink: updatedLink } }));
+                        }}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
                   </div>
+
+                  <div style={{ marginTop: '4px' }}>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get A Quote</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={(() => {
+                        if (currentSec.waMessage !== undefined && currentSec.waMessage !== '') return currentSec.waMessage;
+                        if (currentSec.buttonLink && currentSec.buttonLink.includes('text=')) {
+                          try {
+                            const match = currentSec.buttonLink.match(/text=([^&]+)/);
+                            if (match && match[1]) return decodeURIComponent(match[1]);
+                          } catch (err) {}
+                        }
+                        return "Hello Winera International! I want to get a quote and details for Hypergrid LED Floor Game setup. Please share details. [Ref: Hypergrid Page]";
+                      })()}
+                      onChange={(e) => {
+                        const newMsg = e.target.value;
+                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultHypergridIntro.buttonLink;
+                        const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                        setFormData(prev => ({
+                          ...prev,
+                          hypergridIntro: {
+                            ...(prev.hypergridIntro || defaultHypergridIntro),
+                            waMessage: newMsg,
+                            buttonLink: updatedLink
+                          }
+                        }));
+                      }}
+                      placeholder="e.g. Hello Winera International! I want to get a quote..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                    />
+                  </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Left Graphic Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Left Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -7792,7 +8323,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Graphic Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Right Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={bannerImg} alt="Banner Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -7842,7 +8375,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Technical Specifications Section</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 600 px (2:1)</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={bgImg} alt="BG Preview" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -7980,7 +8515,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image</label>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                      </label>
                       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                         <img src={bgImg} alt="BG Preview" style={{ width: '60px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
                         <input
@@ -7993,7 +8530,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </div>
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Left Column Image</label>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Left Column Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                      </label>
                       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                         <img src={leftImg} alt="Left Preview" style={{ width: '60px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
                         <input
@@ -8145,14 +8684,55 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                       <input
                         type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultHypergridRoi.buttonLink}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), buttonLink: e.target.value } }))}
+                        value={(currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultHypergridRoi.buttonLink}
+                        onChange={(e) => {
+                          const baseLink = e.target.value;
+                          const msg = currentSec.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Hypergrid LED Floor Game setup & commercial ROI calculation. Please share details. [Ref: Hypergrid Page]";
+                          const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                          setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), buttonLink: updatedLink } }));
+                        }}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
                   </div>
+
+                  <div style={{ marginTop: '4px' }}>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Talk to an ROI Expert</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={(() => {
+                        if (currentSec.waMessage !== undefined && currentSec.waMessage !== '') return currentSec.waMessage;
+                        if (currentSec.buttonLink && currentSec.buttonLink.includes('text=')) {
+                          try {
+                            const match = currentSec.buttonLink.match(/text=([^&]+)/);
+                            if (match && match[1]) return decodeURIComponent(match[1]);
+                          } catch (err) {}
+                        }
+                        return "Hello Winera International! I want to talk to an ROI Expert for Hypergrid LED Floor Game setup & commercial ROI calculation. Please share details. [Ref: Hypergrid Page]";
+                      })()}
+                      onChange={(e) => {
+                        const newMsg = e.target.value;
+                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultHypergridRoi.buttonLink;
+                        const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                        setFormData(prev => ({
+                          ...prev,
+                          hypergridRoi: {
+                            ...(prev.hypergridRoi || defaultHypergridRoi),
+                            waMessage: newMsg,
+                            buttonLink: updatedLink
+                          }
+                        }));
+                      }}
+                      placeholder="e.g. Hello Winera International! I want to talk to an ROI Expert..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                    />
+                  </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Graphic Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Right Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={roiImg} alt="Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -8385,7 +8965,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Hypergrid CTA Banner Settings</h3>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Banner Background Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -8431,7 +9013,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Tilted Side Cards Image Uploads */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Left Tilted Card Image</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Left Tilted Card Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <img
                       src={getAdminValidImageUrl(formData.hypergridCta?.leftImgUrl, leftTiltedCard)}
@@ -8463,7 +9047,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
 
                 <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Tilted Card Image</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Right Tilted Card Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <img
                       src={getAdminValidImageUrl(formData.hypergridCta?.rightImgUrl, rightTiltedCard)}
@@ -8575,7 +9161,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -8668,15 +9256,56 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.bumpercarIntro?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('bumpercarIntro', 'buttonLink', e.target.value)}
+                    value={(formData.bumpercarIntro?.buttonLink && formData.bumpercarIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.bumpercarIntro?.waMessage || "Hello Winera International! I want to get a quote and details for Bumper Car setup. Please share details. [Ref: Bumper Car Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      setFormData(prev => ({ ...prev, bumpercarIntro: { ...(prev.bumpercarIntro || {}), buttonLink: updatedLink } }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
               </div>
 
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Quote From Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.bumpercarIntro?.waMessage !== undefined && formData.bumpercarIntro.waMessage !== '') return formData.bumpercarIntro.waMessage;
+                    if (formData.bumpercarIntro?.buttonLink && formData.bumpercarIntro.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.bumpercarIntro.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to get a quote and details for Bumper Car setup. Please share details. [Ref: Bumper Car Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.bumpercarIntro?.buttonLink && formData.bumpercarIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      bumpercarIntro: {
+                        ...(prev.bumpercarIntro || {}),
+                        waMessage: newMsg,
+                        buttonLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to get a quote..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
+              </div>
+
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Section Right Collage Graphic Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Section Right Collage Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Collage Graphic
@@ -8741,7 +9370,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right 3D Neon Bumper Car Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right 3D Neon Bumper Car Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload 3D Neon Bumper Car Image
@@ -8883,7 +9514,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Background Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 600 px (2:1)</span>
+                </label>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
@@ -9098,7 +9731,38 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Collage Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Section Container Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading options background image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          handleFieldChange('bumpercarOptions', 'bgUrl', res.url);
+                          setStatusMsg('Options background image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  <img src={getAdminValidImageUrl(formData.bumpercarOptions?.bgUrl, bumpercarOptionsBg)} alt="BG Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Collage Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Right Collage Graphic
@@ -9120,9 +9784,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.bumpercarOptions?.imgUrl && (
-                    <img src={formData.bumpercarOptions.imgUrl} alt="" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px' }} />
-                  )}
+                  <img src={getAdminValidImageUrl(formData.bumpercarOptions?.imgUrl, bumpercarOptionsCollage)} alt="Collage Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
               </div>
 
@@ -9386,15 +10048,56 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link</label>
                   <input
                     type="text"
-                    value={formData.bumpercarInvestment?.btnLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('bumpercarInvestment', 'btnLink', e.target.value)}
+                    value={(formData.bumpercarInvestment?.btnLink && formData.bumpercarInvestment.btnLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.bumpercarInvestment?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Bumper Car setup & commercial ROI calculation. Please share details. [Ref: Bumper Car Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      setFormData(prev => ({ ...prev, bumpercarInvestment: { ...(prev.bumpercarInvestment || {}), btnLink: updatedLink } }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
               </div>
 
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Plan Your Game Zone</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.bumpercarInvestment?.waMessage !== undefined && formData.bumpercarInvestment.waMessage !== '') return formData.bumpercarInvestment.waMessage;
+                    if (formData.bumpercarInvestment?.btnLink && formData.bumpercarInvestment.btnLink.includes('text=')) {
+                      try {
+                        const match = formData.bumpercarInvestment.btnLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to talk to an ROI Expert for Bumper Car setup & commercial ROI calculation. Please share details. [Ref: Bumper Car Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.bumpercarInvestment?.btnLink && formData.bumpercarInvestment.btnLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      bumpercarInvestment: {
+                        ...(prev.bumpercarInvestment || {}),
+                        waMessage: newMsg,
+                        btnLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to talk to an ROI Expert..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
+              </div>
+
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Left Collage Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Left Collage Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Left Collage Graphic
@@ -9651,69 +10354,55 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Bumper Car CTA Banner Settings</h3>
 
-              {/* 3 Images Upload Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', background: '#F8FAFC', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                {/* 1. Background Image */}
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '8px' }}>1. Banner Background Image</label>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{
-                      background: '#38bdf8',
-                      color: '#ffffff',
-                      padding: '8px 14px',
-                      borderRadius: '10px',
-                      fontWeight: '800',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px'
-                    }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Background
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading banner background image...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.bumpercarCta || {}), bgUrl: res.url };
-                            setFormData(prev => ({ ...prev, bumpercarCta: updated }));
-                            await persistSectionToDatabase('bumpercarCta', updated);
-                            setStatusMsg('Background image uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                    <img
-                      src={getAdminValidImageUrl(formData.bumpercarCta?.bgUrl, amusementParkCtaBg)}
-                      alt="Background Preview"
-                      style={{ width: '100%', height: '70px', borderRadius: '8px', objectFit: 'cover', border: '1.5px solid #cbd5e1' }}
+              {/* Banner Background Image Upload */}
+              <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  1. Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.bumpercarCta?.bgUrl, amusementParkCtaBg)}
+                    alt="Banner Background Preview"
+                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
+                  <label style={{ background: '#38bdf8', color: '#ffffff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading banner background image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.bumpercarCta || {}), bgUrl: res.url };
+                          setFormData(prev => ({ ...prev, bumpercarCta: updated }));
+                          await persistSectionToDatabase('bumpercarCta', updated);
+                          setStatusMsg('Background image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
                     />
-                  </div>
+                  </label>
                 </div>
+              </div>
 
-                {/* 2. Left Tilted Image */}
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '8px' }}>2. Left Tilted Image Graphic</label>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{
-                      background: '#38bdf8',
-                      color: '#ffffff',
-                      padding: '8px 14px',
-                      borderRadius: '10px',
-                      fontWeight: '800',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px'
-                    }}>
+              {/* Tilted Side Cards Image Uploads */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    2. Left Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.bumpercarCta?.leftImgUrl, bumperCarCtaLeft)}
+                      alt="Left Card Preview"
+                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'contain', background: '#0f172a', border: '1px solid #cbd5e1' }}
+                    />
+                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                       <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
                       <input
                         type="file"
@@ -9735,30 +10424,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ display: 'none' }}
                       />
                     </label>
-                    <img
-                      src={getAdminValidImageUrl(formData.bumpercarCta?.leftImgUrl, bumperCarCtaLeft)}
-                      alt="Left Image Preview"
-                      style={{ width: '100%', height: '70px', borderRadius: '8px', objectFit: 'contain', background: '#0f172a', border: '1.5px solid #cbd5e1' }}
-                    />
                   </div>
                 </div>
 
-                {/* 3. Right Tilted Image */}
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '8px' }}>3. Right Tilted Image Graphic</label>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{
-                      background: '#38bdf8',
-                      color: '#ffffff',
-                      padding: '8px 14px',
-                      borderRadius: '10px',
-                      fontWeight: '800',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px'
-                    }}>
+                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    3. Right Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(formData.bumpercarCta?.rightImgUrl, bumperCarCtaRight)}
+                      alt="Right Card Preview"
+                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'contain', background: '#0f172a', border: '1px solid #cbd5e1' }}
+                    />
+                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                       <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
                       <input
                         type="file"
@@ -9780,11 +10459,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ display: 'none' }}
                       />
                     </label>
-                    <img
-                      src={getAdminValidImageUrl(formData.bumpercarCta?.rightImgUrl, bumperCarCtaRight)}
-                      alt="Right Image Preview"
-                      style={{ width: '100%', height: '70px', borderRadius: '8px', objectFit: 'contain', background: '#0f172a', border: '1.5px solid #cbd5e1' }}
-                    />
                   </div>
                 </div>
               </div>
@@ -9861,7 +10535,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>AR Games Hero Banner Settings</h3>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -10566,7 +11242,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         </div>
 
                         <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>Game Image</label>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
+                            Game Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                          </label>
                           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                             {game.img && <img src={game.img} alt="" style={{ width: '50px', height: '36px', objectFit: 'cover', borderRadius: '6px' }} />}
                             <input
@@ -10615,7 +11293,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>AR Games Supplier in India Section</h3>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Collage Graphic Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Collage Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -10692,11 +11372,50 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.arIntro?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('arIntro', 'buttonLink', e.target.value)}
+                    value={(formData.arIntro?.buttonLink && formData.arIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.arIntro?.waMessage || "Hello Winera International! I want to get a quote and details for AR Games setup. Please share details. [Ref: AR Games Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      setFormData(prev => ({ ...prev, arIntro: { ...(prev.arIntro || {}), buttonLink: updatedLink } }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
+              </div>
+
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Quote From Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.arIntro?.waMessage !== undefined && formData.arIntro.waMessage !== '') return formData.arIntro.waMessage;
+                    if (formData.arIntro?.buttonLink && formData.arIntro.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.arIntro.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to get a quote and details for AR Games setup. Please share details. [Ref: AR Games Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.arIntro?.buttonLink && formData.arIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      arIntro: {
+                        ...(prev.arIntro || {}),
+                        waMessage: newMsg,
+                        buttonLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to get a quote for AR Games..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -10716,7 +11435,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Interactive AR Attractions Section</h3>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Left Column Image Graphic</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Left Column Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -10803,11 +11524,50 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.arMatchedVenue?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('arMatchedVenue', 'buttonLink', e.target.value)}
+                    value={(formData.arMatchedVenue?.buttonLink && formData.arMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.arMatchedVenue?.waMessage || "Hello Winera International! I want to get a quote for Interactive AR Attractions setup for my venue. Please share details. [Ref: AR Games Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      setFormData(prev => ({ ...prev, arMatchedVenue: { ...(prev.arMatchedVenue || {}), buttonLink: updatedLink } }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
+              </div>
+
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Quote From Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.arMatchedVenue?.waMessage !== undefined && formData.arMatchedVenue.waMessage !== '') return formData.arMatchedVenue.waMessage;
+                    if (formData.arMatchedVenue?.buttonLink && formData.arMatchedVenue.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.arMatchedVenue.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to get a quote for Interactive AR Attractions setup for my venue. Please share details. [Ref: AR Games Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.arMatchedVenue?.buttonLink && formData.arMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      arMatchedVenue: {
+                        ...(prev.arMatchedVenue || {}),
+                        waMessage: newMsg,
+                        buttonLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to get a quote for AR Attractions..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -10827,7 +11587,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>AR Features & Highlights Settings</h3>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Tech Frame Background Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Tech Frame Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 1080 px (Section BG)</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -10888,7 +11650,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                 />
                 <div>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>Row 1 Image</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12px', color: '#0f172a', marginBottom: '6px' }}>
+                    Row 1 Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 550 × 230 px (2.4:1 Widescreen)</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
                     <label style={{
                       background: '#38bdf8',
@@ -10950,7 +11714,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                 />
                 <div>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>Row 2 Image</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12px', color: '#0f172a', marginBottom: '6px' }}>
+                    Row 2 Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 550 × 230 px (2.4:1 Widescreen)</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
                     <label style={{
                       background: '#38bdf8',
@@ -11012,7 +11778,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                 />
                 <div>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>Row 3 Image</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12px', color: '#0f172a', marginBottom: '6px' }}>
+                    Row 3 Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 550 × 230 px (2.4:1 Widescreen)</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
                     <label style={{
                       background: '#38bdf8',
@@ -11124,7 +11892,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Side Gamers Image Graphic</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Side Gamers Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -11372,7 +12142,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Background Image Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>CTA Banner Background Image</h4>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  CTA Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </h4>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   <img
                     src={getAdminValidImageUrl(
@@ -11431,7 +12203,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Side Images (Left & Right Tilted Cards) */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Left Tilted Image Graphic</h4>
+                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                    Left Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </h4>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <img
                       src={getAdminValidImageUrl(formData.arCta?.leftImgUrl, homeBlock1)}
@@ -11459,7 +12233,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
 
                 <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Right Tilted Image Graphic</h4>
+                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                    Right Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </h4>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <img
                       src={getAdminValidImageUrl(formData.arCta?.rightImgUrl, vrCtaRightImg)}
@@ -11549,7 +12325,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>VR Games Hero Banner Settings</h3>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -11686,7 +12464,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>VR Gaming Machine Supplier Section</h3>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Left Image Graphic</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Left Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -11763,11 +12543,50 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.vrIntro?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('vrIntro', 'buttonLink', e.target.value)}
+                    value={(formData.vrIntro?.buttonLink && formData.vrIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.vrIntro?.waMessage || "Hello Winera International! I want to get a quote and details for VR Gaming Machine setup. Please share details. [Ref: VR Games Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      setFormData(prev => ({ ...prev, vrIntro: { ...(prev.vrIntro || {}), buttonLink: updatedLink } }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
+              </div>
+
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Quote From Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.vrIntro?.waMessage !== undefined && formData.vrIntro.waMessage !== '') return formData.vrIntro.waMessage;
+                    if (formData.vrIntro?.buttonLink && formData.vrIntro.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.vrIntro.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to get a quote and details for VR Gaming Machine setup. Please share details. [Ref: VR Games Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.vrIntro?.buttonLink && formData.vrIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      vrIntro: {
+                        ...(prev.vrIntro || {}),
+                        waMessage: newMsg,
+                        buttonLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to get a quote..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -11787,7 +12606,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Commercial VR Machines Matched Venue Section</h3>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Image Graphic</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -11894,11 +12715,50 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.vrMatchedVenue?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('vrMatchedVenue', 'buttonLink', e.target.value)}
+                    value={(formData.vrMatchedVenue?.buttonLink && formData.vrMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.vrMatchedVenue?.waMessage || "Hello Winera International! I want to get a quote for Commercial VR Machines matched to my venue. Please share details. [Ref: VR Games Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      setFormData(prev => ({ ...prev, vrMatchedVenue: { ...(prev.vrMatchedVenue || {}), buttonLink: updatedLink } }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
+              </div>
+
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Quote From Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.vrMatchedVenue?.waMessage !== undefined && formData.vrMatchedVenue.waMessage !== '') return formData.vrMatchedVenue.waMessage;
+                    if (formData.vrMatchedVenue?.buttonLink && formData.vrMatchedVenue.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.vrMatchedVenue.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to get a quote for Commercial VR Machines matched to my venue. Please share details. [Ref: VR Games Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.vrMatchedVenue?.buttonLink && formData.vrMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      vrMatchedVenue: {
+                        ...(prev.vrMatchedVenue || {}),
+                        waMessage: newMsg,
+                        buttonLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to get a quote for VR Machines..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -11915,7 +12775,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* OUR VR GAMING MACHINE RANGE FORM */}
           {activeSection === 'vrRange' && (() => {
             const defaultVrRangeItems = [
-              { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR Wings Experience", img: "/src/assets/vr-range-theater.webp", status: "ONLINE", latency: "4ms", icon: "plane" },
+              { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR Wings Experience", img: vrBlock1, status: "ONLINE", latency: "4ms", icon: "plane" },
               { title: "VR Wings", subtitle: "Immersive Flight", category: "FLIGHT SIMULATION", name: "VR Wings Flight Arena", img: "/src/assets/about-3.webp", status: "ONLINE", latency: "2ms", icon: "users" },
               { title: "VR UFO 5 player", subtitle: "Multiplayer Ride", category: "THEATER SIMULATION", name: "VR UFO 5 Player Motion Pod", img: "/src/assets/arcade-hall.webp", status: "ONLINE", latency: "5ms", icon: "radio" },
               { title: "VR UFO 4 player", subtitle: "Multiplayer Ride", category: "ARCADE SIMULATION", name: "VR UFO 4 Player Battle Station", img: "/src/assets/about-4.webp", status: "ONLINE", latency: "3ms", icon: "gamepad" },
@@ -11925,9 +12785,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               { title: "VR Standing Arena", subtitle: "360 Platform", category: "ACTIVE SIMULATION", name: "VR Standing Flight Arena", img: "/src/assets/cta-arcade.webp", status: "ONLINE", latency: "4ms", icon: "target" }
             ];
 
-            const vrItemsList = (Array.isArray(formData.vrRange?.items) && formData.vrRange.items.length > 0)
+            const vrItemsListRaw = (Array.isArray(formData.vrRange?.items) && formData.vrRange.items.length > 0)
               ? formData.vrRange.items
               : defaultVrRangeItems;
+
+            const vrItemsList = vrItemsListRaw.map((item, idx) => {
+              if (idx === 0) {
+                return { ...item, img: vrBlock1 };
+              }
+              return item;
+            });
 
             return (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -12047,9 +12914,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         </div>
 
                         <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>Machine Image</label>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
+                            Machine Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1670 × 940 px (16:9 Widescreen)</span>
+                          </label>
                           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            {item.img && <img src={item.img} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />}
+                            <img src={getAdminValidImageUrl(item.img, idx === 0 ? vrBlock1 : about3)} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
                             <input
                               type="file"
                               accept="image/*"
@@ -12106,7 +12975,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Column Image</label>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Column Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <label style={{
                     background: '#38bdf8',
@@ -12215,7 +13086,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Section Background Image</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Section Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 600 px (2:1)</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                     <label style={{
                       background: '#38bdf8',
@@ -12259,7 +13132,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Right Graphic Image (VR Player)</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Right Graphic Image (VR Player) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                     <label style={{
                       background: '#38bdf8',
@@ -12348,11 +13223,50 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.vrEarn?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('vrEarn', 'buttonLink', e.target.value)}
+                    value={(formData.vrEarn?.buttonLink && formData.vrEarn.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.vrEarn?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for VR Gaming Zone setup & commercial ROI calculation. Please share details. [Ref: VR Games Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      setFormData(prev => ({ ...prev, vrEarn: { ...(prev.vrEarn || {}), buttonLink: updatedLink } }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
+              </div>
+
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Talk to an ROI Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.vrEarn?.waMessage !== undefined && formData.vrEarn.waMessage !== '') return formData.vrEarn.waMessage;
+                    if (formData.vrEarn?.buttonLink && formData.vrEarn.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.vrEarn.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to talk to an ROI Expert for VR Gaming Zone setup & commercial ROI calculation. Please share details. [Ref: VR Games Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.vrEarn?.buttonLink && formData.vrEarn.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      vrEarn: {
+                        ...(prev.vrEarn || {}),
+                        waMessage: newMsg,
+                        buttonLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to talk to an ROI Expert..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -12639,7 +13553,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Background Image Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>CTA Banner Background Image</h4>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  CTA Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </h4>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   <img
                     src={getAdminValidImageUrl(
@@ -12698,7 +13614,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Side Images (Left & Right Tilted Cards) */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Left Tilted Image Graphic</h4>
+                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                    Left Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </h4>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <img
                       src={getAdminValidImageUrl(formData.vrCta?.leftImgUrl, homeBlock1)}
@@ -12726,7 +13644,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
 
                 <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Right Tilted Image Graphic</h4>
+                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                    Right Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
+                  </h4>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <img
                       src={getAdminValidImageUrl(formData.vrCta?.rightImgUrl, vrCtaRightImg)}
@@ -12938,7 +13858,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Main Graphic Image
+                  Section Main Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   {formData.bowlingIntro?.mainImgUrl && (
@@ -12982,6 +13902,69 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+              </div>
+
+              {/* WhatsApp Action Button Controls for Bowling Intro */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    WhatsApp Button Text
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bowlingIntro?.buttonText || 'Get Quote From Expert'}
+                    onChange={(e) => handleFieldChange('bowlingIntro', 'buttonText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    WhatsApp Link URL
+                  </label>
+                  <input
+                    type="text"
+                    value={(formData.bowlingIntro?.buttonLink && formData.bowlingIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.bowlingIntro?.waMessage || "Hello Winera International! I want to get a quote and estimation for a Bowling Alley setup. Please share details. [Ref: Bowling Alley Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      handleFieldChange('bowlingIntro', 'buttonLink', updatedLink);
+                    }}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ marginTop: '4px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Quote From Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.bowlingIntro?.waMessage !== undefined && formData.bowlingIntro?.waMessage !== '') return formData.bowlingIntro.waMessage;
+                    if (formData.bowlingIntro?.buttonLink && formData.bowlingIntro.buttonLink.includes('text=')) {
+                      try {
+                        const match = formData.bowlingIntro.buttonLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to get a quote and estimation for a Bowling Alley setup. Please share details. [Ref: Bowling Alley Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.bowlingIntro?.buttonLink && formData.bowlingIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    const updated = {
+                      ...(formData.bowlingIntro || {}),
+                      waMessage: newMsg,
+                      buttonLink: updatedLink
+                    };
+                    setFormData(prev => ({ ...prev, bowlingIntro: updated }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to get a quote..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500', lineHeight: 1.5 }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -13033,7 +14016,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                  Right Side Graphic Image (Exploding Bowling Pins & Ball)
+                  Right Side Graphic Image (Exploding Bowling Pins & Ball) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 500 × 500 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   {formData.bowlingManufacturer?.mainImgUrl && (
@@ -13126,6 +14109,53 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
+              {/* Graphic Photo Upload */}
+              <div>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Free-Fall Pinsetter Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 520 × 460 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <div style={{ position: 'relative', width: '90px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <img src={getAdminValidImageUrl(formData.bowlingFreeFall?.mainImgUrl || formData.bowlingFreeFall?.imgUrl, maskGroupImg)} alt="Free Fall Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                  </div>
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Graphic Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading Free-Fall graphic image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.bowlingFreeFall || {}), mainImgUrl: res.url, imgUrl: res.url };
+                          setFormData(prev => ({ ...prev, bowlingFreeFall: updated }));
+                          await persistSectionToDatabase('bowlingFreeFall', updated);
+                          setStatusMsg('Free-Fall graphic image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {(formData.bowlingFreeFall?.mainImgUrl || formData.bowlingFreeFall?.imgUrl) && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.bowlingFreeFall || {}), mainImgUrl: '', imgUrl: '' };
+                        setFormData(prev => ({ ...prev, bowlingFreeFall: updated }));
+                        await persistSectionToDatabase('bowlingFreeFall', updated);
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Watch Video Button Label</label>
@@ -13137,7 +14167,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Watch Video URL Link</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Watch Video URL Link <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>🎬 Video Ratio: 16:9 Landscape (YouTube / MP4)</span>
+                  </label>
                   <input
                     type="text"
                     value={formData.bowlingFreeFall?.videoUrl || 'https://wa.me/919428989488'}
@@ -13265,6 +14297,53 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
+              {/* Graphic Photo Upload */}
+              <div>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  String Bowling Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 520 × 460 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <div style={{ position: 'relative', width: '90px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <img src={getAdminValidImageUrl(formData.bowlingString?.mainImgUrl || formData.bowlingString?.imgUrl, maskGroup01Img)} alt="String Bowling Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                  </div>
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Graphic Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading String Bowling graphic image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.bowlingString || {}), mainImgUrl: res.url, imgUrl: res.url };
+                          setFormData(prev => ({ ...prev, bowlingString: updated }));
+                          await persistSectionToDatabase('bowlingString', updated);
+                          setStatusMsg('String Bowling graphic image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {(formData.bowlingString?.mainImgUrl || formData.bowlingString?.imgUrl) && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.bowlingString || {}), mainImgUrl: '', imgUrl: '' };
+                        setFormData(prev => ({ ...prev, bowlingString: updated }));
+                        await persistSectionToDatabase('bowlingString', updated);
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Remove Custom Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Watch Video Button Label</label>
@@ -13276,7 +14355,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Watch Video URL Link</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Watch Video URL Link <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>🎬 Video Ratio: 16:9 Landscape (YouTube / MP4)</span>
+                  </label>
                   <input
                     type="text"
                     value={formData.bowlingString?.videoUrl || 'https://wa.me/919428989488'}
@@ -13395,16 +14476,53 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Action Button Target Link URL</label>
                   <input
                     type="text"
-                    value={formData.bowlingRoi?.videoUrl || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('bowlingRoi', 'videoUrl', e.target.value)}
+                    value={(formData.bowlingRoi?.videoUrl && formData.bowlingRoi.videoUrl.split('?')[0]) || 'https://wa.me/919428989488'}
+                    onChange={(e) => {
+                      const baseLink = e.target.value;
+                      const msg = formData.bowlingRoi?.waMessage || "Hello Winera International! I want to get custom Bowling ROI calculation & setup guidance. Please share details. [Ref: Bowling Alley Page]";
+                      const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                      handleFieldChange('bowlingRoi', 'videoUrl', updatedLink);
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
               </div>
 
+              <div style={{ marginTop: '14px' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Talk to an ROI Expert</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.bowlingRoi?.waMessage !== undefined && formData.bowlingRoi?.waMessage !== '') return formData.bowlingRoi.waMessage;
+                    if (formData.bowlingRoi?.videoUrl && formData.bowlingRoi.videoUrl.includes('text=')) {
+                      try {
+                        const match = formData.bowlingRoi.videoUrl.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return "Hello Winera International! I want to get custom Bowling ROI calculation & setup guidance. Please share details. [Ref: Bowling Alley Page]";
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.bowlingRoi?.videoUrl && formData.bowlingRoi.videoUrl.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    const updated = {
+                      ...(formData.bowlingRoi || {}),
+                      waMessage: newMsg,
+                      videoUrl: updatedLink
+                    };
+                    setFormData(prev => ({ ...prev, bowlingRoi: updated }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to get custom Bowling ROI..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500', lineHeight: 1.5 }}
+                />
+              </div>
+
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                  Right Column Image (High-Tech Bowling Alley Graphic)
+                  Right Column Image (High-Tech Bowling Alley Graphic) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   {formData.bowlingRoi?.mainImgUrl && (
@@ -13499,7 +14617,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                  Left Side Graphic Image (Blue Ball & Pins Graphic)
+                  Left Side Graphic Image (Blue Ball & Pins Graphic) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 500 × 500 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   {(formData.bowlingWhyUs?.mainImgUrl || formData.bowlingWhyUs?.graphicUrl) && (
@@ -13635,7 +14753,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Background Banner Image
+                  Background Banner Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
                   {formData.bowlingCta?.bgUrl && (
@@ -13836,7 +14954,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* Background Banner Image */}
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Background Banner Image
+                  Background Banner Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
                   <div style={{ position: 'relative', width: '180px', height: '65px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
@@ -13941,6 +15059,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Hero Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    value={formData.aboutHero?.bgUrl || ''}
+                    onChange={(e) => handleFieldChange('aboutHero', 'bgUrl', e.target.value)}
+                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-hero-bg.webp)"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                  />
+                  <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                    <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                    Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        if (e.target.files?.[0]) {
+                          const res = await uploadImageFile(e.target.files[0], admin.token);
+                          handleFieldChange('aboutHero', 'bgUrl', res.url);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+              </div>
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('aboutHero', formData.aboutHero || {})}
@@ -13979,44 +15126,46 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              {/* Photo Collage Uploads */}
+              {/* Single Welcome Section Photo Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>Photo Collage Uploads (4 Photos)</h4>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                  {[
-                    { label: 'Main Big Background Photo', field: 'mainImgUrl', defaultImg: welcomeWineraImg },
-                    { label: 'Top Right Small Photo', field: 'topRightImgUrl', defaultImg: welcomeWineraImg },
-                    { label: 'Middle Right Small Photo', field: 'midRightImgUrl', defaultImg: welcomeWineraImg },
-                    { label: 'Bottom Left Small Photo', field: 'bottomLeftImgUrl', defaultImg: welcomeWineraImg }
-                  ].map((imgItem, iIdx) => (
-                    <div key={iIdx} style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
-                      <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>{imgItem.label}</label>
-                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                        <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                          <Upload style={{ width: '13px', height: '13px' }} /> Upload Photo
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={async (e) => {
-                              const file = e.target.files[0];
-                              if (!file) return;
-                              setStatusMsg(`Uploading ${imgItem.label}...`);
-                              try {
-                                const res = await uploadImageFile(file, admin.token);
-                                const updated = { ...(formData.aboutWelcome || {}), [imgItem.field]: res.url };
-                                setFormData(prev => ({ ...prev, aboutWelcome: updated }));
-                                await persistSectionToDatabase('aboutWelcome', updated);
-                              } catch (err) {
-                                setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                              }
-                            }}
-                            style={{ display: 'none' }}
-                          />
-                        </label>
-                        <img src={formData.aboutWelcome?.[imgItem.field] || imgItem.defaultImg} alt="" style={{ width: '40px', height: '30px', borderRadius: '6px', objectFit: 'cover', border: '1.5px solid #38bdf8' }} />
-                      </div>
-                    </div>
-                  ))}
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Section Photo <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </h4>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    value={formData.aboutWelcome?.mainImgUrl || formData.aboutWelcome?.img || ''}
+                    onChange={(e) => {
+                      const updated = { ...(formData.aboutWelcome || {}), mainImgUrl: e.target.value, img: e.target.value };
+                      setFormData(prev => ({ ...prev, aboutWelcome: updated }));
+                    }}
+                    placeholder="Image URL or Asset Path (e.g. /src/assets/welcome-to-winera.webp)"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                  />
+                  <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                    <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                    Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        if (e.target.files?.[0]) {
+                          const res = await uploadImageFile(e.target.files[0], admin.token);
+                          const updated = { ...(formData.aboutWelcome || {}), mainImgUrl: res.url, img: res.url };
+                          setFormData(prev => ({ ...prev, aboutWelcome: updated }));
+                          await persistSectionToDatabase('aboutWelcome', updated);
+                        }
+                      }}
+                    />
+                  </label>
+                  {(formData.aboutWelcome?.mainImgUrl || formData.aboutWelcome?.img || welcomeWineraImg) && (
+                    <img
+                      src={getAdminValidImageUrl(formData.aboutWelcome?.mainImgUrl || formData.aboutWelcome?.img, welcomeWineraImg)}
+                      alt=""
+                      style={{ width: '60px', height: '45px', borderRadius: '8px', objectFit: 'contain', border: '1.5px solid #38bdf8' }}
+                    />
+                  )}
                 </div>
               </div>
 
@@ -14099,54 +15248,77 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Company Achievements Stats Section</h3>
 
               <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '18px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', marginBottom: '14px' }}>4 Achievement Counter Stats</h4>
                 {(() => {
                   const defaultStatsList = [
-                    { defaultNum: "14+", defaultTitle: "YEARS EXPERIENCE" },
-                    { defaultNum: "200+", defaultTitle: "Installation" },
-                    { defaultNum: "50+", defaultTitle: "Country Served" },
-                    { defaultNum: "98%", defaultTitle: "CUSTOMER SATISFACTION" }
+                    { num: "14+", title: "YEARS EXPERIENCE" },
+                    { num: "200+", title: "Project Completed" },
+                    { num: "98%", title: "Happy Clients" },
+                    { num: "50+", title: "Cities Covered" }
                   ];
 
-                  const rawStatsList = Array.isArray(formData.aboutStats?.items)
+                  const statsList = Array.isArray(formData.aboutStats?.items) && formData.aboutStats.items.length > 0
                     ? formData.aboutStats.items
-                    : (Array.isArray(formData.stats) ? formData.stats : []);
-
-                  const fullStatsList = defaultStatsList.map((def, idx) => {
-                    const current = rawStatsList[idx] || {};
-                    return {
-                      num: current.num || current.number || def.defaultNum,
-                      title: current.title || current.label || def.defaultTitle
-                    };
-                  });
+                    : (Array.isArray(formData.stats) && formData.stats.length > 0 ? formData.stats : defaultStatsList);
 
                   return (
                     <>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                        <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Achievement Counter Stats (Total {statsList.length})</h4>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newStats = [...statsList, { num: "100+", title: "New Stat Title" }];
+                            setFormData(prev => ({
+                              ...prev,
+                              aboutStats: { ...(prev.aboutStats || {}), items: newStats }
+                            }));
+                          }}
+                          style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                        >
+                          <Plus style={{ width: '14px', height: '14px' }} /> Add Stat Card
+                        </button>
+                      </div>
+
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                        {fullStatsList.map((currentStat, sIdx) => (
-                          <div key={sIdx} style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
-                            <div style={{ fontWeight: '800', fontSize: '12px', color: '#38bdf8', marginBottom: '8px' }}>Stat Box #{sIdx + 1}</div>
+                        {statsList.map((currentStat, sIdx) => (
+                          <div key={sIdx} style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontWeight: '800', fontSize: '12px', color: '#38bdf8' }}>Stat Box #{sIdx + 1}</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const newStats = statsList.filter((_, i) => i !== sIdx);
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    aboutStats: { ...(prev.aboutStats || {}), items: newStats }
+                                  }));
+                                }}
+                                style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '800', display: 'inline-flex', alignItems: 'center', gap: '3px' }}
+                              >
+                                <Trash2 style={{ width: '12px', height: '12px' }} /> Delete
+                              </button>
+                            </div>
                             <input
                               type="text"
                               placeholder="Stat Number (e.g. 14+)"
-                              value={currentStat.num}
+                              value={currentStat.num || currentStat.number || ''}
                               onChange={(e) => {
-                                const newStats = [...fullStatsList];
-                                newStats[sIdx] = { ...newStats[sIdx], num: e.target.value };
+                                const newStats = [...statsList];
+                                newStats[sIdx] = { ...newStats[sIdx], num: e.target.value, number: e.target.value };
                                 setFormData(prev => ({
                                   ...prev,
                                   aboutStats: { ...(prev.aboutStats || {}), items: newStats }
                                 }));
                               }}
-                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700', marginBottom: '8px' }}
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                             />
                             <input
                               type="text"
                               placeholder="Stat Title Label"
-                              value={currentStat.title}
+                              value={currentStat.title || currentStat.label || ''}
                               onChange={(e) => {
-                                const newStats = [...fullStatsList];
-                                newStats[sIdx] = { ...newStats[sIdx], title: e.target.value };
+                                const newStats = [...statsList];
+                                newStats[sIdx] = { ...newStats[sIdx], title: e.target.value, label: e.target.value };
                                 setFormData(prev => ({
                                   ...prev,
                                   aboutStats: { ...(prev.aboutStats || {}), items: newStats }
@@ -14161,7 +15333,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <div style={{ textAlign: 'right', marginTop: '20px' }}>
                         <button
                           onClick={() => {
-                            const updatedObj = { ...(formData.aboutStats || {}), items: fullStatsList };
+                            const updatedObj = { ...(formData.aboutStats || {}), items: statsList };
                             setFormData(prev => ({ ...prev, aboutStats: updatedObj }));
                             persistSectionToDatabase('aboutStats', updatedObj);
                           }}
@@ -14264,6 +15436,67 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   onChange={(e) => handleFieldChange('aboutWhyUsDetail', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
+              </div>
+              {/* Top Mindmap Background Image */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Top Mindmap Section Background Image URL (Top Half BG) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 1920 × 1080 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    value={formData.aboutWhyUsDetail?.bgUrl || ''}
+                    onChange={(e) => handleFieldChange('aboutWhyUsDetail', 'bgUrl', e.target.value)}
+                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-us-image-1.png)"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                  />
+                  <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                    <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                    Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        if (e.target.files?.[0]) {
+                          const res = await uploadImageFile(e.target.files[0], admin.token);
+                          handleFieldChange('aboutWhyUsDetail', 'bgUrl', res.url);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+              </div>
+
+              {/* Bottom 3-Card Section Background Image */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Bottom 3-Cards Section Background Image URL (Bottom Half BG) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 1920 × 1080 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    value={formData.aboutWhyUsDetail?.bottomBgUrl || ''}
+                    onChange={(e) => handleFieldChange('aboutWhyUsDetail', 'bottomBgUrl', e.target.value)}
+                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-us-image-2.png)"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                  />
+                  <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                    <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                    Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        if (e.target.files?.[0]) {
+                          const res = await uploadImageFile(e.target.files[0], admin.token);
+                          handleFieldChange('aboutWhyUsDetail', 'bottomBgUrl', res.url);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
               </div>
 
               {/* 6 Mindmap Pills */}
@@ -14432,7 +15665,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                 {/* Founder Image Upload */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Founder Photo (Saved on Server)</label>
+                  <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                    Founder Photo (Saved on Server) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                  </label>
                   <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                     <label style={{
                       background: '#38bdf8',
@@ -14730,7 +15965,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Projects Hero Banner</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Hero Banner Background Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Hero Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={heroImg} alt="Hero Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -15111,12 +16348,51 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link / WhatsApp URL</label>
                       <input
                         type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultProjectBlock.buttonLink}
-                        onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), buttonLink: e.target.value } }))}
+                        value={(currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultProjectBlock.buttonLink}
+                        onChange={(e) => {
+                          const baseLink = e.target.value;
+                          const msg = currentSec.waMessage || 'Hello Winera International! I want to get a project quote. Please share details. [Ref: Project Detail Page]';
+                          const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                          setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), buttonLink: updatedLink } }));
+                        }}
                         placeholder="https://wa.me/919428989488"
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get A Quote</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={(() => {
+                        if (currentSec.waMessage !== undefined && currentSec.waMessage !== '') return currentSec.waMessage;
+                        if (currentSec.buttonLink && currentSec.buttonLink.includes('text=')) {
+                          try {
+                            const match = currentSec.buttonLink.match(/text=([^&]+)/);
+                            if (match && match[1]) return decodeURIComponent(match[1]);
+                          } catch (err) {}
+                        }
+                        return 'Hello Winera International! I want to get a project quote. Please share details. [Ref: Project Detail Page]';
+                      })()}
+                      onChange={(e) => {
+                        const newMsg = e.target.value;
+                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                        const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                        setFormData(prev => ({
+                          ...prev,
+                          projectBlock: {
+                            ...(prev.projectBlock || defaultProjectBlock),
+                            waMessage: newMsg,
+                            buttonLink: updatedLink
+                          }
+                        }));
+                      }}
+                      placeholder="e.g. Hello Winera International! I want to get a project quote..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                    />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Card Image</label>
@@ -15169,7 +16445,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Basic Information Table Section</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Card Background Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Card Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 800 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={bgImg} alt="BG Preview" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -15332,7 +16610,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Section Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={clientImg} alt="Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -15419,7 +16699,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Section Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={solutionImg} alt="Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -15469,7 +16751,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Project Gallery Grid Section</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Background Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Section Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={bgImg} alt="BG Preview" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -15521,7 +16805,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   {/* Gallery Images List */}
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Gallery Images List ({galleryImgs.length} Images)</label>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>
+                        Gallery Images List ({galleryImgs.length} Images) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                      </label>
                       <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <Plus style={{ width: '16px', height: '16px' }} /> Upload New Image
                         <input
@@ -15582,7 +16868,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Project Video Showcase Section</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Video Thumbnail Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Video Thumbnail Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1280 × 720 px (16:9)</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={videoImg} alt="Thumbnail Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -15643,7 +16931,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Project Page CTA Banner Section</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Background Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      CTA Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={bgImg} alt="CTA Banner Preview" style={{ width: '180px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -15745,7 +17035,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 1920 × 450 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={getAdminValidImageUrl(currentSec.bgUrl, safetyBg)} alt="Hero Bg" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
                       <input
@@ -15831,7 +17123,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Left Graphic Collage Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Left Graphic Collage Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 640 × 520 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={getAdminValidImageUrl(currentSec.mainImgUrl, safetyStandardImg1)} alt="Intro Img" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
                       <input
@@ -16025,7 +17319,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Shield Graphic Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Section Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 1920 × 1080 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={getAdminValidImageUrl(currentSec.bgUrl, safetyStandardBg2)} alt="Section Bg" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), bgUrl: e.target.value } }))}
+                        placeholder="Section Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Right Shield Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 540 × 580 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={getAdminValidImageUrl(currentSec.imgUrl, safetyStandard2)} alt="Materials Img" style={{ width: '100px', height: '60px', objectFit: 'contain', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
                       <input
@@ -16156,7 +17483,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Machine Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Right Machine Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 560 × 520 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={getAdminValidImageUrl(currentSec.imgUrl, safetyStandardImg3)} alt="Electrical Img" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
                       <input
@@ -16389,7 +17718,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   
                   {/* Banner Background Image Upload */}
                   <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                    <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>CTA Banner Background Image</h4>
+                    <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                      CTA Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 1920 × 600 px</span>
+                    </h4>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                       <img
                         src={getAdminValidImageUrl(currentSec.bgUrl || currentSec.bg, hypergridWineraLastblock)}
@@ -16426,7 +17757,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   {/* Side Tilted Card Images */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                      <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Left Tilted Image Graphic</h4>
+                      <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                        Left Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 400 × 500 px (4:5)</span>
+                      </h4>
                       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                         <img
                           src={getAdminValidImageUrl(currentSec.leftImgUrl, rightTiltedCard)}
@@ -16454,7 +17787,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
 
                     <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                      <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>Right Tilted Image Graphic</h4>
+                      <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                        Right Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 400 × 500 px (4:5)</span>
+                      </h4>
                       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                         <img
                           src={getAdminValidImageUrl(currentSec.rightImgUrl, leftTiltedCard)}
@@ -16513,25 +17848,31 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Title Part 1 (Yellow)</label>
-                      <input
-                        type="text"
-                        value={currentSec.ctaTitle1 !== undefined ? currentSec.ctaTitle1 : defaultSafetyWhyMatters.ctaTitle1}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), ctaTitle1: e.target.value } }))}
-                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Title Part 2 (Cyan)</label>
-                      <input
-                        type="text"
-                        value={currentSec.ctaTitle2 !== undefined ? currentSec.ctaTitle2 : defaultSafetyWhyMatters.ctaTitle2}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), ctaTitle2: e.target.value } }))}
-                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
-                    </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Title (Gradient Shaded Text)</label>
+                    <input
+                      type="text"
+                      value={
+                        currentSec.ctaTitle !== undefined
+                          ? currentSec.ctaTitle
+                          : currentSec.ctaTitle1 || currentSec.ctaTitle2
+                          ? `${(currentSec.ctaTitle1 || '').trim()} ${(currentSec.ctaTitle2 || '').trim()}`.replace(/\s+/g, ' ')
+                          : "BUILD YOURS NOW"
+                      }
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setFormData(prev => ({
+                          ...prev,
+                          safetyWhyMatters: {
+                            ...(prev.safetyWhyMatters || defaultSafetyWhyMatters),
+                            ctaTitle: val,
+                            ctaTitle1: val,
+                            ctaTitle2: ''
+                          }
+                        }));
+                      }}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -16579,7 +17920,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Trampoline Park Hero Banner</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={heroImg} alt="Hero Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -16668,14 +18011,55 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                       <input
                         type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultTrampolineIntro.buttonLink}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), buttonLink: e.target.value } }))}
+                        value={(currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultTrampolineIntro.buttonLink}
+                        onChange={(e) => {
+                          const baseLink = e.target.value;
+                          const msg = currentSec.waMessage || "Hello Winera International! I want to get a quote and design details for a Trampoline Park setup. Please share details. [Ref: Trampoline Park Page]";
+                          const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                          setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), buttonLink: updatedLink } }));
+                        }}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
                   </div>
+
+                  <div style={{ marginTop: '4px' }}>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Quote From Expert</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={(() => {
+                        if (currentSec.waMessage !== undefined && currentSec.waMessage !== '') return currentSec.waMessage;
+                        if (currentSec.buttonLink && currentSec.buttonLink.includes('text=')) {
+                          try {
+                            const match = currentSec.buttonLink.match(/text=([^&]+)/);
+                            if (match && match[1]) return decodeURIComponent(match[1]);
+                          } catch (err) {}
+                        }
+                        return "Hello Winera International! I want to get a quote and design details for a Trampoline Park setup. Please share details. [Ref: Trampoline Park Page]";
+                      })()}
+                      onChange={(e) => {
+                        const newMsg = e.target.value;
+                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultTrampolineIntro.buttonLink;
+                        const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                        setFormData(prev => ({
+                          ...prev,
+                          trampolineIntro: {
+                            ...(prev.trampolineIntro || defaultTrampolineIntro),
+                            waMessage: newMsg,
+                            buttonLink: updatedLink
+                          }
+                        }));
+                      }}
+                      placeholder="e.g. Hello Winera International! I want to get a quote..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500', lineHeight: 1.5 }}
+                    />
+                  </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Graphic Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Main Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -16762,7 +18146,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Panda Mascot / Graphic Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Panda Mascot / Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 500 × 500 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={mascotImg} alt="Mascot Preview" style={{ width: '60px', height: '60px', objectFit: 'contain', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -16870,6 +18256,62 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       ))}
                     </div>
                   </div>
+
+                  {/* Card Background Image Upload */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Card Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 600 px (2:1)</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={getAdminValidImageUrl(currentSec.bgUrl || currentSec.imgUrl, trampolineImg3)} alt="Specs Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || currentSec.imgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), bgUrl: e.target.value, imgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), bgUrl: res.url, imgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* WhatsApp Action Button Controls for Specs */}
+                  {/* Action Button Controls for Specs */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : 'Download Our Brochure'}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link / Brochure URL</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : (currentSec.brochureLink || defaultTrampolineIntro.buttonLink)}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
                       onClick={() => persistSectionToDatabase('trampolineSpecs', formData.trampolineSpecs || defaultTrampolineSpecs)}
@@ -16891,8 +18333,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What is inside a Custom Trampoline Park (Zones Carousel)</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan highlight)</label>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>
+                      Park Attractions & Zones ({zonesList.length}) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Card Image: 600 × 400 px (3:2)</span>
+                    </label>
                     <input
                       type="text"
                       value={currentSec.title !== undefined ? currentSec.title : defaultTrampolineInside.title}
@@ -17065,14 +18509,55 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                       <input
                         type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultTrampolineRoi.buttonLink}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), buttonLink: e.target.value } }))}
+                        value={(currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultTrampolineRoi.buttonLink}
+                        onChange={(e) => {
+                          const baseLink = e.target.value;
+                          const msg = currentSec.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Trampoline Park setup & commercial ROI calculation. Please share details. [Ref: Trampoline Park Page]";
+                          const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                          setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), buttonLink: updatedLink } }));
+                        }}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
                   </div>
+
+                  <div style={{ marginTop: '4px' }}>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Talk to an ROI Expert</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={(() => {
+                        if (currentSec.waMessage !== undefined && currentSec.waMessage !== '') return currentSec.waMessage;
+                        if (currentSec.buttonLink && currentSec.buttonLink.includes('text=')) {
+                          try {
+                            const match = currentSec.buttonLink.match(/text=([^&]+)/);
+                            if (match && match[1]) return decodeURIComponent(match[1]);
+                          } catch (err) {}
+                        }
+                        return "Hello Winera International! I want to talk to an ROI Expert for Trampoline Park setup & commercial ROI calculation. Please share details. [Ref: Trampoline Park Page]";
+                      })()}
+                      onChange={(e) => {
+                        const newMsg = e.target.value;
+                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultTrampolineRoi.buttonLink;
+                        const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                        setFormData(prev => ({
+                          ...prev,
+                          trampolineRoi: {
+                            ...(prev.trampolineRoi || defaultTrampolineRoi),
+                            waMessage: newMsg,
+                            buttonLink: updatedLink
+                          }
+                        }));
+                      }}
+                      placeholder="e.g. Hello Winera International! I want to talk to an ROI Expert..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500', lineHeight: 1.5 }}
+                    />
+                  </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Right Image Graphic</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Right Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -17334,7 +18819,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                       <img src={bgImg} alt="CTA Preview" style={{ width: '100px', height: '55px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
@@ -17391,7 +18878,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image URL</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '10px' }}>
                       <input
                         type="text"
@@ -17515,7 +19004,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Right Image URL</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Main Right Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '10px' }}>
                       <input
                         type="text"
@@ -17897,7 +19388,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           />
                         </div>
                         <div>
-                          <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>Background Image URL</label>
+                          <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                            Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                          </label>
                           <div style={{ display: 'flex', gap: '6px' }}>
                             <input
                               type="text"
@@ -17985,7 +19478,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Left Image URL</label>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Section Left Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                      </label>
                       <div style={{ display: 'flex', gap: '10px' }}>
                         <input
                           type="text"
@@ -18109,7 +19604,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Inner Card Background Image URL</label>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Inner Card Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 1080 px (Section BG)</span>
+                      </label>
                       <div style={{ display: 'flex', gap: '10px' }}>
                         <input
                           type="text"
@@ -18328,7 +19825,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image URL</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '10px' }}>
                       <input
                         type="text"
@@ -18549,7 +20048,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Background Image URL</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '10px' }}>
                       <input
                         type="text"
@@ -18592,23 +20093,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Manage All Blog Posts ({postsList.length})</h3>
+                  <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Manage All Blog Posts ({postsList.length})</h3>
+                    <p style={{ fontSize: '13px', color: '#64748b', margin: '4px 0 0' }}>Click "Edit Post Content" on any blog to update its title, images, and full article text.</p>
+                  </div>
                   <button
                     onClick={() => {
+                      const newId = Date.now();
                       const newPost = {
-                        id: Date.now(),
-                        title: "Soft Play vs Trampoline Park: Which",
-                        subtitle: "Is Better for Your Space?",
-                        line1: "Soft play or trampoline park? Discover",
-                        line2: "the key differences in investment, space",
-                        line3: "requirements, safety, and revenue.....",
+                        id: newId,
+                        title: "New Game Zone Blog Post Title",
+                        subtitle: "Expert Insights & Strategy",
+                        category: "Game Zone Setup & ROI",
                         date: "Aug 22, 2026",
-                        image: "/src/assets/blog-images.webp"
+                        readTime: "4 min read",
+                        author: "Winera Experts",
+                        image: "/src/assets/blog-images.webp",
+                        line1: "Discover the latest trends in game zone setup,",
+                        line2: "investment returns, equipment choice,",
+                        line3: "and operational profitability.....",
+                        content: "Planning a new game zone requires critical decisions regarding layout design, equipment mix, safety standards, and overall investment strategy.",
+                        takeawayText: "Combining soft play and trampoline zones increases footfall and family dwell time.",
+                        section1Title: "1. Space & Layout Planning",
+                        section1Text: "Commercial game zones require clear ceiling heights and optimal circulation pathways for parents and children.",
+                        section2Title: "2. Equipment Certification",
+                        section2Text: "All equipment supplied by Winera meets international safety standards including EN 1176 and ASTM F2970."
                       };
-                      setFormData(prev => ({
-                        ...prev,
-                        blogPosts: [...(Array.isArray(prev.blogPosts) ? prev.blogPosts : defaultBlogPosts), newPost]
-                      }));
+                      const updated = [...postsList, newPost];
+                      setFormData(prev => ({ ...prev, blogPosts: updated }));
+                      setExpandedBlogIdx(updated.length - 1);
                     }}
                     style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#0284c7', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                   >
@@ -18617,141 +20130,371 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </button>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                  {postsList.map((post, idx) => (
-                    <div key={post.id || idx} style={{ background: '#f8fafc', borderRadius: '16px', padding: '20px', border: '1px solid #cbd5e1', position: 'relative' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                        <span style={{ fontSize: '14px', fontWeight: '900', color: '#0ea5e9' }}>Blog #{idx + 1}</span>
-                        <button
-                          onClick={() => {
-                            const updated = postsList.filter((_, i) => i !== idx);
-                            setFormData(prev => ({ ...prev, blogPosts: updated }));
-                          }}
-                          style={{ background: '#fee2e2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontSize: '12px', fontWeight: '800', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                        >
-                          <Trash2 style={{ width: '14px', height: '14px' }} />
-                          Delete Post
-                        </button>
-                      </div>
-
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Title Line 1</label>
-                          <input
-                            type="text"
-                            value={post.title || ''}
-                            onChange={(e) => {
-                              const updated = [...postsList];
-                              updated[idx] = { ...updated[idx], title: e.target.value };
-                              setFormData(prev => ({ ...prev, blogPosts: updated }));
-                            }}
-                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                          />
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Title Subtitle Line 2</label>
-                          <input
-                            type="text"
-                            value={post.subtitle || ''}
-                            onChange={(e) => {
-                              const updated = [...postsList];
-                              updated[idx] = { ...updated[idx], subtitle: e.target.value };
-                              setFormData(prev => ({ ...prev, blogPosts: updated }));
-                            }}
-                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                          />
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Excerpt Line 1</label>
-                          <input
-                            type="text"
-                            value={post.line1 || post.excerpt || ''}
-                            onChange={(e) => {
-                              const updated = [...postsList];
-                              updated[idx] = { ...updated[idx], line1: e.target.value };
-                              setFormData(prev => ({ ...prev, blogPosts: updated }));
-                            }}
-                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                          />
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Excerpt Line 2</label>
-                          <input
-                            type="text"
-                            value={post.line2 || ''}
-                            onChange={(e) => {
-                              const updated = [...postsList];
-                              updated[idx] = { ...updated[idx], line2: e.target.value };
-                              setFormData(prev => ({ ...prev, blogPosts: updated }));
-                            }}
-                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                          />
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Excerpt Line 3</label>
-                          <input
-                            type="text"
-                            value={post.line3 || ''}
-                            onChange={(e) => {
-                              const updated = [...postsList];
-                              updated[idx] = { ...updated[idx], line3: e.target.value };
-                              setFormData(prev => ({ ...prev, blogPosts: updated }));
-                            }}
-                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                          />
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Post Date</label>
-                          <input
-                            type="text"
-                            value={post.date || ''}
-                            onChange={(e) => {
-                              const updated = [...postsList];
-                              updated[idx] = { ...updated[idx], date: e.target.value };
-                              setFormData(prev => ({ ...prev, blogPosts: updated }));
-                            }}
-                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                          />
-                        </div>
-                      </div>
-
-                      <div style={{ marginTop: '12px' }}>
-                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Blog Card Image URL</label>
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                          <input
-                            type="text"
-                            value={post.image || ''}
-                            onChange={(e) => {
-                              const updated = [...postsList];
-                              updated[idx] = { ...updated[idx], image: e.target.value };
-                              setFormData(prev => ({ ...prev, blogPosts: updated }));
-                            }}
-                            style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                          />
-                          <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '8px 16px', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '12px' }}>
-                            <Upload style={{ width: '14px', height: '14px', marginRight: '6px' }} />
-                            Upload
-                            <input
-                              type="file"
-                              accept="image/*"
-                              style={{ display: 'none' }}
-                              onChange={async (e) => {
-                                if (e.target.files?.[0]) {
-                                  const res = await uploadImageFile(e.target.files[0], admin.token);
-                                  const updated = [...postsList];
-                                  updated[idx] = { ...updated[idx], image: res.url };
-                                  setFormData(prev => ({ ...prev, blogPosts: updated }));
-                                }
-                              }}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {postsList.map((post, idx) => {
+                    const isEditing = expandedBlogIdx === idx;
+                    return (
+                      <div key={post.id || idx} style={{ background: '#f8fafc', borderRadius: '18px', padding: '20px', border: isEditing ? '2px solid #0ea5e9' : '1px solid #cbd5e1', transition: 'all 0.25s ease' }}>
+                        {/* Top Card Preview Row */}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, minWidth: '280px' }}>
+                            <img
+                              src={getValidImageUrl(post.image || post.imgUrl, blogCardImg)}
+                              alt=""
+                              style={{ width: '70px', height: '50px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #cbd5e1', flexShrink: 0 }}
                             />
-                          </label>
+                            <div>
+                              <div style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', lineHeight: 1.3 }}>
+                                {post.title} {post.subtitle ? `– ${post.subtitle}` : ''}
+                              </div>
+                              <div style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', marginTop: '4px' }}>
+                                📅 {post.date || 'Aug 22, 2026'} &nbsp;•&nbsp; 🏷️ {post.category || 'Game Zone Setup & ROI'} &nbsp;•&nbsp; ⏱️ {post.readTime || '4 min read'}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <button
+                              type="button"
+                              onClick={() => setExpandedBlogIdx(isEditing ? null : idx)}
+                              style={{
+                                background: isEditing ? '#e0f2fe' : '#0284c7',
+                                color: isEditing ? '#0284c7' : '#ffffff',
+                                border: isEditing ? '1.5px solid #0284c7' : 'none',
+                                padding: '8px 18px',
+                                borderRadius: '10px',
+                                fontWeight: '800',
+                                fontSize: '12.5px',
+                                cursor: 'pointer',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '6px'
+                              }}
+                            >
+                              <Edit style={{ width: '14px', height: '14px' }} />
+                              {isEditing ? 'Close Editor' : 'Edit Post Content'}
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = postsList.filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                if (expandedBlogIdx === idx) setExpandedBlogIdx(null);
+                              }}
+                              style={{ background: '#fee2e2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', cursor: 'pointer', fontSize: '12.5px', fontWeight: '800', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px' }} />
+                              Delete
+                            </button>
+                          </div>
                         </div>
+
+                        {/* Expanded Full Editor Form */}
+                        {isEditing && (
+                          <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                            <div style={{ fontSize: '13px', fontWeight: '900', color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                              📝 Edit Blog Details, Front Photo & Article Text
+                            </div>
+
+                            {/* Main Title & Subtitle */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Blog Title (Line 1)</label>
+                                <input
+                                  type="text"
+                                  value={post.title || ''}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], title: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Blog Subtitle (Line 2)</label>
+                                <input
+                                  type="text"
+                                  value={post.subtitle || ''}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], subtitle: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                            </div>
+
+                            {/* Meta Bar: Category, Date, Read Time, Author */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '12px' }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Category Badge</label>
+                                <input
+                                  type="text"
+                                  value={post.category || 'Game Zone Setup & ROI'}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], category: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Post Date</label>
+                                <input
+                                  type="text"
+                                  value={post.date || ''}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], date: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Read Time</label>
+                                <input
+                                  type="text"
+                                  value={post.readTime || '4 min read'}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], readTime: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Author Name</label>
+                                <input
+                                  type="text"
+                                  value={post.author || 'Winera Experts'}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], author: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                            </div>
+
+                            {/* Front Photo Upload */}
+                            <div>
+                              <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
+                                Blog Front Featured Photo Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                              </label>
+                              <div style={{ display: 'flex', gap: '10px' }}>
+                                <input
+                                  type="text"
+                                  value={post.image || ''}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], image: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                                <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '8px 16px', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '12px' }}>
+                                  <Upload style={{ width: '14px', height: '14px', marginRight: '6px' }} />
+                                  Upload Photo
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    style={{ display: 'none' }}
+                                    onChange={async (e) => {
+                                      if (e.target.files?.[0]) {
+                                        const res = await uploadImageFile(e.target.files[0], admin.token);
+                                        const updated = [...postsList];
+                                        updated[idx] = { ...updated[idx], image: res.url };
+                                        setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                      }
+                                    }}
+                                  />
+                                </label>
+                              </div>
+                            </div>
+
+                            {/* Excerpt Lines for Listing Card */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Card Excerpt Line 1</label>
+                                <input
+                                  type="text"
+                                  value={post.line1 || post.excerpt || ''}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], line1: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Card Excerpt Line 2</label>
+                                <input
+                                  type="text"
+                                  value={post.line2 || ''}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], line2: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Card Excerpt Line 3</label>
+                                <input
+                                  type="text"
+                                  value={post.line3 || ''}
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], line3: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                            </div>
+
+                            {/* Full Article Content Textarea */}
+                            <div>
+                              <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Full Article Main Paragraph Content (Detail Page)</label>
+                              <textarea
+                                rows={4}
+                                value={post.content || post.description || 'Planning a new game zone or family entertainment center requires critical decisions regarding layout design, equipment mix, safety standards, and overall investment strategy. Understanding the distinct operational and financial characteristics of each attraction model is vital to maximizing your long-term return on investment (ROI).'}
+                                placeholder="Enter full article main paragraph text..."
+                                onChange={(e) => {
+                                  const updated = [...postsList];
+                                  updated[idx] = { ...updated[idx], content: e.target.value, description: e.target.value };
+                                  setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                }}
+                                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                              />
+                            </div>
+
+                            {/* Key Takeaway Highlight Text */}
+                            <div>
+                              <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0ea5e9', marginBottom: '6px' }}>💡 Key Takeaway Highlight Text</label>
+                              <input
+                                type="text"
+                                value={post.takeawayText || 'Soft play delivers higher throughput per square meter for toddlers and kids aged 2–8, while Trampoline Parks attract older kids, teens, and young adults with higher per-ticket pricing.'}
+                                placeholder="Soft play delivers higher throughput for toddlers while Trampoline Parks attract teens..."
+                                onChange={(e) => {
+                                  const updated = [...postsList];
+                                  updated[idx] = { ...updated[idx], takeawayText: e.target.value };
+                                  setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                }}
+                                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #38bdf8', fontSize: '13.5px', background: '#f0f9ff' }}
+                              />
+                            </div>
+
+                            {/* Section 1 & Section 2 Headings & Text */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px' }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 1 Heading</label>
+                                <input
+                                  type="text"
+                                  value={post.section1Title || 'Space Requirements & Architectural Layout'}
+                                  placeholder="Space Requirements & Layout"
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], section1Title: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 1 Content Text</label>
+                                <input
+                                  type="text"
+                                  value={post.section1Text || 'Soft Play zones typically require a minimum ceiling height of 3.5 to 4.5 meters for multi-level tubular structures, whereas Trampoline Parks demand clear ceiling heights of 5.5 to 6.5 meters to accommodate high jumps, foam pits, and airbag stunt zones safely.'}
+                                  placeholder="Enter details about space requirements..."
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], section1Text: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                            </div>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px' }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 2 Heading</label>
+                                <input
+                                  type="text"
+                                  value={post.section2Title || '2. Safety Standards & Commercial Durability'}
+                                  placeholder="Safety Standards & Certification"
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], section2Title: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 2 Content Text</label>
+                                <input
+                                  type="text"
+                                  value={post.section2Text || 'All commercial equipment supplied by Winera International meets rigorous global standards including EN 1176 / ASTM F1918 for Soft Play and ASTM F2970 for Trampoline Parks. Flame-retardant PVC padding, high-density impact foams, and non-toxic materials ensure long-lasting commercial durability.'}
+                                  placeholder="Enter details about safety standards..."
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], section2Text: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                            </div>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px' }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 3 Heading</label>
+                                <input
+                                  type="text"
+                                  value={post.section3Title || '3. Revenue Projection & Operating Costs'}
+                                  placeholder="Revenue Projection & Operating Costs"
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], section3Title: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 3 Content Text</label>
+                                <input
+                                  type="text"
+                                  value={post.section3Text || 'Integrating a balanced game zone mix — combining Soft Play, Trampoline Courts, Arcade Games, and VR simulators — creates a comprehensive family destination that drives repeat visits and higher average spend per customer.'}
+                                  placeholder="Enter details about revenue projections..."
+                                  onChange={(e) => {
+                                    const updated = [...postsList];
+                                    updated[idx] = { ...updated[idx], section3Text: e.target.value };
+                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                  }}
+                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
-                <div style={{ textAlign: 'right', marginTop: '24px' }}>
+                <div style={{ textAlign: 'right', marginTop: '28px' }}>
                   <button
                     onClick={() => persistSectionToDatabase('blogPosts', formData.blogPosts || defaultBlogPosts)}
                     style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
@@ -18765,8 +20508,112 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
 
 
+          {/* DYNAMIC FOOTER DETAILS MANAGEMENT FORM */}
+          {activeSection === 'footer' && (() => {
+            const currentSec = formData.footer || defaultFooterData;
+
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Footer Details Settings</h3>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  {/* 1. Footer Logo & Tagline */}
+                  <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                      Footer Logo Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 240 × 60 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '14px' }}>
+                      <img src={getAdminValidImageUrl(currentSec.logoUrl, wineraLogo)} alt="Footer Logo" style={{ height: '48px', maxWidth: '180px', objectFit: 'contain', background: '#fff', padding: '4px 10px', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
+                      <input
+                        type="text"
+                        value={currentSec.logoUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), logoUrl: e.target.value } }))}
+                        placeholder="Footer Logo Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), logoUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Footer About Tagline Paragraph</label>
+                      <textarea
+                        rows={3}
+                        value={currentSec.tagline !== undefined ? currentSec.tagline : defaultFooterData.tagline}
+                        onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), tagline: e.target.value } }))}
+                        style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* 2. Contact Info & Copyright */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Phone Number 1</label>
+                      <input
+                        type="text"
+                        value={currentSec.phone1 !== undefined ? currentSec.phone1 : defaultFooterData.phone1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), phone1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Phone Number 2</label>
+                      <input
+                        type="text"
+                        value={currentSec.phone2 !== undefined ? currentSec.phone2 : defaultFooterData.phone2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), phone2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Email Address</label>
+                      <input
+                        type="text"
+                        value={currentSec.email !== undefined ? currentSec.email : defaultFooterData.email}
+                        onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), email: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Copyright Notice Text</label>
+                    <input
+                      type="text"
+                      value={currentSec.copyright !== undefined ? currentSec.copyright : defaultFooterData.copyright}
+                      onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), copyright: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('footer', formData.footer || defaultFooterData)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Footer Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* FALLBACK FOR OTHER UNCHECKED SECTIONS */}
-          {!activeSection.endsWith('Related') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo'].includes(activeSection) && (
+          {!activeSection.endsWith('Related') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo', 'footer'].includes(activeSection) && (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               <FileText style={{ width: '48px', height: '48px', color: '#38bdf8', marginBottom: '14px' }} />
               <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -18888,7 +20735,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Upload Logo File (Saved on Server)</label>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
+                      Upload Logo File (Saved on Server) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 300 × 150 px (Transparent PNG)</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                       <label style={{
                         background: '#38bdf8',
@@ -18942,7 +20791,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Upload Venue Image File</label>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
+                      Upload Venue Image File <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 800 × 600 px</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                       <label style={{
                         background: '#38bdf8',
@@ -19013,7 +20864,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Product Category Tab</label>
+                      <select
+                        value={modalItemData.category || 'Arcade Games'}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, category: e.target.value, specsCategory: e.target.value }))}
+                        style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '700', background: '#ffffff', color: '#0284c7' }}
+                      >
+                        {((Array.isArray(formData.arcadeCategories?.categoriesList) && formData.arcadeCategories.categoriesList.length > 0)
+                          ? formData.arcadeCategories.categoriesList
+                          : ["Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride", "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"]
+                        ).map((catName, cIdx) => (
+                          <option key={cIdx} value={catName}>{catName}</option>
+                        ))}
+                      </select>
+                    </div>
                     <div>
                       <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Badge Tag</label>
                       <input
@@ -19149,7 +21015,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Main Product Showcase Photo</label>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
+                      Main Product Showcase Photo <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 600 × 600 px (Square 1:1)</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                       <label style={{ background: '#0284c7', color: '#fff', padding: '10px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
                         <Upload style={{ width: '14px', height: '14px' }} /> Upload Main Photo
@@ -19188,7 +21056,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <div key={num} style={{ background: '#f8fafc', padding: '10px 12px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                             <label style={{ fontSize: '11.5px', fontWeight: '800', color: '#0f172a' }}>
-                              Thumbnail {num} Photo
+                              Thumbnail {num} Photo <span style={{ fontSize: '10px', color: '#0284c7', background: '#e0f2fe', padding: '1px 5px', borderRadius: '4px', fontWeight: '700', marginLeft: '4px' }}>📐 300 × 300 px</span>
                             </label>
                             {thumbVal && (
                               <button
@@ -19239,7 +21107,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                     <div>
-                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Watch Video URL</label>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>
+                        Watch Video URL <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '1px 5px', borderRadius: '4px', fontWeight: '700', marginLeft: '4px' }}>🎬 Video Ratio: 16:9 Landscape</span>
+                      </label>
                       <input
                         type="text"
                         value={modalItemData.videoUrl || ''}
@@ -19249,15 +21119,63 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Get a Quote WhatsApp Link</label>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Base WhatsApp Link / URL</label>
                       <input
                         type="text"
-                        value={modalItemData.quoteUrl || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, quoteUrl: e.target.value }))}
-                        placeholder="https://wa.me/919428989488..."
+                        value={(modalItemData.quoteUrl && modalItemData.quoteUrl.split('?')[0]) || 'https://wa.me/919428989488'}
+                        onChange={(e) => {
+                          const newBase = e.target.value;
+                          setModalItemData(prev => {
+                            const msg = prev.waMessage || (() => {
+                              if (prev.quoteUrl && prev.quoteUrl.includes('text=')) {
+                                try {
+                                  const match = prev.quoteUrl.match(/text=([^&]+)/);
+                                  if (match && match[1]) return decodeURIComponent(match[1]);
+                                } catch (err) {}
+                              }
+                              return prev.name ? `Hello Winera International! I want to get a quote for ${prev.name}. Please share price and details.` : '';
+                            })();
+                            const updatedUrl = msg ? `${newBase.split('?')[0]}?text=${encodeURIComponent(msg)}` : newBase;
+                            return { ...prev, quoteUrl: updatedUrl };
+                          });
+                        }}
+                        placeholder="https://wa.me/919428989488"
                         style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
                     </div>
+                  </div>
+
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
+                      WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '1px 5px', borderRadius: '4px', fontWeight: '700', marginLeft: '4px' }}>💬 Sent when user clicks Get a Quote</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={(() => {
+                        if (modalItemData.waMessage !== undefined && modalItemData.waMessage !== '') return modalItemData.waMessage;
+                        if (modalItemData.quoteUrl && modalItemData.quoteUrl.includes('text=')) {
+                          try {
+                            const match = modalItemData.quoteUrl.match(/text=([^&]+)/);
+                            if (match && match[1]) return decodeURIComponent(match[1]);
+                          } catch (err) {}
+                        }
+                        return modalItemData.name ? `Hello Winera International! I want to get a quote for ${modalItemData.name}. Please share price and details.` : '';
+                      })()}
+                      onChange={(e) => {
+                        const newMsg = e.target.value;
+                        setModalItemData(prev => {
+                          const base = (prev.quoteUrl && prev.quoteUrl.split('?')[0]) || 'https://wa.me/919428989488';
+                          const updatedUrl = newMsg ? `${base}?text=${encodeURIComponent(newMsg)}` : base;
+                          return {
+                            ...prev,
+                            waMessage: newMsg,
+                            quoteUrl: updatedUrl
+                          };
+                        });
+                      }}
+                      placeholder={`e.g. Hello Winera International! I want to get a quote for ${modalItemData.name || 'this machine'}. Please share price and details.`}
+                      style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '500', lineHeight: 1.5 }}
+                    />
                   </div>
 
                   <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', marginTop: '10px', marginBottom: '8px' }}>
@@ -19366,7 +21284,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Upload Project Photo</label>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
+                        Upload Project Photo <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                      </label>
                       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                         <label style={{
                           background: '#38bdf8',
@@ -19462,6 +21382,37 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         </div>
                       </div>
 
+                      {/* Basic Information Card Block */}
+                      <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>Basic Information Card Section</h5>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>
+                            Card Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 800 px</span>
+                          </label>
+                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <label style={{ background: '#0284c7', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <Upload style={{ width: '14px', height: '14px' }} /> Upload BG Image
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleModalFileUpload(e, 'basicInfoBg')}
+                                style={{ display: 'none' }}
+                              />
+                            </label>
+                            <input
+                              type="text"
+                              value={modalItemData.basicInfoBg || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, basicInfoBg: e.target.value }))}
+                              placeholder="Image URL or Asset Path (e.g. /src/assets/project-images-bg.png)"
+                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                            />
+                            {modalItemData.basicInfoBg && (
+                              <img src={modalItemData.basicInfoBg} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
                       {/* What Client Wanted Block */}
                       <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>What The Client Wanted Section</h5>
@@ -19486,7 +21437,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           />
                         </div>
                         <div>
-                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Section Photo (What Client Wanted)</label>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>
+                            Section Photo (What Client Wanted) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                          </label>
                           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                             <label style={{ background: '#0284c7', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                               <Upload style={{ width: '14px', height: '14px' }} /> Upload Photo
@@ -19535,7 +21488,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           />
                         </div>
                         <div>
-                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Section Photo (What Solution We Provide)</label>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>
+                            Section Photo (What Solution We Provide) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                          </label>
                           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                             <label style={{ background: '#0284c7', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                               <Upload style={{ width: '14px', height: '14px' }} /> Upload Photo
@@ -19619,7 +21574,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               {galleryList.map((imgUrl, idx) => (
                                 <div key={idx} style={{ background: '#f8fafc', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '8px', minWidth: 0 }}>
                                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <label style={{ fontSize: '11.5px', fontWeight: '800', color: '#0f172a' }}>Gallery Photo #{idx + 1}</label>
+                                    <label style={{ fontSize: '11.5px', fontWeight: '800', color: '#0f172a' }}>
+                                      Gallery Photo #{idx + 1} <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '1px 6px', borderRadius: '5px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended Size: 600 × 500 px</span>
+                                    </label>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                       {imgUrl ? (
                                         <img src={imgUrl} alt="" style={{ width: '45px', height: '30px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
@@ -19750,7 +21707,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>🎥 Project Video Showcase</h5>
                         <div>
-                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Video Cover Image</label>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>
+                            Video Cover Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1280 × 720 px (16:9)</span>
+                          </label>
                           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                             <label style={{ background: '#0284c7', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                               <Upload style={{ width: '14px', height: '14px' }} /> Upload Cover
@@ -19900,7 +21859,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </div>
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>YouTube Link</label>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
+                        YouTube Link <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '1px 5px', borderRadius: '4px', fontWeight: '700', marginLeft: '4px' }}>🎬 Video Ratio: 16:9</span>
+                      </label>
                       <input
                         type="text"
                         value={modalItemData.youtubeVideoUrl || ''}
@@ -19912,7 +21873,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Upload Founder Photo</label>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
+                      Upload Founder Photo <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 300 × 300 px (Square 1:1)</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                       <label style={{
                         background: '#38bdf8',

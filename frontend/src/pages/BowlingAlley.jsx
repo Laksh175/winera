@@ -31,7 +31,7 @@ import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
 import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.png';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
-import about1 from '../assets/about-1.webp';
+import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
 import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
@@ -317,28 +317,41 @@ export default function BowlingAlley({ siteData }) {
                 transform: 'rotate(-1.8deg)',
                 zIndex: 1
               }} />
-              <a
-                href={siteData?.bowlingIntro?.buttonLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Get Quote From Expert on WhatsApp"
-                style={{
-                  position: 'relative',
-                  zIndex: 2,
-                  background: '#38bdf8',
-                  color: '#ffffff',
-                  fontSize: '14.5px',
-                  fontWeight: '800',
-                  padding: '12px 28px',
-                  borderRadius: '10px',
-                  border: '1.5px solid #ffcd00',
-                  boxShadow: 'none',
-                  display: 'inline-block',
-                  textDecoration: 'none'
-                }}
-              >
-                {siteData?.bowlingIntro?.buttonText || "Get Quote From Expert"}
-              </a>
+              {(() => {
+                const baseLink = siteData?.bowlingIntro?.buttonLink || "https://wa.me/919428989488";
+                const defaultMsg = siteData?.bowlingIntro?.waMessage || "Hello Winera International! I want to get a quote and estimation for a Bowling Alley setup. Please share details. [Ref: Bowling Alley Page]";
+                
+                let hrefLink = baseLink;
+                if (!baseLink.includes('text=')) {
+                  const separator = baseLink.includes('?') ? '&' : '?';
+                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+
+                return (
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Get Quote From Expert on WhatsApp"
+                    style={{
+                      position: 'relative',
+                      zIndex: 2,
+                      background: '#38bdf8',
+                      color: '#ffffff',
+                      fontSize: '14.5px',
+                      fontWeight: '800',
+                      padding: '12px 28px',
+                      borderRadius: '10px',
+                      border: '1.5px solid #ffcd00',
+                      boxShadow: 'none',
+                      display: 'inline-block',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    {siteData?.bowlingIntro?.buttonText || "Get Quote From Expert"}
+                  </a>
+                );
+              })()}
             </div>
           </div>
 
@@ -538,7 +551,7 @@ export default function BowlingAlley({ siteData }) {
             <div className="winera-bowling-types-pills-col" style={{ position: 'relative', width: '100%', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {/* Main Oval Free-Fall Pins Image: Mask-group.webp */}
               <img
-                src={maskGroupImg}
+                src={siteData?.bowlingFreeFall?.mainImgUrl || siteData?.bowlingFreeFall?.imgUrl || maskGroupImg}
                 alt="Free Fall Bowling Pinsetter"
                 loading="lazy"
                 decoding="async"
@@ -719,7 +732,7 @@ export default function BowlingAlley({ siteData }) {
             <div className="winera-bowling-types-pills-col" style={{ position: 'relative', width: '100%', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {/* Main Friends Bowling Photo: Mask-group-01.webp */}
               <img
-                src={maskGroup01Img}
+                src={siteData?.bowlingString?.mainImgUrl || siteData?.bowlingString?.imgUrl || maskGroup01Img}
                 alt="String Bowling Friends"
                 style={{
                   position: 'absolute',
@@ -1019,45 +1032,58 @@ export default function BowlingAlley({ siteData }) {
                   zIndex: 1
                 }} />
                 {/* Main White Card Button */}
-                <a
-                  href={siteData?.bowlingRoi?.videoUrl || "https://wa.me/919428989488"}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Talk to an ROI Expert on WhatsApp"
-                  style={{
-                    position: 'relative',
-                    zIndex: 2,
-                    background: '#ffffff',
-                    color: '#0f172a',
-                    fontSize: '15px',
-                    fontWeight: '800',
-                    padding: '10px 24px 10px 14px',
-                    borderRadius: '12px',
-                    border: '1.5px solid #38bdf8',
-                    boxShadow: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    textDecoration: 'none'
-                  }}
-                >
-                  {/* Green Circular WhatsApp Icon Badge */}
-                  <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    background: '#25D366',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 448 512" fill="white">
-                      <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-                    </svg>
-                  </div>
-                  <span>Talk to an ROI Expert</span>
-                </a>
+                {(() => {
+                  const baseLink = siteData?.bowlingRoi?.videoUrl || "https://wa.me/919428989488";
+                  const defaultMsg = siteData?.bowlingRoi?.waMessage || "Hello Winera International! I want to get custom Bowling ROI calculation & setup guidance. Please share details. [Ref: Bowling Alley Page]";
+                  
+                  let hrefLink = baseLink;
+                  if (!baseLink.includes('text=')) {
+                    const separator = baseLink.includes('?') ? '&' : '?';
+                    hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                  }
+
+                  return (
+                    <a
+                      href={hrefLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Talk to an ROI Expert on WhatsApp"
+                      style={{
+                        position: 'relative',
+                        zIndex: 2,
+                        background: '#ffffff',
+                        color: '#0f172a',
+                        fontSize: '15px',
+                        fontWeight: '800',
+                        padding: '10px 24px 10px 14px',
+                        borderRadius: '12px',
+                        border: '1.5px solid #38bdf8',
+                        boxShadow: 'none',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      {/* Green Circular WhatsApp Icon Badge */}
+                      <div style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        background: '#25D366',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 448 512" fill="white">
+                          <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                        </svg>
+                      </div>
+                      <span>{siteData?.bowlingRoi?.btnText || "Get Custom Bowling ROI Calculation"}</span>
+                    </a>
+                  );
+                })()}
               </div>
             </div>
           </div>
@@ -1184,6 +1210,7 @@ export default function BowlingAlley({ siteData }) {
       <CtaBanner
         showOverlay={false}
         align="center"
+        buttonTheme="yellow_white"
         gradientTitle={true}
         minHeight="300px"
         descriptionFontSize="18px"

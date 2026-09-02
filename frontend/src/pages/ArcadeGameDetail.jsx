@@ -356,6 +356,8 @@ export default function ArcadeGameDetail({ siteData }) {
             }}>
               <Link to="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</Link>
               <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+              <Link to="/product/arcade-games" style={{ color: '#ffffff', textDecoration: 'none' }}>Arcade Games</Link>
+              <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
               <span style={{ color: '#ffcd00', fontWeight: '900' }}>
                 {product.name}
               </span>
@@ -675,44 +677,56 @@ export default function ArcadeGameDetail({ siteData }) {
                   </div>
 
                   {/* Button 2: Get a Quote with Offset Rotated Cyan Backdrop */}
-                  <div style={{ position: 'relative', display: 'inline-block' }}>
-                    <div style={{
-                      position: 'absolute',
-                      top: '-3px',
-                      bottom: '-3px',
-                      left: '-4px',
-                      right: '-4px',
-                      background: '#38bdf8',
-                      borderRadius: '14px',
-                      transform: 'rotate(-1.8deg)',
-                      zIndex: 1
-                    }} />
-                    <a
-                      href={product.quoteUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        position: 'relative',
-                        zIndex: 2,
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        background: '#e0f2fe',
-                        color: '#0f172a',
-                        fontSize: '13.5px',
-                        fontWeight: '800',
-                        padding: '10px 24px',
-                        borderRadius: '12px',
-                        border: '1.5px solid #38bdf8',
-                        textDecoration: 'none',
-                        boxShadow: '0 6px 18px rgba(0, 0, 0, 0.05)',
-                        transition: 'all 0.25s ease'
-                      }}
-                      className="winera-cta-btn-hover"
-                    >
-                      <span>Get a Quote</span>
-                    </a>
-                  </div>
+                  {(() => {
+                    const rawQuoteUrl = product.quoteUrl || "https://wa.me/919428989488";
+                    let hrefUrl = rawQuoteUrl;
+                    if (!rawQuoteUrl.includes('text=')) {
+                      const defaultMsg = `Hello Winera International! I want to get a quote for ${product.name || 'this arcade machine'}. Please share price and details. [Ref: Arcade Game - ${product.name || 'Detail'}]`;
+                      const separator = rawQuoteUrl.includes('?') ? '&' : '?';
+                      hrefUrl = `${rawQuoteUrl}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                    }
+
+                    return (
+                      <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <div style={{
+                          position: 'absolute',
+                          top: '-3px',
+                          bottom: '-3px',
+                          left: '-4px',
+                          right: '-4px',
+                          background: '#38bdf8',
+                          borderRadius: '14px',
+                          transform: 'rotate(-1.8deg)',
+                          zIndex: 1
+                        }} />
+                        <a
+                          href={hrefUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{
+                            position: 'relative',
+                            zIndex: 2,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            background: '#e0f2fe',
+                            color: '#0f172a',
+                            fontSize: '13.5px',
+                            fontWeight: '800',
+                            padding: '10px 24px',
+                            borderRadius: '12px',
+                            border: '1.5px solid #38bdf8',
+                            textDecoration: 'none',
+                            boxShadow: '0 6px 18px rgba(0, 0, 0, 0.05)',
+                            transition: 'all 0.25s ease'
+                          }}
+                          className="winera-cta-btn-hover"
+                        >
+                          <span>Get a Quote</span>
+                        </a>
+                      </div>
+                    );
+                  })()}
                 </div>
 
               </div>

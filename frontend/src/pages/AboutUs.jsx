@@ -4,17 +4,31 @@ import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import aboutHeroBg from '../assets/about-hero-bg.webp';
-import about1 from '../assets/about-1.webp';
+import about1 from '../assets/about-01.webp';
 import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
-import whyChooseTopBg from '../assets/why-choose-top-bg.webp';
-import whyChooseBottomBg from '../assets/why-choose-bottom-bg.webp';
+import aboutUsTopBg from '../assets/about-us-image-1.png';
+import aboutUsBottomBg from '../assets/about-us-image-2.png';
 import wineraWBadge from '../assets/winera-w-badge.webp';
 import founderUnnit from '../assets/founder-unnit.webp';
 import aboutLounge from '../assets/about-lounge.webp';
 import welcomeWineraImg from '../assets/welcome-to-winera.webp';
 import aboutusCtaBg from '../assets/aboutus-cta-bg.png';
 import { Shield, Users, Target, Eye, TrendingUp, Maximize2, Clock, RefreshCw, Award, Headset, Settings } from 'lucide-react';
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
 
 // Helper function to render title with *word* highlights, <cyan>cyan words</cyan> and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
@@ -73,6 +87,9 @@ export default function AboutUs({ siteData }) {
 
   const { header, footer } = siteData;
 
+  const aboutHeroData = siteData?.aboutHero || {};
+  const heroBg = getValidImageUrl(aboutHeroData.bgUrl, aboutHeroBg);
+
   return (
     <div style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh' }}>
       {/* 1. HEADER NAVBAR */}
@@ -85,7 +102,7 @@ export default function AboutUs({ siteData }) {
         aspectRatio: '1920 / 460',
         paddingTop: '120px',
         paddingBottom: '50px',
-        background: `url(${aboutHeroBg}) center/100% 100% no-repeat`,
+        background: `url(${heroBg}) center/100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -145,7 +162,7 @@ export default function AboutUs({ siteData }) {
         }}>
           <div className="winera-about-welcome-collage" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
             <img
-              src={welcomeWineraImg}
+              src={getValidImageUrl(siteData?.aboutWelcome?.mainImgUrl || siteData?.aboutWelcome?.img, welcomeWineraImg)}
               alt="Welcome to Winera International 13+ Years Experience"
               style={{
                 width: '100%',
@@ -208,26 +225,23 @@ export default function AboutUs({ siteData }) {
       {/* 4. STATS & OUR PURPOSE & PROMISE SECTION */}
       <section style={{ padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ background: 'linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%)', padding: '40px 4vw 50px', marginBottom: '50px' }}>
-          <div className="winera-about-stats-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+          <div className="winera-about-stats-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px' }}>
             {(() => {
               const defaultStats = [
                 { number: "14+", label: "YEARS EXPERIENCE" },
-                { number: "200+", label: "Installation" },
-                { number: "50+", label: "Country Served" },
-                { number: "98%", label: "CUSTOMER SATISFACTION" }
+                { number: "200+", label: "Project Completed" },
+                { number: "98%", label: "Happy Clients" },
+                { number: "50+", label: "Cities Covered" }
               ];
 
-              const dbStats = Array.isArray(siteData?.aboutStats?.items)
+              const dbStats = Array.isArray(siteData?.aboutStats?.items) && siteData.aboutStats.items.length > 0
                 ? siteData.aboutStats.items
-                : (Array.isArray(siteData?.stats) ? siteData.stats : []);
+                : (Array.isArray(siteData?.stats) && siteData.stats.length > 0 ? siteData.stats : defaultStats);
 
-              const stats = defaultStats.map((def, idx) => {
-                const item = dbStats[idx] || {};
-                return {
-                  number: item.num || item.number || def.number,
-                  label: item.title || item.label || def.label
-                };
-              });
+              const stats = dbStats.map((item, idx) => ({
+                number: item.num || item.number || (defaultStats[idx] ? defaultStats[idx].number : '100+'),
+                label: item.title || item.label || (defaultStats[idx] ? defaultStats[idx].label : 'Stat Label')
+              }));
 
               return stats.map((stat, idx) => (
                 <div key={idx} style={{
@@ -360,7 +374,7 @@ export default function AboutUs({ siteData }) {
 
       {/* 5. WHY CHOOSE US MINDMAP & 3-CARD SECTION */}
       <section id="why-choose-us-detail" className="winera-about-mindmap-section" style={{ position: 'relative', width: '100%', padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
-        <div style={{ position: 'relative', width: '100%', background: `url(${whyChooseTopBg}) center top / 100% 100% no-repeat`, padding: '80px 4vw 160px', minHeight: '620px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ position: 'relative', width: '100%', background: `url(${getValidImageUrl(siteData?.aboutWhyUsDetail?.bgUrl, aboutUsTopBg)}) center top / 100% 100% no-repeat`, padding: '80px 4vw 80px', minHeight: '775px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <SectionHeading marginBottom="40px" accentWidth="260px" accentMaxWidth="320px" style={{ zIndex: 10 }}>
             {(() => {
               const rawTitle = siteData?.aboutWhyUsDetail?.title || "Why *Choose Us?*";
@@ -378,16 +392,16 @@ export default function AboutUs({ siteData }) {
             })()}
           </SectionHeading>
 
-          <div className="winera-about-mindmap-container" style={{ position: 'relative', width: '100%', maxWidth: '1080px', height: '320px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="winera-about-mindmap-container" style={{ position: 'relative', width: '100%', maxWidth: '1080px', height: '260px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <svg className="winera-about-mindmap-svg" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }}>
-              <line x1="330" y1="50" x2="540" y2="160" stroke="#00a8ff" strokeWidth="1.5" opacity="0.6" />
-              <line x1="340" y1="160" x2="540" y2="160" stroke="#00a8ff" strokeWidth="1.5" opacity="0.6" />
-              <line x1="360" y1="270" x2="540" y2="160" stroke="#00a8ff" strokeWidth="1.5" opacity="0.6" />
-              <line x1="750" y1="50" x2="540" y2="160" stroke="#d97706" strokeWidth="1.5" opacity="0.6" />
-              <line x1="740" y1="160" x2="540" y2="160" stroke="#d97706" strokeWidth="1.5" opacity="0.6" />
-              <line x1="760" y1="270" x2="540" y2="160" stroke="#d97706" strokeWidth="1.5" opacity="0.6" />
+              <line x1="321" y1="35" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
+              <line x1="315" y1="130" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
+              <line x1="385" y1="235" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
+              <line x1="714" y1="35" x2="540" y2="130" stroke="#d97706" strokeWidth="1.8" opacity="0.65" />
+              <line x1="734" y1="130" x2="540" y2="130" stroke="#d97706" strokeWidth="1.8" opacity="0.65" />
+              <line x1="704" y1="235" x2="540" y2="130" stroke="#d97706" strokeWidth="1.8" opacity="0.65" />
             </svg>
-            <div className="winera-about-mindmap-badge" style={{ position: 'relative', zIndex: 10, width: '130px', height: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center', filter: 'drop-shadow(0 15px 30px rgba(0, 168, 255, 0.4))' }}>
+            <div className="winera-about-mindmap-badge" style={{ position: 'relative', zIndex: 10, width: '200px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', filter: 'drop-shadow(0 15px 35px rgba(0, 168, 255, 0.45))' }}>
               <img src={wineraWBadge} alt="Winera Badge" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             {(() => {
@@ -403,24 +417,35 @@ export default function AboutUs({ siteData }) {
                 ? siteData.aboutWhyUsDetail.pills
                 : defaultPills;
 
-              const leftItems = [ { icon: TrendingUp, text: pills[0] }, { icon: Maximize2, text: pills[1] }, { icon: Headset, text: pills[2] } ];
-              const rightItems = [ { icon: Clock, text: pills[3] }, { icon: RefreshCw, text: pills[4] }, { icon: Award, text: pills[5] } ];
+              const leftItems = [
+                { icon: TrendingUp, text: pills[0], offset: '66px'},
+                { icon: Maximize2, text: pills[1], offset: '85px' },
+                { icon: Headset, text: pills[2], offset: '42px' }
+              ];
+              const rightItems = [
+                { icon: Clock, text: pills[3], offset: '10px' },
+                { icon: RefreshCw, text: pills[4], offset: '0px' },
+                { icon: Award, text: pills[5], offset: '0px' }
+              ];
 
               return (
                 <>
-                  <div className="winera-about-mindmap-left" style={{ position: 'absolute', left: '40px', top: 0, bottom: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 5 }}>
+                  <div className="winera-about-mindmap-left" style={{ position: 'absolute', left: '3px', top: '12px', bottom: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start', zIndex: 5 }}>
                     {leftItems.map((item, idx) => (
-                      <div key={idx} style={{
+                      <div key={idx} className="winera-about-mindmap-item" style={{
                         position: 'relative',
                         background: '#ffffff',
-                        borderRadius: '30px',
-                        padding: '10px 24px 10px 18px',
+                        borderRadius: '40px',
+                        padding: '14px 22px 14px 18px',
                         boxShadow: '0 10px 25px rgba(0,0,0,0.06)',
                         border: '1px solid #e2e8f0',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '12px',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        width: 'fit-content',
+                        maxWidth: '420px',
+                        marginLeft: item.offset
                       }}>
                         {/* Left Side Blue Accent Line */}
                         <div style={{
@@ -433,25 +458,28 @@ export default function AboutUs({ siteData }) {
                           borderRadius: '0 4px 4px 0'
                         }} />
                         <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                          <item.icon style={{ width: '16px', height: '16px', color: '#0284c7' }} />
+                          <item.icon style={{ width: '15px', height: '15px', color: '#0284c7' }} />
                         </div>
                         <span style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>{item.text}</span>
                       </div>
                     ))}
                   </div>
-                  <div className="winera-about-mindmap-right" style={{ position: 'absolute', right: '40px', top: 0, bottom: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 5 }}>
+                  <div className="winera-about-mindmap-right" style={{ position: 'absolute', right: '66px', top: 0, bottom: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-end', zIndex: 5 }}>
                     {rightItems.map((item, idx) => (
-                      <div key={idx} style={{
+                      <div key={idx} className="winera-about-mindmap-item" style={{
                         position: 'relative',
                         background: '#ffffff',
-                        borderRadius: '30px',
-                        padding: '10px 24px 10px 18px',
+                        borderRadius: '40px',
+                        padding: '14px 22px 14px 18px',
                         boxShadow: '0 10px 25px rgba(0,0,0,0.06)',
                         border: '1px solid #e2e8f0',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '12px',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        width: 'fit-content',
+                        maxWidth: '420px',
+                        marginRight: item.offset
                       }}>
                         {/* Left Side Yellow Accent Line */}
                         <div style={{
@@ -464,7 +492,7 @@ export default function AboutUs({ siteData }) {
                           borderRadius: '0 4px 4px 0'
                         }} />
                         <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                          <item.icon style={{ width: '16px', height: '16px', color: '#d97706' }} />
+                          <item.icon style={{ width: '15px', height: '15px', color: '#d97706' }} />
                         </div>
                         <span style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>{item.text}</span>
                       </div>
@@ -475,7 +503,7 @@ export default function AboutUs({ siteData }) {
             })()}
           </div>
         </div>
-        <div className="winera-about-whyus-bottom-bg" style={{ position: 'relative', width: '100%', background: `url(${whyChooseBottomBg}) center top / 100% 100% no-repeat`, padding: '110px 4vw 100px', marginTop: '-155px', zIndex: 2 }}>
+        <div className="winera-about-whyus-bottom-bg" style={{ position: 'relative', width: '100%', background: `url(${getValidImageUrl(siteData?.aboutWhyUsDetail?.bottomBgUrl, aboutUsBottomBg)}) center top / 100% 100% no-repeat`, padding: '80px 4vw 100px', marginTop: '-340px', zIndex: 2 }}>
           <div className="winera-about-whyus-cards-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px', textAlign: 'left' }}>
             {(() => {
               const defaultCards = [
@@ -668,6 +696,7 @@ export default function AboutUs({ siteData }) {
       <CtaBanner
         showOverlay={false}
         align="left"
+        buttonTheme="yellow_white"
         gradientTagline={false}
         gradientTitle={true}
         bgUrl={siteData?.aboutCta?.bgUrl !== undefined ? siteData.aboutCta.bgUrl : null}

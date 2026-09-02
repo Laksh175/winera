@@ -24,6 +24,7 @@ const SafetyStandards = lazy(() => import('./pages/SafetyStandards'));
 const TrampolinePark = lazy(() => import('./pages/TrampolinePark'));
 const Roi = lazy(() => import('./pages/Roi'));
 const Blog = lazy(() => import('./pages/Blog'));
+const BlogDetail = lazy(() => import('./pages/BlogDetail'));
 const LaserTag = lazy(() => import('./pages/LaserTag'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
@@ -73,9 +74,11 @@ export default function App() {
             {/* 1. Home Page */}
             <Route path="/" element={<Home siteData={siteData} />} />
 
-            {/* 2. Blog Page */}
+            {/* 2. Blog Page & Blog Detail */}
             <Route path="/blog" element={<Blog siteData={siteData} />} />
+            <Route path="/blog/:id" element={<BlogDetail siteData={siteData} />} />
             <Route path="/resources/blog" element={<Blog siteData={siteData} />} />
+            <Route path="/resources/blog/:id" element={<BlogDetail siteData={siteData} />} />
 
             {/* 3. About Us Page */}
             <Route path="/why-us" element={<AboutUs siteData={siteData} />} />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import blogHeroBg from '../assets/blog-image-bg.webp';
@@ -31,6 +32,7 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 export default function Blog({ siteData }) {
+  const navigate = useNavigate();
   const header = siteData?.header || {};
   const footer = siteData?.footer || {};
 
@@ -120,14 +122,14 @@ export default function Blog({ siteData }) {
       </section>
 
       {/* 3. OUR BLOGS SECTION */}
-      <section style={{ padding: '60px 4vw 90px', background: '#F5F5F9' }}>
+      <section style={{ padding: '25px 4vw 60px', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Header */}
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '25px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', width: '240px', height: '10px', margin: '0 auto 10px', objectFit: 'fill' }}
+              style={{ display: 'block', width: '240px', height: '10px', margin: '0 auto 8px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
               our <span style={{ color: '#38bdf8' }}>Blogs</span>
@@ -143,6 +145,7 @@ export default function Blog({ siteData }) {
             {currentPosts.map((post, index) => (
               <div
                 key={post.id || index}
+                onClick={() => navigate(`/blog/${post.id}`)}
                 className="winera-blog-single-card"
                 style={{
                   background: '#f0f9ff',
@@ -169,7 +172,7 @@ export default function Blog({ siteData }) {
                   <img
                     src={getValidImageUrl(post.image || post.imgUrl, blogCardImg)}
                     alt={post.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'fill', display: 'block' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   />
                 </div>
 

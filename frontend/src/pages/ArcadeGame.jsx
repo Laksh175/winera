@@ -20,7 +20,7 @@ import commercialTeam from '../assets/commercial-team.webp';
 import aboutUsSectionImg from '../assets/about-us-section.webp';
 import arcadeCtaBg from '../assets/arcadegame-cta-bg.png';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
-import about1 from '../assets/about-1.webp';
+import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
 import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
@@ -221,32 +221,52 @@ export default function ArcadeGame({ siteData }) {
             }}></div>
 
             {/* Floating Pill Tag */}
-            <div style={{
-              position: 'absolute',
-              bottom: '18px',
-              left: '70px',
-              zIndex: 25,
-              background: '#F5F5F9',
-              border: '2px solid #38bdf8',
-              boxShadow: 'none',
-              borderRadius: '30px',
-              padding: '8px 22px',
-              color: '#0284c7',
-              fontSize: '12.5px',
-              fontWeight: '800'
-            }}>
-              {siteData?.arcadeIntro?.floatingTag || "Set Up Arcade Arena Now !"}
-            </div>
+            {(() => {
+              const baseLink = siteData?.arcadeIntro?.quoteLink || "https://wa.me/919428989488";
+              const defaultMsg = siteData?.arcadeIntro?.waMessage || "Hello Winera International! I want to inquire about Commercial Arcade Game Machines. Please share catalog and details. [Ref: Arcade Games Page]";
+              
+              let hrefLink = baseLink;
+              if (!baseLink.includes('text=')) {
+                const separator = baseLink.includes('?') ? '&' : '?';
+                hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+              }
+
+              return (
+                <a
+                  href={hrefLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    position: 'absolute',
+                    bottom: '18px',
+                    left: '70px',
+                    zIndex: 25,
+                    background: '#F5F5F9',
+                    border: '2px solid #38bdf8',
+                    boxShadow: 'none',
+                    borderRadius: '30px',
+                    padding: '8px 22px',
+                    color: '#0284c7',
+                    fontSize: '12.5px',
+                    fontWeight: '800',
+                    textDecoration: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {siteData?.arcadeIntro?.floatingTag || "Set Up Arcade Arena Now !"}
+                </a>
+              );
+            })()}
 
             {/* Blue Decorative Grid Dots Accent */}
             <div style={{
               position: 'absolute',
               top: '160px',
               left: '315px',
-              width: '60px',
-              height: '60px',
+              width: '120px',
+              height: '120px',
               backgroundImage: 'radial-gradient(#38bdf8 2px, transparent 2px)',
-              backgroundSize: '10px 10px',
+              backgroundSize: '16px 16px',
               zIndex: 1,
               opacity: 0.8
             }}></div>
@@ -301,20 +321,16 @@ export default function ArcadeGame({ siteData }) {
             </p>
 
             {/* Dynamic Features List */}
-            {(
-              Array.isArray(siteData?.arcadeIntro?.features) && siteData.arcadeIntro.features.length > 0
-                ? siteData.arcadeIntro.features
-                : [
-                  {
-                    title: siteData?.arcadeIntro?.feature1Title || "Commercial Durability",
-                    desc: siteData?.arcadeIntro?.feature1Desc || "Before delivery, each unit goes through a commercial-grade durability check built for high-footfall environments like malls, hotels, and entertainment centres, not casual or residential use."
-                  },
-                  {
-                    title: siteData?.arcadeIntro?.feature2Title || "Installation Network",
-                    desc: siteData?.arcadeIntro?.feature2Desc || "From sourcing to installation and after-sales support, our own team handles the entire arcade game zone setup process, not a third-party contractor."
-                  }
-                ]
-            ).map((feature, fIdx) => (
+            {(Array.isArray(siteData?.arcadeIntro?.features) ? siteData.arcadeIntro.features : [
+              {
+                title: siteData?.arcadeIntro?.feature1Title || "Commercial Durability",
+                desc: siteData?.arcadeIntro?.feature1Desc || "Before delivery, each unit goes through a commercial-grade durability check built for high-footfall environments like malls, hotels, and entertainment centres, not casual or residential use."
+              },
+              {
+                title: siteData?.arcadeIntro?.feature2Title || "Installation Network",
+                desc: siteData?.arcadeIntro?.feature2Desc || "From sourcing to installation and after-sales support, our own team handles the entire arcade game zone setup process, not a third-party contractor."
+              }
+            ]).map((feature, fIdx) => (
               <div key={fIdx} style={{
                 display: 'flex',
                 gap: '16px',
@@ -369,7 +385,7 @@ export default function ArcadeGame({ siteData }) {
                   zIndex: 1
                 }} />
                 <button
-                  onClick={() => openVideoModal(siteData?.arcadeIntro?.videoLink, "Arcade Games Showcase")}
+                  onClick={() => openVideoModal(siteData?.arcadeIntro?.videoLink || "https://youtube.com", "Arcade Game Showcase")}
                   style={{
                     position: 'relative',
                     zIndex: 2,
@@ -394,44 +410,57 @@ export default function ArcadeGame({ siteData }) {
               </div>
 
               {/* Button 2: Get a Quote with Offset Rotated Cyan Backdrop */}
-              <div style={{ position: 'relative', display: 'inline-block' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-3px',
-                  bottom: '-3px',
-                  left: '-4px',
-                  right: '-4px',
-                  background: '#38bdf8',
-                  borderRadius: '14px',
-                  transform: 'rotate(-1.8deg)',
-                  zIndex: 1
-                }} />
-                <a
-                  href={siteData?.arcadeIntro?.quoteLink || "https://wa.me/919428989488"}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    position: 'relative',
-                    zIndex: 2,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: '#e0f2fe',
-                    color: '#0f172a',
-                    fontSize: '14px',
-                    fontWeight: '800',
-                    padding: '11px 28px',
-                    borderRadius: '12px',
-                    border: '1.5px solid #38bdf8',
-                    textDecoration: 'none',
-                    boxShadow: 'none',
-                    transition: 'all 0.25s ease'
-                  }}
-                  className="winera-cta-btn-hover"
-                >
-                  <span>{siteData?.arcadeIntro?.quoteBtnText || "Get a Quote"}</span>
-                </a>
-              </div>
+              {(() => {
+                const baseLink = siteData?.arcadeIntro?.quoteLink || "https://wa.me/919428989488";
+                const defaultMsg = siteData?.arcadeIntro?.waMessage || "Hello Winera International! I want to inquire about Commercial Arcade Game Machines. Please share catalog and details. [Ref: Arcade Games Page]";
+                
+                let hrefLink = baseLink;
+                if (!baseLink.includes('text=')) {
+                  const separator = baseLink.includes('?') ? '&' : '?';
+                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+
+                return (
+                  <div style={{ position: 'relative', display: 'inline-block' }}>
+                    <div style={{
+                      position: 'absolute',
+                      top: '-3px',
+                      bottom: '-3px',
+                      left: '-4px',
+                      right: '-4px',
+                      background: '#38bdf8',
+                      borderRadius: '14px',
+                      transform: 'rotate(-1.8deg)',
+                      zIndex: 1
+                    }} />
+                    <a
+                      href={hrefLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        position: 'relative',
+                        zIndex: 2,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: '#e0f2fe',
+                        color: '#0f172a',
+                        fontSize: '14px',
+                        fontWeight: '800',
+                        padding: '11px 28px',
+                        borderRadius: '12px',
+                        border: '1.5px solid #38bdf8',
+                        textDecoration: 'none',
+                        boxShadow: 'none',
+                        transition: 'all 0.25s ease'
+                      }}
+                      className="winera-cta-btn-hover"
+                    >
+                      <span>{siteData?.arcadeIntro?.quoteBtnText || "Get a Quote"}</span>
+                    </a>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>
@@ -618,19 +647,17 @@ export default function ArcadeGame({ siteData }) {
 
                 let prodCards = defaultProdCards;
                 if (rawCards) {
-                  const hasUnsplash = rawCards.some(c => (c.img || c.imageUrl || '').includes('unsplash.com'));
-                  if (hasUnsplash) {
-                    prodCards = rawCards.map((c, i) => {
-                      const nameKey = c.name || c.title || "";
-                      const mappedImg = imageMap[nameKey] || defaultProdCards[i % defaultProdCards.length]?.img || c.img;
-                      return { ...c, img: mappedImg, imageUrl: mappedImg };
-                    });
-                  } else {
-                    prodCards = rawCards.map(c => ({
+                  prodCards = rawCards.map((c, i) => {
+                    const customImg = c.img || c.imageUrl;
+                    const isValidCustom = customImg && !customImg.includes('unsplash.com');
+                    const nameKey = c.name || c.title || "";
+                    const finalImg = isValidCustom ? customImg : (imageMap[nameKey] || customImg || defaultProdCards[i % defaultProdCards.length]?.img);
+                    return {
                       ...c,
-                      img: imageMap[c.name || c.title] || c.img || c.imageUrl
-                    }));
-                  }
+                      img: finalImg,
+                      imageUrl: finalImg
+                    };
+                  });
                 }
 
                 const getCardSlug = (card) => {
@@ -1040,46 +1067,59 @@ export default function ArcadeGame({ siteData }) {
                 transform: 'rotate(-1.8deg)',
                 zIndex: 1
               }} />
-              <a
-                href={siteData?.arcadeCommercial?.ctaLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  position: 'relative',
-                  zIndex: 2,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  background: '#ffffff',
-                  color: '#0f172a',
-                  fontSize: '14px',
-                  fontWeight: '800',
-                  padding: '10px 26px 10px 14px',
-                  borderRadius: '12px',
-                  border: '1.5px solid #ffcd00',
-                  textDecoration: 'none',
-                  boxShadow: 'none',
-                  transition: 'all 0.25s ease'
-                }}
-                className="winera-cta-btn-hover"
-              >
-                <div style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '50%',
-                  background: '#25d366',
-                  color: '#ffffff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                  </svg>
-                </div>
-                <span>{siteData?.arcadeCommercial?.ctaBtnText || "Talk to an ROI Expert"}</span>
-              </a>
+              {(() => {
+                const baseLink = siteData?.arcadeCommercial?.ctaLink || "https://wa.me/919428989488";
+                const defaultMsg = siteData?.arcadeCommercial?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for setup & commercial guidance. Please share details. [Ref: Arcade Game Page]";
+                
+                let hrefLink = baseLink;
+                if (!baseLink.includes('text=')) {
+                  const separator = baseLink.includes('?') ? '&' : '?';
+                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+
+                return (
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      position: 'relative',
+                      zIndex: 2,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      background: '#ffffff',
+                      color: '#0f172a',
+                      fontSize: '14px',
+                      fontWeight: '800',
+                      padding: '10px 26px 10px 14px',
+                      borderRadius: '12px',
+                      border: '1.5px solid #ffcd00',
+                      textDecoration: 'none',
+                      boxShadow: 'none',
+                      transition: 'all 0.25s ease'
+                    }}
+                    className="winera-cta-btn-hover"
+                  >
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: '#25d366',
+                      color: '#ffffff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0
+                    }}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                      </svg>
+                    </div>
+                    <span>{siteData?.arcadeCommercial?.ctaBtnText || "Talk to an ROI Expert"}</span>
+                  </a>
+                );
+              })()}
             </div>
           </div>
 

@@ -9,7 +9,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import ClientsMarqueeSection from '../components/ClientsMarqueeSection';
 import CtaBanner from '../components/CtaBanner';
 import heroBg from '../assets/hero-bg.webp';
-import about1 from '../assets/about-1.webp';
+import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
 import about3 from '../assets/about-3.webp';
 import aboutCollage from '../assets/about-collage.webp';
@@ -129,8 +129,8 @@ export default function Home({ siteData }) {
         width: '100%',
         minHeight: 'auto',
         aspectRatio: '1920 / 840',
-        paddingTop: '145px',
-        paddingBottom: '115px',
+        paddingTop: '65px',
+        paddingBottom: '70px',
         background: `url(${heroBg}) center/100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
@@ -143,16 +143,15 @@ export default function Home({ siteData }) {
           {/* Badge */}
           <div style={{
             display: 'inline-block',
-            padding: '7px 30px',
-            background: 'linear-gradient(90deg, rgba(255,183,3,0.3) 0%, rgba(255,183,3,0.9) 50%, rgba(255,183,3,0.3) 100%)',
-            borderRadius: '4px',
+            padding: '2px 64px 2px 50px',
+            background: 'linear-gradient(90deg, rgba(0, 42, 95, 1) 0%, rgba(255, 212, 0, 1) 35%, rgba(8, 45, 86, 1) 100%)',
             color: '#ffffff',
             fontWeight: '900',
-            fontSize: '17.5px',
+            fontSize: '18px',
             letterSpacing: '0.6px',
-            textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+            textShadow: '0 2px 5px rgba(0,0,0,0.75)',
             marginBottom: '18px',
-            clipPath: 'polygon(6% 0%, 94% 0%, 100% 50%, 94% 100%, 6% 100%, 0% 50%)'
+            clipPath: 'polygon(0% 0%, calc(100% - 20px) 0%, 85% 50%, calc(100% - 22px) 100%, 0% 100%)'
           }}>
             India's Trusted
           </div>
@@ -163,7 +162,6 @@ export default function Home({ siteData }) {
             fontWeight: '900',
             lineHeight: 1.18,
             color: '#ffffff',
-            textShadow: '0 4px 25px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0,0,0,0.8)',
             marginBottom: '18px',
             letterSpacing: '-0.3px',
             maxWidth: '920px',
@@ -180,7 +178,7 @@ export default function Home({ siteData }) {
                   <>
                     <span style={{ display: 'block', width: '100%' }}>Game Zone Equipment</span>
                     <span style={{ display: 'block', width: '100%', marginTop: '4px' }}>
-                      <span style={{ color: '#ffcd00', textShadow: '0 4px 18px rgba(255, 205, 0, 0.55)', display: 'inline' }}>Manufacturer</span> & Supplier
+                      <span style={{ color: '#ffcd00', display: 'inline' }}>Manufacturer</span> & Supplier
                     </span>
                   </>
                 );
@@ -193,7 +191,6 @@ export default function Home({ siteData }) {
                       key={index}
                       style={{
                         color: '#ffcd00',
-                        textShadow: '0 4px 18px rgba(255, 205, 0, 0.55)',
                         display: 'inline'
                       }}
                     >
@@ -220,16 +217,29 @@ export default function Home({ siteData }) {
           </p>
 
           {/* CTA Button */}
-          <div className="winera-hero-cta-wrapper">
-            <a href={hero?.ctaPrimaryLink || "https://wa.me/919428989488"} target="_blank" rel="noreferrer" className="winera-hero-cta-btn">
-              <div className="winera-hero-cta-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
-                  <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982l-1.412 5.16 5.281-1.385c1.455.794 3.1 1.213 4.787 1.214h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.668-1.037-5.176-2.923-7.061-1.886-1.885-4.394-2.922-7.066-2.922zm5.834 14.168c-.247.694-1.222 1.282-1.688 1.341-.466.06-1.047.098-1.696-.109-.4-.128-.918-.298-1.583-.585-2.822-1.222-4.664-4.084-4.806-4.273-.141-.188-1.144-1.523-1.144-2.905 0-1.381.724-2.062.981-2.343.257-.282.564-.352.752-.352.188 0 .376.002.54.01.174.008.411-.066.643.49.235.564.8 1.95.87 2.091.07.141.117.306.023.494-.094.188-.141.306-.282.47-.141.164-.298.367-.424.494-.141.141-.289.294-.125.576.164.282.729 1.202 1.564 1.946 1.074.956 1.98 1.253 2.262 1.394.282.141.447.117.611-.07.164-.188.705-.823.893-1.105.188-.282.376-.235.634-.141.258.094 1.644.775 1.926.916.282.141.47.211.54.329.07.117.07.681-.177 1.375z" />
-                </svg>
+          {(() => {
+            const defaultBaseLink = hero?.ctaPrimaryLink || "https://wa.me/919428989488";
+            const defaultMsg = hero?.waMessage || "Hello Winera International! I want to plan and setup a Game Zone for my space. Please share details and an ROI report. [Ref: Home Page]";
+            
+            let hrefLink = defaultBaseLink;
+            if (!defaultBaseLink.includes('text=')) {
+              const separator = defaultBaseLink.includes('?') ? '&' : '?';
+              hrefLink = `${defaultBaseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+            }
+
+            return (
+              <div className="winera-hero-cta-wrapper">
+                <a href={hrefLink} target="_blank" rel="noreferrer" className="winera-hero-cta-btn">
+                  <div className="winera-hero-cta-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
+                      <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982l-1.412 5.16 5.281-1.385c1.455.794 3.1 1.213 4.787 1.214h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.668-1.037-5.176-2.923-7.061-1.886-1.885-4.394-2.922-7.066-2.922zm5.834 14.168c-.247.694-1.222 1.282-1.688 1.341-.466.06-1.047.098-1.696-.109-.4-.128-.918-.298-1.583-.585-2.822-1.222-4.664-4.084-4.806-4.273-.141-.188-1.144-1.523-1.144-2.905 0-1.381.724-2.062.981-2.343.257-.282.564-.352.752-.352.188 0 .376.002.54.01.174.008.411-.066.643.49.235.564.8 1.95.87 2.091.07.141.117.306.023.494-.094.188-.141.306-.282.47-.141.164-.298.367-.424.494-.141.141-.289.294-.125.576.164.282.729 1.202 1.564 1.946 1.074.956 1.98 1.253 2.262 1.394.282.141.447.117.611-.07.164-.188.705-.823.893-1.105.188-.282.376-.235.634-.141.258.094 1.644.775 1.926.916.282.141.47.211.54.329.07.117.07.681-.177 1.375z" />
+                    </svg>
+                  </div>
+                  <span>{hero?.ctaPrimaryText || "Plan Your Game Zone"}</span>
+                </a>
               </div>
-              <span>{hero?.ctaPrimaryText || "Plan Your Game Zone"}</span>
-            </a>
-          </div>
+            );
+          })()}
         </div>
       </section>
 
@@ -633,9 +643,9 @@ export default function Home({ siteData }) {
                 </p>
                 <div style={{ textAlign: 'right' }}>
                   <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-                    <a href="https://wa.me/919428989488" target="_blank" rel="noreferrer" title="Chat on WhatsApp for Free ROI Consultancy" className="winera-cyan-cta-btn winera-cyan-cta-btn-sm">
+                    <Link to={siteData?.partnerHome?.box1Link || "/roi"} title="Learn More about Free ROI Consultancy" className="winera-cyan-cta-btn winera-cyan-cta-btn-sm">
                       <span>Explore More</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -652,9 +662,9 @@ export default function Home({ siteData }) {
                 </p>
                 <div style={{ textAlign: 'right' }}>
                   <div className="winera-white-cyan-cta-wrapper">
-                    <a href="https://wa.me/919428989488" target="_blank" rel="noreferrer" className="winera-white-cyan-cta-btn">
+                    <Link to={siteData?.partnerHome?.box2Link || "/safety-standards"} title="Learn More about Safety Standards" className="winera-white-cyan-cta-btn">
                       <span>Explore More</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -1195,6 +1205,7 @@ export default function Home({ siteData }) {
       {/* 15. READY TO GET STARTED CTA BANNER SECTION */}
       <CtaBanner
         align="center"
+        buttonTheme="yellow_white"
         gradientTagline={true}
         gradientTitle={false}
         bgUrl={siteData?.ctaBanner?.bgUrl !== undefined ? siteData.ctaBanner.bgUrl : null}

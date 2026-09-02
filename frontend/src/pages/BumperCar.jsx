@@ -172,14 +172,25 @@ export default function BumperCar({ siteData }) {
 
             {/* Action Button: Get Quote From Expert */}
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.bumpercarIntro?.buttonLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                {siteData?.bumpercarIntro?.buttonText || "Get Quote From Expert"}
-              </a>
+              {(() => {
+                const baseLink = siteData?.bumpercarIntro?.buttonLink || "https://wa.me/919428989488";
+                const defaultMsg = siteData?.bumpercarIntro?.waMessage || "Hello Winera International! I want to get a quote and details for Bumper Car setup. Please share details. [Ref: Bumper Car Page]";
+                let hrefLink = baseLink;
+                if (!baseLink.includes('text=')) {
+                  const separator = baseLink.includes('?') ? '&' : '?';
+                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+                return (
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                  >
+                    {siteData?.bumpercarIntro?.buttonText || "Get Quote From Expert"}
+                  </a>
+                );
+              })()}
             </div>
           </div>
 
@@ -470,22 +481,29 @@ export default function BumperCar({ siteData }) {
               {siteData?.bumpercarOptions?.desc || "We supply two drive types for indoor bumper car attractions. The right choice depends on your floor infrastructure, venue flexibility, and operational model."}
             </p>
 
-            {/* Option 1: Electric Floor Bumper Cars with Cyan Offset Backdrop Tab (FIGMA 1:1) */}
-            <div className="winera-contact-card-wrapper-cyan" style={{
-              borderRadius: '26px 12px 26px 26px',
-              background: '#38bdf8',
-              padding: '4px 0 0 4px',
-              marginBottom: '28px',
-              display: 'block'
-            }}>
+            {/* Option 1: Electric Floor Bumper Cars (Contact Us Style with top-left cyan accent wing) */}
+            <div style={{ position: 'relative', width: '100%', marginBottom: '28px' }}>
+              <div style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '-8px',
+                width: '250px',
+                height: '115px',
+                background: '#38bdf8',
+                borderRadius: '14px',
+                clipPath: 'polygon(0 0, 105% 11px, 100% 100%, 10px 100%)',
+                zIndex: 1
+              }}></div>
+
               <div style={{
                 position: 'relative',
                 zIndex: 2,
                 background: '#e0f2fe',
-                border: '1.5px solid #7dd3fc',
-                borderRadius: '24px 10px 24px 24px',
+                border: '2px solid #38bdf8',
+                borderRadius: '16px',
                 padding: '24px 28px',
-                boxShadow: '0 12px 35px rgba(56, 189, 248, 0.08)'
+                boxShadow: 'none',
+                textAlign: 'left'
               }}>
                 <h4 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
                   {siteData?.bumpercarOptions?.option1Title || "Electric Floor Bumper Cars"}
@@ -496,21 +514,29 @@ export default function BumperCar({ siteData }) {
               </div>
             </div>
 
-            {/* Option 2: Battery-Operated Bumper Cars with Yellow Offset Backdrop Tab (FIGMA 1:1) */}
-            <div className="winera-contact-card-wrapper-yellow" style={{
-              borderRadius: '26px 12px 26px 26px',
-              background: '#ffcd00',
-              padding: '4px 0 0 4px',
-              display: 'block'
-            }}>
+            {/* Option 2: Battery-Operated Bumper Cars (Contact Us Style with top-left yellow accent wing) */}
+            <div style={{ position: 'relative', width: '100%' }}>
+              <div style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '-8px',
+                width: '250px',
+                height: '115px',
+                background: '#ffcd00',
+                borderRadius: '15px',
+                clipPath: 'polygon(0 0, 105% 11px, 100% 100%, 10px 100%)',
+                zIndex: 1
+              }}></div>
+
               <div style={{
                 position: 'relative',
                 zIndex: 2,
-                background: '#fef9c3',
-                border: '1.5px solid #fde047',
-                borderRadius: '24px 10px 24px 24px',
+                background: '#fefce8',
+                border: '2px solid #facc15',
+                borderRadius: '16px',
                 padding: '24px 28px',
-                boxShadow: '0 12px 35px rgba(250, 204, 21, 0.08)'
+                boxShadow: 'none',
+                textAlign: 'left'
               }}>
                 <h4 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
                   {siteData?.bumpercarOptions?.option2Title || "Battery-Operated Bumper Cars"}
@@ -575,17 +601,17 @@ export default function BumperCar({ siteData }) {
                     <div key={idx} style={{
                       background: 'linear-gradient(135deg, #fef08a 0%, #fde047 50%, #facc15 100%)',
                       borderRadius: '24px',
-                      padding: '5px 12px 5px 16px',
+                      padding: '10px 12px 10px 16px',
                       boxShadow: '0 6px 16px rgba(250, 204, 21, 0.2)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '10px',
+                      gap: '12px',
                       justifyContent: 'flex-end',
                       marginRight: `${offsetRight}px`,
                       minHeight: '38px',
                       transition: 'all 0.3s ease'
                     }}>
-                      <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#0f172a', textAlign: 'left', lineHeight: 1.3, marginRight: '30px'}}>
+                      <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#0f172a', textAlign: 'left', lineHeight: 1.3, marginRight: '14px' }}>
                         {pt.text && typeof pt.text === 'string'
                           ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
                               <React.Fragment key={lIdx}>
@@ -596,8 +622,8 @@ export default function BumperCar({ siteData }) {
                           : pt.text}
                       </span>
                       <span style={{
-                        width: '40px',
-                        height: '40px',
+                        width: '33px',
+                        height: '31px',
                         borderRadius: '50%',
                         background: '#ffffff',
                         color: '#0f172a',
@@ -628,8 +654,7 @@ export default function BumperCar({ siteData }) {
                 textAlign: 'center',
                 padding: '8px',
                 flexShrink: 0,
-                background: '#ffffff',
-                boxShadow: '0 8px 20px rgba(234, 179, 8, 0.12)',
+                background: 'transparent',
                 marginLeft: '15px',
                 marginRight: '8px',
                 zIndex: 2,
@@ -691,8 +716,7 @@ export default function BumperCar({ siteData }) {
                 textAlign: 'center',
                 padding: '8px',
                 flexShrink: 0,
-                background: '#ffffff',
-                boxShadow: '0 8px 20px rgba(56, 189, 248, 0.12)',
+                background: 'transparent',
                 marginRight: '15px',
                 marginLeft: '8px',
                 zIndex: 2,
@@ -727,18 +751,18 @@ export default function BumperCar({ siteData }) {
                     <div key={idx} style={{
                       background: 'linear-gradient(135deg, #7dd3fc 0%, #38bdf8 50%, #0284c7 100%)',
                       borderRadius: '24px',
-                      padding: '5px 16px 5px 12px',
+                      padding: '10px 16px 10px 12px',
                       boxShadow: '0 6px 16px rgba(56, 189, 248, 0.2)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '10px',
+                      gap: '12px',
                       marginLeft: `${offsetLeft}px`,
                       minHeight: '38px',
                       transition: 'all 0.3s ease'
                     }}>
                       <span style={{
-                        width: '40px',
-                        height: '40px',
+                        width: '33px',
+                        height: '31px',
                         borderRadius: '50%',
                         background: '#ffffff',
                         color: '#0284c7',
@@ -752,7 +776,7 @@ export default function BumperCar({ siteData }) {
                       }}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#ffffff', textAlign: 'left', lineHeight: 1.3, marginLeft: '12px'}}>
+                      <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#ffffff', textAlign: 'left', lineHeight: 1.3, marginLeft: '14px' }}>
                         {pt.text && typeof pt.text === 'string'
                           ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
                               <React.Fragment key={lIdx}>
@@ -874,31 +898,42 @@ export default function BumperCar({ siteData }) {
             {/* Plan Your Game Zone Button matching Figma Screenshot 1:1 */}
             <div>
               <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-                <a
-                  href={siteData?.bumpercarInvestment?.btnLink || siteData?.header?.whatsAppUrl || "https://wa.me/919428989488"}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-                >
-                  {/* Green Circular WhatsApp Icon Badge */}
-                  <div style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '50%',
-                    background: '#25d366',
-                    color: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                    </svg>
-                  </div>
-                  <span>{siteData?.bumpercarInvestment?.btnText || "Plan Your Game Zone"}</span>
-                </a>
+                {(() => {
+                  const baseLink = siteData?.bumpercarInvestment?.btnLink || siteData?.header?.whatsAppUrl || "https://wa.me/919428989488";
+                  const defaultMsg = siteData?.bumpercarInvestment?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Bumper Car setup & commercial ROI calculation. Please share details. [Ref: Bumper Car Page]";
+                  let hrefLink = baseLink;
+                  if (!baseLink.includes('text=')) {
+                    const separator = baseLink.includes('?') ? '&' : '?';
+                    hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                  }
+                  return (
+                    <a
+                      href={hrefLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                    >
+                      {/* Green Circular WhatsApp Icon Badge */}
+                      <div style={{
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        background: '#25d366',
+                        color: '#ffffff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                        </svg>
+                      </div>
+                      <span>{siteData?.bumpercarInvestment?.btnText || "Plan Your Game Zone"}</span>
+                    </a>
+                  );
+                })()}
               </div>
             </div>
           </div>

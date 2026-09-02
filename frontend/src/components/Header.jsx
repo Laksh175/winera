@@ -12,7 +12,28 @@ export default function Header({ headerData }) {
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
   const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
 
-  const productSubMenu = [
+  const getValidImageUrl = (url, fallback) => {
+    if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+      return fallback;
+    }
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+      return url;
+    }
+    if (url.startsWith('/uploads')) {
+      const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+      return `http://${hostname}:5001${url}`;
+    }
+    return fallback;
+  };
+
+  const defaultNavLinks = [
+    { label: 'Home', href: '/' },
+    { label: 'About Us', href: '/why-us' },
+    { label: 'Project', href: '/project' },
+    { label: 'Contact Us', href: '/contact' }
+  ];
+
+  const defaultProductSubMenu = [
     { label: 'Arcade Games', href: '/product/arcade-games' },
     { label: 'VR Games', href: '/product/vr-games' },
     { label: 'AR Games', href: '/product/ar-games' },
@@ -25,11 +46,25 @@ export default function Header({ headerData }) {
     { label: 'Amusement Park', href: '/product/amusement-park' }
   ];
 
-  const resourcesSubMenu = [
+  const defaultResourcesSubMenu = [
     { label: 'Blog', href: '/blog' },
     { label: 'ROI', href: '/resource/roi' },
     { label: 'Safety Standards', href: '/resource/safety-standards' }
   ];
+
+  const logoSrc = getValidImageUrl(headerData?.logoUrl, wineraLogo);
+  const navLinks = Array.isArray(headerData?.navLinks) && headerData.navLinks.length > 0 ? headerData.navLinks : defaultNavLinks;
+  const productSubMenu = Array.isArray(headerData?.productSubMenu) && headerData.productSubMenu.length > 0 ? headerData.productSubMenu : defaultProductSubMenu;
+  const resourcesSubMenu = Array.isArray(headerData?.resourcesSubMenu) && headerData.resourcesSubMenu.length > 0 ? headerData.resourcesSubMenu : defaultResourcesSubMenu;
+  const ctaText = headerData?.ctaText || "Free Consultation";
+  const ctaLink = headerData?.ctaLink || "https://wa.me/919428989488";
+
+  const isHomeActive = currentPath === '/';
+  const isProductActive = currentPath.startsWith('/product');
+  const isProjectActive = currentPath.startsWith('/project');
+  const isResourcesActive = currentPath.startsWith('/resource') || currentPath.startsWith('/blog');
+  const isAboutActive = currentPath === '/why-us' || currentPath === '/about';
+  const isContactActive = currentPath === '/contact';
 
   return (
     <>
@@ -39,8 +74,9 @@ export default function Header({ headerData }) {
         under 900px / 600px - desktop layout is untouched.
       */}
       <style>{`
-        .winera-header { }
-        .winera-nav-desktop { display: flex; }
+        .winera-header { font-family: 'Montserrat', sans-serif !important; }
+        .winera-nav-desktop { display: flex; font-family: 'Montserrat', sans-serif !important; }
+        .winera-nav-desktop a, .winera-nav-desktop span { font-family: 'Montserrat', sans-serif !important; }
         .winera-socials-desktop { display: flex; }
         .winera-hamburger { display: none; }
         .winera-logo-img { height: 48px; }
@@ -82,47 +118,82 @@ export default function Header({ headerData }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        transition: 'all 0.3s ease'
+        transition: 'all 0.3s ease',
+        fontFamily: "'Montserrat', sans-serif"
       }}>
         {/* 1. Official Winera Logo */}
         <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <img src={wineraLogo} alt="Winera International Pvt. Ltd." className="winera-logo-img" style={{ objectFit: 'contain' }} />
+          <img src={logoSrc} alt="Winera International Pvt. Ltd." className="winera-logo-img" style={{ objectFit: 'contain' }} />
         </Link>
 
         {/* 2. Navigation Menu (hidden on mobile) */}
         <nav className="winera-nav-desktop" style={{ gap: '22px', alignItems: 'center' }}>
+          {/* Home Link */}
           <Link
             to="/"
             style={{
               fontSize: '14px',
-              fontWeight: currentPath === '/' ? '800' : '700',
-              color: currentPath === '/' ? '#0084ff' : '#1e293b',
-              textDecoration: 'none'
+              fontWeight: '700',
+              letterSpacing: '0px',
+              color: isHomeActive ? '#38bdf8' : '#0f172a',
+              textDecoration: 'none',
+              position: 'relative',
+              padding: '6px 0',
+              display: 'inline-flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              transition: 'color 0.2s ease'
             }}
           >
-            Home
+            <span>Home</span>
+            {isHomeActive && (
+              <span style={{
+                position: 'absolute',
+                bottom: '-2px',
+                left: '0',
+                right: '0',
+                height: '2.5px',
+                background: '#38bdf8',
+                borderRadius: '2px'
+              }} />
+            )}
           </Link>
 
           {/* Product Dropdown */}
           <div
             onMouseEnter={() => setProductDropdown(true)}
             onMouseLeave={() => setProductDropdown(false)}
-            style={{ position: 'relative', padding: '8px 0' }}
+            style={{ position: 'relative', padding: '6px 0' }}
           >
             <a
               href="/#products"
               style={{
                 fontSize: '14px',
                 fontWeight: '700',
-                color: '#1e293b',
+                letterSpacing: '0px',
+                color: isProductActive ? '#38bdf8' : '#0f172a',
                 textDecoration: 'none',
-                display: 'flex',
+                display: 'inline-flex',
                 alignItems: 'center',
-                gap: '4px'
+                gap: '4px',
+                position: 'relative',
+                padding: '6px 0',
+                transition: 'color 0.2s ease'
               }}
             >
               <span>Product</span>
               <span style={{ fontSize: '10px', transition: 'transform 0.2s', transform: productDropdown ? 'rotate(180deg)' : 'rotate(0deg)' }}>▼</span>
+              {isProductActive && (
+                <span style={{
+                  position: 'absolute',
+                  bottom: '-2px',
+                  left: '0',
+                  right: '0',
+                  height: '2.5px',
+                  background: '#38bdf8',
+                  borderRadius: '2px'
+                }} />
+              )}
             </a>
 
             {/* Floating Product Dropdown Card */}
@@ -144,32 +215,36 @@ export default function Header({ headerData }) {
                 flexDirection: 'column',
                 zIndex: 1050
               }}>
-                {productSubMenu.map((item, idx) => (
-                  <Link
-                    key={idx}
-                    to={item.href}
-                    onClick={() => setProductDropdown(false)}
-                    style={{
-                      padding: '8px 18px',
-                      color: '#0f172a',
-                      fontSize: '13px',
-                      fontWeight: '700',
-                      textDecoration: 'none',
-                      textAlign: 'left',
-                      transition: 'all 0.15s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#f0f9ff';
-                      e.currentTarget.style.color = '#0084ff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.color = '#0f172a';
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+                {productSubMenu.map((item, idx) => {
+                  const isSubActive = currentPath === item.href;
+                  return (
+                    <Link
+                      key={idx}
+                      to={item.href}
+                      onClick={() => setProductDropdown(false)}
+                      style={{
+                        padding: '8px 18px',
+                        color: isSubActive ? '#38bdf8' : '#0f172a',
+                        fontSize: '13px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        textAlign: 'left',
+                        transition: 'all 0.15s ease',
+                        background: isSubActive ? '#f0f9ff' : 'transparent'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#f0f9ff';
+                        e.currentTarget.style.color = '#38bdf8';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = isSubActive ? '#f0f9ff' : 'transparent';
+                        e.currentTarget.style.color = isSubActive ? '#38bdf8' : '#0f172a';
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -179,34 +254,67 @@ export default function Header({ headerData }) {
             to="/project"
             style={{
               fontSize: '14px',
-              fontWeight: currentPath.startsWith('/project') ? '800' : '700',
-              color: currentPath.startsWith('/project') ? '#0084ff' : '#1e293b',
-              textDecoration: 'none'
+              fontWeight: '700',
+              letterSpacing: '0px',
+              color: isProjectActive ? '#38bdf8' : '#0f172a',
+              textDecoration: 'none',
+              position: 'relative',
+              padding: '6px 0',
+              display: 'inline-flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              transition: 'color 0.2s ease'
             }}
           >
-            Project
+            <span>Project</span>
+            {isProjectActive && (
+              <span style={{
+                position: 'absolute',
+                bottom: '-2px',
+                left: '0',
+                right: '0',
+                height: '2.5px',
+                background: '#38bdf8',
+                borderRadius: '2px'
+              }} />
+            )}
           </Link>
 
           {/* Resources Dropdown */}
           <div
             onMouseEnter={() => setResourcesDropdown(true)}
             onMouseLeave={() => setResourcesDropdown(false)}
-            style={{ position: 'relative', padding: '8px 0' }}
+            style={{ position: 'relative', padding: '6px 0' }}
           >
             <a
               href="/#resources"
               style={{
                 fontSize: '14px',
                 fontWeight: '700',
-                color: '#1e293b',
+                letterSpacing: '0px',
+                color: isResourcesActive ? '#38bdf8' : '#0f172a',
                 textDecoration: 'none',
-                display: 'flex',
+                display: 'inline-flex',
                 alignItems: 'center',
-                gap: '4px'
+                gap: '4px',
+                position: 'relative',
+                padding: '6px 0',
+                transition: 'color 0.2s ease'
               }}
             >
               <span>Resources</span>
               <span style={{ fontSize: '10px', transition: 'transform 0.2s', transform: resourcesDropdown ? 'rotate(180deg)' : 'rotate(0deg)' }}>▼</span>
+              {isResourcesActive && (
+                <span style={{
+                  position: 'absolute',
+                  bottom: '-2px',
+                  left: '0',
+                  right: '0',
+                  height: '2.5px',
+                  background: '#38bdf8',
+                  borderRadius: '2px'
+                }} />
+              )}
             </a>
 
             {/* Floating Resources Dropdown Card */}
@@ -226,57 +334,100 @@ export default function Header({ headerData }) {
                 flexDirection: 'column',
                 zIndex: 1050
               }}>
-                {resourcesSubMenu.map((item, idx) => (
-                  <Link
-                    key={idx}
-                    to={item.href}
-                    onClick={() => setResourcesDropdown(false)}
-                    style={{
-                      padding: '9px 18px',
-                      color: '#0f172a',
-                      fontSize: '13px',
-                      fontWeight: '700',
-                      textDecoration: 'none',
-                      textAlign: 'left',
-                      transition: 'all 0.15s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#f0f9ff';
-                      e.currentTarget.style.color = '#0084ff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.color = '#0f172a';
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+                {resourcesSubMenu.map((item, idx) => {
+                  const isSubActive = currentPath === item.href;
+                  return (
+                    <Link
+                      key={idx}
+                      to={item.href}
+                      onClick={() => setResourcesDropdown(false)}
+                      style={{
+                        padding: '9px 18px',
+                        color: isSubActive ? '#38bdf8' : '#0f172a',
+                        fontSize: '13px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        textAlign: 'left',
+                        transition: 'all 0.15s ease',
+                        background: isSubActive ? '#f0f9ff' : 'transparent'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#f0f9ff';
+                        e.currentTarget.style.color = '#38bdf8';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = isSubActive ? '#f0f9ff' : 'transparent';
+                        e.currentTarget.style.color = isSubActive ? '#38bdf8' : '#0f172a';
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>
 
+          {/* About Us Link */}
           <Link
             to="/why-us"
             style={{
               fontSize: '14px',
-              fontWeight: (currentPath === '/why-us' || currentPath === '/about') ? '800' : '700',
-              color: (currentPath === '/why-us' || currentPath === '/about') ? '#0084ff' : '#1e293b',
-              textDecoration: 'none'
+              fontWeight: '700',
+              letterSpacing: '0px',
+              color: isAboutActive ? '#38bdf8' : '#0f172a',
+              textDecoration: 'none',
+              position: 'relative',
+              padding: '6px 0',
+              display: 'inline-flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              transition: 'color 0.2s ease'
             }}
           >
-            About Us
+            <span>About Us</span>
+            {isAboutActive && (
+              <span style={{
+                position: 'absolute',
+                bottom: '-2px',
+                left: '0',
+                right: '0',
+                height: '2.5px',
+                background: '#38bdf8',
+                borderRadius: '2px'
+              }} />
+            )}
           </Link>
+
+          {/* Contact Us Link */}
           <Link
             to="/contact"
             style={{
               fontSize: '14px',
-              fontWeight: currentPath === '/contact' ? '800' : '700',
-              color: currentPath === '/contact' ? '#0084ff' : '#1e293b',
-              textDecoration: 'none'
+              fontWeight: '700',
+              letterSpacing: '0px',
+              color: isContactActive ? '#38bdf8' : '#0f172a',
+              textDecoration: 'none',
+              position: 'relative',
+              padding: '6px 0',
+              display: 'inline-flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              transition: 'color 0.2s ease'
             }}
           >
-            Contact Us
+            <span>Contact Us</span>
+            {isContactActive && (
+              <span style={{
+                position: 'absolute',
+                bottom: '-2px',
+                left: '0',
+                right: '0',
+                height: '2.5px',
+                background: '#38bdf8',
+                borderRadius: '2px'
+              }} />
+            )}
           </Link>
         </nav>
 

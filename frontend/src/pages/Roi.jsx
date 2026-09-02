@@ -1234,12 +1234,12 @@ export default function Roi({ siteData }) {
           </p>
 
           {/* Styled Button offset wrap */}
-          <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm" style={{ position: 'relative', zIndex: 2 }}>
+          <div className="winera-yellow-cyan-cta-wrapper winera-yellow-cyan-cta-wrapper-sm" style={{ position: 'relative', zIndex: 2 }}>
             <a
               href={roiCta.buttonLink}
               target="_blank"
               rel="noreferrer"
-              className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+              className="winera-yellow-cyan-cta-btn winera-yellow-cyan-cta-btn-sm"
             >
               {roiCta.buttonText}
             </a>

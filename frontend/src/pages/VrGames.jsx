@@ -14,7 +14,7 @@ import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeBoy from '../assets/arcade-boy.webp';
 import arcadeHall from '../assets/arcade-hall.webp';
-import about1 from '../assets/about-1.webp';
+import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
 import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
@@ -24,6 +24,7 @@ import vrSupplierCollage from '../assets/vr-supplier-collage.webp';
 import vrMatchedVenue from '../assets/vr-matched-venue.webp';
 import vrMatchedVenueDirect from '../assets/vr-matched-venue-direct.webp';
 import vrRangeTheater from '../assets/vr-range-theater.webp';
+import vrBlock1 from '../assets/vr-block-1.png';
 import vrCommercialReliability from '../assets/vr-commercial-reliability.webp';
 import vrRoiFrame from '../assets/vr-roi-frame.webp';
 import vrRoiContent from '../assets/vr-roi-content.webp';
@@ -145,8 +146,8 @@ export default function VrGames({ siteData }) {
   const heroBgImage = siteData?.vrHero?.bgUrl || vrHeroBg;
 
   const defaultRangeItems = [
-    { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR4 Seated Simulator", img: vrImg, status: "ONLINE", latency: "4ms", icon: "plane" },
-    { title: "VR Wings", subtitle: "Immersive Flight", category: "FLIGHT SIMULATION", name: "VR Wings Experience", img: about3, status: "ONLINE", latency: "2ms", icon: "users" },
+    { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR Wings Experience", img: vrBlock1, status: "ONLINE", latency: "4ms", icon: "plane" },
+    { title: "VR Wings", subtitle: "Immersive Flight", category: "FLIGHT SIMULATION", name: "VR Wings Flight Arena", img: about3, status: "ONLINE", latency: "2ms", icon: "users" },
     { title: "VR UFO 5 player", subtitle: "Group Pod Ride", category: "THEATER SIMULATION", name: "VR UFO 5 Player Motion Pod", img: arcadeHall, status: "ONLINE", latency: "5ms", icon: "radio" },
     { title: "VR UFO 4 player", subtitle: "Group Battle", category: "ARCADE SIMULATION", name: "VR UFO 4 Player Battle Station", img: about4, status: "ONLINE", latency: "3ms", icon: "gamepad" },
     { title: "VR Thunder Dual 360", subtitle: "Combat Station", category: "ACTION SIMULATION", name: "VR Thunder Dual 360 Platform", img: ctaArcade, status: "ONLINE", latency: "4ms", icon: "zap" },
@@ -159,8 +160,11 @@ export default function VrGames({ siteData }) {
 
   const vrRangeListRaw = (Array.isArray(siteData?.vrRange?.items) && siteData.vrRange.items.length > 0) ? siteData.vrRange.items : defaultRangeItems;
   const vrRangeList = vrRangeListRaw.map((item, idx) => {
-    if (idx === 0) return { ...item, img: vrImg, imgUrl: vrImg };
-    return item;
+    let finalImg = item.img || item.imgUrl;
+    if (idx === 0) {
+      finalImg = vrBlock1;
+    }
+    return { ...item, img: finalImg, imgUrl: finalImg };
   });
   const displayedRangeItems = showAllRangeItems ? vrRangeList : vrRangeList.slice(0, 5);
 
@@ -310,14 +314,25 @@ export default function VrGames({ siteData }) {
             </p>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.vrIntro?.buttonLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                {siteData?.vrIntro?.buttonText || "Get Quote From Expert"}
-              </a>
+              {(() => {
+                const baseLink = siteData?.vrIntro?.buttonLink || "https://wa.me/919428989488";
+                const defaultMsg = siteData?.vrIntro?.waMessage || "Hello Winera International! I want to get a quote and details for VR Gaming Machine setup. Please share details. [Ref: VR Games Page]";
+                let hrefLink = baseLink;
+                if (!baseLink.includes('text=')) {
+                  const separator = baseLink.includes('?') ? '&' : '?';
+                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+                return (
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                  >
+                    {siteData?.vrIntro?.buttonText || "Get Quote From Expert"}
+                  </a>
+                );
+              })()}
             </div>
           </div>
         </div>
@@ -373,14 +388,25 @@ export default function VrGames({ siteData }) {
             </div>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.vrMatchedVenue?.buttonLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                {siteData?.vrMatchedVenue?.buttonText || "Get Quote From Expert"}
-              </a>
+              {(() => {
+                const baseLink = siteData?.vrMatchedVenue?.buttonLink || "https://wa.me/919428989488";
+                const defaultMsg = siteData?.vrMatchedVenue?.waMessage || "Hello Winera International! I want to get a quote for Commercial VR Machines matched to my venue. Please share details. [Ref: VR Games Page]";
+                let hrefLink = baseLink;
+                if (!baseLink.includes('text=')) {
+                  const separator = baseLink.includes('?') ? '&' : '?';
+                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+                return (
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                  >
+                    {siteData?.vrMatchedVenue?.buttonText || "Get Quote From Expert"}
+                  </a>
+                );
+              })()}
             </div>
           </div>
 
@@ -714,14 +740,25 @@ export default function VrGames({ siteData }) {
             </div>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.vrEarn?.buttonLink || "https://wa.me/919428989488"}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                {siteData?.vrEarn?.buttonText || "Talk to an ROI Expert"}
-              </a>
+              {(() => {
+                const baseLink = siteData?.vrEarn?.buttonLink || "https://wa.me/919428989488";
+                const defaultMsg = siteData?.vrEarn?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for VR Gaming Zone setup & commercial ROI calculation. Please share details. [Ref: VR Games Page]";
+                let hrefLink = baseLink;
+                if (!baseLink.includes('text=')) {
+                  const separator = baseLink.includes('?') ? '&' : '?';
+                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+                return (
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                  >
+                    {siteData?.vrEarn?.buttonText || "Talk to an ROI Expert"}
+                  </a>
+                );
+              })()}
             </div>
           </div>
 
