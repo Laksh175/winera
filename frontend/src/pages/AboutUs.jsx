@@ -394,7 +394,7 @@ export default function AboutUs({ siteData }) {
 
           <div className="winera-about-mindmap-container" style={{ position: 'relative', width: '100%', maxWidth: '1080px', height: '260px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <svg className="winera-about-mindmap-svg" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }}>
-              <line x1="321" y1="35" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
+              <line x1="321" y1="45" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
               <line x1="315" y1="130" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
               <line x1="385" y1="235" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
               <line x1="714" y1="35" x2="540" y2="130" stroke="#d97706" strokeWidth="1.8" opacity="0.65" />
