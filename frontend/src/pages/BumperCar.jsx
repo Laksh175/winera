@@ -8,7 +8,7 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
-import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
+import bumpercarHeroBg from '../assets/bumper-car-hero-bg.png';
 import bumpercarCollageFrame from '../assets/bumpercar-collage-frame.webp';
 import bumpercar3dNeon from '../assets/bumpercar-3d-neon.webp';
 import bumpercarSpecsBg from '../assets/bumpercar-specs-bg.jpg';
@@ -108,8 +108,8 @@ export default function BumperCar({ siteData }) {
       <section className="winera-bumpercar-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

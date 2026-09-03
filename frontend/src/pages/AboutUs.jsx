@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
-import aboutHeroBg from '../assets/about-hero-bg.webp';
+import aboutHeroBg from '../assets/about-us-banner.png';
 import about1 from '../assets/about-01.webp';
 import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
@@ -720,6 +720,7 @@ export default function AboutUs({ siteData }) {
 
       {/* 7. CTA BANNER SECTION */}
       <CtaBanner
+        pageSource="About Us Page"
         showOverlay={false}
         align="left"
         buttonTheme="yellow_white"

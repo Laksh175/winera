@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LeadCaptureModal from '../components/LeadCaptureModal';
 import { ShieldCheck } from 'lucide-react';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
-import safetyBg from '../assets/safety-bg.webp';
+import safetyBg from '../assets/safety-standard-hero-bg.png';
 import safetyStandardImg1 from '../assets/safety-standard-img1.webp';
 import safetyStandardBg2 from '../assets/safety-standard-bg-2.webp';
 import safetyStandard2 from '../assets/safety-standard-2.webp';
@@ -27,6 +28,7 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 export default function SafetyStandards({ siteData }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
 
@@ -53,8 +55,8 @@ export default function SafetyStandards({ siteData }) {
       <section className="winera-safety-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${bgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
@@ -823,9 +825,11 @@ export default function SafetyStandards({ siteData }) {
                   zIndex: 1
                 }} />
                 <a
-                  href={siteData?.safetyWhyMatters?.buttonLink || "https://wa.me/919428989488"}
-                  target="_blank"
-                  rel="noreferrer"
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsModalOpen(true);
+                  }}
                   style={{
                     position: 'relative',
                     zIndex: 2,
@@ -836,7 +840,8 @@ export default function SafetyStandards({ siteData }) {
                     padding: '14px 34px',
                     borderRadius: '16px',
                     display: 'inline-block',
-                    textDecoration: 'none'
+                    textDecoration: 'none',
+                    cursor: 'pointer'
                   }}
                 >
                   {siteData?.safetyWhyMatters?.buttonText || "Talk to an ROI Expert"}
@@ -846,6 +851,12 @@ export default function SafetyStandards({ siteData }) {
           </div>
         </div>
       </section>
+
+      <LeadCaptureModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        pageSource="Safety Standards Page"
+      />
 
       {/* FOOTER */}
       <Footer footerData={footer} />

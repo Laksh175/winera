@@ -7,7 +7,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import arHeroBg from '../assets/ar-hero-bg.webp';
+import arHeroBg from '../assets/argame-hero-bg.png';
 import arSupplierCollage from '../assets/ar-supplier-collage.webp';
 import arAttractionsGraphic from '../assets/ar-attractions-graphic.webp';
 import arFeaturesBg from '../assets/ar-features-bg.webp';
@@ -440,8 +440,8 @@ export default function ArGames({ siteData }) {
       <section className="winera-ar-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

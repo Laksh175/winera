@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CtaBanner from '../components/CtaBanner';
-import arcadegame1Bg from '../assets/arcadegame1-bg.webp';
+import arcadegame1Bg from '../assets/arcadegames-hero-bg.png';
 import arcadegamesImg from '../assets/arcadegames-img.webp';
 import bikeArcade from '../assets/bike-arcade.webp';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
@@ -328,8 +328,8 @@ export default function ArcadeGameDetail({ siteData }) {
           style={{
             position: 'relative',
             width: '100%',
-            paddingTop: '185px',
-            paddingBottom: '60px',
+            paddingTop: '175px',
+            paddingBottom: '95px',
             background: `url(${arcadegame1Bg}) center top / 100% 100% no-repeat`,
             display: 'flex',
             flexDirection: 'column',
@@ -790,6 +790,7 @@ export default function ArcadeGameDetail({ siteData }) {
 
         {/* 5. NEED ANY CONSULTATIONS CTA BANNER SECTION */}
         <CtaBanner
+          pageSource={`Arcade Games › ${cmsFoundCard?.title || cmsFoundCard?.name || defaultProduct?.name || defaultProduct?.title || 'Game'}`}
           showOverlay={false}
           align="center"
           gradientTitle={true}

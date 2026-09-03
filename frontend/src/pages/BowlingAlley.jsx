@@ -10,14 +10,14 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 
 import wineraLogo from '../assets/logo.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
-import bowlingHeroBg from '../assets/bowling-hero-bg.webp';
+import bowlingHeroBg from '../assets/bowlling-hero-bg.png';
 import bowlingImg from '../assets/bowling.webp';
 import maskGroupImg from '../assets/Mask-group.webp';
 import maskGroup01Img from '../assets/Mask-group-01.webp';
 import vectorImg from '../assets/Vector.webp';
 import bowlingPinsExplode from '../assets/bowling-pins-explode.webp';
 import bowlingBallPinsBlue from '../assets/bowling-ball-pins-blue.webp';
-import bowlingTypesBg from '../assets/bowling-types-bg.webp';
+import bowlingTypesBg from '../assets/bowlling-bg.png';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeBoy from '../assets/arcade-boy.webp';
@@ -206,8 +206,8 @@ export default function BowlingAlley({ siteData }) {
       <section className="winera-bowling-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

@@ -71,3 +71,67 @@ export const uploadImageFile = async (file, token) => {
   return response.data;
 };
 
+// Lead Inquiry APIs
+export const submitLeadApi = async (leadData) => {
+  const response = await axios.post(`${API_BASE_URL}/leads`, leadData);
+  return response.data;
+};
+
+export const fetchLeadsApi = async (params = {}, token) => {
+  let authToken = token;
+  if (!authToken) {
+    try {
+      const savedAdmin = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+      authToken = savedAdmin.token;
+    } catch (e) {}
+  }
+  const response = await axios.get(`${API_BASE_URL}/leads`, {
+    params,
+    headers: { Authorization: `Bearer ${authToken}` }
+  });
+  return response.data;
+};
+
+export const deleteLeadApi = async (id, token) => {
+  let authToken = token;
+  if (!authToken) {
+    try {
+      const savedAdmin = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+      authToken = savedAdmin.token;
+    } catch (e) {}
+  }
+  const response = await axios.delete(`${API_BASE_URL}/leads/${id}`, {
+    headers: { Authorization: `Bearer ${authToken}` }
+  });
+  return response.data;
+};
+
+export const bulkDeleteLeadsApi = async (ids, token) => {
+  let authToken = token;
+  if (!authToken) {
+    try {
+      const savedAdmin = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+      authToken = savedAdmin.token;
+    } catch (e) {}
+  }
+  const response = await axios.post(`${API_BASE_URL}/leads/bulk-delete`, { ids }, {
+    headers: { Authorization: `Bearer ${authToken}` }
+  });
+  return response.data;
+};
+
+export const updateLeadStatusApi = async (id, status, token) => {
+  let authToken = token;
+  if (!authToken) {
+    try {
+      const savedAdmin = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+      authToken = savedAdmin.token;
+    } catch (e) {}
+  }
+  const response = await axios.patch(`${API_BASE_URL}/leads/${id}/status`, { status }, {
+    headers: { Authorization: `Bearer ${authToken}` }
+  });
+  return response.data;
+};
+
+

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import blogHeroBg from '../assets/blog-image-bg.webp';
+import blogHeroBg from '../assets/blog-hero-bg.png';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
@@ -88,11 +88,11 @@ export default function Blog({ siteData }) {
       <Header headerData={header} />
 
       {/* 2. HERO BANNER (MATCHING VR GAMES 1:1) */}
-      <section className="winera-vr-hero-section" style={{
+      <section className="winera-blog-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${heroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

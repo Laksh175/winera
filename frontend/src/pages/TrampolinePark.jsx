@@ -6,7 +6,8 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import trampolineParkBg from '../assets/trampoline-park-bg.webp';
+import LeadCaptureModal from '../components/LeadCaptureModal';
+import trampolineParkBg from '../assets/trampoline-park-hero-bg.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
 import qualityBadge from '../assets/quality-badge.webp';
@@ -61,6 +62,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 
 export default function TrampolinePark({ siteData }) {
   const [activeZoneIndex, setActiveZoneIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -235,8 +237,8 @@ export default function TrampolinePark({ siteData }) {
       <section className="winera-trampoline-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '200px',
-        paddingBottom: '85px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${bgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
@@ -981,12 +983,11 @@ export default function TrampolinePark({ siteData }) {
             {/* Offset Rotated Backdrop Button with Yellow BG & White Border */}
             <div className="winera-yellow-white-cta-wrapper winera-yellow-white-cta-wrapper-sm">
               <a
-                href={(() => {
-                  const link = siteData?.trampolineCta?.buttonLink || "https://wa.me/919428989488";
-                  return link.split('?')[0];
-                })()}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsModalOpen(true);
+                }}
                 className="winera-yellow-white-cta-btn winera-yellow-white-cta-btn-sm"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               >
@@ -1012,6 +1013,12 @@ export default function TrampolinePark({ siteData }) {
           </div>
         </div>
       </section>
+
+      <LeadCaptureModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        pageSource="Trampoline Park Page"
+      />
 
       {/* FOOTER */}
       <Footer footerData={footer} />

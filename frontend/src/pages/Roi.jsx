@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BarChart2, Edit3, Shield, Database, Users, Settings, AlertTriangle, TrendingDown, UserX } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import roiBgImage from '../assets/roi-bg-image.webp';
+import LeadCaptureModal from '../components/LeadCaptureModal';
+import roiBgImage from '../assets/roi-hero-bg.png';
 import roiImg1 from '../assets/roi-img1.webp';
 import roiImage3bg from '../assets/roi-image-3bg.webp';
 import roiBlock5Img1 from '../assets/roi-block5-img1.webp';
@@ -33,6 +34,7 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 export default function Roi({ siteData }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
 
@@ -198,8 +200,8 @@ export default function Roi({ siteData }) {
       <section className="winera-roi-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${getValidImageUrl(roiHero.bgUrl, roiBgImage)}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
@@ -1257,9 +1259,11 @@ export default function Roi({ siteData }) {
           {/* Styled Button offset wrap */}
           <div className="winera-yellow-cyan-cta-wrapper winera-yellow-cyan-cta-wrapper-sm" style={{ position: 'relative', zIndex: 2 }}>
             <a
-              href={roiCta.buttonLink}
-              target="_blank"
-              rel="noreferrer"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsModalOpen(true);
+              }}
               className="winera-yellow-cyan-cta-btn winera-yellow-cyan-cta-btn-sm"
             >
               {roiCta.buttonText}
@@ -1267,6 +1271,12 @@ export default function Roi({ siteData }) {
           </div>
         </div>
       </section>
+
+      <LeadCaptureModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        pageSource="ROI Calculator Page"
+      />
 
       {/* FOOTER */}
       <Footer footerData={footer} />

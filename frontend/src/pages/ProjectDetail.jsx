@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
-import projectBanner from '../assets/project-banner.webp';
+import projectBanner from '../assets/project-hero-bg.png';
 import projectImage01 from '../assets/project-image01.webp';
 import projectImage2Bg from '../assets/project-image2-bg.webp';
 import projectImage3 from '../assets/project-image-3.webp';
@@ -318,8 +318,8 @@ export default function ProjectDetail({ siteData }) {
       <section className="winera-project-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '150px',
-        paddingBottom: '120px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${bannerImg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

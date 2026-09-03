@@ -8,7 +8,7 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import CtaBanner from '../components/CtaBanner';
 import RelatedProductsSection from '../components/RelatedProductsSection';
-import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
+import arcadeHeroBg from '../assets/arcadegame-hero-bg.png';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeBoy from '../assets/arcade-boy.webp';
@@ -148,8 +148,8 @@ export default function ArcadeGame({ siteData }) {
         <section className="winera-arcade-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${getValidImageUrl(siteData?.arcadeHero?.bgUrl, arcadeHeroBg)}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

@@ -5,7 +5,7 @@ import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import FaqSection from '../components/FaqSection';
 import { Phone, Mail, Building2, Globe, CheckCircle2, MapPin } from 'lucide-react';
-import contactUsHeroBg from '../assets/Contact-us.webp';
+import contactUsHeroBg from '../assets/contact-us-banner-bg.png';
 import aboutHeroBg from '../assets/about-hero-bg.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 
@@ -35,7 +35,7 @@ export default function ContactUs({ siteData }) {
         position: 'relative',
         width: '100%',
         paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingBottom: '100px',
         background: `url(${contactUsHeroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

@@ -7,7 +7,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import hypergridHeroBg from '../assets/hypergrid-hero-bg.webp';
+import hypergridHeroBg from '../assets/hypergrid-hero-bg.png';
 import hypergridSupplierCollage from '../assets/hypergrid-supplier-collage.webp';
 import hypergridBannerImg from '../assets/hypergrid-banner-img.webp';
 import hypergridSpecsBg from '../assets/hypergrid-specs-bg.webp';
@@ -157,8 +157,8 @@ export default function Hypergrid({ siteData }) {
       <section className="winera-hypergrid-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

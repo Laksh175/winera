@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CtaBanner from '../components/CtaBanner';
-import blogHeroBg from '../assets/blog-image-bg.webp';
+import blogHeroBg from '../assets/blog-hero-bg.png';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import aboutusCtaBg from '../assets/aboutus-cta-bg.png';
@@ -72,11 +72,11 @@ export default function BlogDetail({ siteData }) {
       <Header headerData={header} />
 
       {/* 2. TOP HERO BANNER (Clean breadcrumb only, title removed from hero) */}
-      <section className="winera-vr-hero-section" style={{
+      <section className="winera-blog-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '60px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${heroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

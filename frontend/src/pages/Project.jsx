@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 
-import projectBanner from '../assets/project-banner.webp';
+import projectBanner from '../assets/main-project-bg.png';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
@@ -310,8 +310,8 @@ export default function Project({ siteData }) {
       <section className="winera-project-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${bannerImg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

@@ -8,13 +8,14 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import ClientsMarqueeSection from '../components/ClientsMarqueeSection';
 import CtaBanner from '../components/CtaBanner';
-import heroBg from '../assets/hero-bg.webp';
+import heroBg from '../assets/home-page-banner-bg.png';
 import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
 import about3 from '../assets/about-3.webp';
 import aboutCollage from '../assets/about-collage.webp';
 import qualityBadge from '../assets/quality-badge.webp';
 import productsBg from '../assets/products-bg.webp';
+import homePageBanner from '../assets/home-page banner.png';
 import partnerBg from '../assets/partner-bg.webp';
 import whyChooseBg from '../assets/why-choose-bg.webp';
 import indMall from '../assets/ind-mall.webp';
@@ -77,6 +78,70 @@ export default function Home({ siteData }) {
     metaTag.setAttribute('content', homeSeo.metaDescription || homeSeo.description || "Winera International is your trusted Game Zone Equipment Manufacturer and Indoor Play Equipment Manufacturer in India since 2014. Get Amazing deals!");
   }, [homeSeo]);
 
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const checkVisibility = () => {
+      const elements = document.querySelectorAll('.winera-reveal, .winera-animate-block, [data-aos]');
+      const windowHeight = window.innerHeight;
+      elements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= windowHeight * 0.92) {
+          el.classList.add('is-visible');
+          el.classList.add('aos-animate');
+        }
+      });
+    };
+
+    const timer = setTimeout(() => {
+      checkVisibility();
+    }, 100);
+
+    const fallbackTimer = setTimeout(() => {
+      const elements = document.querySelectorAll('.winera-reveal, .winera-animate-block, [data-aos]');
+      elements.forEach((el) => {
+        el.classList.add('is-visible');
+        el.classList.add('aos-animate');
+      });
+    }, 600);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            entry.target.classList.add('aos-animate');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '100px 0px 100px 0px',
+        threshold: 0.01
+      }
+    );
+
+    const observerTimer = setTimeout(() => {
+      const elements = document.querySelectorAll('.winera-reveal, .winera-animate-block, [data-aos]');
+      elements.forEach((el) => {
+        if (!el.classList.contains('is-visible')) {
+          observer.observe(el);
+        }
+      });
+    }, 150);
+
+    window.addEventListener('scroll', checkVisibility, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(fallbackTimer);
+      clearTimeout(observerTimer);
+      window.removeEventListener('scroll', checkVisibility);
+      observer.disconnect();
+    };
+  }, [siteData]);
+
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
 
   const { header, hero, footer } = siteData;
@@ -125,162 +190,184 @@ export default function Home({ siteData }) {
       <Header headerData={header} />
       <main id="main-content">
         <section id="hero" className="winera-home-hero-section" style={{
-        position: 'relative',
-        width: '100%',
-        minHeight: 'auto',
-        aspectRatio: '1920 / 840',
-        paddingTop: '65px',
-        paddingBottom: '70px',
-        background: `url(${heroBg}) center/100% 100% no-repeat`,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        color: '#ffffff'
-      }}>
-        <div style={{ width: '100%', maxWidth: '880px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          {/* Badge */}
-          <div style={{
-            display: 'inline-block',
-            padding: '2px 64px 2px 50px',
-            background: 'linear-gradient(90deg, rgba(0, 42, 95, 1) 0%, rgba(255, 212, 0, 1) 35%, rgba(8, 45, 86, 1) 100%)',
-            color: '#ffffff',
-            fontWeight: '900',
-            fontSize: '18px',
-            letterSpacing: '0.6px',
-            textShadow: '0 2px 5px rgba(0,0,0,0.75)',
-            marginBottom: '18px',
-            clipPath: 'polygon(0% 0%, calc(100% - 20px) 0%, 85% 50%, calc(100% - 22px) 100%, 0% 100%)'
-          }}>
-            India's Trusted
-          </div>
+          position: 'relative',
+          width: '100%',
+          minHeight: 'auto',
+          aspectRatio: '1920 / 840',
+          paddingTop: '65px',
+          paddingBottom: '70px',
+          background: `url(${heroBg}) center/100% 100% no-repeat`,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          color: '#ffffff'
+        }}>
+          <div className="winera-hero-animate" style={{ width: '100%', maxWidth: '880px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
+            {/* Badge */}
+            <div style={{
+              display: 'inline-block',
+              padding: '2px 64px 2px 50px',
+              background: 'linear-gradient(90deg, rgba(0, 42, 95, 1) 0%, rgba(255, 212, 0, 1) 35%, rgba(8, 45, 86, 1) 100%)',
+              color: '#ffffff',
+              fontWeight: '900',
+              fontSize: '18px',
+              letterSpacing: '0.6px',
+              textShadow: '0 2px 5px rgba(0,0,0,0.75)',
+              marginBottom: '18px',
+              clipPath: 'polygon(0% 0%, calc(100% - 20px) 0%, 85% 50%, calc(100% - 22px) 100%, 0% 100%)'
+            }}>
+              India's Trusted
+            </div>
 
-          {/* Main Title */}
-          <h1 style={{
-            fontSize: 'clamp(1.75rem, 4.4vw, 3.75rem)',
-            fontWeight: '900',
-            lineHeight: 1.18,
-            color: '#ffffff',
-            marginBottom: '18px',
-            letterSpacing: '-0.3px',
-            maxWidth: '920px',
-            margin: '0 auto 18px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center'
-          }}>
+            {/* Main Title */}
+            <h1 style={{
+              fontSize: 'clamp(1.75rem, 4.4vw, 3.75rem)',
+              fontWeight: '900',
+              lineHeight: 1.18,
+              color: '#ffffff',
+              marginBottom: '18px',
+              letterSpacing: '-0.3px',
+              maxWidth: '920px',
+              margin: '0 auto 18px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textAlign: 'center'
+            }}>
+              {(() => {
+                const rawTitle = hero?.title || "Game Zone Equipment *Manufacturer* & Supplier";
+                if (rawTitle.includes("Game Zone Equipment")) {
+                  return (
+                    <>
+                      <span style={{ display: 'block', width: '100%' }}>Game Zone Equipment</span>
+                      <span style={{ display: 'block', width: '100%', marginTop: '4px' }}>
+                        <span style={{ color: '#ffcd00', display: 'inline' }}>Manufacturer</span> & Supplier
+                      </span>
+                    </>
+                  );
+                }
+                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                return parts.map((part, index) => {
+                  if (index % 2 === 1) {
+                    return (
+                      <span
+                        key={index}
+                        style={{
+                          color: '#ffcd00',
+                          display: 'inline'
+                        }}
+                      >
+                        {part}
+                      </span>
+                    );
+                  }
+                  return <span key={index} style={{ display: 'inline' }}>{part}</span>;
+                });
+              })()}
+            </h1>
+
+            {/* Subtitle Paragraph */}
+            <p style={{
+              fontSize: '0.98rem',
+              color: '#d1d5db',
+              maxWidth: '680px',
+              margin: '0 auto 32px',
+              lineHeight: 1.6,
+              textShadow: '0 2px 8px rgba(0,0,0,0.85)',
+              fontWeight: '500'
+            }}>
+              {hero?.subtitle || "India's ROI-First Game Zone Developer from bowling alleys and trampoline parks to arcade zones and VR gaming & complete indoor amusement park setup, installed by our own team across 50+ cities."}
+            </p>
+
+            {/* CTA Button */}
             {(() => {
-              const rawTitle = hero?.title || "Game Zone Equipment *Manufacturer* & Supplier";
-              if (rawTitle.includes("Game Zone Equipment")) {
-                return (
-                  <>
-                    <span style={{ display: 'block', width: '100%' }}>Game Zone Equipment</span>
-                    <span style={{ display: 'block', width: '100%', marginTop: '4px' }}>
-                      <span style={{ color: '#ffcd00', display: 'inline' }}>Manufacturer</span> & Supplier
-                    </span>
-                  </>
-                );
+              const defaultBaseLink = hero?.ctaPrimaryLink || "https://wa.me/919428989488";
+              const defaultMsg = hero?.waMessage || "Hello Winera International! I want to plan and setup a Game Zone for my space. Please share details and an ROI report. [Ref: Home Page]";
+
+              let hrefLink = defaultBaseLink;
+              if (!defaultBaseLink.includes('text=')) {
+                const separator = defaultBaseLink.includes('?') ? '&' : '?';
+                hrefLink = `${defaultBaseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
               }
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span
-                      key={index}
-                      style={{
-                        color: '#ffcd00',
-                        display: 'inline'
-                      }}
-                    >
-                      {part}
-                    </span>
-                  );
-                }
-                return <span key={index} style={{ display: 'inline' }}>{part}</span>;
-              });
+
+              return (
+                <div className="winera-hero-cta-wrapper">
+                  <a href={hrefLink} target="_blank" rel="noreferrer" className="winera-hero-cta-btn">
+                    <div className="winera-hero-cta-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
+                        <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982l-1.412 5.16 5.281-1.385c1.455.794 3.1 1.213 4.787 1.214h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.668-1.037-5.176-2.923-7.061-1.886-1.885-4.394-2.922-7.066-2.922zm5.834 14.168c-.247.694-1.222 1.282-1.688 1.341-.466.06-1.047.098-1.696-.109-.4-.128-.918-.298-1.583-.585-2.822-1.222-4.664-4.084-4.806-4.273-.141-.188-1.144-1.523-1.144-2.905 0-1.381.724-2.062.981-2.343.257-.282.564-.352.752-.352.188 0 .376.002.54.01.174.008.411-.066.643.49.235.564.8 1.95.87 2.091.07.141.117.306.023.494-.094.188-.141.306-.282.47-.141.164-.298.367-.424.494-.141.141-.289.294-.125.576.164.282.729 1.202 1.564 1.946 1.074.956 1.98 1.253 2.262 1.394.282.141.447.117.611-.07.164-.188.705-.823.893-1.105.188-.282.376-.235.634-.141.258.094 1.644.775 1.926.916.282.141.47.211.54.329.07.117.07.681-.177 1.375z" />
+                      </svg>
+                    </div>
+                    <span>{hero?.ctaPrimaryText || "Plan Your Game Zone"}</span>
+                  </a>
+                </div>
+              );
             })()}
-          </h1>
+          </div>
+        </section>
 
-          {/* Subtitle Paragraph */}
-          <p style={{
-            fontSize: '0.98rem',
-            color: '#d1d5db',
-            maxWidth: '680px',
-            margin: '0 auto 32px',
-            lineHeight: 1.6,
-            textShadow: '0 2px 8px rgba(0,0,0,0.85)',
-            fontWeight: '500'
-          }}>
-            {hero?.subtitle || "India's ROI-First Game Zone Developer from bowling alleys and trampoline parks to arcade zones and VR gaming & complete indoor amusement park setup, installed by our own team across 50+ cities."}
-          </p>
+        <section style={{ padding: '70px 5vw 35px', background: '#F5F5F9', textAlign: 'center' }}>
+          <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+            <SectionHeading marginBottom="12px" accentWidth="320px" accentMaxWidth="420px">
+              {(() => {
+                const rawTitle = siteData?.statsHeader?.title || "DISCOVER OUR *COMPANY STATS*";
+                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                return parts.map((part, index) => {
+                  if (index % 2 === 1) {
+                    return (
+                      <span key={index} style={{ color: '#38bdf8' }}>
+                        {part}
+                      </span>
+                    );
+                  }
+                  return part;
+                });
+              })()}
+            </SectionHeading>
 
-          {/* CTA Button */}
-          {(() => {
-            const defaultBaseLink = hero?.ctaPrimaryLink || "https://wa.me/919428989488";
-            const defaultMsg = hero?.waMessage || "Hello Winera International! I want to plan and setup a Game Zone for my space. Please share details and an ROI report. [Ref: Home Page]";
-            
-            let hrefLink = defaultBaseLink;
-            if (!defaultBaseLink.includes('text=')) {
-              const separator = defaultBaseLink.includes('?') ? '&' : '?';
-              hrefLink = `${defaultBaseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
-            }
+            <p style={{ color: '#475569', fontSize: '14.5px', fontWeight: '500', maxWidth: '620px', margin: '0 auto 48px', lineHeight: 1.55 }}>
+              {siteData?.statsHeader?.description || "Helping businesses build profitable, safe, and unforgettable entertainment destinations with precision and luxury in mind."}
+            </p>
 
-            return (
-              <div className="winera-hero-cta-wrapper">
-                <a href={hrefLink} target="_blank" rel="noreferrer" className="winera-hero-cta-btn">
-                  <div className="winera-hero-cta-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
-                      <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982l-1.412 5.16 5.281-1.385c1.455.794 3.1 1.213 4.787 1.214h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.668-1.037-5.176-2.923-7.061-1.886-1.885-4.394-2.922-7.066-2.922zm5.834 14.168c-.247.694-1.222 1.282-1.688 1.341-.466.06-1.047.098-1.696-.109-.4-.128-.918-.298-1.583-.585-2.822-1.222-4.664-4.084-4.806-4.273-.141-.188-1.144-1.523-1.144-2.905 0-1.381.724-2.062.981-2.343.257-.282.564-.352.752-.352.188 0 .376.002.54.01.174.008.411-.066.643.49.235.564.8 1.95.87 2.091.07.141.117.306.023.494-.094.188-.141.306-.282.47-.141.164-.298.367-.424.494-.141.141-.289.294-.125.576.164.282.729 1.202 1.564 1.946 1.074.956 1.98 1.253 2.262 1.394.282.141.447.117.611-.07.164-.188.705-.823.893-1.105.188-.282.376-.235.634-.141.258.094 1.644.775 1.926.916.282.141.47.211.54.329.07.117.07.681-.177 1.375z" />
-                    </svg>
-                  </div>
-                  <span>{hero?.ctaPrimaryText || "Plan Your Game Zone"}</span>
-                </a>
-              </div>
-            );
-          })()}
-        </div>
-      </section>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '20px',
+              alignItems: 'stretch'
+            }}>
+              {(Array.isArray(siteData?.stats) && siteData.stats.length > 0 ? siteData.stats : [
+                { number: '14+', label: 'YEARS OF EXPERIENCE' },
+                { number: '200+', label: 'Successful Project' },
+                { number: '98%', label: 'Happy Clients' },
+                { number: '50+', label: 'Cities Covered' }
+              ]).map((stat, i) => (
+                <div key={i} className={`winera-stats-card winera-reveal winera-reveal-delay-${(i % 4) + 1}`} style={{
+                  background: 'linear-gradient(145deg, #cceeff 0%, #e8f5ff 45%, #ffffff 100%)',
+                  padding: '30px 18px 24px',
+                  borderRadius: '20px',
+                  border: '1px solid rgba(186, 230, 253, 0.7)',
+                  boxShadow: '0 12px 30px rgba(0, 168, 255, 0.07)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center'
+                }}>
+                  <h3 style={{ fontSize: '2.6rem', fontWeight: '800', color: '#38bdf8', lineHeight: 1, marginBottom: '8px', letterSpacing: '-0.5px' }}>
+                    {stat.number || stat.val}
+                  </h3>
+                  <p style={{ color: '#334155', fontWeight: '800', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0, lineHeight: 1.35 }}>
+                    {stat.label || stat.title}
+                  </p>
+                </div>
+              ))}
 
-      <section style={{ padding: '70px 5vw 35px', background: '#F5F5F9', textAlign: 'center' }}>
-        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          <SectionHeading marginBottom="12px" accentWidth="320px" accentMaxWidth="420px">
-            {(() => {
-              const rawTitle = siteData?.statsHeader?.title || "DISCOVER OUR *COMPANY STATS*";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#38bdf8' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </SectionHeading>
-
-          <p style={{ color: '#475569', fontSize: '14.5px', fontWeight: '500', maxWidth: '620px', margin: '0 auto 48px', lineHeight: 1.55 }}>
-            {siteData?.statsHeader?.description || "Helping businesses build profitable, safe, and unforgettable entertainment destinations with precision and luxury in mind."}
-          </p>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '20px',
-            alignItems: 'stretch'
-          }}>
-            {(Array.isArray(siteData?.stats) && siteData.stats.length > 0 ? siteData.stats : [
-              { number: '14+', label: 'YEARS OF EXPERIENCE' },
-              { number: '200+', label: 'Successful Project' },
-              { number: '98%', label: 'Happy Clients' },
-              { number: '50+', label: 'Cities Covered' }
-            ]).map((stat, i) => (
-              <div key={i} style={{
+              {/* 5th Card: Safety First */}
+              <div className="winera-stats-card winera-reveal winera-reveal-delay-5" style={{
                 background: 'linear-gradient(145deg, #cceeff 0%, #e8f5ff 45%, #ffffff 100%)',
-                padding: '30px 18px 24px',
+                padding: '24px 18px 22px',
                 borderRadius: '20px',
                 border: '1px solid rgba(186, 230, 253, 0.7)',
                 boxShadow: '0 12px 30px rgba(0, 168, 255, 0.07)',
@@ -288,330 +375,32 @@ export default function Home({ siteData }) {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                textAlign: 'center',
-                transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+                textAlign: 'center'
               }}>
-                <h3 style={{ fontSize: '2.6rem', fontWeight: '800', color: '#38bdf8', lineHeight: 1, marginBottom: '8px', letterSpacing: '-0.5px' }}>
-                  {stat.number || stat.val}
-                </h3>
-                <p style={{ color: '#334155', fontWeight: '800', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0, lineHeight: 1.35 }}>
-                  {stat.label || stat.title}
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#0f172a">
+                    <path d="M12 2l2.4 1.8 3-0.6 0.8 2.9 3 1.1-0.8 2.9 1.8 2.4-2.4 1.8 0.6 3-2.9 0.8-1.1 3-2.9-0.8-2.4 1.8-1.8-2.4-3 0.6-0.8-2.9-3-1.1 0.8-2.9-1.8-2.4 2.4-1.8-0.6-3 2.9-0.8 1.1-3z" />
+                    <path d="M9 12l2 2 4-4" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                  </svg>
+                  <span style={{ fontSize: '10.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase' }}>100% CERTIFIED</span>
+                </div>
+                <h4 style={{ fontSize: '1.35rem', fontWeight: '800', color: '#38bdf8', margin: '2px 0 4px', lineHeight: 1.2 }}>
+                  Safety First
+                </h4>
+                <p style={{ color: '#64748b', fontSize: '10.5px', fontWeight: '600', lineHeight: 1.35, margin: 0 }}>
+                  Industry Standard<br />Excellence
                 </p>
               </div>
-            ))}
-
-            {/* 5th Card: Safety First */}
-            <div style={{
-              background: 'linear-gradient(145deg, #cceeff 0%, #e8f5ff 45%, #ffffff 100%)',
-              padding: '24px 18px 22px',
-              borderRadius: '20px',
-              border: '1px solid rgba(186, 230, 253, 0.7)',
-              boxShadow: '0 12px 30px rgba(0, 168, 255, 0.07)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              transition: 'transform 0.25s ease, box-shadow 0.25s ease'
-            }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="#0f172a">
-                  <path d="M12 2l2.4 1.8 3-0.6 0.8 2.9 3 1.1-0.8 2.9 1.8 2.4-2.4 1.8 0.6 3-2.9 0.8-1.1 3-2.9-0.8-2.4 1.8-1.8-2.4-3 0.6-0.8-2.9-3-1.1 0.8-2.9-1.8-2.4 2.4-1.8-0.6-3 2.9-0.8 1.1-3z" />
-                  <path d="M9 12l2 2 4-4" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                </svg>
-                <span style={{ fontSize: '10.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase' }}>100% CERTIFIED</span>
-              </div>
-              <h4 style={{ fontSize: '1.35rem', fontWeight: '800', color: '#38bdf8', margin: '2px 0 4px', lineHeight: 1.2 }}>
-                Safety First
-              </h4>
-              <p style={{ color: '#64748b', fontSize: '10.5px', fontWeight: '600', lineHeight: 1.35, margin: 0 }}>
-                Industry Standard<br />Excellence
-              </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ABOUT WINERA INTERNATIONAL SECTION */}
-      <section id="about" style={{ padding: '35px 5vw 70px', background: '#F5F5F9', textAlign: 'center' }}>
-        <div style={{ maxWidth: '1220px', margin: '0 auto' }}>
-          <SectionHeading marginBottom="45px" accentWidth="280px" accentMaxWidth="320px">
-            {(() => {
-              const rawTitle = siteData?.aboutHome?.title || "*About* Winera International";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#00a8ff' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </SectionHeading>
-
-          <div className="winera-about-content-wrapper" style={{ display: 'grid', gridTemplateColumns: '1fr 520px', gap: '50px', alignItems: 'center', textAlign: 'left' }}>
-            <div>
-              <p style={{ color: '#475569', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '16px' }}>
-                {siteData?.aboutHome?.paragraph1 || "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project."}
-              </p>
-
-              <p style={{ color: '#475569', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '24px' }}>
-                {siteData?.aboutHome?.paragraph2 || "Our team calculates a complete ROI Blueprint for your space, covering projected footfall, revenue potential, and break-even timeline. At Winera International Pvt. Ltd, we've built a reputation for efficiency and reliability, making us the go-to choice for exceptional gaming experiences in the B2B sector."}
-              </p>
-
-              {/* Dynamic Checkmark Feature Bullets */}
-              <div className="winera-about-bullets-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 20px', marginBottom: '32px' }}>
-                {(
-                  Array.isArray(siteData?.aboutHome?.features) && siteData.aboutHome.features.length > 0
-                    ? siteData.aboutHome.features.filter(f => f && f.trim() !== '')
-                    : [
-                      "Game Zone Setup",
-                      "FEC Equipment & Setup",
-                      "Bowling Alley Equipment",
-                      "Arcade & Amusement Equipment",
-                      "Kids Entertainment Solutions",
-                      "VR Gaming Equipment",
-                      "Concept to Installation"
-                    ]
-                ).map((feat, idx) => (
-                  <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '18px',
-                      height: '18px',
-                      color: '#000000',
-                      flexShrink: 0
-                    }}>
-                      <Check style={{ width: '18px', height: '18px', strokeWidth: 3.2 }} />
-                    </span>
-                    <span style={{ fontSize: '13px', fontWeight: '700', color: '#334155' }}>{feat}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTA Button */}
-              <div className="winera-cyan-cta-wrapper">
-                <a href="/why-us" className="winera-cyan-cta-btn">
-                  <span>More About Us</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Right Side Single Composite Collage Image */}
-            <div className="winera-about-images-grid" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img
-                src={siteData?.aboutHome?.rightImgUrl || aboutCollage}
-                alt="About Winera International"
-                loading="lazy"
-                decoding="async"
-                width={520}
-                height={480}
-                style={{
-                  width: '100%',
-                  maxWidth: '520px',
-                  height: 'auto',
-                  aspectRatio: '520 / 480',
-                  display: 'block',
-                  filter: 'drop-shadow(0 15px 35px rgba(0, 0, 0, 0.12))'
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="products" className="winera-products-section" style={{
-        position: 'relative',
-        padding: '70px 4vw 85px',
-        background: `url(${productsBg}) center/100% 100% no-repeat`,
-        minHeight: '760px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start'
-      }}>
-        <div style={{ maxWidth: '1240px', width: '100%', margin: '0 auto', textAlign: 'center' }}>
-          <SectionHeading marginBottom="6px" accentWidth="280px" accentMaxWidth="340px">
-            {(() => {
-              const rawTitle = siteData?.productsHome?.title || "Take a look At *Our Best Products*";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#00a8ff' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </SectionHeading>
-
-          <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '700', marginBottom: '40px' }}>
-            {siteData?.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions"}
-          </p>
-
-          <div className="winera-products-container" style={{
-            display: 'flex',
-            gap: '12px',
-            maxWidth: '1220px',
-            margin: '0 auto',
-            height: '460px',
-            alignItems: 'stretch'
-          }}>
-            {(() => {
-              const defaultProductsCards = [
-                { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
-                { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
-                { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
-                { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
-                { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
-                { id: "trampoline", title: "Trampoline", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
-                { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
-                { id: "lasertag", title: "Laser Tag & Spy", desc: "High-adrenaline commercial laser tag arena setup delivering competitive team battles for malls & venues.", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80", link: "/products/laser-tag" },
-                { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" },
-                { id: "decorative", title: "Decorative Items", desc: "Custom themed lights, sculptures, reception desks, and ambient furniture to elevate your game zone.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80", link: "/products/lights" }
-              ];
-
-              const rawCards = (Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
-                ? siteData.productsHome.cardsList
-                : defaultProductsCards;
-
-              // Filter out Decorative items for now
-              const cards = rawCards.filter(prod => prod.id !== 'decorative' && !prod.title?.toLowerCase().includes('decorative'));
-
-              return cards.map((prod, idx) => {
-                const isExpanded = activeProductIndex === idx;
-                const targetLink = resolveProductLink(prod);
-
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      if (isExpanded) {
-                        navigate(targetLink);
-                      } else {
-                        setActiveProductIndex(idx);
-                      }
-                    }}
-                    onMouseEnter={() => setActiveProductIndex(idx)}
-                    className={`winera-product-card ${isExpanded ? 'is-expanded' : ''}`}
-                    style={{
-                      flex: isExpanded ? '0 0 340px' : '1',
-                      borderRadius: '20px',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      cursor: 'pointer',
-                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                      boxShadow: isExpanded ? '0 15px 35px rgba(0, 0, 0, 0.35)' : '0 6px 16px rgba(0, 144, 224, 0.2)',
-                      border: isExpanded ? '2px solid rgba(0, 168, 255, 0.6)' : '1px solid rgba(255, 255, 255, 0.3)',
-                      background: `linear-gradient(180deg, rgba(0, 144, 224, 0.85) 0%, rgba(0, 114, 200, 0.95) 100%), url(${prod.img}) center/cover no-repeat`,
-                      backgroundBlendMode: isExpanded ? 'normal' : 'overlay'
-                    }}
-                  >
-                    {isExpanded ? (
-                      <div style={{
-                        width: '100%',
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        background: `url(${prod.img}) center/cover no-repeat`,
-                        position: 'relative'
-                      }}>
-                        <div style={{ flex: 1, minHeight: '120px' }}></div>
-                        <div style={{
-                          background: '#F5F5F9',
-                          margin: '12px',
-                          padding: '16px 20px',
-                          borderRadius: '16px',
-                          textAlign: 'left',
-                          boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
-                        }}>
-                          <h3 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#00a8ff', marginBottom: '6px' }}>{prod.title}</h3>
-                          <p style={{ fontSize: '11px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }}>
-                            {prod.desc}
-                          </p>
-                          <Link
-                            to={targetLink}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                            style={{
-                              color: '#00a8ff',
-                              fontSize: '11px',
-                              fontWeight: '800',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '4px',
-                              textDecoration: 'none'
-                            }}
-                          >
-                            <span>View More Info</span>
-                            <ArrowRight style={{ width: '12px', height: '12px' }} />
-                          </Link>
-                        </div>
-                      </div>
-                    ) : (
-                      <div
-                        className="winera-collapsed-title"
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          writingMode: 'vertical-rl',
-                          transform: 'rotate(180deg)',
-                          padding: '20px 0',
-                          color: '#ffffff',
-                          fontWeight: '800',
-                          fontSize: '15px',
-                          letterSpacing: '1px',
-                          textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        {prod.title}
-                      </div>
-                    )}
-                  </div>
-                );
-              });
-            })()}
-          </div>
-        </div>
-      </section>
-
-      <section className="winera-partner-section" style={{
-        position: 'relative',
-        width: '100%',
-        padding: '95px 5vw 175px',
-        background: `url(${partnerBg}) center top / 100% 100% no-repeat`,
-        minHeight: '660px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div className="winera-partner-grid" style={{
-          maxWidth: '1240px',
-          width: '100%',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: '1fr 520px',
-          gap: '50px',
-          alignItems: 'center'
-        }}>
-          <div style={{ textAlign: 'left' }}>
-            <SectionHeading align="left" marginBottom="12px" accentWidth="70%" accentMaxWidth="380px">
+        {/* ABOUT WINERA INTERNATIONAL SECTION */}
+        <section id="about" className="winera-reveal" style={{ padding: '35px 5vw 70px', background: '#F5F5F9', textAlign: 'center' }}>
+          <div style={{ maxWidth: '1220px', margin: '0 auto' }}>
+            <SectionHeading marginBottom="45px" accentWidth="280px" accentMaxWidth="320px">
               {(() => {
-                const rawTitle = siteData?.partnerHome?.title || "*Your Partner* in Building a Profitable Game Zone";
+                const rawTitle = siteData?.aboutHome?.title || "*About* Winera International";
                 const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
@@ -626,197 +415,278 @@ export default function Home({ siteData }) {
               })()}
             </SectionHeading>
 
-            <p style={{ color: '#475569', fontSize: '13px', lineHeight: 1.6, maxWidth: '440px', marginTop: '16px' }}>
-              {siteData?.partnerHome?.subtitle || "Discover how Winera International helps you plan, build, and launch a successful game zone from free ROI consultation to safety-certified equipment and complete installation support."}
+            <div className="winera-about-content-wrapper" style={{ display: 'grid', gridTemplateColumns: '1fr 520px', gap: '50px', alignItems: 'center', textAlign: 'left' }}>
+              <div>
+                <p style={{ color: '#475569', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '16px' }}>
+                  {siteData?.aboutHome?.paragraph1 || "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project."}
+                </p>
+
+                <p style={{ color: '#475569', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '24px' }}>
+                  {siteData?.aboutHome?.paragraph2 || "Our team calculates a complete ROI Blueprint for your space, covering projected footfall, revenue potential, and break-even timeline. At Winera International Pvt. Ltd, we've built a reputation for efficiency and reliability, making us the go-to choice for exceptional gaming experiences in the B2B sector."}
+                </p>
+
+                {/* Dynamic Checkmark Feature Bullets */}
+                <div className="winera-about-bullets-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 20px', marginBottom: '32px' }}>
+                  {(
+                    Array.isArray(siteData?.aboutHome?.features) && siteData.aboutHome.features.length > 0
+                      ? siteData.aboutHome.features.filter(f => f && f.trim() !== '')
+                      : [
+                        "Game Zone Setup",
+                        "FEC Equipment & Setup",
+                        "Bowling Alley Equipment",
+                        "Arcade & Amusement Equipment",
+                        "Kids Entertainment Solutions",
+                        "VR Gaming Equipment",
+                        "Concept to Installation"
+                      ]
+                  ).map((feat, idx) => (
+                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '18px',
+                        height: '18px',
+                        color: '#000000',
+                        flexShrink: 0
+                      }}>
+                        <Check style={{ width: '18px', height: '18px', strokeWidth: 3.2 }} />
+                      </span>
+                      <span style={{ fontSize: '13px', fontWeight: '700', color: '#334155' }}>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA Button */}
+                <div className="winera-cyan-cta-wrapper">
+                  <a href="/why-us" className="winera-cyan-cta-btn">
+                    <span>More About Us</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Side Single Composite Collage Image */}
+              <div className="winera-about-images-grid" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img
+                  src={siteData?.aboutHome?.rightImgUrl || aboutCollage}
+                  alt="About Winera International"
+                  loading="lazy"
+                  decoding="async"
+                  width={520}
+                  height={480}
+                  style={{
+                    width: '100%',
+                    maxWidth: '520px',
+                    height: 'auto',
+                    aspectRatio: '520 / 480',
+                    display: 'block',
+                    filter: 'drop-shadow(0 15px 35px rgba(0, 0, 0, 0.12))'
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="products" className="winera-products-section winera-reveal" style={{
+          position: 'relative',
+          padding: '70px 4vw 85px',
+          backgroundColor: '#F5F5F9',
+          background: `#F5F5F9 url(${homePageBanner}) center/100% 100% no-repeat`,
+          minHeight: '760px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'flex-start'
+        }}>
+          <div style={{ maxWidth: '1240px', width: '100%', margin: '0 auto', textAlign: 'center' }}>
+            <SectionHeading marginBottom="6px" accentWidth="280px" accentMaxWidth="340px">
+              {(() => {
+                const rawTitle = siteData?.productsHome?.title || "Take a look At *Our Best Products*";
+                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                return parts.map((part, index) => {
+                  if (index % 2 === 1) {
+                    return (
+                      <span key={index} style={{ color: '#00a8ff' }}>
+                        {part}
+                      </span>
+                    );
+                  }
+                  return part;
+                });
+              })()}
+            </SectionHeading>
+
+            <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '700', marginBottom: '40px' }}>
+              {siteData?.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions"}
             </p>
-          </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {/* Box 1: Free ROI Consultancy */}
-            <div className="winera-partner-box-wrapper-yellow">
-              <div className="winera-partner-box-yellow">
-                <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>
-                  {siteData?.partnerHome?.box1Title || "Free ROI Consultancy"}
-                </h4>
-                <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.5, marginBottom: '12px' }}>
-                  {siteData?.partnerHome?.box1Desc || "Before you invest a single rupee, our team consults with you on layout, equipment mix, and budget and hands you a complete ROI report covering projected revenue, footfall, and break-even timeline."}
-                </p>
-                <div style={{ textAlign: 'right' }}>
-                  <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-                    <Link to={siteData?.partnerHome?.box1Link || "/roi"} title="Learn More about Free ROI Consultancy" className="winera-cyan-cta-btn winera-cyan-cta-btn-sm">
-                      <span>Explore More</span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Box 2: Safety-Certified Installation */}
-            <div className="winera-partner-box-wrapper-cyan">
-              <div className="winera-partner-box-cyan">
-                <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>
-                  {siteData?.partnerHome?.box2Title || "Safety-Certified Installation"}
-                </h4>
-                <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.5, marginBottom: '12px' }}>
-                  {siteData?.partnerHome?.box2Desc || "Every product we install meets commercial safety standards tested for high-footfall environments, assembled by our own trained team, and handed over only after a full on-site safety inspection."}
-                </p>
-                <div style={{ textAlign: 'right' }}>
-                  <div className="winera-white-cyan-cta-wrapper">
-                    <Link to={siteData?.partnerHome?.box2Link || "/safety-standards"} title="Learn More about Safety Standards" className="winera-white-cyan-cta-btn">
-                      <span>Explore More</span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="industries" style={{
-        padding: '70px 5vw 75px',
-        background: '#F5F5F9',
-        textAlign: 'center',
-        position: 'relative'
-      }}>
-        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          <SectionHeading marginBottom="8px" accentWidth="280px" accentMaxWidth="320px">
-            {(() => {
-              const rawTitle = siteData?.industriesHeader?.title || "INDUSTRIES *WE SERVE*";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#00a8ff' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </SectionHeading>
-
-          <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginBottom: '50px' }}>
-            {siteData?.industriesHeader?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
-          </p>
-
-          <div style={{
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            maxWidth: '1240px',
-            margin: '0 auto',
-            minHeight: '440px'
-          }}>
-            <button
-              onClick={() => {
-                const total = (Array.isArray(siteData?.industriesHeader?.items) && siteData.industriesHeader.items.length > 0) ? siteData.industriesHeader.items.length : 10;
-                setActiveIndustryIndex((prev) => (prev > 0 ? prev - 1 : total - 1));
-              }}
-              className="winera-industries-btn-left"
-              aria-label="Previous Industry"
-              style={{
-                position: 'absolute',
-                left: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                zIndex: 50,
-                background: 'transparent',
-                border: 'none',
-                color: '#64748b',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                padding: '8px',
-                transition: 'all 0.25s ease'
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#00a8ff'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
-            >
-              <ChevronLeft style={{ width: '40px', height: '40px', strokeWidth: 1.8 }} />
-            </button>
-
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              height: '440px',
+            <div className="winera-products-container" style={{
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
+              gap: '12px',
+              maxWidth: '1220px',
+              margin: '0 auto',
+              height: '460px',
+              alignItems: 'stretch'
             }}>
               {(() => {
-                const defaultIndustries = [
-                  { title: "Shopping Malls", img: indMall },
-                  { title: "Hotels & Resorts", img: indResort },
-                  { title: "Schools & Academies", img: indSchool },
-                  { title: "Commercial Spaces", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
-                  { title: "Residential Projects", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
-                  { title: "Sports Centres", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-                  { title: "Entertainment Hubs", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-                  { title: "Airports & Terminals", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" },
-                  { title: "Hospitals & Clinics", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" },
-                  { title: "Food and Beverage", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" }
+                const defaultProductsCards = [
+                  { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
+                  { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
+                  { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
+                  { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
+                  { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
+                  { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
+                  { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
+                  { id: "lasertag", title: "Laser Tag", desc: "High-adrenaline commercial laser tag arena setup delivering competitive team battles for malls & venues.", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80", link: "/products/laser-tag" },
+                  { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
+                  { id: "decorative", title: "Decorative Items", desc: "Custom themed lights, sculptures, reception desks, and ambient furniture to elevate your game zone.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80", link: "/products/lights" },
+                  { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" }
                 ];
 
-                const items = (Array.isArray(siteData?.industriesHeader?.items) && siteData.industriesHeader.items.length > 0)
-                  ? siteData.industriesHeader.items
-                  : defaultIndustries;
+                const getCustomTitleStyle = (prod) => {
+                  const idKey = (prod.id || '').toLowerCase().replace(/[^a-z]/g, '');
+                  const titleKey = (prod.title || '').toLowerCase().replace(/[^a-z]/g, '');
 
-                return items.map((ind, idx, arr) => {
-                  const total = arr.length;
-                  let offset = (idx - activeIndustryIndex) % total;
-                  if (offset > total / 2) offset -= total;
-                  if (offset < -total / 2) offset += total;
+                  if (idKey.includes('arcade') || titleKey.includes('arcade')) {
+                    return { padding: '0 0 120px 0', fontSize: '32px', letterSpacing: '2px' };
+                  }
+                  if (idKey.includes('bumper') || titleKey.includes('bumper')) {
+                    return { padding: '0 0 150px 0', fontSize: '31px', letterSpacing: '2px' };
+                  }
+                  if (idKey.includes('amusement') || titleKey.includes('amusement')) {
+                    return { padding: '0 0 88px 0', fontSize: '29px', letterSpacing: '1.8px' };
+                  }
+                  if (idKey.includes('trampoline') || titleKey.includes('trampoline')) {
+                    return { padding: '0 0 88px 0', fontSize: '29px', letterSpacing: '1.8px' };
+                  }
+                  if (idKey.includes('hyper') || titleKey.includes('hyper')) {
+                    return { padding: '0 0 180px 0', fontSize: '31px', letterSpacing: '2px' };
+                  }
+                  if (idKey.includes('laser') || titleKey.includes('laser')) {
+                    return { padding: '0 0 200px 0', fontSize: '31px', letterSpacing: '2px' };
+                  }
+                  if (idKey.includes('decorative') || titleKey.includes('decorative') || titleKey.includes('light')) {
+                    return { padding: '0 0 116px 0', fontSize: '27px', letterSpacing: '1.5px' };
+                  }
+                  if (idKey.includes('soft') || titleKey.includes('soft')) {
+                    return { padding: '0 0 190px 0', fontSize: '31px', letterSpacing: '2px' };
+                  }
+                  if (idKey.includes('bowling') || titleKey.includes('bowling')) {
+                    return { padding: '0 0 110px 0', fontSize: '31px', letterSpacing: '2px' };
+                  }
+                  if (idKey.includes('vr') || titleKey.includes('vr')) {
+                    return { padding: '0 0 185px 0', fontSize: '32px', letterSpacing: '2.5px' };
+                  }
+                  if (idKey === 'ar' || titleKey === 'argame' || titleKey === 'ar' || titleKey.startsWith('argame')) {
+                    return { padding: '0 0 177px 0', fontSize: '32px', letterSpacing: '2.5px' };
+                  }
 
-                  // Show only the 5 closest cards: offsets -2, -1, 0, 1, 2
-                  if (Math.abs(offset) > 2) return null;
+                  return { padding: '0 0 120px 0', fontSize: '30px', letterSpacing: '2px' };
+                };
 
-                  const isCenter = offset === 0;
-                  const translateXMap = { '-2': '-500px', '-1': '-265px', '0': '0px', '1': '265px', '2': '500px' };
-                  const translateYMap = { '-2': '30px', '-1': '15px', '0': '0px', '1': '15px', '2': '30px' };
-                  const scaleMap = { '-2': 0.76, '-1': 0.88, '0': 1.12, '1': 0.88, '2': 0.76 };
-                  const opacityMap = { '-2': 0.6, '-1': 0.88, '0': 1, '1': 0.88, '2': 0.6 };
-                  const zIndexMap = { '-2': 5, '-1': 15, '0': 30, '1': 15, '2': 5 };
+                const cards = (Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
+                  ? siteData.productsHome.cardsList
+                  : defaultProductsCards;
+
+                return cards.map((prod, idx) => {
+                  const isExpanded = activeProductIndex === idx;
+                  const targetLink = resolveProductLink(prod);
+                  const cardStyle = getCustomTitleStyle(prod);
 
                   return (
                     <div
                       key={idx}
-                      onClick={() => setActiveIndustryIndex(idx)}
-                      className={`winera-industry-card ${isCenter ? 'is-center-card' : 'is-side-card'}`}
+                      onClick={() => {
+                        if (isExpanded) {
+                          navigate(targetLink);
+                        } else {
+                          setActiveProductIndex(idx);
+                        }
+                      }}
+                      onMouseEnter={() => setActiveProductIndex(idx)}
+                      className={`winera-product-card ${isExpanded ? 'is-expanded' : ''}`}
                       style={{
-                        position: 'absolute',
-                        width: '260px',
-                        height: '350px',
-                        borderRadius: '24px',
+                        flex: isExpanded ? '0 0 340px' : '1',
+                        borderRadius: '18px',
                         overflow: 'hidden',
+                        position: 'relative',
                         cursor: 'pointer',
-                        transition: 'all 0.55s cubic-bezier(0.34, 1.25, 0.64, 1)',
-                        opacity: opacityMap[offset],
-                        zIndex: zIndexMap[offset],
-                        transform: `translate3d(${translateXMap[offset]}, ${translateYMap[offset]}, 0) scale(${scaleMap[offset]})`,
-                        boxShadow: isCenter ? '0 25px 50px rgba(0, 0, 0, 0.4)' : '0 12px 28px rgba(0,0,0,0.18)',
-                        background: `url(${ind.img}) center/cover no-repeat`
+                        transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
+                        boxShadow: isExpanded ? '0 16px 36px rgba(2, 132, 199, 0.22)' : '0 4px 12px rgba(0,0,0,0.06)',
+                        background: isExpanded
+                          ? '#0f172a'
+                          : `linear-gradient(180deg, rgba(38, 168, 237, 0.70) 0%, rgba(2, 125, 190, 0.80) 100%), url(${prod.img}) center/cover no-repeat`
                       }}
                     >
-                      {isCenter && (
+                      {isExpanded ? (
                         <div style={{
-                          position: 'absolute',
-                          bottom: '20px',
-                          left: '16px',
-                          right: '16px',
-                          background: '#F5F5F9',
-                          padding: '16px 18px',
-                          borderRadius: '16px',
-                          textAlign: 'left',
-                          boxShadow: '0 12px 30px rgba(0,0,0,0.25)'
+                          width: '100%',
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          background: `url(${prod.img}) center/cover no-repeat`,
+                          position: 'relative'
                         }}>
-                          <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#00a8ff', marginBottom: '6px' }}>
-                            {ind.title}
-                          </h3>
+                          <div style={{ flex: 1, minHeight: '120px' }}></div>
+                          <div
+                            className="winera-expanded-info-box"
+                            style={{
+                              background: '#ffffff',
+                              margin: '14px',
+                              padding: '16px 20px',
+                              borderRadius: '16px',
+                              textAlign: 'left',
+                              boxShadow: '0 10px 25px rgba(0,0,0,0.15)'
+                            }}
+                          >
+                            <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0284c7', marginBottom: '6px' }}>{prod.title}</h3>
+                            <p style={{ fontSize: '11.5px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }}>
+                              {prod.desc}
+                            </p>
+                            <Link
+                              to={targetLink}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                              style={{
+                                color: '#0284c7',
+                                fontSize: '12px',
+                                fontWeight: '800',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                textDecoration: 'none'
+                              }}
+                            >
+                              <span>View More Info</span>
+                              <ArrowRight style={{ width: '13px', height: '13px' }} />
+                            </Link>
+                          </div>
+                        </div>
+                      ) : (
+                        <div
+                          className="winera-collapsed-title winera-collapsed-title-anim"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'flex-start',
+                            writingMode: 'vertical-rl',
+                            transform: 'rotate(180deg)',
+                            padding: cardStyle.padding,
+                            color: '#ffffff',
+                            fontWeight: '800',
+                            fontSize: cardStyle.fontSize,
+                            letterSpacing: cardStyle.letterSpacing,
+                            whiteSpace: 'nowrap',
+                            transition: 'all 0.4s ease'
+                          }}
+                        >
+                          {prod.title}
                         </div>
                       )}
                     </div>
@@ -824,206 +694,110 @@ export default function Home({ siteData }) {
                 });
               })()}
             </div>
-
-            <button
-              onClick={() => {
-                const total = (Array.isArray(siteData?.industriesHeader?.items) && siteData.industriesHeader.items.length > 0) ? siteData.industriesHeader.items.length : 10;
-                setActiveIndustryIndex((prev) => (prev < total - 1 ? prev + 1 : 0));
-              }}
-              className="winera-industries-btn-right"
-              aria-label="Next Industry"
-              style={{
-                position: 'absolute',
-                right: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                zIndex: 50,
-                background: 'transparent',
-                border: 'none',
-                color: '#64748b',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                padding: '8px',
-                transition: 'all 0.25s ease'
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#00a8ff'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
-            >
-              <ChevronRight style={{ width: '40px', height: '40px', strokeWidth: 1.8 }} />
-            </button>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="process" className="winera-process-section" style={{ padding: '70px 4vw 75px', background: '#F5F5F9', textAlign: 'center' }}>
-        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          <SectionHeading marginBottom="8px" accentWidth="280px" accentMaxWidth="320px">
-            {(() => {
-              const rawTitle = siteData?.processHome?.title || "*OUR WORKING* PROCESS";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#00a8ff' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </SectionHeading>
-
-          <p style={{ color: '#64748b', fontSize: '14px', fontWeight: '700', marginBottom: '50px' }}>
-            {siteData?.processHome?.subtitle || "How We Setup Your Game Zone"}
-          </p>
-
-          {/* Dynamic Working Process Cards */}
-          <div className="winera-process-cards-container" style={{ display: 'flex', flexDirection: 'column', gap: '40px', maxWidth: '1220px', margin: '0 auto', paddingTop: '12px' }}>
-            {(() => {
-              const defaultCards = [
-                { num: "01", title: "Free ROI Consultation", points: ["Share your project idea and business goal", "Tell us your space size and budget", "We suggest the best game zone setup for you"] },
-                { num: "02", title: "Project planning", points: ["We design a complete game zone layout for your space", "Best equipment selected as per your budget", "Complete route planning for your project"] },
-                { num: "03", title: "Order Confirmation", points: ["Contract signed with transparent pricing", "Payment confirmation and order finalized", "Game zone production process begins"] },
-                { num: "04", title: "Interior Design", points: ["Structural information and details finalized", "Partial decoration work completed", "Overall decoration drawing shared for approval"] },
-                { num: "05", title: "Project Installation", points: ["Complete equipment assembly at your site", "Management system installation and setup", "Full equipment inspection after installation"] },
-                { num: "06", title: "Forever Support", points: ["Technical support whenever you need assistance", "Spare parts and maintenance support available", "Expert guidance to keep operations running smoothly"] }
-              ];
-              const cardList = (Array.isArray(siteData?.processHome?.cards) && siteData.processHome.cards.length > 0)
-                ? siteData.processHome.cards.filter(item => item && typeof item === 'object')
-                : defaultCards;
-
-              const iconsList = [
-                <UserCheck style={{ width: '26px', height: '26px', color: '#00a8ff' }} />,
-                <LayoutGrid style={{ width: '26px', height: '26px', color: '#d97706' }} />,
-                <ShoppingBag style={{ width: '26px', height: '26px', color: '#00a8ff' }} />,
-                <Palette style={{ width: '26px', height: '26px', color: '#d97706' }} />,
-                <Wrench style={{ width: '26px', height: '26px', color: '#00a8ff' }} />,
-                <UserCheck style={{ width: '26px', height: '26px', color: '#d97706' }} />
-              ];
-
-              const renderCard = (step, idx, actualIndex) => {
-                const isYellow = actualIndex % 2 === 1;
-                const wrapperClass = isYellow ? 'winera-process-card-wrapper-yellow' : 'winera-process-card-wrapper-cyan';
-                const iconBg = isYellow ? '#fef9c3' : '#e0f2fe';
-                const iconComponent = iconsList[actualIndex % iconsList.length];
-                const rawNum = step?.num || `${actualIndex + 1}`;
-                const formattedNum = rawNum.length === 1 ? `0${rawNum}` : rawNum;
-
-                return (
-                  <div key={idx} className={wrapperClass}>
-                    <div className="winera-process-inner-card">
-                      {/* Very Large, Bold, Visually Dominant Step Number (Matching FIRST IMAGE) */}
-                      <div style={{
-                        position: 'absolute',
-                        top: '6px',
-                        right: '16px',
-                        fontSize: '6rem',
-                        fontWeight: '900',
-                        color: '#f1f5f9',
-                        lineHeight: 0.85,
-                        letterSpacing: '-2px',
-                        pointerEvents: 'none',
-                        userSelect: 'none',
-                        fontFamily: 'Inter, system-ui, sans-serif'
-                      }}>
-                        {formattedNum}
-                      </div>
-
-                      {/* Icon Badge Container */}
-                      <div style={{
-                        width: '54px',
-                        height: '54px',
-                        borderRadius: '16px',
-                        background: iconBg,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginBottom: '20px',
-                        flexShrink: 0,
-                        boxShadow: isYellow ? '0 6px 18px rgba(234, 179, 8, 0.18)' : '0 6px 18px rgba(56, 189, 248, 0.18)'
-                      }}>
-                        {iconComponent}
-                      </div>
-
-                      {/* Card Title */}
-                      <h3 style={{ fontSize: '1.3rem', fontWeight: '900', color: '#0f172a', margin: '0 0 16px 0', lineHeight: 1.3 }}>
-                        {step?.title || ''}
-                      </h3>
-
-                      {/* Bullet Points */}
-                      <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        {(Array.isArray(step?.points) ? step.points : []).filter(p => p && p.trim() !== '').map((pt, pIdx) => (
-                          <li key={pIdx} style={{ fontSize: '13px', color: '#475569', fontWeight: '500', lineHeight: 1.6, display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                            <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '14px', fontWeight: '900', marginTop: '-1px' }}>•</span>
-                            <span>{pt}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                );
-              };
-
-              const totalCards = cardList.length;
-
-              if (totalCards % 3 === 0) {
-                return (
-                  <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px', width: '100%' }}>
-                    {cardList.map((step, idx) => renderCard(step, idx, idx))}
-                  </div>
-                );
-              }
-
-              const topRowCards = cardList.slice(0, 3);
-              const bottomRowCards = cardList.slice(3);
-
-              return (
-                <>
-                  <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(topRowCards.length, 3)}, 1fr)`, gap: '40px' }}>
-                    {topRowCards.map((step, idx) => renderCard(step, idx, idx))}
-                  </div>
-
-                  {bottomRowCards.length > 0 && (
-                    <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: `repeat(${bottomRowCards.length}, 1fr)`, gap: '40px', maxWidth: bottomRowCards.length === 2 ? '820px' : '1220px', margin: '0 auto', width: '100%' }}>
-                      {bottomRowCards.map((step, idx) => renderCard(step, idx, idx + topRowCards.length))}
-                    </div>
-                  )}
-                </>
-              );
-            })()}
-          </div>
-        </div>
-      </section>
-
-      <ClientsMarqueeSection
-        clientLogos={siteData?.clientLogos}
-        title={siteData?.clientsHeader?.title}
-        subtitle={siteData?.clientsHeader?.subtitle}
-      />
-
-      <ProjectsMarqueeSection
-        showTopHeader={true}
-        projects={siteData?.builtProjects}
-        title={siteData?.builtProjectsHeader?.title}
-        subtext={siteData?.builtProjectsHeader?.subtext}
-      />
-
-      <section id="partners" className="winera-channel-partners-section" style={{ padding: '70px 5vw 75px', background: '#f5F5F9' }}>
-        <div className="winera-channel-partners-grid" style={{
-          maxWidth: '1240px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: '360px 1fr',
-          gap: '50px',
-          alignItems: 'center'
+        <section className="winera-partner-section winera-reveal" style={{
+          position: 'relative',
+          width: '100%',
+          padding: '95px 5vw 175px',
+          backgroundColor: 'rgb(245, 245, 249)',
+          backgroundImage: `url(${partnerBg})`,
+          backgroundPosition: 'center top',
+          backgroundSize: '100% 100%',
+          backgroundRepeat: 'no-repeat',
+          backgroundBlendMode: 'multiply',
+          minHeight: '660px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}>
-          <div style={{ textAlign: 'left' }}>
-            <SectionHeading align="left" marginBottom="8px" accentWidth="80%" accentMaxWidth="320px">
+          <div className="winera-partner-grid" style={{
+            maxWidth: '1240px',
+            width: '100%',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: '1fr 520px',
+            gap: '50px',
+            alignItems: 'center'
+          }}>
+            <div style={{ textAlign: 'left' }}>
+              <SectionHeading align="left" marginBottom="12px" accentWidth="70%" accentMaxWidth="380px">
+                {(() => {
+                  const rawTitle = siteData?.partnerHome?.title || "*Your Partner* in Building a Profitable Game Zone";
+                  const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                  return parts.map((part, index) => {
+                    if (index % 2 === 1) {
+                      return (
+                        <span key={index} style={{ color: '#00a8ff' }}>
+                          {part}
+                        </span>
+                      );
+                    }
+                    return part;
+                  });
+                })()}
+              </SectionHeading>
+
+              <p style={{ color: '#475569', fontSize: '13px', lineHeight: 1.6, maxWidth: '440px', marginTop: '16px' }}>
+                {siteData?.partnerHome?.subtitle || "Discover how Winera International helps you plan, build, and launch a successful game zone from free ROI consultation to safety-certified equipment and complete installation support."}
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {/* Box 1: Free ROI Consultancy */}
+              <div className="winera-partner-box-wrapper-yellow winera-reveal winera-reveal-delay-1">
+                <div className="winera-partner-box-yellow">
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>
+                    {siteData?.partnerHome?.box1Title || "Free ROI Consultancy"}
+                  </h4>
+                  <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.5, marginBottom: '12px' }}>
+                    {siteData?.partnerHome?.box1Desc || "Before you invest a single rupee, our team consults with you on layout, equipment mix, and budget and hands you a complete ROI report covering projected revenue, footfall, and break-even timeline."}
+                  </p>
+                  <div style={{ textAlign: 'right' }}>
+                    <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+                      <Link to={siteData?.partnerHome?.box1Link || "/roi"} title="Learn More about Free ROI Consultancy" className="winera-cyan-cta-btn winera-cyan-cta-btn-sm">
+                        <span>Explore More</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Box 2: Safety-Certified Installation */}
+              <div className="winera-partner-box-wrapper-cyan winera-reveal winera-reveal-delay-2">
+                <div className="winera-partner-box-cyan">
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>
+                    {siteData?.partnerHome?.box2Title || "Safety-Certified Installation"}
+                  </h4>
+                  <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.5, marginBottom: '12px' }}>
+                    {siteData?.partnerHome?.box2Desc || "Every product we install meets commercial safety standards tested for high-footfall environments, assembled by our own trained team, and handed over only after a full on-site safety inspection."}
+                  </p>
+                  <div style={{ textAlign: 'right' }}>
+                    <div className="winera-white-cyan-cta-wrapper">
+                      <Link to={siteData?.partnerHome?.box2Link || "/safety-standards"} title="Learn More about Safety Standards" className="winera-white-cyan-cta-btn">
+                        <span>Explore More</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="industries" className="winera-reveal" style={{
+          padding: '70px 5vw 75px',
+          background: '#F5F5F9',
+          textAlign: 'center',
+          position: 'relative',
+          marginTop: '-110px',
+          zIndex: 2
+        }}>
+          <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+            <SectionHeading marginBottom="8px" accentWidth="280px" accentMaxWidth="320px">
               {(() => {
-                const rawTitle = siteData?.channelPartnersHeader?.title || "*Our Channel* partners";
+                const rawTitle = siteData?.industriesHeader?.title || "INDUSTRIES *WE SERVE*";
                 const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
@@ -1037,190 +811,535 @@ export default function Home({ siteData }) {
                 });
               })()}
             </SectionHeading>
-          </div>
 
-          <div className="winera-channel-partners-content">
-            {/* Desktop Static Grid */}
-            <div className="winera-desktop-partners-grid">
-              {(siteData?.channelPartners && siteData.channelPartners.length > 0) ? (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '16px' }}>
-                  {siteData.channelPartners.map((partner, idx) => (
-                    <div key={idx} style={{
-                      background: '#F5F5F9',
-                      height: '56px',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
-                      border: '1px solid #e2e8f0',
-                      padding: '8px 16px'
-                    }}>
-                      {partner.logoUrl ? (
-                        <img src={partner.logoUrl} alt={partner.name} style={{ maxHeight: '36px', maxWidth: '100%', objectFit: 'contain' }} />
+            <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginBottom: '50px' }}>
+              {siteData?.industriesHeader?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
+            </p>
+
+            <div style={{
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              maxWidth: '1240px',
+              margin: '0 auto',
+              minHeight: '440px'
+            }}>
+              <button
+                onClick={() => {
+                  const total = (Array.isArray(siteData?.industriesHeader?.items) && siteData.industriesHeader.items.length > 0) ? siteData.industriesHeader.items.length : 10;
+                  setActiveIndustryIndex((prev) => (prev > 0 ? prev - 1 : total - 1));
+                }}
+                className="winera-industries-btn-left"
+                aria-label="Previous Industry"
+                style={{
+                  position: 'absolute',
+                  left: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  zIndex: 50,
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#64748b',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  padding: '8px',
+                  transition: 'all 0.25s ease'
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#00a8ff'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
+              >
+                <ChevronLeft style={{ width: '40px', height: '40px', strokeWidth: 1.8 }} />
+              </button>
+
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: '440px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                {(() => {
+                  const defaultIndustries = [
+                    { title: "Shopping Malls", img: indMall },
+                    { title: "Hotels & Resorts", img: indResort },
+                    { title: "Schools & Academies", img: indSchool },
+                    { title: "Commercial Spaces", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Residential Projects", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Sports Centres", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Entertainment Hubs", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Airports & Terminals", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Hospitals & Clinics", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Food and Beverage", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" }
+                  ];
+
+                  const items = (Array.isArray(siteData?.industriesHeader?.items) && siteData.industriesHeader.items.length > 0)
+                    ? siteData.industriesHeader.items
+                    : defaultIndustries;
+
+                  return items.map((ind, idx, arr) => {
+                    const total = arr.length;
+                    let offset = (idx - activeIndustryIndex) % total;
+                    if (offset > total / 2) offset -= total;
+                    if (offset < -total / 2) offset += total;
+
+                    // Show only the 5 closest cards: offsets -2, -1, 0, 1, 2
+                    if (Math.abs(offset) > 2) return null;
+
+                    const isCenter = offset === 0;
+                    const translateXMap = { '-2': '-500px', '-1': '-265px', '0': '0px', '1': '265px', '2': '500px' };
+                    const translateYMap = { '-2': '30px', '-1': '15px', '0': '0px', '1': '15px', '2': '30px' };
+                    const scaleMap = { '-2': 0.76, '-1': 0.88, '0': 1.12, '1': 0.88, '2': 0.76 };
+                    const opacityMap = { '-2': 0.6, '-1': 0.88, '0': 1, '1': 0.88, '2': 0.6 };
+                    const zIndexMap = { '-2': 5, '-1': 15, '0': 30, '1': 15, '2': 5 };
+
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => setActiveIndustryIndex(idx)}
+                        className={`winera-industry-card ${isCenter ? 'is-center-card' : 'is-side-card'}`}
+                        style={{
+                          position: 'absolute',
+                          width: '260px',
+                          height: '350px',
+                          borderRadius: '24px',
+                          overflow: 'hidden',
+                          cursor: 'pointer',
+                          transition: 'all 0.55s cubic-bezier(0.34, 1.25, 0.64, 1)',
+                          opacity: opacityMap[offset],
+                          zIndex: zIndexMap[offset],
+                          transform: `translate3d(${translateXMap[offset]}, ${translateYMap[offset]}, 0) scale(${scaleMap[offset]})`,
+                          boxShadow: isCenter ? '0 25px 50px rgba(0, 0, 0, 0.4)' : '0 12px 28px rgba(0,0,0,0.18)',
+                          background: `url(${ind.img}) center/cover no-repeat`
+                        }}
+                      >
+                        {isCenter && (
+                          <div style={{
+                            position: 'absolute',
+                            bottom: '20px',
+                            left: '16px',
+                            right: '16px',
+                            background: '#F5F5F9',
+                            padding: '16px 18px',
+                            borderRadius: '16px',
+                            textAlign: 'left',
+                            boxShadow: '0 12px 30px rgba(0,0,0,0.25)'
+                          }}>
+                            <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#00a8ff', marginBottom: '6px' }}>
+                              {ind.title}
+                            </h3>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
+
+              <button
+                onClick={() => {
+                  const total = (Array.isArray(siteData?.industriesHeader?.items) && siteData.industriesHeader.items.length > 0) ? siteData.industriesHeader.items.length : 10;
+                  setActiveIndustryIndex((prev) => (prev < total - 1 ? prev + 1 : 0));
+                }}
+                className="winera-industries-btn-right"
+                aria-label="Next Industry"
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  zIndex: 50,
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#64748b',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  padding: '8px',
+                  transition: 'all 0.25s ease'
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#00a8ff'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
+              >
+                <ChevronRight style={{ width: '40px', height: '40px', strokeWidth: 1.8 }} />
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="process" className="winera-process-section" style={{ padding: '70px 4vw 75px', background: '#F5F5F9', textAlign: 'center' }}>
+          <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+            <SectionHeading marginBottom="8px" accentWidth="280px" accentMaxWidth="320px">
+              {(() => {
+                const rawTitle = siteData?.processHome?.title || "*OUR WORKING* PROCESS";
+                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                return parts.map((part, index) => {
+                  if (index % 2 === 1) {
+                    return (
+                      <span key={index} style={{ color: '#00a8ff' }}>
+                        {part}
+                      </span>
+                    );
+                  }
+                  return part;
+                });
+              })()}
+            </SectionHeading>
+
+            <p style={{ color: '#64748b', fontSize: '14px', fontWeight: '700', marginBottom: '50px' }}>
+              {siteData?.processHome?.subtitle || "How We Setup Your Game Zone"}
+            </p>
+
+            {/* Dynamic Working Process Cards */}
+            <div className="winera-process-cards-container" style={{ display: 'flex', flexDirection: 'column', gap: '40px', maxWidth: '1220px', margin: '0 auto', paddingTop: '12px' }}>
+              {(() => {
+                const defaultCards = [
+                  { num: "01", title: "Free ROI Consultation", points: ["Share your project idea and business goal", "Tell us your space size and budget", "We suggest the best game zone setup for you"] },
+                  { num: "02", title: "Project planning", points: ["We design a complete game zone layout for your space", "Best equipment selected as per your budget", "Complete route planning for your project"] },
+                  { num: "03", title: "Order Confirmation", points: ["Contract signed with transparent pricing", "Payment confirmation and order finalized", "Game zone production process begins"] },
+                  { num: "04", title: "Interior Design", points: ["Structural information and details finalized", "Partial decoration work completed", "Overall decoration drawing shared for approval"] },
+                  { num: "05", title: "Project Installation", points: ["Complete equipment assembly at your site", "Management system installation and setup", "Full equipment inspection after installation"] },
+                  { num: "06", title: "Forever Support", points: ["Technical support whenever you need assistance", "Spare parts and maintenance support available", "Expert guidance to keep operations running smoothly"] }
+                ];
+                const cardList = (Array.isArray(siteData?.processHome?.cards) && siteData.processHome.cards.length > 0)
+                  ? siteData.processHome.cards.filter(item => item && typeof item === 'object')
+                  : defaultCards;
+
+                const iconsList = [
+                  <UserCheck style={{ width: '26px', height: '26px', color: '#00a8ff' }} />,
+                  <LayoutGrid style={{ width: '26px', height: '26px', color: '#d97706' }} />,
+                  <ShoppingBag style={{ width: '26px', height: '26px', color: '#00a8ff' }} />,
+                  <Palette style={{ width: '26px', height: '26px', color: '#d97706' }} />,
+                  <Wrench style={{ width: '26px', height: '26px', color: '#00a8ff' }} />,
+                  <UserCheck style={{ width: '26px', height: '26px', color: '#d97706' }} />
+                ];
+
+                const renderCard = (step, idx, actualIndex) => {
+                  const isYellow = actualIndex % 2 === 1;
+                  const wrapperClass = isYellow 
+                    ? `winera-process-card-wrapper-yellow winera-reveal winera-reveal-delay-${(actualIndex % 3) + 1}` 
+                    : `winera-process-card-wrapper-cyan winera-reveal winera-reveal-delay-${(actualIndex % 3) + 1}`;
+                  const iconBg = isYellow ? '#fef9c3' : '#e0f2fe';
+                  const iconComponent = iconsList[actualIndex % iconsList.length];
+                  const rawNum = step?.num || `${actualIndex + 1}`;
+                  const formattedNum = rawNum.length === 1 ? `0${rawNum}` : rawNum;
+
+                  return (
+                    <div key={idx} className={wrapperClass}>
+                      <div className="winera-process-inner-card">
+                        {/* Very Large, Bold, Visually Dominant Step Number */}
+                        <div 
+                          className="winera-process-step-num"
+                          style={{
+                          position: 'absolute',
+                          top: '6px',
+                          right: '16px',
+                          fontSize: '6rem',
+                          fontWeight: '900',
+                          color: '#f1f5f9',
+                          lineHeight: 0.85,
+                          letterSpacing: '-2px',
+                          pointerEvents: 'none',
+                          userSelect: 'none',
+                          fontFamily: 'Inter, system-ui, sans-serif'
+                        }}>
+                          {formattedNum}
+                        </div>
+
+                        {/* Icon Badge Container */}
+                        <div style={{
+                          width: '54px',
+                          height: '54px',
+                          borderRadius: '16px',
+                          background: iconBg,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginBottom: '20px',
+                          flexShrink: 0,
+                          boxShadow: isYellow ? '0 6px 18px rgba(234, 179, 8, 0.18)' : '0 6px 18px rgba(56, 189, 248, 0.18)'
+                        }}>
+                          {iconComponent}
+                        </div>
+
+                        {/* Card Title */}
+                        <h3 style={{ fontSize: '1.3rem', fontWeight: '900', color: '#0f172a', margin: '0 0 16px 0', lineHeight: 1.3 }}>
+                          {step?.title || ''}
+                        </h3>
+
+                        {/* Bullet Points */}
+                        <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                          {(Array.isArray(step?.points) ? step.points : []).filter(p => p && p.trim() !== '').map((pt, pIdx) => (
+                            <li key={pIdx} style={{ fontSize: '13px', color: '#475569', fontWeight: '500', lineHeight: 1.6, display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                              <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '14px', fontWeight: '900', marginTop: '-1px' }}>•</span>
+                              <span>{pt}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  );
+                };
+
+                const totalCards = cardList.length;
+
+                if (totalCards % 3 === 0) {
+                  return (
+                    <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px', width: '100%' }}>
+                      {cardList.map((step, idx) => renderCard(step, idx, idx))}
+                    </div>
+                  );
+                }
+
+                const topRowCards = cardList.slice(0, 3);
+                const bottomRowCards = cardList.slice(3);
+
+                return (
+                  <>
+                    <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(topRowCards.length, 3)}, 1fr)`, gap: '40px' }}>
+                      {topRowCards.map((step, idx) => renderCard(step, idx, idx))}
+                    </div>
+
+                    {bottomRowCards.length > 0 && (
+                      <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: `repeat(${bottomRowCards.length}, 1fr)`, gap: '40px', maxWidth: bottomRowCards.length === 2 ? '820px' : '1220px', margin: '0 auto', width: '100%' }}>
+                        {bottomRowCards.map((step, idx) => renderCard(step, idx, idx + topRowCards.length))}
+                      </div>
+                    )}
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+        </section>
+
+        <ClientsMarqueeSection
+          clientLogos={siteData?.clientLogos}
+          title={siteData?.clientsHeader?.title}
+          subtitle={siteData?.clientsHeader?.subtitle}
+        />
+
+        <ProjectsMarqueeSection
+          showTopHeader={true}
+          projects={siteData?.builtProjects}
+          title={siteData?.builtProjectsHeader?.title}
+          subtext={siteData?.builtProjectsHeader?.subtext}
+        />
+
+        <section id="partners" className="winera-channel-partners-section" style={{ padding: '70px 5vw 75px', background: '#f5F5F9' }}>
+          <div className="winera-channel-partners-grid" style={{
+            maxWidth: '1240px',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: '360px 1fr',
+            gap: '50px',
+            alignItems: 'center'
+          }}>
+            <div style={{ textAlign: 'left' }}>
+              <SectionHeading align="left" marginBottom="8px" accentWidth="80%" accentMaxWidth="320px">
+                {(() => {
+                  const rawTitle = siteData?.channelPartnersHeader?.title || "*Our Channel* partners";
+                  const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                  return parts.map((part, index) => {
+                    if (index % 2 === 1) {
+                      return (
+                        <span key={index} style={{ color: '#00a8ff' }}>
+                          {part}
+                        </span>
+                      );
+                    }
+                    return part;
+                  });
+                })()}
+              </SectionHeading>
+            </div>
+
+            <div className="winera-channel-partners-content">
+              {/* Desktop Static Grid */}
+              <div className="winera-desktop-partners-grid">
+                {(siteData?.channelPartners && siteData.channelPartners.length > 0) ? (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '16px' }}>
+                    {siteData.channelPartners.map((partner, idx) => (
+                      <div key={idx} style={{
+                        background: '#F5F5F9',
+                        height: '56px',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
+                        border: '1px solid #e2e8f0',
+                        padding: '8px 16px'
+                      }}>
+                        {partner.logoUrl ? (
+                          <img src={partner.logoUrl} alt={partner.name} style={{ maxHeight: '36px', maxWidth: '100%', objectFit: 'contain' }} />
+                        ) : (
+                          <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '14px' }}>{partner.name}</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px' }}>
+                    <div style={{ background: '#F5F5F9', height: '54px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', color: '#0f172a', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>NETFLIX</div>
+                    <div style={{ background: '#F5F5F9', height: '54px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', color: '#0f172a', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>DISNEY</div>
+                    <div style={{ background: '#F5F5F9', height: '54px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', color: '#0f172a', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>SONY</div>
+                    <div style={{ background: '#F5F5F9', height: '54px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', color: '#0f172a', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>WARNER</div>
+                  </div>
+                )}
+              </div>
+
+              {/* Mobile Infinite Scrolling Marquee Track */}
+              <div className="winera-mobile-partners-marquee" style={{ display: 'none', width: '100vw', overflow: 'hidden', margin: '16px 0 0', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
+                <div className="marquee-track">
+                  {[...Array(4)].map((_, setIdx) => (
+                    <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '45px', paddingRight: '45px' }}>
+                      {(siteData?.channelPartners && siteData.channelPartners.length > 0) ? (
+                        siteData.channelPartners.map((partner, idx) => (
+                          <div key={idx} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: '60px' }}>
+                            {partner.logoUrl ? (
+                              <img src={partner.logoUrl} alt={partner.name} style={{ maxHeight: '50px', maxWidth: '160px', objectFit: 'contain' }} />
+                            ) : (
+                              <span style={{ fontSize: '1.6rem', fontWeight: '900', color: '#0f172a', whiteSpace: 'nowrap' }}>{partner.name}</span>
+                            )}
+                          </div>
+                        ))
                       ) : (
-                        <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '14px' }}>{partner.name}</span>
+                        [
+                          { text: "NETFLIX" },
+                          { text: "DISNEY" },
+                          { text: "SONY" },
+                          { text: "WARNER" }
+                        ].map((item, idx) => (
+                          <div key={idx} style={{ fontSize: '1.6rem', fontWeight: '900', color: '#0f172a', whiteSpace: 'nowrap' }}>
+                            {item.text}
+                          </div>
+                        ))
                       )}
                     </div>
                   ))}
                 </div>
-              ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px' }}>
-                  <div style={{ background: '#F5F5F9', height: '54px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', color: '#0f172a', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>NETFLIX</div>
-                  <div style={{ background: '#F5F5F9', height: '54px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', color: '#0f172a', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>DISNEY</div>
-                  <div style={{ background: '#F5F5F9', height: '54px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', color: '#0f172a', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>SONY</div>
-                  <div style={{ background: '#F5F5F9', height: '54px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', color: '#0f172a', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>WARNER</div>
-                </div>
-              )}
+              </div>
             </div>
+          </div>
+        </section>
 
-            {/* Mobile Infinite Scrolling Marquee Track */}
-            <div className="winera-mobile-partners-marquee" style={{ display: 'none', width: '100vw', overflow: 'hidden', margin: '16px 0 0', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
-              <div className="marquee-track">
-                {[...Array(4)].map((_, setIdx) => (
-                  <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '45px', paddingRight: '45px' }}>
-                    {(siteData?.channelPartners && siteData.channelPartners.length > 0) ? (
-                      siteData.channelPartners.map((partner, idx) => (
-                        <div key={idx} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: '60px' }}>
-                          {partner.logoUrl ? (
-                            <img src={partner.logoUrl} alt={partner.name} style={{ maxHeight: '50px', maxWidth: '160px', objectFit: 'contain' }} />
-                          ) : (
-                            <span style={{ fontSize: '1.6rem', fontWeight: '900', color: '#0f172a', whiteSpace: 'nowrap' }}>{partner.name}</span>
-                          )}
-                        </div>
-                      ))
-                    ) : (
-                      [
-                        { text: "NETFLIX" },
-                        { text: "DISNEY" },
-                        { text: "SONY" },
-                        { text: "WARNER" }
-                      ].map((item, idx) => (
-                        <div key={idx} style={{ fontSize: '1.6rem', fontWeight: '900', color: '#0f172a', whiteSpace: 'nowrap' }}>
-                          {item.text}
-                        </div>
-                      ))
-                    )}
+        <section id="why-us" className="winera-why-us-section" style={{
+          position: 'relative',
+          width: '100%',
+          padding: '80px 4vw 110px',
+          background: `url(${whyChooseBg}) center/100% 100% no-repeat`,
+          minHeight: '520px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center'
+        }}>
+          <div style={{ maxWidth: '1180px', width: '100%', margin: '0 auto' }}>
+            <SectionHeading marginBottom="8px">
+              {(() => {
+                const rawTitle = siteData?.whyChooseUs?.title || "*WHY* CHOOSE US";
+                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                return parts.map((part, index) => {
+                  if (index % 2 === 1) {
+                    return (
+                      <span key={index} style={{ color: '#00a8ff' }}>
+                        {part}
+                      </span>
+                    );
+                  }
+                  return part;
+                });
+              })()}
+            </SectionHeading>
+
+            <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
+              {siteData?.whyChooseUs?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
+            </p>
+
+            <div className="winera-why-us-grid" style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '30px 45px',
+              textAlign: 'left'
+            }}>
+              {(
+                Array.isArray(siteData?.whyChooseUs?.items) && siteData.whyChooseUs.items.length > 0
+                  ? siteData.whyChooseUs.items
+                  : [
+                    { title: "ROI-Focused, From Day One", desc: "We consult on ROI first every client receives a complete report covering footfall, revenue, and payback period before we plan or select equipment." },
+                    { title: "Industry Expertise", desc: "Our team recommends the right entertainment attractions based on your space, budget, and business goals." },
+                    { title: "Premium Quality Equipment", desc: "We supply high-grade amusement equipment designed for reliable performance and durability." },
+                    { title: "Customized Planning", desc: "Our team recommends the right entertainment attractions based on your space, budget, and business goals." },
+                    { title: "Complete Turnkey Solutions", desc: "We provide end-to-end support from project planning and equipment selection to installation and execution" },
+                    { title: "Pan-India Execution", desc: "We support projects across India with professional installation, project management, and execution services." }
+                  ]
+              ).map((item, idx) => (
+                <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+                  <div style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '12px',
+                    background: '#cff4fe',
+                    border: '1px solid #7dd3fc',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    marginTop: '2px'
+                  }}>
+                    <CheckCheck style={{ width: '20px', height: '20px', color: '#00a8ff' }} />
                   </div>
-                ))}
-              </div>
+                  <div>
+                    <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
+                      {item.title}
+                    </h4>
+                    <p style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, margin: 0 }}>
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="why-us" className="winera-why-us-section" style={{
-        position: 'relative',
-        width: '100%',
-        padding: '80px 4vw 110px',
-        background: `url(${whyChooseBg}) center/100% 100% no-repeat`,
-        minHeight: '520px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center'
-      }}>
-        <div style={{ maxWidth: '1180px', width: '100%', margin: '0 auto' }}>
-          <SectionHeading marginBottom="8px">
-            {(() => {
-              const rawTitle = siteData?.whyChooseUs?.title || "*WHY* CHOOSE US";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#00a8ff' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </SectionHeading>
+        <TestimonialsSection
+          testimonials={siteData?.testimonials}
+          title={siteData?.testimonialsHeader?.title}
+          subtitle={siteData?.testimonialsHeader?.subtitle}
+        />
 
-          <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
-            {siteData?.whyChooseUs?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
-          </p>
+        <FaqSection
+          faqList={(Array.isArray(siteData?.faqs) && siteData.faqs.length >= 9) ? siteData.faqs : defaultHomeFaqs}
+          title={siteData?.faqsHeader?.title}
+          subtitle={siteData?.faqsHeader?.subtitle}
+        />
 
-          <div className="winera-why-us-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '30px 45px',
-            textAlign: 'left'
-          }}>
-            {(
-              Array.isArray(siteData?.whyChooseUs?.items) && siteData.whyChooseUs.items.length > 0
-                ? siteData.whyChooseUs.items
-                : [
-                  { title: "ROI-Focused, From Day One", desc: "We consult on ROI first every client receives a complete report covering footfall, revenue, and payback period before we plan or select equipment." },
-                  { title: "Industry Expertise", desc: "Our team recommends the right entertainment attractions based on your space, budget, and business goals." },
-                  { title: "Premium Quality Equipment", desc: "We supply high-grade amusement equipment designed for reliable performance and durability." },
-                  { title: "Customized Planning", desc: "Our team recommends the right entertainment attractions based on your space, budget, and business goals." },
-                  { title: "Complete Turnkey Solutions", desc: "We provide end-to-end support from project planning and equipment selection to installation and execution" },
-                  { title: "Pan-India Execution", desc: "We support projects across India with professional installation, project management, and execution services." }
-                ]
-            ).map((item, idx) => (
-              <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                <div style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '12px',
-                  background: '#cff4fe',
-                  border: '1px solid #7dd3fc',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                  marginTop: '2px'
-                }}>
-                  <CheckCheck style={{ width: '20px', height: '20px', color: '#00a8ff' }} />
-                </div>
-                <div>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
-                    {item.title}
-                  </h4>
-                  <p style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, margin: 0 }}>
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <TestimonialsSection
-        testimonials={siteData?.testimonials}
-        title={siteData?.testimonialsHeader?.title}
-        subtitle={siteData?.testimonialsHeader?.subtitle}
-      />
-
-      <FaqSection
-        faqList={(Array.isArray(siteData?.faqs) && siteData.faqs.length >= 9) ? siteData.faqs : defaultHomeFaqs}
-        title={siteData?.faqsHeader?.title}
-        subtitle={siteData?.faqsHeader?.subtitle}
-      />
-
-      {/* 15. READY TO GET STARTED CTA BANNER SECTION */}
-      <CtaBanner
-        align="center"
-        buttonTheme="yellow_white"
-        gradientTagline={true}
-        gradientTitle={false}
-        bgUrl={siteData?.ctaBanner?.bgUrl !== undefined ? siteData.ctaBanner.bgUrl : null}
-        bg={homeBlockBg}
-        leftImgUrl={siteData?.ctaBanner?.leftImgUrl !== undefined ? siteData.ctaBanner.leftImgUrl : null}
-        leftImg={homeBlock1}
-        rightImgUrl={siteData?.ctaBanner?.rightImgUrl !== undefined ? siteData.ctaBanner.rightImgUrl : null}
-        rightImg={homeBlock2}
-        tagline={siteData?.ctaBanner?.tagline !== undefined ? siteData.ctaBanner.tagline : "READY TO GET STARTED?"}
-        title={siteData?.ctaBanner?.title || "Start Your Game Zone Journey"}
-        subtitle={siteData?.ctaBanner?.subtitle || "Game Zones Are India's Fastest Growing Business Are You In?"}
-        description={siteData?.ctaBanner?.description || "Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company"}
-        buttonText={siteData?.ctaBanner?.buttonText || "Talk to an Expert"}
-        buttonLink={siteData?.ctaBanner?.buttonLink || "https://wa.me/919428989488"}
-      />
+        {/* 15. READY TO GET STARTED CTA BANNER SECTION */}
+        <CtaBanner
+          align="center"
+          buttonTheme="yellow_white"
+          gradientTagline={true}
+          gradientTitle={false}
+          bgUrl={siteData?.ctaBanner?.bgUrl !== undefined ? siteData.ctaBanner.bgUrl : null}
+          bg={homeBlockBg}
+          leftImgUrl={siteData?.ctaBanner?.leftImgUrl !== undefined ? siteData.ctaBanner.leftImgUrl : null}
+          leftImg={homeBlock1}
+          rightImgUrl={siteData?.ctaBanner?.rightImgUrl !== undefined ? siteData.ctaBanner.rightImgUrl : null}
+          rightImg={homeBlock2}
+          tagline={siteData?.ctaBanner?.tagline !== undefined ? siteData.ctaBanner.tagline : "READY TO GET STARTED?"}
+          title={siteData?.ctaBanner?.title || "Start Your Game Zone Journey"}
+          subtitle={siteData?.ctaBanner?.subtitle || "Game Zones Are India's Fastest Growing Business Are You In?"}
+          description={siteData?.ctaBanner?.description || "Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company"}
+          buttonText={siteData?.ctaBanner?.buttonText || "Talk to an Expert"}
+          buttonLink={siteData?.ctaBanner?.buttonLink || "https://wa.me/919428989488"}
+        />
       </main>
 
       {/* 16. FOOTER SECTION */}

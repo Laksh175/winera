@@ -1714,7 +1714,9 @@ export const uploadImage = async (req, res) => {
 
   try {
     const ext = path.extname(req.file.path).toLowerCase();
-    if (ext !== '.webp') {
+    const isDocument = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip'].includes(ext);
+
+    if (!isDocument && ext !== '.webp') {
       const webpFilename = `${path.basename(req.file.path, ext)}.webp`;
       const webpPath = path.join(path.dirname(req.file.path), webpFilename);
       await sharp(req.file.path)

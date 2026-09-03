@@ -9,7 +9,7 @@ import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import needConsultationsBg from '../assets/cta-consultations-banner.webp';
 import softplayCtaBg from '../assets/softplay-cta-bg.png';
-import softplayHeroBg from '../assets/softplay-hero-bg.webp';
+import softplayHeroBg from '../assets/softplay-hero-bg.png';
 import logoImg from '../assets/logo.webp';
 import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
@@ -93,7 +93,7 @@ export default function SoftPlay({ siteData }) {
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Soft Play...</div>;
 
   const { header, footer } = siteData;
-  const heroBgImage = siteData?.softplayHero?.bgUrl || softplayHeroBg;
+  const heroBgImage = getValidImageUrl(siteData?.softplayHero?.bgUrl, softplayHeroBg);
 
   return (
     <div style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh', overflowX: 'hidden' }}>
@@ -104,8 +104,8 @@ export default function SoftPlay({ siteData }) {
       <section className="winera-softplay-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

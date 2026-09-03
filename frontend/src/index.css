@@ -326,6 +326,178 @@ html {
     height: 52px !important;
   }
 
+@keyframes wineraPageHeroFade {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.winera-hero-animate {
+  animation: wineraPageHeroFade 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* AOS and Reveal Scroll Animation Rules - Smooth Bottom-to-Top Slow Slide Up */
+.winera-reveal,
+[data-aos="fade-up"] {
+  opacity: 0;
+  transform: translate3d(0, 50px, 0);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.winera-reveal.is-visible,
+[data-aos="fade-up"].aos-animate,
+[data-aos="fade-up"].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.winera-reveal.is-visible.winera-reveal-delay-1 { transition-delay: 0.1s; }
+.winera-reveal.is-visible.winera-reveal-delay-2 { transition-delay: 0.22s; }
+.winera-reveal.is-visible.winera-reveal-delay-3 { transition-delay: 0.34s; }
+.winera-reveal.is-visible.winera-reveal-delay-4 { transition-delay: 0.46s; }
+.winera-reveal.is-visible.winera-reveal-delay-5 { transition-delay: 0.58s; }
+
+/* Immediate Hover Response (Override transition-delay on hover) */
+.winera-process-card-wrapper-cyan:hover,
+.winera-process-card-wrapper-yellow:hover,
+.winera-partner-box-wrapper-yellow:hover,
+.winera-partner-box-wrapper-cyan:hover {
+  transition-delay: 0s !important;
+}
+
+@keyframes wineraSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wineraFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.winera-expanded-info-box {
+  animation: wineraSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.winera-collapsed-title-anim {
+  animation: wineraFadeIn 0.35s ease forwards;
+}
+
+/* Card Hover & Interactive Float Animations */
+.winera-process-card-wrapper-cyan::before,
+.winera-process-card-wrapper-yellow::before {
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease !important;
+}
+
+.winera-process-card-wrapper-cyan:hover::before {
+  transform: translate(-5px, -5px) scale(1.03) !important;
+  filter: drop-shadow(0 8px 18px rgba(56, 189, 248, 0.55)) !important;
+}
+
+.winera-process-card-wrapper-yellow:hover::before {
+  transform: translate(5px, -5px) scale(1.03) !important;
+  filter: drop-shadow(0 8px 18px rgba(255, 205, 0, 0.6)) !important;
+}
+
+.winera-process-card-wrapper-cyan,
+.winera-process-card-wrapper-yellow {
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.85s ease !important;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.winera-process-card-wrapper-cyan:hover,
+.winera-process-card-wrapper-yellow:hover {
+  transform: translateY(-14px) scale(1.03) !important;
+}
+
+.winera-process-inner-card {
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease !important;
+}
+
+.winera-process-card-wrapper-cyan:hover .winera-process-inner-card {
+  box-shadow: 0 28px 60px rgba(56, 189, 248, 0.42), 0 10px 25px rgba(56, 189, 248, 0.22) !important;
+  border-color: #38bdf8 !important;
+}
+
+.winera-process-card-wrapper-yellow:hover .winera-process-inner-card {
+  box-shadow: 0 28px 60px rgba(255, 205, 0, 0.45), 0 10px 25px rgba(255, 205, 0, 0.25) !important;
+  border-color: #ffcd00 !important;
+}
+
+.winera-process-card-wrapper-cyan:hover .winera-process-inner-card > div:first-of-type,
+.winera-process-card-wrapper-yellow:hover .winera-process-inner-card > div:first-of-type {
+  transform: scale(1.25) rotate(10deg) !important;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.winera-process-card-wrapper-cyan:hover .winera-process-step-num {
+  color: #00a8ff !important;
+  opacity: 0.55 !important;
+  transform: scale(1.2) translate(4px, -4px) !important;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.winera-process-card-wrapper-yellow:hover .winera-process-step-num {
+  color: #d97706 !important;
+  opacity: 0.55 !important;
+  transform: scale(1.2) translate(-4px, -4px) !important;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.winera-stats-card {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease !important;
+}
+
+.winera-stats-card:hover {
+  transform: translateY(-10px) scale(1.04) !important;
+  box-shadow: 0 22px 45px rgba(0, 168, 255, 0.25) !important;
+}
+
+.winera-partner-box-wrapper-yellow,
+.winera-partner-box-wrapper-cyan {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.85s ease !important;
+  cursor: pointer;
+}
+
+.winera-partner-box-wrapper-yellow:hover,
+.winera-partner-box-wrapper-cyan:hover {
+  transform: translateY(-10px) scale(1.02) !important;
+}
+
+.winera-partner-box-yellow,
+.winera-partner-box-cyan {
+  transition: box-shadow 0.35s ease, border-color 0.35s ease !important;
+}
+
+.winera-partner-box-wrapper-yellow:hover .winera-partner-box-yellow {
+  box-shadow: 0 24px 50px rgba(255, 205, 0, 0.4), 0 8px 24px rgba(255, 205, 0, 0.22) !important;
+  border-color: #ffcd00 !important;
+}
+
+.winera-partner-box-wrapper-cyan:hover .winera-partner-box-cyan {
+  box-shadow: 0 24px 50px rgba(56, 189, 248, 0.4), 0 8px 24px rgba(56, 189, 248, 0.2) !important;
+  border-color: #38bdf8 !important;
+}
+
   /* Industries Carousel Single Card Layout for Mobile */
   .winera-industries-wrapper {
     min-height: 380px !important;
@@ -4158,9 +4330,21 @@ img[src*="yellow-stroke-line"] {
 }
 
 /* Hero Section Padding so Breadcrumb is always 100% visible */
-.winera-arcade-hero-section {
+.winera-arcade-hero-section,
+.winera-bowling-hero-section,
+.winera-softplay-hero-section,
+.winera-bumpercar-hero-section,
+.winera-vr-hero-section,
+.winera-ar-hero-section,
+.winera-amusement-hero-section,
+.winera-hypergrid-hero-section,
+.winera-project-hero-section,
+.winera-safety-hero-section,
+.winera-trampoline-hero-section,
+.winera-roi-hero-section,
+.winera-blog-hero-section {
   padding-top: 175px !important;
-  padding-bottom: 50px !important;
+  padding-bottom: 95px !important;
 }
 
 /* Arrow Icon Visibility: Up/Down on Desktop, Left/Right on Mobile */

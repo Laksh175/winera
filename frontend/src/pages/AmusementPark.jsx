@@ -6,7 +6,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import amusementHeroBg from '../assets/amusement-hero-bg.webp';
+import amusementHeroBg from '../assets/amusement-park-hero-bg.png';
 import amusementSupplierCollage from '../assets/amusement-supplier-collage.webp';
 import amusementSetupsCollage from '../assets/amusement-setups-collage.webp';
 import amusementOptionsBg from '../assets/amusement-options-bg.webp';
@@ -182,8 +182,8 @@ export default function AmusementPark({ siteData }) {
       <section className="winera-amusement-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',

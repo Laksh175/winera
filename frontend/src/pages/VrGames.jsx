@@ -8,7 +8,7 @@ import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import { ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity } from 'lucide-react';
 
-import vrHeroBg from '../assets/vr-hero-bg.webp';
+import vrHeroBg from '../assets/vrgame-hero-bg.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
@@ -29,6 +29,8 @@ import vrCommercialReliability from '../assets/vr-commercial-reliability.webp';
 import vrRoiFrame from '../assets/vr-roi-frame.webp';
 import vrRoiContent from '../assets/vr-roi-content.webp';
 import vrEarnPlayer from '../assets/vr-earn-player.jpg';
+import vrGameImg from '../assets/vr-game-image.png';
+import vrGameCurveImg from '../assets/vr-game-image2.png';
 import vrImg from '../assets/VR.webp';
 import vectorVr from '../assets/Vector-VR.webp';
 import vector01 from '../assets/Vector-01.webp';
@@ -143,7 +145,7 @@ export default function VrGames({ siteData }) {
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading VR Games...</div>;
 
   const { header, footer } = siteData;
-  const heroBgImage = siteData?.vrHero?.bgUrl || vrHeroBg;
+  const heroBgImage = getValidImageUrl(siteData?.vrHero?.bgUrl, vrHeroBg);
 
   const defaultRangeItems = [
     { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR Wings Experience", img: vrBlock1, status: "ONLINE", latency: "4ms", icon: "plane" },
@@ -239,8 +241,8 @@ export default function VrGames({ siteData }) {
       <section className="winera-vr-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
+        paddingTop: '175px',
+        paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
@@ -630,7 +632,7 @@ export default function VrGames({ siteData }) {
                 style={{ display: 'block', width: '300px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '2.85rem',
+                fontSize: '33px',
                 fontWeight: '900',
                 lineHeight: 1.15,
                 margin: 0,
@@ -688,36 +690,39 @@ export default function VrGames({ siteData }) {
         </div>
       </section>
 
-      {/* 7. WHAT WILL YOUR VR GAMING ZONE ACTUALLY EARN? SECTION (FULL SCREEN WIDTH BG) */}
+      {/* 7. WHAT WILL YOUR VR GAMING ZONE ACTUALLY EARN? SECTION (WITH vrRoiFrame BG) */}
       <section className="winera-vr-earn-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '90px 4vw 100px',
+        padding: '85px 4vw 95px',
         background: `url(${siteData?.vrEarn?.bgUrl || vrRoiFrame}) center/100% 100% no-repeat`,
         overflow: 'hidden'
       }}>
-        <div className="winera-vr-earn-grid" style={{
-          maxWidth: '1240px',
+        <div className="winera-vr-earn-card" style={{
+          maxWidth: '1080px',
           margin: '0 auto',
           position: 'relative',
+          background: 'transparent',
+          padding: '0',
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '50px',
+          gridTemplateColumns: '1.08fr 1fr',
           alignItems: 'center',
-          minHeight: '440px'
+          overflow: 'visible',
+          boxShadow: 'none',
+          minHeight: '430px'
         }}>
-          {/* Left Content */}
-          <div className="winera-vr-earn-text" style={{ textAlign: 'left', zIndex: 2 }}>
-            <div style={{ position: 'relative', display: 'block', marginBottom: '18px' }}>
+          {/* Left Content Column */}
+          <div className="winera-vr-earn-text" style={{ padding: '42px 35px 42px 45px', textAlign: 'left', zIndex: 3 }}>
+            <div style={{ position: 'relative', display: 'block', marginBottom: '16px' }}>
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '280px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
+                style={{ display: 'block', width: '260px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '2.7rem',
+                fontSize: '33px',
                 fontWeight: '900',
-                lineHeight: 1.15,
+                lineHeight: 1.16,
                 margin: 0,
                 color: '#0f172a',
                 letterSpacing: '-0.5px'
@@ -730,16 +735,28 @@ export default function VrGames({ siteData }) {
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '28px', maxWidth: '520px' }}>
-              <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '26px', maxWidth: '520px' }}>
+              <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
                 {siteData?.vrEarn?.p1 || "Most VR machine suppliers in India quote a price and leave the financial decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any order, our team prepares a complete ROI report for your specific venue covering machine cost, projected daily sessions, estimated revenue per player, maintenance costs, and break-even timeline."}
               </p>
-              <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+              <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
                 {siteData?.vrEarn?.p2 || "Every figure is calculated around your venue type, footfall, and machine selection, not an industry average pulled from a brochure. Very few VR gaming suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
               </p>
             </div>
 
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+            {/* Get Quote Button with Rotated Yellow Accent Backdrop */}
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <div style={{
+                position: 'absolute',
+                top: '-3px',
+                bottom: '-3px',
+                left: '-14px',
+                right: '-4px',
+                background: '#ffcd00',
+                borderRadius: '10px',
+                transform: 'rotate(-1.8deg)',
+                zIndex: 1
+              }} />
               {(() => {
                 const baseLink = siteData?.vrEarn?.buttonLink || "https://wa.me/919428989488";
                 const defaultMsg = siteData?.vrEarn?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for VR Gaming Zone setup & commercial ROI calculation. Please share details. [Ref: VR Games Page]";
@@ -753,40 +770,65 @@ export default function VrGames({ siteData }) {
                     href={hrefLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                    style={{
+                      position: 'relative',
+                      zIndex: 2,
+                      background: '#38bdf8',
+                      color: '#ffffff',
+                      fontSize: '14px',
+                      fontWeight: '800',
+                      padding: '11px 26px',
+                      borderRadius: '10px',
+                      border: '1.5px solid #ffcd00',
+                      boxShadow: 'none',
+                      display: 'inline-block',
+                      textDecoration: 'none'
+                    }}
                   >
-                    {siteData?.vrEarn?.buttonText || "Talk to an ROI Expert"}
+                    {siteData?.vrEarn?.buttonText || "Get Quote From Expert"}
                   </a>
                 );
               })()}
             </div>
           </div>
 
-          {/* Right Image Feature with Vector-01.webp and Vector-VR backdrop on left (FIGMA 1:1) */}
-          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
+          {/* Right Image Feature with vr-game-image.png & vr-game-image2.png (Yellow Curve Accent) */}
+          <div className="winera-vr-earn-img-container" style={{
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            minHeight: '430px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            overflow: 'hidden'
+          }}>
             <img
-              src={vectorVr}
+              src={getValidImageUrl(siteData?.vrEarn?.imgUrl, vrGameImg)}
+              alt="VR Gaming Zone ROI Player"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'left center',
+                display: 'block',
+                position: 'relative',
+                zIndex: 1,
+                paddingLeft: '12px'
+              }}
+            />
+            {/* Yellow Wave Accent Stroke sitting along the curve */}
+            <img
+              src={vrGameCurveImg}
               alt=""
               style={{
                 position: 'absolute',
-                left: '-5px',
-                top: '0',
-                height: '100%',
+                left: '-4px',
+                top: '-2px',
+                height: '103%',
                 width: 'auto',
-                zIndex: 1,
-                pointerEvents: 'none'
-              }}
-            />
-            <img
-              src={getValidImageUrl(siteData?.vrEarn?.imgUrl, vrEarnPlayer)}
-              alt="VR Gaming Zone ROI Player"
-              style={{
-                position: 'relative',
                 zIndex: 2,
-                width: '100%',
-                maxWidth: '540px',
-                height: 'auto',
-                display: 'block'
+                pointerEvents: 'none'
               }}
             />
           </div>
@@ -910,17 +952,17 @@ export default function VrGames({ siteData }) {
                     ))}
                   </div>
 
-                   {/* Horizontal Center Cyan Divider Line with Shade Fading */}
-                   {bottomCards.length > 0 && (
-                     <div className="winera-vr-whyus-horizontal-divider" style={{
-                       width: '100%',
-                       height: '2px',
-                       background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
-                       position: 'relative',
-                       zIndex: 3,
-                       margin: '0 0 30px'
-                     }}></div>
-                   )}
+                  {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                  {bottomCards.length > 0 && (
+                    <div className="winera-vr-whyus-horizontal-divider" style={{
+                      width: '100%',
+                      height: '2px',
+                      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                      position: 'relative',
+                      zIndex: 3,
+                      margin: '0 0 30px'
+                    }}></div>
+                  )}
 
                   {/* BOTTOM ROW (CENTERED ODD/EVEN REMAINDER) */}
                   {bottomCards.length > 0 && (
@@ -1047,8 +1089,8 @@ export default function VrGames({ siteData }) {
         subtitleFontWeight="900"
         bgUrl={
           siteData?.vrCta?.bgUrl &&
-          !siteData.vrCta.bgUrl.includes('cta-consultations') &&
-          !siteData.vrCta.bgUrl.includes('project-lastbg')
+            !siteData.vrCta.bgUrl.includes('cta-consultations') &&
+            !siteData.vrCta.bgUrl.includes('project-lastbg')
             ? getValidImageUrl(siteData.vrCta.bgUrl, amusementParkCtaBg)
             : null
         }

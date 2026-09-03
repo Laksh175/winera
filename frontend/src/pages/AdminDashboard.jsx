@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { updateSectionContent, uploadImageFile } from '../services/api';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
+import LeadManagementSection from '../components/LeadManagementSection';
 import {
   Save,
   LogOut,
   ExternalLink,
   RefreshCw,
   CheckCircle,
+  Users,
   Home,
   Gamepad2,
   Info,
@@ -997,6 +999,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
   // Sidebar navigation structure by page
   const navigationMenu = {
+    leads: {
+      label: '💬 Lead Inquiries',
+      icon: <Users style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'leadList', name: 'Manage All Popup Leads' }
+      ]
+    },
     home: {
       label: 'Home Page',
       icon: <Home style={{ width: '18px', height: '18px' }} />,
@@ -2431,8 +2440,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
           border: '1px solid #e2e8f0'
         }}>
+          {/* LEAD INQUIRIES MANAGEMENT PANEL */}
+          {selectedPage === 'leads' && (
+            <LeadManagementSection
+              siteData={formData}
+              onUpdateSiteData={async (sectionKey, updatedData) => {
+                setFormData(prev => ({ ...prev, [sectionKey]: updatedData }));
+                await updateSectionContent(sectionKey, updatedData);
+              }}
+              authToken={admin?.token || localStorage.getItem('adminToken')}
+            />
+          )}
+
           {/* 1. HERO SECTION FORM */}
-          {activeSection === 'hero' && (
+          {selectedPage !== 'leads' && activeSection === 'hero' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
@@ -8486,13 +8507,36 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
-                      <input
-                        type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultHypergridSpecs.buttonLink}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), buttonLink: e.target.value } }))}
-                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File / Link URL</label>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                          type="text"
+                          value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultHypergridSpecs.buttonLink}
+                          onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), buttonLink: e.target.value } }))}
+                          placeholder="e.g. /uploads/hypergrid_brochure.pdf"
+                          style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                        />
+                        <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                          <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                          <input
+                            type="file"
+                            accept="application/pdf,.pdf"
+                            onChange={async (e) => {
+                              const file = e.target.files[0];
+                              if (!file) return;
+                              setStatusMsg('Uploading PDF brochure...');
+                              try {
+                                const res = await uploadImageFile(file, admin.token);
+                                setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), buttonLink: res.url } }));
+                                setStatusMsg('PDF Brochure uploaded successfully!');
+                              } catch (err) {
+                                setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                              }
+                            }}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                      </div>
                     </div>
                   </div>
 
@@ -9551,13 +9595,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF Document</label>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  <label style={{ background: '#0284c7', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Brochure PDF
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF Document / Link URL</label>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="text"
+                    value={formData.bumpercarSpecs?.brochureUrl || '#'}
+                    onChange={(e) => handleFieldChange('bumpercarSpecs', 'brochureUrl', e.target.value)}
+                    placeholder="e.g. /uploads/bumpercar_brochure.pdf"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                    <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
                     <input
                       type="file"
-                      accept="application/pdf"
+                      accept="application/pdf,.pdf"
                       onChange={async (e) => {
                         const file = e.target.files[0];
                         if (!file) return;
@@ -9573,16 +9624,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.bumpercarSpecs?.brochureUrl && (
-                    <a
-                      href={formData.bumpercarSpecs.brochureUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ fontSize: '12.5px', color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}
-                    >
-                      View Uploaded PDF
-                    </a>
-                  )}
                 </div>
               </div>
 
@@ -14196,14 +14237,36 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF / Link URL</label>
-                  <input
-                    type="text"
-                    value={formData.bowlingFreeFall?.brochureUrl || '#'}
-                    onChange={(e) => handleFieldChange('bowlingFreeFall', 'brochureUrl', e.target.value)}
-                    placeholder="e.g. /assets/brochure.pdf or https://..."
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File / Link URL</label>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <input
+                      type="text"
+                      value={formData.bowlingFreeFall?.brochureUrl || '#'}
+                      onChange={(e) => handleFieldChange('bowlingFreeFall', 'brochureUrl', e.target.value)}
+                      placeholder="e.g. /uploads/bowling_brochure.pdf"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                    <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                      <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                      <input
+                        type="file"
+                        accept="application/pdf,.pdf"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          setStatusMsg('Uploading PDF brochure...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            handleFieldChange('bowlingFreeFall', 'brochureUrl', res.url);
+                            setStatusMsg('PDF Brochure uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
 
@@ -18376,13 +18439,36 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link / Brochure URL</label>
-                      <input
-                        type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : (currentSec.brochureLink || defaultTrampolineIntro.buttonLink)}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), buttonLink: e.target.value } }))}
-                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File / Link URL</label>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                          type="text"
+                          value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : (currentSec.brochureLink || defaultTrampolineIntro.buttonLink)}
+                          onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), buttonLink: e.target.value } }))}
+                          placeholder="e.g. /uploads/trampoline_brochure.pdf"
+                          style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                        />
+                        <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                          <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                          <input
+                            type="file"
+                            accept="application/pdf,.pdf"
+                            onChange={async (e) => {
+                              const file = e.target.files[0];
+                              if (!file) return;
+                              setStatusMsg('Uploading PDF brochure...');
+                              try {
+                                const res = await uploadImageFile(file, admin.token);
+                                setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), buttonLink: res.url } }));
+                                setStatusMsg('PDF Brochure uploaded successfully!');
+                              } catch (err) {
+                                setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                              }
+                            }}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                      </div>
                     </div>
                   </div>
 
