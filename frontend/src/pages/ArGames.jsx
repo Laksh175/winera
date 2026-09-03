@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ShieldCheck, Settings, Database, Headset, Wrench, Box } from 'lucide-react';
+import { ShieldCheck, Settings, Database, Headset, Wrench, Box, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
@@ -801,54 +801,161 @@ export default function ArGames({ siteData }) {
                   );
                 })}
               </div>
+            </div>
+          </div>
 
-              {/* Dynamic Bottom Pagination Controls (Matching Figma Screenshot 1:1) */}
-              <div style={{ textAlign: 'center' }}>
-                <div className="winera-ar-pagination" style={{
-                  display: 'inline-flex',
+          {/* Dynamic Bottom Pagination Controls (Centered across both blocks / full section width) */}
+          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '40px' }}>
+            <div className="winera-ar-pagination" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '12px',
+              background: 'rgba(224, 242, 254, 0.65)',
+              border: '1.5px solid #7dd3fc',
+              padding: '6px 20px',
+              borderRadius: '16px',
+              boxShadow: 'none'
+            }}>
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: currentPage === 1 ? '#cbd5e1' : '#475569',
+                  cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                  display: 'flex',
                   alignItems: 'center',
-                  gap: '14px',
-                  background: '#e0f7ff',
-                  padding: '8px 24px',
-                  borderRadius: '24px',
-                  boxShadow: '0 4px 15px rgba(56, 189, 248, 0.12)'
-                }}>
-                  <button
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                    style={{ background: 'none', border: 'none', color: currentPage === 1 ? '#94a3b8' : '#475569', cursor: currentPage === 1 ? 'default' : 'pointer', fontWeight: '800', fontSize: '14px' }}
-                  >
-                    &lt;
-                  </button>
-                  <button
-                    onClick={() => setCurrentPage(1)}
-                    style={{
-                      width: '32px',
-                      height: '32px',
-                      borderRadius: '50%',
-                      background: currentPage === 1 ? '#38bdf8' : 'transparent',
-                      color: currentPage === 1 ? '#ffffff' : '#475569',
-                      border: 'none',
-                      fontWeight: '800',
-                      fontSize: '13px',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    1
-                  </button>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569', cursor: 'pointer' }} onClick={() => setCurrentPage(2)}>2</span>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569', cursor: 'pointer' }} onClick={() => setCurrentPage(3)}>3</span>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569', cursor: 'pointer' }} onClick={() => setCurrentPage(4)}>4</span>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569' }}>...</span>
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#475569', cursor: 'pointer' }}>71</span>
-                  <button
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages || 71))}
-                    style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', fontWeight: '800', fontSize: '14px' }}
-                  >
-                    &gt;
-                  </button>
-                </div>
-              </div>
+                  padding: '4px'
+                }}
+                aria-label="Previous Page"
+              >
+                <ChevronLeft style={{ width: '18px', height: '18px' }} />
+              </button>
+
+              <button
+                onClick={() => setCurrentPage(1)}
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '12px',
+                  background: currentPage === 1 ? '#38bdf8' : 'transparent',
+                  color: currentPage === 1 ? '#ffffff' : '#475569',
+                  border: 'none',
+                  fontWeight: currentPage === 1 ? '800' : '600',
+                  fontSize: '14.5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                1
+              </button>
+
+              <button
+                onClick={() => setCurrentPage(2)}
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '12px',
+                  background: currentPage === 2 ? '#38bdf8' : 'transparent',
+                  color: currentPage === 2 ? '#ffffff' : '#475569',
+                  border: 'none',
+                  fontWeight: currentPage === 2 ? '800' : '600',
+                  fontSize: '14.5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                2
+              </button>
+
+              <button
+                onClick={() => setCurrentPage(3)}
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '12px',
+                  background: currentPage === 3 ? '#38bdf8' : 'transparent',
+                  color: currentPage === 3 ? '#ffffff' : '#475569',
+                  border: 'none',
+                  fontWeight: currentPage === 3 ? '800' : '600',
+                  fontSize: '14.5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                3
+              </button>
+
+              <button
+                onClick={() => setCurrentPage(4)}
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '12px',
+                  background: currentPage === 4 ? '#38bdf8' : 'transparent',
+                  color: currentPage === 4 ? '#ffffff' : '#475569',
+                  border: 'none',
+                  fontWeight: currentPage === 4 ? '800' : '600',
+                  fontSize: '14.5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                4
+              </button>
+
+              <span style={{ fontSize: '14.5px', fontWeight: '600', color: '#475569', padding: '0 4px' }}>...</span>
+
+              <button
+                onClick={() => setCurrentPage(71)}
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '12px',
+                  background: currentPage === 71 ? '#38bdf8' : 'transparent',
+                  color: currentPage === 71 ? '#ffffff' : '#475569',
+                  border: 'none',
+                  fontWeight: currentPage === 71 ? '800' : '600',
+                  fontSize: '14.5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                71
+              </button>
+
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, 71))}
+                disabled={currentPage === 71}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: currentPage === 71 ? '#cbd5e1' : '#475569',
+                  cursor: currentPage === 71 ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '4px'
+                }}
+                aria-label="Next Page"
+              >
+                <ChevronRight style={{ width: '18px', height: '18px' }} />
+              </button>
             </div>
           </div>
         </div>

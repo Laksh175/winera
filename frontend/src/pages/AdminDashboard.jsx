@@ -1672,7 +1672,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         galleryImage5: (currentItem.galleryImages && currentItem.galleryImages[4]) || currentItem.galleryImage5 || projectBlock2,
         galleryImage6: (currentItem.galleryImages && currentItem.galleryImages[5]) || currentItem.galleryImage6 || projectBlock3,
         videoImg: currentItem.videoImg || currentItem.videoCoverUrl || projectSectionVideo,
-        videoUrl: currentItem.videoUrl || currentItem.videoLink || 'https://wa.me/919428989488'
+        videoUrl: currentItem.videoUrl || currentItem.videoLink || 'https://wa.me/919428989488',
+        buttonText: currentItem.buttonText || knownProj.buttonText || 'Get A Quote',
+        buttonLink: currentItem.buttonLink || knownProj.buttonLink || 'https://wa.me/919428989488',
+        waMessage: currentItem.waMessage || knownProj.waMessage || `Hello Winera International! I want to get a project quote for ${currentItem.name || projTitle || 'this project'}. Please share details. [Ref: Project Detail Page]`
       };
 
       setModalItemData({ ...defaultProjectItem, ...currentItem });
@@ -1715,7 +1718,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         galleryImage5: projectBlock2,
         galleryImage6: projectBlock3,
         videoImg: projectSectionVideo,
-        videoUrl: 'https://wa.me/919428989488'
+        videoUrl: 'https://wa.me/919428989488',
+        buttonText: 'Get A Quote',
+        buttonLink: 'https://wa.me/919428989488',
+        waMessage: 'Hello Winera International! I want to get a project quote. Please share details. [Ref: Project Detail Page]'
       });
       else if (sec && sec.toLowerCase().includes('faq')) setModalItemData({ q: '', a: '' });
       else if (sec === 'testimonials') setModalItemData({ founderImage: '', gameZoneName: '', reviewerRole: '', starRating: 5, youtubeVideoUrl: '', quote: '' });
@@ -15221,7 +15227,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link URL</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link URL (WhatsApp URL)</label>
                   <input
                     type="text"
                     value={formData.aboutWelcome?.btnLink || 'https://wa.me/919428989488'}
@@ -15229,6 +15235,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Contact Us Now</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={(() => {
+                    if (formData.aboutWelcome?.waMessage !== undefined && formData.aboutWelcome?.waMessage !== '') return formData.aboutWelcome.waMessage;
+                    if (formData.aboutWelcome?.btnLink && formData.aboutWelcome.btnLink.includes('text=')) {
+                      try {
+                        const match = formData.aboutWelcome.btnLink.match(/text=([^&]+)/);
+                        if (match && match[1]) return decodeURIComponent(match[1]);
+                      } catch (err) {}
+                    }
+                    return 'Hello Winera International! I want to contact your team regarding amusement solutions. Please share details. [Ref: About Us Page]';
+                  })()}
+                  onChange={(e) => {
+                    const newMsg = e.target.value;
+                    const baseLink = (formData.aboutWelcome?.btnLink && formData.aboutWelcome.btnLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                    setFormData(prev => ({
+                      ...prev,
+                      aboutWelcome: {
+                        ...(prev.aboutWelcome || {}),
+                        waMessage: newMsg,
+                        btnLink: updatedLink
+                      }
+                    }));
+                  }}
+                  placeholder="e.g. Hello Winera International! I want to contact your team..."
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -15627,6 +15667,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       value={formData.aboutWhyUsDetail?.ctaSecondaryLink || '/arcade-game'}
                       onChange={(e) => handleFieldChange('aboutWhyUsDetail', 'ctaSecondaryLink', e.target.value)}
                       style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                    />
+                  </div>
+
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>
+                      Primary Button WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get Started</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={(() => {
+                        if (formData.aboutWhyUsDetail?.waMessage !== undefined && formData.aboutWhyUsDetail?.waMessage !== '') return formData.aboutWhyUsDetail.waMessage;
+                        if (formData.aboutWhyUsDetail?.ctaPrimaryLink && formData.aboutWhyUsDetail.ctaPrimaryLink.includes('text=')) {
+                          try {
+                            const match = formData.aboutWhyUsDetail.ctaPrimaryLink.match(/text=([^&]+)/);
+                            if (match && match[1]) return decodeURIComponent(match[1]);
+                          } catch (err) {}
+                        }
+                        return 'Hello Winera International! I want to get started with a game zone project. Please share details. [Ref: About Us Page]';
+                      })()}
+                      onChange={(e) => {
+                        const newMsg = e.target.value;
+                        const baseLink = (formData.aboutWhyUsDetail?.ctaPrimaryLink && formData.aboutWhyUsDetail.ctaPrimaryLink.split('?')[0]) || 'https://wa.me/919428989488';
+                        const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                        setFormData(prev => ({
+                          ...prev,
+                          aboutWhyUsDetail: {
+                            ...(prev.aboutWhyUsDetail || {}),
+                            waMessage: newMsg,
+                            ctaPrimaryLink: updatedLink
+                          }
+                        }));
+                      }}
+                      placeholder="e.g. Hello Winera International! I want to get started..."
+                      style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
                     />
                   </div>
                 </div>
@@ -18994,7 +19068,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link (WhatsApp URL)</label>
                       <input
                         type="text"
                         value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultRoiIntro.buttonLink}
@@ -19002,6 +19076,39 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Book Your Free ROI Consultation</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={(() => {
+                        if (currentSec.waMessage !== undefined && currentSec.waMessage !== '') return currentSec.waMessage;
+                        if (currentSec.buttonLink && currentSec.buttonLink.includes('text=')) {
+                          try {
+                            const match = currentSec.buttonLink.match(/text=([^&]+)/);
+                            if (match && match[1]) return decodeURIComponent(match[1]);
+                          } catch (err) {}
+                        }
+                        return 'Hello Winera International! I want to book a free ROI consultation. Please share details. [Ref: ROI Page]';
+                      })()}
+                      onChange={(e) => {
+                        const newMsg = e.target.value;
+                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                        const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                        setFormData(prev => ({
+                          ...prev,
+                          roiIntro: {
+                            ...(prev.roiIntro || defaultRoiIntro),
+                            waMessage: newMsg,
+                            buttonLink: updatedLink
+                          }
+                        }));
+                      }}
+                      placeholder="e.g. Hello Winera International! I want to book a free ROI consultation..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                    />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -21378,6 +21485,63 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             onChange={(e) => setModalItemData(prev => ({ ...prev, description: e.target.value }))}
                             placeholder="e.g. How we designed and installed a professional-grade bowling alley across 3,000 sq. ft..."
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* CTA Button & WhatsApp Pre-filled Message */}
+                      <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>CTA Button & WhatsApp Pre-filled Message</h5>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Button Text / Label</label>
+                            <input
+                              type="text"
+                              value={modalItemData.buttonText !== undefined ? modalItemData.buttonText : 'Get A Quote'}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, buttonText: e.target.value }))}
+                              placeholder="e.g. Get A Quote"
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '700' }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Button Base Link (WhatsApp URL)</label>
+                            <input
+                              type="text"
+                              value={modalItemData.buttonLink !== undefined ? modalItemData.buttonLink : 'https://wa.me/919428989488'}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, buttonLink: e.target.value }))}
+                              placeholder="https://wa.me/919428989488"
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>
+                            WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '1px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get A Quote</span>
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={(() => {
+                              if (modalItemData.waMessage !== undefined && modalItemData.waMessage !== '') return modalItemData.waMessage;
+                              if (modalItemData.buttonLink && modalItemData.buttonLink.includes('text=')) {
+                                try {
+                                  const match = modalItemData.buttonLink.match(/text=([^&]+)/);
+                                  if (match && match[1]) return decodeURIComponent(match[1]);
+                                } catch (err) {}
+                              }
+                              return `Hello Winera International! I want to get a project quote for ${modalItemData.name || 'this project'}. Please share details. [Ref: Project Detail Page]`;
+                            })()}
+                            onChange={(e) => {
+                              const newMsg = e.target.value;
+                              const baseLink = (modalItemData.buttonLink && modalItemData.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                              const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                              setModalItemData(prev => ({
+                                ...prev,
+                                waMessage: newMsg,
+                                buttonLink: updatedLink
+                              }));
+                            }}
+                            placeholder="e.g. Hello Winera International! I want to get a project quote..."
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', lineHeight: 1.5 }}
                           />
                         </div>
                       </div>

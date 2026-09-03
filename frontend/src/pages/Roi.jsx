@@ -50,8 +50,29 @@ export default function Roi({ siteData }) {
     paragraph2: "Most game zone owners lose money in year one — not because gaming is dead, but because the setup, game mix, and management were wrong from day one.",
     buttonText: "Book Your Free ROI Consultation",
     buttonLink: "https://wa.me/919428989488",
+    waMessage: "Hello Winera International! I want to book a free ROI consultation. Please share details. [Ref: ROI Page]",
     image: roiImg1
   };
+
+  const rawRoiLink = roiIntro.buttonLink || "https://wa.me/919428989488";
+  let roiWaMsg = roiIntro.waMessage;
+
+  const baseRoiLink = rawRoiLink.split('?')[0];
+
+  if (!roiWaMsg && rawRoiLink.includes('text=')) {
+    try {
+      const match = rawRoiLink.match(/text=([^&]+)/);
+      if (match && match[1]) {
+        roiWaMsg = decodeURIComponent(match[1]);
+      }
+    } catch (e) {}
+  }
+
+  if (!roiWaMsg) {
+    roiWaMsg = "Hello Winera International! I want to book a free ROI consultation. Please share details. [Ref: ROI Page]";
+  }
+
+  const roiButtonLink = `${baseRoiLink}?text=${encodeURIComponent(roiWaMsg)}`;
 
   const roiMatters = siteData?.roiMatters || {
     title: "Opening a game zone is easy. Making it profitable is a system.",
@@ -270,7 +291,7 @@ export default function Roi({ siteData }) {
             {/* CTA Button — offset yellow front, cyan back matching figma design */}
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
               <a
-                href={roiIntro.buttonLink}
+                href={roiButtonLink}
                 target="_blank"
                 rel="noreferrer"
                 className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"

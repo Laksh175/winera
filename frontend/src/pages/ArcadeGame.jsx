@@ -874,13 +874,13 @@ export default function ArcadeGame({ siteData }) {
             return (
               <div className="winera-desktop-pagination" style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '32px' }}>
                 <div style={{
-                  background: '#e3f2fd',
+                  background: 'rgba(224, 242, 254, 0.65)',
                   border: '1.5px solid #7dd3fc',
-                  borderRadius: '24px',
-                  padding: '6px 18px',
+                  borderRadius: '16px',
+                  padding: '6px 20px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  gap: '12px',
                   boxShadow: 'none'
                 }}>
                   <button

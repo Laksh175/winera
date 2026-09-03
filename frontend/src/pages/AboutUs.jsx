@@ -90,6 +90,46 @@ export default function AboutUs({ siteData }) {
   const aboutHeroData = siteData?.aboutHero || {};
   const heroBg = getValidImageUrl(aboutHeroData.bgUrl, aboutHeroBg);
 
+  // Welcome Section WhatsApp button link calculation
+  const rawWelcomeLink = siteData?.aboutWelcome?.btnLink || "https://wa.me/919428989488";
+  let welcomeWaMsg = siteData?.aboutWelcome?.waMessage;
+  const baseWelcomeLink = rawWelcomeLink.split('?')[0];
+
+  if (!welcomeWaMsg && rawWelcomeLink.includes('text=')) {
+    try {
+      const match = rawWelcomeLink.match(/text=([^&]+)/);
+      if (match && match[1]) {
+        welcomeWaMsg = decodeURIComponent(match[1]);
+      }
+    } catch (e) {}
+  }
+
+  if (!welcomeWaMsg) {
+    welcomeWaMsg = "Hello Winera International! I want to contact your team regarding amusement solutions. Please share details. [Ref: About Us Page]";
+  }
+
+  const welcomeButtonLink = `${baseWelcomeLink}?text=${encodeURIComponent(welcomeWaMsg)}`;
+
+  // Why Choose Us Section Primary WhatsApp button link calculation
+  const rawWhyUsLink = siteData?.aboutWhyUsDetail?.ctaPrimaryLink || "https://wa.me/919428989488";
+  let whyUsWaMsg = siteData?.aboutWhyUsDetail?.waMessage;
+  const baseWhyUsLink = rawWhyUsLink.split('?')[0];
+
+  if (!whyUsWaMsg && rawWhyUsLink.includes('text=')) {
+    try {
+      const match = rawWhyUsLink.match(/text=([^&]+)/);
+      if (match && match[1]) {
+        whyUsWaMsg = decodeURIComponent(match[1]);
+      }
+    } catch (e) {}
+  }
+
+  if (!whyUsWaMsg) {
+    whyUsWaMsg = "Hello Winera International! I want to get started with a game zone project. Please share details. [Ref: About Us Page]";
+  }
+
+  const whyUsButtonLink = `${baseWhyUsLink}?text=${encodeURIComponent(whyUsWaMsg)}`;
+
   return (
     <div style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh' }}>
       {/* 1. HEADER NAVBAR */}
@@ -133,20 +173,6 @@ export default function AboutUs({ siteData }) {
               });
             })()}
           </h1>
-          <p style={{
-            fontSize: '14px',
-            fontWeight: '700',
-            color: '#ffffff',
-            opacity: 0.9,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px'
-          }}>
-            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
-            <span style={{ color: '#ffcd00' }}>&gt;</span>
-            <span style={{ color: '#ffffff' }}>{siteData?.aboutHero?.breadcrumbText || "About Us"}</span>
-          </p>
         </div>
       </section>
 
@@ -210,7 +236,7 @@ export default function AboutUs({ siteData }) {
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
               <a
-                href={siteData?.aboutWelcome?.btnLink || "https://wa.me/919428989488"}
+                href={welcomeButtonLink}
                 target="_blank"
                 rel="noreferrer"
                 className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
@@ -436,7 +462,7 @@ export default function AboutUs({ siteData }) {
                         position: 'relative',
                         background: '#ffffff',
                         borderRadius: '40px',
-                        padding: '14px 22px 14px 18px',
+                        padding: idx === 0 ? '14px 75px 14px 18px' : '14px 22px 14px 18px',
                         boxShadow: '0 10px 25px rgba(0,0,0,0.06)',
                         border: '1px solid #e2e8f0',
                         display: 'flex',
@@ -553,7 +579,7 @@ export default function AboutUs({ siteData }) {
                 zIndex: 1
               }} />
               <a
-                href={siteData?.aboutWhyUsDetail?.ctaPrimaryLink || "https://wa.me/919428989488"}
+                href={whyUsButtonLink}
                 target="_blank"
                 rel="noreferrer"
                 style={{

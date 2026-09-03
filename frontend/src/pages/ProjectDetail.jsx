@@ -201,7 +201,10 @@ export default function ProjectDetail({ siteData }) {
     ].filter(Boolean),
     videoImg: cmsItem.videoImg || cmsItem.videoCoverUrl || defaultProject.videoImg,
     videoUrl: cmsItem.videoUrl || cmsItem.videoLink || defaultProject.videoUrl,
-    basicInfoBg: cmsItem.basicInfoBg || cmsItem.basicBg || ''
+    basicInfoBg: cmsItem.basicInfoBg || cmsItem.basicBg || '',
+    buttonText: cmsItem.buttonText,
+    buttonLink: cmsItem.buttonLink,
+    waMessage: cmsItem.waMessage
   } : defaultProject;
 
   // Dynamic content sections from CMS siteData
@@ -219,12 +222,32 @@ export default function ProjectDetail({ siteData }) {
   const titleLine2Black = currentProject.titleLine2Black;
   const titleLine3 = currentProject.titleLine3;
   const description = currentProject.description;
-  const buttonText = siteData?.projectBlock?.buttonText || 'Get A Quote';
-  const _rawButtonLink = siteData?.projectBlock?.buttonLink || 'https://wa.me/919428989488';
-  const _waMessage = siteData?.projectBlock?.waMessage || 'Hello Winera International! I want to get a project quote. Please share details. [Ref: Project Detail Page]';
-  const buttonLink = !_rawButtonLink.includes('text=')
-    ? `${_rawButtonLink.split('?')[0]}?text=${encodeURIComponent(_waMessage)}`
-    : _rawButtonLink;
+
+  const buttonText = currentProject?.buttonText || siteData?.projectBlock?.buttonText || 'Get A Quote';
+
+  let rawLink = currentProject?.buttonLink || siteData?.projectBlock?.buttonLink || 'https://wa.me/919428989488';
+  let waMsg = currentProject?.waMessage || siteData?.projectBlock?.waMessage;
+
+  // Extract base WhatsApp URL
+  const baseLink = rawLink.split('?')[0];
+
+  // If waMsg is not explicitly set, try extracting text from rawLink
+  if (!waMsg && rawLink.includes('text=')) {
+    try {
+      const match = rawLink.match(/text=([^&]+)/);
+      if (match && match[1]) {
+        waMsg = decodeURIComponent(match[1]);
+      }
+    } catch (e) {}
+  }
+
+  // If waMsg is empty or generic without project reference, include the current project name
+  if (!waMsg || waMsg.trim() === 'Hello Winera International! I want to get a project quote. Please share details. [Ref: Project Detail Page]') {
+    const projName = currentProject?.name || 'this project';
+    waMsg = `Hello Winera International! I want to get a project quote for ${projName}. Please share details. [Ref: Project Detail Page]`;
+  }
+
+  const buttonLink = `${baseLink}?text=${encodeURIComponent(waMsg)}`;
   const mainImage = currentProject.mainImg;
 
   const basicBg = getValidImageUrl(currentProject.basicInfoBg || basicData.bgImg, projectImage2Bg);
