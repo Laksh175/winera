@@ -27,6 +27,8 @@ export default function SectionHeading({
   accentMaxWidth = '260px',
   align = 'center',
   marginBottom = '32px',
+  accentFilter = null,
+  accentColor = null,
   style = {}
 }) {
   const isLeft = align === 'left';
@@ -40,19 +42,38 @@ export default function SectionHeading({
       width: '100%',
       ...style
     }}>
-      <img
-        src={yellowStrokeLine}
-        alt=""
-        style={{
+      {accentColor ? (
+        <div style={{
           display: 'block',
           width: accentWidth,
           maxWidth: accentMaxWidth,
           height: '10px',
           margin: isLeft ? '0 0 10px 0' : '0 auto 10px',
-          objectFit: 'fill'
-        }}
-      />
+          backgroundColor: accentColor,
+          WebkitMaskImage: `url(${yellowStrokeLine})`,
+          maskImage: `url(${yellowStrokeLine})`,
+          WebkitMaskSize: '100% 100%',
+          maskSize: '100% 100%',
+          WebkitMaskRepeat: 'no-repeat',
+          maskRepeat: 'no-repeat'
+        }} />
+      ) : (
+        <img
+          src={yellowStrokeLine}
+          alt=""
+          style={{
+            display: 'block',
+            width: accentWidth,
+            maxWidth: accentMaxWidth,
+            height: '10px',
+            margin: isLeft ? '0 0 10px 0' : '0 auto 10px',
+            objectFit: 'fill',
+            filter: accentFilter || 'none'
+          }}
+        />
+      )}
       <h2 style={{
+        fontFamily: "'Black Han Sans', sans-serif",
         fontSize: '2.8rem',
         fontWeight: '900',
         color: '#0f172a',

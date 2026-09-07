@@ -5098,3 +5098,11 @@ img[src*="yellow-stroke-line"] {
     text-shadow: 0 0 16px rgba(255, 205, 0, 0.95), 0 0 32px rgba(255, 205, 0, 0.6), 0 0 48px rgba(255, 205, 0, 0.3);
   }
 }
+
+/* ==========================================
+   GLOBAL SECTION TITLES FONT FAMILY (Black Han Sans)
+   ========================================== */
+h2,
+.winera-section-heading-container h2 {
+  font-family: 'Black Han Sans', 'Montserrat', sans-serif !important;
+}

@@ -25,6 +25,7 @@ import indSchool from '../assets/ind-school.webp';
 import homeBlockBg from '../assets/home-block.webp';
 import homeBlock1 from '../assets/home-block-1.webp';
 import homeBlock2 from '../assets/home-block-2.webp';
+import homeRightSign from '../assets/home-right-sign.png';
 import { Check, ArrowRight, ShieldCheck, ChevronLeft, ChevronRight, LayoutGrid, ShoppingBag, Palette, Wrench, CheckCheck, UserCheck } from 'lucide-react';
 
 const getValidImageUrl = (url, fallback) => {
@@ -1274,7 +1275,7 @@ export default function Home({ siteData }) {
           textAlign: 'center'
         }}>
           <div style={{ maxWidth: '1180px', width: '100%', margin: '0 auto' }}>
-            <SectionHeading marginBottom="8px">
+            <SectionHeading marginBottom="8px" accentColor="#00a8ff">
               {(() => {
                 const rawTitle = siteData?.whyChooseUs?.title || "*WHY* CHOOSE US";
                 const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -1314,20 +1315,17 @@ export default function Home({ siteData }) {
                   ]
               ).map((item, idx) => (
                 <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                  <div style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '12px',
-                    background: '#cff4fe',
-                    border: '1px solid #7dd3fc',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                    marginTop: '2px'
-                  }}>
-                    <CheckCheck style={{ width: '20px', height: '20px', color: '#00a8ff' }} />
-                  </div>
+                  <img
+                    src={homeRightSign}
+                    alt=""
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      flexShrink: 0,
+                      objectFit: 'contain',
+                      marginTop: '2px'
+                    }}
+                  />
                   <div>
                     <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
                       {item.title}
