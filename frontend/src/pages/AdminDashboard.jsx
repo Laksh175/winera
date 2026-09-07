@@ -775,7 +775,7 @@ const defaultTrampolineCustom = {
   title1: 'Custom Trampoline Parks ',
   title2: 'by Winera',
   title3: 'International',
-  paragraph: "At Winera International, we design and manufacture commercial-grade trampoline parks tailored to your exact venue space, target audience, and business goals. From high-energy free jump zones and dodgeball courts to ninja warrior courses and interactive foam pits, every setup is engineered for maximum safety, durability, and operational ROI.",
+  paragraph: "At Winera International, we specialize in creating custom-built trampoline parks tailored to your space, budget, and activity preferences. As a leading trampoline manufacturer in India we ensure top-quality design, safety, and durability in every project. Whether you're envisioning a compact jump zone or a large-scale interactive entertainment center, we are the trampoline park manufacturer that delivers complete turnkey solutions to bring your vision to life. We have been designing and supplying commercial trampoline parks for malls, hotels, schools, resorts, and family entertainment centres since 2014.",
   imgUrl: trampolineParkImg2
 };
 
@@ -5172,6 +5172,51 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
+              {/* Section Background Image Upload */}
+              <div>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Section Background Image (Cyan Graphic Frame) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#fff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading background image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.arcadeCommercial || {}), bgUrl: res.url };
+                          setFormData(prev => ({ ...prev, arcadeCommercial: updated }));
+                          await persistSectionToDatabase('arcadeCommercial', updated);
+                          setStatusMsg('Background image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.arcadeCommercial?.bgUrl && (
+                    <img src={formData.arcadeCommercial.bgUrl} alt="" style={{ width: '80px', height: '40px', borderRadius: '8px', objectFit: 'cover', border: '2px solid #38bdf8' }} />
+                  )}
+                </div>
+              </div>
+
 
 
               {/* Team Photo Upload */}
@@ -6408,6 +6453,43 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
+              {/* Section Background Image Upload */}
+              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Section Background Image (Blue Graphic Frame) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </h4>
+                <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>Background Frame Graphic</label>
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      <Upload style={{ width: '13px', height: '13px' }} /> Upload Background Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          setStatusMsg('Uploading background image...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.softplayMaterials || {}), bgUrl: res.url };
+                            setFormData(prev => ({ ...prev, softplayMaterials: updated }));
+                            await persistSectionToDatabase('softplayMaterials', updated);
+                            setStatusMsg('Background image uploaded!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                    {formData.softplayMaterials?.bgUrl && (
+                      <img src={formData.softplayMaterials.bgUrl} alt="" style={{ height: '35px', width: '75px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #38bdf8' }} />
+                    )}
+                  </div>
+                </div>
+              </div>
+
               {/* Photo Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                 <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
@@ -6862,6 +6944,50 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   placeholder="e.g. Hello Winera International! I want to talk to an ROI Expert..."
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500', lineHeight: 1.5 }}
                 />
+              </div>
+
+              {/* Section Background Image Upload */}
+              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Section Background Image (Cyan Graphic Frame) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </h4>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  {formData.softplayRoi?.bgUrl ? (
+                    <img src={formData.softplayRoi.bgUrl} alt="" style={{ width: '100px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '2px solid #38bdf8' }} />
+                  ) : (
+                    <div style={{ width: '100px', height: '50px', borderRadius: '8px', background: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: '#64748b', fontWeight: '700' }}>Default BG</div>
+                  )}
+                  <input
+                    type="text"
+                    value={formData.softplayRoi?.bgUrl || ''}
+                    onChange={(e) => handleFieldChange('softplayRoi', 'bgUrl', e.target.value)}
+                    placeholder="Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload BG Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          setStatusMsg('Uploading background image...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.softplayRoi || {}), bgUrl: res.url };
+                            setFormData(prev => ({ ...prev, softplayRoi: updated }));
+                            await persistSectionToDatabase('softplayRoi', updated);
+                            setStatusMsg('Background image uploaded!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
               </div>
 
               {/* Section Image Upload */}
