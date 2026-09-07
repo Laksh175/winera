@@ -1008,13 +1008,20 @@ export default function Roi({ siteData }) {
                 margin: '0 0 24px 0',
                 letterSpacing: '-0.8px'
               }}>
-                {roiGet.title.includes("Winera") ? (
-                  <>
-                    {roiGet.title.split("Winera")[0]}<br />
-                    with <span style={{ color: '#00aeef' }}>Winera</span><br />
-                    <span style={{ color: '#00aeef' }}>{roiGet.title.split("Winera")[1] || "International"}</span>
-                  </>
-                ) : roiGet.title}
+                {(() => {
+                  if (roiGet.title.includes("Winera")) {
+                    const mainBefore = roiGet.title.split("Winera")[0].replace(/\s*with\s*$/i, "").trim();
+                    const afterWinera = roiGet.title.split("Winera")[1] ? roiGet.title.split("Winera")[1].trim() : "International";
+                    return (
+                      <>
+                        {mainBefore}<br />
+                        with <span style={{ color: '#00aeef' }}>Winera</span><br />
+                        <span style={{ color: '#00aeef' }}>{afterWinera}</span>
+                      </>
+                    );
+                  }
+                  return roiGet.title;
+                })()}
               </h2>
               <p style={{
                 fontSize: '15px',
@@ -1091,7 +1098,7 @@ export default function Roi({ siteData }) {
                 <div className="winera-roi-checklist-pill-left" style={{
                   position: 'absolute',
                   left: '50%',
-                  top: '-90px',
+                  top: '-94px',
                   transform: 'translateX(-50%)',
                   display: 'flex',
                   alignItems: 'center',
@@ -1108,51 +1115,57 @@ export default function Roi({ siteData }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: 'none',
-                    zIndex: 2
+                    boxShadow: '0 0 0 3px #ffffff',
+                    zIndex: 2,
+                    flexShrink: 0
                   }}>
                     <span style={{ color: '#38bdf8', fontSize: '20px', fontWeight: '900', lineHeight: 1 }}>✓</span>
                   </div>
-                  {/* Slanted blue pill */}
+                  {/* Slanted blue pill (matching second image shape) */}
                   <div style={{
                     background: 'linear-gradient(90deg, #38bdf8 0%, #7dd3fc 100%)',
                     color: '#0f172a',
                     padding: '0 28px 0 24px',
-                    borderRadius: '0 30px 30px 0',
-                    marginLeft: '-15px',
-                    fontSize: '13.5px',
-                    fontWeight: '800',
+                    borderRadius: '0 16px 16px 0',
+                    marginLeft: '-14px',
                     height: '38px',
                     display: 'flex',
                     alignItems: 'center',
-                    clipPath: 'polygon(0% 0%, 88% 0%, 100% 100%, 0% 100%)',
+                    transform: 'skewX(-16deg)',
                     zIndex: 1,
-                    fontFamily: "'Inter', sans-serif",
                     whiteSpace: 'nowrap'
                   }}>
-                    {roiChecklist.fitPill || "You're a fit"}
+                    <span style={{
+                      transform: 'skewX(16deg)',
+                      fontSize: '13.5px',
+                      fontWeight: '800',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
+                      {roiChecklist.fitPill || "You're a fit"}
+                    </span>
                   </div>
                 </div>
 
                 {(Array.isArray(roiChecklist.fitItems) ? roiChecklist.fitItems : []).map((itemText, idx) => {
                   let icon;
                   if (idx === 0) {
-                    icon = <BarChart2 size={18} />;
+                    icon = <BarChart2 size={22} />;
                   } else if (idx === 1) {
-                    icon = <Database size={18} />;
+                    icon = <Database size={22} />;
                   } else if (idx === 2) {
-                    icon = <Users size={18} />;
+                    icon = <Users size={22} />;
                   } else {
-                    icon = <Settings size={18} />;
+                    icon = <Settings size={22} />;
                   }
                   return (
                     <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
                       <div style={{
-                        width: '46px',
-                        height: '46px',
+                        width: '56px',
+                        height: '56px',
                         borderRadius: '50%',
-                        background: 'rgba(255, 255, 255, 0.08)',
-                        border: '1px solid rgba(255, 255, 255, 0.15)',
+                        background: 'linear-gradient(180deg, rgba(2, 23, 56, 1) 0%, rgba(67, 99, 149, 1) 100%)',
+                        border: '1px solid rgba(95, 154, 246, 0.75)',
+                        boxShadow: '0 6px 16px rgba(2, 23, 56, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.25)',
                         color: '#ffffff',
                         display: 'flex',
                         alignItems: 'center',
@@ -1162,11 +1175,11 @@ export default function Roi({ siteData }) {
                         {icon}
                       </div>
                       <p style={{
-                        fontSize: '14px',
-                        color: '#e2e8f0',
+                        fontSize: '16px',
+                        color: 'rgb(226, 232, 240)',
                         lineHeight: '1.45',
-                        fontWeight: '600',
-                        margin: 0,
+                        fontWeight: '500',
+                        margin: '0px',
                         fontFamily: "'Inter', sans-serif"
                       }}>
                         {itemText}
@@ -1190,7 +1203,7 @@ export default function Roi({ siteData }) {
                 <div className="winera-roi-checklist-pill-right" style={{
                   position: 'absolute',
                   left: '50%',
-                  top: '-90px',
+                  top: '-94px',
                   transform: 'translateX(-50%)',
                   display: 'flex',
                   alignItems: 'center',
@@ -1207,51 +1220,57 @@ export default function Roi({ siteData }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: 'none',
-                    zIndex: 2
+                    boxShadow: '0 0 0 3px #ffffff',
+                    zIndex: 2,
+                    flexShrink: 0
                   }}>
                     <span style={{ color: '#ef4444', fontSize: '18px', fontWeight: '900', lineHeight: 1 }}>✕</span>
                   </div>
-                  {/* Slanted red pill */}
+                  {/* Slanted red pill (matching second image shape) */}
                   <div style={{
                     background: 'linear-gradient(90deg, #ef4444 0%, #b91c1c 100%)',
                     color: '#ffffff',
                     padding: '0 28px 0 24px',
-                    borderRadius: '0 30px 30px 0',
-                    marginLeft: '-15px',
-                    fontSize: '13.5px',
-                    fontWeight: '800',
+                    borderRadius: '0 16px 16px 0',
+                    marginLeft: '-14px',
                     height: '38px',
                     display: 'flex',
                     alignItems: 'center',
-                    clipPath: 'polygon(0% 0%, 88% 0%, 100% 100%, 0% 100%)',
+                    transform: 'skewX(-16deg)',
                     zIndex: 1,
-                    fontFamily: "'Inter', sans-serif",
                     whiteSpace: 'nowrap'
                   }}>
-                    {roiChecklist.unfitPill === "You're a fit" ? "Not for you if" : (roiChecklist.unfitPill || "Not for you if")}
+                    <span style={{
+                      transform: 'skewX(16deg)',
+                      fontSize: '13.5px',
+                      fontWeight: '800',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
+                      {roiChecklist.unfitPill === "You're a fit" ? "Not for you if" : (roiChecklist.unfitPill || "Not for you if")}
+                    </span>
                   </div>
                 </div>
 
                 {(Array.isArray(roiChecklist.unfitItems) ? roiChecklist.unfitItems : []).map((itemText, idx) => {
                   let icon;
                   if (idx === 0) {
-                    icon = <BarChart2 size={18} />;
+                    icon = <BarChart2 size={22} />;
                   } else if (idx === 1) {
-                    icon = <AlertTriangle size={18} />;
+                    icon = <AlertTriangle size={22} />;
                   } else if (idx === 2) {
-                    icon = <TrendingDown size={18} />;
+                    icon = <TrendingDown size={22} />;
                   } else {
-                    icon = <UserX size={18} />;
+                    icon = <UserX size={22} />;
                   }
                   return (
                     <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
                       <div style={{
-                        width: '46px',
-                        height: '46px',
+                        width: '56px',
+                        height: '56px',
                         borderRadius: '50%',
-                        background: 'rgba(255, 255, 255, 0.08)',
-                        border: '1px solid rgba(255, 255, 255, 0.15)',
+                        background: 'linear-gradient(180deg, rgba(2, 23, 56, 1) 0%, rgba(67, 99, 149, 1) 100%)',
+                        border: '1px solid rgba(95, 154, 246, 0.75)',
+                        boxShadow: '0 6px 16px rgba(2, 23, 56, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.25)',
                         color: '#ffffff',
                         display: 'flex',
                         alignItems: 'center',
@@ -1261,11 +1280,11 @@ export default function Roi({ siteData }) {
                         {icon}
                       </div>
                       <p style={{
-                        fontSize: '14px',
-                        color: '#e2e8f0',
+                        fontSize: '16px',
+                        color: 'rgb(226, 232, 240)',
                         lineHeight: '1.45',
-                        fontWeight: '600',
-                        margin: 0,
+                        fontWeight: '500',
+                        margin: '0px',
                         fontFamily: "'Inter', sans-serif"
                       }}>
                         {itemText}

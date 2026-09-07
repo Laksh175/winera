@@ -19,6 +19,7 @@ import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
 import bumperCarCtaLeft from '../assets/bumperCar-cta-left.png';
 import bumperCarCtaRight from '../assets/bumperCar-cta-right.png';
+import bumperCarIcon from '../assets/bumper-car-icon.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
@@ -280,19 +281,16 @@ export default function BumperCar({ siteData }) {
         }}>
           {/* Top Title with Cyan Shield Badge */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginBottom: '16px' }}>
-            <div style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
-              background: '#b0e2fd',
-              color: '#0284c7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0
-            }}>
-              <ShieldCheck style={{ width: '24px', height: '24px' }} />
-            </div>
+            <img
+              src={bumperCarIcon}
+              alt=""
+              style={{
+                width: '44px',
+                height: '44px',
+                objectFit: 'contain',
+                flexShrink: 0
+              }}
+            />
             <h3 style={{ fontSize: '1.65rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
               {currentThrillCard.title || "The Perfect Blend Of Thrill And Safety:"}
             </h3>
