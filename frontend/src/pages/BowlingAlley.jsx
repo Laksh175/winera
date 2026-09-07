@@ -233,7 +233,7 @@ export default function BowlingAlley({ siteData }) {
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>
-              {siteData?.bowlingHero?.breadcrumbText || "Bowling Alley"}
+              {(siteData?.bowlingHero?.breadcrumbText || "Bowling").replace("Bowling Alley", "Bowling")}
             </span>
           </h1>
         </div>
@@ -1089,12 +1089,12 @@ export default function BowlingAlley({ siteData }) {
             </div>
 
             {/* Right: Yellow brush accent + Single-line title + paragraphs */}
-            <div className="winera-bowling-whyus-text" style={{ flex: 1, textAlign: 'center' }}>
+            <div className="winera-bowling-whyus-text" style={{ flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               {/* Yellow brush accent line */}
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '320px', height: '12px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+                style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
               />
               {/* Single-line title */}
               <h2 style={{
@@ -1136,7 +1136,15 @@ export default function BowlingAlley({ siteData }) {
       />
 
       {/* 9. RELATED PRODUCTS CAROUSEL SECTION */}
-      <RelatedProductsSection sectionData={siteData?.bowlingRelated} accentColor="#38bdf8" />
+      <RelatedProductsSection
+        sectionData={siteData?.bowlingRelated}
+        accentColor="#38bdf8"
+        accentWidth="370px"
+        accentMaxWidth="95%"
+        accentHeight="11px"
+        accentMarginBottom="8px"
+        accentAlign="left-inline"
+      />
 
       {/* 10. FREQUENTLY ASKED QUESTIONS SECTION (DYNAMIC BOWLING FAQS WITH FALLBACK) */}
       <FaqSection
@@ -1144,6 +1152,11 @@ export default function BowlingAlley({ siteData }) {
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
         highlightColor="#38bdf8"
+        accentWidth="510px"
+        accentMaxWidth="95%"
+        accentHeight="11px"
+        accentMarginBottom="8px"
+        accentAlign="left-inline"
       />
 
       {/* SEO PARTNER PARAGRAPH */}

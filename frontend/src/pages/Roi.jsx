@@ -69,7 +69,7 @@ export default function Roi({ siteData }) {
       if (match && match[1]) {
         roiWaMsg = decodeURIComponent(match[1]);
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   if (!roiWaMsg) {
@@ -234,7 +234,7 @@ export default function Roi({ siteData }) {
 
       {/* 2. RETURN ON INVESTMENT INTRO BLOCK */}
       <section className="winera-roi-intro-section" style={{
-        padding: '70px 4vw 80px',
+        padding: '40px 4vw 40px',
         maxWidth: '1240px',
         margin: '0 auto'
       }}>
@@ -343,7 +343,7 @@ export default function Roi({ siteData }) {
 
       {/* 3. OPENING A GAME ZONE IS EASY BLOCK */}
       <section className="winera-roi-pain-section" style={{
-        padding: '70px 4vw 90px',
+        padding: '40px 4vw 40px',
         background: '#eef4fb',
         position: 'relative',
         overflow: 'hidden'
@@ -480,14 +480,14 @@ export default function Roi({ siteData }) {
 
       {/* 4. WHY MOST GAME ZONES FAIL VS WHY OURS PROFIT SECTION */}
       <section className="winera-roi-comparison-section" style={{
-        padding: '70px 4vw 90px',
+        padding: '75px 4vw 75px',
         background: `url(${roiImage3bg}) center top / 100% 100% no-repeat`,
         position: 'relative',
         overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center' }}>
           {/* Yellow Stroke + Title */}
-          <div style={{ marginBottom: '50px' }}>
+          <div style={{ marginBottom: '30px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -739,12 +739,12 @@ export default function Roi({ siteData }) {
 
       {/* 5. FROM EMPTY SPACE TO PROFIT SECTION */}
       <section className="winera-roi-process-section" style={{
-        padding: '70px 4vw 90px',
-        background: '#ffffff'
+        padding: '40px 4vw 40px',
+        background: 'rgb(245, 245, 249)'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center' }}>
           {/* Yellow Stroke + Title */}
-          <div style={{ marginBottom: '50px' }}>
+          <div style={{ marginBottom: '30px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -768,100 +768,100 @@ export default function Roi({ siteData }) {
             </h2>
           </div>
 
-        {/* Cards Grid */}
-        <div className="winera-roi-process-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '24px',
-          marginTop: '40px'
-        }}>
-          {(Array.isArray(roiProcess.cards) ? roiProcess.cards : []).map((step, idx) => {
-            let fallbackImg = roiBlock5Img1;
-            if (idx === 1) fallbackImg = roiBlock5Img2;
-            else if (idx === 2) fallbackImg = roiBlock5Img3;
-            else if (idx === 3) fallbackImg = roiBlock5Img4;
-            else if (idx === 4) fallbackImg = roiBlock5Img5;
-            else if (idx === 5) fallbackImg = roiBlock5Img6;
+          {/* Cards Grid */}
+          <div className="winera-roi-process-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '24px',
+            marginTop: '40px'
+          }}>
+            {(Array.isArray(roiProcess.cards) ? roiProcess.cards : []).map((step, idx) => {
+              let fallbackImg = roiBlock5Img1;
+              if (idx === 1) fallbackImg = roiBlock5Img2;
+              else if (idx === 2) fallbackImg = roiBlock5Img3;
+              else if (idx === 3) fallbackImg = roiBlock5Img4;
+              else if (idx === 4) fallbackImg = roiBlock5Img5;
+              else if (idx === 5) fallbackImg = roiBlock5Img6;
 
-            const resolvedImg = step.img && (step.img.startsWith('http') || step.img.startsWith('data:')) ? step.img : fallbackImg;
-            const isLeft = idx % 3 === 0;
-            const isRight = idx % 3 === 2;
-            const startX = isLeft ? -75 : (isRight ? 75 : 0);
-            const startY = isLeft || isRight ? 0 : 40;
+              const resolvedImg = step.img && (step.img.startsWith('http') || step.img.startsWith('data:')) ? step.img : fallbackImg;
+              const isLeft = idx % 3 === 0;
+              const isRight = idx % 3 === 2;
+              const startX = isLeft ? -75 : (isRight ? 75 : 0);
+              const startY = isLeft || isRight ? 0 : 40;
 
-            return (
-              <motion.div
-                key={idx}
-                data-framer-motion="true"
-                initial={{ opacity: 0, x: startX, y: startY }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: false, amount: 0.15 }}
-                transition={{
-                  duration: 0.8,
-                  delay: (idx % 3) * 0.12,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-              >
-                <MotionCardFlip
-                  className="winera-roi-process-card"
-                  style={{
-                    position: 'relative',
-                    borderRadius: '24px',
-                    overflow: 'hidden',
-                    height: '280px',
-                    background: `url(${resolvedImg}) center center / cover no-repeat`,
-                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end'
+              return (
+                <motion.div
+                  key={idx}
+                  data-framer-motion="true"
+                  initial={{ opacity: 0, x: startX, y: startY }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: (idx % 3) * 0.12,
+                    ease: [0.16, 1, 0.3, 1]
                   }}
                 >
-                  {/* Dark overlay for readability */}
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.9) 100%)',
-                    zIndex: 1
-                  }} />
+                  <MotionCardFlip
+                    className="winera-roi-process-card"
+                    style={{
+                      position: 'relative',
+                      borderRadius: '24px',
+                      overflow: 'hidden',
+                      height: '280px',
+                      background: `url(${resolvedImg}) center center / cover no-repeat`,
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'flex-end'
+                    }}
+                  >
+                    {/* Dark overlay for readability */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.9) 100%)',
+                      zIndex: 1
+                    }} />
 
-                  {/* Text Content */}
-                  <div style={{
-                    position: 'relative',
-                    zIndex: 2,
-                    padding: '24px',
-                    textAlign: 'left'
-                  }}>
-                    <h3 style={{
-                      color: '#ffffff',
-                      fontSize: '18px',
-                      fontWeight: '800',
-                      margin: '0 0 8px 0',
-                      fontFamily: "'Inter', sans-serif"
+                    {/* Text Content */}
+                    <div style={{
+                      position: 'relative',
+                      zIndex: 2,
+                      padding: '24px',
+                      textAlign: 'left'
                     }}>
-                      {step.title}
-                    </h3>
-                    <p style={{
-                      color: '#cbd5e1',
-                      fontSize: '13.5px',
-                      lineHeight: '1.5',
-                      margin: 0,
-                      fontFamily: "'Inter', sans-serif"
-                    }}>
-                      {step.desc}
-                    </p>
-                  </div>
-                </MotionCardFlip>
-              </motion.div>
-            );
-          })}
+                      <h3 style={{
+                        color: '#ffffff',
+                        fontSize: '18px',
+                        fontWeight: '800',
+                        margin: '0 0 8px 0',
+                        fontFamily: "'Inter', sans-serif"
+                      }}>
+                        {step.title}
+                      </h3>
+                      <p style={{
+                        color: '#cbd5e1',
+                        fontSize: '13.5px',
+                        lineHeight: '1.5',
+                        margin: 0,
+                        fontFamily: "'Inter', sans-serif"
+                      }}>
+                        {step.desc}
+                      </p>
+                    </div>
+                  </MotionCardFlip>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* 6. WHAT YOU GET WITH WINERA INTERNATIONAL SECTION */}
       <section className="winera-roi-get-section" style={{
-        padding: '70px 4vw 90px',
-        background: '#f8fafc'
+        padding: '40px 4vw 40px',
+        background: 'rgb(244, 244, 248)'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           <div className="winera-roi-get-grid" style={{
@@ -954,7 +954,7 @@ export default function Roi({ siteData }) {
                   } else {
                     stepIcon = <Shield size={18} />;
                   }
-                  
+
                   return (
                     <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '16px', position: 'relative', zIndex: 2 }}>
                       <div style={{
@@ -1039,12 +1039,12 @@ export default function Roi({ siteData }) {
 
       {/* 7. THIS IS FOR YOU IF SECTION (Checklist Block) */}
       <section className="winera-roi-checklist-section" style={{
-        padding: '70px 4vw 90px',
-        background: '#ffffff'
+        padding: '40px 4vw 40px',
+        background: 'rgb(245, 245, 249)'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center' }}>
           {/* Title Header */}
-          <div style={{ marginBottom: '60px' }}>
+          <div style={{ marginBottom: '30px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -1302,7 +1302,7 @@ export default function Roi({ siteData }) {
       <TestimonialsSection siteData={siteData} />
 
       {/* 9. BOTTOM CTA BOOK CONSULTATION SECTION */}
-      <section style={{ padding: '60px 4vw 80px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section style={{ padding: '40px 4vw 40px', background: '#F5F5F9', textAlign: 'center' }}>
         <div className="winera-cta-banner-container" style={{
           maxWidth: '1240px',
           margin: '0 auto',

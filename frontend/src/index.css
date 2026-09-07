@@ -3742,6 +3742,7 @@ textarea::placeholder,
 
   .winera-safety-electrical-section {
     padding: 45px 4vw !important;
+    background: rgb(241, 241, 246) !important;
   }
 
   .winera-safety-electrical-grid {
@@ -3764,6 +3765,12 @@ textarea::placeholder,
 
   .winera-safety-structure-section {
     padding: 50px 4vw !important;
+    background: rgb(241, 241, 246) !important;
+  }
+
+  .winera-safety-why-matters-section {
+    padding: 45px 4vw !important;
+    background: rgb(241, 241, 246) !important;
   }
 
   .winera-safety-structure-grid {
@@ -3817,6 +3824,11 @@ textarea::placeholder,
     align-items: center !important;
     text-align: center !important;
   }
+.winera-safety-electrical-section,
+.winera-safety-structure-section,
+.winera-safety-why-matters-section {
+  background: rgb(241, 241, 246) !important;
+  background-color: rgb(241, 241, 246) !important;
 }
 
 /* Safety Cards Gradient Border & Background Shading (Matching Reference Screenshot 1:1) */

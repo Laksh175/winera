@@ -22,7 +22,12 @@ export default function ProjectsMarqueeSection({
   projects = defaultProjects,
   bg = '#F5F5F9',
   buttonText = "View All",
-  showBottomButton = false
+  showBottomButton = false,
+  accentWidth = '510px',
+  accentMaxWidth = '100%',
+  accentHeight = '11px',
+  accentMarginBottom = '8px',
+  accentAlign = 'center'
 }) {
   const items = Array.isArray(projects) && projects.length > 0 ? projects : defaultProjects;
 
@@ -42,7 +47,7 @@ export default function ProjectsMarqueeSection({
             flexWrap: 'wrap'
           }}>
             <div style={{ flex: '1 1 500px', minWidth: '280px' }}>
-              <SectionHeading align="left" marginBottom="0" accentWidth="220px" accentMaxWidth="320px">
+              <SectionHeading align="left" marginBottom="0" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign}>
                 {typeof title === 'string' ? (
                   (() => {
                     const parts = title.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -76,7 +81,7 @@ export default function ProjectsMarqueeSection({
           </div>
         ) : (
           <div style={{ maxWidth: '1240px', margin: '0 auto 50px', textAlign: 'center' }}>
-            <SectionHeading marginBottom="0" accentWidth="220px" accentMaxWidth="260px">
+            <SectionHeading marginBottom="0" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign}>
               {simpleTitle || title}
             </SectionHeading>
           </div>

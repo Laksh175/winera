@@ -10,7 +10,13 @@ export default function FaqSection({
   title = 'Frequently Asked *Questions*',
   subtitle = null,
   highlightColor = '#00a8ff',
-  bg = '#F5F5F9'
+  bg = '#F5F5F9',
+  accentWidth = '510px',
+  accentMaxWidth = '95%',
+  accentHeight = '11px',
+  accentMarginBottom = '8px',
+  accentAlign = 'left-inline',
+  accentStyle = {}
 }) {
   const [activeFaqIndex, setActiveFaqIndex] = useState(-1);
 
@@ -22,7 +28,7 @@ export default function FaqSection({
     <section id={id} className="winera-faq-section" style={{ padding: '25px 4vw 40px', background: bg, textAlign: 'center' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         <MotionFadeIn>
-        <SectionHeading marginBottom="8px">
+        <SectionHeading marginBottom="8px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign} accentStyle={accentStyle}>
           {(() => {
             const rawTitle = title || "Frequently Asked *Questions*";
             const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);

@@ -1095,7 +1095,7 @@ export default function ArcadeGame({ siteData }) {
       <section className="winera-arcade-why-section" style={{ padding: '70px 4vw 75px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading with Yellow Accent Line Above */}
-          <SectionHeading marginBottom="40px" accentWidth="260px" accentMaxWidth="300px">
+          <SectionHeading marginBottom="40px" accentWidth="510px" accentMaxWidth="95%" accentHeight="11px" accentMarginBottom="8px" accentAlign="center">
             {(() => {
               const rawTitle = typeof siteData?.arcadeWhyUs?.title === 'string' ? siteData.arcadeWhyUs.title : "Why Choose *Winera International*";
               const parts = String(rawTitle).split(/\*{1,2}(.*?)\*{1,2}/g);

@@ -103,7 +103,7 @@ export default function AboutUs({ siteData }) {
       if (match && match[1]) {
         welcomeWaMsg = decodeURIComponent(match[1]);
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   if (!welcomeWaMsg) {
@@ -123,7 +123,7 @@ export default function AboutUs({ siteData }) {
       if (match && match[1]) {
         whyUsWaMsg = decodeURIComponent(match[1]);
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   if (!whyUsWaMsg) {
@@ -308,7 +308,7 @@ export default function AboutUs({ siteData }) {
         </div>
 
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 4vw' }}>
-          <SectionHeading marginBottom="40px" accentWidth="240px" accentMaxWidth="300px">
+          <SectionHeading marginBottom="40px" accentWidth="367px" accentMaxWidth="95%" accentHeight="11px" accentMarginBottom="8px" accentAlign="left-inline">
             {(() => {
               const rawTitle = siteData?.aboutMissionVision?.title || "*Our Purpose* & Promise";
               const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -422,7 +422,7 @@ export default function AboutUs({ siteData }) {
       {/* 5. WHY CHOOSE US MINDMAP & 3-CARD SECTION */}
       <section id="why-choose-us-detail" className="winera-about-mindmap-section" style={{ position: 'relative', width: '100%', padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ position: 'relative', width: '100%', background: `url(${getValidImageUrl(siteData?.aboutWhyUsDetail?.bgUrl, aboutUsTopBg)}) center top / 100% 100% no-repeat`, padding: '80px 4vw 80px', minHeight: '775px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <SectionHeading marginBottom="40px" accentWidth="260px" accentMaxWidth="320px" style={{ zIndex: 10 }}>
+          <SectionHeading marginBottom="40px" accentWidth="370px" accentMaxWidth="95%" accentHeight="11px" accentMarginBottom="8px" accentAlign="left-inline" style={{ zIndex: 10 }}>
             {(() => {
               const rawTitle = siteData?.aboutWhyUsDetail?.title || "Why *Choose Us?*";
               const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -465,7 +465,7 @@ export default function AboutUs({ siteData }) {
                 : defaultPills;
 
               const leftItems = [
-                { icon: TrendingUp, text: pills[0], offset: '66px'},
+                { icon: TrendingUp, text: pills[0], offset: '66px' },
                 { icon: Maximize2, text: pills[1], offset: '85px' },
                 { icon: Headset, text: pills[2], offset: '42px' }
               ];
@@ -517,7 +517,7 @@ export default function AboutUs({ siteData }) {
                         position: 'relative',
                         background: '#ffffff',
                         borderRadius: '40px',
-                        padding: '14px 22px 14px 18px',
+                        padding: '14px 30px 14px 18px',
                         boxShadow: '0 10px 25px rgba(0,0,0,0.06)',
                         border: '1px solid #e2e8f0',
                         display: 'flex',
@@ -574,7 +574,7 @@ export default function AboutUs({ siteData }) {
                 const IconComponent = styleObj.icon;
 
                 return (
-                  <div key={idx} style={{ background: '#F5F5F9', borderRadius: '24px', padding: '36px 30px', boxShadow: '0 15px 40px rgba(0, 168, 255, 0.08)', border: '1px solid #f1f5f9' }}>
+                  <div key={idx} style={{ background: '#ffffff', borderRadius: '24px', padding: '36px 30px', boxShadow: '0 15px 40px rgba(0, 168, 255, 0.08)', border: '1px solid #f1f5f9' }}>
                     <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: styleObj.bg, color: styleObj.color, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}><IconComponent style={{ width: '20px', height: '20px' }} /></div>
                     <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: '#0f172a', marginBottom: '12px' }}>{c.title}</h3>
                     <p style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', lineHeight: 1.6 }}>{c.desc}</p>
@@ -715,7 +715,7 @@ export default function AboutUs({ siteData }) {
               })()}
             </SectionHeading>
             <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: '#0f172a', marginBottom: '16px' }}>{siteData?.founder?.name || 'Mr. Unnit Jogani'}</h3>
-            
+
             <div style={{ color: '#475569', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '32px', whiteSpace: 'pre-line' }}>
               {(() => {
                 const defaultBio = "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.";

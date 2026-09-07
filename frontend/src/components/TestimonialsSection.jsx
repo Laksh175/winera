@@ -36,13 +36,24 @@ const defaultTestimonials = [
 
 export default function TestimonialsSection({
   id = 'testimonials',
+  siteData = null,
   testimonials = defaultTestimonials,
   title = '*What Our* Clients Say',
   subtitle = null,
   highlightColor = '#00a8ff',
-  bg = '#F5F5F9'
+  bg = '#F5F5F9',
+  accentWidth = '510px',
+  accentMaxWidth = '100%',
+  accentHeight = '11px',
+  accentMarginBottom = '8px',
+  accentAlign = 'center'
 }) {
-  const list = Array.isArray(testimonials) && testimonials.length > 0 ? testimonials : defaultTestimonials;
+  const actualTestimonials = (Array.isArray(siteData?.testimonials) && siteData.testimonials.length > 0)
+    ? siteData.testimonials
+    : testimonials;
+  const list = Array.isArray(actualTestimonials) && actualTestimonials.length > 0 ? actualTestimonials : defaultTestimonials;
+  const actualTitle = siteData?.testimonialsHeader?.title || title;
+  const actualSubtitle = siteData?.testimonialsHeader?.subtitle || subtitle;
   const [activeIndex, setActiveIndex] = useState(0);
   const { openVideoModal } = useVideoModal();
   const currentItem = list[activeIndex % list.length] || defaultTestimonials[0];
@@ -66,9 +77,9 @@ export default function TestimonialsSection({
     <section id={id} style={{ padding: '40px 4vw 20px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         <MotionFadeIn>
-        <SectionHeading marginBottom="10px">
+        <SectionHeading marginBottom="10px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign}>
           {(() => {
-            const rawTitle = title || "*What Our* Clients Say";
+            const rawTitle = actualTitle || "*What Our* Clients Say";
             const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
             return parts.map((part, index) => {
               if (index % 2 === 1) {
@@ -92,7 +103,7 @@ export default function TestimonialsSection({
           margin: '0 auto 24px',
           transition: 'opacity 0.3s'
         }}>
-          {subtitle || currentItem.quote}
+          {actualSubtitle || currentItem.quote}
         </p>
 
         {/* ── DESKTOP LAYOUT ── */}

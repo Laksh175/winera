@@ -643,7 +643,7 @@ export default function TrampolinePark({ siteData }) {
       {/* 6.5 WHAT WILL YOUR TRAMPOLINE PARK ACTUALLY EARN? (ROI SECTION MATCHING SCREENSHOT) */}
       <section className="winera-trampoline-roi-earn-section" style={{
         padding: '45px 4vw',
-        background: '#F8FAFC',
+        background: 'rgb(245, 245, 249)',
         position: 'relative'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
@@ -749,13 +749,13 @@ export default function TrampolinePark({ siteData }) {
       }}>
         <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
           {/* Header (Single Line Title & Reduced Top Spacing) */}
-          <div style={{ textAlign: 'center', maxWidth: '1000px', margin: '0 auto 35px' }}>
+          <div style={{ textAlign: 'center', margin: '0 auto 35px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
+              style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: '0' }} className="winera-why-h2">
+            <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, whiteSpace: 'nowrap' }} className="winera-why-h2">
               {renderTitleMarkup(siteData?.trampolineWhyChoose?.title, "Why Choose *Winera International*", '#28b4ee')}
             </h2>
           </div>

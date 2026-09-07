@@ -48,7 +48,7 @@ export default function SafetyStandards({ siteData }) {
   }, [siteData]);
 
   return (
-    <div style={{ background: '#f5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: 'Montserrat, sans-serif', overflowX: 'hidden' }}>
+    <div style={{ background: 'rgb(241, 241, 246)', color: '#0f172a', minHeight: '100vh', fontFamily: 'Montserrat, sans-serif', overflowX: 'hidden' }}>
       {/* 1. HEADER */}
       <Header headerData={header} />
 
@@ -90,7 +90,7 @@ export default function SafetyStandards({ siteData }) {
       </section>
 
       {/* 3. GAME ZONE & KIDS PLAY EQUIPMENT SAFETY STANDARDS BLOCK (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-safety-intro-section" style={{ padding: '80px 4vw', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-safety-intro-section" style={{ padding: '40px 4vw', background: 'rgb(241, 241, 246)', overflow: 'hidden' }}>
         <div className="winera-safety-intro-grid" style={{
           maxWidth: '1280px',
           margin: '0 auto',
@@ -157,10 +157,10 @@ export default function SafetyStandards({ siteData }) {
       </section>
 
       {/* 4. PLAY & ATTRACTION EQUIPMENT SAFETY SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-safety-standards-section" style={{ padding: '40px 4vw 90px', background: '#F5F5F9' }}>
+      <section className="winera-safety-standards-section" style={{ padding: '40px 4vw 40px', background: 'rgb(241, 241, 246)' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Centered Header */}
-          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 45px' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 30px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -293,13 +293,13 @@ export default function SafetyStandards({ siteData }) {
       <section className="winera-safety-material-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '80px 4vw 90px',
+        padding: '75px 4vw 75px',
         background: `url(${safetyStandardBg2}) center center / 100% 100% no-repeat`,
         overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Header (Left Aligned matching Image 2) */}
-          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 35px 0' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 25px 0' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -430,13 +430,14 @@ export default function SafetyStandards({ siteData }) {
       <section className="winera-safety-electrical-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '80px 4vw 90px',
-        background: '#f8fafc',
+        padding: '40px 4vw 40px',
+        backgroundColor: 'rgb(241, 241, 246)',
+        background: 'rgb(241, 241, 246)',
         overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Left Aligned Header */}
-          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 40px 0' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 25px 0' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -592,13 +593,14 @@ export default function SafetyStandards({ siteData }) {
       <section className="winera-safety-structure-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '90px 4vw 100px',
-        background: '#ffffff',
+        padding: '40px 4vw 40px',
+        backgroundColor: 'rgb(241, 241, 246)',
+        background: 'rgb(241, 241, 246)',
         overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Centered Header */}
-          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '860px', margin: '0 auto 55px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '860px', margin: '0 auto 30px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -777,13 +779,14 @@ export default function SafetyStandards({ siteData }) {
       <section className="winera-safety-why-matters-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '80px 4vw 90px',
-        background: '#f8fafc',
+        padding: '40px 4vw 40px',
+        backgroundColor: 'rgb(241, 241, 246)',
+        background: 'rgb(241, 241, 246)',
         overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Centered Header */}
-          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '880px', margin: '0 auto 45px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '880px', margin: '0 auto 30px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""

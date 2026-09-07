@@ -1089,7 +1089,7 @@ export default function ArGames({ siteData }) {
         position: 'relative',
         width: '100%',
         padding: '70px 4vw 80px',
-        background: '#F8FAFC',
+        background: 'rgb(245, 245, 249)',
         overflow: 'hidden'
       }}>
         {/* Top Decorative Color Accent Tabs (Figma 1:1) */}
@@ -1184,9 +1184,9 @@ export default function ArGames({ siteData }) {
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
+              style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, whiteSpace: 'nowrap' }}>
               {renderTitleMarkup(siteData?.arWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>

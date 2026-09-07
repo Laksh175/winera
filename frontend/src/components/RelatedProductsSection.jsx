@@ -7,7 +7,16 @@ import ctaArcade from '../assets/cta-arcade.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
 
-export default function RelatedProductsSection({ sectionData, accentColor = '#38bdf8' }) {
+export default function RelatedProductsSection({
+  sectionData,
+  accentColor = '#38bdf8',
+  accentWidth = '370px',
+  accentMaxWidth = '95%',
+  accentHeight = '11px',
+  accentMarginBottom = '8px',
+  accentAlign = 'left-inline',
+  accentStyle = {}
+}) {
   const defaultCategories = [
     { title: "Arcade Games", link: "/products/arcade-games", img: ctaArcade },
     { title: "VR Games", link: "/products/vr-games", img: "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80" },
@@ -69,7 +78,7 @@ export default function RelatedProductsSection({ sectionData, accentColor = '#38
     >
       <MotionFadeIn>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-        <SectionHeading marginBottom="40px" accentWidth="220px" accentMaxWidth="260px">
+        <SectionHeading marginBottom="40px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign} accentStyle={accentStyle}>
           {(() => {
             const rawTitle = sectionData?.title || "*Related* Products";
             const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
