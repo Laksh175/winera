@@ -342,26 +342,86 @@ html {
 }
 
 /* AOS and Reveal Scroll Animation Rules - Smooth Bottom-to-Top Slow Slide Up */
+@keyframes wineraFadeUpCenter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 50px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes wineraFadeUpRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(-70px, 50px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes wineraFadeUpLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(70px, 50px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .winera-reveal,
+.winera-animate-block,
 [data-aos="fade-up"] {
   opacity: 0;
-  transform: translate3d(0, 50px, 0);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.winera-reveal-left,
+.fade-up-right,
+[data-aos="fade-up-right"] {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.winera-reveal-right,
+.fade-up-left,
+[data-aos="fade-up-left"] {
+  opacity: 0;
   will-change: opacity, transform;
 }
 
 .winera-reveal.is-visible,
-[data-aos="fade-up"].aos-animate,
-[data-aos="fade-up"].is-visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+.winera-animate-block.is-visible,
+[data-aos="fade-up"].is-visible,
+[data-aos="fade-up"].aos-animate {
+  animation: wineraFadeUpCenter 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
-.winera-reveal.is-visible.winera-reveal-delay-1 { transition-delay: 0.1s; }
-.winera-reveal.is-visible.winera-reveal-delay-2 { transition-delay: 0.22s; }
-.winera-reveal.is-visible.winera-reveal-delay-3 { transition-delay: 0.34s; }
-.winera-reveal.is-visible.winera-reveal-delay-4 { transition-delay: 0.46s; }
-.winera-reveal.is-visible.winera-reveal-delay-5 { transition-delay: 0.58s; }
+.winera-reveal-left.is-visible,
+.fade-up-right.is-visible,
+[data-aos="fade-up-right"].is-visible,
+[data-aos="fade-up-right"].aos-animate {
+  animation: wineraFadeUpRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+.winera-reveal-right.is-visible,
+.fade-up-left.is-visible,
+[data-aos="fade-up-left"].is-visible,
+[data-aos="fade-up-left"].aos-animate {
+  animation: wineraFadeUpLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+.winera-reveal-delay-1, .delay-1 { animation-delay: 0.1s !important; }
+.winera-reveal-delay-2, .delay-2 { animation-delay: 0.22s !important; }
+.winera-reveal-delay-3, .delay-3 { animation-delay: 0.34s !important; }
+.winera-reveal-delay-4, .delay-4 { animation-delay: 0.46s !important; }
+.winera-reveal-delay-5, .delay-5 { animation-delay: 0.58s !important; }
 
 /* Immediate Hover Response (Override transition-delay on hover) */
 .winera-process-card-wrapper-cyan:hover,
@@ -472,30 +532,66 @@ html {
   box-shadow: 0 22px 45px rgba(0, 168, 255, 0.25) !important;
 }
 
+.winera-partner-box-wrapper-yellow::before,
+.winera-partner-box-wrapper-cyan::before {
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease !important;
+}
+
+.winera-partner-box-wrapper-yellow:hover::before {
+  transform: translate(-6px, -6px) scale(1.04) !important;
+  filter: drop-shadow(0 8px 20px rgba(255, 205, 0, 0.65)) !important;
+}
+
+.winera-partner-box-wrapper-cyan:hover::before {
+  transform: translate(-6px, -6px) scale(1.04) !important;
+  filter: drop-shadow(0 8px 20px rgba(56, 189, 248, 0.65)) !important;
+}
+
 .winera-partner-box-wrapper-yellow,
 .winera-partner-box-wrapper-cyan {
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.85s ease !important;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.85s ease !important;
   cursor: pointer;
+  perspective: 1000px;
 }
 
 .winera-partner-box-wrapper-yellow:hover,
 .winera-partner-box-wrapper-cyan:hover {
-  transform: translateY(-10px) scale(1.02) !important;
+  transform: translateY(-12px) scale(1.03) !important;
 }
 
 .winera-partner-box-yellow,
 .winera-partner-box-cyan {
-  transition: box-shadow 0.35s ease, border-color 0.35s ease !important;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease, transform 0.35s ease !important;
 }
 
 .winera-partner-box-wrapper-yellow:hover .winera-partner-box-yellow {
-  box-shadow: 0 24px 50px rgba(255, 205, 0, 0.4), 0 8px 24px rgba(255, 205, 0, 0.22) !important;
+  background: #ffffff !important;
+  box-shadow: 0 26px 55px rgba(255, 205, 0, 0.42), 0 10px 24px rgba(255, 205, 0, 0.22) !important;
   border-color: #ffcd00 !important;
 }
 
 .winera-partner-box-wrapper-cyan:hover .winera-partner-box-cyan {
-  box-shadow: 0 24px 50px rgba(56, 189, 248, 0.4), 0 8px 24px rgba(56, 189, 248, 0.2) !important;
+  background: #ffffff !important;
+  box-shadow: 0 26px 55px rgba(56, 189, 248, 0.42), 0 10px 24px rgba(56, 189, 248, 0.22) !important;
   border-color: #38bdf8 !important;
+}
+
+.winera-partner-box-wrapper-yellow:hover .winera-partner-box-yellow h4 {
+  color: #d97706 !important;
+  transform: translateX(4px);
+  transition: transform 0.3s ease, color 0.3s ease !important;
+}
+
+.winera-partner-box-wrapper-cyan:hover .winera-partner-box-cyan h4 {
+  color: #00a8ff !important;
+  transform: translateX(4px);
+  transition: transform 0.3s ease, color 0.3s ease !important;
+}
+
+.winera-partner-box-wrapper-yellow:hover .winera-cyan-cta-btn,
+.winera-partner-box-wrapper-cyan:hover .winera-white-cyan-cta-btn {
+  transform: scale(1.08) !important;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
   /* Industries Carousel Single Card Layout for Mobile */

@@ -29,12 +29,68 @@ const LaserTag = lazy(() => import('./pages/LaserTag'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 
-// Helper component that resets window scroll position to (0,0) whenever route path changes
-function ScrollToTop() {
+// Helper component that resets window scroll position and initializes smooth scroll-reveal animations across all pages
+function GlobalScrollAnimation() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     window.scrollTo(0, 0);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            entry.target.classList.add('aos-animate');
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px -80px 0px',
+        threshold: 0.1
+      }
+    );
+
+    const scanAndObserve = () => {
+      if (window.location.pathname.startsWith('/admin')) return;
+
+      const selector = [
+        'section',
+        '.winera-reveal',
+        '.winera-reveal-left',
+        '.winera-reveal-right',
+        '.fade-up-right',
+        '.fade-up-left',
+        '.winera-animate-block',
+        '[data-aos]',
+        '.winera-stats-card',
+        '.winera-process-card-wrapper-cyan',
+        '.winera-process-card-wrapper-yellow',
+        '.winera-partner-box-wrapper-yellow',
+        '.winera-partner-box-wrapper-cyan'
+      ].join(', ');
+
+      const elements = document.querySelectorAll(selector);
+      elements.forEach((el) => {
+        if (!el.classList.contains('winera-reveal') && !el.classList.contains('winera-animate-block')) {
+          el.classList.add('winera-reveal');
+        }
+        observer.observe(el);
+      });
+    };
+
+    scanAndObserve();
+    const interval = setInterval(scanAndObserve, 250);
+    const timeout = setTimeout(() => clearInterval(interval), 3000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+      observer.disconnect();
+    };
   }, [pathname]);
 
   return null;
@@ -67,7 +123,7 @@ export default function App() {
     <AuthProvider>
       <VideoModalProvider>
         <Router>
-          <ScrollToTop />
+          <GlobalScrollAnimation />
           <WhatsAppFloat whatsAppUrl={siteData?.header?.whatsAppUrl} />
           <Suspense fallback={<div style={{ minHeight: '100vh', background: '#F5F5F9' }} />}>
           <Routes>

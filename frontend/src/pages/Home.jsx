@@ -40,6 +40,64 @@ const getValidImageUrl = (url, fallback) => {
   return fallback;
 };
 
+const CountUpNumber = ({ targetText, duration = 1800 }) => {
+  const [count, setCount] = React.useState(0);
+  const elementRef = React.useRef(null);
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+
+  const raw = String(targetText || '');
+  const match = raw.match(/(\d+)/);
+  const targetNum = match ? parseInt(match[1], 10) : 0;
+  const prefix = match ? raw.substring(0, match.index) : '';
+  const suffix = match ? raw.substring(match.index + match[0].length) : raw;
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined' || !elementRef.current || targetNum === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+            let startTime = null;
+
+            const animate = (currentTime) => {
+              if (!startTime) startTime = currentTime;
+              const elapsed = currentTime - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              const easedProgress = 1 - Math.pow(1 - progress, 3);
+              const currentVal = Math.floor(easedProgress * targetNum);
+
+              setCount(currentVal);
+
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              } else {
+                setCount(targetNum);
+              }
+            };
+
+            requestAnimationFrame(animate);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(elementRef.current);
+
+    return () => observer.disconnect();
+  }, [targetNum, duration, hasAnimated]);
+
+  if (!match) return <span>{targetText}</span>;
+
+  return (
+    <span ref={elementRef}>
+      {prefix}{hasAnimated ? count : 0}{suffix}
+    </span>
+  );
+};
+
 export default function Home({ siteData }) {
   const navigate = useNavigate();
   const [activeProductIndex, setActiveProductIndex] = React.useState(0);
@@ -81,63 +139,34 @@ export default function Home({ siteData }) {
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const checkVisibility = () => {
-      const elements = document.querySelectorAll('.winera-reveal, .winera-animate-block, [data-aos]');
-      const windowHeight = window.innerHeight;
-      elements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= windowHeight * 0.92) {
-          el.classList.add('is-visible');
-          el.classList.add('aos-animate');
-        }
-      });
-    };
-
-    const timer = setTimeout(() => {
-      checkVisibility();
-    }, 100);
-
-    const fallbackTimer = setTimeout(() => {
-      const elements = document.querySelectorAll('.winera-reveal, .winera-animate-block, [data-aos]');
-      elements.forEach((el) => {
-        el.classList.add('is-visible');
-        el.classList.add('aos-animate');
-      });
-    }, 600);
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
             entry.target.classList.add('aos-animate');
-            observer.unobserve(entry.target);
           }
         });
       },
       {
         root: null,
-        rootMargin: '100px 0px 100px 0px',
-        threshold: 0.01
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.1
       }
     );
 
-    const observerTimer = setTimeout(() => {
+    const initObserver = () => {
       const elements = document.querySelectorAll('.winera-reveal, .winera-animate-block, [data-aos]');
       elements.forEach((el) => {
-        if (!el.classList.contains('is-visible')) {
-          observer.observe(el);
-        }
+        observer.observe(el);
       });
-    }, 150);
+    };
 
-    window.addEventListener('scroll', checkVisibility, { passive: true });
+    initObserver();
+    const timer = setTimeout(initObserver, 150);
 
     return () => {
       clearTimeout(timer);
-      clearTimeout(fallbackTimer);
-      clearTimeout(observerTimer);
-      window.removeEventListener('scroll', checkVisibility);
       observer.disconnect();
     };
   }, [siteData]);
@@ -356,7 +385,7 @@ export default function Home({ siteData }) {
                   textAlign: 'center'
                 }}>
                   <h3 style={{ fontSize: '2.6rem', fontWeight: '800', color: '#38bdf8', lineHeight: 1, marginBottom: '8px', letterSpacing: '-0.5px' }}>
-                    {stat.number || stat.val}
+                    <CountUpNumber targetText={stat.number || stat.val || ''} />
                   </h3>
                   <p style={{ color: '#334155', fontWeight: '800', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0, lineHeight: 1.35 }}>
                     {stat.label || stat.title}
@@ -382,7 +411,9 @@ export default function Home({ siteData }) {
                     <path d="M12 2l2.4 1.8 3-0.6 0.8 2.9 3 1.1-0.8 2.9 1.8 2.4-2.4 1.8 0.6 3-2.9 0.8-1.1 3-2.9-0.8-2.4 1.8-1.8-2.4-3 0.6-0.8-2.9-3-1.1 0.8-2.9-1.8-2.4 2.4-1.8-0.6-3 2.9-0.8 1.1-3z" />
                     <path d="M9 12l2 2 4-4" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                   </svg>
-                  <span style={{ fontSize: '10.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase' }}>100% CERTIFIED</span>
+                  <span style={{ fontSize: '10.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
+                    <CountUpNumber targetText="100% CERTIFIED" />
+                  </span>
                 </div>
                 <h4 style={{ fontSize: '1.35rem', fontWeight: '800', color: '#38bdf8', margin: '2px 0 4px', lineHeight: 1.2 }}>
                   Safety First
@@ -416,7 +447,7 @@ export default function Home({ siteData }) {
             </SectionHeading>
 
             <div className="winera-about-content-wrapper" style={{ display: 'grid', gridTemplateColumns: '1fr 520px', gap: '50px', alignItems: 'center', textAlign: 'left' }}>
-              <div>
+              <div className="winera-reveal-left">
                 <p style={{ color: '#475569', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '16px' }}>
                   {siteData?.aboutHome?.paragraph1 || "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project."}
                 </p>
@@ -466,7 +497,7 @@ export default function Home({ siteData }) {
               </div>
 
               {/* Right Side Single Composite Collage Image */}
-              <div className="winera-about-images-grid" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="winera-about-images-grid winera-reveal-right" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <img
                   src={siteData?.aboutHome?.rightImgUrl || aboutCollage}
                   alt="About Winera International"
@@ -721,7 +752,7 @@ export default function Home({ siteData }) {
             gap: '50px',
             alignItems: 'center'
           }}>
-            <div style={{ textAlign: 'left' }}>
+            <div className="winera-reveal-left" style={{ textAlign: 'left' }}>
               <SectionHeading align="left" marginBottom="12px" accentWidth="70%" accentMaxWidth="380px">
                 {(() => {
                   const rawTitle = siteData?.partnerHome?.title || "*Your Partner* in Building a Profitable Game Zone";
@@ -746,7 +777,7 @@ export default function Home({ siteData }) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {/* Box 1: Free ROI Consultancy */}
-              <div className="winera-partner-box-wrapper-yellow winera-reveal winera-reveal-delay-1">
+              <div className="winera-partner-box-wrapper-yellow winera-reveal-right winera-reveal-delay-1">
                 <div className="winera-partner-box-yellow">
                   <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>
                     {siteData?.partnerHome?.box1Title || "Free ROI Consultancy"}
@@ -765,7 +796,7 @@ export default function Home({ siteData }) {
               </div>
 
               {/* Box 2: Safety-Certified Installation */}
-              <div className="winera-partner-box-wrapper-cyan winera-reveal winera-reveal-delay-2">
+              <div className="winera-partner-box-wrapper-cyan winera-reveal-right winera-reveal-delay-2">
                 <div className="winera-partner-box-cyan">
                   <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>
                     {siteData?.partnerHome?.box2Title || "Safety-Certified Installation"}
@@ -1021,9 +1052,10 @@ export default function Home({ siteData }) {
 
                 const renderCard = (step, idx, actualIndex) => {
                   const isYellow = actualIndex % 2 === 1;
+                  const dirClass = actualIndex % 2 === 0 ? 'winera-reveal-left' : 'winera-reveal-right';
                   const wrapperClass = isYellow 
-                    ? `winera-process-card-wrapper-yellow winera-reveal winera-reveal-delay-${(actualIndex % 3) + 1}` 
-                    : `winera-process-card-wrapper-cyan winera-reveal winera-reveal-delay-${(actualIndex % 3) + 1}`;
+                    ? `winera-process-card-wrapper-yellow ${dirClass} winera-reveal-delay-${(actualIndex % 3) + 1}` 
+                    : `winera-process-card-wrapper-cyan ${dirClass} winera-reveal-delay-${(actualIndex % 3) + 1}`;
                   const iconBg = isYellow ? '#fef9c3' : '#e0f2fe';
                   const iconComponent = iconsList[actualIndex % iconsList.length];
                   const rawNum = step?.num || `${actualIndex + 1}`;
