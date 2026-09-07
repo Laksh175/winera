@@ -4093,11 +4093,42 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <tbody>
                     {(() => {
                       const defaultHomeFaqs = [
-                        { q: "What types of game zone equipment do you manufacture and supply?", a: "We manufacture and supply a full range of indoor amusement equipment including commercial bowling alleys, arcade & redemption machines, soft play structures, VR simulators, trampoline parks, bumper cars, and laser tag arenas." },
-                        { q: "Do you provide complete turnkey game zone setup services across India?", a: "Yes, Winera International handles the entire process from initial 2D/3D layout design and ROI estimation to equipment manufacturing, delivery, professional installation, and staff training." },
-                        { q: "Can I get a custom 3D design and ROI report for my venue space?", a: "Absolutelty! Before you place an order, our team creates a venue-specific 3D design layout and a complete financial ROI report detailing your estimated footfall, monthly revenue, and break-even timeline." },
-                        { q: "What commercial safety standards do your soft play & amusement products meet?", a: "All our soft play structures adhere to European EN-1176 standards, utilizing non-toxic PVC leather, fire-retardant high-density foam, anti-climb safety netting, and heavy-duty steel frames." },
-                        { q: "How long does it take to setup a complete game zone or soft play area?", a: "Depending on the venue size and machine mix, standard installations typically take 7 to 20 days on-site after delivery. Our own dedicated technical team manages every step pan-India." }
+                        {
+                          q: "How do I set up a game zone in India?",
+                          a: "Start with a consultation and share your available space, budget, and location with our team. As a trusted gaming zone setup company in India, Winera International handles everything from ROI analysis and layout design to equipment selection, installation, and post-launch support across 50+ cities."
+                        },
+                        {
+                          q: "What is the cost of a game zone setup in India?",
+                          a: "Game zone setup cost in India totally depends on the size of space, type of attractions, and level of customisation. As a direct game zone equipment supplier, Winera International provides a complete cost breakdown covering equipment, installation, and maintenance before you confirm any project. Contact our team for a quote specific to your venue."
+                        },
+                        {
+                          q: "Does Winera handle the complete game zone setup?",
+                          a: "Yes. As experienced game zone developers in India, we manage the entire project from concept to completion, space planning, equipment sourcing, layout design, installation, and after-sales support all handled by our own team, not third-party contractors."
+                        },
+                        {
+                          q: "Which cities does Winera cover in India?",
+                          a: "Winera International installs game zone equipment across 50+ cities in India — covering Tier-1 metros, Tier-2 cities, and emerging Tier-3 markets. Our own installation team reaches wherever your venue is located, without relying on local contractors."
+                        },
+                        {
+                          q: "What makes Winera International different from other game zone suppliers?",
+                          a: "Before recommending any equipment, we prepare a free ROI Blueprint for your specific venue covering projected footfall, revenue potential, and break-even timeline. Very few game zone suppliers in India offer this as a standard part of their process."
+                        },
+                        {
+                          q: "Do you provide after-sales support after installation?",
+                          a: "Yes. Our technical team provides ongoing maintenance, spare parts, and on-site support for all equipment we install available directly through our own team, not through agents or third-party service providers."
+                        },
+                        {
+                          q: "Can game zone equipment be customised for my venue's theme?",
+                          a: "Yes. Every game zone solution we deliver is designed around your specific space, theme, budget, and target audience from layout planning to equipment selection and visual design."
+                        },
+                        {
+                          q: "How do I get started with my game zone project?",
+                          a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. We're also available on social media."
+                        },
+                        {
+                          q: "Can Winera International help me plan my game zone from scratch?",
+                          a: "Yes, Winera International offers complete game zone planning support. From space planning and equipment selection to installation and staff training, we manage the entire project. Our “Plan Your Game Zone” service is specially designed for first-time entrepreneurs and existing businesses looking to add an entertainment zone."
+                        }
                       ];
                       const list = (Array.isArray(formData.faqs) && formData.faqs.length > 0) ? formData.faqs : defaultHomeFaqs;
                       return list.map((item, idx) => (

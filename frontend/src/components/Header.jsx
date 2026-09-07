@@ -532,20 +532,6 @@ export default function Header({ headerData }) {
             }}>
               𝕏
             </a>
-
-            <Link to="/admin" style={{
-              marginLeft: '6px',
-              padding: '6px 14px',
-              borderRadius: '20px',
-              background: '#f1f5f9',
-              color: '#475569',
-              fontSize: '11px',
-              fontWeight: '800',
-              textTransform: 'uppercase',
-              whiteSpace: 'nowrap'
-            }}>
-              CMS
-            </Link>
           </div>
 
           {/* Mobile Hamburger Toggle Button */}
@@ -759,22 +745,6 @@ export default function Header({ headerData }) {
                 <a href={instagramUrl} target="_blank" rel="noreferrer" style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#e6683c', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>ig</a>
                 <a href={whatsappUrl} target="_blank" rel="noreferrer" style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#25d366', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>wa</a>
               </div>
-
-              <Link
-                to="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                style={{
-                  padding: '8px 18px',
-                  borderRadius: '20px',
-                  background: '#00a8ff',
-                  color: '#ffffff',
-                  fontSize: '12px',
-                  fontWeight: '900',
-                  textDecoration: 'none'
-                }}
-              >
-                ADMIN PANEL
-              </Link>
             </div>
           </div>
         )}
