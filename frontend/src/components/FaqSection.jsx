@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import MotionFadeIn from './MotionFadeIn';
 
 export default function FaqSection({
   faqList = [],
@@ -20,6 +21,7 @@ export default function FaqSection({
   return (
     <section id={id} className="winera-faq-section" style={{ padding: '25px 4vw 40px', background: bg, textAlign: 'center' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+        <MotionFadeIn>
         <SectionHeading marginBottom="8px">
           {(() => {
             const rawTitle = title || "Frequently Asked *Questions*";
@@ -61,25 +63,27 @@ export default function FaqSection({
                   key={globalIdx}
                   onClick={() => setActiveFaqIndex(isOpen ? -1 : globalIdx)}
                   style={{
-                    background: '#F5F5F9',
+                    background: '#ffffff',
                     borderRadius: '16px',
                     padding: '20px 24px',
                     border: isOpen ? `1.5px solid ${highlightColor}` : '1.5px solid #e2e8f0',
-                    boxShadow: isOpen ? '0 10px 30px rgba(0, 168, 255, 0.08)' : '0 4px 14px rgba(0,0,0,0.02)',
+                    boxShadow: isOpen ? '0 10px 30px rgba(0, 168, 255, 0.1)' : '0 4px 16px rgba(0,0,0,0.03)',
                     cursor: 'pointer',
-                    transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    WebkitFontSmoothing: 'antialiased',
+                    MozOsxFontSmoothing: 'grayscale'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-                    <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', lineHeight: 1.35, margin: 0 }}>
+                    <h3 style={{ fontSize: '1.02rem', fontWeight: '800', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
                       {item.q || item.question}
                     </h3>
                     <div style={{
                       width: '28px',
                       height: '28px',
                       borderRadius: '50%',
-                      background: isOpen ? highlightColor : '#e2e8f0',
-                      color: isOpen ? '#ffffff' : '#64748b',
+                      background: isOpen ? highlightColor : '#f1f5f9',
+                      color: isOpen ? '#ffffff' : '#475569',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -96,13 +100,13 @@ export default function FaqSection({
                   </div>
                   {isOpen && (
                     <p style={{
-                      color: '#475569',
-                      fontSize: '13px',
-                      lineHeight: 1.6,
+                      color: '#334155',
+                      fontSize: '13.5px',
+                      lineHeight: 1.65,
                       fontWeight: '500',
                       marginTop: '14px',
                       paddingTop: '12px',
-                      borderTop: '1px stroke #cbd5e1'
+                      borderTop: '1px solid #f1f5f9'
                     }}>
                       {item.a || item.answer}
                     </p>
@@ -123,25 +127,27 @@ export default function FaqSection({
                   key={globalIdx}
                   onClick={() => setActiveFaqIndex(isOpen ? -1 : globalIdx)}
                   style={{
-                    background: '#F5F5F9',
+                    background: '#ffffff',
                     borderRadius: '16px',
                     padding: '20px 24px',
                     border: isOpen ? `1.5px solid ${highlightColor}` : '1.5px solid #e2e8f0',
-                    boxShadow: isOpen ? '0 10px 30px rgba(0, 168, 255, 0.08)' : '0 4px 14px rgba(0,0,0,0.02)',
+                    boxShadow: isOpen ? '0 10px 30px rgba(0, 168, 255, 0.1)' : '0 4px 16px rgba(0,0,0,0.03)',
                     cursor: 'pointer',
-                    transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    WebkitFontSmoothing: 'antialiased',
+                    MozOsxFontSmoothing: 'grayscale'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-                    <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', lineHeight: 1.35, margin: 0 }}>
+                    <h3 style={{ fontSize: '1.02rem', fontWeight: '800', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
                       {item.q || item.question}
                     </h3>
                     <div style={{
                       width: '28px',
                       height: '28px',
                       borderRadius: '50%',
-                      background: isOpen ? highlightColor : '#e2e8f0',
-                      color: isOpen ? '#ffffff' : '#64748b',
+                      background: isOpen ? highlightColor : '#f1f5f9',
+                      color: isOpen ? '#ffffff' : '#475569',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -158,13 +164,13 @@ export default function FaqSection({
                   </div>
                   {isOpen && (
                     <p style={{
-                      color: '#475569',
-                      fontSize: '13px',
-                      lineHeight: 1.6,
+                      color: '#334155',
+                      fontSize: '13.5px',
+                      lineHeight: 1.65,
                       fontWeight: '500',
                       marginTop: '14px',
                       paddingTop: '12px',
-                      borderTop: '1px stroke #cbd5e1'
+                      borderTop: '1px solid #f1f5f9'
                     }}>
                       {item.a || item.answer}
                     </p>
@@ -174,6 +180,7 @@ export default function FaqSection({
             })}
           </div>
         </div>
+        </MotionFadeIn>
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
@@ -431,70 +432,112 @@ export default function Project({ siteData }) {
         </div>
 
         {/* PROJECTS CARDS GRID (3 COLUMNS) */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-          gap: '30px'
-        }}>
-          {filteredProjects.map((proj) => (
-            <Link
-              key={proj.id}
-              to={`/project/${proj.slug}`}
-              style={{
-                display: 'block',
-                borderRadius: '28px',
-                overflow: 'hidden',
-                position: 'relative',
-                height: '360px',
-                boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                background: `url(${resolveProjectImg(proj)}) center/cover no-repeat`,
-                transition: 'transform 0.3s cubic-bezier(0.34, 1.25, 0.64, 1), boxShadow 0.3s',
-                cursor: 'pointer',
-                textDecoration: 'none'
-              }}
-              className="winera-project-card-hover"
-            >
-              {/* Gradient Overlay & Details Footer */}
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.85) 100%)',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'space-between',
-                padding: '24px 26px'
-              }}>
-                <div style={{ textAlign: 'left' }}>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#ffffff', marginBottom: '4px', textShadow: '0 2px 6px rgba(0,0,0,0.6)' }}>
-                    {proj.name}
-                  </h3>
-                  <p style={{ fontSize: '12.5px', color: '#cbd5e1', fontWeight: '600', margin: 0, textTransform: 'capitalize' }}>
-                    {proj.city}, {proj.state}
-                  </p>
-                </div>
+        <motion.div
+          layout
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+            gap: '30px'
+          }}
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((proj, idx) => {
+              const isLeft = idx % 3 === 0;
+              const isRight = idx % 3 === 2;
+              const startX = isLeft ? -70 : (isRight ? 70 : 0);
+              const startY = isLeft || isRight ? 0 : 50;
 
-                <div
-                  aria-label={`View details for ${proj.name}`}
+              return (
+                <motion.div
+                  key={proj.id}
+                  layout
+                  data-framer-motion="true"
+                  initial={{ opacity: 0, x: startX, y: startY, scale: 0.95 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.02,
+                    boxShadow: '0 25px 50px rgba(0, 174, 239, 0.22)',
+                  }}
+                  transition={{
+                    duration: 0.7,
+                    delay: (idx % 3) * 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                    scale: { type: 'spring', stiffness: 300, damping: 20 },
+                  }}
                   style={{
-                    width: '42px',
-                    height: '42px',
-                    borderRadius: '50%',
-                    background: 'rgba(255, 255, 255, 0.25)',
-                    backdropFilter: 'blur(6px)',
-                    color: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: '1.5px solid rgba(255,255,255,0.4)',
-                    transition: 'all 0.25s ease'
+                    borderRadius: '28px',
+                    overflow: 'hidden',
+                    position: 'relative',
+                    height: '360px',
+                    boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
+                    background: `url(${resolveProjectImg(proj)}) center/cover no-repeat`,
+                    cursor: 'pointer',
+                    backfaceVisibility: 'hidden',
+                    WebkitFontSmoothing: 'subpixel-antialiased',
+                    willChange: 'transform',
                   }}
                 >
-                  <ArrowRight style={{ width: '20px', height: '20px', color: '#ffffff' }} />
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+                  <Link
+                    to={`/project/${proj.slug}`}
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      height: '100%',
+                      textDecoration: 'none',
+                      position: 'relative',
+                      zIndex: 2,
+                    }}
+                    className="winera-project-card-hover"
+                  >
+                    {/* Gradient Overlay & Details Footer */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.85) 100%)',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      justifyContent: 'space-between',
+                      padding: '24px 26px'
+                    }}>
+                      <div style={{ textAlign: 'left' }}>
+                        <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#ffffff', marginBottom: '4px', textShadow: '0 2px 6px rgba(0,0,0,0.6)' }}>
+                          {proj.name}
+                        </h3>
+                        <p style={{ fontSize: '12.5px', color: '#cbd5e1', fontWeight: '600', margin: 0, textTransform: 'capitalize' }}>
+                          {proj.city}, {proj.state}
+                        </p>
+                      </div>
+
+                      <motion.div
+                        whileHover={{ scale: 1.15, backgroundColor: '#38bdf8' }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                        aria-label={`View details for ${proj.name}`}
+                        style={{
+                          width: '42px',
+                          height: '42px',
+                          borderRadius: '50%',
+                          background: 'rgba(255, 255, 255, 0.25)',
+                          backdropFilter: 'blur(6px)',
+                          color: '#ffffff',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          border: '1.5px solid rgba(255,255,255,0.4)',
+                          transition: 'all 0.25s ease'
+                        }}
+                      >
+                        <ArrowRight style={{ width: '20px', height: '20px', color: '#ffffff' }} />
+                      </motion.div>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
       </section>
 
       {/* 4. CTA BANNER SECTION */}

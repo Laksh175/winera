@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { BarChart2, Edit3, Shield, Database, Users, Settings, AlertTriangle, TrendingDown, UserX } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -18,6 +19,7 @@ import roiBlock7Bg from '../assets/roi-block7-bg.webp';
 import homeBlockBg from '../assets/home-block.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import TestimonialsSection from '../components/TestimonialsSection';
+import MotionCardFlip from '../components/MotionCardFlip';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -243,7 +245,14 @@ export default function Roi({ siteData }) {
           alignItems: 'center'
         }}>
           {/* Left Content */}
-          <div className="winera-roi-intro-text">
+          <motion.div
+            data-framer-motion="true"
+            initial={{ opacity: 0, x: -75 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="winera-roi-intro-text"
+          >
             <img
               src={yellowStrokeLine}
               alt=""
@@ -301,14 +310,22 @@ export default function Roi({ siteData }) {
                 {roiIntro.buttonText}
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Image */}
-          <div className="winera-roi-intro-img" style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+          <motion.div
+            data-framer-motion="true"
+            initial={{ opacity: 0, x: 75 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="winera-roi-intro-img"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
             <img
               src={getValidImageUrl(roiIntro.image, roiImg1)}
               alt="ROI Investment Growth"
@@ -320,7 +337,7 @@ export default function Roi({ siteData }) {
                 objectFit: 'contain'
               }}
             />
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -339,7 +356,14 @@ export default function Roi({ siteData }) {
             alignItems: 'flex-start'
           }}>
             {/* Left Content */}
-            <div className="winera-roi-pain-text">
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: -75 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="winera-roi-pain-text"
+            >
               <img
                 src={yellowStrokeLine}
                 alt=""
@@ -363,15 +387,23 @@ export default function Roi({ siteData }) {
               }}>
                 {roiMatters.paragraph1}
               </p>
-            </div>
+            </motion.div>
 
             {/* Right — Red Pain Point Cards */}
-            <div className="winera-roi-pain-cards" style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px',
-              paddingTop: '10px'
-            }}>
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: 75 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="winera-roi-pain-cards"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+                paddingTop: '10px'
+              }}
+            >
               {painPoints.map((point, idx) => (
                 <div key={idx} style={{
                   display: 'flex',
@@ -441,7 +473,7 @@ export default function Roi({ siteData }) {
                   <span style={{ color: '#dc2626', fontWeight: '800' }}>{roiMatters.warningTextLine2}</span>
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -486,13 +518,21 @@ export default function Roi({ siteData }) {
             margin: '0 auto'
           }}>
             {/* LEFT SIDE: The Wrong Way (Red Pills Arc) */}
-            <div className="winera-roi-wrong-side" style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-end',
-              position: 'relative',
-              paddingRight: '45px'
-            }}>
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: -80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="winera-roi-wrong-side"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                position: 'relative',
+                paddingRight: '45px'
+              }}
+            >
               {/* Red Circle ✕ in center-right of left side */}
               <div className="winera-roi-center-circle-red" style={{
                 position: 'absolute',
@@ -578,16 +618,24 @@ export default function Roi({ siteData }) {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* RIGHT SIDE: The Right Way (Green Pills Arc) */}
-            <div className="winera-roi-right-side" style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              position: 'relative',
-              paddingLeft: '45px'
-            }}>
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: 80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="winera-roi-right-side"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                position: 'relative',
+                paddingLeft: '45px'
+              }}
+            >
               {/* Green Circle ✓ in center-left of right side (dashed circle behind pills) */}
               <div className="winera-roi-center-circle-green" style={{
                 position: 'absolute',
@@ -673,7 +721,7 @@ export default function Roi({ siteData }) {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Sub Caption */}
@@ -736,58 +784,74 @@ export default function Roi({ siteData }) {
             else if (idx === 5) fallbackImg = roiBlock5Img6;
 
             const resolvedImg = step.img && (step.img.startsWith('http') || step.img.startsWith('data:')) ? step.img : fallbackImg;
+            const isLeft = idx % 3 === 0;
+            const isRight = idx % 3 === 2;
+            const startX = isLeft ? -75 : (isRight ? 75 : 0);
+            const startY = isLeft || isRight ? 0 : 40;
+
             return (
-              <div
+              <motion.div
                 key={idx}
-                className="winera-roi-process-card"
-                style={{
-                  position: 'relative',
-                  borderRadius: '24px',
-                  overflow: 'hidden',
-                  height: '280px',
-                  background: `url(${resolvedImg}) center center / cover no-repeat`,
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-end',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                data-framer-motion="true"
+                initial={{ opacity: 0, x: startX, y: startY }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{
+                  duration: 0.8,
+                  delay: (idx % 3) * 0.12,
+                  ease: [0.16, 1, 0.3, 1]
                 }}
               >
-                {/* Dark overlay for readability */}
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.9) 100%)',
-                  zIndex: 1
-                }} />
+                <MotionCardFlip
+                  className="winera-roi-process-card"
+                  style={{
+                    position: 'relative',
+                    borderRadius: '24px',
+                    overflow: 'hidden',
+                    height: '280px',
+                    background: `url(${resolvedImg}) center center / cover no-repeat`,
+                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end'
+                  }}
+                >
+                  {/* Dark overlay for readability */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.9) 100%)',
+                    zIndex: 1
+                  }} />
 
-                {/* Text Content */}
-                <div style={{
-                  position: 'relative',
-                  zIndex: 2,
-                  padding: '24px',
-                  textAlign: 'left'
-                }}>
-                  <h3 style={{
-                    color: '#ffffff',
-                    fontSize: '18px',
-                    fontWeight: '800',
-                    margin: '0 0 8px 0',
-                    fontFamily: "'Inter', sans-serif"
+                  {/* Text Content */}
+                  <div style={{
+                    position: 'relative',
+                    zIndex: 2,
+                    padding: '24px',
+                    textAlign: 'left'
                   }}>
-                    {step.title}
-                  </h3>
-                  <p style={{
-                    color: '#cbd5e1',
-                    fontSize: '13.5px',
-                    lineHeight: '1.5',
-                    margin: 0,
-                    fontFamily: "'Inter', sans-serif"
-                  }}>
-                    {step.desc}
-                  </p>
-                </div>
-              </div>
+                    <h3 style={{
+                      color: '#ffffff',
+                      fontSize: '18px',
+                      fontWeight: '800',
+                      margin: '0 0 8px 0',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
+                      {step.title}
+                    </h3>
+                    <p style={{
+                      color: '#cbd5e1',
+                      fontSize: '13.5px',
+                      lineHeight: '1.5',
+                      margin: 0,
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
+                      {step.desc}
+                    </p>
+                  </div>
+                </MotionCardFlip>
+              </motion.div>
             );
           })}
           </div>
@@ -807,16 +871,24 @@ export default function Roi({ siteData }) {
             alignItems: 'center'
           }}>
             {/* Left Card Container (White background + cyan shade gradient) */}
-            <div className="winera-roi-get-card-box" style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(0, 174, 239, 0.2) 100%)',
-              borderRadius: '10px',
-              padding: '40px',
-              boxShadow: '0 10px 40px rgba(0, 174, 239, 0.04)',
-              border: '1px solid rgba(0, 174, 239, 0.08)',
-              display: 'flex',
-              gap: '40px',
-              alignItems: 'center'
-            }}>
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: -75 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="winera-roi-get-card-box"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(0, 174, 239, 0.2) 100%)',
+                borderRadius: '10px',
+                padding: '40px',
+                boxShadow: '0 10px 40px rgba(0, 174, 239, 0.04)',
+                border: '1px solid rgba(0, 174, 239, 0.08)',
+                display: 'flex',
+                gap: '40px',
+                alignItems: 'center'
+              }}
+            >
               {/* Inner Left: Rounded Photo with Pill Sticker */}
               <div className="winera-roi-get-img-wrapper" style={{
                 position: 'relative',
@@ -911,10 +983,18 @@ export default function Roi({ siteData }) {
                   );
                 })}
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Side Column (Title + description) */}
-            <div className="winera-roi-get-content" style={{ paddingLeft: '20px' }}>
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: 75 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="winera-roi-get-content"
+              style={{ paddingLeft: '20px' }}
+            >
               <img
                 src={yellowStrokeLine}
                 alt=""
@@ -945,7 +1025,7 @@ export default function Roi({ siteData }) {
               }}>
                 {roiGet.subtitle}
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -998,7 +1078,15 @@ export default function Roi({ siteData }) {
               zIndex: 2
             }}>
               {/* Left Column wrapper (Fit Items) */}
-              <div className="winera-roi-checklist-col-left" style={{ display: 'flex', flexDirection: 'column', gap: '30px', position: 'relative' }}>
+              <motion.div
+                data-framer-motion="true"
+                initial={{ opacity: 0, x: -75 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="winera-roi-checklist-col-left"
+                style={{ display: 'flex', flexDirection: 'column', gap: '30px', position: 'relative' }}
+              >
                 {/* Float Pill Left (You're a fit) */}
                 <div className="winera-roi-checklist-pill-left" style={{
                   position: 'absolute',
@@ -1086,10 +1174,18 @@ export default function Roi({ siteData }) {
                     </div>
                   );
                 })}
-              </div>
+              </motion.div>
 
               {/* Right Column wrapper (Unfit Items) */}
-              <div className="winera-roi-checklist-col-right" style={{ display: 'flex', flexDirection: 'column', gap: '30px', position: 'relative' }}>
+              <motion.div
+                data-framer-motion="true"
+                initial={{ opacity: 0, x: 75 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="winera-roi-checklist-col-right"
+                style={{ display: 'flex', flexDirection: 'column', gap: '30px', position: 'relative' }}
+              >
                 {/* Float Pill Right (Not for you if - using red pill matching figma mockup) */}
                 <div className="winera-roi-checklist-pill-right" style={{
                   position: 'absolute',
@@ -1177,7 +1273,7 @@ export default function Roi({ siteData }) {
                     </div>
                   );
                 })}
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

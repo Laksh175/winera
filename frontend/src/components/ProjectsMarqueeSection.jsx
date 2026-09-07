@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import MotionFadeIn from './MotionFadeIn';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
@@ -27,6 +28,7 @@ export default function ProjectsMarqueeSection({
 
   return (
     <section id={id} style={{ padding: '35px 0 35px', background: bg, overflow: 'hidden' }}>
+      <MotionFadeIn>
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
         {showTopHeader ? (
           <div style={{
@@ -153,6 +155,7 @@ export default function ProjectsMarqueeSection({
           </div>
         </div>
       )}
+      </MotionFadeIn>
     </section>
   );
 }

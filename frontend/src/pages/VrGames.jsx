@@ -315,7 +315,7 @@ export default function VrGames({ siteData }) {
               {siteData?.vrIntro?.desc || "India's ROI-first VR gaming supplier commercial-grade machines sourced, configured, and serviced by our own team across 50+ cities"}
             </p>
 
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+            <div className="winera-cyan-cta-wrapper">
               {(() => {
                 const baseLink = siteData?.vrIntro?.buttonLink || "https://wa.me/919428989488";
                 const defaultMsg = siteData?.vrIntro?.waMessage || "Hello Winera International! I want to get a quote and details for VR Gaming Machine setup. Please share details. [Ref: VR Games Page]";
@@ -329,9 +329,9 @@ export default function VrGames({ siteData }) {
                     href={hrefLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                    className="winera-cyan-cta-btn"
                   >
-                    {siteData?.vrIntro?.buttonText || "Get Quote From Expert"}
+                    <span>{siteData?.vrIntro?.buttonText || "Get Quote From Expert"}</span>
                   </a>
                 );
               })()}
@@ -389,7 +389,7 @@ export default function VrGames({ siteData }) {
               </p>
             </div>
 
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+            <div className="winera-cyan-cta-wrapper">
               {(() => {
                 const baseLink = siteData?.vrMatchedVenue?.buttonLink || "https://wa.me/919428989488";
                 const defaultMsg = siteData?.vrMatchedVenue?.waMessage || "Hello Winera International! I want to get a quote for Commercial VR Machines matched to my venue. Please share details. [Ref: VR Games Page]";
@@ -403,9 +403,9 @@ export default function VrGames({ siteData }) {
                     href={hrefLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                    className="winera-cyan-cta-btn"
                   >
-                    {siteData?.vrMatchedVenue?.buttonText || "Get Quote From Expert"}
+                    <span>{siteData?.vrMatchedVenue?.buttonText || "Get Quote From Expert"}</span>
                   </a>
                 );
               })()}
@@ -744,19 +744,8 @@ export default function VrGames({ siteData }) {
               </p>
             </div>
 
-            {/* Get Quote Button with Rotated Yellow Accent Backdrop */}
-            <div style={{ position: 'relative', display: 'inline-block' }}>
-              <div style={{
-                position: 'absolute',
-                top: '-3px',
-                bottom: '-3px',
-                left: '-14px',
-                right: '-4px',
-                background: '#ffcd00',
-                borderRadius: '10px',
-                transform: 'rotate(-1.8deg)',
-                zIndex: 1
-              }} />
+            {/* Get Quote Button matching Image 1 1:1 */}
+            <div className="winera-cyan-cta-wrapper">
               {(() => {
                 const baseLink = siteData?.vrEarn?.buttonLink || "https://wa.me/919428989488";
                 const defaultMsg = siteData?.vrEarn?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for VR Gaming Zone setup & commercial ROI calculation. Please share details. [Ref: VR Games Page]";
@@ -770,22 +759,9 @@ export default function VrGames({ siteData }) {
                     href={hrefLink}
                     target="_blank"
                     rel="noreferrer"
-                    style={{
-                      position: 'relative',
-                      zIndex: 2,
-                      background: '#38bdf8',
-                      color: '#ffffff',
-                      fontSize: '14px',
-                      fontWeight: '800',
-                      padding: '11px 26px',
-                      borderRadius: '10px',
-                      border: '1.5px solid #ffcd00',
-                      boxShadow: 'none',
-                      display: 'inline-block',
-                      textDecoration: 'none'
-                    }}
+                    className="winera-cyan-cta-btn"
                   >
-                    {siteData?.vrEarn?.buttonText || "Get Quote From Expert"}
+                    <span>{siteData?.vrEarn?.buttonText || "Get Quote From Expert"}</span>
                   </a>
                 );
               })()}

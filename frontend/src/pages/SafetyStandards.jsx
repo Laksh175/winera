@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
@@ -99,7 +100,15 @@ export default function SafetyStandards({ siteData }) {
           alignItems: 'center'
         }}>
           {/* Left Collage Graphic Column */}
-          <div className="winera-safety-intro-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <motion.div
+            data-framer-motion="true"
+            initial={{ opacity: 0, x: -75 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="winera-safety-intro-img"
+            style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
             <img
               src={introImg}
               alt="Game Zone & Kids Play Equipment Safety Standards"
@@ -110,10 +119,17 @@ export default function SafetyStandards({ siteData }) {
                 display: 'block'
               }}
             />
-          </div>
+          </motion.div>
 
           {/* Right Text Content Column */}
-          <div className="winera-safety-intro-text">
+          <motion.div
+            data-framer-motion="true"
+            initial={{ opacity: 0, x: 75 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="winera-safety-intro-text"
+          >
             {/* Yellow Accent Stroke Line */}
             <div style={{ position: 'relative', display: 'block', marginBottom: '16px' }}>
               <img
@@ -136,7 +152,7 @@ export default function SafetyStandards({ siteData }) {
             <p style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
               {siteData?.safetyIntro?.p2 || "As a complete game zone developer, our safety commitment covers four areas: the attractions themselves, the materials they're made of, the electrical systems that power them, and the structure and operation of the finished venue."}
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -144,7 +160,7 @@ export default function SafetyStandards({ siteData }) {
       <section className="winera-safety-standards-section" style={{ padding: '40px 4vw 90px', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Centered Header */}
-          <div style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 45px' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 45px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -218,9 +234,23 @@ export default function SafetyStandards({ siteData }) {
               ]
             ).map((card, idx, arr) => {
               const isLastOdd = (arr.length % 2 !== 0) && (idx === arr.length - 1);
+              const isLeft = idx % 2 === 0;
+              const startX = isLastOdd ? 0 : (isLeft ? -75 : 75);
+              const startY = isLastOdd ? 40 : 0;
+              const delayVal = isLastOdd ? 0.2 : (isLeft ? 0.05 : 0.2);
+
               return (
-                <div
+                <motion.div
                   key={idx}
+                  data-framer-motion="true"
+                  initial={{ opacity: 0, x: startX, y: startY }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: delayVal,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
                   className={`winera-safety-card ${isLastOdd ? 'winera-safety-card-wide' : ''}`}
                   style={{
                     gridColumn: isLastOdd ? '1 / -1' : 'auto',
@@ -252,7 +282,7 @@ export default function SafetyStandards({ siteData }) {
                   }}>
                     {card.desc}
                   </p>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -269,7 +299,7 @@ export default function SafetyStandards({ siteData }) {
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Header (Left Aligned matching Image 2) */}
-          <div style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 35px 0' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 35px 0' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -329,14 +359,27 @@ export default function SafetyStandards({ siteData }) {
                   }
                 ]
               ).map((card, idx) => (
-                <div key={idx} className="winera-safety-card winera-safety-rect-card" style={{
-                  background: 'linear-gradient(180deg, #d3ebff 0%, #ffffff 100%)',
-                  borderRadius: '18px',
-                  padding: '20px 28px',
-                  textAlign: 'left',
-                  width: '100%',
-                  boxShadow: 'none'
-                }}>
+                <motion.div
+                  key={idx}
+                  data-framer-motion="true"
+                  initial={{ opacity: 0, x: -75 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: idx * 0.12,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  className="winera-safety-card winera-safety-rect-card"
+                  style={{
+                    background: 'linear-gradient(180deg, #d3ebff 0%, #ffffff 100%)',
+                    borderRadius: '18px',
+                    padding: '20px 28px',
+                    textAlign: 'left',
+                    width: '100%',
+                    boxShadow: 'none'
+                  }}
+                >
                   <h3 style={{
                     fontSize: '1.1rem',
                     fontWeight: '800',
@@ -357,17 +400,28 @@ export default function SafetyStandards({ siteData }) {
                   }}>
                     {card.desc}
                   </p>
-                </div>
+                </motion.div>
               ))}
             </div>
 
             {/* Right 3D Shield Collage Image */}
-            <div className="winera-safety-material-img">
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: 75 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{
+                duration: 0.85,
+                delay: 0.2,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              className="winera-safety-material-img"
+            >
               <img
                 src={getValidImageUrl(siteData?.safetyMaterials?.imgUrl, safetyStandard2)}
                 alt="Material & Fire Safety"
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -382,7 +436,7 @@ export default function SafetyStandards({ siteData }) {
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Left Aligned Header */}
-          <div style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 40px 0' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 40px 0' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -446,7 +500,19 @@ export default function SafetyStandards({ siteData }) {
                   }
                 ]
               ).map((item, idx) => (
-                <div key={idx} style={{ textAlign: 'left' }}>
+                <motion.div
+                  key={idx}
+                  data-framer-motion="true"
+                  initial={{ opacity: 0, x: -75 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: idx * 0.12,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  style={{ textAlign: 'left' }}
+                >
                   {/* Badge + Title Row */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '8px' }}>
                     <div style={{
@@ -488,12 +554,24 @@ export default function SafetyStandards({ siteData }) {
                   }}>
                     {item.desc}
                   </p>
-                </div>
+                </motion.div>
               ))}
             </div>
 
             {/* Right Graphic Image */}
-            <div className="winera-safety-electrical-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: 75 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{
+                duration: 0.85,
+                delay: 0.2,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              className="winera-safety-electrical-img"
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            >
               <img
                 src={getValidImageUrl(siteData?.safetyElectrical?.imgUrl, safetyStandardImg3)}
                 alt="Electrical & Machine Safety"
@@ -505,7 +583,7 @@ export default function SafetyStandards({ siteData }) {
                   borderRadius: '16px'
                 }}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -520,7 +598,7 @@ export default function SafetyStandards({ siteData }) {
       }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Centered Header */}
-          <div style={{ textAlign: 'center', maxWidth: '860px', margin: '0 auto 55px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '860px', margin: '0 auto 55px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -585,96 +663,112 @@ export default function SafetyStandards({ siteData }) {
                   desc: "These standards are about running and looking after the attractions safely after they are built. We set up your venue the right way and show your team how to run and maintain each attraction safely."
                 }
               ]
-            ).map((card, idx) => (
-              <div key={idx} style={{
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                paddingTop: '12px',
-                paddingLeft: '12px'
-              }}>
-                {/* Accent Offset Colored Backing (Stops at ~68% width on top, ~82% height on left) */}
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '68%',
-                  height: '82%',
-                  background: card.accent || '#00aeef',
-                  borderRadius: '28px 20px 20px 28px',
-                  zIndex: 1
-                }} />
+            ).map((card, idx) => {
+              const isLeft = idx % 2 === 0;
+              const startX = isLeft ? -75 : 75;
+              return (
+                <motion.div
+                  key={idx}
+                  data-framer-motion="true"
+                  initial={{ opacity: 0, x: startX }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: (idx % 3) * 0.12,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    paddingTop: '12px',
+                    paddingLeft: '12px'
+                  }}
+                >
+                  {/* Accent Offset Colored Backing (Stops at ~68% width on top, ~82% height on left) */}
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '68%',
+                    height: '82%',
+                    background: card.accent || '#00aeef',
+                    borderRadius: '28px 20px 20px 28px',
+                    zIndex: 1
+                  }} />
 
-                {/* Main White Card Box */}
-                <div style={{
-                  position: 'relative',
-                  zIndex: 2,
-                  background: '#ffffff',
-                  borderRadius: '24px',
-                  padding: '28px 22px',
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.03)',
-                  overflow: 'hidden'
-                }}>
-                  {/* Top Header Row: Small Icon Badge Left, Giant Watermark Number Right */}
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '12px' }}>
-                    <div style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '12px',
-                      background: '#d8eefd',
-                      color: '#0284c7',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0
-                    }}>
-                      <ShieldCheck size={22} strokeWidth={2.2} />
+                  {/* Main White Card Box */}
+                  <div style={{
+                    position: 'relative',
+                    zIndex: 2,
+                    background: '#ffffff',
+                    borderRadius: '24px',
+                    padding: '28px 22px',
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.03)',
+                    overflow: 'hidden'
+                  }}>
+                    {/* Top Header Row: Small Icon Badge Left, Giant Watermark Number Right */}
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '12px' }}>
+                      <div style={{
+                        width: '42px',
+                        height: '42px',
+                        borderRadius: '12px',
+                        background: '#d8eefd',
+                        color: '#0284c7',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        <ShieldCheck size={22} strokeWidth={2.2} />
+                      </div>
+                      <span className="winera-safety-watermark-num" style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: '8.6rem',
+                        fontWeight: '800',
+                        color: '#f0f3f7',
+                        lineHeight: 0.9,
+                        letterSpacing: '-2px',
+                        userSelect: 'none',
+                        marginTop: '-6px',
+                        marginRight: '-4px'
+                      }}>
+                        {card.num}
+                      </span>
                     </div>
-                    <span className="winera-safety-watermark-num" style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: '8.6rem',
+
+                    {/* Card Title */}
+                    <h3 style={{
+                      fontSize: '1.08rem',
                       fontWeight: '800',
-                      color: '#f0f3f7',
-                      lineHeight: 0.9,
-                      letterSpacing: '-2px',
-                      userSelect: 'none',
-                      marginTop: '-6px',
-                      marginRight: '-4px'
+                      color: '#0f172a',
+                      marginBottom: '8px',
+                      lineHeight: 1.35,
+                      textAlign: 'left'
                     }}>
-                      {card.num}
-                    </span>
+                      {card.title}
+                    </h3>
+
+                    {/* Card Description */}
+                    <p style={{
+                      fontSize: '10.5px',
+                      color: '#64748b',
+                      lineHeight: 1.55,
+                      fontWeight: '500',
+                      margin: 0,
+                      textAlign: 'left'
+                    }}>
+                      {card.desc}
+                    </p>
                   </div>
-
-                  {/* Card Title */}
-                  <h3 style={{
-                    fontSize: '1.08rem',
-                    fontWeight: '800',
-                    color: '#0f172a',
-                    marginBottom: '8px',
-                    lineHeight: 1.35,
-                    textAlign: 'left'
-                  }}>
-                    {card.title}
-                  </h3>
-
-                  {/* Card Description */}
-                  <p style={{
-                    fontSize: '10.5px',
-                    color: '#64748b',
-                    lineHeight: 1.55,
-                    fontWeight: '500',
-                    margin: 0,
-                    textAlign: 'left'
-                  }}>
-                    {card.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -689,7 +783,7 @@ export default function SafetyStandards({ siteData }) {
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Centered Header */}
-          <div style={{ textAlign: 'center', maxWidth: '880px', margin: '0 auto 45px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '880px', margin: '0 auto 45px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -720,7 +814,7 @@ export default function SafetyStandards({ siteData }) {
           </div>
 
           {/* BUILD YOURS NOW CTA BANNER (MATCHING SCREENSHOT 1:1) */}
-          <div className="winera-cta-banner-container" style={{
+          <div className="winera-cta-banner-container winera-reveal winera-reveal-delay-2" style={{
             maxWidth: '1240px',
             margin: '0 auto',
             position: 'relative',

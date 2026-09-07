@@ -2717,7 +2717,47 @@ html {
   }
 }
 
-/* Home Hero CTA Button (Exact design from user screenshot) */
+/* ==========================================
+   HOME HERO CTA CONTINUOUS ANIMATION
+   ========================================== */
+@keyframes wineraHeroFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes wineraIconPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 6px rgba(37, 211, 102, 0.35);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.45);
+  }
+}
+
+@keyframes wineraHeroShimmer {
+  0% {
+    transform: translateX(-160%) skewX(-20deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+/* Home Hero CTA Button (Exact design with continuous premium motion) */
 .winera-hero-cta-wrapper {
   position: relative;
   display: inline-block;
@@ -2725,12 +2765,13 @@ html {
   border-radius: 18px;
   padding: 3px 4px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  animation: wineraHeroFloat 2.8s ease-in-out infinite;
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .winera-hero-cta-wrapper:hover {
-  transform: translateY(-3px) scale(1.025);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 18px 40px rgba(255, 205, 0, 0.35), 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 .winera-hero-cta-btn {
@@ -2749,7 +2790,35 @@ html {
   letter-spacing: -0.2px;
   text-decoration: none;
   white-space: nowrap;
+  overflow: hidden;
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.winera-hero-cta-btn span {
+  position: relative;
+  z-index: 2;
+}
+
+.winera-hero-cta-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 205, 0, 0.2) 30%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 205, 0, 0.2) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-160%) skewX(-20deg);
+  pointer-events: none;
+  animation: wineraHeroShimmer 1.8s linear infinite;
+  border-radius: inherit;
+  z-index: 1;
 }
 
 .winera-hero-cta-wrapper:hover .winera-hero-cta-btn {
@@ -2757,6 +2826,8 @@ html {
 }
 
 .winera-hero-cta-icon {
+  position: relative;
+  z-index: 2;
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -2764,13 +2835,34 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 8px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 2px 6px rgba(37, 211, 102, 0.35);
   flex-shrink: 0;
+  animation: wineraIconPulse 2.2s ease-in-out infinite;
 }
 
 .winera-hero-cta-icon svg {
   width: 24px;
   height: 24px;
+}
+
+/* ==========================================
+   SHIMMER GLARE SWEEP & SPRING LIFT BUTTON ANIMATIONS
+   ========================================== */
+@keyframes wineraButtonShimmer {
+  0% {
+    transform: translateX(-160%) skewX(-20deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%) skewX(-20deg);
+    opacity: 0;
+  }
 }
 
 /* Cyan Blue Offset CTA Button */
@@ -2780,13 +2872,17 @@ html {
   background: #ffcd00;
   border-radius: 16px;
   padding: 3px 4px;
-  box-shadow: none !important;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
 }
 
 .winera-cyan-cta-wrapper:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: none !important;
+  transform: translateY(-3px) scale(1.025);
+  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.22);
+}
+
+.winera-cyan-cta-wrapper:active {
+  transform: translateY(0px) scale(0.97);
 }
 
 .winera-cyan-cta-btn {
@@ -2806,11 +2902,37 @@ html {
   letter-spacing: -0.2px;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.winera-cyan-cta-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 30%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0.25) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-160%) skewX(-20deg);
+  pointer-events: none;
+  animation: wineraButtonShimmer 1.5s linear infinite;
+  border-radius: inherit;
 }
 
 .winera-cyan-cta-wrapper:hover .winera-cyan-cta-btn {
-  transform: rotate(-0.5deg);
+  transform: rotate(0deg);
+}
+
+.winera-cyan-cta-wrapper:hover .winera-cyan-cta-btn::after {
+  animation: wineraButtonShimmer 0.75s linear infinite;
 }
 
 .winera-cyan-cta-wrapper-sm {
@@ -2824,20 +2946,24 @@ html {
   border-radius: 10px !important;
 }
 
-/* Yellow Button with Cyan Blue Offset Backdrop (Matching Screenshot 1:1) */
+/* Yellow Button with Cyan Blue Offset Backdrop */
 .winera-yellow-cyan-cta-wrapper {
   position: relative;
   display: inline-block;
   background: #38bdf8;
   border-radius: 16px;
   padding: 3px 4px;
-  box-shadow: none !important;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
 }
 
 .winera-yellow-cyan-cta-wrapper:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: none !important;
+  transform: translateY(-3px) scale(1.025);
+  box-shadow: 0 6px 16px rgba(255, 205, 0, 0.25);
+}
+
+.winera-yellow-cyan-cta-wrapper:active {
+  transform: translateY(0px) scale(0.97);
 }
 
 .winera-yellow-cyan-cta-btn {
@@ -2857,11 +2983,37 @@ html {
   letter-spacing: -0.2px;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.winera-yellow-cyan-cta-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 30%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0.25) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-160%) skewX(-20deg);
+  pointer-events: none;
+  animation: wineraButtonShimmer 1.5s linear infinite;
+  border-radius: inherit;
 }
 
 .winera-yellow-cyan-cta-wrapper:hover .winera-yellow-cyan-cta-btn {
-  transform: rotate(-0.5deg);
+  transform: rotate(0deg);
+}
+
+.winera-yellow-cyan-cta-wrapper:hover .winera-yellow-cyan-cta-btn::after {
+  animation: wineraButtonShimmer 0.75s linear infinite;
 }
 
 .winera-yellow-cyan-cta-wrapper-sm {
@@ -2875,20 +3027,73 @@ html {
   border-radius: 10px !important;
 }
 
-/* Yellow Button with White Offset Backdrop (Matching Image 1 1:1) */
+/* Standalone Yellow CTA Button with Continuous Shimmer animation */
+.winera-yellow-shimmer-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffcd00;
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 12px 28px;
+  border-radius: 12px;
+  border: 1.5px solid #ffcd00;
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: none;
+  transition: all 0.25s ease;
+}
+
+.winera-yellow-shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 30%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.35) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-160%) skewX(-20deg);
+  pointer-events: none;
+  animation: wineraButtonShimmer 1.5s linear infinite;
+  border-radius: inherit;
+}
+
+.winera-yellow-shimmer-btn:hover::after {
+  animation: wineraButtonShimmer 0.75s linear infinite;
+}
+
+.winera-yellow-shimmer-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 205, 0, 0.35);
+}
+
+/* Yellow Button with White Offset Backdrop */
 .winera-yellow-white-cta-wrapper {
   position: relative;
   display: inline-block;
   background: #ffffff;
   border-radius: 16px;
   padding: 3px 4px;
-  box-shadow: none !important;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
 }
 
 .winera-yellow-white-cta-wrapper:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: none !important;
+  transform: translateY(-3px) scale(1.025);
+  box-shadow: 0 6px 16px rgba(255, 205, 0, 0.25);
+}
+
+.winera-yellow-white-cta-wrapper:active {
+  transform: translateY(0px) scale(0.97);
 }
 
 .winera-yellow-white-cta-btn {
@@ -2908,11 +3113,37 @@ html {
   letter-spacing: -0.2px;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.winera-yellow-white-cta-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 30%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0.25) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-160%) skewX(-20deg);
+  pointer-events: none;
+  animation: wineraButtonShimmer 1.5s linear infinite;
+  border-radius: inherit;
 }
 
 .winera-yellow-white-cta-wrapper:hover .winera-yellow-white-cta-btn {
-  transform: rotate(-0.5deg);
+  transform: rotate(0deg);
+}
+
+.winera-yellow-white-cta-wrapper:hover .winera-yellow-white-cta-btn::after {
+  animation: wineraButtonShimmer 0.75s linear infinite;
 }
 
 .winera-yellow-white-cta-wrapper-sm {
@@ -2926,20 +3157,95 @@ html {
   border-radius: 10px !important;
 }
 
-/* White Button with Cyan Border & Offset Backdrop Tab (Safety-Certified Installation Card) */
+/* White Button with Yellow Offset Backdrop (1:1 Match with User Image) */
+.winera-white-yellow-cta-wrapper {
+  position: relative;
+  display: inline-block;
+  background: #ffcd00;
+  border-radius: 14px;
+  padding: 3px 4px;
+  box-shadow: 0 2px 10px rgba(255, 205, 0, 0.2);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+
+.winera-white-yellow-cta-wrapper:hover {
+  transform: translateY(-3px) scale(1.025);
+  box-shadow: 0 6px 18px rgba(255, 205, 0, 0.35);
+}
+
+.winera-white-yellow-cta-wrapper:active {
+  transform: translateY(0px) scale(0.97);
+}
+
+.winera-white-yellow-cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 26px;
+  background: #ffffff;
+  border: 1.5px solid #ffcd00;
+  border-radius: 12px;
+  transform: rotate(-1.5deg);
+  transform-origin: center;
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.winera-white-yellow-cta-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 205, 0, 0.15) 30%,
+    rgba(255, 205, 0, 0.45) 50%,
+    rgba(255, 205, 0, 0.15) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-160%) skewX(-20deg);
+  pointer-events: none;
+  animation: wineraButtonShimmer 1.5s linear infinite;
+  border-radius: inherit;
+}
+
+.winera-white-yellow-cta-wrapper:hover .winera-white-yellow-cta-btn {
+  transform: rotate(0deg);
+}
+
+.winera-white-yellow-cta-wrapper:hover .winera-white-yellow-cta-btn::after {
+  animation: wineraButtonShimmer 0.75s linear infinite;
+}
+
+/* White Button with Cyan Border & Offset Backdrop Tab */
 .winera-white-cyan-cta-wrapper {
   position: relative;
   display: inline-block;
   background: #38bdf8;
   border-radius: 12px;
   padding: 0 0 4px 5px;
-  box-shadow: none !important;
-  transition: transform 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
 }
 
 .winera-white-cyan-cta-wrapper:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: none !important;
+  transform: translateY(-3px) scale(1.025);
+  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.2);
+}
+
+.winera-white-cyan-cta-wrapper:active {
+  transform: translateY(0px) scale(0.97);
 }
 
 .winera-white-cyan-cta-btn {
@@ -2958,11 +3264,37 @@ html {
   transform-origin: center;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform 0.25s ease;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.winera-white-cyan-cta-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 168, 255, 0.15) 30%,
+    rgba(0, 168, 255, 0.45) 50%,
+    rgba(0, 168, 255, 0.15) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-160%) skewX(-20deg);
+  pointer-events: none;
+  animation: wineraButtonShimmer 1.5s linear infinite;
+  border-radius: inherit;
 }
 
 .winera-white-cyan-cta-wrapper:hover .winera-white-cyan-cta-btn {
-  transform: rotate(-0.5deg);
+  transform: rotate(0deg);
+}
+
+.winera-white-cyan-cta-wrapper:hover .winera-white-cyan-cta-btn::after {
+  animation: wineraButtonShimmer 0.75s linear infinite;
 }
 
 /* Process Cards Offset Accent Backdrops */
@@ -4622,5 +4954,147 @@ img[src*="yellow-stroke-line"] {
   }
   .winera-spec-detail-card-hover {
     padding: 22px 18px !important;
+  }
+}
+
+/* ==========================================
+   UNIQUE ANIMATIONS FOR ALL HERO BREADCRUMBS (Home › PageName)
+   ========================================== */
+
+.winera-arcade-hero-h1,
+.winera-bowling-hero-h1,
+.winera-softplay-hero-h1,
+.winera-vr-hero-h1,
+.winera-ar-hero-h1,
+.winera-bumpercar-hero-h1,
+.winera-amusement-hero-h1,
+.winera-amusement-hero-title,
+.winera-trampoline-hero-h1,
+.winera-hypergrid-hero-h1,
+.winera-hypergrid-hero-title,
+.winera-safety-hero-h1,
+.winera-project-hero-h1,
+.winera-roi-hero-h1,
+.winera-blog-hero-h1,
+.winera-lasertag-hero-h1,
+.winera-contact-hero-h1,
+.winera-breadcrumb-hero {
+  animation: wineraBreadcrumbPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.winera-arcade-hero-h1 > a,
+.winera-bowling-hero-h1 > a,
+.winera-softplay-hero-h1 > a,
+.winera-vr-hero-h1 > a,
+.winera-ar-hero-h1 > a,
+.winera-bumpercar-hero-h1 > a,
+.winera-amusement-hero-h1 > a,
+.winera-amusement-hero-title > a,
+.winera-trampoline-hero-h1 > a,
+.winera-hypergrid-hero-h1 > a,
+.winera-hypergrid-hero-title > a,
+.winera-safety-hero-h1 > a,
+.winera-project-hero-h1 > a,
+.winera-roi-hero-h1 > a,
+.winera-blog-hero-h1 > a,
+.winera-lasertag-hero-h1 > a,
+.winera-contact-hero-h1 > a,
+.winera-breadcrumb-hero > a {
+  position: relative;
+  transition: all 0.25s ease;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.winera-arcade-hero-h1 > a:hover,
+.winera-bowling-hero-h1 > a:hover,
+.winera-softplay-hero-h1 > a:hover,
+.winera-vr-hero-h1 > a:hover,
+.winera-ar-hero-h1 > a:hover,
+.winera-bumpercar-hero-h1 > a:hover,
+.winera-amusement-hero-h1 > a:hover,
+.winera-amusement-hero-title > a:hover,
+.winera-trampoline-hero-h1 > a:hover,
+.winera-hypergrid-hero-h1 > a:hover,
+.winera-hypergrid-hero-title > a:hover,
+.winera-safety-hero-h1 > a:hover,
+.winera-project-hero-h1 > a:hover,
+.winera-roi-hero-h1 > a:hover,
+.winera-blog-hero-h1 > a:hover,
+.winera-lasertag-hero-h1 > a:hover,
+.winera-contact-hero-h1 > a:hover,
+.winera-breadcrumb-hero > a:hover {
+  color: #38bdf8 !important;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.75);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Static Arrow (Animation Removed) */
+.winera-arcade-hero-h1 > span:nth-of-type(1),
+.winera-bowling-hero-h1 > span:nth-of-type(1),
+.winera-softplay-hero-h1 > span:nth-of-type(1),
+.winera-vr-hero-h1 > span:nth-of-type(1),
+.winera-ar-hero-h1 > span:nth-of-type(1),
+.winera-bumpercar-hero-h1 > span:nth-of-type(1),
+.winera-amusement-hero-h1 > span:nth-of-type(1),
+.winera-amusement-hero-title > span:nth-of-type(1),
+.winera-trampoline-hero-h1 > span:nth-of-type(1),
+.winera-hypergrid-hero-h1 > span:nth-of-type(1),
+.winera-hypergrid-hero-title > span:nth-of-type(1),
+.winera-safety-hero-h1 > span:nth-of-type(1),
+.winera-project-hero-h1 > span:nth-of-type(1),
+.winera-roi-hero-h1 > span:nth-of-type(1),
+.winera-blog-hero-h1 > span:nth-of-type(1),
+.winera-lasertag-hero-h1 > span:nth-of-type(1),
+.winera-contact-hero-h1 > span:nth-of-type(1),
+.winera-breadcrumb-hero > span:nth-of-type(1) {
+  display: inline-block;
+  margin: 0 6px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Active Page Title Golden Breathing Glow Pulse */
+.winera-arcade-hero-h1 > span:nth-of-type(2),
+.winera-bowling-hero-h1 > span:nth-of-type(2),
+.winera-softplay-hero-h1 > span:nth-of-type(2),
+.winera-vr-hero-h1 > span:nth-of-type(2),
+.winera-ar-hero-h1 > span:nth-of-type(2),
+.winera-bumpercar-hero-h1 > span:nth-of-type(2),
+.winera-amusement-hero-h1 > span:nth-of-type(2),
+.winera-amusement-hero-title > span:nth-of-type(2),
+.winera-trampoline-hero-h1 > span:nth-of-type(2),
+.winera-hypergrid-hero-h1 > span:nth-of-type(2),
+.winera-hypergrid-hero-title > span:nth-of-type(2),
+.winera-safety-hero-h1 > span:nth-of-type(2),
+.winera-project-hero-h1 > span:nth-of-type(2),
+.winera-roi-hero-h1 > span:nth-of-type(2),
+.winera-blog-hero-h1 > span:nth-of-type(2),
+.winera-lasertag-hero-h1 > span:nth-of-type(2),
+.winera-contact-hero-h1 > span:nth-of-type(2),
+.winera-breadcrumb-hero > span:nth-of-type(2) {
+  display: inline-block;
+  animation: wineraGoldPulse 2.8s ease-in-out infinite;
+  letter-spacing: -0.2px;
+}
+
+@keyframes wineraBreadcrumbPop {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes wineraGoldPulse {
+  0%, 100% {
+    color: #ffcd00;
+    text-shadow: 0 0 10px rgba(255, 205, 0, 0.55), 0 0 20px rgba(255, 205, 0, 0.25);
+  }
+  50% {
+    color: #ffe066;
+    text-shadow: 0 0 16px rgba(255, 205, 0, 0.95), 0 0 32px rgba(255, 205, 0, 0.6), 0 0 48px rgba(255, 205, 0, 0.3);
   }
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Star, Play } from 'lucide-react';
 import { useVideoModal } from '../context/VideoModalContext';
 import SectionHeading from './SectionHeading';
+import MotionFadeIn from './MotionFadeIn';
 import testiOwner from '../assets/testi-owner.webp';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
@@ -64,6 +65,7 @@ export default function TestimonialsSection({
   return (
     <section id={id} style={{ padding: '40px 4vw 20px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+        <MotionFadeIn>
         <SectionHeading marginBottom="10px">
           {(() => {
             const rawTitle = title || "*What Our* Clients Say";
@@ -434,7 +436,7 @@ export default function TestimonialsSection({
             </button>
           </div>
         </div>
-
+        </MotionFadeIn>
       </div>
     </section>
   );

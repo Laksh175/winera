@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import LeadCaptureModal from './LeadCaptureModal';
+import MotionFadeIn from './MotionFadeIn';
 
 const getValidImg = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -89,6 +90,7 @@ export default function CtaBanner({
         pageUrl={currentUrl}
       />
       <section style={{ padding: sectionPadding, background: '#F5F5F9' }}>
+        <MotionFadeIn>
         <div className="winera-cta-banner-container" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -298,7 +300,8 @@ export default function CtaBanner({
             />
           </div>
         )}
-      </div>
+        </div>
+        </MotionFadeIn>
     </section>
     </>
   );

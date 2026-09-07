@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import MotionCardFlip from '../components/MotionCardFlip';
+import CountUpNumber from '../components/CountUpNumber';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import aboutHeroBg from '../assets/about-us-banner.png';
@@ -222,16 +224,16 @@ export default function AboutUs({ siteData }) {
             </p>
 
             <div className="winera-about-welcome-box-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '32px' }}>
-              <div style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 18px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
+              <MotionCardFlip style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 18px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
                 <div style={{ color: '#00a8ff', marginBottom: '10px' }}><Shield style={{ width: '24px', height: '24px', fill: '#00a8ff', color: '#00a8ff' }} /></div>
                 <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box1Title || "Quality Assurance"}</h4>
                 <p style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '500', lineHeight: 1.45 }}>{siteData?.aboutWelcome?.box1Desc || "At Winera International, Quality Is Key. Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety. We Don't Just Build Equipment; We Build Experiences You Can Trust."}</p>
-              </div>
-              <div style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 18px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
+              </MotionCardFlip>
+              <MotionCardFlip style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 18px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
                 <div style={{ color: '#00a8ff', marginBottom: '10px' }}><Users style={{ width: '24px', height: '24px', color: '#00a8ff' }} /></div>
                 <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box2Title || "Your Success, Our Commitment"}</h4>
                 <p style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '500', lineHeight: 1.45 }}>{siteData?.aboutWelcome?.box2Desc || "At Winera International, We Prioritize Your Satisfaction. From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step."}</p>
-              </div>
+              </MotionCardFlip>
             </div>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
@@ -278,7 +280,9 @@ export default function AboutUs({ siteData }) {
                   borderLeft: '4px solid #38bdf8',
                   textAlign: 'left'
                 }}>
-                  <h3 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0284c7', lineHeight: 1, marginBottom: '10px' }}>{stat.number}</h3>
+                  <h3 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0284c7', lineHeight: 1, marginBottom: '10px' }}>
+                    <CountUpNumber value={stat.number} />
+                  </h3>
                   <p style={{ fontSize: '12.5px', fontWeight: '700', color: '#475569', lineHeight: 1.35, margin: 0 }}>{stat.label}</p>
                 </div>
               ));

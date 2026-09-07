@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionHeading from './SectionHeading';
+import MotionFadeIn from './MotionFadeIn';
 import clientsBg from '../assets/clients-bg.webp';
 
 export default function ClientsMarqueeSection({
@@ -23,6 +24,7 @@ export default function ClientsMarqueeSection({
       textAlign: 'center',
       overflow: 'hidden'
     }}>
+      <MotionFadeIn style={{ width: '100%' }}>
       <div style={{ maxWidth: '100%', width: '100%', margin: '0 auto' }}>
         <SectionHeading marginBottom="8px" accentWidth="280px" accentMaxWidth="340px">
           {(() => {
@@ -110,6 +112,7 @@ export default function ClientsMarqueeSection({
           </div>
         </div>
       </div>
+      </MotionFadeIn>
     </section>
   );
 }

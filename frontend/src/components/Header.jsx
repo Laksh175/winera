@@ -81,6 +81,25 @@ export default function Header({ headerData }) {
         .winera-hamburger { display: none; }
         .winera-logo-img { height: 48px; }
 
+        /* Custom Dropdown Scrollbar: Hidden when items fit, thin track when overflowed */
+        .winera-dropdown-scroll {
+          scrollbar-width: thin;
+          scrollbar-color: #cbd5e1 transparent;
+        }
+        .winera-dropdown-scroll::-webkit-scrollbar {
+          width: 5px;
+        }
+        .winera-dropdown-scroll::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .winera-dropdown-scroll::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 10px;
+        }
+        .winera-dropdown-scroll::-webkit-scrollbar-thumb:hover {
+          background: #38bdf8;
+        }
+
         @media (max-width: 1150px) {
           .winera-header {
             width: 94% !important;
@@ -136,13 +155,14 @@ export default function Header({ headerData }) {
               fontWeight: '700',
               letterSpacing: '0px',
               color: isHomeActive ? '#38bdf8' : '#0f172a',
+              textShadow: isHomeActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none',
               textDecoration: 'none',
               position: 'relative',
               padding: '6px 0',
               display: 'inline-flex',
               flexDirection: 'column',
               alignItems: 'center',
-              transition: 'color 0.2s ease'
+              transition: 'all 0.2s ease'
             }}
           >
             <span>Home</span>
@@ -154,6 +174,7 @@ export default function Header({ headerData }) {
                 right: '0',
                 height: '2.5px',
                 background: '#38bdf8',
+                boxShadow: '0 0 4px rgba(56, 189, 248, 0.5)',
                 borderRadius: '2px'
               }} />
             )}
@@ -172,13 +193,14 @@ export default function Header({ headerData }) {
                 fontWeight: '700',
                 letterSpacing: '0px',
                 color: isProductActive ? '#38bdf8' : '#0f172a',
+                textShadow: isProductActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none',
                 textDecoration: 'none',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '4px',
                 position: 'relative',
                 padding: '6px 0',
-                transition: 'color 0.2s ease'
+                transition: 'all 0.2s ease'
               }}
             >
               <span>Product</span>
@@ -191,6 +213,7 @@ export default function Header({ headerData }) {
                   right: '0',
                   height: '2.5px',
                   background: '#38bdf8',
+                  boxShadow: '0 0 4px rgba(56, 189, 248, 0.5)',
                   borderRadius: '2px'
                 }} />
               )}
@@ -198,7 +221,7 @@ export default function Header({ headerData }) {
 
             {/* Floating Product Dropdown Card */}
             {productDropdown && (
-              <div style={{
+              <div className="winera-dropdown-scroll" style={{
                 position: 'absolute',
                 top: '100%',
                 left: '50%',
@@ -206,8 +229,8 @@ export default function Header({ headerData }) {
                 background: '#ffffff',
                 borderRadius: '16px',
                 padding: '10px 0',
-                minWidth: '210px',
-                maxHeight: '380px',
+                minWidth: '215px',
+                maxHeight: 'calc(100vh - 110px)',
                 overflowY: 'auto',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
                 border: '1px solid #e2e8f0',
@@ -257,13 +280,14 @@ export default function Header({ headerData }) {
               fontWeight: '700',
               letterSpacing: '0px',
               color: isProjectActive ? '#38bdf8' : '#0f172a',
+              textShadow: isProjectActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none',
               textDecoration: 'none',
               position: 'relative',
               padding: '6px 0',
               display: 'inline-flex',
               flexDirection: 'column',
               alignItems: 'center',
-              transition: 'color 0.2s ease'
+              transition: 'all 0.2s ease'
             }}
           >
             <span>Project</span>
@@ -275,6 +299,7 @@ export default function Header({ headerData }) {
                 right: '0',
                 height: '2.5px',
                 background: '#38bdf8',
+                boxShadow: '0 0 4px rgba(56, 189, 248, 0.5)',
                 borderRadius: '2px'
               }} />
             )}
@@ -293,13 +318,14 @@ export default function Header({ headerData }) {
                 fontWeight: '700',
                 letterSpacing: '0px',
                 color: isResourcesActive ? '#38bdf8' : '#0f172a',
+                textShadow: isResourcesActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none',
                 textDecoration: 'none',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '4px',
                 position: 'relative',
                 padding: '6px 0',
-                transition: 'color 0.2s ease'
+                transition: 'all 0.2s ease'
               }}
             >
               <span>Resources</span>
@@ -312,6 +338,7 @@ export default function Header({ headerData }) {
                   right: '0',
                   height: '2.5px',
                   background: '#38bdf8',
+                  boxShadow: '0 0 4px rgba(56, 189, 248, 0.5)',
                   borderRadius: '2px'
                 }} />
               )}
@@ -319,7 +346,7 @@ export default function Header({ headerData }) {
 
             {/* Floating Resources Dropdown Card */}
             {resourcesDropdown && (
-              <div style={{
+              <div className="winera-dropdown-scroll" style={{
                 position: 'absolute',
                 top: '100%',
                 left: '50%',
@@ -328,6 +355,8 @@ export default function Header({ headerData }) {
                 borderRadius: '16px',
                 padding: '10px 0',
                 minWidth: '190px',
+                maxHeight: 'calc(100vh - 110px)',
+                overflowY: 'auto',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
                 border: '1px solid #e2e8f0',
                 display: 'flex',
@@ -376,13 +405,14 @@ export default function Header({ headerData }) {
               fontWeight: '700',
               letterSpacing: '0px',
               color: isAboutActive ? '#38bdf8' : '#0f172a',
+              textShadow: isAboutActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none',
               textDecoration: 'none',
               position: 'relative',
               padding: '6px 0',
               display: 'inline-flex',
               flexDirection: 'column',
               alignItems: 'center',
-              transition: 'color 0.2s ease'
+              transition: 'all 0.2s ease'
             }}
           >
             <span>About Us</span>
@@ -394,6 +424,7 @@ export default function Header({ headerData }) {
                 right: '0',
                 height: '2.5px',
                 background: '#38bdf8',
+                boxShadow: '0 0 4px rgba(56, 189, 248, 0.5)',
                 borderRadius: '2px'
               }} />
             )}
@@ -407,13 +438,14 @@ export default function Header({ headerData }) {
               fontWeight: '700',
               letterSpacing: '0px',
               color: isContactActive ? '#38bdf8' : '#0f172a',
+              textShadow: isContactActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none',
               textDecoration: 'none',
               position: 'relative',
               padding: '6px 0',
               display: 'inline-flex',
               flexDirection: 'column',
               alignItems: 'center',
-              transition: 'color 0.2s ease'
+              transition: 'all 0.2s ease'
             }}
           >
             <span>Contact Us</span>
@@ -425,6 +457,7 @@ export default function Header({ headerData }) {
                 right: '0',
                 height: '2.5px',
                 background: '#38bdf8',
+                boxShadow: '0 0 4px rgba(56, 189, 248, 0.5)',
                 borderRadius: '2px'
               }} />
             )}

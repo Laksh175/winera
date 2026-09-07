@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -425,11 +426,17 @@ export default function SoftPlay({ siteData }) {
         </div>
       </section>
 
-      {/* 7. TYPES OF SOFT PLAY ZONES WE DESIGN & INSTALL SECTION (MATCHING FIGMA 1:1) */}
+      {/* 7. TYPES OF SOFT PLAY ZONES WE DESIGN & INSTALL */}
       <section className="winera-softplay-timeline-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
-          <div style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+          >
             <img
               src={yellowStrokeLine}
               alt=""
@@ -438,21 +445,29 @@ export default function SoftPlay({ siteData }) {
             <h2 style={{ fontSize: '3rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.softplayTypes?.title, "Types of Soft Play Zones *We<br />Design & Install*")}
             </h2>
-          </div>
+          </motion.div>
 
           {/* Vertical Timeline Tree Container */}
           <div style={{ position: 'relative', maxWidth: '1150px', margin: '0 auto' }}>
             {/* Center Vertical Cyan Line */}
-            <div className="winera-softplay-timeline-line" style={{
-              position: 'absolute',
-              top: '80px',
-              bottom: '80px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '2.5px',
-              background: 'linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)',
-              zIndex: 1
-            }}></div>
+            <motion.div
+              className="winera-softplay-timeline-line"
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: 'easeOut' }}
+              style={{
+                position: 'absolute',
+                top: '80px',
+                bottom: '80px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '2.5px',
+                background: 'linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)',
+                transformOrigin: 'top center',
+                zIndex: 1
+              }}
+            />
 
             {/* Timeline Steps (Zig-Zag Left / Right Layout matching Figma 1:1) */}
             {(Array.isArray(siteData?.softplayTypes?.typesList) && siteData.softplayTypes.typesList.length > 0
@@ -477,42 +492,80 @@ export default function SoftPlay({ siteData }) {
                     zIndex: 2
                   }}
                 >
-                  {/* Horizontal Rule Connector Line between Number Badge & Image Box */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: alignLeft ? '50%' : 'calc(50% - 40px)',
-                    width: '40px',
-                    height: '2px',
-                    background: '#64748b',
-                    transform: 'translateY(-50%)',
-                    zIndex: 5
-                  }}></div>
+                  {/* Combined Number Badge & Horizontal Connector Line Assembly */}
+                  <div
+                    className="winera-softplay-timeline-badge-assembly"
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: alignLeft ? 'translate(0%, -50%)' : 'translate(-100%, -50%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      zIndex: 10,
+                      pointerEvents: 'none'
+                    }}
+                  >
+                    {/* If Image is on Left, line comes before badge */}
+                    {!alignLeft && (
+                      <div style={{
+                        width: '40px',
+                        height: '2px',
+                        background: '#38bdf8',
+                        flexShrink: 0
+                      }} />
+                    )}
 
-                  {/* Number Badge Pill directly on the Center Vertical Line */}
-                  <div className="winera-softplay-timeline-badge" style={{
-                    position: 'absolute',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                    color: '#ffffff',
-                    fontSize: '15px',
-                    fontWeight: '900',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: 'none',
-                    zIndex: 10
-                  }}>
-                    {idx + 1}
+                    {/* Number Badge Pill directly on the Center Vertical Line */}
+                    <motion.div
+                      className="winera-softplay-timeline-badge"
+                      initial={{ scale: 0, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true, margin: '-40px' }}
+                      transition={{ duration: 0.45, delay: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+                      whileHover={{ scale: 1.18, boxShadow: '0 0 20px rgba(56, 189, 248, 0.5)' }}
+                      style={{
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '50%',
+                        background: '#38bdf8',
+                        color: '#ffffff',
+                        fontSize: '15px',
+                        fontWeight: '900',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 10px rgba(56, 189, 248, 0.3)',
+                        flexShrink: 0,
+                        margin: '0 -19px',
+                        zIndex: 12,
+                        pointerEvents: 'auto',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {idx + 1}
+                    </motion.div>
+
+                    {/* If Image is on Right, line comes after badge */}
+                    {alignLeft && (
+                      <div style={{
+                        width: '40px',
+                        height: '2px',
+                        background: '#38bdf8',
+                        flexShrink: 0
+                      }} />
+                    )}
                   </div>
 
                   {/* Left Side Element */}
-                  <div className={alignLeft ? "winera-softplay-timeline-text-col" : "winera-softplay-timeline-img-col"} style={{ textAlign: alignLeft ? 'left' : 'right' }}>
+                  <motion.div
+                    className={alignLeft ? "winera-softplay-timeline-text-col" : "winera-softplay-timeline-img-col"}
+                    initial={{ opacity: 0, x: -55 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ textAlign: alignLeft ? 'left' : 'right' }}
+                  >
                     {alignLeft ? (
                       <div>
                         <h3 style={{ fontSize: '2rem', fontWeight: '900', color: '#38bdf8', marginBottom: '14px', lineHeight: 1.2 }}>
@@ -523,28 +576,47 @@ export default function SoftPlay({ siteData }) {
                         </p>
                       </div>
                     ) : (
-                      <div style={{
-                        width: '100%',
-                        height: '300px',
-                        borderRadius: '24px',
-                        overflow: 'hidden',
-                        boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                        background: `url(${imgUrl}) center/cover no-repeat`
-                      }}></div>
+                      <motion.div
+                        whileHover={{ y: -8, scale: 1.025, boxShadow: '0 20px 40px rgba(56, 189, 248, 0.22)' }}
+                        style={{
+                          width: '100%',
+                          height: '300px',
+                          borderRadius: '24px',
+                          overflow: 'hidden',
+                          boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
+                          background: `url(${imgUrl}) center/cover no-repeat`,
+                          cursor: 'pointer',
+                          backfaceVisibility: 'hidden',
+                          WebkitBackfaceVisibility: 'hidden'
+                        }}
+                      />
                     )}
-                  </div>
+                  </motion.div>
 
                   {/* Right Side Element */}
-                  <div className={alignLeft ? "winera-softplay-timeline-img-col" : "winera-softplay-timeline-text-col"} style={{ textAlign: alignLeft ? 'right' : 'left' }}>
+                  <motion.div
+                    className={alignLeft ? "winera-softplay-timeline-img-col" : "winera-softplay-timeline-text-col"}
+                    initial={{ opacity: 0, x: 55 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ textAlign: alignLeft ? 'right' : 'left' }}
+                  >
                     {alignLeft ? (
-                      <div style={{
-                        width: '100%',
-                        height: '300px',
-                        borderRadius: '24px',
-                        overflow: 'hidden',
-                        boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                        background: `url(${imgUrl}) center/cover no-repeat`
-                      }}></div>
+                      <motion.div
+                        whileHover={{ y: -8, scale: 1.025, boxShadow: '0 20px 40px rgba(56, 189, 248, 0.22)' }}
+                        style={{
+                          width: '100%',
+                          height: '300px',
+                          borderRadius: '24px',
+                          overflow: 'hidden',
+                          boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
+                          background: `url(${imgUrl}) center/cover no-repeat`,
+                          cursor: 'pointer',
+                          backfaceVisibility: 'hidden',
+                          WebkitBackfaceVisibility: 'hidden'
+                        }}
+                      />
                     ) : (
                       <div>
                         <h3 style={{ fontSize: '2rem', fontWeight: '900', color: '#38bdf8', marginBottom: '14px', lineHeight: 1.2 }}>
@@ -555,13 +627,19 @@ export default function SoftPlay({ siteData }) {
                         </p>
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 </div>
               );
             })}
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px', width: '100%' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ display: 'flex', justifyContent: 'center', marginTop: '50px', width: '100%' }}
+          >
             <div style={{ position: 'relative', display: 'inline-block' }}>
               <div style={{
                 position: 'absolute',
@@ -598,7 +676,7 @@ export default function SoftPlay({ siteData }) {
                 {siteData?.softplayTypes?.buttonText || "Download Our Brochure"}
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

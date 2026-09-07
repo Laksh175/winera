@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import blogHeroBg from '../assets/blog-hero-bg.png';
@@ -125,7 +126,14 @@ export default function Blog({ siteData }) {
       <section style={{ padding: '25px 4vw 60px', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Header */}
-          <div style={{ textAlign: 'center', marginBottom: '25px' }}>
+          <motion.div
+            data-framer-motion="true"
+            initial={{ opacity: 0, y: -30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            style={{ textAlign: 'center', marginBottom: '25px' }}
+          >
             <img
               src={yellowStrokeLine}
               alt=""
@@ -134,7 +142,7 @@ export default function Blog({ siteData }) {
             <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
               our <span style={{ color: '#38bdf8' }}>Blogs</span>
             </h2>
-          </div>
+          </motion.div>
 
           {/* 9 Cards Grid */}
           <div className="winera-blog-cards-grid" style={{
@@ -142,78 +150,94 @@ export default function Blog({ siteData }) {
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '32px',
           }}>
-            {currentPosts.map((post, index) => (
-              <div
-                key={post.id || index}
-                onClick={() => navigate(`/blog/${post.id}`)}
-                className="winera-blog-single-card"
-                style={{
-                  background: '#f0f9ff',
-                  border: '1.5px solid #38bdf8',
-                  borderRadius: '24px',
-                  padding: '16px',
-                  boxShadow: 'none',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 0.25s ease',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-6px)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                {/* Card Top Image */}
-                <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '18px', overflow: 'hidden', height: '240px', flexShrink: 0 }}>
-                  <img
-                    src={getValidImageUrl(post.image || post.imgUrl, blogCardImg)}
-                    alt={post.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
-                </div>
+            {currentPosts.map((post, index) => {
+              const isLeft = index % 3 === 0;
+              const isRight = index % 3 === 2;
+              const startX = isLeft ? -70 : (isRight ? 70 : 0);
+              const startY = isLeft || isRight ? 0 : 50;
 
-                {/* Card Text Body */}
-                <div style={{ paddingTop: '16px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                  <h3 style={{
-                    fontSize: '16px',
-                    fontWeight: '800',
-                    color: '#0d1e38',
-                    lineHeight: 1.35,
-                    margin: '0 0 12px',
-                  }}>
-                    {post.title} {post.subtitle && <><span className="winera-desktop-br"><br /></span>{post.subtitle}</>}
-                  </h3>
-
-                  <p style={{
-                    fontSize: '13.5px',
-                    fontWeight: '400',
-                    color: '#64748b',
-                    lineHeight: 1.55,
-                    margin: '0 0 16px',
-                    flexGrow: 1,
-                  }}>
-                    {post.line1 || post.excerpt} <span className="winera-desktop-br"><br /></span>
-                    {post.line2} <span className="winera-desktop-br"><br /></span>
-                    {post.line3}
-                  </p>
-
-                  <div>
-                    <span style={{
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      color: '#64748b',
-                      textDecoration: 'underline',
-                    }}>
-                      {post.date}
-                    </span>
+              return (
+                <motion.div
+                  key={post.id || index}
+                  data-framer-motion="true"
+                  initial={{ opacity: 0, x: startX, y: startY }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{
+                    duration: 0.75,
+                    delay: (index % 3) * 0.12,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  onClick={() => navigate(`/blog/${post.id}`)}
+                  className="winera-blog-single-card"
+                  style={{
+                    background: '#f0f9ff',
+                    border: '1.5px solid #38bdf8',
+                    borderRadius: '24px',
+                    padding: '16px',
+                    boxShadow: 'none',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.25s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-6px)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  {/* Card Top Image */}
+                  <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '18px', overflow: 'hidden', height: '240px', flexShrink: 0 }}>
+                    <img
+                      src={getValidImageUrl(post.image || post.imgUrl, blogCardImg)}
+                      alt={post.title}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
                   </div>
-                </div>
-              </div>
-            ))}
+
+                  {/* Card Text Body */}
+                  <div style={{ paddingTop: '16px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                    <h3 style={{
+                      fontSize: '16px',
+                      fontWeight: '800',
+                      color: '#0d1e38',
+                      lineHeight: 1.35,
+                      margin: '0 0 12px',
+                    }}>
+                      {post.title} {post.subtitle && <><span className="winera-desktop-br"><br /></span>{post.subtitle}</>}
+                    </h3>
+
+                    <p style={{
+                      fontSize: '13.5px',
+                      fontWeight: '400',
+                      color: '#64748b',
+                      lineHeight: 1.55,
+                      margin: '0 0 16px',
+                      flexGrow: 1,
+                    }}>
+                      {post.line1 || post.excerpt} <span className="winera-desktop-br"><br /></span>
+                      {post.line2} <span className="winera-desktop-br"><br /></span>
+                      {post.line3}
+                    </p>
+
+                    <div>
+                      <span style={{
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        color: '#64748b',
+                        textDecoration: 'underline',
+                      }}>
+                        {post.date}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* ── PAGINATION BAR ───────────────────────────────────── */}

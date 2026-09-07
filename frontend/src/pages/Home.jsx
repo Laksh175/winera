@@ -8,6 +8,7 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import ClientsMarqueeSection from '../components/ClientsMarqueeSection';
 import CtaBanner from '../components/CtaBanner';
+import MotionCardFlip from '../components/MotionCardFlip';
 import heroBg from '../assets/home-page-banner-bg.png';
 import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
@@ -777,7 +778,7 @@ export default function Home({ siteData }) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {/* Box 1: Free ROI Consultancy */}
-              <div className="winera-partner-box-wrapper-yellow winera-reveal-right winera-reveal-delay-1">
+              <MotionCardFlip className="winera-partner-box-wrapper-yellow winera-reveal-right winera-reveal-delay-1">
                 <div className="winera-partner-box-yellow">
                   <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>
                     {siteData?.partnerHome?.box1Title || "Free ROI Consultancy"}
@@ -793,10 +794,10 @@ export default function Home({ siteData }) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </MotionCardFlip>
 
               {/* Box 2: Safety-Certified Installation */}
-              <div className="winera-partner-box-wrapper-cyan winera-reveal-right winera-reveal-delay-2">
+              <MotionCardFlip className="winera-partner-box-wrapper-cyan winera-reveal-right winera-reveal-delay-2">
                 <div className="winera-partner-box-cyan">
                   <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>
                     {siteData?.partnerHome?.box2Title || "Safety-Certified Installation"}
@@ -812,7 +813,7 @@ export default function Home({ siteData }) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </MotionCardFlip>
             </div>
           </div>
         </section>
@@ -1062,7 +1063,7 @@ export default function Home({ siteData }) {
                   const formattedNum = rawNum.length === 1 ? `0${rawNum}` : rawNum;
 
                   return (
-                    <div key={idx} className={wrapperClass}>
+                    <MotionCardFlip key={idx} className={wrapperClass}>
                       <div className="winera-process-inner-card">
                         {/* Very Large, Bold, Visually Dominant Step Number */}
                         <div 
@@ -1114,7 +1115,7 @@ export default function Home({ siteData }) {
                           ))}
                         </ul>
                       </div>
-                    </div>
+                    </MotionCardFlip>
                   );
                 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RelatedProductsSection from '../components/RelatedProductsSection';
@@ -677,7 +678,13 @@ export default function ProjectDetail({ siteData }) {
         margin: '20px 0 0'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ marginBottom: '45px' }}>
+          <motion.div
+            initial={{ opacity: 0, y: -25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            style={{ marginBottom: '45px' }}
+          >
             <img
               src={strokeImg}
               alt=""
@@ -687,7 +694,7 @@ export default function ProjectDetail({ siteData }) {
               <span style={{ color: '#38bdf8' }}>{galleryTitleCyan}</span>
               <span>{galleryTitleDark}</span>
             </h3>
-          </div>
+          </motion.div>
 
           <div className="winera-project-gallery-grid" style={{
             display: 'grid',
@@ -697,19 +704,44 @@ export default function ProjectDetail({ siteData }) {
             margin: '0 auto'
           }}>
             {galleryImages.map((imgSrc, idx) => (
-              <img
+              <motion.div
                 key={idx}
-                src={imgSrc}
-                alt={`Project Gallery ${idx + 1}`}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  borderRadius: '24px',
-                  display: 'block',
-                  boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-                  objectFit: 'cover'
+                initial={{ opacity: 0, y: 45, scale: 0.94 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{
+                  duration: 0.55,
+                  delay: idx * 0.1,
+                  ease: [0.22, 1, 0.36, 1]
                 }}
-              />
+                whileHover={{
+                  y: -10,
+                  scale: 1.03,
+                  boxShadow: '0 20px 35px rgba(56, 189, 248, 0.25), 0 10px 20px rgba(0,0,0,0.12)'
+                }}
+                whileTap={{ scale: 0.98 }}
+                style={{
+                  borderRadius: '24px',
+                  overflow: 'hidden',
+                  boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+                  cursor: 'pointer',
+                  background: '#ffffff',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden'
+                }}
+              >
+                <img
+                  src={imgSrc}
+                  alt={`Project Gallery ${idx + 1}`}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '24px',
+                    display: 'block',
+                    objectFit: 'cover'
+                  }}
+                />
+              </motion.div>
             ))}
           </div>
         </div>
@@ -717,8 +749,14 @@ export default function ProjectDetail({ siteData }) {
 
       {/* 7. PROJECT VIDEO SHOWCASE SECTION */}
       <section style={{ padding: '60px 4vw 90px', maxWidth: '1060px', margin: '0 auto', textAlign: 'center' }}>
-        <button
+        <motion.button
           onClick={() => openVideoModal(videoLink, `${currentProject.name} Showcase`)}
+          initial={{ opacity: 0, y: 40, scale: 0.96 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6 }}
+          whileHover={{ y: -8, scale: 1.025, boxShadow: '0 22px 45px rgba(0,0,0,0.22)' }}
+          whileTap={{ scale: 0.98 }}
           style={{
             display: 'block',
             position: 'relative',
@@ -728,7 +766,10 @@ export default function ProjectDetail({ siteData }) {
             boxShadow: 'none',
             border: 'none',
             padding: 0,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            background: 'transparent',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden'
           }}
         >
           <img
@@ -736,7 +777,7 @@ export default function ProjectDetail({ siteData }) {
             alt="Project Showcase Video"
             style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '28px' }}
           />
-        </button>
+        </motion.button>
       </section>
 
       {/* 8. OUR RECENT PROJECTS MARQUEE */}

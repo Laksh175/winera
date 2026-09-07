@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SectionHeading from './SectionHeading';
+import MotionFadeIn from './MotionFadeIn';
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 
 import ctaArcade from '../assets/cta-arcade.webp';
@@ -66,6 +67,7 @@ export default function RelatedProductsSection({ sectionData, accentColor = '#38
       className="winera-related-section"
       style={{ padding: '25px 4vw 25px', background: '#F5F5F9', textAlign: 'center' }}
     >
+      <MotionFadeIn>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         <SectionHeading marginBottom="40px" accentWidth="220px" accentMaxWidth="260px">
           {(() => {
@@ -231,6 +233,7 @@ export default function RelatedProductsSection({ sectionData, accentColor = '#38
           </button>
         </div>
       </div>
+      </MotionFadeIn>
     </section>
   );
 }

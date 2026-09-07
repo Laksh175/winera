@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
@@ -98,14 +99,39 @@ export default function ContactUs({ siteData }) {
             </p>
 
             {/* Stack of 2 Contact Info Cards (Call Us & Email Our Team) */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '36px', paddingTop: '10px' }}>
 
               {/* CALL US card — clean white background with top-left cyan accent wing */}
-              <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+              <motion.div
+                data-framer-motion="true"
+                initial={{ opacity: 0, x: -65, scale: 0.95 }}
+                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
+                whileHover={{
+                  y: -6,
+                  scale: 1.015,
+                  boxShadow: '0 18px 36px rgba(56, 189, 248, 0.22)',
+                }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.16, 1, 0.3, 1],
+                  scale: { type: 'spring', stiffness: 300, damping: 20 },
+                }}
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  maxWidth: '520px',
+                  borderRadius: '10px',
+                  backfaceVisibility: 'hidden',
+                  WebkitFontSmoothing: 'subpixel-antialiased',
+                  willChange: 'transform',
+                  zIndex: 2,
+                }}
+              >
                 {/* Top-Left Accent Backdrop Wing sticking out behind top-left corner */}
                 <div style={{
                   position: 'absolute',
-                  top: '-15px',
+                  top: '-14px',
                   left: '-7px',
                   width: '290px',
                   height: '113px',
@@ -127,9 +153,16 @@ export default function ContactUs({ siteData }) {
                   gap: '18px',
                   overflow: 'hidden'
                 }}>
-                  <div style={{ position: 'relative', zIndex: 3, width: '46px', height: '46px', borderRadius: '50%', background: '#38bdf8', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <motion.div
+                    initial={{ scale: 0, rotate: -30 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    viewport={{ once: false }}
+                    transition={{ type: 'spring', stiffness: 350, damping: 15, delay: 0.15 }}
+                    whileHover={{ scale: 1.22, rotate: 12 }}
+                    style={{ position: 'relative', zIndex: 3, width: '46px', height: '46px', borderRadius: '50%', background: '#38bdf8', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                  >
                     <Phone style={{ width: '22px', height: '22px' }} />
-                  </div>
+                  </motion.div>
                   <div style={{ position: 'relative', zIndex: 3 }}>
                     <h5 style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.callTitle || "CALL US DIRECTLY"}
@@ -140,14 +173,41 @@ export default function ContactUs({ siteData }) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* EMAIL card — clean white background with top-left yellow accent wing */}
-              <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+              <motion.div
+                data-framer-motion="true"
+                initial={{ opacity: 0, x: -65, scale: 0.95 }}
+                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
+                whileHover={{
+                  y: -6,
+                  scale: 1.015,
+                  boxShadow: '0 18px 36px rgba(255, 205, 0, 0.28)',
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.1,
+                  ease: [0.16, 1, 0.3, 1],
+                  scale: { type: 'spring', stiffness: 300, damping: 20 },
+                }}
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  maxWidth: '520px',
+                  borderRadius: '10px',
+                  marginTop: '12px',
+                  backfaceVisibility: 'hidden',
+                  WebkitFontSmoothing: 'subpixel-antialiased',
+                  willChange: 'transform',
+                  zIndex: 2,
+                }}
+              >
                 {/* Top-Left Accent Backdrop Wing sticking out behind top-left corner */}
                 <div style={{
                   position: 'absolute',
-                  top: '-15px',
+                  top: '-14px',
                   left: '-7px',
                   width: '290px',
                   height: '113px',
@@ -169,9 +229,16 @@ export default function ContactUs({ siteData }) {
                   gap: '18px',
                   overflow: 'hidden'
                 }}>
-                  <div style={{ position: 'relative', zIndex: 3, width: '46px', height: '46px', borderRadius: '50%', background: '#ffcd00', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <motion.div
+                    initial={{ scale: 0, rotate: 30 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    viewport={{ once: false }}
+                    transition={{ type: 'spring', stiffness: 350, damping: 15, delay: 0.25 }}
+                    whileHover={{ scale: 1.22, rotate: -12 }}
+                    style={{ position: 'relative', zIndex: 3, width: '46px', height: '46px', borderRadius: '50%', background: '#ffcd00', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 14px rgba(255, 205, 0, 0.4)' }}
+                  >
                     <Mail style={{ width: '22px', height: '22px' }} />
-                  </div>
+                  </motion.div>
                   <div style={{ position: 'relative', zIndex: 3 }}>
                     <h5 style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.emailTitle || "EMAIL OUR TEAM"}
@@ -179,7 +246,7 @@ export default function ContactUs({ siteData }) {
                     <a href={`mailto:${siteData?.contactPage?.email || "info@winera.in"}`} style={{ fontSize: '13.5px', fontWeight: '700', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.email || "info@winera.in"}</a>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 
@@ -325,7 +392,23 @@ export default function ContactUs({ siteData }) {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
 
               {/* Surat HQ — light cyan background fill with top-left cyan accent wing */}
-              <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+              <motion.div
+                data-framer-motion="true"
+                initial={{ opacity: 0, x: -70, scale: 0.95 }}
+                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
+                whileHover={{
+                  y: -6,
+                  scale: 1.015,
+                  boxShadow: '0 20px 40px rgba(56, 189, 248, 0.26)',
+                }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.16, 1, 0.3, 1],
+                  scale: { type: 'spring', stiffness: 300, damping: 20 },
+                }}
+                style={{ position: 'relative', width: '100%', maxWidth: '520px', borderRadius: '10px', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'subpixel-antialiased', willChange: 'transform', zIndex: 2 }}
+              >
                 {/* Top-Left Accent Backdrop Wing sticking out behind top-left corner */}
                 <div style={{
                   position: 'absolute',
@@ -352,9 +435,16 @@ export default function ContactUs({ siteData }) {
                   overflow: 'hidden'
                 }}>
                   <div style={{ position: 'relative', zIndex: 3, display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
-                    <div style={{ width: '46px', height: '46px', borderRadius: '14px', background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)' }}>
+                    <motion.div
+                      initial={{ scale: 0, rotate: -30 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      viewport={{ once: false }}
+                      transition={{ type: 'spring', stiffness: 350, damping: 15, delay: 0.15 }}
+                      whileHover={{ scale: 1.25, rotate: 15 }}
+                      style={{ width: '46px', height: '46px', borderRadius: '14px', background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 14px rgba(56, 189, 248, 0.4)' }}
+                    >
                       <MapPin style={{ width: '22px', height: '22px' }} />
-                    </div>
+                    </motion.div>
                     <div>
                       <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq1Name || "Surat Headquarters (India)"}</h3>
                       <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq1Badge || "Corporate & Sales Office"}</span>
@@ -364,10 +454,27 @@ export default function ContactUs({ siteData }) {
                     {siteData?.contactPage?.hq1Address || "Winera International Pvt. Ltd.\nSurat, Gujarat, India.\nHotline: +91 94289 89488 / +91 95123 56766"}
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* China Facility — light yellow background fill with top-left yellow accent wing */}
-              <div style={{ position: 'relative', width: '100%', maxWidth: '520px' }}>
+              <motion.div
+                data-framer-motion="true"
+                initial={{ opacity: 0, x: 70, scale: 0.95 }}
+                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
+                whileHover={{
+                  y: -6,
+                  scale: 1.015,
+                  boxShadow: '0 20px 40px rgba(255, 205, 0, 0.3)',
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.12,
+                  ease: [0.16, 1, 0.3, 1],
+                  scale: { type: 'spring', stiffness: 300, damping: 20 },
+                }}
+                style={{ position: 'relative', width: '100%', maxWidth: '520px', borderRadius: '10px', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'subpixel-antialiased', willChange: 'transform', zIndex: 2 }}
+              >
                 {/* Top-Left Accent Backdrop Wing sticking out behind top-left corner */}
                 <div style={{
                   position: 'absolute',
@@ -394,9 +501,16 @@ export default function ContactUs({ siteData }) {
                   overflow: 'hidden'
                 }}>
                   <div style={{ position: 'relative', zIndex: 3, display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
-                    <div style={{ width: '46px', height: '46px', borderRadius: '14px', background: 'linear-gradient(135deg, #ffcd00 0%, #e6a800 100%)', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 12px rgba(255, 205, 0, 0.3)' }}>
+                    <motion.div
+                      initial={{ scale: 0, rotate: 30 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      viewport={{ once: false }}
+                      transition={{ type: 'spring', stiffness: 350, damping: 15, delay: 0.25 }}
+                      whileHover={{ scale: 1.25, rotate: -15 }}
+                      style={{ width: '46px', height: '46px', borderRadius: '14px', background: 'linear-gradient(135deg, #ffcd00 0%, #e6a800 100%)', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 14px rgba(255, 205, 0, 0.4)' }}
+                    >
                       <Globe style={{ width: '22px', height: '22px' }} />
-                    </div>
+                    </motion.div>
                     <div>
                       <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq2Name || "China Manufacturing Facility"}</h3>
                       <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq2Badge || "Sourcing & Assembly Hub"}</span>
@@ -406,7 +520,7 @@ export default function ContactUs({ siteData }) {
                     {siteData?.contactPage?.hq2Address || "Winera International Global Assembly Base\nGuangzhou / Panyu Amusement Equipment Zone,\nGuangdong Province, China."}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 
