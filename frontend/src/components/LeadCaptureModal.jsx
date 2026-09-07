@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { X, CheckCircle2, Phone, User, Globe, Send, Loader2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { X, CheckCircle2, Phone, User, Globe, Send, Loader2, ChevronDown } from 'lucide-react';
 import { submitLeadApi } from '../services/api';
 
 const COUNTRY_CODES = [
@@ -113,6 +113,8 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const currentUrl = pageUrl || (typeof window !== 'undefined' ? window.location.pathname : '/');
   const currentSource = resolvePageName(pageSource, currentUrl);
@@ -137,11 +139,22 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
   };
 
   useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsCountryDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
     if (!isOpen) {
       setName('');
       setPhone('');
       setSubmitted(false);
       setErrorMsg('');
+      setIsCountryDropdownOpen(false);
     }
   }, [isOpen]);
 
@@ -210,6 +223,7 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
       onClick={onClose}
     >
       <div
+        className="winera-lead-modal-card"
         style={{
           position: 'relative',
           width: '100%',
@@ -219,7 +233,7 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
           padding: '32px 28px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
           border: '1.5px solid #e0f2fe',
-          overflow: 'hidden'
+          overflow: 'visible'
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -315,30 +329,111 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
                   Mobile / Phone Number *
                 </label>
                 <div style={{ display: 'flex', gap: '8px' }}>
-                  {/* Country Code Select */}
-                  <div style={{ position: 'relative', width: '130px', flexShrink: 0 }}>
-                    <select
-                      value={countryCode}
-                      onChange={(e) => handleCountryChange(e.target.value)}
+                  {/* Custom Country Code Dropdown */}
+                  <div ref={dropdownRef} className="winera-country-select-container" style={{ position: 'relative', width: '110px', flexShrink: 0 }}>
+                    <button
+                      type="button"
+                      onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
+                      className="winera-country-trigger-btn"
                       style={{
                         width: '100%',
-                        padding: '12px 8px 12px 12px',
+                        padding: '12px 10px',
                         borderRadius: '14px',
-                        border: '1.5px solid #cbd5e1',
+                        border: isCountryDropdownOpen ? '1.5px solid #0284c7' : '1.5px solid #cbd5e1',
                         background: '#f8fafc',
                         fontSize: '13.5px',
-                        fontWeight: '700',
+                        fontWeight: '800',
                         color: '#0f172a',
                         outline: 'none',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '4px',
+                        boxSizing: 'border-box'
                       }}
                     >
-                      {COUNTRY_CODES.map((c) => (
-                        <option key={`${c.country}-${c.code}`} value={c.code}>
-                          {c.flag} {c.code} ({c.country})
-                        </option>
-                      ))}
-                    </select>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                        <span>{selectedCountry.flag}</span>
+                        <span>{selectedCountry.code}</span>
+                      </span>
+                      <ChevronDown style={{
+                        width: '14px',
+                        height: '14px',
+                        color: '#64748b',
+                        flexShrink: 0,
+                        transition: 'transform 0.2s',
+                        transform: isCountryDropdownOpen ? 'rotate(180deg)' : 'rotate(0)'
+                      }} />
+                    </button>
+
+                    {/* Scrollable Country List Popup */}
+                    {isCountryDropdownOpen && (
+                      <div
+                        className="winera-country-dropdown-popup"
+                        style={{
+                          position: 'absolute',
+                          top: 'calc(100% + 6px)',
+                          left: 0,
+                          zIndex: 999,
+                          width: '255px',
+                          maxHeight: '190px',
+                          overflowY: 'auto',
+                          background: '#ffffff',
+                          border: '1.5px solid #e2e8f0',
+                          borderRadius: '16px',
+                          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.18)',
+                          padding: '6px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '2px',
+                          boxSizing: 'border-box'
+                        }}
+                      >
+                        {COUNTRY_CODES.map((c) => {
+                          const isSelected = c.code === countryCode;
+                          return (
+                            <button
+                              key={`${c.country}-${c.code}`}
+                              type="button"
+                              onClick={() => {
+                                handleCountryChange(c.code);
+                                setIsCountryDropdownOpen(false);
+                              }}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                width: '100%',
+                                padding: '9px 12px',
+                                borderRadius: '10px',
+                                border: 'none',
+                                background: isSelected ? '#e0f2fe' : 'transparent',
+                                color: isSelected ? '#0284c7' : '#0f172a',
+                                fontSize: '13px',
+                                fontWeight: isSelected ? '800' : '600',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                                transition: 'background 0.15s'
+                              }}
+                              onMouseEnter={(e) => {
+                                if (!isSelected) e.currentTarget.style.background = '#f1f5f9';
+                              }}
+                              onMouseLeave={(e) => {
+                                if (!isSelected) e.currentTarget.style.background = 'transparent';
+                              }}
+                            >
+                              <span style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                                <span style={{ fontSize: '15px' }}>{c.flag}</span>
+                                <span style={{ fontWeight: '800' }}>{c.code}</span>
+                                <span style={{ color: '#64748b', fontSize: '12px', fontWeight: '500' }}>({c.country})</span>
+                              </span>
+                              {isSelected && <CheckCircle2 style={{ width: '15px', height: '15px', color: '#0284c7', flexShrink: 0 }} />}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
 
                   {/* Number Input */}

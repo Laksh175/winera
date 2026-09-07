@@ -4637,6 +4637,45 @@ img[src*="yellow-stroke-line"] {
   }
 }
 
+/* Lead Capture Modal Country Select Mobile Responsiveness */
+.winera-lead-modal-card {
+  box-sizing: border-box !important;
+}
+
+.winera-country-dropdown-popup::-webkit-scrollbar {
+  width: 5px;
+}
+.winera-country-dropdown-popup::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 8px;
+}
+.winera-country-dropdown-popup::-webkit-scrollbar-thumb {
+  background: #38bdf8;
+  border-radius: 8px;
+}
+
+@media (max-width: 576px) {
+  .winera-lead-modal-card {
+    padding: 24px 16px !important;
+    border-radius: 20px !important;
+    max-width: 94vw !important;
+  }
+
+  .winera-country-select-container {
+    width: 100px !important;
+  }
+
+  .winera-country-trigger-btn {
+    padding: 12px 6px !important;
+    font-size: 13px !important;
+  }
+
+  .winera-country-dropdown-popup {
+    width: 230px !important;
+    max-height: 185px !important;
+  }
+}
+
 /* ==========================================================================
    ROI PAGE RESPONSIVE STYLES
    ========================================================================== */
