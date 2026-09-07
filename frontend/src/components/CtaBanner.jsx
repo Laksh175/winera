@@ -149,7 +149,7 @@ export default function CtaBanner({
           )}
 
           {/* Center / Main Content Box */}
-          <div style={{
+          <div className="winera-cta-content-box" style={{
             position: 'relative',
             zIndex: 10,
             display: 'flex',
@@ -161,7 +161,7 @@ export default function CtaBanner({
             maxWidth: isCentered ? '820px' : '650px'
           }}>
             {tagline && (
-              <div style={{
+              <div className="winera-cta-tagline" style={{
                 fontSize: '1.75rem',
                 fontWeight: '900',
                 letterSpacing: '0.5px',
@@ -185,7 +185,7 @@ export default function CtaBanner({
             )}
 
             {title && (
-              <h2 style={{
+              <h2 className="winera-cta-title" style={{
                 fontSize: titleFontSize || (isCentered ? (hasSideImages ? '1.95rem' : '2.3rem') : '2.4rem'),
                 fontWeight: titleFontWeight || '900',
                 lineHeight: 1.25,
@@ -212,7 +212,7 @@ export default function CtaBanner({
             )}
 
             {subtitle && (
-              <div style={{
+              <div className="winera-cta-subtitle" style={{
                 fontSize: subtitleFontSize || 'clamp(1.2rem, 2.2vw, 1.6rem)',
                 fontWeight: subtitleFontWeight || '800',
                 color: '#ffffff',
@@ -231,7 +231,7 @@ export default function CtaBanner({
             )}
 
             {description && (
-              <p style={{
+              <p className="winera-cta-description" style={{
                 fontSize: descriptionFontSize || '13px',
                 fontWeight: '500',
                 color: '#e2e8f0',

@@ -698,29 +698,61 @@ html {
     gap: 24px !important;
   }
 
-  /* Remove bg image for CTA banner on mobile and use sleek dark gradient */
+  /* Responsive CTA Banner Rules across all pages (Preserves background image, text, theme, colors) */
   .winera-cta-banner-container {
-    background: linear-gradient(135deg, #09132b 0%, #0056b3 50%, #00a8ff 100%) !important;
     aspect-ratio: auto !important;
     min-height: auto !important;
-    padding: 36px 22px !important;
+    padding: 44px 24px !important;
     text-align: center !important;
-    box-shadow: 0 16px 40px rgba(0, 86, 179, 0.3) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25) !important;
+    border-radius: 20px !important;
+    background-size: cover !important;
+    background-position: center center !important;
   }
 
-  .winera-cta-banner-container>div {
+  .winera-cta-content-box,
+  .winera-cta-banner-container > div {
     align-items: center !important;
     text-align: center !important;
     max-width: 100% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
   }
 
+  .winera-cta-tagline {
+    font-size: clamp(1.1rem, 4vw, 1.45rem) !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    margin-bottom: 8px !important;
+  }
+
+  .winera-cta-title,
   .winera-cta-banner-container h2 {
-    font-size: 1.7rem !important;
+    font-size: clamp(1.35rem, 4.8vw, 1.85rem) !important;
+    line-height: 1.25 !important;
     text-align: center !important;
+    margin-bottom: 12px !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
   }
 
-  .winera-cta-banner-container p {
+  .winera-cta-subtitle {
+    font-size: clamp(1.05rem, 3.8vw, 1.35rem) !important;
+    line-height: 1.35 !important;
     text-align: center !important;
+    margin-bottom: 18px !important;
+  }
+
+  .winera-cta-description,
+  .winera-cta-banner-container p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+  }
+
+  .winera-cta-side-img {
+    display: none !important;
   }
 
   /* Ready To Get Started Home CTA Section Mobile Responsive */
@@ -1504,14 +1536,17 @@ html {
 
 
   .winera-vr-earn-section {
-    padding: 50px 5vw 55px !important;
+    padding: 40px 4vw 50px !important;
     text-align: center !important;
     background: #F5F5F9 !important;
   }
 
+  .winera-vr-earn-card,
   .winera-vr-earn-grid {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
+    min-height: auto !important;
+    height: auto !important;
   }
 
   .winera-vr-earn-text {
@@ -1519,6 +1554,7 @@ html {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    padding: 24px 16px !important;
   }
 
   .winera-vr-earn-text img {
@@ -1526,8 +1562,9 @@ html {
   }
 
   .winera-vr-earn-text h2 {
-    font-size: 1.9rem !important;
+    font-size: clamp(1.4rem, 5vw, 1.9rem) !important;
     text-align: center !important;
+    line-height: 1.25 !important;
   }
 
   .winera-vr-earn-text p {
@@ -1540,9 +1577,34 @@ html {
     margin: 0 auto !important;
   }
 
-  /* Hide decorative gamer image in earn section on mobile */
-  .winera-vr-earn-grid>div:last-child {
-    display: none !important;
+  .winera-vr-earn-img-container {
+    min-height: auto !important;
+    height: auto !important;
+    max-height: 320px !important;
+    width: 100% !important;
+    max-width: 420px !important;
+    margin: 16px auto 0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .winera-vr-earn-img-container img:first-child {
+    width: 100% !important;
+    height: 280px !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    padding-left: 0 !important;
+    border-radius: 20px !important;
+  }
+
+  .winera-vr-earn-img-container img:last-child {
+    height: 100% !important;
+    width: auto !important;
+    left: 0 !important;
+    top: 0 !important;
   }
 
   .winera-vr-whyus-section {
@@ -3914,6 +3976,11 @@ textarea::placeholder,
     line-height: 1.25 !important;
     text-align: center !important;
   }
+
+  .winera-hypergrid-whywinera-row {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -4494,6 +4561,80 @@ textarea::placeholder,
 img[src*="yellow-stroke-line"] {
   max-width: 100% !important;
   height: auto !important;
+}
+
+/* Home Page & Global Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  html, body, #root, main, #main-content {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+
+  .winera-section-heading-container {
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-section-heading-container h2 {
+    font-size: clamp(1.4rem, 5.5vw, 2.1rem) !important;
+    line-height: 1.22 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .winera-partner-section {
+    padding: 40px 16px 50px !important;
+    overflow: hidden !important;
+  }
+
+  .winera-partner-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-partner-box-wrapper-yellow::before,
+  .winera-partner-box-wrapper-cyan::before {
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .winera-partner-box-wrapper-yellow,
+  .winera-partner-box-wrapper-cyan {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-partner-box-yellow,
+  .winera-partner-box-cyan {
+    padding: 18px 16px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .winera-partner-grid p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Prevent #industries section from pulling over and hiding partner card buttons on mobile */
+  #industries,
+  section[id="industries"] {
+    margin-top: 0 !important;
+    padding-top: 40px !important;
+  }
+
+  .winera-partner-box-yellow > div,
+  .winera-partner-box-cyan > div {
+    margin-top: 14px !important;
+  }
 }
 
 /* ==========================================================================

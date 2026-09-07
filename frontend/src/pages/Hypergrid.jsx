@@ -627,7 +627,7 @@ export default function Hypergrid({ siteData }) {
                         }}
                       >
                         {/* Vertical Gradient Divider Line on Right of Top Row Item */}
-                        <div style={{
+                        <div className="winera-hypergrid-whyus-vertical-divider" style={{
                           position: 'absolute',
                           right: '9px',
                           top: 0,
@@ -666,7 +666,7 @@ export default function Hypergrid({ siteData }) {
                   </div>
 
                   {/* HORIZONTAL CENTER DIVIDER LINE */}
-                  <div style={{
+                  <div className="winera-hypergrid-whyus-horizontal-divider" style={{
                     width: '100%',
                     height: '1.5px',
                     background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.1) 0%, #38bdf8 8%, #38bdf8 92%, rgba(56, 189, 248, 0.1) 100%)',
@@ -698,7 +698,7 @@ export default function Hypergrid({ siteData }) {
                         >
                         {/* Vertical Gradient Divider Line on Right of Bottom Row Item (2 lines only) */}
                         {bIdx < bottomCards.length - 1 && (
-                          <div style={{
+                          <div className="winera-hypergrid-whyus-vertical-divider" style={{
                             position: 'absolute',
                             right: '-10px',
                             top: 0,
