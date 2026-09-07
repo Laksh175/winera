@@ -23,7 +23,7 @@ export default function TermsAndConditions({ siteData }) {
     metaTag.setAttribute('content', termsSeo.metaDescription || termsSeo.description || "Read Winera International's Terms & Conditions outlining guidelines, responsibilities, project process, warranty, and legal agreements.");
   }, [termsSeo]);
 
-  const sections = [
+  const defaultSections = [
     {
       number: "1",
       title: "About Winera International Pvt. Ltd.",
@@ -198,6 +198,8 @@ export default function TermsAndConditions({ siteData }) {
       ]
     }
   ];
+
+  const sections = (siteData?.termsSections && siteData.termsSections.length > 0) ? siteData.termsSections : defaultSections;
 
   return (
     <div style={{ background: '#F5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Inter', 'Montserrat', sans-serif" }}>

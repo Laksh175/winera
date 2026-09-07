@@ -327,7 +327,7 @@ export default function Roi({ siteData }) {
             }}
           >
             <img
-              src={getValidImageUrl(roiIntro.image, roiImg1)}
+              src={getValidImageUrl(roiIntro.image || roiIntro.imgUrl, roiImg1)}
               alt="ROI Investment Growth"
               style={{
                 width: '100%',

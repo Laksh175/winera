@@ -684,6 +684,325 @@ const defaultSafetySeo = {
   metaDescription: "Winera International equipment safety standards, international certifications, commercial-grade materials, and on-site inspection protocols for game zones in India."
 };
 
+const defaultPrivacySections = [
+  {
+    number: "1",
+    title: "Introduction",
+    content: [
+      "Winera International Pvt. Ltd. ('Winera', 'Company', 'we', 'our', or 'us') is committed to protecting your personal and business information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website www.winera.in, interact with us online, or use our services. By using our website, you consent to the practices described in this policy."
+    ]
+  },
+  {
+    number: "2",
+    title: "Information We Collect",
+    subtitle: "We collect the following types of information:",
+    bullets: [
+      { label: "Personal Information", text: "Your name, email address, phone number, business name, designation, and other contact details." },
+      { label: "Business Information", text: "Project details, site drawings, requirements, order history." },
+      { label: "Technical Data", text: "IP address, browser type, device information, operating system, referring URLs, date/time stamps." },
+      { label: "Cookies and Usage Data", text: "We use cookies to collect anonymous usage statistics and user behavior data." }
+    ]
+  },
+  {
+    number: "3",
+    title: "How We Use Your Information",
+    subtitle: "We use your information for purposes including:",
+    bulletsText: [
+      "Responding to inquiries and sending quotes",
+      "Processing and managing your orders",
+      "Delivering customer service and support",
+      "Improving our website and services",
+      "Sending transactional and promotional communications (with your consent)",
+      "Legal compliance and dispute resolution"
+    ]
+  },
+  {
+    number: "4",
+    title: "Legal Basis for Processing",
+    subtitle: "We process your data based on:",
+    bulletsText: [
+      "Your consent",
+      "The necessity to perform a contract",
+      "Our legal obligations",
+      "Legitimate business interests"
+    ]
+  },
+  {
+    number: "5",
+    title: "Sharing and Disclosure of Information",
+    subtitle: "We do not sell your data. We may share information with:",
+    bulletsText: [
+      "Internal teams for project fulfillment",
+      "Logistics providers for delivery",
+      "IT and analytics partners (e.g., Google Analytics)",
+      "Legal or regulatory authorities when required"
+    ]
+  },
+  {
+    number: "6",
+    title: "Data Retention",
+    content: [
+      "We retain your personal and business data only for as long as necessary to fulfill the purposes outlined in this policy. This includes compliance with legal obligations, resolving disputes, and enforcing agreements."
+    ]
+  },
+  {
+    number: "7",
+    title: "Your Data Rights",
+    subtitle: "You have the right to:",
+    bulletsText: [
+      "Access and review your data",
+      "Correct or update inaccurate information",
+      "Withdraw consent at any time",
+      "Request data deletion, subject to legal limits",
+      "Object to processing or request data portability"
+    ]
+  },
+  {
+    number: "8",
+    title: "Security of Your Data",
+    content: [
+      "We implement appropriate technical and organizational measures to safeguard your data. This includes secure servers, firewalls, encryption, and access controls. While we strive for security, no method is fully secure."
+    ]
+  },
+  {
+    number: "9",
+    title: "Cookies and Tracking",
+    content: [
+      "We use cookies to understand user behavior and improve site performance. You can manage your cookie preferences in your browser settings. Blocking cookies may impact your experience."
+    ]
+  },
+  {
+    number: "10",
+    title: "Third-Party Links",
+    content: [
+      "Our website may contain links to other websites. We are not responsible for their privacy practices or content. Please review their policies before interacting with them."
+    ]
+  },
+  {
+    number: "11",
+    title: "Children’s Privacy",
+    content: [
+      "Our services are intended for individuals 18 years and older. We do not knowingly collect data from children. If you believe we have inadvertently collected such data, contact us for deletion."
+    ]
+  },
+  {
+    number: "12",
+    title: "International Data Transfers",
+    content: [
+      "If you are accessing our website from outside India, you consent to the transfer and processing of your data in accordance with Indian law."
+    ]
+  },
+  {
+    number: "13",
+    title: "Changes to This Policy",
+    content: [
+      "We may update this Privacy Policy from time to time. The latest version will be posted on this page. Continued use of our website means you accept the updated terms."
+    ]
+  },
+  {
+    number: "14",
+    title: "Contact Information",
+    subtitle: "For any questions or concerns, contact us at:",
+    content: [
+      "Winera International Pvt. Ltd.",
+      "1011, 10th floor, Millennium Business Hub, opp. Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat-395006, India"
+    ],
+    bulletsText: [
+      "Email: info@winera.in",
+      "Phone: +91 94289 89488 / +91 95123 56766"
+    ]
+  }
+];
+
+const defaultTermsSections = [
+  {
+    number: "1",
+    title: "About Winera International Pvt. Ltd.",
+    intro: "Winera International Pvt. Ltd., incorporated under the Companies Act, 1956, with registered office at 1011, 10th floor, Millennium Business Hub, opp., Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat 395006, India, is a leading B2B turnkey entertainment solutions provider. Our services include:",
+    bulletsText: [
+      "Indoor soft play zones",
+      "Trampoline parks and ninja courses",
+      "Arcade and video game machine installations",
+      "VR/AR entertainment zones",
+      "Bowling alleys, bumper cars, laser tag setups",
+      "Customized commercial play and recreation areas"
+    ]
+  },
+  {
+    number: "2",
+    title: "Scope of Agreement",
+    content: [
+      "These Terms apply to all interactions, transactions, proposals, quotations, and contracts made through the Site or directly with the Company. These Terms do not override signed project-specific contracts; however, in case of conflict, the mutually signed agreement shall take precedence."
+    ]
+  },
+  {
+    number: "3",
+    title: "Use of the Website",
+    bulletsText: [
+      "You agree to access this Site lawfully and only for legitimate business purposes.",
+      "Unauthorized use of this Site may give rise to claims for damages and/or be a criminal offense.",
+      "You may not attempt to gain unauthorized access to our systems or data, use this Site to copy, store, transmit, or distribute malicious software, or scrape, crawl, or collect user data without permission."
+    ]
+  },
+  {
+    number: "4",
+    title: "Quotations, Proposals & Pricing",
+    bulletsText: [
+      "All quotations are non-binding until confirmed through a signed purchase/work order.",
+      "Quotes are valid for 30 days unless otherwise stated in writing.",
+      "All pricing is in Indian Rupees (INR) and exclusive of applicable taxes, duties, and levies.",
+      "Price revisions may occur due to changes in raw material costs, design alterations, or import duties."
+    ]
+  },
+  {
+    number: "5",
+    title: "Project Process & Order Confirmation",
+    intro: "Projects commence only after receiving signed approval on quotation/design/BOQ and advance payment as per agreed terms.",
+    bulletsText: [
+      "The project is broken into phases: Design → Production → Dispatch → Installation → Handover.",
+      "Project-specific responsibilities (like flooring, lighting, or electrical setup) must be completed by the client before installation begins."
+    ]
+  },
+  {
+    number: "6",
+    title: "Payment Terms",
+    intro: "Unless otherwise specified, standard payment milestones are:",
+    bulletsText: [
+      "50% of the total project value is payable in advance.",
+      "40% before shipment or dispatch from factory.",
+      "10% upon final handover and acceptance.",
+      "No shipment or site work will begin without receipt of due payments.",
+      "Delay in payment will lead to additional storage, demurrage, or interest charges (typically 1.5% per month).",
+      "Payments must be made to official bank accounts listed on company invoices."
+    ]
+  },
+  {
+    number: "7",
+    title: "Delivery & Logistics",
+    bulletsText: [
+      "Delivery timelines are indicative and commence only after design approval and advance receipt.",
+      "Unexpected delays (strikes, customs clearance, shipping issues, etc.) will be communicated but shall not be grounds for penalty unless otherwise agreed.",
+      "Risk of goods passes to the client upon dispatch from our warehouse.",
+      "Insurance, if required, must be arranged by the client or requested in writing."
+    ]
+  },
+  {
+    number: "8",
+    title: "Installation & Site Readiness",
+    intro: "Winera provides installation services as part of turnkey projects.",
+    bulletsText: [
+      "Client responsibilities: Ensure access to the site during business hours, provide civil-ready conditions (flooring, walls, electric points, etc.), and provide accommodation or local logistics for installation crew in remote locations (as per mutual agreement).",
+      "Any re-visits or delays due to client-side unpreparedness will be chargeable."
+    ]
+  },
+  {
+    number: "9",
+    title: "Warranty & Maintenance",
+    intro: "A standard 12-month manufacturer’s warranty is provided from date of installation.",
+    bullets: [
+      { label: "Coverage includes", text: "Structural integrity, weld failures, and manufacturing defects in supplied components." },
+      { label: "Exclusions include", text: "Misuse, vandalism, natural disasters, water/fire/electrical damage, third-party installations or repairs, and consumables / wear-and-tear parts (nets, ropes, foam padding, etc.)." },
+      { label: "AMC", text: "Post-warranty AMC (Annual Maintenance Contract) is available for a fee." }
+    ]
+  },
+  {
+    number: "10",
+    title: "Design, Drawing & Intellectual Property",
+    bulletsText: [
+      "All designs, layouts, 3D renders, and proposals remain the intellectual property of Winera unless transferred by written agreement.",
+      "No reuse, reproduction, or sharing is permitted without our written consent.",
+      "Breach of this clause may result in legal action and claims for damages."
+    ]
+  },
+  {
+    number: "11",
+    title: "Modifications & Customization",
+    bulletsText: [
+      "Clients may request minor customizations post-design approval; these will be accommodated if feasible.",
+      "Major changes post-approval may involve additional cost and timeline revisions.",
+      "Requests must be made in writing and approved by both parties."
+    ]
+  },
+  {
+    number: "12",
+    title: "Cancellation & Refund Policy",
+    bulletsText: [
+      "Cancellation before production begins will attract a minimum 10% administrative fee.",
+      "Once manufacturing or procurement has commenced, no refund will be issued.",
+      "Refunds (where applicable) will be processed within 30 working days after due verification."
+    ]
+  },
+  {
+    number: "13",
+    title: "Limitation of Liability",
+    intro: "Winera shall not be liable for indirect or consequential losses, loss of business, revenue, or reputation, or delays due to force majeure or third-party vendors.",
+    content: [
+      "Maximum liability is capped at the total value of the product/service provided in the dispute."
+    ]
+  },
+  {
+    number: "14",
+    title: "Subcontractors & Third Parties",
+    content: [
+      "We may use subcontractors or third-party service providers for part of the project (e.g., transport, electrical work). While we take care in selection, Winera is not liable for direct performance of subcontractors unless contractually stated."
+    ]
+  },
+  {
+    number: "15",
+    title: "Confidentiality & Data Protection",
+    bulletsText: [
+      "All discussions, documents, drawings, client lists, and pricing details shared between Winera and the client are confidential.",
+      "Each party agrees to use such data only for the intended project and not disclose to third parties without consent.",
+      "Winera maintains strict cybersecurity and GDPR-compliant (where applicable) data handling protocols."
+    ]
+  },
+  {
+    number: "16",
+    title: "Force Majeure",
+    content: [
+      "Winera shall not be liable for failure or delay in performance due to causes beyond its reasonable control, including but not limited to acts of God, war, fire, pandemics, strikes, shipping delays, embargoes, or government orders."
+    ]
+  },
+  {
+    number: "17",
+    title: "Termination",
+    subtitle: "Winera reserves the right to terminate any contract if:",
+    bulletsText: [
+      "The client breaches material terms of the agreement.",
+      "Payments are withheld or delayed beyond agreed terms.",
+      "The client is found engaging in fraudulent, unethical, or harmful business practices."
+    ]
+  },
+  {
+    number: "18",
+    title: "Governing Law & Jurisdiction",
+    bulletsText: [
+      "These Terms shall be governed by and construed in accordance with the laws of the Republic of India.",
+      "Any disputes or legal claims shall be subject to the exclusive jurisdiction of the courts in Surat, Gujarat."
+    ]
+  },
+  {
+    number: "19",
+    title: "Revisions and Updates",
+    content: [
+      "These Terms may be updated periodically to reflect changes in law or business operations. Continued use of the Site or Services after updates will constitute acceptance of the revised Terms."
+    ]
+  },
+  {
+    number: "20",
+    title: "Contact Us",
+    content: [
+      "Winera International Pvt. Ltd.",
+      "📍 1011, 10th floor, Millennium Business Hub, opp., Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat-395006, India"
+    ],
+    bulletsText: [
+      "Email: info@winera.in",
+      "Phone: +91 94289 89488 / +91 95123 56766",
+      "Website: www.winera.in"
+    ]
+  }
+];
+
 const defaultHeaderNavLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/why-us' },
@@ -1169,8 +1488,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       sections: [
         { id: 'arHero', name: 'AR Games Hero Banner' },
         { id: 'arIntro', name: 'AR Games Supplier in India' },
-        { id: 'arCategoriesData', name: 'Categories & Games Catalog' },
         { id: 'arMatchedVenue', name: 'Interactive AR Attractions' },
+        { id: 'arCategoriesData', name: 'Categories & Games Catalog' },
         { id: 'arFeatures', name: 'AR Features & Highlights' },
         { id: 'arEarn', name: 'Know Your Returns Section' },
         { id: 'arWhyUs', name: 'Why Choose Winera Section' },
@@ -1264,6 +1583,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       label: 'Privacy Policy Page',
       icon: <FileText style={{ width: '18px', height: '18px' }} />,
       sections: [
+        { id: 'privacySections', name: 'Privacy Policy Sections & Content' },
         { id: 'privacySeo', name: 'SEO Meta Title & Description' }
       ]
     },
@@ -1271,6 +1591,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       label: 'Terms & Conditions Page',
       icon: <FileText style={{ width: '18px', height: '18px' }} />,
       sections: [
+        { id: 'termsSections', name: 'Terms & Conditions Sections & Content' },
         { id: 'termsSeo', name: 'SEO Meta Title & Description' }
       ]
     },
@@ -10068,6 +10389,76 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
+              {/* Center Comparison Labels Manager */}
+              <div style={{ background: '#ECFDF5', padding: '16px', borderRadius: '16px', border: '1px solid #a7f3d0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#047857' }}>Center Comparison Labels (Middle Column)</h4>
+                  <button
+                    onClick={() => {
+                      const cur = formData.bumpercarComparison?.features || [
+                        "Installation",
+                        "Power management",
+                        "Best for",
+                        "Relocation",
+                        "Setup cost",
+                        "Operating cost"
+                      ];
+                      handleFieldChange('bumpercarComparison', 'features', [...cur, '']);
+                    }}
+                    style={{ background: '#10b981', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                  >
+                    + Add Label
+                  </button>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {(formData.bumpercarComparison?.features || [
+                    "Installation",
+                    "Power management",
+                    "Best for",
+                    "Relocation",
+                    "Setup cost",
+                    "Operating cost"
+                  ]).map((itemText, idx) => (
+                    <div key={idx} style={{ display: 'flex', gap: '8px' }}>
+                      <input
+                        type="text"
+                        value={itemText}
+                        onChange={(e) => {
+                          const list = [...(formData.bumpercarComparison?.features || [
+                            "Installation",
+                            "Power management",
+                            "Best for",
+                            "Relocation",
+                            "Setup cost",
+                            "Operating cost"
+                          ])];
+                          list[idx] = e.target.value;
+                          handleFieldChange('bumpercarComparison', 'features', list);
+                        }}
+                        style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                      />
+                      <button
+                        onClick={() => {
+                          const list = [...(formData.bumpercarComparison?.features || [
+                            "Installation",
+                            "Power management",
+                            "Best for",
+                            "Relocation",
+                            "Setup cost",
+                            "Operating cost"
+                          ])];
+                          list.splice(idx, 1);
+                          handleFieldChange('bumpercarComparison', 'features', list);
+                        }}
+                        style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', borderRadius: '8px', cursor: 'pointer' }}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* Electric Points Manager */}
               <div style={{ background: '#FEFCE8', padding: '16px', borderRadius: '16px', border: '1px solid #fef08a' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
@@ -12124,26 +12515,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
-                  <input
-                    type="text"
-                    value={formData.arEarn?.buttonText || 'Talk to an ROI Expert'}
-                    onChange={(e) => handleFieldChange('arEarn', 'buttonText', e.target.value)}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
-                  <input
-                    type="text"
-                    value={formData.arEarn?.buttonLink || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('arEarn', 'buttonLink', e.target.value)}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
-                </div>
-              </div>
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
@@ -13962,15 +14333,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Text</label>
-                <textarea
-                  rows={2}
-                  value={formData.vrCta?.description !== undefined ? formData.vrCta.description : "Partner with India's trusted VR gaming machine supplier for a complete VR zone setup across India."}
-                  onChange={(e) => handleFieldChange('vrCta', 'description', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
-                />
-              </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
@@ -18161,36 +18523,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title Part 1 (Cyan)</label>
-                      <input
-                        type="text"
-                        value={currentSec.title1 !== undefined ? currentSec.title1 : defaultSafetyWhyMatters.title1}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), title1: e.target.value } }))}
-                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title Part 2 (Dark)</label>
-                      <input
-                        type="text"
-                        value={currentSec.title2 !== undefined ? currentSec.title2 : defaultSafetyWhyMatters.title2}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), title2: e.target.value } }))}
-                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph Description</label>
-                    <textarea
-                      rows={4}
-                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyWhyMatters.subtitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), subtitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                    />
-                  </div>
 
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Title (Gradient Shaded Text)</label>
@@ -19405,18 +19737,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                      Main Right Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                      Main Right Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                     </label>
-                    <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                       <input
                         type="text"
-                        value={currentSec.image !== undefined ? currentSec.image : defaultRoiIntro.image}
-                        onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), image: e.target.value } }))}
+                        value={currentSec.image !== undefined ? currentSec.image : (currentSec.imgUrl !== undefined ? currentSec.imgUrl : defaultRoiIntro.image)}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), image: e.target.value, imgUrl: e.target.value } }))}
                         style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
-                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
                         <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
-                        Upload
+                        Upload Image
                         <input
                           type="file"
                           accept="image/*"
@@ -19424,11 +19756,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           onChange={async (e) => {
                             if (e.target.files?.[0]) {
                               const res = await uploadImageFile(e.target.files[0], admin.token);
-                              setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), image: res.url } }));
+                              setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), image: res.url, imgUrl: res.url } }));
                             }
                           }}
                         />
                       </label>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.image || currentSec.imgUrl, roiImg1)}
+                        alt="ROI Intro Graphic Preview"
+                        style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'contain', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '4px' }}
+                      />
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -20432,6 +20769,292 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             );
           })()}
 
+          {/* PRIVACY POLICY SECTIONS EDITOR */}
+          {activeSection === 'privacySections' && (() => {
+            const sectionsList = formData.privacySections || defaultPrivacySections;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                  <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Privacy Policy Content & Sections</h3>
+                    <p style={{ fontSize: '13px', color: '#64748b', margin: '4px 0 0', fontWeight: '500' }}>
+                      Edit all Privacy Policy sections, titles, paragraphs, and bullet points displayed on the website.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newSec = {
+                        number: String(sectionsList.length + 1),
+                        title: "New Policy Section",
+                        content: ["Enter section content here..."]
+                      };
+                      const updated = [...sectionsList, newSec];
+                      setFormData(prev => ({ ...prev, privacySections: updated }));
+                    }}
+                    style={{ background: '#0284c7', color: '#ffffff', border: 'none', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                  >
+                    + Add New Section
+                  </button>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {sectionsList.map((sec, idx) => (
+                    <div key={idx} style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                        <span style={{ fontSize: '13px', fontWeight: '800', color: '#0284c7', background: '#e0f2fe', padding: '4px 10px', borderRadius: '8px' }}>
+                          Section #{sec.number || idx + 1}
+                        </span>
+                        <button
+                          onClick={() => {
+                            const updated = sectionsList.filter((_, i) => i !== idx);
+                            setFormData(prev => ({ ...prev, privacySections: updated }));
+                          }}
+                          style={{ background: '#fef2f2', color: '#ef4444', border: '1px solid #fca5a5', padding: '4px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '14px', marginBottom: '14px' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Number</label>
+                          <input
+                            type="text"
+                            value={sec.number || ''}
+                            onChange={(e) => {
+                              const updated = [...sectionsList];
+                              updated[idx] = { ...updated[idx], number: e.target.value };
+                              setFormData(prev => ({ ...prev, privacySections: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section Title</label>
+                          <input
+                            type="text"
+                            value={sec.title || ''}
+                            onChange={(e) => {
+                              const updated = [...sectionsList];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              setFormData(prev => ({ ...prev, privacySections: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                      </div>
+
+                      <div style={{ marginBottom: '14px' }}>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Subtitle / Intro (Optional)</label>
+                        <input
+                          type="text"
+                          value={sec.subtitle || sec.intro || ''}
+                          onChange={(e) => {
+                            const updated = [...sectionsList];
+                            updated[idx] = { ...updated[idx], subtitle: e.target.value, intro: e.target.value };
+                            setFormData(prev => ({ ...prev, privacySections: updated }));
+                          }}
+                          placeholder="e.g. We collect the following types of information:"
+                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                        />
+                      </div>
+
+                      <div style={{ marginBottom: '14px' }}>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Paragraph Content (Paragraphs separated by line breaks)</label>
+                        <textarea
+                          rows={3}
+                          value={Array.isArray(sec.content) ? sec.content.join('\n\n') : (sec.content || '')}
+                          onChange={(e) => {
+                            const updated = [...sectionsList];
+                            const textVal = e.target.value;
+                            updated[idx] = { ...updated[idx], content: textVal.split('\n\n').filter(Boolean) };
+                            setFormData(prev => ({ ...prev, privacySections: updated }));
+                          }}
+                          placeholder="Section main paragraph content..."
+                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Bullet Points (1 point per line)</label>
+                        <textarea
+                          rows={3}
+                          value={
+                            sec.bulletsText
+                              ? sec.bulletsText.join('\n')
+                              : sec.bullets
+                              ? sec.bullets.map(b => `${b.label ? b.label + ': ' : ''}${b.text}`).join('\n')
+                              : ''
+                          }
+                          onChange={(e) => {
+                            const updated = [...sectionsList];
+                            const lines = e.target.value.split('\n').filter(l => l.trim().length > 0);
+                            updated[idx] = { ...updated[idx], bulletsText: lines, bullets: undefined };
+                            setFormData(prev => ({ ...prev, privacySections: updated }));
+                          }}
+                          placeholder="Enter each bullet point on a new line..."
+                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('privacySections', formData.privacySections || defaultPrivacySections)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Privacy Policy Content
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TERMS & CONDITIONS SECTIONS EDITOR */}
+          {activeSection === 'termsSections' && (() => {
+            const sectionsList = formData.termsSections || defaultTermsSections;
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                  <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Terms & Conditions Content & Sections</h3>
+                    <p style={{ fontSize: '13px', color: '#64748b', margin: '4px 0 0', fontWeight: '500' }}>
+                      Edit all Terms & Conditions sections, titles, paragraphs, and bullet points displayed on the website.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newSec = {
+                        number: String(sectionsList.length + 1),
+                        title: "New Terms Section",
+                        content: ["Enter section content here..."]
+                      };
+                      const updated = [...sectionsList, newSec];
+                      setFormData(prev => ({ ...prev, termsSections: updated }));
+                    }}
+                    style={{ background: '#0284c7', color: '#ffffff', border: 'none', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                  >
+                    + Add New Section
+                  </button>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {sectionsList.map((sec, idx) => (
+                    <div key={idx} style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                        <span style={{ fontSize: '13px', fontWeight: '800', color: '#0284c7', background: '#e0f2fe', padding: '4px 10px', borderRadius: '8px' }}>
+                          Section #{sec.number || idx + 1}
+                        </span>
+                        <button
+                          onClick={() => {
+                            const updated = sectionsList.filter((_, i) => i !== idx);
+                            setFormData(prev => ({ ...prev, termsSections: updated }));
+                          }}
+                          style={{ background: '#fef2f2', color: '#ef4444', border: '1px solid #fca5a5', padding: '4px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '14px', marginBottom: '14px' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Number</label>
+                          <input
+                            type="text"
+                            value={sec.number || ''}
+                            onChange={(e) => {
+                              const updated = [...sectionsList];
+                              updated[idx] = { ...updated[idx], number: e.target.value };
+                              setFormData(prev => ({ ...prev, termsSections: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section Title</label>
+                          <input
+                            type="text"
+                            value={sec.title || ''}
+                            onChange={(e) => {
+                              const updated = [...sectionsList];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              setFormData(prev => ({ ...prev, termsSections: updated }));
+                            }}
+                            style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                        </div>
+                      </div>
+
+                      <div style={{ marginBottom: '14px' }}>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Subtitle / Intro (Optional)</label>
+                        <input
+                          type="text"
+                          value={sec.subtitle || sec.intro || ''}
+                          onChange={(e) => {
+                            const updated = [...sectionsList];
+                            updated[idx] = { ...updated[idx], subtitle: e.target.value, intro: e.target.value };
+                            setFormData(prev => ({ ...prev, termsSections: updated }));
+                          }}
+                          placeholder="e.g. Standard payment milestones are:"
+                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                        />
+                      </div>
+
+                      <div style={{ marginBottom: '14px' }}>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Paragraph Content (Paragraphs separated by line breaks)</label>
+                        <textarea
+                          rows={3}
+                          value={Array.isArray(sec.content) ? sec.content.join('\n\n') : (sec.content || '')}
+                          onChange={(e) => {
+                            const updated = [...sectionsList];
+                            const textVal = e.target.value;
+                            updated[idx] = { ...updated[idx], content: textVal.split('\n\n').filter(Boolean) };
+                            setFormData(prev => ({ ...prev, termsSections: updated }));
+                          }}
+                          placeholder="Section main paragraph content..."
+                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Bullet Points (1 point per line)</label>
+                        <textarea
+                          rows={3}
+                          value={
+                            sec.bulletsText
+                              ? sec.bulletsText.join('\n')
+                              : sec.bullets
+                              ? sec.bullets.map(b => `${b.label ? b.label + ': ' : ''}${b.text}`).join('\n')
+                              : ''
+                          }
+                          onChange={(e) => {
+                            const updated = [...sectionsList];
+                            const lines = e.target.value.split('\n').filter(l => l.trim().length > 0);
+                            updated[idx] = { ...updated[idx], bulletsText: lines, bullets: undefined };
+                            setFormData(prev => ({ ...prev, termsSections: updated }));
+                          }}
+                          placeholder="Enter each bullet point on a new line..."
+                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('termsSections', formData.termsSections || defaultTermsSections)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Terms & Conditions Content
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
           {activeSection === 'blogHero' && (() => {
             const currentSec = formData.blogHero || defaultBlogHero;
             return (
@@ -20593,9 +21216,117 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         {/* Expanded Full Editor Form */}
                         {isEditing && (
                           <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                            <div style={{ fontSize: '13px', fontWeight: '900', color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                              📝 Edit Blog Details, Front Photo & Article Text
-                            </div>
+                             {/* Key Takeaway Highlight Text */}
+                             <div>
+                               <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0ea5e9', marginBottom: '6px' }}>💡 Key Takeaway Highlight Text</label>
+                               <textarea
+                                 rows={3}
+                                 value={post.takeawayText || 'Soft play delivers higher throughput per square meter for toddlers and kids aged 2–8, while Trampoline Parks attract older kids, teens, and young adults with higher per-ticket pricing.'}
+                                 placeholder="Soft play delivers higher throughput for toddlers while Trampoline Parks attract teens..."
+                                 onChange={(e) => {
+                                   const updated = [...postsList];
+                                   updated[idx] = { ...updated[idx], takeawayText: e.target.value };
+                                   setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                 }}
+                                 style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #38bdf8', fontSize: '13.5px', background: '#f0f9ff', lineHeight: 1.6 }}
+                               />
+                             </div>
+
+                             {/* Section 1 & Section 2 & Section 3 Headings & Text */}
+                             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                               <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px', alignItems: 'start' }}>
+                                 <div>
+                                   <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 1 Heading</label>
+                                   <input
+                                     type="text"
+                                     value={post.section1Title || 'Space Requirements & Architectural Layout'}
+                                     placeholder="Space Requirements & Layout"
+                                     onChange={(e) => {
+                                       const updated = [...postsList];
+                                       updated[idx] = { ...updated[idx], section1Title: e.target.value };
+                                       setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                     }}
+                                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                   />
+                                 </div>
+                                 <div>
+                                   <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 1 Content Text</label>
+                                   <textarea
+                                     rows={4}
+                                     value={post.section1Text || 'Soft Play zones typically require a minimum ceiling height of 3.5 to 4.5 meters for multi-level tubular structures, whereas Trampoline Parks demand clear ceiling heights of 5.5 to 6.5 meters to accommodate high jumps, foam pits, and airbag stunt zones safely.'}
+                                     placeholder="Enter details about space requirements..."
+                                     onChange={(e) => {
+                                       const updated = [...postsList];
+                                       updated[idx] = { ...updated[idx], section1Text: e.target.value };
+                                       setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                     }}
+                                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                                   />
+                                 </div>
+                               </div>
+
+                               <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px', alignItems: 'start' }}>
+                                 <div>
+                                   <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 2 Heading</label>
+                                   <input
+                                     type="text"
+                                     value={post.section2Title || '2. Safety Standards & Commercial Durability'}
+                                     placeholder="Safety Standards & Certification"
+                                     onChange={(e) => {
+                                       const updated = [...postsList];
+                                       updated[idx] = { ...updated[idx], section2Title: e.target.value };
+                                       setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                     }}
+                                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                   />
+                                 </div>
+                                 <div>
+                                   <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 2 Content Text</label>
+                                   <textarea
+                                     rows={4}
+                                     value={post.section2Text || 'All commercial equipment supplied by Winera International meets rigorous global standards including EN 1176 / ASTM F1918 for Soft Play and ASTM F2970 for Trampoline Parks. Flame-retardant PVC padding, high-density impact foams, and non-toxic materials ensure long-lasting commercial durability.'}
+                                     placeholder="Enter details about safety standards..."
+                                     onChange={(e) => {
+                                       const updated = [...postsList];
+                                       updated[idx] = { ...updated[idx], section2Text: e.target.value };
+                                       setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                     }}
+                                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                                   />
+                                 </div>
+                               </div>
+
+                               <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px', alignItems: 'start' }}>
+                                 <div>
+                                   <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 3 Heading</label>
+                                   <input
+                                     type="text"
+                                     value={post.section3Title || '3. Revenue Projection & Operating Costs'}
+                                     placeholder="Revenue Projection & Operating Costs"
+                                     onChange={(e) => {
+                                       const updated = [...postsList];
+                                       updated[idx] = { ...updated[idx], section3Title: e.target.value };
+                                       setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                     }}
+                                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                                   />
+                                 </div>
+                                 <div>
+                                   <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 3 Content Text</label>
+                                   <textarea
+                                     rows={4}
+                                     value={post.section3Text || 'Integrating a balanced game zone mix — combining Soft Play, Trampoline Courts, Arcade Games, and VR simulators — creates a comprehensive family destination that drives repeat visits and higher average spend per customer.'}
+                                     placeholder="Enter details about revenue projections..."
+                                     onChange={(e) => {
+                                       const updated = [...postsList];
+                                       updated[idx] = { ...updated[idx], section3Text: e.target.value };
+                                       setFormData(prev => ({ ...prev, blogPosts: updated }));
+                                     }}
+                                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                                   />
+                                 </div>
+                               </div>
+                             </div>
 
                             {/* Main Title & Subtitle */}
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
@@ -20778,115 +21509,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               />
                             </div>
 
-                            {/* Key Takeaway Highlight Text */}
-                            <div>
-                              <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0ea5e9', marginBottom: '6px' }}>💡 Key Takeaway Highlight Text</label>
-                              <input
-                                type="text"
-                                value={post.takeawayText || 'Soft play delivers higher throughput per square meter for toddlers and kids aged 2–8, while Trampoline Parks attract older kids, teens, and young adults with higher per-ticket pricing.'}
-                                placeholder="Soft play delivers higher throughput for toddlers while Trampoline Parks attract teens..."
-                                onChange={(e) => {
-                                  const updated = [...postsList];
-                                  updated[idx] = { ...updated[idx], takeawayText: e.target.value };
-                                  setFormData(prev => ({ ...prev, blogPosts: updated }));
-                                }}
-                                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #38bdf8', fontSize: '13.5px', background: '#f0f9ff' }}
-                              />
-                            </div>
-
-                            {/* Section 1 & Section 2 Headings & Text */}
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px' }}>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 1 Heading</label>
-                                <input
-                                  type="text"
-                                  value={post.section1Title || 'Space Requirements & Architectural Layout'}
-                                  placeholder="Space Requirements & Layout"
-                                  onChange={(e) => {
-                                    const updated = [...postsList];
-                                    updated[idx] = { ...updated[idx], section1Title: e.target.value };
-                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
-                                  }}
-                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                                />
-                              </div>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 1 Content Text</label>
-                                <input
-                                  type="text"
-                                  value={post.section1Text || 'Soft Play zones typically require a minimum ceiling height of 3.5 to 4.5 meters for multi-level tubular structures, whereas Trampoline Parks demand clear ceiling heights of 5.5 to 6.5 meters to accommodate high jumps, foam pits, and airbag stunt zones safely.'}
-                                  placeholder="Enter details about space requirements..."
-                                  onChange={(e) => {
-                                    const updated = [...postsList];
-                                    updated[idx] = { ...updated[idx], section1Text: e.target.value };
-                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
-                                  }}
-                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                                />
-                              </div>
-                            </div>
-
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px' }}>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 2 Heading</label>
-                                <input
-                                  type="text"
-                                  value={post.section2Title || '2. Safety Standards & Commercial Durability'}
-                                  placeholder="Safety Standards & Certification"
-                                  onChange={(e) => {
-                                    const updated = [...postsList];
-                                    updated[idx] = { ...updated[idx], section2Title: e.target.value };
-                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
-                                  }}
-                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                                />
-                              </div>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 2 Content Text</label>
-                                <input
-                                  type="text"
-                                  value={post.section2Text || 'All commercial equipment supplied by Winera International meets rigorous global standards including EN 1176 / ASTM F1918 for Soft Play and ASTM F2970 for Trampoline Parks. Flame-retardant PVC padding, high-density impact foams, and non-toxic materials ensure long-lasting commercial durability.'}
-                                  placeholder="Enter details about safety standards..."
-                                  onChange={(e) => {
-                                    const updated = [...postsList];
-                                    updated[idx] = { ...updated[idx], section2Text: e.target.value };
-                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
-                                  }}
-                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                                />
-                              </div>
-                            </div>
-
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px' }}>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 3 Heading</label>
-                                <input
-                                  type="text"
-                                  value={post.section3Title || '3. Revenue Projection & Operating Costs'}
-                                  placeholder="Revenue Projection & Operating Costs"
-                                  onChange={(e) => {
-                                    const updated = [...postsList];
-                                    updated[idx] = { ...updated[idx], section3Title: e.target.value };
-                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
-                                  }}
-                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                                />
-                              </div>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Section 3 Content Text</label>
-                                <input
-                                  type="text"
-                                  value={post.section3Text || 'Integrating a balanced game zone mix — combining Soft Play, Trampoline Courts, Arcade Games, and VR simulators — creates a comprehensive family destination that drives repeat visits and higher average spend per customer.'}
-                                  placeholder="Enter details about revenue projections..."
-                                  onChange={(e) => {
-                                    const updated = [...postsList];
-                                    updated[idx] = { ...updated[idx], section3Text: e.target.value };
-                                    setFormData(prev => ({ ...prev, blogPosts: updated }));
-                                  }}
-                                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                                />
-                              </div>
-                            </div>
                           </div>
                         )}
                       </div>

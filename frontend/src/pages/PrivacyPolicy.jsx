@@ -24,7 +24,7 @@ export default function PrivacyPolicy({ siteData }) {
     metaTag.setAttribute('content', privacySeo.metaDescription || privacySeo.description || "Read the Privacy Policy of Winera International Pvt. Ltd. Learn how we collect, use, safeguard, and process your personal and business information.");
   }, [privacySeo]);
 
-  const sections = [
+  const defaultSections = [
     {
       number: "1",
       title: "Introduction",
@@ -138,8 +138,22 @@ export default function PrivacyPolicy({ siteData }) {
       content: [
         "We may update this Privacy Policy from time to time. The latest version will be posted on this page. Continued use of our website means you accept the updated terms."
       ]
+    },
+    {
+      number: "14",
+      title: "Contact Information",
+      subtitle: "For any questions or concerns, contact us at:",
+      isContactBox: true,
+      companyName: "Winera International Pvt. Ltd.",
+      address: "1011, 10th floor, Millennium Business Hub, opp. Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat-395006, India",
+      bulletsText: [
+        "Email: info@winera.in",
+        "Phone: +91 94289 89488 / +91 95123 56766"
+      ]
     }
   ];
+
+  const sections = (siteData?.privacySections && siteData.privacySections.length > 0) ? siteData.privacySections : defaultSections;
 
   return (
     <div style={{ background: '#F5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Inter', 'Montserrat', sans-serif" }}>
@@ -173,141 +187,158 @@ export default function PrivacyPolicy({ siteData }) {
           boxShadow: 'none'
         }}>
 
-          {/* Render Sections 1 to 13 */}
-          {sections.map((sec, idx) => (
-            <div key={idx} style={{
-              marginBottom: idx === sections.length - 1 ? '40px' : '36px',
-              paddingBottom: idx === sections.length - 1 ? '0' : '32px',
-              borderBottom: idx === sections.length - 1 ? 'none' : '1px solid #f1f5f9'
-            }}>
-              <h3 style={{
-                fontSize: '1.25rem',
-                fontWeight: '800',
-                color: '#0f172a',
-                margin: '0 0 14px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                lineHeight: 1.3
-              }}>
-                <span style={{
-                  background: '#e0f2fe',
-                  color: '#0284c7',
-                  borderRadius: '10px',
-                  width: '32px',
-                  height: '32px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: '800',
-                  flexShrink: 0
+          {/* Render Sections 1 to 14 */}
+          {sections.map((sec, idx) => {
+            const isContact = sec.isContactBox || sec.number === "14" || (sec.title && sec.title.toLowerCase().includes('contact'));
+            if (isContact) {
+              return (
+                <div key={idx} style={{
+                  background: '#f0f9ff',
+                  border: '1.5px solid #38bdf8',
+                  borderRadius: '20px',
+                  padding: '30px 32px',
+                  marginTop: '20px'
                 }}>
-                  {sec.number}
-                </span>
-                {sec.title}
-              </h3>
-
-              {sec.content && sec.content.map((pText, pIdx) => (
-                <p key={pIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, margin: '0 0 10px', fontWeight: '450' }}>
-                  {pText}
-                </p>
-              ))}
-
-              {sec.subtitle && (
-                <p style={{ fontSize: '14.5px', color: '#334155', fontWeight: '600', margin: '0 0 12px', lineHeight: 1.6 }}>
-                  {sec.subtitle}
-                </p>
-              )}
-
-              {/* Labelled bullets */}
-              {sec.bullets && (
-                <ul style={{ margin: 0, paddingLeft: '22px', listStyleType: 'disc' }}>
-                  {sec.bullets.map((bItem, bIdx) => (
-                    <li key={bIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, marginBottom: '8px' }}>
-                      <strong style={{ color: '#0f172a', fontWeight: '700' }}>{bItem.label}:</strong> {bItem.text}
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* Simple text bullets */}
-              {sec.bulletsText && (
-                <ul style={{ margin: 0, paddingLeft: '22px', listStyleType: 'disc' }}>
-                  {sec.bulletsText.map((tItem, tIdx) => (
-                    <li key={tIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, marginBottom: '8px' }}>
-                      {tItem}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-
-          {/* Section 14: Contact Information Box */}
-          <div style={{
-            background: '#f0f9ff',
-            border: '1.5px solid #38bdf8',
-            borderRadius: '20px',
-            padding: '30px 32px',
-            marginTop: '20px'
-          }}>
-            <h3 style={{
-              fontSize: '1.25rem',
-              fontWeight: '800',
-              color: '#0f172a',
-              margin: '0 0 14px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px'
-            }}>
-              <span style={{
-                background: '#38bdf8',
-                color: '#ffffff',
-                borderRadius: '10px',
-                width: '32px',
-                height: '32px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '14px',
-                fontWeight: '800',
-                flexShrink: 0
+                  <h3 style={{
+                    fontSize: '1.25rem',
+                    fontWeight: '800',
+                    color: '#0f172a',
+                    margin: '0 0 14px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px'
+                  }}>
+                    <span style={{
+                      background: '#38bdf8',
+                      color: '#ffffff',
+                      borderRadius: '10px',
+                      width: '32px',
+                      height: '32px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '14px',
+                      fontWeight: '800',
+                      flexShrink: 0
+                    }}>
+                      {sec.number || '14'}
+                    </span>
+                    {sec.title || 'Contact Information'}
+                  </h3>
+                  {(sec.subtitle || sec.intro) && (
+                    <p style={{ fontSize: '14.5px', color: '#334155', fontWeight: '600', margin: '0 0 14px' }}>
+                      {sec.subtitle || sec.intro}
+                    </p>
+                  )}
+                  <div style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, fontWeight: '500' }}>
+                    <p style={{ margin: '0 0 8px', fontWeight: '700', color: '#0f172a', fontSize: '15px' }}>
+                      {sec.companyName || (sec.content && sec.content[0]) || "Winera International Pvt. Ltd."}
+                    </p>
+                    <p style={{ margin: '0 0 12px', maxWidth: '720px' }}>
+                      {sec.address || (sec.content && sec.content[1]) || "1011, 10th floor, Millennium Business Hub, opp. Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat-395006, India"}
+                    </p>
+                    {sec.bulletsText ? (
+                      <ul style={{ margin: 0, paddingLeft: '22px', listStyleType: 'disc' }}>
+                        {sec.bulletsText.map((tItem, tIdx) => (
+                          <li key={tIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, marginBottom: '8px' }}>
+                            {tItem}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', marginTop: '10px' }}>
+                        <div>
+                          <strong style={{ color: '#0f172a' }}>Email:</strong>{' '}
+                          <a href={`mailto:${sec.email || 'info@winera.in'}`} style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                            {sec.email || 'info@winera.in'}
+                          </a>
+                        </div>
+                        <div>
+                          <strong style={{ color: '#0f172a' }}>Phone:</strong>{' '}
+                          <a href={`tel:${sec.phone1 || '+919428989488'}`} style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                            {sec.phone1 || '+91 94289 89488'}
+                          </a>
+                          {' / '}
+                          <a href={`tel:${sec.phone2 || '+919512356766'}`} style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                            {sec.phone2 || '+91 95123 56766'}
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <div key={idx} style={{
+                marginBottom: idx === sections.length - 1 ? '40px' : '36px',
+                paddingBottom: idx === sections.length - 1 ? '0' : '32px',
+                borderBottom: idx === sections.length - 1 ? 'none' : '1px solid #f1f5f9'
               }}>
-                14
-              </span>
-              Contact Information
-            </h3>
-            <p style={{ fontSize: '14.5px', color: '#334155', fontWeight: '600', margin: '0 0 14px' }}>
-              For any questions or concerns, contact us at:
-            </p>
-            <div style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, fontWeight: '500' }}>
-              <p style={{ margin: '0 0 8px', fontWeight: '700', color: '#0f172a', fontSize: '15px' }}>
-                Winera International Pvt. Ltd.
-              </p>
-              <p style={{ margin: '0 0 12px', maxWidth: '720px' }}>
-                1011, 10th floor, Millennium Business Hub, opp. Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat-395006, India
-              </p>
-              <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', marginTop: '10px' }}>
-                <div>
-                  <strong style={{ color: '#0f172a' }}>Email:</strong>{' '}
-                  <a href="mailto:info@winera.in" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
-                    info@winera.in
-                  </a>
-                </div>
-                <div>
-                  <strong style={{ color: '#0f172a' }}>Phone:</strong>{' '}
-                  <a href="tel:+919428989488" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
-                    +91 94289 89488
-                  </a>
-                  {' / '}
-                  <a href="tel:+919512356766" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
-                    +91 95123 56766
-                  </a>
-                </div>
+                <h3 style={{
+                  fontSize: '1.25rem',
+                  fontWeight: '800',
+                  color: '#0f172a',
+                  margin: '0 0 14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  lineHeight: 1.3
+                }}>
+                  <span style={{
+                    background: '#e0f2fe',
+                    color: '#0284c7',
+                    borderRadius: '10px',
+                    width: '32px',
+                    height: '32px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '14px',
+                    fontWeight: '800',
+                    flexShrink: 0
+                  }}>
+                    {sec.number}
+                  </span>
+                  {sec.title}
+                </h3>
+
+                {sec.content && sec.content.map((pText, pIdx) => (
+                  <p key={pIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, margin: '0 0 10px', fontWeight: '450' }}>
+                    {pText}
+                  </p>
+                ))}
+
+                {sec.subtitle && (
+                  <p style={{ fontSize: '14.5px', color: '#334155', fontWeight: '600', margin: '0 0 12px', lineHeight: 1.6 }}>
+                    {sec.subtitle}
+                  </p>
+                )}
+
+                {/* Labelled bullets */}
+                {sec.bullets && (
+                  <ul style={{ margin: 0, paddingLeft: '22px', listStyleType: 'disc' }}>
+                    {sec.bullets.map((bItem, bIdx) => (
+                      <li key={bIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, marginBottom: '8px' }}>
+                        <strong style={{ color: '#0f172a', fontWeight: '700' }}>{bItem.label}:</strong> {bItem.text}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Simple text bullets */}
+                {sec.bulletsText && (
+                  <ul style={{ margin: 0, paddingLeft: '22px', listStyleType: 'disc' }}>
+                    {sec.bulletsText.map((tItem, tIdx) => (
+                      <li key={tIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, marginBottom: '8px' }}>
+                        {tItem}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-            </div>
-          </div>
+            );
+          })}
 
         </div>
       </section>
