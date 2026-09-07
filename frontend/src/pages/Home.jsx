@@ -414,14 +414,14 @@ export default function Home({ siteData }) {
                     <path d="M9 12l2 2 4-4" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                   </svg>
                   <span style={{ fontSize: '10.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
-                    <CountUpNumber targetText="100% CERTIFIED" />
+                    <CountUpNumber targetText={siteData?.statsHeader?.safetyBadgeText !== undefined ? siteData.statsHeader.safetyBadgeText : "100% CERTIFIED"} />
                   </span>
                 </div>
                 <h4 style={{ fontSize: '1.35rem', fontWeight: '800', color: '#38bdf8', margin: '2px 0 4px', lineHeight: 1.2 }}>
-                  Safety First
+                  {siteData?.statsHeader?.safetyTitle !== undefined ? siteData.statsHeader.safetyTitle : "Safety First"}
                 </h4>
-                <p style={{ color: '#64748b', fontSize: '10.5px', fontWeight: '600', lineHeight: 1.35, margin: 0 }}>
-                  Industry Standard<br />Excellence
+                <p style={{ color: '#64748b', fontSize: '10.5px', fontWeight: '600', lineHeight: 1.35, margin: 0, whiteSpace: 'pre-line' }}>
+                  {siteData?.statsHeader?.safetySubtitle !== undefined ? siteData.statsHeader.safetySubtitle : "Industry Standard\nExcellence"}
                 </p>
               </div>
             </div>

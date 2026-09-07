@@ -12,6 +12,12 @@ export default function Header({ headerData }) {
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
   const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
 
+  const facebookUrl = headerData?.facebookUrl || "https://facebook.com";
+  const instagramUrl = headerData?.instagramUrl || "https://instagram.com";
+  const youtubeUrl = headerData?.youtubeUrl || "https://youtube.com";
+  const twitterUrl = headerData?.twitterUrl || "https://x.com";
+  const whatsappUrl = headerData?.whatsappUrl || "https://wa.me/919428989488";
+
   const getValidImageUrl = (url, fallback) => {
     if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
       return fallback;
@@ -467,7 +473,7 @@ export default function Header({ headerData }) {
         {/* 3. Social Icons Grid, Admin Portal & Mobile Hamburger */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div className="winera-socials-desktop" style={{ alignItems: 'center', gap: '10px' }}>
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" style={{
+            <a href={facebookUrl} target="_blank" rel="noreferrer" aria-label="Facebook" style={{
               width: '34px',
               height: '34px',
               borderRadius: '50%',
@@ -482,7 +488,7 @@ export default function Header({ headerData }) {
               </svg>
             </a>
 
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" style={{
+            <a href={instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram" style={{
               width: '34px',
               height: '34px',
               borderRadius: '50%',
@@ -497,7 +503,7 @@ export default function Header({ headerData }) {
               </svg>
             </a>
 
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube" style={{
+            <a href={youtubeUrl} target="_blank" rel="noreferrer" aria-label="YouTube" style={{
               width: '34px',
               height: '34px',
               borderRadius: '50%',
@@ -512,7 +518,7 @@ export default function Header({ headerData }) {
               </svg>
             </a>
 
-            <a href="https://x.com" target="_blank" rel="noreferrer" aria-label="Twitter X" style={{
+            <a href={twitterUrl} target="_blank" rel="noreferrer" aria-label="Twitter X" style={{
               width: '34px',
               height: '34px',
               borderRadius: '50%',
@@ -749,9 +755,9 @@ export default function Header({ headerData }) {
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '8px', borderTop: '1px solid #e2e8f0' }}>
               <div style={{ display: 'flex', gap: '10px' }}>
-                <a href="https://facebook.com" target="_blank" rel="noreferrer" style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#1877f2', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>f</a>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#e6683c', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>ig</a>
-                <a href="https://wa.me/919428989488" target="_blank" rel="noreferrer" style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#25d366', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>wa</a>
+                <a href={facebookUrl} target="_blank" rel="noreferrer" style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#1877f2', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>f</a>
+                <a href={instagramUrl} target="_blank" rel="noreferrer" style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#e6683c', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>ig</a>
+                <a href={whatsappUrl} target="_blank" rel="noreferrer" style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#25d366', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>wa</a>
               </div>
 
               <Link

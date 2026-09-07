@@ -1274,6 +1274,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'termsSeo', name: 'SEO Meta Title & Description' }
       ]
     },
+    headerPage: {
+      label: 'Header Page',
+      icon: <Layout style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'header', name: 'Header Social Links' }
+      ]
+    },
     footerPage: {
       label: 'Footer Page',
       icon: <Layout style={{ width: '18px', height: '18px' }} />,
@@ -3585,7 +3592,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </button>
                 </div>
 
-                {/* Section Header Controls */}
+                {/* Section Header & 5th Card Controls */}
                 <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                   <div>
                     <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>
@@ -3609,21 +3616,64 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '500' }}
                     />
                   </div>
-                  <div style={{ textAlign: 'right' }}>
+
+                  {/* 5th Safety Card Settings */}
+                  <div style={{ marginTop: '6px', paddingTop: '16px', borderTop: '1px solid #cbd5e1' }}>
+                    <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0284c7', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      🛡️ 5th Card Settings (100% Certified & Safety First Card)
+                    </h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '12px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '6px' }}>
+                          Badge Text (e.g. 100% CERTIFIED)
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.statsHeader?.safetyBadgeText !== undefined ? formData.statsHeader.safetyBadgeText : "100% CERTIFIED"}
+                          onChange={(e) => handleFieldChange('statsHeader', 'safetyBadgeText', e.target.value)}
+                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '6px' }}>
+                          Card Title (e.g. Safety First)
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.statsHeader?.safetyTitle !== undefined ? formData.statsHeader.safetyTitle : "Safety First"}
+                          onChange={(e) => handleFieldChange('statsHeader', 'safetyTitle', e.target.value)}
+                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '6px' }}>
+                        Card Subtitle / Description Text (e.g. Industry Standard Excellence)
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.statsHeader?.safetySubtitle !== undefined ? formData.statsHeader.safetySubtitle : "Industry Standard Excellence"}
+                        onChange={(e) => handleFieldChange('statsHeader', 'safetySubtitle', e.target.value)}
+                        style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '6px' }}>
                     <button
                       onClick={() => persistSectionToDatabase('statsHeader', formData.statsHeader || {})}
                       style={{
                         background: '#38bdf8',
                         color: '#ffffff',
                         border: 'none',
-                        padding: '8px 20px',
+                        padding: '10px 24px',
                         borderRadius: '10px',
                         fontWeight: '800',
                         fontSize: '13px',
                         cursor: 'pointer'
                       }}
                     >
-                      Save Section Header
+                      Save Section & Safety Card Details
                     </button>
                   </div>
                 </div>
@@ -20701,6 +20751,97 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
 
 
+          {/* DYNAMIC HEADER SOCIAL LINKS MANAGEMENT FORM */}
+          {activeSection === 'header' && (() => {
+            const currentSec = formData.header || defaultHeaderData;
+
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Header Social Links Settings</h3>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Facebook Profile URL
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.facebookUrl !== undefined ? currentSec.facebookUrl : defaultHeaderData.facebookUrl}
+                        onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), facebookUrl: e.target.value } }))}
+                        placeholder="https://facebook.com/yourpage"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Instagram Profile URL
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.instagramUrl !== undefined ? currentSec.instagramUrl : defaultHeaderData.instagramUrl}
+                        onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), instagramUrl: e.target.value } }))}
+                        placeholder="https://instagram.com/yourhandle"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        YouTube Channel URL
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.youtubeUrl !== undefined ? currentSec.youtubeUrl : defaultHeaderData.youtubeUrl}
+                        onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), youtubeUrl: e.target.value } }))}
+                        placeholder="https://youtube.com/@yourchannel"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        X (Twitter) Profile URL
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.twitterUrl !== undefined ? currentSec.twitterUrl : defaultHeaderData.twitterUrl}
+                        onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), twitterUrl: e.target.value } }))}
+                        placeholder="https://x.com/yourhandle"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      WhatsApp Contact Link / Number
+                    </label>
+                    <input
+                      type="text"
+                      value={currentSec.whatsappUrl !== undefined ? currentSec.whatsappUrl : defaultHeaderData.whatsappUrl}
+                      onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), whatsappUrl: e.target.value } }))}
+                      placeholder="https://wa.me/919428989488"
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('header', formData.header || defaultHeaderData)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                      Save Header Social Links
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* DYNAMIC FOOTER DETAILS MANAGEMENT FORM */}
           {activeSection === 'footer' && (() => {
             const currentSec = formData.footer || defaultFooterData;
@@ -20806,7 +20947,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           })()}
 
           {/* FALLBACK FOR OTHER UNCHECKED SECTIONS */}
-          {!activeSection.endsWith('Related') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo', 'footer'].includes(activeSection) && (
+          {!activeSection.endsWith('Related') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo', 'header', 'footer'].includes(activeSection) && (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               <FileText style={{ width: '48px', height: '48px', color: '#38bdf8', marginBottom: '14px' }} />
               <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
