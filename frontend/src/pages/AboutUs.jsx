@@ -154,10 +154,10 @@ export default function AboutUs({ siteData }) {
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <h1 style={{
-            fontSize: '3.0rem',
+            fontSize: '3.6rem',
             fontWeight: '900',
             letterSpacing: '-1px',
-            marginBottom: '8px',
+            marginBottom: '12px',
             lineHeight: 1.15
           }}>
             {(() => {
@@ -175,6 +175,23 @@ export default function AboutUs({ siteData }) {
               });
             })()}
           </h1>
+
+          <div className="winera-about-hero-breadcrumb" style={{
+            fontSize: '14px',
+            fontWeight: '600',
+            color: '#ffffff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            margin: 0,
+            lineHeight: 1.2,
+            textAlign: 'center'
+          }}>
+            <a href="/" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: '600' }}>Home</a>
+            <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+            <span style={{ color: '#ffffff', fontWeight: '600' }}>About Us</span>
+          </div>
         </div>
       </section>
 
@@ -700,12 +717,27 @@ export default function AboutUs({ siteData }) {
             <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: '#0f172a', marginBottom: '16px' }}>{siteData?.founder?.name || 'Mr. Unnit Jogani'}</h3>
             
             <div style={{ color: '#475569', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '32px', whiteSpace: 'pre-line' }}>
-              {siteData?.founder?.aboutDetails || (
-                <>
-                  <p style={{ marginBottom: '16px' }}>Mr. Unnit Jogani is the Founder &amp; CEO of Winera International Pvt. Ltd. One of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.</p>
-                  <p>Since establishing WinEra in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader successfully delivering projects across India with an uncompromising focus on quality, safety, and client satisfaction.</p>
-                </>
-              )}
+              {(() => {
+                const defaultBio = "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.";
+                let rawText = siteData?.founder?.aboutDetails || defaultBio;
+                const targetPhrase = "game zone equipment manufacturers and indoor amusement park solution providers.";
+
+                if (rawText.includes(targetPhrase) && !rawText.includes(`*${targetPhrase}*`)) {
+                  rawText = rawText.replace(targetPhrase, `*${targetPhrase}*`);
+                }
+
+                const parts = rawText.split(/\*{1,2}(.*?)\*{1,2}/g);
+                return parts.map((part, index) => {
+                  if (index % 2 === 1) {
+                    return (
+                      <strong key={index} style={{ fontWeight: '600', color: 'rgba(55, 62, 65, 1)' }}>
+                        {part}
+                      </strong>
+                    );
+                  }
+                  return part;
+                });
+              })()}
             </div>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
