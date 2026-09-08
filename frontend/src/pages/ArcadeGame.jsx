@@ -57,6 +57,7 @@ export default function ArcadeGame({ siteData }) {
   const [activeFaqIndex, setActiveFaqIndex] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Arcade Games");
   const [expandedCat, setExpandedCat] = useState("Arcade Games");
+  const [isCatDropdownOpen, setIsCatDropdownOpen] = useState(false);
   const [relatedIndex, setRelatedIndex] = useState(0);
   const [mobileProdIndex, setMobileProdIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -446,21 +447,16 @@ export default function ArcadeGame({ siteData }) {
             Discover our *Products*
           </SectionHeading>
 
-          {/* Mobile Category Select Dropdown (Visible only on mobile) */}
-          <div className="winera-mobile-category-dropdown-container" style={{ display: 'none', marginBottom: '24px', width: '100%' }}>
-            <label htmlFor="arcade_category_select" style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px', textAlign: 'left' }}>
+          {/* Mobile Category Select Dropdown (Custom UI with large 15px bold text) */}
+          <div className="winera-mobile-category-dropdown-container" style={{ display: 'none', marginBottom: '24px', width: '100%', position: 'relative', zIndex: 50 }}>
+            <label style={{ display: 'block', fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px', textAlign: 'left' }}>
               Select Category:
             </label>
-            <select
-              id="arcade_category_select"
-              name="arcadeCategory"
-              aria-label="Select Category"
-              value={activeCategory}
-              onChange={(e) => {
-                setActiveCategory(e.target.value);
-                setMobileProdIndex(0);
-                setCurrentPage(1);
-              }}
+
+            {/* Category Toggle Button */}
+            <button
+              type="button"
+              onClick={() => setIsCatDropdownOpen(!isCatDropdownOpen)}
               style={{
                 width: '100%',
                 padding: '14px 18px',
@@ -468,20 +464,80 @@ export default function ArcadeGame({ siteData }) {
                 border: '2px solid #38bdf8',
                 background: '#ffffff',
                 color: '#0f172a',
-                fontSize: '14px',
+                fontSize: '15px',
                 fontWeight: '800',
                 outline: 'none',
-                boxShadow: 'none',
-                cursor: 'pointer'
+                boxShadow: '0 4px 15px rgba(56, 189, 248, 0.12)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                textAlign: 'left'
               }}
             >
-              {[
-                "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
-                "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
-              ].map((cat, cIdx) => (
-                <option key={cIdx} value={cat}>{cat}</option>
-              ))}
-            </select>
+              <span>{activeCategory}</span>
+              <ChevronDown style={{
+                width: '20px',
+                height: '20px',
+                color: '#0284c7',
+                transform: isCatDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.25s ease'
+              }} />
+            </button>
+
+            {/* Custom Dropdown Options Menu */}
+            {isCatDropdownOpen && (
+              <div style={{
+                position: 'absolute',
+                top: 'calc(100% + 6px)',
+                left: 0,
+                right: 0,
+                background: '#ffffff',
+                border: '2px solid #38bdf8',
+                borderRadius: '18px',
+                boxShadow: '0 12px 35px rgba(2, 132, 199, 0.18)',
+                overflow: 'hidden',
+                zIndex: 100,
+                maxHeight: '340px',
+                overflowY: 'auto',
+                padding: '6px'
+              }}>
+                {[
+                  "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
+                  "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
+                ].map((cat, cIdx) => {
+                  const isSelected = activeCategory === cat;
+                  return (
+                    <div
+                      key={cIdx}
+                      onClick={() => {
+                        setActiveCategory(cat);
+                        setMobileProdIndex(0);
+                        setCurrentPage(1);
+                        setIsCatDropdownOpen(false);
+                      }}
+                      style={{
+                        padding: '13px 16px',
+                        borderRadius: '12px',
+                        fontSize: '15px',
+                        fontWeight: isSelected ? '800' : '600',
+                        color: isSelected ? '#ffffff' : '#0f172a',
+                        background: isSelected ? '#38bdf8' : 'transparent',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '3px',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <span>{cat}</span>
+                      {isSelected && <span style={{ fontSize: '15px', fontWeight: '900' }}>✓</span>}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <div className="winera-categories-grid" style={{
@@ -1006,9 +1062,9 @@ export default function ArcadeGame({ siteData }) {
                 ]
             ).map((point, pIdx) => (
               <div key={pIdx} style={{ marginBottom: pIdx === 0 ? '22px' : '30px' }}>
-                <div className="winera-commercial-point-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                  <CheckCheck style={{ width: '20px', height: '20px', color: '#00a8ff', strokeWidth: 3 }} />
-                  <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                <div className="winera-commercial-point-title" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '8px', textAlign: 'left' }}>
+                  <CheckCheck style={{ width: '22px', height: '22px', color: '#00a8ff', strokeWidth: 3, flexShrink: 0, marginTop: '2px' }} />
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, lineHeight: 1.35, textAlign: 'left' }}>
                     {point.title}
                   </h4>
                 </div>
