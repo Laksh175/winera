@@ -408,9 +408,10 @@ export default function TestimonialsSection({
           }}>
             <button
               onClick={goPrev}
+              aria-label="Previous Testimonial"
               style={{
-                width: '40px',
-                height: '40px',
+                width: '44px',
+                height: '44px',
                 borderRadius: '50%',
                 background: '#ffffff',
                 border: '2px solid #e2e8f0',
@@ -421,7 +422,7 @@ export default function TestimonialsSection({
                 boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
               }}
             >
-              <ChevronLeft style={{ width: '20px', height: '20px', color: '#475569' }} />
+              <ChevronLeft aria-hidden="true" style={{ width: '22px', height: '22px', color: '#475569' }} />
             </button>
 
             <span style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a' }}>
@@ -430,9 +431,10 @@ export default function TestimonialsSection({
 
             <button
               onClick={goNext}
+              aria-label="Next Testimonial"
               style={{
-                width: '40px',
-                height: '40px',
+                width: '44px',
+                height: '44px',
                 borderRadius: '50%',
                 background: '#00a8ff',
                 border: 'none',
@@ -443,7 +445,7 @@ export default function TestimonialsSection({
                 boxShadow: '0 4px 14px rgba(0,168,255,0.35)'
               }}
             >
-              <ChevronRight style={{ width: '20px', height: '20px', color: '#ffffff' }} />
+              <ChevronRight aria-hidden="true" style={{ width: '22px', height: '22px', color: '#ffffff' }} />
             </button>
           </div>
         </div>

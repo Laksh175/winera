@@ -147,7 +147,7 @@ export default function Header({ headerData }) {
         fontFamily: "'Montserrat', sans-serif"
       }}>
         {/* 1. Official Winera Logo */}
-        <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+        <Link to="/" onClick={() => setMobileMenuOpen(false)} aria-label="Winera International Home" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
           <img src={logoSrc} alt="Winera International Pvt. Ltd." className="winera-logo-img" style={{ objectFit: 'contain' }} />
         </Link>
 
@@ -538,15 +538,17 @@ export default function Header({ headerData }) {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="winera-hamburger"
-            aria-label="Toggle menu"
+            aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
             style={{
               background: '#00a8ff',
               color: '#ffffff',
               border: 'none',
               borderRadius: '50%',
-              width: '38px',
-              height: '38px',
+              width: '42px',
+              height: '42px',
+              fontSize: '20px',
+              display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',

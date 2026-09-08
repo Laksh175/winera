@@ -8,18 +8,18 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
-import bumpercarHeroBg from '../assets/bumper-car-hero-bg.png';
+import bumpercarHeroBg from '../assets/bumper-car-hero-bg.webp';
 import bumpercarCollageFrame from '../assets/bumpercar-collage-frame.webp';
 import bumpercar3dNeon from '../assets/bumpercar-3d-neon.webp';
-import bumpercarSpecsBg from '../assets/bumpercar-specs-bg.jpg';
+import bumpercarSpecsBg from '../assets/bumpercar-specs-bg.webp';
 import bumpercarOptionsBg from '../assets/bumpercar-options-bg.webp';
-import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.jpg';
+import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.webp';
 import bumpercarInvestmentCollage from '../assets/bumpercar-investment-collage.webp';
 import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
-import bumperCarCtaLeft from '../assets/bumperCar-cta-left.png';
-import bumperCarCtaRight from '../assets/bumperCar-cta-right.png';
-import bumperCarIcon from '../assets/bumper-car-icon.png';
+import bumperCarCtaLeft from '../assets/bumperCar-cta-left.webp';
+import bumperCarCtaRight from '../assets/bumperCar-cta-right.webp';
+import bumperCarIcon from '../assets/bumper-car-icon.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
@@ -948,7 +948,7 @@ export default function BumperCar({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, whiteSpace: 'nowrap' }}>
+            <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.bumpercarWhyChoose?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>

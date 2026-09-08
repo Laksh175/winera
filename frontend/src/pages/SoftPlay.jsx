@@ -9,8 +9,8 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import needConsultationsBg from '../assets/cta-consultations-banner.webp';
-import softplayCtaBg from '../assets/softplay-cta-bg.png';
-import softplayHeroBg from '../assets/softplay-hero-bg.png';
+import softplayCtaBg from '../assets/softplay-cta-bg.webp';
+import softplayHeroBg from '../assets/softplay-hero-bg.webp';
 import logoImg from '../assets/logo.webp';
 import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
@@ -793,7 +793,7 @@ export default function SoftPlay({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '3rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, whiteSpace: 'nowrap' }}>
+            <h2 style={{ fontSize: '3rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.softplayWhyUs?.title, "Why Choose *Winera International*")}
             </h2>
           </div>

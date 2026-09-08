@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
-import projectBanner from '../assets/project-hero-bg.png';
+import projectBanner from '../assets/project-hero-bg.webp';
 import projectImage01 from '../assets/project-image01.webp';
 import projectImage2Bg from '../assets/project-image2-bg.webp';
 import projectImage3 from '../assets/project-image-3.webp';

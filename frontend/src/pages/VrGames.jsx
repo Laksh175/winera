@@ -8,7 +8,7 @@ import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import { ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity } from 'lucide-react';
 
-import vrHeroBg from '../assets/vrgame-hero-bg.png';
+import vrHeroBg from '../assets/vrgame-hero-bg.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
@@ -24,19 +24,19 @@ import vrSupplierCollage from '../assets/vr-supplier-collage.webp';
 import vrMatchedVenue from '../assets/vr-matched-venue.webp';
 import vrMatchedVenueDirect from '../assets/vr-matched-venue-direct.webp';
 import vrRangeTheater from '../assets/vr-range-theater.webp';
-import vrBlock1 from '../assets/vr-block-1.png';
+import vrBlock1 from '../assets/vr-block-1.webp';
 import vrCommercialReliability from '../assets/vr-commercial-reliability.webp';
 import vrRoiFrame from '../assets/vr-roi-frame.webp';
 import vrRoiContent from '../assets/vr-roi-content.webp';
-import vrEarnPlayer from '../assets/vr-earn-player.jpg';
-import vrGameImg from '../assets/vr-game-image.png';
-import vrGameCurveImg from '../assets/vr-game-image2.png';
+import vrEarnPlayer from '../assets/vr-earn-player.webp';
+import vrGameImg from '../assets/vr-game-image.webp';
+import vrGameCurveImg from '../assets/vr-game-image2.webp';
 import vrImg from '../assets/VR.webp';
 import vectorVr from '../assets/Vector-VR.webp';
 import vector01 from '../assets/Vector-01.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
-import vrgameCtaBg from '../assets/vrgame-cta-bg.png';
-import vrCtaRightImg from '../assets/vr-cta-right-img.png';
+import vrgameCtaBg from '../assets/vrgame-cta-bg.webp';
+import vrCtaRightImg from '../assets/vr-cta-right-img.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
@@ -768,7 +768,7 @@ export default function VrGames({ siteData }) {
             </div>
           </div>
 
-          {/* Right Image Feature with vr-game-image.png & vr-game-image2.png (Yellow Curve Accent) */}
+          {/* Right Image Feature with vr-game-image.webp & vr-game-image2.webp (Yellow Curve Accent) */}
           <div className="winera-vr-earn-img-container" style={{
             position: 'relative',
             width: '100%',

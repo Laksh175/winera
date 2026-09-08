@@ -3,10 +3,10 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CtaBanner from '../components/CtaBanner';
-import blogHeroBg from '../assets/blog-hero-bg.png';
+import blogHeroBg from '../assets/blog-hero-bg.webp';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
-import aboutusCtaBg from '../assets/aboutus-cta-bg.png';
+import aboutusCtaBg from '../assets/aboutus-cta-bg.webp';
 
 const DEFAULT_BLOG_POSTS = Array.from({ length: 27 }, (_, i) => ({
   id: i + 1,

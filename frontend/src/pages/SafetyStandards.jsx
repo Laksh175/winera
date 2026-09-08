@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
 import { ShieldCheck } from 'lucide-react';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
-import safetyBg from '../assets/safety-standard-hero-bg.png';
+import safetyBg from '../assets/safety-standard-hero-bg.webp';
 import safetyStandardImg1 from '../assets/safety-standard-img1.webp';
 import safetyStandardBg2 from '../assets/safety-standard-bg-2.webp';
 import safetyStandard2 from '../assets/safety-standard-2.webp';

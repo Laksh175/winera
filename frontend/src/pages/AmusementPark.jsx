@@ -6,7 +6,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import amusementHeroBg from '../assets/amusement-park-hero-bg.png';
+import amusementHeroBg from '../assets/amusement-park-hero-bg.webp';
 import amusementSupplierCollage from '../assets/amusement-supplier-collage.webp';
 import amusementSetupsCollage from '../assets/amusement-setups-collage.webp';
 import amusementOptionsBg from '../assets/amusement-options-bg.webp';
@@ -496,7 +496,7 @@ export default function AmusementPark({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, whiteSpace: 'nowrap' }}>
+            <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.amusementWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>

@@ -43,7 +43,7 @@ export default function ClientsMarqueeSection({
           })()}
         </SectionHeading>
 
-        <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
+        <p style={{ color: '#334155', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
           {subtitle}
         </p>
 

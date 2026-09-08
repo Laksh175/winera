@@ -7,7 +7,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import arHeroBg from '../assets/argame-hero-bg.png';
+import arHeroBg from '../assets/argame-hero-bg.webp';
 import arSupplierCollage from '../assets/ar-supplier-collage.webp';
 import arAttractionsGraphic from '../assets/ar-attractions-graphic.webp';
 import arFeaturesBg from '../assets/ar-features-bg.webp';
@@ -16,14 +16,14 @@ import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
 import needConsultationsBg from '../assets/cta-consultations-banner.webp';
 import homeBlock1 from '../assets/home-block-1.webp';
-import vrCtaRightImg from '../assets/vr-cta-right-img.png';
+import vrCtaRightImg from '../assets/vr-cta-right-img.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
-import superAirHockeyImg from '../assets/super-air-hockey.jpg';
-import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.jpg';
-import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.jpg';
-import auroraAirHockeyImg from '../assets/aurora-air-hockey.jpg';
-import ochaAirHockeyImg from '../assets/ocha-air-hockey.jpg';
-import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.jpg';
+import superAirHockeyImg from '../assets/super-air-hockey.webp';
+import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.webp';
+import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.webp';
+import auroraAirHockeyImg from '../assets/aurora-air-hockey.webp';
+import ochaAirHockeyImg from '../assets/ocha-air-hockey.webp';
+import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.webp';
 
 const airHockeyImageMap = {
   "Super Air Hockey": superAirHockeyImg,

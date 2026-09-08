@@ -9,14 +9,14 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import ClientsMarqueeSection from '../components/ClientsMarqueeSection';
 import CtaBanner from '../components/CtaBanner';
 import MotionCardFlip from '../components/MotionCardFlip';
-import heroBg from '../assets/home-page-banner-bg.png';
+import heroBg from '../assets/home-page-banner-bg.webp';
 import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
 import about3 from '../assets/about-3.webp';
 import aboutCollage from '../assets/about-collage.webp';
 import qualityBadge from '../assets/quality-badge.webp';
 import productsBg from '../assets/products-bg.webp';
-import homePageBanner from '../assets/home-page banner.png';
+import homePageBanner from '../assets/home-page banner.webp';
 import partnerBg from '../assets/partner-bg.webp';
 import whyChooseBg from '../assets/why-choose-bg.webp';
 import indMall from '../assets/ind-mall.webp';
@@ -25,19 +25,23 @@ import indSchool from '../assets/ind-school.webp';
 import homeBlockBg from '../assets/home-block.webp';
 import homeBlock1 from '../assets/home-block-1.webp';
 import homeBlock2 from '../assets/home-block-2.webp';
-import homeRightSign from '../assets/home-right-sign.png';
+import homeRightSign from '../assets/home-right-sign.webp';
 import { Check, ArrowRight, ShieldCheck, ChevronLeft, ChevronRight, LayoutGrid, ShoppingBag, Palette, Wrench, CheckCheck, UserCheck } from 'lucide-react';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
-    return url;
-  }
+  let finalUrl = url;
   if (url.startsWith('/uploads')) {
     const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${url}`;
+    finalUrl = `http://${hostname}:5001${url}`;
+  }
+  if (finalUrl.includes('/uploads/')) {
+    finalUrl = finalUrl.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+  }
+  if (finalUrl.startsWith('http://') || finalUrl.startsWith('https://') || finalUrl.startsWith('data:')) {
+    return finalUrl;
   }
   return fallback;
 };
@@ -233,8 +237,25 @@ export default function Home({ siteData }) {
           alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
-          color: '#ffffff'
+          color: '#ffffff',
+          overflow: 'hidden'
         }}>
+          <img
+            src={heroBg}
+            alt=""
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 1,
+              pointerEvents: 'none'
+            }}
+          />
           <div className="winera-hero-animate" style={{ width: '100%', maxWidth: '880px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
             {/* Badge */}
             <div style={{
@@ -331,7 +352,7 @@ export default function Home({ siteData }) {
                         <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982l-1.412 5.16 5.281-1.385c1.455.794 3.1 1.213 4.787 1.214h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.668-1.037-5.176-2.923-7.061-1.886-1.885-4.394-2.922-7.066-2.922zm5.834 14.168c-.247.694-1.222 1.282-1.688 1.341-.466.06-1.047.098-1.696-.109-.4-.128-.918-.298-1.583-.585-2.822-1.222-4.664-4.084-4.806-4.273-.141-.188-1.144-1.523-1.144-2.905 0-1.381.724-2.062.981-2.343.257-.282.564-.352.752-.352.188 0 .376.002.54.01.174.008.411-.066.643.49.235.564.8 1.95.87 2.091.07.141.117.306.023.494-.094.188-.141.306-.282.47-.141.164-.298.367-.424.494-.141.141-.289.294-.125.576.164.282.729 1.202 1.564 1.946 1.074.956 1.98 1.253 2.262 1.394.282.141.447.117.611-.07.164-.188.705-.823.893-1.105.188-.282.376-.235.634-.141.258.094 1.644.775 1.926.916.282.141.47.211.54.329.07.117.07.681-.177 1.375z" />
                       </svg>
                     </div>
-                    <span>{hero?.ctaPrimaryText || "Plan Your Game Zone"}</span>
+                    <span>{(hero?.ctaPrimaryText || "Plan Your Game Zone").replace(/\s*\(WhatsApp\)/gi, '')}</span>
                   </a>
                 </div>
               );
@@ -503,7 +524,7 @@ export default function Home({ siteData }) {
                 <img
                   src={siteData?.aboutHome?.rightImgUrl || aboutCollage}
                   alt="About Winera International"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   width={520}
                   height={480}
@@ -630,11 +651,25 @@ export default function Home({ siteData }) {
                   return (
                     <div
                       key={idx}
+                      role="button"
+                      tabIndex={0}
+                      aria-expanded={isExpanded}
+                      aria-label={`View ${prod.title} equipment`}
                       onClick={() => {
                         if (isExpanded) {
                           navigate(targetLink);
                         } else {
                           setActiveProductIndex(idx);
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          if (isExpanded) {
+                            navigate(targetLink);
+                          } else {
+                            setActiveProductIndex(idx);
+                          }
                         }
                       }}
                       onMouseEnter={() => setActiveProductIndex(idx)}
@@ -647,11 +682,35 @@ export default function Home({ siteData }) {
                         cursor: 'pointer',
                         transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
                         boxShadow: isExpanded ? '0 16px 36px rgba(2, 132, 199, 0.22)' : '0 4px 12px rgba(0,0,0,0.06)',
-                        background: isExpanded
-                          ? '#0f172a'
-                          : `linear-gradient(180deg, rgba(38, 168, 237, 0.70) 0%, rgba(2, 125, 190, 0.80) 100%), url(${prod.img}) center/cover no-repeat`
+                        background: '#0f172a'
                       }}
                     >
+                      {/* Product Card Image with Native Lazy Loading */}
+                      <img
+                        src={getValidImageUrl(prod.img, '')}
+                        alt={prod.title}
+                        loading="lazy"
+                        decoding="async"
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          zIndex: 0
+                        }}
+                      />
+
+                      {/* Gradient / Overlay */}
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: isExpanded
+                          ? 'rgba(15, 23, 42, 0.2)'
+                          : 'linear-gradient(180deg, rgba(38, 168, 237, 0.70) 0%, rgba(2, 125, 190, 0.80) 100%)',
+                        zIndex: 1
+                      }} />
+
                       {isExpanded ? (
                         <div style={{
                           width: '100%',
@@ -659,8 +718,8 @@ export default function Home({ siteData }) {
                           display: 'flex',
                           flexDirection: 'column',
                           justifyContent: 'space-between',
-                          background: `url(${prod.img}) center/cover no-repeat`,
-                          position: 'relative'
+                          position: 'relative',
+                          zIndex: 2
                         }}>
                           <div style={{ flex: 1, minHeight: '120px' }}></div>
                           <div
@@ -933,7 +992,16 @@ export default function Home({ siteData }) {
                     return (
                       <div
                         key={idx}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Select industry ${ind.title}`}
                         onClick={() => setActiveIndustryIndex(idx)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setActiveIndustryIndex(idx);
+                          }
+                        }}
                         className={`winera-industry-card ${isCenter ? 'is-center-card' : 'is-side-card'}`}
                         style={{
                           position: 'absolute',
@@ -947,9 +1015,23 @@ export default function Home({ siteData }) {
                           zIndex: zIndexMap[offset],
                           transform: `translate3d(${translateXMap[offset]}, ${translateYMap[offset]}, 0) scale(${scaleMap[offset]})`,
                           boxShadow: isCenter ? '0 25px 50px rgba(0, 0, 0, 0.4)' : '0 12px 28px rgba(0,0,0,0.18)',
-                          background: `url(${ind.img}) center/cover no-repeat`
+                          background: '#0f172a'
                         }}
                       >
+                        <img
+                          src={getValidImageUrl(ind.img, '')}
+                          alt={ind.title}
+                          loading="lazy"
+                          decoding="async"
+                          style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            zIndex: 0
+                          }}
+                        />
                         {isCenter && (
                           <div style={{
                             position: 'absolute',
@@ -1292,7 +1374,7 @@ export default function Home({ siteData }) {
               })()}
             </SectionHeading>
 
-            <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
+            <p style={{ color: '#334155', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
               {siteData?.whyChooseUs?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
             </p>
 
@@ -1318,6 +1400,11 @@ export default function Home({ siteData }) {
                   <img
                     src={homeRightSign}
                     alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    decoding="async"
+                    width={42}
+                    height={42}
                     style={{
                       width: '42px',
                       height: '42px',
@@ -1330,7 +1417,7 @@ export default function Home({ siteData }) {
                     <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
                       {item.title}
                     </h4>
-                    <p style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, margin: 0 }}>
+                    <p style={{ fontSize: '12px', color: '#334155', fontWeight: '500', lineHeight: 1.5, margin: 0 }}>
                       {item.desc}
                     </p>
                   </div>

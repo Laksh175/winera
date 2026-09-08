@@ -6,14 +6,14 @@ import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 
-import projectBanner from '../assets/main-project-bg.png';
+import projectBanner from '../assets/main-project-bg.webp';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
 import projectImage01 from '../assets/project-image01.webp';
 import projectImage3 from '../assets/project-image-3.webp';
 import projectImage4 from '../assets/project-image-4.webp';
-import projectCtaBg from '../assets/project-cta-bg.png';
+import projectCtaBg from '../assets/project-cta-bg.webp';
 import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
 
 const resolveProjectImg = (proj) => {

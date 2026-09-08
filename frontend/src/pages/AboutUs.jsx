@@ -5,17 +5,17 @@ import MotionCardFlip from '../components/MotionCardFlip';
 import CountUpNumber from '../components/CountUpNumber';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
-import aboutHeroBg from '../assets/about-us-banner.png';
+import aboutHeroBg from '../assets/about-us-banner.webp';
 import about1 from '../assets/about-01.webp';
 import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
-import aboutUsTopBg from '../assets/about-us-image-1.png';
-import aboutUsBottomBg from '../assets/about-us-image-2.png';
+import aboutUsTopBg from '../assets/about-us-image-1.webp';
+import aboutUsBottomBg from '../assets/about-us-image-2.webp';
 import wineraWBadge from '../assets/winera-w-badge.webp';
 import founderUnnit from '../assets/founder-unnit.webp';
 import aboutLounge from '../assets/about-lounge.webp';
 import welcomeWineraImg from '../assets/welcome-to-winera.webp';
-import aboutusCtaBg from '../assets/aboutus-cta-bg.png';
+import aboutusCtaBg from '../assets/aboutus-cta-bg.webp';
 import { Shield, Users, Target, Eye, TrendingUp, Maximize2, Clock, RefreshCw, Award, Headset, Settings } from 'lucide-react';
 
 const getValidImageUrl = (url, fallback) => {

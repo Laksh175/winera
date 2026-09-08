@@ -67,7 +67,17 @@ export default function FaqSection({
               return (
                 <div
                   key={globalIdx}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isOpen}
+                  aria-label={`Toggle FAQ: ${item.q || item.question}`}
                   onClick={() => setActiveFaqIndex(isOpen ? -1 : globalIdx)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveFaqIndex(isOpen ? -1 : globalIdx);
+                    }
+                  }}
                   style={{
                     background: '#ffffff',
                     borderRadius: '16px',
@@ -96,7 +106,7 @@ export default function FaqSection({
                       flexShrink: 0,
                       transition: 'all 0.3s'
                     }}>
-                      <ChevronDown style={{
+                      <ChevronDown aria-hidden="true" style={{
                         width: '16px',
                         height: '16px',
                         transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -131,7 +141,17 @@ export default function FaqSection({
               return (
                 <div
                   key={globalIdx}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isOpen}
+                  aria-label={`Toggle FAQ: ${item.q || item.question}`}
                   onClick={() => setActiveFaqIndex(isOpen ? -1 : globalIdx)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveFaqIndex(isOpen ? -1 : globalIdx);
+                    }
+                  }}
                   style={{
                     background: '#ffffff',
                     borderRadius: '16px',
@@ -160,7 +180,7 @@ export default function FaqSection({
                       flexShrink: 0,
                       transition: 'all 0.3s'
                     }}>
-                      <ChevronDown style={{
+                      <ChevronDown aria-hidden="true" style={{
                         width: '16px',
                         height: '16px',
                         transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',

@@ -427,6 +427,20 @@ html {
 .winera-reveal-delay-4, .delay-4 { animation-delay: 0.46s !important; }
 .winera-reveal-delay-5, .delay-5 { animation-delay: 0.58s !important; }
 
+/* Mobile Animation Safety: Ensure elements are visible on mobile first load */
+@media (max-width: 768px) {
+  .winera-reveal,
+  .winera-reveal-left,
+  .winera-reveal-right,
+  .fade-up-right,
+  .fade-up-left,
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
 /* Immediate Hover Response (Override transition-delay on hover) */
 .winera-process-card-wrapper-cyan:hover,
 .winera-process-card-wrapper-yellow:hover,
@@ -2118,15 +2132,16 @@ html {
   }
 
   .winera-bowling-roi-section {
-    padding: 50px 5vw 55px !important;
+    padding: 65px 4vw !important;
   }
 
   .winera-bowling-roi-grid {
     grid-template-columns: 1fr !important;
+    border-radius: 24px !important;
   }
 
   .winera-bowling-roi-text {
-    padding: 0 !important;
+    padding: 42px 24px !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -4405,7 +4420,7 @@ textarea::placeholder,
     padding: 8px 6px !important;
   }
   .winera-trampoline-inside-frame {
-    padding: 30px 16px 24px !important;
+    padding: 60px 16px 55px !important;
     background-size: cover !important;
   }
   .winera-zone-tabs-bar {
@@ -5322,4 +5337,378 @@ img[src*="yellow-stroke-line"] {
 h2,
 .winera-section-heading-container h2 {
   font-family: 'Black Han Sans', 'Montserrat', sans-serif !important;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS FIXES FOR HYPERGRID, TRAMPOLINE PARK & BUMPER CAR
+   ========================================================================== */
+
+@media (max-width: 992px) {
+  /* --- Hypergrid Page --- */
+  .winera-hypergrid-supplier-grid,
+  .winera-hypergrid-banner-grid,
+  .winera-hypergrid-whyus-grid,
+  .winera-hypergrid-roi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center !important;
+  }
+
+  .winera-hypergrid-supplier-text,
+  .winera-hypergrid-banner-text,
+  .winera-hypergrid-roi-text {
+    text-align: center !important;
+  }
+
+  .winera-hypergrid-roi-img {
+    margin-top: 0 !important;
+  }
+
+  .winera-hypergrid-specs-container {
+    padding: 35px 20px !important;
+    border-radius: 24px !important;
+  }
+
+  .winera-hypergrid-specs-table-wrapper {
+    max-width: 100% !important;
+    padding: 16px 14px !important;
+  }
+
+  .winera-hypergrid-whywinera-row {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .winera-hypergrid-whyus-vertical-divider,
+  .winera-hypergrid-whyus-horizontal-divider {
+    display: none !important;
+  }
+
+  /* --- Trampoline Park Page --- */
+  .winera-trampoline-intro-grid,
+  .winera-trampoline-roi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center !important;
+  }
+
+  .winera-trampoline-intro-text,
+  .winera-trampoline-roi-grid > div {
+    text-align: center !important;
+  }
+
+  .winera-trampoline-intro-text p,
+  .winera-trampoline-roi-grid p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .winera-trampoline-mascot-img {
+    position: static !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 20px auto 0 !important;
+  }
+
+  .winera-trampoline-mascot-img img {
+    width: 120px !important;
+  }
+
+  .winera-trampoline-custom-container {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .winera-trampoline-custom-container > div:first-child {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .winera-trampoline-specs-card {
+    padding: 30px 18px !important;
+    border-radius: 24px !important;
+    min-height: auto !important;
+  }
+
+  .winera-trampoline-inside-frame {
+    padding: 60px 16px 55px !important;
+  }
+
+  .winera-trampoline-specs-card > div {
+    max-width: 100% !important;
+  }
+
+  .winera-trampoline-zone-card {
+    grid-template-columns: 1fr !important;
+    padding: 24px 18px !important;
+    gap: 20px !important;
+    min-height: auto !important;
+  }
+
+  .winera-trampoline-zone-card img {
+    max-height: 200px !important;
+  }
+
+  .winera-why-top-grid,
+  .winera-why-bottom-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .winera-v-line {
+    display: none !important;
+  }
+
+  /* --- Bumper Car Page --- */
+  .winera-bumpercar-supplier-grid,
+  .winera-bumpercar-intro-grid,
+  .winera-bumpercar-options-grid,
+  .winera-bumpercar-investment-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center !important;
+  }
+
+  .winera-bumpercar-supplier-text,
+  .winera-bumpercar-intro-text,
+  .winera-bumpercar-options-text,
+  .winera-bumpercar-investment-text {
+    text-align: center !important;
+  }
+
+  .winera-bumpercar-intro-text h2,
+  .winera-bumpercar-intro-text p,
+  .winera-bumpercar-investment-text p {
+    text-align: center !important;
+  }
+
+  .winera-bumpercar-thrill-card {
+    padding: 28px 18px 24px !important;
+    border-radius: 20px !important;
+  }
+
+  .winera-bumpercar-specs-container {
+    padding: 35px 18px !important;
+    border-radius: 24px !important;
+    min-height: auto !important;
+  }
+
+  .winera-bumpercar-specs-table-card {
+    max-width: 100% !important;
+    padding: 20px 14px !important;
+  }
+
+  .winera-bumpercar-comparison-desktop {
+    display: none !important;
+  }
+
+  .winera-bumpercar-comparison-mobile {
+    display: flex !important;
+  }
+
+  .winera-bumpercar-whyus-top-row,
+  .winera-bumpercar-whyus-bottom-row {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .winera-bumpercar-whyus-divider {
+    display: none !important;
+  }
+}
+
+@media (max-width: 992px) {
+  /* --- Soft Play Page --- */
+  .winera-softplay-supplier-grid,
+  .winera-softplay-intro-grid,
+  .winera-softplay-materials-grid,
+  .winera-softplay-roi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center !important;
+  }
+
+  .winera-softplay-supplier-text,
+  .winera-softplay-intro-text,
+  .winera-softplay-materials-text,
+  .winera-softplay-roi-text {
+    text-align: center !important;
+  }
+
+  .winera-softplay-supplier-text p,
+  .winera-softplay-intro-text p,
+  .winera-softplay-materials-text p,
+  .winera-softplay-roi-text p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+
+  .winera-softplay-specs-container {
+    padding: 35px 18px !important;
+    border-radius: 24px !important;
+    min-height: auto !important;
+  }
+
+  .winera-softplay-specs-table-card {
+    max-width: 100% !important;
+    padding: 20px 14px !important;
+  }
+
+  .winera-softplay-timeline-line,
+  .winera-softplay-timeline-badge-assembly {
+    display: none !important;
+  }
+
+  .winera-softplay-timeline-row {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .winera-softplay-whyus-top-row,
+  .winera-softplay-whyus-bottom-row {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .winera-softplay-whyus-divider,
+  .winera-softplay-whyus-horizontal-divider {
+    display: none !important;
+  }
+
+  /* --- Amusement Park Page --- */
+  .winera-amusement-supplier-grid,
+  .winera-amusement-banner-grid,
+  .winera-amusement-options-grid,
+  .winera-amusement-roi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center !important;
+  }
+
+  .winera-amusement-supplier-text,
+  .winera-amusement-banner-text,
+  .winera-amusement-roi-grid > div {
+    text-align: center !important;
+  }
+
+  .winera-amusement-supplier-text p,
+  .winera-amusement-banner-text p,
+  .winera-amusement-roi-grid p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+
+  .winera-amusement-whyus-row {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .winera-amusement-whyus-vertical-divider,
+  .winera-amusement-whyus-horizontal-divider {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Common Header Stroke Line Alignment */
+  .winera-hypergrid-supplier-text img,
+  .winera-hypergrid-banner-text img,
+  .winera-hypergrid-whyus-section img,
+  .winera-hypergrid-roi-section img,
+  .winera-trampoline-intro-text img,
+  .winera-trampoline-custom-section img,
+  .winera-trampoline-specs-section img,
+  .winera-trampoline-inside-section img,
+  .winera-trampoline-roi-earn-section img,
+  .winera-trampoline-why-choose-section img,
+  .winera-bumpercar-supplier-text img,
+  .winera-bumpercar-options-text img,
+  .winera-bumpercar-investment-text img,
+  .winera-bumpercar-whyus-section img,
+  .winera-softplay-supplier-text img,
+  .winera-softplay-intro-text img,
+  .winera-softplay-materials-text img,
+  .winera-softplay-roi-text img,
+  .winera-softplay-whyus-section img,
+  .winera-amusement-supplier-text img,
+  .winera-amusement-banner-text img,
+  .winera-amusement-whyus-section img {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Headings Sizing Fix */
+  .winera-hypergrid-supplier-text h2,
+  .winera-hypergrid-banner-text h2,
+  .winera-hypergrid-specs-container h2,
+  .winera-hypergrid-whyus-section h2,
+  .winera-hypergrid-roi-section h2,
+  .winera-hypergrid-whywinera-section h2,
+  .winera-trampoline-intro-text h2,
+  .winera-trampoline-custom-section h2,
+  .winera-trampoline-specs-card h2,
+  .winera-trampoline-inside-section h2,
+  .winera-trampoline-roi-earn-section h2,
+  .winera-trampoline-why-choose-section h2,
+  .winera-bumpercar-supplier-text h2,
+  .winera-bumpercar-intro-text h2,
+  .winera-bumpercar-options-text h2,
+  .winera-bumpercar-comparison-section h2,
+  .winera-bumpercar-investment-text h2,
+  .winera-bumpercar-whyus-section h2,
+  .winera-softplay-supplier-text h2,
+  .winera-softplay-intro-text h2,
+  .winera-softplay-specs-container h2,
+  .winera-softplay-materials-text h2,
+  .winera-softplay-timeline-section h2,
+  .winera-softplay-roi-text h2,
+  .winera-softplay-whyus-section h2,
+  .winera-amusement-supplier-text h2,
+  .winera-amusement-banner-text h2,
+  .winera-amusement-options-section h2,
+  .winera-amusement-whyus-section h2 {
+    font-size: 1.75rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .winera-trampoline-cta-card h2,
+  .winera-cta-h2 {
+    font-size: 1.65rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .winera-hypergrid-supplier-text h2,
+  .winera-hypergrid-banner-text h2,
+  .winera-hypergrid-specs-container h2,
+  .winera-hypergrid-whyus-section h2,
+  .winera-hypergrid-roi-section h2,
+  .winera-hypergrid-whywinera-section h2,
+  .winera-trampoline-intro-text h2,
+  .winera-trampoline-custom-section h2,
+  .winera-trampoline-specs-card h2,
+  .winera-trampoline-inside-section h2,
+  .winera-trampoline-roi-earn-section h2,
+  .winera-trampoline-why-choose-section h2,
+  .winera-bumpercar-supplier-text h2,
+  .winera-bumpercar-intro-text h2,
+  .winera-bumpercar-options-text h2,
+  .winera-bumpercar-comparison-section h2,
+  .winera-bumpercar-investment-text h2,
+  .winera-bumpercar-whyus-section h2,
+  .winera-softplay-supplier-text h2,
+  .winera-softplay-intro-text h2,
+  .winera-softplay-specs-container h2,
+  .winera-softplay-materials-text h2,
+  .winera-softplay-timeline-section h2,
+  .winera-softplay-roi-text h2,
+  .winera-softplay-whyus-section h2,
+  .winera-amusement-supplier-text h2,
+  .winera-amusement-banner-text h2,
+  .winera-amusement-options-section h2,
+  .winera-amusement-whyus-section h2 {
+    font-size: 1.45rem !important;
+  }
 }

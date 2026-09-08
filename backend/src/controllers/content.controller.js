@@ -98,7 +98,7 @@ export const defaultSiteData = {
   hero: {
     title: "India's Trusted Game Zone Equipment Manufacturer & Supplier",
     subtitle: "India's ROI-First Game Zone Developer from bowling alleys and trampoline parks to arcade zones and VR gaming & complete indoor amusement park setup, installed by our own team across 50+ cities.",
-    ctaPrimaryText: "Plan Your Game Zone (WhatsApp)",
+    ctaPrimaryText: "Plan Your Game Zone",
     ctaPrimaryLink: "https://wa.me/919428989488",
     ctaSecondaryText: "Explore Products",
     ctaSecondaryLink: "#products",

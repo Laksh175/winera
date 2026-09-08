@@ -7,7 +7,7 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import LeadCaptureModal from '../components/LeadCaptureModal';
-import trampolineParkBg from '../assets/trampoline-park-hero-bg.png';
+import trampolineParkBg from '../assets/trampoline-park-hero-bg.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
 import qualityBadge from '../assets/quality-badge.webp';
@@ -18,7 +18,7 @@ import trampolineImg3 from '../assets/trampoline-img-3.webp';
 import tampolineImg4 from '../assets/tampoline-img-4.webp';
 import tampolineImg5 from '../assets/tampoline-img-5.webp';
 import tampolineImage6 from '../assets/tampoline-image-6.webp';
-import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.png';
+import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.webp';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -259,8 +259,7 @@ export default function TrampolinePark({ siteData }) {
             gap: '8px',
             margin: 0,
             lineHeight: 1.2,
-            textAlign: 'center',
-            whiteSpace: 'nowrap'
+            textAlign: 'center'
           }}>
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&gt;</span>
@@ -509,7 +508,7 @@ export default function TrampolinePark({ siteData }) {
           position: 'relative',
           width: '100%',
           background: `url(${tampolineImg4}) center center / 100% 100% no-repeat`,
-          padding: '45px 0',
+          padding: '70px 0',
           overflow: 'hidden'
         }}>
           {/* Inner Content Centered Container */}
@@ -755,7 +754,7 @@ export default function TrampolinePark({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, whiteSpace: 'nowrap' }} className="winera-why-h2">
+            <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }} className="winera-why-h2">
               {renderTitleMarkup(siteData?.trampolineWhyChoose?.title, "Why Choose *Winera International*", '#28b4ee')}
             </h2>
           </div>

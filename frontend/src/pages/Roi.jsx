@@ -5,7 +5,7 @@ import { BarChart2, Edit3, Shield, Database, Users, Settings, AlertTriangle, Tre
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
-import roiBgImage from '../assets/roi-hero-bg.png';
+import roiBgImage from '../assets/roi-hero-bg.webp';
 import roiImg1 from '../assets/roi-img1.webp';
 import roiImage3bg from '../assets/roi-image-3bg.webp';
 import roiBlock5Img1 from '../assets/roi-block5-img1.webp';

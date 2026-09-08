@@ -69,7 +69,7 @@ export default function ProjectsMarqueeSection({
             </div>
 
             <div style={{ textAlign: 'left', maxWidth: '420px', flex: '0 1 420px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '14px' }}>
-              <p style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+              <p style={{ color: '#334155', fontSize: '13.5px', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
                 {subtext}
               </p>
               <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
@@ -102,6 +102,11 @@ export default function ProjectsMarqueeSection({
                   const cardSlug = proj.slug || (proj.name || proj.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                   const href = cardSlug ? `/project/${cardSlug}` : '/project';
 
+                  const imgSrc = proj.imageUrl || proj.img || projHulaboo;
+                  const finalImgSrc = (typeof imgSrc === 'string' && imgSrc.includes('/uploads/'))
+                    ? imgSrc.replace(/\.(png|jpg|jpeg)$/i, '.webp')
+                    : imgSrc;
+
                   return (
                     <a
                       key={idx}
@@ -113,13 +118,27 @@ export default function ProjectsMarqueeSection({
                         overflow: 'hidden',
                         position: 'relative',
                         boxShadow: '0 12px 30px rgba(0,0,0,0.12)',
-                        background: `url(${proj.imageUrl || proj.img || projHulaboo}) center/cover no-repeat`,
+                        background: '#0f172a',
                         cursor: 'pointer',
                         flexShrink: 0,
                         textDecoration: 'none',
                         display: 'block'
                       }}
                     >
+                      <img
+                        src={finalImgSrc}
+                        alt={proj.name || proj.title || "Built Game Zone"}
+                        loading="lazy"
+                        decoding="async"
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          zIndex: 0
+                        }}
+                      />
                       <div style={{
                         position: 'absolute',
                         inset: 0,
@@ -127,7 +146,8 @@ export default function ProjectsMarqueeSection({
                         display: 'flex',
                         alignItems: 'flex-end',
                         justifyContent: 'space-between',
-                        padding: '20px 22px'
+                        padding: '20px 22px',
+                        zIndex: 1
                       }}>
                         <div style={{ textAlign: 'left' }}>
                           <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#ffffff', marginBottom: '2px', textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>

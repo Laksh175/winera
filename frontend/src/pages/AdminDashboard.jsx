@@ -39,8 +39,8 @@ import {
 import blogCardImg from '../assets/blog-images.webp';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
-import vrCtaRightImg from '../assets/vr-cta-right-img.png';
-import vrBlock1 from '../assets/vr-block-1.png';
+import vrCtaRightImg from '../assets/vr-cta-right-img.webp';
+import vrBlock1 from '../assets/vr-block-1.webp';
 import wineraLogo from '../assets/logo.webp';
 
 import projectBanner from '../assets/project-banner.webp';
@@ -54,7 +54,7 @@ import projectBlock2 from '../assets/project-block2.webp';
 import projectBlock3 from '../assets/project-block3.webp';
 import projectSectionVideo from '../assets/project-section-video.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
-import projectCtaBg from '../assets/project-cta-bg.png';
+import projectCtaBg from '../assets/project-cta-bg.webp';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
@@ -99,26 +99,26 @@ import homeBlock1 from '../assets/home-block-1.webp';
 import homeBlock2 from '../assets/home-block-2.webp';
 import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
-import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.png';
+import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.webp';
 import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
-import aboutusCtaBg from '../assets/aboutus-cta-bg.png';
+import aboutusCtaBg from '../assets/aboutus-cta-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 import bowlingHeroBg from '../assets/bowling-hero-bg.webp';
 import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
 import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
 import bumpercarOptionsBg from '../assets/bumpercar-options-bg.webp';
-import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.jpg';
+import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
-import bumperCarCtaLeft from '../assets/bumperCar-cta-left.png';
-import bumperCarCtaRight from '../assets/bumperCar-cta-right.png';
+import bumperCarCtaLeft from '../assets/bumperCar-cta-left.webp';
+import bumperCarCtaRight from '../assets/bumperCar-cta-right.webp';
 import vrHeroBg from '../assets/vr-hero-bg.webp';
 import vrSupplierCollage from '../assets/vr-supplier-collage.webp';
 import vrMatchedVenueDirect from '../assets/vr-matched-venue-direct.webp';
 import vrCommercialReliability from '../assets/vr-commercial-reliability.webp';
 import vrRoiFrame from '../assets/vr-roi-frame.webp';
-import vrEarnPlayer from '../assets/vr-earn-player.jpg';
+import vrEarnPlayer from '../assets/vr-earn-player.webp';
 import arHeroBg from '../assets/ar-hero-bg.webp';
 import arSupplierCollage from '../assets/ar-supplier-collage.webp';
 import arAttractionsGraphic from '../assets/ar-attractions-graphic.webp';
@@ -135,12 +135,12 @@ import amusementCtaBg from '../assets/cta-consultations-banner.webp';
 import amusementLeftImg from '../assets/amusement-park-left-img.webp';
 import amusementRightImg from '../assets/amusement-park-right-img.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
-import superAirHockeyImg from '../assets/super-air-hockey.jpg';
-import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.jpg';
-import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.jpg';
-import auroraAirHockeyImg from '../assets/aurora-air-hockey.jpg';
-import ochaAirHockeyImg from '../assets/ocha-air-hockey.jpg';
-import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.jpg';
+import superAirHockeyImg from '../assets/super-air-hockey.webp';
+import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.webp';
+import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.webp';
+import auroraAirHockeyImg from '../assets/aurora-air-hockey.webp';
+import ochaAirHockeyImg from '../assets/ocha-air-hockey.webp';
+import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.webp';
 import maskGroupImg from '../assets/Mask-group.webp';
 import maskGroup01Img from '../assets/Mask-group-01.webp';
 
@@ -16119,7 +16119,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     type="text"
                     value={formData.aboutWhyUsDetail?.bgUrl || ''}
                     onChange={(e) => handleFieldChange('aboutWhyUsDetail', 'bgUrl', e.target.value)}
-                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-us-image-1.png)"
+                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-us-image-1.webp)"
                     style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
                   />
                   <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
@@ -16150,7 +16150,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     type="text"
                     value={formData.aboutWhyUsDetail?.bottomBgUrl || ''}
                     onChange={(e) => handleFieldChange('aboutWhyUsDetail', 'bottomBgUrl', e.target.value)}
-                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-us-image-2.png)"
+                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-us-image-2.webp)"
                     style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
                   />
                   <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
@@ -22573,7 +22573,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               type="text"
                               value={modalItemData.basicInfoBg || ''}
                               onChange={(e) => setModalItemData(prev => ({ ...prev, basicInfoBg: e.target.value }))}
-                              placeholder="Image URL or Asset Path (e.g. /src/assets/project-images-bg.png)"
+                              placeholder="Image URL or Asset Path (e.g. /src/assets/project-images-bg.webp)"
                               style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
                             />
                             {modalItemData.basicInfoBg && (

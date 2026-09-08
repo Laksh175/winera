@@ -10,14 +10,14 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 
 import wineraLogo from '../assets/logo.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
-import bowlingHeroBg from '../assets/bowlling-hero-bg.png';
+import bowlingHeroBg from '../assets/bowlling-hero-bg.webp';
 import bowlingImg from '../assets/bowling.webp';
 import maskGroupImg from '../assets/Mask-group.webp';
 import maskGroup01Img from '../assets/Mask-group-01.webp';
 import vectorImg from '../assets/Vector.webp';
 import bowlingPinsExplode from '../assets/bowling-pins-explode.webp';
 import bowlingBallPinsBlue from '../assets/bowling-ball-pins-blue.webp';
-import bowlingTypesBg from '../assets/bowlling-bg.png';
+import bowlingTypesBg from '../assets/bowlling-bg.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeBoy from '../assets/arcade-boy.webp';
@@ -29,7 +29,7 @@ import commercialTeam from '../assets/commercial-team.webp';
 import needConsultationsBg from '../assets/cta-consultations-banner.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
-import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.png';
+import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.webp';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
@@ -948,7 +948,7 @@ export default function BowlingAlley({ siteData }) {
       </section>
 
       {/* 3.7 INVESTMENT & ROI BANNER SECTION (FIGMA 1:1) */}
-      <section className="winera-bowling-roi-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
+      <section className="winera-bowling-roi-section" style={{ padding: '70px 4vw', background: '#F5F5F9' }}>
         <div className="winera-bowling-roi-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',

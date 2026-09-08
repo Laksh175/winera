@@ -6,7 +6,7 @@ import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import FaqSection from '../components/FaqSection';
 import { Phone, Mail, Building2, Globe, CheckCircle2, MapPin } from 'lucide-react';
-import contactUsHeroBg from '../assets/contact-us-banner-bg.png';
+import contactUsHeroBg from '../assets/contact-us-banner-bg.webp';
 import aboutHeroBg from '../assets/about-hero-bg.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 
