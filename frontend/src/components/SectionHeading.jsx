@@ -11,7 +11,15 @@ function parseStarText(children) {
   return parts.map((part, index) => {
     if (index % 2 === 1) {
       return (
-        <span key={index} style={{ color: '#00a8ff' }}>
+        <span key={index} style={{
+          color: '#00a8ff',
+          fontFamily: "'Black Han Sans', sans-serif",
+          fontWeight: '400',
+          fontStyle: 'normal',
+          fontSize: 'inherit',
+          lineHeight: 'inherit',
+          letterSpacing: 'inherit'
+        }}>
           {part}
         </span>
       );
@@ -82,11 +90,12 @@ export default function SectionHeading({
           )}
           <h2 style={{
             fontFamily: "'Black Han Sans', sans-serif",
-            fontSize: '2.8rem',
-            fontWeight: '900',
+            fontSize: '50px',
+            fontWeight: '400',
+            fontStyle: 'normal',
             color: '#0f172a',
-            letterSpacing: '-0.5px',
-            lineHeight: 1.15
+            letterSpacing: '0px',
+            lineHeight: '60px'
           }}>
             {parseStarText(children)}
           </h2>
@@ -143,11 +152,12 @@ export default function SectionHeading({
       )}
       <h2 style={{
         fontFamily: "'Black Han Sans', sans-serif",
-        fontSize: '2.8rem',
-        fontWeight: '900',
+        fontSize: '50px',
+        fontWeight: '400',
+        fontStyle: 'normal',
         color: '#0f172a',
-        letterSpacing: '-0.5px',
-        lineHeight: 1.15
+        letterSpacing: '0px',
+        lineHeight: '60px'
       }}>
         {parseStarText(children)}
       </h2>

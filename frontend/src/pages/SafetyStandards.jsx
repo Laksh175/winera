@@ -48,7 +48,7 @@ export default function SafetyStandards({ siteData }) {
   }, [siteData]);
 
   return (
-    <div style={{ background: 'rgb(241, 241, 246)', color: '#0f172a', minHeight: '100vh', fontFamily: 'Montserrat, sans-serif', overflowX: 'hidden' }}>
+    <div style={{ background: 'rgb(241, 241, 246)', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflowX: 'hidden' }}>
       {/* 1. HEADER */}
       <Header headerData={header} />
 
@@ -730,7 +730,7 @@ export default function SafetyStandards({ siteData }) {
                         <ShieldCheck size={22} strokeWidth={2.2} />
                       </div>
                       <span className="winera-safety-watermark-num" style={{
-                        fontFamily: "'Montserrat', sans-serif",
+                        fontFamily: "'Open Sans', sans-serif",
                         fontSize: '8.6rem',
                         fontWeight: '800',
                         color: '#f0f3f7',

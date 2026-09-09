@@ -80,9 +80,9 @@ export default function Header({ headerData }) {
         under 900px / 600px - desktop layout is untouched.
       */}
       <style>{`
-        .winera-header { font-family: 'Montserrat', sans-serif !important; }
-        .winera-nav-desktop { display: flex; font-family: 'Montserrat', sans-serif !important; }
-        .winera-nav-desktop a, .winera-nav-desktop span { font-family: 'Montserrat', sans-serif !important; }
+        .winera-header { font-family: 'Open Sans', sans-serif !important; }
+        .winera-nav-desktop { display: flex; font-family: 'Open Sans', sans-serif !important; }
+        .winera-nav-desktop a, .winera-nav-desktop span { font-family: 'Open Sans', sans-serif !important; }
         .winera-socials-desktop { display: flex; }
         .winera-hamburger { display: none; }
         .winera-logo-img { height: 48px; }
@@ -144,7 +144,7 @@ export default function Header({ headerData }) {
         alignItems: 'center',
         justifyContent: 'space-between',
         transition: 'all 0.3s ease',
-        fontFamily: "'Montserrat', sans-serif"
+        fontFamily: "'Open Sans', sans-serif"
       }}>
         {/* 1. Official Winera Logo */}
         <Link to="/" onClick={() => setMobileMenuOpen(false)} aria-label="Winera International Home" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
@@ -472,7 +472,7 @@ export default function Header({ headerData }) {
 
         {/* 3. Social Icons Grid, Admin Portal & Mobile Hamburger */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div className="winera-socials-desktop" style={{ alignItems: 'center', gap: '10px' }}>
+          <div className="winera-socials-desktop desktop-socials" style={{ alignItems: 'center', gap: '10px' }}>
             <a href={facebookUrl} target="_blank" rel="noreferrer" aria-label="Facebook" style={{
               width: '34px',
               height: '34px',
@@ -537,7 +537,7 @@ export default function Header({ headerData }) {
           {/* Mobile Hamburger Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="winera-hamburger"
+            className="winera-hamburger mobile-hamburger-btn"
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
             style={{
@@ -548,7 +548,6 @@ export default function Header({ headerData }) {
               width: '42px',
               height: '42px',
               fontSize: '20px',
-              display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',

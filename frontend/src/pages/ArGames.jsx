@@ -762,8 +762,7 @@ export default function ArGames({ siteData }) {
                         boxShadow: '0 8px 24px rgba(0, 0, 0, 0.03)',
                         textAlign: 'center',
                         transition: 'transform 0.3s ease, boxShadow 0.3s ease'
-                      }}
-                    >
+                      }} >
                       {/* Inner Image Container with White Card Frame */}
                       <div style={{
                         borderRadius: '16px',

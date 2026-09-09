@@ -176,19 +176,27 @@ export const defaultSiteData = {
   testimonials: [
     {
       founderImage: "",
-      gameZoneName: "House of pepe",
-      reviewerRole: "Founder & Business Owner, Larana Inc.",
+      gameZoneName: "Rebounce Game Zone",
+      reviewerRole: "Surat",
       starRating: 5,
       youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      quote: "When we were planning our game zone, Winera International made the entire process effortless. One meeting was enough! They handled layout design to installation."
+      quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
     },
     {
       founderImage: "",
-      gameZoneName: "Hulaboo Family Fun Zone",
-      reviewerRole: "Director & General Manager, Surat",
+      gameZoneName: "Fun Houze",
+      reviewerRole: "Surat",
       starRating: 5,
       youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      quote: "Winera International exceeded our expectations! They guided us on ROI planning, equipment selection, and setup for our game zone in Surat."
+      quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
+    },
+    {
+      founderImage: "",
+      gameZoneName: "Hulaboo Game Zone",
+      reviewerRole: "Surat",
+      starRating: 5,
+      youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
     }
   ],
   about: {

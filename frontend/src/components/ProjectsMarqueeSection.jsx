@@ -2,15 +2,17 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
+import projectImage01 from '../assets/project-image01.webp';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
 
 const defaultProjects = [
-  { title: "Hulaboo", location: "Surat", img: projHulaboo },
-  { title: "Nenopanda", location: "Indore", img: projNeon1 },
-  { title: "Nenopanda", location: "Indore", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-  { title: "Nenopanda", location: "Indore", img: projSoft1 }
+  { name: "Hulaboo", title: "Hulaboo", city: "Surat", location: "Surat", slug: "hulaboo", img: projHulaboo },
+  { name: "Playzonia", title: "Playzonia", city: "Surat", location: "Surat", slug: "playzonia", img: projSoft1 },
+  { name: "FifthAlley Sport Bowling", title: "FifthAlley Sport Bowling", city: "Surat", location: "Surat", slug: "fifthalley-sport-bowling", img: projectImage01 },
+  { name: "Nenopanda", title: "Nenopanda", city: "Indore", location: "Indore", slug: "neon-panda", img: projNeon1 },
+  { name: "FizzyFox", title: "FizzyFox", city: "Nashik", location: "Nashik", slug: "fizzyfox", img: projSoft1 }
 ];
 
 export default function ProjectsMarqueeSection({
@@ -23,7 +25,7 @@ export default function ProjectsMarqueeSection({
   bg = '#F5F5F9',
   buttonText = "View All",
   showBottomButton = false,
-  accentWidth = '510px',
+  accentWidth = '250px',
   accentMaxWidth = '100%',
   accentHeight = '11px',
   accentMarginBottom = '8px',
@@ -37,9 +39,9 @@ export default function ProjectsMarqueeSection({
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
         {showTopHeader ? (
           <div style={{
-            maxWidth: '1240px',
+            maxWidth: '1340px',
             margin: '0 auto 45px',
-            padding: '0 4vw',
+            padding: '0 5vw',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -102,7 +104,7 @@ export default function ProjectsMarqueeSection({
                   const cardSlug = proj.slug || (proj.name || proj.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                   const href = cardSlug ? `/project/${cardSlug}` : '/project';
 
-                  const imgSrc = proj.imageUrl || proj.img || projHulaboo;
+                  const imgSrc = proj.img || proj.imageUrl || proj.imgUrl || projHulaboo;
                   const finalImgSrc = (typeof imgSrc === 'string' && imgSrc.includes('/uploads/'))
                     ? imgSrc.replace(/\.(png|jpg|jpeg)$/i, '.webp')
                     : imgSrc;
@@ -112,12 +114,12 @@ export default function ProjectsMarqueeSection({
                       key={idx}
                       href={href}
                       style={{
-                        width: '280px',
-                        height: '340px',
+                        width: '350px',
+                        height: '350px',
                         borderRadius: '24px',
                         overflow: 'hidden',
                         position: 'relative',
-                        boxShadow: '0 12px 30px rgba(0,0,0,0.12)',
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.12)',
                         background: '#0f172a',
                         cursor: 'pointer',
                         flexShrink: 0,
@@ -142,24 +144,27 @@ export default function ProjectsMarqueeSection({
                       <div style={{
                         position: 'absolute',
                         inset: 0,
-                        background: 'linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%)',
+                        background: 'linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.85) 100%)',
                         display: 'flex',
                         alignItems: 'flex-end',
                         justifyContent: 'space-between',
-                        padding: '20px 22px',
+                        padding: '16px 20px',
                         zIndex: 1
                       }}>
                         <div style={{ textAlign: 'left' }}>
-                          <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#ffffff', marginBottom: '2px', textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
+                          <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#ffffff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
                             {proj.name || proj.title}
                           </h3>
-                          <p style={{ fontSize: '12px', color: '#cbd5e1', fontWeight: '600', textTransform: 'capitalize' }}>
+                          <p style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.75)', fontWeight: '400', margin: '2px 0 0 0', textTransform: 'capitalize' }}>
                             {proj.city || proj.location}
                           </p>
                         </div>
 
-                        <div style={{ color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <ArrowRight style={{ width: '18px', height: '18px', color: '#ffffff' }} />
+                        <div style={{ color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.9 }}>
+                          <svg width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="2" cy="7" r="1.5" fill="white" />
+                            <path d="M2 7H20M20 7L14 1M20 7L14 13" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
                         </div>
                       </div>
                     </a>

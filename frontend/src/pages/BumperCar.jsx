@@ -12,10 +12,10 @@ import bumpercarHeroBg from '../assets/bumper-car-hero-bg.webp';
 import bumpercarCollageFrame from '../assets/bumpercar-collage-frame.webp';
 import bumpercar3dNeon from '../assets/bumpercar-3d-neon.webp';
 import bumpercarSpecsBg from '../assets/bumpercar-specs-bg.webp';
-import bumpercarOptionsBg from '../assets/bumpercar-options-bg.webp';
+import bumpercarOptionsBg from '../assets/bumper-car-bg.png';
 import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.webp';
-import bumpercarInvestmentCollage from '../assets/bumpercar-investment-collage.webp';
-import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
+import bumpercarInvestmentCollage from '../assets/bumpercar-options-collage.webp';
+import bumpercarCtaBannerBg from '../assets/cta-consultations-banner.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
 import bumperCarCtaLeft from '../assets/bumperCar-cta-left.webp';
 import bumperCarCtaRight from '../assets/bumperCar-cta-right.webp';
@@ -449,7 +449,7 @@ export default function BumperCar({ siteData }) {
       <section className="winera-bumpercar-options-section" style={{
         width: '100%',
         padding: '80px 4vw 90px',
-        background: `url(${siteData?.bumpercarOptions?.bgUrl || bumpercarOptionsBg}) center/100% 100% no-repeat`,
+        background: `url(${getValidImageUrl(siteData?.bumpercarOptions?.bgUrl, bumpercarOptionsBg)}) center/100% 100% no-repeat`,
         overflow: 'hidden'
       }}>
         <div className="winera-bumpercar-options-grid" style={{

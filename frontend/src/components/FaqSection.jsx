@@ -16,7 +16,7 @@ export default function FaqSection({
   accentHeight = '11px',
   accentMarginBottom = '8px',
   accentAlign = 'left-inline',
-  accentStyle = {}
+  accentStyle = { margin: '0px 15% 8px' }
 }) {
   const [activeFaqIndex, setActiveFaqIndex] = useState(-1);
 
@@ -91,7 +91,7 @@ export default function FaqSection({
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-                    <h3 style={{ fontSize: '1.02rem', fontWeight: '800', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
+                    <h3 style={{ fontSize: '1.02rem', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
                       {item.q || item.question}
                     </h3>
                     <div style={{
@@ -120,6 +120,7 @@ export default function FaqSection({
                       fontSize: '13.5px',
                       lineHeight: 1.65,
                       fontWeight: '500',
+                      letterSpacing: '0px',
                       marginTop: '14px',
                       paddingTop: '12px',
                       borderTop: '1px solid #f1f5f9'
@@ -165,7 +166,7 @@ export default function FaqSection({
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-                    <h3 style={{ fontSize: '1.02rem', fontWeight: '800', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
+                    <h3 style={{ fontSize: '1.02rem', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
                       {item.q || item.question}
                     </h3>
                     <div style={{
@@ -194,6 +195,7 @@ export default function FaqSection({
                       fontSize: '13.5px',
                       lineHeight: 1.65,
                       fontWeight: '500',
+                      letterSpacing: '0px',
                       marginTop: '14px',
                       paddingTop: '12px',
                       borderTop: '1px solid #f1f5f9'

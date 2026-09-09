@@ -149,7 +149,7 @@ export default function Hypergrid({ siteData }) {
   }, [siteData]);
 
   return (
-    <div style={{ background: '#f5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: 'Montserrat, sans-serif', overflowX: 'hidden' }}>
+    <div style={{ background: '#f5f5f9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflowX: 'hidden' }}>
       {/* 1. HEADER */}
       <Header headerData={header} />
 

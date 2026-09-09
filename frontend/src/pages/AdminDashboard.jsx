@@ -107,8 +107,8 @@ import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 import bowlingHeroBg from '../assets/bowling-hero-bg.webp';
 import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
-import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
-import bumpercarOptionsBg from '../assets/bumpercar-options-bg.webp';
+import bumpercarCtaBannerBg from '../assets/cta-consultations-banner.webp';
+import bumpercarOptionsBg from '../assets/bumper-car-bg.png';
 import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
 import bumperCarCtaLeft from '../assets/bumperCar-cta-left.webp';
@@ -1599,7 +1599,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       label: 'Header Page',
       icon: <Layout style={{ width: '18px', height: '18px' }} />,
       sections: [
-        { id: 'header', name: 'Header Social Links' }
+        { id: 'header', name: 'Header Details & Logo' }
       ]
     },
     footerPage: {
@@ -4558,7 +4558,32 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {(formData.testimonials || []).map((item, idx) => (
+                    {((Array.isArray(formData.testimonials) && formData.testimonials.length > 0)
+                      ? formData.testimonials
+                      : [
+                          {
+                            gameZoneName: "Rebounce Game Zone",
+                            reviewerRole: "Surat",
+                            starRating: 5,
+                            youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                            quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
+                          },
+                          {
+                            gameZoneName: "Fun Houze",
+                            reviewerRole: "Surat",
+                            starRating: 5,
+                            youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                            quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
+                          },
+                          {
+                            gameZoneName: "Hulaboo Game Zone",
+                            reviewerRole: "Surat",
+                            starRating: 5,
+                            youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                            quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
+                          }
+                        ]
+                    ).map((item, idx) => (
                       <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
                         <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
                         <td style={{ padding: '14px 18px' }}>
@@ -5492,54 +5517,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
-
-              {/* Section Background Image Upload */}
-              <div>
-                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Background Image (Cyan Graphic Frame) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
-                </label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <label style={{
-                    background: '#38bdf8',
-                    color: '#fff',
-                    padding: '10px 18px',
-                    borderRadius: '12px',
-                    fontWeight: '800',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        setStatusMsg('Uploading background image...');
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.arcadeCommercial || {}), bgUrl: res.url };
-                          setFormData(prev => ({ ...prev, arcadeCommercial: updated }));
-                          await persistSectionToDatabase('arcadeCommercial', updated);
-                          setStatusMsg('Background image uploaded successfully!');
-                        } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                        }
-                      }}
-                      style={{ display: 'none' }}
-                    />
-                  </label>
-                  {formData.arcadeCommercial?.bgUrl && (
-                    <img src={formData.arcadeCommercial.bgUrl} alt="" style={{ width: '80px', height: '40px', borderRadius: '8px', objectFit: 'cover', border: '2px solid #38bdf8' }} />
-                  )}
-                </div>
-              </div>
-
-
-
               {/* Team Photo Upload */}
               <div>
                 <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -6774,43 +6751,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              {/* Section Background Image Upload */}
-              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
-                  Section Background Image (Blue Graphic Frame) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
-                </h4>
-                <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>Background Frame Graphic</label>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                      <Upload style={{ width: '13px', height: '13px' }} /> Upload Background Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading background image...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.softplayMaterials || {}), bgUrl: res.url };
-                            setFormData(prev => ({ ...prev, softplayMaterials: updated }));
-                            await persistSectionToDatabase('softplayMaterials', updated);
-                            setStatusMsg('Background image uploaded!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                    {formData.softplayMaterials?.bgUrl && (
-                      <img src={formData.softplayMaterials.bgUrl} alt="" style={{ height: '35px', width: '75px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #38bdf8' }} />
-                    )}
-                  </div>
-                </div>
-              </div>
-
               {/* Photo Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                 <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
@@ -7267,49 +7207,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              {/* Section Background Image Upload */}
-              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
-                  Section Background Image (Cyan Graphic Frame) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
-                </h4>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  {formData.softplayRoi?.bgUrl ? (
-                    <img src={formData.softplayRoi.bgUrl} alt="" style={{ width: '100px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '2px solid #38bdf8' }} />
-                  ) : (
-                    <div style={{ width: '100px', height: '50px', borderRadius: '8px', background: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: '#64748b', fontWeight: '700' }}>Default BG</div>
-                  )}
-                  <input
-                    type="text"
-                    value={formData.softplayRoi?.bgUrl || ''}
-                    onChange={(e) => handleFieldChange('softplayRoi', 'bgUrl', e.target.value)}
-                    placeholder="Background Image URL"
-                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
-                  />
-                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload BG Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          setStatusMsg('Uploading background image...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.softplayRoi || {}), bgUrl: res.url };
-                            setFormData(prev => ({ ...prev, softplayRoi: updated }));
-                            await persistSectionToDatabase('softplayRoi', updated);
-                            setStatusMsg('Background image uploaded!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }
-                      }}
-                    />
-                  </label>
-                </div>
-              </div>
 
               {/* Section Image Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
@@ -9091,36 +8988,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What Makes Hypergrid the Right Choice</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                        Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
-                      </label>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                        <img src={bgImg} alt="BG Preview" style={{ width: '60px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
-                        <input
-                          type="text"
-                          value={currentSec.bgUrl || ''}
-                          onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), bgUrl: e.target.value } }))}
-                          placeholder="Background Image URL"
-                          style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                        Left Column Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
-                      </label>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                        <img src={leftImg} alt="Left Preview" style={{ width: '60px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
-                        <input
-                          type="text"
-                          value={currentSec.leftImgUrl || ''}
-                          onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), leftImgUrl: e.target.value } }))}
-                          placeholder="Left Image URL"
-                          style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
-                        />
-                      </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Left Column Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                      <img src={leftImg} alt="Left Preview" style={{ width: '60px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
+                      <input
+                        type="text"
+                        value={currentSec.leftImgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), leftImgUrl: e.target.value } }))}
+                        placeholder="Left Image URL"
+                        style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                      />
                     </div>
                   </div>
 
@@ -10296,41 +10176,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <textarea
                     rows={3}
                     placeholder="Option 2 Description"
-                    value={formData.bumpercarOptions?.option2Desc || "Self-contained rides running on rechargeable batteries — no floor grid or ceiling rig required. Ideal for malls, gaming zones, and temporary event setups where floor modification is not possible or where the operator wants the flexibility to relocate the attraction."}
+                    value={formData.bumpercarOptions?.option2Desc || "Self-contained rides running on rechargeable batteries — no floor grid or ceiling mesh required. Ideal for multi-purpose venues, temporary setups, and operators seeking lower initial infrastructure costs with maximum operational flexibility."}
                     onChange={(e) => handleFieldChange('bumpercarOptions', 'option2Desc', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                   />
-                </div>
-              </div>
-
-
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Container Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
-                </label>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        setStatusMsg('Uploading options background image...');
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          handleFieldChange('bumpercarOptions', 'bgUrl', res.url);
-                          setStatusMsg('Options background image uploaded successfully!');
-                        } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                        }
-                      }}
-                      style={{ display: 'none' }}
-                    />
-                  </label>
-                  <img src={getAdminValidImageUrl(formData.bumpercarOptions?.bgUrl, bumpercarOptionsBg)} alt="BG Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
               </div>
 
@@ -12231,52 +12080,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>AR Features & Highlights Settings</h3>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Tech Frame Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 1080 px (Section BG)</span>
-                </label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <label style={{
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    padding: '10px 18px',
-                    borderRadius: '12px',
-                    fontWeight: '800',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Tech Frame Background Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        setStatusMsg('Uploading tech frame background...');
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.arFeatures || {}), bgUrl: res.url };
-                          setFormData(prev => ({ ...prev, arFeatures: updated }));
-                          await persistSectionToDatabase('arFeatures', updated);
-                          setStatusMsg('Image uploaded successfully!');
-                        } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                        }
-                      }}
-                      style={{ display: 'none' }}
-                    />
-                  </label>
-                  <img
-                    src={getAdminValidImageUrl(formData.arFeatures?.bgUrl, arFeaturesBg)}
-                    alt="Bg Preview"
-                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
-                  />
-                </div>
-              </div>
-
               {/* Feature 1 */}
               <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0284c7' }}>Feature Row #1</h4>
@@ -13709,57 +13512,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>What Will Your VR Gaming Zone Earn Section</h3>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    Section Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 600 px (2:1)</span>
-                  </label>
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                    <label style={{
-                      background: '#38bdf8',
-                      color: '#ffffff',
-                      padding: '10px 18px',
-                      borderRadius: '12px',
-                      fontWeight: '800',
-                      fontSize: '13px',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      <Upload style={{ width: '16px', height: '16px' }} /> Background Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading ROI section background...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.vrEarn || {}), bgUrl: res.url };
-                            setFormData(prev => ({ ...prev, vrEarn: updated }));
-                            await persistSectionToDatabase('vrEarn', updated);
-                            setStatusMsg('Image uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                    <img
-                      src={getAdminValidImageUrl(formData.vrEarn?.bgUrl, vrRoiFrame)}
-                      alt="Background Preview"
-                      style={{ width: '100px', height: '55px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    Right Graphic Image (VR Player) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
-                  </label>
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Graphic Image (VR Player) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                </label>
                   <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                     <label style={{
                       background: '#38bdf8',
@@ -13801,7 +13557,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                 </div>
-              </div>
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
@@ -16109,67 +15864,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
-              {/* Top Mindmap Background Image */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Top Mindmap Section Background Image URL (Top Half BG) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 1920 × 1080 px</span>
-                </label>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <input
-                    type="text"
-                    value={formData.aboutWhyUsDetail?.bgUrl || ''}
-                    onChange={(e) => handleFieldChange('aboutWhyUsDetail', 'bgUrl', e.target.value)}
-                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-us-image-1.webp)"
-                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
-                  />
-                  <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
-                    <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
-                    Upload
-                    <input
-                      type="file"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      onChange={async (e) => {
-                        if (e.target.files?.[0]) {
-                          const res = await uploadImageFile(e.target.files[0], admin.token);
-                          handleFieldChange('aboutWhyUsDetail', 'bgUrl', res.url);
-                        }
-                      }}
-                    />
-                  </label>
-                </div>
-              </div>
 
-              {/* Bottom 3-Card Section Background Image */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Bottom 3-Cards Section Background Image URL (Bottom Half BG) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 1920 × 1080 px</span>
-                </label>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <input
-                    type="text"
-                    value={formData.aboutWhyUsDetail?.bottomBgUrl || ''}
-                    onChange={(e) => handleFieldChange('aboutWhyUsDetail', 'bottomBgUrl', e.target.value)}
-                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-us-image-2.webp)"
-                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
-                  />
-                  <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
-                    <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
-                    Upload
-                    <input
-                      type="file"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      onChange={async (e) => {
-                        if (e.target.files?.[0]) {
-                          const res = await uploadImageFile(e.target.files[0], admin.token);
-                          handleFieldChange('aboutWhyUsDetail', 'bottomBgUrl', res.url);
-                        }
-                      }}
-                    />
-                  </label>
-                </div>
-              </div>
 
               {/* 6 Mindmap Pills */}
               <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '18px', border: '1px solid #e2e8f0' }}>
@@ -18024,36 +17719,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
                     />
                   </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                      Section Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 1920 × 1080 px</span>
-                    </label>
-                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <img src={getAdminValidImageUrl(currentSec.bgUrl, safetyStandardBg2)} alt="Section Bg" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }} />
-                      <input
-                        type="text"
-                        value={currentSec.bgUrl || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), bgUrl: e.target.value } }))}
-                        placeholder="Section Background Image URL"
-                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
-                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
-                        <input
-                          type="file"
-                          accept="image/*"
-                          style={{ display: 'none' }}
-                          onChange={async (e) => {
-                            const file = e.target.files[0];
-                            if (file) {
-                              const res = await uploadImageFile(file, admin.token);
-                              setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), bgUrl: res.url } }));
-                            }
-                          }}
-                        />
-                      </label>
-                    </div>
-                  </div>
+
 
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -20330,44 +19996,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Checklist (This is for you if)</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Section Title</label>
-                      <input
-                        type="text"
-                        value={currentSec.title !== undefined ? currentSec.title : defaultRoiChecklist.title}
-                        onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), title: e.target.value } }))}
-                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                        Inner Card Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 1080 px (Section BG)</span>
-                      </label>
-                      <div style={{ display: 'flex', gap: '10px' }}>
-                        <input
-                          type="text"
-                          value={currentSec.bgImage !== undefined ? currentSec.bgImage : defaultRoiChecklist.bgImage}
-                          onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), bgImage: e.target.value } }))}
-                          style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                        />
-                        <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
-                          <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
-                          Upload
-                          <input
-                            type="file"
-                            accept="image/*"
-                            style={{ display: 'none' }}
-                            onChange={async (e) => {
-                              if (e.target.files?.[0]) {
-                                const res = await uploadImageFile(e.target.files[0], admin.token);
-                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), bgImage: res.url } }));
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
-                    </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Main Section Title</label>
+                    <input
+                      type="text"
+                      value={currentSec.title !== undefined ? currentSec.title : defaultRoiChecklist.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), title: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -21530,15 +21166,47 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
 
 
-          {/* DYNAMIC HEADER SOCIAL LINKS MANAGEMENT FORM */}
+          {/* DYNAMIC HEADER SOCIAL LINKS & LOGO MANAGEMENT FORM */}
           {activeSection === 'header' && (() => {
             const currentSec = formData.header || defaultHeaderData;
 
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Header Social Links Settings</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Header Details & Logo Settings</h3>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {/* Header Logo Image */}
+                  <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                      Header Logo Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 240 × 60 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                      <img src={getAdminValidImageUrl(currentSec.logoUrl, wineraLogo)} alt="Header Logo" style={{ height: '48px', maxWidth: '180px', objectFit: 'contain', background: '#fff', padding: '4px 10px', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
+                      <input
+                        type="text"
+                        value={currentSec.logoUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), logoUrl: e.target.value } }))}
+                        placeholder="Header Logo Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), logoUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -21613,7 +21281,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       onClick={() => persistSectionToDatabase('header', formData.header || defaultHeaderData)}
                       style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
                     >
-                      Save Header Social Links
+                      Save Header Details
                     </button>
                   </div>
                 </div>
@@ -22972,77 +22640,76 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               {/* 5. TESTIMONIAL FIELDS */}
               {activeSection === 'testimonials' && (
                 <>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Game Zone Name</label>
                       <input
                         type="text"
                         value={modalItemData.gameZoneName || ''}
                         onChange={(e) => setModalItemData(prev => ({ ...prev, gameZoneName: e.target.value }))}
-                        placeholder="e.g. Hulaboo"
-                        style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '13px' }}
+                        placeholder="e.g. Hulaboo Game Zone"
+                        style={{ width: '100%', boxSizing: 'border-box', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '13px' }}
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Reviewer Role</label>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Reviewer Role / Location</label>
                       <input
                         type="text"
                         value={modalItemData.reviewerRole || ''}
                         onChange={(e) => setModalItemData(prev => ({ ...prev, reviewerRole: e.target.value }))}
-                        placeholder="e.g. Founder & Owner"
-                        style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        placeholder="e.g. Surat"
+                        style={{ width: '100%', boxSizing: 'border-box', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                       />
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Star Rating ({modalItemData.starRating || 5} Stars)</label>
-                      <div style={{ display: 'flex', gap: '6px', alignItems: 'center', padding: '6px 0' }}>
-                        {[1, 2, 3, 4, 5].map((starVal) => {
-                          const isFilled = starVal <= (modalItemData.starRating || 5);
-                          return (
-                            <button
-                              key={starVal}
-                              type="button"
-                              onClick={() => setModalItemData(prev => ({ ...prev, starRating: starVal }))}
+                  <div style={{ marginBottom: '12px' }}>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Star Rating ({modalItemData.starRating || 5} Stars)</label>
+                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 0' }}>
+                      {[1, 2, 3, 4, 5].map((starVal) => {
+                        const isFilled = starVal <= (modalItemData.starRating || 5);
+                        return (
+                          <button
+                            key={starVal}
+                            type="button"
+                            onClick={() => setModalItemData(prev => ({ ...prev, starRating: starVal }))}
+                            style={{
+                              background: 'none',
+                              border: 'none',
+                              cursor: 'pointer',
+                              padding: '2px',
+                              transition: 'transform 0.15s ease'
+                            }}
+                          >
+                            <Star
                               style={{
-                                background: 'none',
-                                border: 'none',
-                                cursor: 'pointer',
-                                padding: '2px',
-                                transition: 'transform 0.15s ease'
+                                width: '26px',
+                                height: '26px',
+                                color: isFilled ? '#ffcd00' : '#cbd5e1',
+                                fill: isFilled ? '#ffcd00' : 'none',
+                                strokeWidth: 2
                               }}
-                            >
-                              <Star
-                                style={{
-                                  width: '26px',
-                                  height: '26px',
-                                  color: isFilled ? '#ffcd00' : '#cbd5e1',
-                                  fill: isFilled ? '#ffcd00' : 'none',
-                                  strokeWidth: 2
-                                }}
-                              />
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
-                        YouTube Link <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '1px 5px', borderRadius: '4px', fontWeight: '700', marginLeft: '4px' }}>🎬 Video Ratio: 16:9</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={modalItemData.youtubeVideoUrl || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, youtubeVideoUrl: e.target.value }))}
-                        placeholder="https://youtube.com/..."
-                        style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
-                      />
+                            />
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 
-                  <div>
+                  <div style={{ marginBottom: '12px' }}>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
+                      YouTube Link <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '1px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '4px' }}>🎬 Video Ratio: 16:9</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={modalItemData.youtubeVideoUrl || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, youtubeVideoUrl: e.target.value }))}
+                      placeholder="https://www.youtube.com/watch?v=..."
+                      style={{ width: '100%', boxSizing: 'border-box', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                    />
+                  </div>
+
+                  <div style={{ marginBottom: '12px' }}>
                     <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
                       Upload Founder Photo <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 300 × 300 px (Square 1:1)</span>
                     </label>

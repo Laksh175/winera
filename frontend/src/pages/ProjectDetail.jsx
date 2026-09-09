@@ -17,7 +17,7 @@ import projectBlock3 from '../assets/project-block3.webp';
 import projectSectionVideo from '../assets/project-section-video.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import CtaBanner from '../components/CtaBanner';
-import bumpercarCtaBannerBg from '../assets/bumpercar-cta-banner-bg.webp';
+import bumpercarCtaBannerBg from '../assets/cta-consultations-banner.webp';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';

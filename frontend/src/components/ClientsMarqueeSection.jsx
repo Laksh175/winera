@@ -14,7 +14,7 @@ export default function ClientsMarqueeSection({
     <section id={id} className="winera-clients-section" style={{
       position: 'relative',
       width: '100%',
-      padding: '95px 0 65px',
+      padding: '120px 0 65px',
       background: `url(${bg}) center/100% 100% no-repeat`,
       minHeight: '360px',
       display: 'flex',
@@ -26,7 +26,7 @@ export default function ClientsMarqueeSection({
     }}>
       <MotionFadeIn style={{ width: '100%' }}>
       <div style={{ maxWidth: '100%', width: '100%', margin: '0 auto' }}>
-        <SectionHeading marginBottom="8px" accentWidth="280px" accentMaxWidth="340px">
+        <SectionHeading marginBottom="8px" accentWidth="500px" accentMaxWidth="500px">
           {(() => {
             const rawTitle = title || "*Our Clients* Section";
             const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);

@@ -67,7 +67,7 @@ export default function BlogDetail({ siteData }) {
   }, [post]);
 
   return (
-    <div style={{ background: '#F5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Inter', 'Montserrat', sans-serif", overflowX: 'hidden' }}>
+    <div style={{ background: '#F5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflowX: 'hidden' }}>
       {/* 1. HEADER */}
       <Header headerData={header} />
 

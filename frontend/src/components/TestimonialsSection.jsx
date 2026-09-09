@@ -9,25 +9,25 @@ import projNeon1 from '../assets/proj-neonpanda1.webp';
 
 const defaultTestimonials = [
   {
-    quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself. Rebounce today is a thriving game zone and our customers keep coming back.",
+    quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back.",
     name: "Rebounce Game Zone",
-    role: "Founder & Business Owner, Larana Inc.",
+    role: "Surat",
     img: testiOwner,
     videoImg: testiOwner,
     rating: 5
   },
   {
-    quote: "Winera International exceeded our expectations! They guided us on ROI planning, equipment selection, and setup for our Hulaboo Game Zone in Surat. Their ongoing technical support and maintenance team is top-notch. Highly recommended for anyone setting up a family entertainment center.",
-    name: "Hulaboo Family Fun Zone",
-    role: "Director & General Manager, Surat",
+    quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed.",
+    name: "Fun Houze",
+    role: "Surat",
     img: projHulaboo,
     videoImg: projHulaboo,
     rating: 5
   },
   {
-    quote: "Partnering with Winera was the best decision for Nenopanda Indore! Their 3D interior design and high-grade arcade attractions transformed our venue into the city's top gaming hotspot. Professional installation and zero downtime experience.",
-    name: "Nenopanda Trampoline & Arcade",
-    role: "Owner & Co-Founder, Indore",
+    quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised.",
+    name: "Hulaboo Family Fun Zone",
+    role: "Surat",
     img: projNeon1,
     videoImg: projNeon1,
     rating: 5
@@ -39,10 +39,10 @@ export default function TestimonialsSection({
   siteData = null,
   testimonials = defaultTestimonials,
   title = '*What Our* Clients Say',
-  subtitle = null,
+  subtitle = "We are proud to have helped businesses across India build successful game zones. Here's what our clients say about our quality, service, and support.\n\nWhen we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back.",
   highlightColor = '#00a8ff',
   bg = '#F5F5F9',
-  accentWidth = '510px',
+  accentWidth = '465px',
   accentMaxWidth = '100%',
   accentHeight = '11px',
   accentMarginBottom = '8px',
@@ -58,7 +58,6 @@ export default function TestimonialsSection({
   const { openVideoModal } = useVideoModal();
   const currentItem = list[activeIndex % list.length] || defaultTestimonials[0];
 
-  // Extract YouTube video ID to fetch official HQ thumbnail
   const getYouTubeThumbnail = (url, fallbackImg) => {
     if (!url) return fallbackImg;
     const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
@@ -68,123 +67,121 @@ export default function TestimonialsSection({
     return fallbackImg;
   };
 
-  const videoThumbnail = getYouTubeThumbnail(currentItem?.youtubeVideoUrl, currentItem?.founderImage || currentItem?.videoImg || testiOwner);
+  const videoThumbnail = getYouTubeThumbnail(currentItem?.youtubeVideoUrl, currentItem?.founderImage || currentItem?.videoImg || currentItem?.img || testiOwner);
 
   const goNext = () => setActiveIndex((prev) => (prev < list.length - 1 ? prev + 1 : 0));
   const goPrev = () => setActiveIndex((prev) => (prev > 0 ? prev - 1 : list.length - 1));
 
+  const hasMultipleTestimonials = list.length > 1;
+
   return (
-    <section id={id} style={{ padding: '40px 4vw 20px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+    <section id={id} style={{ padding: '90px 4vw 70px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         <MotionFadeIn>
-        <SectionHeading marginBottom="10px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign}>
-          {(() => {
-            const rawTitle = actualTitle || "*What Our* Clients Say";
-            const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-            return parts.map((part, index) => {
-              if (index % 2 === 1) {
-                return (
-                  <span key={index} style={{ color: highlightColor }}>
-                    {part}
-                  </span>
-                );
-              }
-              return part;
-            });
-          })()}
-        </SectionHeading>
+          <SectionHeading marginBottom="12px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign}>
+            {(() => {
+              const rawTitle = actualTitle || "*What Our* Clients Say";
+              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+              return parts.map((part, index) => {
+                if (index % 2 === 1) {
+                  return (
+                    <span key={index} style={{ color: highlightColor }}>
+                      {part}
+                    </span>
+                  );
+                }
+                return part;
+              });
+            })()}
+          </SectionHeading>
 
-        <p style={{
-          color: '#64748b',
-          fontSize: '13px',
-          fontWeight: '500',
-          lineHeight: 1.5,
-          maxWidth: '780px',
-          margin: '0 auto 24px',
-          transition: 'opacity 0.3s'
-        }}>
-          {actualSubtitle || currentItem.quote}
-        </p>
-
-        {/* ── DESKTOP LAYOUT ── */}
-        <div className="winera-testi-desktop" style={{
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          maxWidth: '1100px',
-          margin: '0 auto'
-        }}>
-          {/* Left Arrow Button */}
-          <button
-            onClick={goPrev}
-            aria-label="Previous Testimonial"
-            style={{
-              position: 'absolute',
-              left: 0,
-              zIndex: 30,
-              background: 'transparent',
-              border: 'none',
-              color: '#a0aec0',
-              cursor: 'pointer',
-              padding: '10px',
-              transition: 'color 0.2s'
-            }}
-          >
-            <ChevronLeft style={{ width: '36px', height: '36px', strokeWidth: 1.5 }} />
-          </button>
-
-          {/* Main Card Slider Container */}
-          <div style={{
-            position: 'relative',
-            width: '940px',
-            height: '280px',
-            display: 'flex',
-            alignItems: 'center'
+          <p style={{
+            color: '#475569',
+            fontSize: '14px',
+            fontWeight: '500',
+            lineHeight: 1.6,
+            maxWidth: '750px',
+            margin: '0 auto 90px',
+            textAlign: 'center',
+            whiteSpace: 'pre-line'
           }}>
-            {/* Background Faded Peek Card on Right */}
-            <div style={{
-              position: 'absolute',
-              right: 0,
-              width: '360px',
-              height: '210px',
-              background: '#ffffff',
-              borderRadius: '28px',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-              opacity: 0.85,
-              border: '1px solid #f1f5f9'
-            }}></div>
+            {actualSubtitle}
+          </p>
 
-            {/* Front White Main Content Card */}
+          {/* ── DESKTOP LAYOUT (Pop-Out Video Frame matching Image 2) ── */}
+          <div className="winera-testi-desktop" style={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            maxWidth: '1100px',
+            margin: '60px auto 20px'
+          }}>
+            {/* Left Arrow Button (Only if > 1 testimonial) */}
+            {hasMultipleTestimonials && (
+              <button
+                onClick={goPrev}
+                aria-label="Previous Testimonial"
+                style={{
+                  position: 'absolute',
+                  left: '-24px',
+                  zIndex: 30,
+                  background: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '50%',
+                  width: '48px',
+                  height: '48px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#1e293b',
+                  cursor: 'pointer',
+                  boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <ChevronLeft style={{ width: '26px', height: '26px', strokeWidth: 2 }} />
+              </button>
+            )}
+
+            {/* White Rectangle Card Container */}
             <div style={{
-              position: 'absolute',
-              left: '40px',
-              width: '640px',
-              height: '220px',
+              position: 'relative',
+              width: '100%',
               background: '#ffffff',
-              borderRadius: '28px',
-              padding: '32px 40px',
-              boxShadow: '0 10px 35px rgba(0, 0, 0, 0.04)',
+              borderRadius: '32px',
+              padding: '44px 470px 44px 48px',
+              minHeight: '340px',
+              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.04)',
+              border: '1px solid #f1f5f9',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
-              textAlign: 'left',
-              zIndex: 10
+              justifyContent: 'space-between',
+              textAlign: 'left'
             }}>
-              {/* Quote Mark */}
-              <div style={{
-                color: '#bae6fd',
-                fontSize: '2.5rem',
-                lineHeight: 0.6,
-                fontWeight: '900',
-                marginBottom: '16px',
-                fontFamily: 'serif'
-              }}>
-                ""
+              {/* Top: Star Rating & Quote */}
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '18px' }}>
+                  {[...Array(currentItem.starRating || currentItem.rating || 5)].map((_, i) => (
+                    <Star key={i} style={{ width: '18px', height: '18px', fill: '#ffcd00', color: '#ffcd00' }} />
+                  ))}
+                </div>
+
+                <p style={{
+                  color: '#334155',
+                  fontSize: '14.5px',
+                  fontStyle: 'italic',
+                  fontWeight: '500',
+                  lineHeight: 1.7,
+                  maxWidth: '520px',
+                  margin: '0 0 28px'
+                }}>
+                  "{currentItem.quote}"
+                </p>
               </div>
 
-              {/* Founder Profile & Name Row */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '14px' }}>
+              {/* Bottom: Founder / Client Profile Row */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <img
                   src={currentItem.founderImage || currentItem.img || testiOwner}
                   alt={currentItem.gameZoneName || currentItem.name}
@@ -196,7 +193,7 @@ export default function TestimonialsSection({
                   }}
                 />
                 <div>
-                  <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#00a8ff', display: 'flex', alignItems: 'center', gap: '6px', margin: 0 }}>
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#00a8ff', display: 'flex', alignItems: 'center', gap: '6px', margin: 0 }}>
                     <span>{currentItem.gameZoneName || currentItem.name}</span>
                     <span style={{
                       display: 'inline-flex',
@@ -211,244 +208,260 @@ export default function TestimonialsSection({
                       fontWeight: '900'
                     }}>✓</span>
                   </h4>
-                  <p style={{ fontSize: '11.5px', color: '#cbd5e1', fontWeight: '600', margin: '2px 0 0' }}>
-                    {currentItem.reviewerRole || currentItem.role}
+                  <p style={{ fontSize: '12px', color: '#94a3b8', fontWeight: '600', margin: '2px 0 0' }}>
+                    {currentItem.reviewerRole || currentItem.role || 'Surat'}
                   </p>
                 </div>
               </div>
 
-              {/* Star Rating Row */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                {[...Array(currentItem.starRating || currentItem.rating || 5)].map((_, i) => (
-                  <Star key={i} style={{ width: '18px', height: '18px', fill: '#ffcd00', color: '#ffcd00' }} />
-                ))}
-              </div>
-            </div>
-
-            {/* Overlapping Video Frame Pill Container matching the screenshot */}
-            <div style={{
-              position: 'absolute',
-              right: '100px',
-              width: '370px',
-              height: '240px',
-              padding: '12px',
-              borderRadius: '36px',
-              background: '#e0f2fe',
-              zIndex: 20,
-              boxShadow: '0 15px 40px rgba(0, 168, 255, 0.15)'
-            }}>
+              {/* Right Side: Floating / Pop-Out Video Frame (Exact User CSS) */}
               <div style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: '26px',
-                overflow: 'hidden',
-                position: 'relative',
-                background: `url(${videoThumbnail}) center/cover no-repeat`
+                position: 'absolute',
+                right: '65px',
+                top: '50%',
+                transform: 'translateY(-62%)',
+                width: '377px',
+                height: '377px',
+                background: 'rgb(224, 242, 254)',
+                borderRadius: '48px',
+                padding: '14px',
+                zIndex: 10,
+                boxShadow: 'rgba(0, 168, 255, 0.15) 0px 15px 40px'
               }}>
-                <button
-                  onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}
-                  aria-label="Watch Review Video"
-                  title="Watch Review Video"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'rgba(0, 0, 0, 0.25)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: 'none',
-                    cursor: 'pointer',
-                    width: '100%',
-                    height: '100%'
-                  }}
-                >
-                  <div style={{
-                    width: '56px',
-                    height: '56px',
-                    borderRadius: '50%',
-                    background: '#ffcd00',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: '0 6px 20px rgba(255, 205, 0, 0.5)',
-                    cursor: 'pointer'
-                  }}>
-                    <Play style={{ width: '22px', height: '22px', color: '#000000', fill: '#000000', marginLeft: '3px' }} />
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Arrow Button */}
-          <button
-            onClick={goNext}
-            aria-label="Next Testimonial"
-            style={{
-              position: 'absolute',
-              right: 0,
-              zIndex: 30,
-              background: 'transparent',
-              border: 'none',
-              color: '#a0aec0',
-              cursor: 'pointer',
-              padding: '10px',
-              transition: 'color 0.2s'
-            }}
-          >
-            <ChevronRight style={{ width: '36px', height: '36px', strokeWidth: 1.5 }} />
-          </button>
-        </div>
-
-        {/* ── MOBILE LAYOUT ── */}
-        <div className="winera-testi-mobile" style={{ display: 'none' }}>
-          {/* Mobile Card */}
-          <div style={{
-            background: '#ffffff',
-            borderRadius: '24px',
-            padding: '24px 20px',
-            boxShadow: '0 10px 35px rgba(0,0,0,0.07)',
-            textAlign: 'left',
-            margin: '0 4px'
-          }}>
-            {/* 1. Profile pic + Name */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-              <img
-                src={currentItem.founderImage || currentItem.img || testiOwner}
-                alt={currentItem.gameZoneName || currentItem.name}
-                style={{
-                  width: '52px',
-                  height: '52px',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  flexShrink: 0,
-                  border: '2px solid #e0f2fe'
-                }}
-              />
-              <div>
-                <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#00a8ff', margin: 0, display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  {currentItem.gameZoneName || currentItem.name}
-                  <span style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '13px',
-                    height: '13px',
-                    borderRadius: '50%',
-                    background: '#000000',
-                    color: '#ffffff',
-                    fontSize: '8px',
-                    fontWeight: '900',
-                    flexShrink: 0
-                  }}>✓</span>
-                </h4>
+                <div style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '36px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  background: `#0f172a url(${videoThumbnail}) center/cover no-repeat`
+                }}>
+                  {Boolean(currentItem.youtubeVideoUrl && String(currentItem.youtubeVideoUrl).trim()) && (
+                    <button
+                      onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}
+                      aria-label="Watch Review Video"
+                      title="Watch Review Video"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'rgba(0, 0, 0, 0.22)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        border: 'none',
+                        cursor: 'pointer',
+                        width: '100%',
+                        height: '100%'
+                      }}
+                    >
+                      <div style={{
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '50%',
+                        background: '#ffcd00',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 8px 24px rgba(255, 205, 0, 0.5)',
+                        cursor: 'pointer'
+                      }}>
+                        <Play style={{ width: '24px', height: '24px', color: '#000000', fill: '#000000', marginLeft: '3px' }} />
+                      </div>
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* 2. Role / Post */}
-            <p style={{ fontSize: '11.5px', color: '#94a3b8', fontWeight: '600', margin: '0 0 12px' }}>
-              {currentItem.reviewerRole || currentItem.role}
-            </p>
-
-            {/* 3. Star Rating */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '16px' }}>
-              {[...Array(currentItem.starRating || currentItem.rating || 5)].map((_, i) => (
-                <Star key={i} style={{ width: '17px', height: '17px', fill: '#ffcd00', color: '#ffcd00' }} />
-              ))}
-            </div>
-
-            {/* 4. Video Thumbnail */}
-            <div style={{
-              width: '100%',
-              borderRadius: '18px',
-              overflow: 'hidden',
-              position: 'relative',
-              background: `url(${videoThumbnail}) center/cover no-repeat`,
-              aspectRatio: '16/9'
-            }}>
+            {/* Right Arrow Button (Only if > 1 testimonial) */}
+            {hasMultipleTestimonials && (
               <button
-                onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}
-                title="Watch Review Video"
+                onClick={goNext}
+                aria-label="Next Testimonial"
                 style={{
                   position: 'absolute',
-                  inset: 0,
-                  background: 'rgba(0,0,0,0.28)',
+                  right: '-24px',
+                  zIndex: 30,
+                  background: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '50%',
+                  width: '48px',
+                  height: '48px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: 'none',
+                  color: '#1e293b',
                   cursor: 'pointer',
-                  width: '100%',
-                  height: '100%'
+                  boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
+                  transition: 'all 0.2s'
                 }}
               >
-                <div style={{
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  background: '#ffcd00',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 6px 20px rgba(255,205,0,0.5)'
-                }}>
-                  <Play style={{ width: '20px', height: '20px', color: '#000000', fill: '#000000', marginLeft: '3px' }} />
-                </div>
+                <ChevronRight style={{ width: '26px', height: '26px', strokeWidth: 2 }} />
               </button>
+            )}
+          </div>
+
+          {/* ── MOBILE LAYOUT ── */}
+          <div className="winera-testi-mobile" style={{ display: 'none' }}>
+            <div style={{
+              background: '#ffffff',
+              borderRadius: '24px',
+              padding: '24px 20px',
+              boxShadow: '0 10px 35px rgba(0,0,0,0.07)',
+              textAlign: 'left',
+              margin: '0 4px'
+            }}>
+              {/* Star Rating */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '14px' }}>
+                {[...Array(currentItem.starRating || currentItem.rating || 5)].map((_, i) => (
+                  <Star key={i} style={{ width: '17px', height: '17px', fill: '#ffcd00', color: '#ffcd00' }} />
+                ))}
+              </div>
+
+              {/* Quote */}
+              <p style={{
+                color: '#334155',
+                fontSize: '13.5px',
+                fontStyle: 'italic',
+                fontWeight: '500',
+                lineHeight: 1.6,
+                marginBottom: '20px'
+              }}>
+                "{currentItem.quote}"
+              </p>
+
+              {/* Profile */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                <img
+                  src={currentItem.founderImage || currentItem.img || testiOwner}
+                  alt={currentItem.gameZoneName || currentItem.name}
+                  style={{
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    flexShrink: 0
+                  }}
+                />
+                <div>
+                  <h4 style={{ fontSize: '0.98rem', fontWeight: '800', color: '#00a8ff', margin: 0, display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    {currentItem.gameZoneName || currentItem.name}
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '13px',
+                      height: '13px',
+                      borderRadius: '50%',
+                      background: '#000000',
+                      color: '#ffffff',
+                      fontSize: '8px',
+                      fontWeight: '900',
+                      flexShrink: 0
+                    }}>✓</span>
+                  </h4>
+                  <p style={{ fontSize: '11.5px', color: '#94a3b8', fontWeight: '600', margin: '2px 0 0' }}>
+                    {currentItem.reviewerRole || currentItem.role || 'Surat'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Video Thumbnail */}
+              <div style={{
+                width: '100%',
+                borderRadius: '24px',
+                overflow: 'hidden',
+                position: 'relative',
+                background: `#000 url(${videoThumbnail}) center/cover no-repeat`,
+                aspectRatio: '16/10'
+              }}>
+                {Boolean(currentItem.youtubeVideoUrl && String(currentItem.youtubeVideoUrl).trim()) && (
+                  <button
+                    onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}
+                    title="Watch Review Video"
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(0,0,0,0.28)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: 'none',
+                      cursor: 'pointer',
+                      width: '100%',
+                      height: '100%'
+                    }}
+                  >
+                    <div style={{
+                      width: '52px',
+                      height: '52px',
+                      borderRadius: '50%',
+                      background: '#ffcd00',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 6px 20px rgba(255,205,0,0.5)'
+                    }}>
+                      <Play style={{ width: '22px', height: '22px', color: '#000000', fill: '#000000', marginLeft: '3px' }} />
+                    </div>
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* Mobile Navigation Controls */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '20px',
-            marginTop: '20px'
-          }}>
-            <button
-              onClick={goPrev}
-              aria-label="Previous Testimonial"
-              style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '50%',
-                background: '#ffffff',
-                border: '2px solid #e2e8f0',
+            {/* Mobile Navigation Controls (Only if > 1) */}
+            {hasMultipleTestimonials && (
+              <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                cursor: 'pointer',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
-              }}
-            >
-              <ChevronLeft aria-hidden="true" style={{ width: '22px', height: '22px', color: '#475569' }} />
-            </button>
+                gap: '20px',
+                marginTop: '20px'
+              }}>
+                <button
+                  onClick={goPrev}
+                  aria-label="Previous Testimonial"
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '50%',
+                    background: '#ffffff',
+                    border: '2px solid #e2e8f0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
+                  }}
+                >
+                  <ChevronLeft aria-hidden="true" style={{ width: '22px', height: '22px', color: '#475569' }} />
+                </button>
 
-            <span style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a' }}>
-              {activeIndex + 1} / {testimonials.length}
-            </span>
+                <span style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a' }}>
+                  {activeIndex + 1} / {list.length}
+                </span>
 
-            <button
-              onClick={goNext}
-              aria-label="Next Testimonial"
-              style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '50%',
-                background: '#00a8ff',
-                border: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                boxShadow: '0 4px 14px rgba(0,168,255,0.35)'
-              }}
-            >
-              <ChevronRight aria-hidden="true" style={{ width: '22px', height: '22px', color: '#ffffff' }} />
-            </button>
+                <button
+                  onClick={goNext}
+                  aria-label="Next Testimonial"
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '50%',
+                    background: '#00a8ff',
+                    border: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 14px rgba(0,168,255,0.35)'
+                  }}
+                >
+                  <ChevronRight aria-hidden="true" style={{ width: '22px', height: '22px', color: '#ffffff' }} />
+                </button>
+              </div>
+            )}
           </div>
-        </div>
         </MotionFadeIn>
       </div>
     </section>
