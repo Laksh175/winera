@@ -38,6 +38,7 @@ import about4 from '../assets/about-4.webp';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
+import downloadButtonImg from '../assets/download-button.png';
 
 import { Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight } from 'lucide-react';
 
@@ -897,18 +898,7 @@ export default function BowlingAlley({ siteData }) {
                 {siteData?.bowlingString?.p2 || "String systems have fewer moving parts, which means quieter lanes, easier maintenance your own team can handle, and a compact footprint that fits where a full 89 ft lane won't. That's why family entertainment centers, malls, resorts, and cafés choose them. Lower to set up, lower to run, and quick to start earning."}
               </p>
 
-              <div style={{ position: 'relative', display: 'inline-block', marginBottom: '45px' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-3px',
-                  bottom: '-3px',
-                  left: '-4px',
-                  right: '-4px',
-                  background: '#ffcd00',
-                  borderRadius: '10px',
-                  transform: 'rotate(-1.8deg)',
-                  zIndex: 1
-                }} />
+              <div style={{ marginBottom: '45px' }}>
                 <a
                   href={siteData?.bowlingString?.brochureUrl || "#"}
                   target="_blank"
@@ -916,18 +906,22 @@ export default function BowlingAlley({ siteData }) {
                   download
                   aria-label="Download String Bowling Brochure"
                   style={{
-                    position: 'relative',
-                    zIndex: 2,
-                    background: '#38bdf8',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '225px',
+                    height: '63px',
+                    paddingTop: '5px',
+                    background: `url(${downloadButtonImg}) center center / 100% 100% no-repeat`,
                     color: '#ffffff',
-                    fontSize: '14px',
-                    fontWeight: '800',
-                    padding: '12px 28px',
-                    borderRadius: '10px',
-                    border: '1.5px solid #ffcd00',
-                    boxShadow: 'none',
-                    display: 'inline-block',
-                    textDecoration: 'none'
+                    fontSize: '14.5px',
+                    fontWeight: '600',
+                    textAlign: 'center',
+                    lineHeight: 1,
+                    textDecoration: 'none',
+                    border: 'none',
+                    outline: 'none',
+                    cursor: 'pointer'
                   }}
                 >
                   {siteData?.bowlingString?.brochureBtnText || "Download Our Brochure"}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -28,6 +28,8 @@ import groupImg from '../assets/group-image.webp';
 import roiBlock5Img1 from '../assets/roi-block5-img1.webp';
 import roiBlock5Img4 from '../assets/roi-block5-img4.webp';
 import softPalyImage from '../assets/soft-paly-image.webp';
+import downloadButtonImg from '../assets/download-button.png';
+import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -75,6 +77,8 @@ import { useVideoModal } from '../context/VideoModalContext';
 
 export default function SoftPlay({ siteData }) {
   const { openVideoModal } = useVideoModal();
+  const [visibleCount, setVisibleCount] = useState(1);
+  const typesSectionRef = useRef(null);
   const softplaySeo = siteData?.softplaySeo || {
     pageTitle: "Top Soft Play Equipment Manufacturers in India | Winera International",
     metaDescription: "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget."
@@ -285,14 +289,14 @@ export default function SoftPlay({ siteData }) {
       {/* 5. TECHNICAL SPECIFICATIONS SECTION (MATCHING FIGMA 1:1) */}
       <section className="winera-softplay-specs-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
         <div className="winera-softplay-specs-container" style={{
-          maxWidth: '1200px',
+          maxWidth: '1075px',
           margin: '0 auto',
           position: 'relative',
           borderRadius: '40px',
           overflow: 'hidden',
           background: `url(${siteData?.softplaySpecs?.bgUrl || softplaySpecsBg}) center/cover no-repeat`,
           boxShadow: '0 25px 50px rgba(6, 19, 45, 0.3)',
-          padding: '60px 60px 50px',
+          padding: '60px 60px 50px 40px',
           minHeight: '520px',
           display: 'flex',
           flexDirection: 'column',
@@ -313,19 +317,19 @@ export default function SoftPlay({ siteData }) {
           {/* Center Table Card with White Background & Yellow Border Stroke matching Screenshot 1:1 */}
           <div className="winera-softplay-specs-table-card" style={{
             width: '100%',
-            maxWidth: '560px',
+            maxWidth: '590px',
             boxSizing: 'border-box',
             background: '#ffffff',
             borderRadius: '28px',
             border: '2.5px solid #ffcd00',
-            padding: '28px 32px',
+            padding: '28px 40px',
             boxShadow: '0 25px 50px rgba(0, 0, 0, 0.25)'
           }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1.5px solid #e2e8f0' }}>
-                  <th style={{ paddingBottom: '16px', fontSize: '22px', fontWeight: '800', color: '#0f172a', width: '44%' }}>Specification</th>
-                  <th style={{ paddingBottom: '16px', fontSize: '22px', fontWeight: '800', color: '#0f172a' }}>Details</th>
+                  <th style={{ paddingBottom: '16px', fontSize: '22px', fontWeight: '800', color: '#0f172a', width: '48%', paddingRight: '20px' }}>Specification</th>
+                  <th style={{ paddingBottom: '16px', fontSize: '22px', fontWeight: '800', color: '#0f172a', paddingLeft: '25px' }}>Details</th>
                 </tr>
               </thead>
               <tbody>
@@ -334,8 +338,8 @@ export default function SoftPlay({ siteData }) {
                   : defaultSpecsList
                 ).map((row, idx, arr) => (
                   <tr key={idx} style={{ borderBottom: idx === arr.length - 1 ? 'none' : '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '12px 12px 12px 0', fontWeight: '500', color: '#334155', fontSize: '14px', lineHeight: 1.5, wordBreak: 'break-word' }}>{row.spec}</td>
-                    <td style={{ padding: '12px 0', fontWeight: '500', color: '#334155', fontSize: '14px', lineHeight: 1.5, wordBreak: 'break-word' }}>{row.details}</td>
+                    <td style={{ padding: '12px 24px 12px 0', fontWeight: '500', color: '#334155', fontSize: '14px', lineHeight: 1.5, wordBreak: 'break-word' }}>{row.spec}</td>
+                    <td style={{ padding: '12px 0 12px 25px', fontWeight: '500', color: '#334155', fontSize: '14px', lineHeight: 1.5, wordBreak: 'break-word' }}>{row.details}</td>
                   </tr>
                 ))}
               </tbody>
@@ -427,7 +431,7 @@ export default function SoftPlay({ siteData }) {
       </section>
 
       {/* 7. TYPES OF SOFT PLAY ZONES WE DESIGN & INSTALL */}
-      <section className="winera-softplay-timeline-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
+      <section ref={typesSectionRef} className="winera-softplay-timeline-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
           <motion.div
@@ -453,13 +457,12 @@ export default function SoftPlay({ siteData }) {
             <motion.div
               className="winera-softplay-timeline-line"
               initial={{ scaleY: 0 }}
-              whileInView={{ scaleY: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: 'easeOut' }}
+              animate={{ scaleY: 1 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
               style={{
                 position: 'absolute',
                 top: '80px',
-                bottom: '80px',
+                bottom: visibleCount < (Array.isArray(siteData?.softplayTypes?.typesList) ? siteData.softplayTypes.typesList.length : 4) ? '25px' : '40px',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 width: '2.5px',
@@ -470,167 +473,274 @@ export default function SoftPlay({ siteData }) {
             />
 
             {/* Timeline Steps (Zig-Zag Left / Right Layout matching Figma 1:1) */}
-            {(Array.isArray(siteData?.softplayTypes?.typesList) && siteData.softplayTypes.typesList.length > 0
-              ? siteData.softplayTypes.typesList
-              : defaultTypesList
-            ).map((stepItem, idx, arr) => {
-              const defaultImgs = [about1, about2, about3, about4];
-              const imgUrl = stepItem.img || siteData?.softplayTypes?.[`step${idx + 1}Img`] || defaultImgs[idx % defaultImgs.length];
-              const alignLeft = idx % 2 === 1;
+            {(() => {
+              const typesList = (Array.isArray(siteData?.softplayTypes?.typesList) && siteData.softplayTypes.typesList.length > 0
+                ? siteData.softplayTypes.typesList
+                : defaultTypesList
+              );
+              const visibleList = typesList.slice(0, visibleCount);
 
               return (
-                <div
-                  key={idx}
-                  className="winera-softplay-timeline-row"
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '80px',
-                    alignItems: 'center',
-                    marginBottom: idx === arr.length - 1 ? 0 : '45px',
-                    position: 'relative',
-                    zIndex: 2
-                  }}
-                >
-                  {/* Combined Number Badge & Horizontal Connector Line Assembly */}
-                  <div
-                    className="winera-softplay-timeline-badge-assembly"
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: alignLeft ? 'translate(0%, -50%)' : 'translate(-100%, -50%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      zIndex: 10,
-                      pointerEvents: 'none'
-                    }}
-                  >
-                    {/* If Image is on Left, line comes before badge */}
-                    {!alignLeft && (
-                      <div style={{
-                        width: '40px',
-                        height: '2px',
-                        background: '#38bdf8',
-                        flexShrink: 0
-                      }} />
-                    )}
+                <>
+                  <AnimatePresence mode="sync">
+                    {visibleList.map((stepItem, idx) => {
+                      const defaultImgs = [about1, about2, about3, about4];
+                      const imgUrl = stepItem.img || siteData?.softplayTypes?.[`step${idx + 1}Img`] || defaultImgs[idx % defaultImgs.length];
+                      const alignLeft = idx % 2 === 1;
+                      const isLastVisible = idx === visibleList.length - 1;
 
-                    {/* Number Badge Pill directly on the Center Vertical Line */}
+                      return (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, y: 40, scale: 0.96 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -20, scale: 0.96 }}
+                          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                          className="winera-softplay-timeline-row"
+                          style={{
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr',
+                            gap: '80px',
+                            alignItems: 'center',
+                            marginBottom: isLastVisible && visibleCount === typesList.length ? 0 : '45px',
+                            position: 'relative',
+                            zIndex: 2
+                          }}
+                        >
+                          {/* Combined Number Badge & Horizontal Connector Line Assembly */}
+                          <div
+                            className="winera-softplay-timeline-badge-assembly"
+                            style={{
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              transform: alignLeft ? 'translate(0%, -50%)' : 'translate(-100%, -50%)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              zIndex: 10,
+                              pointerEvents: 'none'
+                            }}
+                          >
+                            {/* If Image is on Left, line comes before badge */}
+                            {!alignLeft && (
+                              <div style={{
+                                width: '40px',
+                                height: '2px',
+                                background: '#38bdf8',
+                                flexShrink: 0
+                              }} />
+                            )}
+
+                            {/* Number Badge Pill directly on the Center Vertical Line */}
+                            <motion.div
+                              className="winera-softplay-timeline-badge"
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
+                              whileHover={{ scale: 1.18, boxShadow: '0 0 20px rgba(56, 189, 248, 0.5)' }}
+                              style={{
+                                width: '38px',
+                                height: '38px',
+                                borderRadius: '50%',
+                                background: '#38bdf8',
+                                color: '#ffffff',
+                                fontSize: '15px',
+                                fontWeight: '900',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 4px 10px rgba(56, 189, 248, 0.3)',
+                                flexShrink: 0,
+                                margin: '0 -19px',
+                                zIndex: 12,
+                                pointerEvents: 'auto',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              {idx + 1}
+                            </motion.div>
+
+                            {/* If Image is on Right, line comes after badge */}
+                            {alignLeft && (
+                              <div style={{
+                                width: '40px',
+                                height: '2px',
+                                background: '#38bdf8',
+                                flexShrink: 0
+                              }} />
+                            )}
+                          </div>
+
+                          {/* Left Side Element */}
+                          <motion.div
+                            className={alignLeft ? "winera-softplay-timeline-text-col" : "winera-softplay-timeline-img-col"}
+                            initial={{ opacity: 0, x: -50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ textAlign: alignLeft ? 'left' : 'right' }}
+                          >
+                            {alignLeft ? (
+                              <div>
+                                <h3 style={{ fontSize: '2rem', fontWeight: '900', color: '#38bdf8', marginBottom: '14px', lineHeight: 1.2 }}>
+                                  {stepItem.title}
+                                </h3>
+                                <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                                  {stepItem.desc}
+                                </p>
+                              </div>
+                            ) : (
+                              <motion.div
+                                whileHover={{ y: -8, scale: 1.025, boxShadow: '0 20px 40px rgba(56, 189, 248, 0.22)' }}
+                                style={{
+                                  width: '100%',
+                                  height: '300px',
+                                  borderRadius: '24px',
+                                  overflow: 'hidden',
+                                  boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
+                                  background: `url(${imgUrl}) center/cover no-repeat`,
+                                  cursor: 'pointer',
+                                  backfaceVisibility: 'hidden',
+                                  WebkitBackfaceVisibility: 'hidden'
+                                }}
+                              />
+                            )}
+                          </motion.div>
+
+                          {/* Right Side Element */}
+                          <motion.div
+                            className={alignLeft ? "winera-softplay-timeline-img-col" : "winera-softplay-timeline-text-col"}
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ textAlign: alignLeft ? 'right' : 'left' }}
+                          >
+                            {alignLeft ? (
+                              <motion.div
+                                whileHover={{ y: -8, scale: 1.025, boxShadow: '0 20px 40px rgba(56, 189, 248, 0.22)' }}
+                                style={{
+                                  width: '100%',
+                                  height: '300px',
+                                  borderRadius: '24px',
+                                  overflow: 'hidden',
+                                  boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
+                                  background: `url(${imgUrl}) center/cover no-repeat`,
+                                  cursor: 'pointer',
+                                  backfaceVisibility: 'hidden',
+                                  WebkitBackfaceVisibility: 'hidden'
+                                }}
+                              />
+                            ) : (
+                              <div>
+                                <h3 style={{ fontSize: '2rem', fontWeight: '900', color: '#38bdf8', marginBottom: '14px', lineHeight: 1.2 }}>
+                                  {stepItem.title}
+                                </h3>
+                                <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                                  {stepItem.desc}
+                                </p>
+                              </div>
+                            )}
+                          </motion.div>
+                        </motion.div>
+                      );
+                    })}
+                  </AnimatePresence>
+
+                  {/* Progressive Reveal "Show More" Button with Down Arrow */}
+                  {visibleCount < typesList.length && (
                     <motion.div
-                      className="winera-softplay-timeline-badge"
-                      initial={{ scale: 0, opacity: 0 }}
-                      whileInView={{ scale: 1, opacity: 1 }}
-                      viewport={{ once: true, margin: '-40px' }}
-                      transition={{ duration: 0.45, delay: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-                      whileHover={{ scale: 1.18, boxShadow: '0 0 20px rgba(56, 189, 248, 0.5)' }}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
                       style={{
-                        width: '38px',
-                        height: '38px',
-                        borderRadius: '50%',
-                        background: '#38bdf8',
-                        color: '#ffffff',
-                        fontSize: '15px',
-                        fontWeight: '900',
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 4px 10px rgba(56, 189, 248, 0.3)',
-                        flexShrink: 0,
-                        margin: '0 -19px',
-                        zIndex: 12,
-                        pointerEvents: 'auto',
-                        cursor: 'pointer'
+                        marginTop: '0px',
+                        marginBottom: '0px',
+                        position: 'relative',
+                        zIndex: 10
                       }}
                     >
-                      {idx + 1}
+                      <motion.button
+                        onClick={() => setVisibleCount((prev) => Math.min(typesList.length, prev + 1))}
+                        whileHover={{ scale: 1.08, boxShadow: '0 12px 30px rgba(56, 189, 248, 0.4)' }}
+                        whileTap={{ scale: 0.95 }}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          padding: '5px 15px',
+                          borderRadius: '10px',
+                          background: 'linear-gradient(135deg, #091E2B 0%, #0c2d42 100%)',
+                          border: '2px solid #38bdf8',
+                          color: '#ffffff',
+                          fontSize: '15px',
+                          fontWeight: '800',
+                          cursor: 'pointer',
+                          boxShadow: '0 8px 24px rgba(56, 189, 248, 0.25)',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        <span>Show More</span>
+                        <motion.span
+                          animate={{ y: [0, 4, 0] }}
+                          transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                          style={{
+                            width: '26px',
+                            height: '26px',
+                            borderRadius: '50%',
+                            background: '#38bdf8',
+                            color: '#ffffff',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '14px',
+                            fontWeight: '900'
+                          }}
+                        >
+                          ↓
+                        </motion.span>
+                      </motion.button>
                     </motion.div>
+                  )}
 
-                    {/* If Image is on Right, line comes after badge */}
-                    {alignLeft && (
-                      <div style={{
-                        width: '40px',
-                        height: '2px',
-                        background: '#38bdf8',
-                        flexShrink: 0
-                      }} />
-                    )}
-                  </div>
-
-                  {/* Left Side Element */}
-                  <motion.div
-                    className={alignLeft ? "winera-softplay-timeline-text-col" : "winera-softplay-timeline-img-col"}
-                    initial={{ opacity: 0, x: -55 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ textAlign: alignLeft ? 'left' : 'right' }}
-                  >
-                    {alignLeft ? (
-                      <div>
-                        <h3 style={{ fontSize: '2rem', fontWeight: '900', color: '#38bdf8', marginBottom: '14px', lineHeight: 1.2 }}>
-                          {stepItem.title}
-                        </h3>
-                        <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                          {stepItem.desc}
-                        </p>
-                      </div>
-                    ) : (
-                      <motion.div
-                        whileHover={{ y: -8, scale: 1.025, boxShadow: '0 20px 40px rgba(56, 189, 248, 0.22)' }}
-                        style={{
-                          width: '100%',
-                          height: '300px',
-                          borderRadius: '24px',
-                          overflow: 'hidden',
-                          boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                          background: `url(${imgUrl}) center/cover no-repeat`,
-                          cursor: 'pointer',
-                          backfaceVisibility: 'hidden',
-                          WebkitBackfaceVisibility: 'hidden'
+                  {/* Show Less button when all zones are expanded */}
+                  {visibleCount === typesList.length && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.4 }}
+                      style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}
+                    >
+                      <button
+                        onClick={() => {
+                          setVisibleCount(1);
+                          if (typesSectionRef.current) {
+                            typesSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }
                         }}
-                      />
-                    )}
-                  </motion.div>
-
-                  {/* Right Side Element */}
-                  <motion.div
-                    className={alignLeft ? "winera-softplay-timeline-img-col" : "winera-softplay-timeline-text-col"}
-                    initial={{ opacity: 0, x: 55 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ textAlign: alignLeft ? 'right' : 'left' }}
-                  >
-                    {alignLeft ? (
-                      <motion.div
-                        whileHover={{ y: -8, scale: 1.025, boxShadow: '0 20px 40px rgba(56, 189, 248, 0.22)' }}
                         style={{
-                          width: '100%',
-                          height: '300px',
-                          borderRadius: '24px',
-                          overflow: 'hidden',
-                          boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                          background: `url(${imgUrl}) center/cover no-repeat`,
+                          background: 'transparent',
+                          border: 'none',
+                          color: '#64748b',
+                          fontSize: '13.5px',
+                          fontWeight: '700',
                           cursor: 'pointer',
-                          backfaceVisibility: 'hidden',
-                          WebkitBackfaceVisibility: 'hidden'
+                          textDecoration: 'underline',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px'
                         }}
-                      />
-                    ) : (
-                      <div>
-                        <h3 style={{ fontSize: '2rem', fontWeight: '900', color: '#38bdf8', marginBottom: '14px', lineHeight: 1.2 }}>
-                          {stepItem.title}
-                        </h3>
-                        <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                          {stepItem.desc}
-                        </p>
-                      </div>
-                    )}
-                  </motion.div>
-                </div>
+                      >
+                        <span>Show Less</span>
+                        <span>↑</span>
+                      </button>
+                    </motion.div>
+                  )}
+                </>
               );
-            })}
+            })()}
           </div>
 
           <motion.div
@@ -638,20 +748,9 @@ export default function SoftPlay({ siteData }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            style={{ display: 'flex', justifyContent: 'center', marginTop: '50px', width: '100%' }}
+            style={{ display: 'flex', justifyContent: 'center', marginTop: '45px', width: '100%' }}
           >
-            <div style={{ position: 'relative', display: 'inline-block' }}>
-              <div style={{
-                position: 'absolute',
-                top: '-3px',
-                bottom: '-3px',
-                left: '-4px',
-                right: '-4px',
-                background: '#ffcd00',
-                borderRadius: '10px',
-                transform: 'rotate(-1.8deg)',
-                zIndex: 1
-              }} />
+            <div>
               <a
                 href={siteData?.softplaySpecs?.brochureUrl || siteData?.softplayTypes?.brochureUrl || "#"}
                 target="_blank"
@@ -659,18 +758,22 @@ export default function SoftPlay({ siteData }) {
                 download
                 aria-label="Download Our Brochure"
                 style={{
-                  position: 'relative',
-                  zIndex: 2,
-                  background: '#38bdf8',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '225px',
+                  height: '63px',
+                  paddingTop: '5px',
+                  background: `url(${downloadButtonImg}) center center / 100% 100% no-repeat`,
                   color: '#ffffff',
                   fontSize: '14.5px',
-                  fontWeight: '800',
-                  padding: '12px 28px',
-                  borderRadius: '10px',
-                  border: '1.5px solid #ffcd00',
-                  boxShadow: 'none',
-                  display: 'inline-block',
-                  textDecoration: 'none'
+                  fontWeight: '600',
+                  textAlign: 'center',
+                  lineHeight: 1,
+                  textDecoration: 'none',
+                  border: 'none',
+                  outline: 'none',
+                  cursor: 'pointer'
                 }}
               >
                 {siteData?.softplayTypes?.buttonText || "Download Our Brochure"}
@@ -721,46 +824,59 @@ export default function SoftPlay({ siteData }) {
               {siteData?.softplayRoi?.p3 || "No other soft play manufacturer or supplier in India currently offers this as a standard part of their process. For Winera, it is not an add-on, it is how every project starts."}
             </p>
 
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              {(() => {
-                const baseLink = siteData?.softplayRoi?.buttonLink || "https://wa.me/919428989488";
-                const defaultMsg = siteData?.softplayRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Soft Play setup & commercial ROI calculation. Please share details. [Ref: Soft Play Page]";
-                
-                let hrefLink = baseLink;
-                if (!baseLink.includes('text=')) {
-                  const separator = baseLink.includes('?') ? '&' : '?';
-                  hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
-                }
+            {(() => {
+              const baseLink = siteData?.softplayRoi?.buttonLink || "https://wa.me/919428989488";
+              const defaultMsg = siteData?.softplayRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Soft Play setup & commercial ROI calculation. Please share details. [Ref: Soft Play Page]";
+              
+              let hrefLink = baseLink;
+              if (!baseLink.includes('text=')) {
+                const separator = baseLink.includes('?') ? '&' : '?';
+                hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+              }
 
-                return (
-                  <a
-                    href={hrefLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-                  >
-                    {/* Official 1:1 WhatsApp Logo SVG Icon */}
+              return (
+                <a
+                  href={hrefLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Talk to an ROI Expert"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '12px',
+                    width: '271px',
+                    height: '70px',
+                    paddingTop: '2px',
+                    background: `url(${talkToRoiButtonImg}) center center / 100% 100% no-repeat`,
+                    color: '#091E2B',
+                    fontSize: '15px',
+                    fontWeight: '700',
+                    textDecoration: 'none',
+                    border: 'none',
+                    outline: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
                     <div style={{
-                      width: '24px',
-                      height: '24px',
+                      width: '32px',
+                      height: '32px',
                       borderRadius: '50%',
                       background: '#25d366',
-                      color: '#ffffff',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       flexShrink: 0
                     }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                      <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 1 .8-3-.2-.3A8 8 0 1 1 12 20z" fill="#ffffff" />
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" fill="#ffffff" />
                       </svg>
                     </div>
-                    <span>{siteData?.softplayRoi?.buttonText || "Talk to an ROI Expert"}</span>
-                  </a>
-                );
-              })()}
-            </div>
+                  <span>{siteData?.softplayRoi?.buttonText || "Talk to an ROI Expert"}</span>
+                </a>
+              );
+            })()}
           </div>
 
           {/* Right Column: soft-paly-image graphic matching exact UI screenshot */}
@@ -784,7 +900,7 @@ export default function SoftPlay({ siteData }) {
       </section>
 
       {/* 9. WHY CHOOSE WINERA INTERNATIONAL SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-softplay-whyus-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
+      <section className="winera-softplay-whyus-section" style={{ padding: '70px 4vw', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
           <div style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

@@ -16,7 +16,8 @@ export default function FaqSection({
   accentHeight = '11px',
   accentMarginBottom = '8px',
   accentAlign = 'left-inline',
-  accentStyle = { margin: '0px 15% 8px' }
+  accentStyle = { margin: '0px 15% 8px' },
+  padding = '70px 4vw 40px'
 }) {
   const [activeFaqIndex, setActiveFaqIndex] = useState(-1);
 
@@ -25,7 +26,7 @@ export default function FaqSection({
   const col2 = items.slice(Math.ceil(items.length / 2));
 
   return (
-    <section id={id} className="winera-faq-section" style={{ padding: '25px 4vw 40px', background: bg, textAlign: 'center' }}>
+    <section id={id} className="winera-faq-section" style={{ padding: padding, background: bg, textAlign: 'center' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         <MotionFadeIn>
         <SectionHeading marginBottom="48px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign} accentStyle={accentStyle}>

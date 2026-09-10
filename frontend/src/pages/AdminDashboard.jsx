@@ -9879,12 +9879,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ fontWeight: '800', fontSize: '14px', color: '#0369a1' }}>Carousel Cards List</label>
                   <button
                     onClick={() => {
-                      const cur = formData.bumpercarThrill?.cards || [
-                        {
-                          title: "The Perfect Blend Of Thrill And Safety:",
-                          desc: "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."
-                        }
-                      ];
+                      const cur = formData.bumpercarThrill?.cards || defaultBumperCarThrillCards;
                       handleFieldChange('bumpercarThrill', 'cards', [...cur, { title: '', desc: '' }]);
                     }}
                     style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
@@ -9894,12 +9889,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  {(formData.bumpercarThrill?.cards || [
-                    {
-                      title: formData.bumpercarThrill?.title || "The Perfect Blend Of Thrill And Safety:",
-                      desc: formData.bumpercarThrill?.desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."
-                    }
-                  ]).map((card, idx) => (
+                  {(formData.bumpercarThrill?.cards || defaultBumperCarThrillCards).map((card, idx) => (
                     <div key={idx} style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0f172a' }}>Card #{idx + 1}</span>

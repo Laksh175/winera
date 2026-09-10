@@ -19,6 +19,8 @@ import tampolineImg4 from '../assets/tampoline-img-4.webp';
 import tampolineImg5 from '../assets/tampoline-img-5.webp';
 import tampolineImage6 from '../assets/tampoline-image-6.webp';
 import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.webp';
+import downloadButtonImg from '../assets/download-button.png';
+import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -410,11 +412,12 @@ export default function TrampolinePark({ siteData }) {
           {/* Main Card Wrapper with trampoline-img-3.webp Background */}
           <div className="winera-trampoline-specs-card" style={{
             position: 'relative',
-            width: '100%',
+            width: '91%',
+            margin: '0 auto',
             minHeight: '540px',
             background: `url(${siteData?.trampolineSpecs?.bgUrl || siteData?.trampolineSpecs?.imgUrl || trampolineImg3}) center center / 100% 100% no-repeat`,
             borderRadius: '32px',
-            padding: '45px 50px',
+            padding: '45px 56px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -422,7 +425,7 @@ export default function TrampolinePark({ siteData }) {
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.12)'
           }}>
             {/* Left Section Content: Title + White Table Card + Button */}
-            <div style={{ maxWidth: '530px', zIndex: 2 }}>
+            <div style={{ maxWidth: '595px', width: '100%', zIndex: 2 }}>
               {/* Yellow Accent Stroke Line */}
               <img
                 src={yellowStrokeLine}
@@ -431,15 +434,21 @@ export default function TrampolinePark({ siteData }) {
               />
 
               {/* Title */}
-              <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#ffffff', margin: '0 0 28px 0', lineHeight: 1.15 }}>
-                {renderTitleMarkup(siteData?.trampolineSpecs?.title, "Technical *Specifications*", '#ffd600')}
+              <h2 style={{ fontSize: '2.65rem', fontWeight: '900', color: '#ffffff', margin: '0 0 24px 0', lineHeight: 1.15 }}>
+                {(() => {
+                  let raw = siteData?.trampolineSpecs?.title;
+                  if (!raw || raw === "Technical *Specifications*") {
+                    raw = "*Technical* Specifications";
+                  }
+                  return renderTitleMarkup(raw, "*Technical* Specifications", '#ffcd00');
+                })()}
               </h2>
 
               {/* White Specifications Table Card */}
               <div style={{
                 background: '#ffffff',
                 borderRadius: '24px',
-                padding: '24px 28px',
+                padding: '24px 30px',
                 boxShadow: '0 12px 35px rgba(0, 0, 0, 0.15)',
                 width: '100%',
                 marginBottom: '28px'
@@ -447,10 +456,10 @@ export default function TrampolinePark({ siteData }) {
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
                     <tr style={{ borderBottom: '2px solid #f1f5f9' }}>
-                      <th style={{ textAlign: 'left', padding: '0 0 12px 0', fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', width: '48%' }}>
+                      <th style={{ textAlign: 'left', padding: '0 0 14px 0', fontSize: '1.25rem', fontWeight: '700', color: '#0f172a', width: '52%' }}>
                         Specification
                       </th>
-                      <th style={{ textAlign: 'left', padding: '0 0 12px 0', fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', width: '52%' }}>
+                      <th style={{ textAlign: 'left', padding: '0 0 14px 0', fontSize: '1.25rem', fontWeight: '700', color: '#0f172a', width: '48%' }}>
                         Details
                       </th>
                     </tr>
@@ -469,10 +478,10 @@ export default function TrampolinePark({ siteData }) {
                         ]
                     ).map((row, idx, arr) => (
                       <tr key={idx} style={{ borderBottom: idx === arr.length - 1 ? 'none' : '1px solid #f1f5f9' }}>
-                        <td style={{ padding: '10px 0', fontSize: '14px', color: '#475569', fontWeight: '500' }}>
+                        <td style={{ padding: '11px 0', fontSize: '14.5px', color: '#475569', fontWeight: '400' }}>
                           {row.label || row.spec}
                         </td>
-                        <td style={{ padding: '10px 0', fontSize: '14px', color: '#0f172a', fontWeight: '600' }}>
+                        <td style={{ padding: '11px 0', fontSize: '14.5px', color: '#0f172a', fontWeight: '400' }}>
                           {row.value || row.details}
                         </td>
                       </tr>
@@ -481,12 +490,30 @@ export default function TrampolinePark({ siteData }) {
                 </table>
               </div>
 
-              <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm" style={{ marginTop: '24px' }}>
+              <div>
                 <a
                   href={siteData?.trampolineSpecs?.buttonLink || siteData?.trampolineSpecs?.brochureLink || siteData?.trampolineIntro?.buttonLink || "https://wa.me/919428989488"}
                   target="_blank"
                   rel="noreferrer"
-                  className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                  aria-label="Download Our Brochure"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '225px',
+                    height: '63px',
+                    paddingTop: '5px',
+                    background: `url(${downloadButtonImg}) center center / 100% 100% no-repeat`,
+                    color: '#ffffff',
+                    fontSize: '14.5px',
+                    fontWeight: '600',
+                    textAlign: 'center',
+                    lineHeight: 1,
+                    textDecoration: 'none',
+                    border: 'none',
+                    outline: 'none',
+                    cursor: 'pointer'
+                  }}
                 >
                   {siteData?.trampolineSpecs?.buttonText || "Download Our Brochure"}
                 </a>
@@ -496,7 +523,7 @@ export default function TrampolinePark({ siteData }) {
         </div>
       </section>
 
-      {/* 6. WHAT IS INSIDE A CUSTOM TRAMPOLINE PARK? (100% FULL SCREEN WIDTH BACKGROUND MATCHING SCREENSHOT 2) */}
+      {/* 6. WHAT IS INSIDE A CUSTOM TRAMPOLINE PARK? (100% FULL SCREEN WIDTH BACKGROUND MATCHING SCREENSHOT 1 & 2) */}
       <section className="winera-trampoline-inside-section" style={{
         padding: '0',
         background: '#F5F5F9',
@@ -508,28 +535,54 @@ export default function TrampolinePark({ siteData }) {
           position: 'relative',
           width: '100%',
           background: `url(${tampolineImg4}) center center / 100% 100% no-repeat`,
-          padding: '70px 0',
+          padding: '70px 0 60px',
           overflow: 'hidden'
         }}>
           {/* Inner Content Centered Container */}
           <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 4vw' }}>
             
-            {/* Header: Title + Intro text */}
-            <div style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 35px' }}>
-              <img
-                src={yellowStrokeLine}
-                alt=""
-                style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
-              />
-              <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: '0 0 12px 0' }}>
-                {renderTitleMarkup(siteData?.trampolineInside?.title, "What is inside a *custom<br />trampoline park?*", '#38bdf8')}
-              </h2>
-              <p style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+            {/* Header: Title + Subtitle */}
+            <div style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 35px', position: 'relative' }}>
+              <div style={{ display: 'inline-block', position: 'relative' }}>
+                <img
+                  src={yellowStrokeLine}
+                  alt=""
+                  style={{
+                    position: 'absolute',
+                    top: '-6px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '420px',
+                    maxWidth: '95%',
+                    height: '8px',
+                    objectFit: 'fill',
+                    pointerEvents: 'none',
+                    zIndex: 1
+                  }}
+                />
+                <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#091E2B', lineHeight: 1.2, margin: '0 0 14px 0', letterSpacing: '-0.02em' }}>
+                  {(() => {
+                    const rawTitle = siteData?.trampolineInside?.title;
+                    if (!rawTitle || rawTitle.includes("custom") || rawTitle.includes("inside") || rawTitle.includes("*custom")) {
+                      return (
+                        <>
+                          <span style={{ color: '#38bdf8' }}>What is inside a </span>
+                          <span style={{ color: '#091E2B' }}>custom</span>
+                          <br />
+                          <span style={{ color: '#091E2B' }}>trampoline park?</span>
+                        </>
+                      );
+                    }
+                    return renderTitleMarkup(rawTitle, "*What is inside a* custom<br />trampoline park?", '#38bdf8');
+                  })()}
+                </h2>
+              </div>
+              <p style={{ fontSize: '14.5px', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.6, fontWeight: '500', margin: '0 auto', maxWidth: '780px' }}>
                 {siteData?.trampolineInside?.subtitle || "A Winera trampoline park is built around your available space and visitor profile. Below are the zones you can include each can be combined in any configuration based on your floor area and budget."}
               </p>
             </div>
 
-            {/* Carousel Container: Left Arrow + Figma Styled Card + Right Arrow */}
+            {/* Carousel Container: Left Arrow + Main Block with Box Shadow + Right Arrow */}
             <div style={{
               display: 'flex',
               alignItems: 'center',
@@ -539,26 +592,41 @@ export default function TrampolinePark({ siteData }) {
               maxWidth: '1180px',
               margin: '0 auto 40px'
             }}>
-              {/* Left Arrow Button with Hover Effect */}
+              {/* Left Arrow Button */}
               <button
                 onClick={handlePrevZone}
                 aria-label="Previous Zone"
-                className="winera-zone-nav-btn"
+                style={{
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '50%',
+                  background: activeZoneIndex === 0 ? 'rgba(255, 255, 255, 0.7)' : '#ffffff',
+                  color: activeZoneIndex === 0 ? '#cbd5e1' : '#475569',
+                  border: '1px solid rgba(203, 213, 225, 0.5)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '13px',
+                  flexShrink: 0,
+                  transition: 'all 0.2s ease'
+                }}
               >
                 &#10094;
               </button>
 
-              {/* Inner Tab Card with Smaller Image & Spacious Left Padding Matching Second Image */}
+              {/* Main Zone Card with Figma Exact Drop Shadow & Inner Shadow matching Screenshot 2 */}
               <div style={{
                 background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(224, 242, 254, 0.85) 100%)',
                 backdropFilter: 'blur(10px)',
-                borderRadius: '0px',
-                border: 'none',
-                boxShadow: 'none',
+                borderRadius: '4px',
+                border: '1px solid rgba(0, 174, 239, 0.3)',
+                boxShadow: '0px 3px 11px 0px rgba(0, 0, 0, 0.4), inset 0px 1px 1px 0px rgba(255, 255, 255, 0.05)',
                 padding: '35px 45px',
                 gap: '45px',
                 display: 'grid',
-                gridTemplateColumns: 'minmax(0, 260px) minmax(0, 1fr)',
+                gridTemplateColumns: 'minmax(0, 280px) minmax(0, 1fr)',
                 alignItems: 'center',
                 flexGrow: 1,
                 width: '100%',
@@ -573,7 +641,7 @@ export default function TrampolinePark({ siteData }) {
                       width: '100%',
                       maxHeight: '260px',
                       objectFit: 'cover',
-                      borderRadius: '0px',
+                      borderRadius: '4px',
                       display: 'block'
                     }}
                   />
@@ -590,25 +658,62 @@ export default function TrampolinePark({ siteData }) {
                 </div>
               </div>
 
-              {/* Right Arrow Button with Hover Effect */}
+              {/* Right Arrow Button matching Cyan Circle in Screenshot 1 */}
               <button
                 onClick={handleNextZone}
                 aria-label="Next Zone"
-                className="winera-zone-nav-btn"
+                style={{
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '50%',
+                  background: '#38bdf8',
+                  color: '#ffffff',
+                  border: 'none',
+                  boxShadow: '0 4px 12px rgba(56, 189, 248, 0.4)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '13px',
+                  flexShrink: 0,
+                  transition: 'all 0.2s ease'
+                }}
               >
                 &#10095;
               </button>
             </div>
 
-            {/* Bottom Tab Bar Navigation with Extra Bottom Spacing */}
-            <div style={{ maxWidth: '1180px', margin: '0 auto 28px', borderTop: '1px solid #cbd5e1', paddingTop: '18px' }}>
+            {/* Bottom Menu & Animated Single Progress Line Track matching Screenshot 2 */}
+            <div style={{ maxWidth: '1180px', margin: '0 auto', position: 'relative' }}>
+              {/* Full Width Horizontal Base Line Track with Animated Active Line */}
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: '2px',
+                background: '#cbd5e1',
+                borderRadius: '1px',
+                marginBottom: '16px'
+              }}>
+                {/* Active Sliding Cyan Highlight Line */}
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: `${(activeZoneIndex * 100) / customParkZones.length}%`,
+                  width: `${100 / customParkZones.length}%`,
+                  height: '3px',
+                  background: '#38bdf8',
+                  borderRadius: '2px',
+                  transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                  boxShadow: '0 0 8px rgba(56, 189, 248, 0.6)'
+                }} />
+              </div>
+
+              {/* Menu items row with font-weight: 600 */}
               <div className="winera-trampoline-tabs-wrapper" style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '12px',
-                overflowX: 'auto',
-                paddingBottom: '6px'
+                display: 'grid',
+                gridTemplateColumns: `repeat(${customParkZones.length}, 1fr)`,
+                width: '100%',
+                gap: '8px'
               }}>
                 {customParkZones.map((zone, idx) => {
                   const isActive = activeZoneIndex === idx;
@@ -619,14 +724,14 @@ export default function TrampolinePark({ siteData }) {
                       style={{
                         background: 'transparent',
                         border: 'none',
-                        borderTop: isActive ? '3px solid #28b4ee' : '3px solid transparent',
-                        paddingTop: '8px',
+                        padding: '4px 0',
                         cursor: 'pointer',
                         fontSize: '14.5px',
-                        fontWeight: '700',
+                        fontWeight: '600',
                         color: isActive ? '#0f172a' : '#64748b',
                         whiteSpace: 'nowrap',
-                        transition: 'all 0.2s ease'
+                        transition: 'color 0.2s ease',
+                        textAlign: 'center'
                       }}
                     >
                       {zone.title}
@@ -635,6 +740,7 @@ export default function TrampolinePark({ siteData }) {
                 })}
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -651,12 +757,25 @@ export default function TrampolinePark({ siteData }) {
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
+              style={{ display: 'inline-block', maxWidth: '95%', width: '480px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '2.6rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.18, margin: '0 0 14px 0' }}>
-              {renderTitleMarkup(siteData?.trampolineRoi?.title, "What Will Your *Trampoline<br />Park Actually Earn?*", '#28b4ee')}
+            <h2 style={{ fontSize: '2.6rem', fontWeight: '900', color: '#091E2B', lineHeight: 1.18, margin: '0 0 14px 0' }}>
+              {(() => {
+                const rawTitle = siteData?.trampolineRoi?.title;
+                if (!rawTitle || rawTitle.includes("Trampoline") || rawTitle.includes("Earn")) {
+                  return (
+                    <>
+                      <span style={{ color: '#091E2B' }}>What Will Your </span>
+                      <span style={{ color: '#38bdf8' }}>Trampoline Park</span>
+                      <br />
+                      <span style={{ color: '#38bdf8' }}>Actually Earn?</span>
+                    </>
+                  );
+                }
+                return renderTitleMarkup(rawTitle, "What Will Your *Trampoline Park<br />Actually Earn?*", '#38bdf8');
+              })()}
             </h2>
-            <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+            <p style={{ fontSize: '15px', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
               {siteData?.trampolineRoi?.subtitle || "Most trampoline park suppliers in India send a price list and wait for you to decide."}
             </p>
           </div>
@@ -671,17 +790,15 @@ export default function TrampolinePark({ siteData }) {
             
             {/* Left Column: Text Copy & CTA Button */}
             <div style={{ textAlign: 'left' }}>
-              <p style={{ fontSize: '15.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 0 20px 0' }}>
-                {siteData?.trampolineRoi?.paragraph1 || "As India's ROI-First Game Zone Developer, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact trampoline park setup cost, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline. Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average."}
+              <p style={{ fontSize: '15.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 0 20px 0', textAlign: 'justify' }}>
+                As <strong style={{ color: '#0f172a', fontWeight: '700 !' }}>India's ROI-First Game Zone Developer</strong>, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact <strong style={{ color: '#0f172a', fontWeight: '700' }}>trampoline park setup cost</strong>, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline. Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average.
               </p>
 
-              <p style={{ fontSize: '15.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 0 32px 0' }}>
+              <p style={{ fontSize: '15.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 0 32px 0', textAlign: 'justify' }}>
                 {siteData?.trampolineRoi?.paragraph2 || "Very few indoor trampoline park suppliers in India include this as a standard part of their process. For Winera, the ROI report is not an add-on, it is how every project starts."}
               </p>
 
-              {/* CTA Button with Left-Bottom & Right-Top Offset Yellow Backdrop and WhatsApp Icon */}
-              <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-                {(() => {
+              {(() => {
                   const baseLink = siteData?.trampolineRoi?.buttonLink || "https://wa.me/919428989488";
                   const defaultMsg = siteData?.trampolineRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Trampoline Park setup & commercial ROI calculation. Please share details. [Ref: Trampoline Park Page]";
                   
@@ -696,30 +813,44 @@ export default function TrampolinePark({ siteData }) {
                       href={hrefLink}
                       target="_blank"
                       rel="noreferrer"
-                      className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-                    >
-                      {/* Proper contrasted WhatsApp Icon wrapper */}
-                      <div style={{
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '50%',
-                        background: '#25d366',
-                        color: '#ffffff',
-                        display: 'flex',
+                      aria-label="Talk to an ROI Expert"
+                      style={{
+                        display: 'inline-flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        flexShrink: 0
-                      }}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                        </svg>
-                      </div>
+                        gap: '12px',
+                        width: '271px',
+                        height: '70px',
+                        paddingTop: '2px',
+                        background: `url(${talkToRoiButtonImg}) center center / 100% 100% no-repeat`,
+                        color: '#091E2B',
+                        fontSize: '15px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        border: 'none',
+                        outline: 'none',
+                        cursor: 'pointer'
+                      }}
+                    >
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: '#25d366',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0
+                    }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 1 .8-3-.2-.3A8 8 0 1 1 12 20z" fill="#ffffff" />
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" fill="#ffffff" />
+                      </svg>
+                    </div>
                       <span>{siteData?.trampolineRoi?.buttonText || "Talk to an ROI Expert"}</span>
                     </a>
                   );
                 })()}
-              </div>
             </div>
 
             {/* Right Column: Graphic */}

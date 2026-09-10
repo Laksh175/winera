@@ -20,7 +20,9 @@ import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
 import bumperCarCtaLeft from '../assets/bumperCar-cta-left.webp';
 import bumperCarCtaRight from '../assets/bumperCar-cta-right.webp';
 import bumperCarIcon from '../assets/bumper-car-icon.webp';
+import bumperCarIconPng from '../assets/bumper-car-icon.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import downloadButtonImg from '../assets/download-button.png';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
@@ -88,13 +90,29 @@ export default function BumperCar({ siteData }) {
 
   const defaultThrillCards = [
     {
-      title: siteData?.bumpercarThrill?.title || "The Perfect Blend Of Thrill And Safety:",
-      desc: siteData?.bumpercarThrill?.desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."
+      title: "The Perfect Blend of Thrill and Safety:",
+      desc: "When it comes to bumper cars, safety is paramount. At Winera International, we’ve made it our unwavering commitment to ensure the safety of every rider. Our bumper cars are equipped with state-of-the-art safety features and technology, making the bumper car experience a thrilling yet secure adventure. Visitors can enjoy the excitement of collisions without compromising their well-being."
+    },
+    {
+      title: "A Long-Term, Low-Maintenance Investment:",
+      desc: "Choosing Winera International’s bumper cars means investing in a long-term, low-maintenance attraction that guarantees maximum fun for your visitors. Our bumper cars are built to withstand the rigors of continuous use, which means less downtime for maintenance and more ride time for your guests. The reliability and durability of our bumper cars ensure that your investment pays off year after year."
+    },
+    {
+      title: "Customization Options from India’s Trusted Bumper Car Manufacturer:",
+      desc: "We recognize that every amusement park has its own unique theme and ambiance. That’s why we offer a wide array of designs and features for you to choose from. Our customization options allow you to tailor your bumper car attraction to seamlessly align with the overall look and feel of your park. Whether you’re aiming for a classic, nostalgic atmosphere or a modern, futuristic vibe, our range of choices ensures you can create the perfect fit."
+    },
+    {
+      title: "Elevating Entertainment and Safety Standards:",
+      desc: "At Winera International, we’re dedicated to supplying amusement park products that not only enhance the entertainment factor but also raise the bar for safety standards. Our bumper cars exemplify this commitment, where the pursuit of fun is always in harmony with ensuring the safety and well-being of your guests. By investing in our high-quality bumper cars, you’re not just providing memorable experiences; you’re also guaranteeing a secure environment for all riders."
+    },
+    {
+      title: "Contact India’s Leading Bumper Car Manufacturer:",
+      desc: "If you’re looking to elevate your amusement park to new heights, Winera International is your partner in making it happen. Our comprehensive range of offerings includes bumper cars designed to capture the hearts of visitors. As a reputed Bumper Car manufacturer in India, we’re ready to assist you in creating an attraction that draws families, friends, and thrill-seekers alike to your park. Contact us today to explore our extensive catalog and discover how our bumper cars can be the highlight of your amusement park."
     }
   ];
 
   const thrillCards = (Array.isArray(siteData?.bumpercarThrill?.cards) && siteData.bumpercarThrill.cards.length > 0)
-    ? siteData.bumpercarThrill.cards
+    ? siteData.bumpercarThrill.cards.slice(0, 5)
     : defaultThrillCards;
 
   const currentThrillCard = thrillCards[activeThrillIndex % thrillCards.length] || thrillCards[0];
@@ -217,7 +235,7 @@ export default function BumperCar({ siteData }) {
       </section>
 
       {/* 4. BUMPER CAR MANUFACTURER IN INDIA FULL BANNER SECTION */}
-      <section className="winera-bumpercar-intro-section" style={{ padding: '10px 4vw 80px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-bumpercar-intro-section" style={{ padding: '10px 4vw 15px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-bumpercar-intro-grid" style={{
           maxWidth: '1280px',
           margin: '0 auto',
@@ -267,7 +285,7 @@ export default function BumperCar({ siteData }) {
       </section>
 
       {/* 5. THE PERFECT BLEND OF THRILL AND SAFETY SLIDER CARD (FIGMA 1:1 GRADIENT SHADE & BADGE) */}
-      <section className="winera-bumpercar-thrill-section" style={{ padding: '30px 4vw 50px', background: '#F5F5F9' }}>
+      <section className="winera-bumpercar-thrill-section" style={{ padding: '30px 4vw 80px', background: '#F5F5F9' }}>
         <div className="winera-bumpercar-thrill-card" style={{
           maxWidth: '860px',
           margin: '0 auto',
@@ -359,11 +377,6 @@ export default function BumperCar({ siteData }) {
             >
               <ChevronRight style={{ width: '18px', height: '18px' }} />
             </button>
-            {thrillCards.length > 1 && (
-              <span style={{ fontSize: '12px', fontWeight: '700', color: '#0284c7', marginLeft: '6px' }}>
-                {activeThrillIndex + 1} / {thrillCards.length}
-              </span>
-            )}
           </div>
         </div>
       </section>
@@ -371,27 +384,27 @@ export default function BumperCar({ siteData }) {
       {/* 6. TECHNICAL SPECIFICATIONS CARD SECTION */}
       <section className="winera-bumpercar-specs-section" style={{ padding: '20px 4vw 90px', background: '#F5F5F9' }}>
         <div className="winera-bumpercar-specs-container" style={{
-          maxWidth: '1200px',
+          maxWidth: '1025px',
           margin: '0 auto',
           position: 'relative',
           borderRadius: '40px',
           overflow: 'hidden',
           background: `url(${siteData?.bumpercarSpecs?.bgUrl || bumpercarSpecsBg}) center/cover no-repeat`,
           boxShadow: '0 25px 50px rgba(6, 19, 45, 0.3)',
-          padding: '60px 60px 50px',
+          padding: '45px 57px 0px 53px',
           minHeight: '520px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between'
         }}>
           {/* Top Title: Technical Specifications */}
-          <div style={{ position: 'relative', display: 'inline-block', marginBottom: '35px' }}>
+          <div style={{ position: 'relative', display: 'inline-block', marginBottom: '30px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
               style={{ display: 'block', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '3rem', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
+            <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
               {renderTitleMarkup(siteData?.bumpercarSpecs?.title, "*Technical* Specifications", "#ffcd00")}
             </h2>
           </div>
@@ -399,20 +412,20 @@ export default function BumperCar({ siteData }) {
           {/* Center Table Card with White Background, Yellow Border & Rounded Corners (FIGMA 1:1) */}
           <div className="winera-bumpercar-specs-table-card" style={{
             width: '100%',
-            maxWidth: '540px',
+            maxWidth: '534px',
             boxSizing: 'border-box',
             background: '#ffffff',
-            borderRadius: '26px',
-            border: '2px solid #ffcd00',
-            padding: '28px 36px',
+            borderRadius: '24px',
+            padding: '5px 0px',
             boxShadow: '0 20px 45px rgba(0, 0, 0, 0.25)',
-            marginBottom: '35px'
+            marginBottom: '30px',
+            overflow: 'hidden'
           }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                  <th style={{ paddingBottom: '14px', fontSize: '1.35rem', fontWeight: '800', color: '#0f172a', width: '45%' }}>Specification</th>
-                  <th style={{ paddingBottom: '14px', fontSize: '1.35rem', fontWeight: '800', color: '#0f172a' }}>Details</th>
+                  <th style={{ padding: '8px 12px 14px 28px', fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', width: '45%' }}>Specification</th>
+                  <th style={{ padding: '8px 28px 14px 12px', fontSize: '1.25rem', fontWeight: '800', color: '#0f172a' }}>Details</th>
                 </tr>
               </thead>
               <tbody>
@@ -420,9 +433,9 @@ export default function BumperCar({ siteData }) {
                   ? siteData.bumpercarSpecs.specsList
                   : defaultBumperCarSpecs
                 ).map((row, idx, arr) => (
-                  <tr key={idx} style={{ borderBottom: idx === arr.length - 1 ? 'none' : '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '12px 8px 12px 0', fontWeight: '500', color: '#334155', fontSize: '13.5px', wordBreak: 'break-word' }}>{row.spec}</td>
-                    <td style={{ padding: '12px 0', fontWeight: '500', color: '#334155', fontSize: '13.5px', wordBreak: 'break-word' }}>{row.details}</td>
+                  <tr key={idx} style={{ borderBottom: idx === arr.length - 1 ? 'none' : '1px solid #e2e8f0' }}>
+                    <td style={{ padding: '10px 12px 10px 28px', fontWeight: '500', color: '#334155', fontSize: '13px', wordBreak: 'break-word' }}>{row.spec}</td>
+                    <td style={{ padding: '1px 28px 10px 12px', fontWeight: '500', color: '#334155', fontSize: '13px', wordBreak: 'break-word' }}>{row.details}</td>
                   </tr>
                 ))}
               </tbody>
@@ -431,16 +444,33 @@ export default function BumperCar({ siteData }) {
 
           {/* Bottom Action Button: Download Our Brochure with Yellow Offset Tab Backdrop Wrapper */}
           <div>
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.bumpercarSpecs?.brochureUrl || siteData?.softplayTypes?.brochureUrl || "#"}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                {siteData?.bumpercarSpecs?.btnText || "Download Our Brochure"}
-              </a>
-            </div>
+            <a
+              href={siteData?.bumpercarSpecs?.brochureUrl || siteData?.softplayTypes?.brochureUrl || "#"}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Download Our Brochure"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '215px',
+                height: '60px',
+                paddingTop:'4px',
+                marginBottom:'35px',
+                background: `url(${downloadButtonImg}) center center / 100% 100% no-repeat`,
+                color: '#ffffff',
+                fontSize: '14px',
+                fontWeight: '600',
+                textAlign: 'center',
+                lineHeight: 1,
+                textDecoration: 'none',
+                border: 'none',
+                outline: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              {siteData?.bumpercarSpecs?.btnText || "Download Our Brochure"}
+            </a>
           </div>
         </div>
       </section>
@@ -448,7 +478,7 @@ export default function BumperCar({ siteData }) {
       {/* 7. INDOOR BUMPER CAR OPTIONS FOR YOUR VENUE SECTION */}
       <section className="winera-bumpercar-options-section" style={{
         width: '100%',
-        padding: '80px 4vw 90px',
+        padding: '50px 4vw 60px',
         background: `url(${getValidImageUrl(siteData?.bumpercarOptions?.bgUrl, bumpercarOptionsBg)}) center/100% 100% no-repeat`,
         overflow: 'hidden'
       }}>
@@ -457,36 +487,36 @@ export default function BumperCar({ siteData }) {
           margin: '0 auto',
           display: 'grid',
           gridTemplateColumns: '1.1fr 1fr',
-          gap: '50px',
+          gap: '40px',
           alignItems: 'center'
         }}>
           {/* Left Column: Heading, Intro, and 2 Option Cards */}
           <div className="winera-bumpercar-options-text">
             {/* Title */}
-            <div style={{ position: 'relative', display: 'block', marginBottom: '14px' }}>
+            <div style={{ position: 'relative', display: 'block', marginBottom: '12px', marginTop:'35px' }}>
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
+                style={{ display: 'block', width: '65%', height: '9px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.bumpercarOptions?.title, "Indoor Bumper Car Options *for Your Venue*", '#38bdf8')}
+              <h2 style={{ fontSize: '2.4rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                {renderTitleMarkup(siteData?.bumpercarOptions?.title, "Indoor Bumper Car<br/>Options *for Your Venue*", '#38bdf8')}
               </h2>
             </div>
 
             {/* Intro Description */}
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '28px' }}>
+            <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.55, fontWeight: '500', marginBottom: '35px', width: '84%', textAlign: 'justify' }}>
               {siteData?.bumpercarOptions?.desc || "We supply two drive types for indoor bumper car attractions. The right choice depends on your floor infrastructure, venue flexibility, and operational model."}
             </p>
 
             {/* Option 1: Electric Floor Bumper Cars (Contact Us Style with top-left cyan accent wing) */}
-            <div style={{ position: 'relative', width: '100%', marginBottom: '28px' }}>
+            <div style={{ position: 'relative', width: '100%', marginBottom: '35px' }}>
               <div style={{
                 position: 'absolute',
-                top: '-8px',
-                left: '-8px',
-                width: '250px',
-                height: '115px',
+                top: '-6px',
+                left: '-6px',
+                width: '230px',
+                height: '105px',
                 background: '#38bdf8',
                 borderRadius: '14px',
                 clipPath: 'polygon(0 0, 105% 11px, 100% 100%, 10px 100%)',
@@ -499,27 +529,27 @@ export default function BumperCar({ siteData }) {
                 background: '#e0f2fe',
                 border: '2px solid #38bdf8',
                 borderRadius: '16px',
-                padding: '24px 28px',
+                padding: '18px 24px 14px',
                 boxShadow: 'none',
                 textAlign: 'left'
               }}>
-                <h4 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px 0' }}>
                   {siteData?.bumpercarOptions?.option1Title || "Electric Floor Bumper Cars"}
                 </h4>
-                <p style={{ fontSize: '13.5px', color: '#334155', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                <p style={{ fontSize: '13.5px', color: '#334155', lineHeight: 1.6, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
                   {siteData?.bumpercarOptions?.option1Desc || "Powered through a conductive floor grid and ceiling contact system. Delivers consistent, uninterrupted power throughout operating hours with zero battery management. Best suited for permanent, fixed installations in amusement parks, large FECs, and dedicated entertainment venues where the infrastructure investment is justified by high daily footfall."}
                 </p>
               </div>
             </div>
 
             {/* Option 2: Battery-Operated Bumper Cars (Contact Us Style with top-left yellow accent wing) */}
-            <div style={{ position: 'relative', width: '100%' }}>
+            <div style={{ position: 'relative', width: '100%', marginBottom: '40px' }}>
               <div style={{
                 position: 'absolute',
-                top: '-8px',
-                left: '-8px',
-                width: '250px',
-                height: '115px',
+                top: '-6px',
+                left: '-6px',
+                width: '230px',
+                height: '105px',
                 background: '#ffcd00',
                 borderRadius: '15px',
                 clipPath: 'polygon(0 0, 105% 11px, 100% 100%, 10px 100%)',
@@ -532,14 +562,14 @@ export default function BumperCar({ siteData }) {
                 background: '#fefce8',
                 border: '2px solid #facc15',
                 borderRadius: '16px',
-                padding: '24px 28px',
+                padding: '18px 24px 14px',
                 boxShadow: 'none',
                 textAlign: 'left'
               }}>
-                <h4 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px 0' }}>
                   {siteData?.bumpercarOptions?.option2Title || "Battery-Operated Bumper Cars"}
                 </h4>
-                <p style={{ fontSize: '13.5px', color: '#334155', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                <p style={{ fontSize: '13.5px', color: '#334155', lineHeight: 1.6, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
                   {siteData?.bumpercarOptions?.option2Desc || "Self-contained rides running on rechargeable batteries — no floor grid or ceiling rig required. Ideal for malls, gaming zones, and temporary event setups where floor modification is not possible or where the operator wants the flexibility to relocate the attraction."}
                 </p>
               </div>
@@ -547,13 +577,13 @@ export default function BumperCar({ siteData }) {
           </div>
 
           {/* Right Column: Bumper Car Collage Graphic */}
-          <div className="winera-bumpercar-options-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div className="winera-bumpercar-options-img" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '30px', marginLeft: '20px' }}>
             <img
               src={siteData?.bumpercarOptions?.imgUrl || bumpercarOptionsCollage}
               alt="Bumper Car Options Collage"
               style={{
                 width: '100%',
-                maxWidth: '520px',
+                maxWidth: '550px',
                 height: 'auto',
                 display: 'block'
               }}
@@ -563,10 +593,10 @@ export default function BumperCar({ siteData }) {
       </section>
 
       {/* 8. QUICK COMPARISON TABLE SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-bumpercar-comparison-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-bumpercar-comparison-section" style={{ padding: '80px 4vw 20px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
-          <div style={{ textAlign: 'center', marginBottom: '60px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center', marginBottom: '25px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -600,7 +630,7 @@ export default function BumperCar({ siteData }) {
                       background: 'linear-gradient(135deg, #fef08a 0%, #fde047 50%, #facc15 100%)',
                       borderRadius: '24px',
                       padding: '10px 12px 10px 16px',
-                      boxShadow: '0 6px 16px rgba(250, 204, 21, 0.2)',
+                      boxShadow: 'none',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '12px',
@@ -609,7 +639,7 @@ export default function BumperCar({ siteData }) {
                       minHeight: '38px',
                       transition: 'all 0.3s ease'
                     }}>
-                      <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#0f172a', textAlign: 'left', lineHeight: 1.3, marginRight: '14px' }}>
+                      <span style={{ fontSize: '11.5px', fontWeight: '600', color: '#0f172a', textAlign: 'left', lineHeight: 1.3, marginRight: '14px' }}>
                         {pt.text && typeof pt.text === 'string'
                           ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
                               <React.Fragment key={lIdx}>
@@ -631,7 +661,7 @@ export default function BumperCar({ siteData }) {
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexShrink: 0,
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+                        boxShadow: 'none'
                       }}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
@@ -658,7 +688,7 @@ export default function BumperCar({ siteData }) {
                 zIndex: 2,
                 position: 'relative'
               }}>
-                <span style={{ fontSize: '11px', fontWeight: '800', color: '#ca8a04', lineHeight: 1.25, letterSpacing: '0.3px' }}>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#ca8a04', lineHeight: 1.25, letterSpacing: '0.3px' }}>
                   BATTERY-<br />OPERATED
                 </span>
               </div>
@@ -689,12 +719,12 @@ export default function BumperCar({ siteData }) {
               flexDirection: 'column',
               justifyContent: 'space-between',
               textAlign: 'center',
-              boxShadow: '0 15px 35px rgba(56, 189, 248, 0.2)',
+              boxShadow: 'none',
               zIndex: 4,
               flexShrink: 0
             }}>
               {(siteData?.bumpercarComparison?.features || defaultComparisonFeatures).map((fText, idx) => (
-                <div key={idx} style={{ fontSize: '14.5px', fontWeight: '800', color: '#0f172a' }}>
+                <div key={idx} style={{ fontSize: '17.5px', fontWeight: '500', color: 'rgba(50, 52, 50, 1)' }}>
                   {fText}
                 </div>
               ))}
@@ -720,7 +750,7 @@ export default function BumperCar({ siteData }) {
                 zIndex: 2,
                 position: 'relative'
               }}>
-                <span style={{ fontSize: '11px', fontWeight: '800', color: '#0284c7', lineHeight: 1.25, letterSpacing: '0.3px'}}>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#0284c7', lineHeight: 1.25, letterSpacing: '0.3px'}}>
                   BATTERY-<br />OPERATED
                 </span>
               </div>
@@ -750,7 +780,7 @@ export default function BumperCar({ siteData }) {
                       background: 'linear-gradient(135deg, #7dd3fc 0%, #38bdf8 50%, #0284c7 100%)',
                       borderRadius: '24px',
                       padding: '10px 16px 10px 12px',
-                      boxShadow: '0 6px 16px rgba(56, 189, 248, 0.2)',
+                      boxShadow: 'none',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '12px',
@@ -770,11 +800,11 @@ export default function BumperCar({ siteData }) {
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexShrink: 0,
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+                        boxShadow: 'none'
                       }}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#ffffff', textAlign: 'left', lineHeight: 1.3, marginLeft: '14px' }}>
+                      <span style={{ fontSize: '11.5px', fontWeight: '600', color: '#ffffff', textAlign: 'left', lineHeight: 1.3, marginLeft: '14px' }}>
                         {pt.text && typeof pt.text === 'string'
                           ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
                               <React.Fragment key={lIdx}>
@@ -850,20 +880,20 @@ export default function BumperCar({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
+                style={{ display: 'block', width: '80%', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '2.7rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.bumpercarInvestment?.title, "Is a Bumper Car Ride a Smart *Investment for Your Venue?*", '#38bdf8')}
+                {renderTitleMarkup(siteData?.bumpercarInvestment?.title, "Is a Bumper Car Ride a<br/>Smart *Investment for<br/>Your Venue?*", '#38bdf8')}
               </h2>
             </div>
 
             {/* Intro Paragraph 1 */}
             <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '16px' }}>
-              {siteData?.bumpercarInvestment?.introText || "Most bumper car suppliers in India provide a catalogue price and leave the financial decision to you. As India's ROI-First Game Zone Partner, Winera International works differently."}
+              {siteData?.bumpercarInvestment?.introText || "Most bumper car suppliers in India provide a catalogue price and leave the financial decision to you. As India's ROI-First Game Zone Developer, Winera International works differently."}
             </p>
 
             {/* Subheading intro line */}
-            <p style={{ fontSize: '13.5px', color: '#1e293b', lineHeight: 1.6, fontWeight: '700', marginBottom: '18px' }}>
+            <p style={{ fontSize: '14.5px', color: '#1e293b', lineHeight: 1.6, fontWeight: 500, marginBottom: '18px', width: '99%' }}>
               {siteData?.bumpercarInvestment?.subtitleText || "Before confirming any bumper car ride setup, our team prepares a complete return-on-investment report specific to your venue. It covers:"}
             </p>
 
@@ -871,17 +901,18 @@ export default function BumperCar({ siteData }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
               {(siteData?.bumpercarInvestment?.bullets || defaultInvestmentBullets).map((bText, idx) => (
                 <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <div style={{
-                    color: '#38bdf8',
-                    fontSize: '16px',
-                    fontWeight: '900',
-                    lineHeight: 1,
-                    marginTop: '2px',
-                    flexShrink: 0
-                  }}>
-                    »
-                  </div>
-                  <span style={{ fontSize: '13.5px', color: '#334155', fontWeight: '600', lineHeight: 1.5 }}>
+                  <img
+                    src={bumperCarIconPng}
+                    alt=""
+                    style={{
+                      width: '22px',
+                      height: '22px',
+                      objectFit: 'contain',
+                      flexShrink: 0,
+                      marginTop: '3px'
+                    }}
+                  />
+                  <span style={{ fontSize: '18.5px', color: 'rgb(51, 65, 85)', fontWeight: 600, lineHeight: 1.5 }}>
                     {bText}
                   </span>
                 </div>
@@ -889,7 +920,7 @@ export default function BumperCar({ siteData }) {
             </div>
 
             {/* Bottom Footnote Paragraph */}
-            <p style={{ fontSize: '13px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', marginBottom: '28px' }}>
+            <p style={{ fontSize: '13.5px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', marginBottom: '28px' }}>
               {siteData?.bumpercarInvestment?.footerText || "Every figure is calculated around your actual floor size, daily footfall, and local entry pricing — not an industry average. This report is provided free, before you commit to anything."}
             </p>
 
@@ -928,7 +959,7 @@ export default function BumperCar({ siteData }) {
                           <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
                         </svg>
                       </div>
-                      <span>{siteData?.bumpercarInvestment?.btnText || "Plan Your Game Zone"}</span>
+                      <span>{siteData?.bumpercarInvestment?.btnText || "Talk to an ROI Expert"}</span>
                     </a>
                   );
                 })()}
@@ -1031,11 +1062,25 @@ export default function BumperCar({ siteData }) {
                             whyChooseIcons[cIdx % whyChooseIcons.length]
                           )}
                         </div>
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
-                          {card.title}
+                        <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                          {card.title && typeof card.title === 'string'
+                            ? card.title.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                                <React.Fragment key={lIdx}>
+                                  {lIdx > 0 && <br />}
+                                  {line}
+                                </React.Fragment>
+                              ))
+                            : card.title}
                         </h4>
                         <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                          {card.desc}
+                          {card.desc && typeof card.desc === 'string'
+                            ? card.desc.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                                <React.Fragment key={lIdx}>
+                                  {lIdx > 0 && <br />}
+                                  {line}
+                                </React.Fragment>
+                              ))
+                            : card.desc}
                         </p>
                       </div>
                     ))}
@@ -1108,11 +1153,25 @@ export default function BumperCar({ siteData }) {
                               whyChooseIcons[(topCards.length + bIdx) % whyChooseIcons.length]
                             )}
                           </div>
-                          <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
-                            {card.title}
+                          <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                            {card.title && typeof card.title === 'string'
+                              ? card.title.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                                  <React.Fragment key={lIdx}>
+                                    {lIdx > 0 && <br />}
+                                    {line}
+                                  </React.Fragment>
+                                ))
+                              : card.title}
                           </h4>
                           <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                            {card.desc}
+                            {card.desc && typeof card.desc === 'string'
+                              ? card.desc.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                                  <React.Fragment key={lIdx}>
+                                    {lIdx > 0 && <br />}
+                                    {line}
+                                  </React.Fragment>
+                                ))
+                              : card.desc}
                           </p>
                         </div>
                       ))}
@@ -1188,13 +1247,12 @@ export default function BumperCar({ siteData }) {
 }
 
 const defaultBumperCarSpecs = [
-  { spec: "Drive Type", details: "Electric Grid / Battery Operated" },
-  { spec: "Body Material", details: "High-density FRP / Polyethylene" },
-  { spec: "Power Source", details: "48V DC / Ceiling Floor Grid" },
-  { spec: "Frame", details: "Hot-dip galvanized steel chassis" },
-  { spec: "Safety Ring", details: "Heavy-duty PVC / Rubber Bumper" },
-  { spec: "Controls", details: "Dual pedal & steering wheel" },
-  { spec: "Expected lifespan", details: "8-12 years" }
+  { spec: "Drive Type", details: "Electric floor type or battery-powered" },
+  { spec: "Body Material", details: "High-density polyethylene (HDPE) — impact resistant" },
+  { spec: "Power Source", details: "Conductive floor grid (electric) or rechargeable battery" },
+  { spec: "Weight Capacity", details: "Up to 150 kg per car — commercial grade" },
+  { spec: "Minimum Area Required", details: "400 sq ft" },
+  { spec: "Expected Lifespan", details: "8–12 years with proper maintenance" }
 ];
 
 const defaultComparisonFeatures = [
@@ -1228,15 +1286,16 @@ const defaultInvestmentBullets = [
   "Equipment and installation cost breakdown",
   "Projected daily and monthly rider capacity based on your floor size",
   "Estimated revenue per session at your pricing",
-  "Annual maintenance cost estimate"
+  "Annual maintenance cost estimate",
+  "Break-even timeline"
 ];
 
 const defaultWhyChooseCards = [
-  { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And Break-Even Before You Commit" },
-  { title: "Own Installation Team", desc: "Our Own Team Install And Commission Every Project Across 50+ Cities" },
-  { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With Servicing And Maintenance So Your Setup Keeps Running." },
-  { title: "Proven Track Record", desc: "Take A Look At What We've Built And Hear From The Venues We've Worked With." },
-  { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything, No Hidden Costs Added Later." }
+  { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And<br />Break-Even Before You Commit" },
+  { title: "Own Installation Team", desc: "Our Own Team Install And Commission<br />Every Project Across 50+ Cities" },
+  { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With<br />Servicing And Maintenance So Your<br />Setup Keeps Running." },
+  { title: "Proven Track Record", desc: "Take A Look At What We've Built<br />And Hear From The Venues We've<br />Worked With." },
+  { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything,<br />No Hidden Costs Added Later." }
 ];
 
 const defaultBumperCarFaqs = [

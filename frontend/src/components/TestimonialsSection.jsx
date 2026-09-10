@@ -159,7 +159,7 @@ export default function TestimonialsSection({
               borderRadius: '32px',
               padding: '36px 470px 36px 48px',
               minHeight: '380px',
-              height: isExpanded ? 'auto' : '390px',
+              height: isExpanded ? 'auto' : '410px',
               boxShadow: '0 12px 40px rgba(0, 0, 0, 0.04)',
               border: '1px solid #f1f5f9',
               display: 'flex',
@@ -179,25 +179,58 @@ export default function TestimonialsSection({
                 {(() => {
                   const quoteText = currentItem.quote || '';
                   const isLong = quoteText.length > 280;
-                  const displayText = (isLong && !isExpanded) ? `${quoteText.slice(0, 255)}...` : quoteText;
 
                   return (
-                    <p className="winera-testi-quote" style={{
-                      color: '#334155',
-                      fontSize: '14.5px',
-                      fontStyle: 'italic',
-                      fontWeight: '500',
-                      lineHeight: 1.5,
-                      maxWidth: '520px',
-                      margin: '0 0 8px'
-                    }}>
-                      {displayText}{' '}
-                      {isLong && (
+                    <div style={{ position: 'relative', maxWidth: '520px', margin: '0 0 8px' }}>
+                      <p className="winera-testi-quote" style={{
+                        color: '#334155',
+                        fontSize: '14.5px',
+                        fontStyle: 'italic',
+                        fontWeight: '500',
+                        lineHeight: 1.5,
+                        margin: 0,
+                        ...(isLong && !isExpanded ? {
+                          display: '-webkit-box',
+                          WebkitLineClamp: 6,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
+                        } : {})
+                      }}>
+                        {quoteText}
+                      </p>
+                      {isLong && !isExpanded && (
                         <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
-                            setIsExpanded(!isExpanded);
+                            setIsExpanded(true);
+                          }}
+                          style={{
+                            position: 'absolute',
+                            right: 0,
+                            bottom: 0,
+                            background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, #ffffff 32%, #ffffff 100%)',
+                            border: 'none',
+                            color: '#00a8ff',
+                            fontStyle: 'italic',
+                            fontWeight: '700',
+                            fontSize: '16.5px',
+                            cursor: 'pointer',
+                            paddingLeft: '28px',
+                            paddingRight: '0px',
+                            lineHeight: 1.5,
+                            textDecoration: 'underline'
+                          }}
+                        >
+                          ... read more..
+                        </button>
+                      )}
+                      {isLong && isExpanded && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsExpanded(false);
                           }}
                           style={{
                             color: '#00a8ff',
@@ -205,17 +238,17 @@ export default function TestimonialsSection({
                             border: 'none',
                             fontStyle: 'italic',
                             fontWeight: '700',
-                            fontSize: '14px',
+                            fontSize: '16.5px',
                             cursor: 'pointer',
                             padding: 0,
-                            margin: '0 0 0 4px',
+                            margin: '4px 0 0 4px',
                             textDecoration: 'underline'
                           }}
                         >
-                          {isExpanded ? 'read less..' : 'read more..'}
+                          read less..
                         </button>
                       )}
-                    </p>
+                    </div>
                   );
                 })()}
               </div>
@@ -379,24 +412,58 @@ export default function TestimonialsSection({
               {(() => {
                 const quoteText = currentItem.quote || '';
                 const isLong = quoteText.length > 280;
-                const displayText = (isLong && !isExpanded) ? `${quoteText.slice(0, 270)}...` : quoteText;
 
                 return (
-                  <p className="winera-testi-quote" style={{
-                    color: '#334155',
-                    fontSize: '13.5px',
-                    fontStyle: 'italic',
-                    fontWeight: '500',
-                    lineHeight: 1.6,
-                    marginBottom: '20px'
-                  }}>
-                    {displayText}{' '}
-                    {isLong && (
+                  <div style={{ position: 'relative', margin: '0 0 20px' }}>
+                    <p className="winera-testi-quote" style={{
+                      color: '#334155',
+                      fontSize: '13.5px',
+                      fontStyle: 'italic',
+                      fontWeight: '500',
+                      lineHeight: 1.6,
+                      margin: 0,
+                      ...(isLong && !isExpanded ? {
+                        display: '-webkit-box',
+                        WebkitLineClamp: 6,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden'
+                      } : {})
+                    }}>
+                      {quoteText}
+                    </p>
+                    {isLong && !isExpanded && (
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setIsExpanded(!isExpanded);
+                          setIsExpanded(true);
+                        }}
+                        style={{
+                          position: 'absolute',
+                          right: 0,
+                          bottom: 0,
+                          background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, #ffffff 32%, #ffffff 100%)',
+                          border: 'none',
+                          color: '#00a8ff',
+                          fontStyle: 'italic',
+                          fontWeight: '700',
+                          fontSize: '12.5px',
+                          cursor: 'pointer',
+                          paddingLeft: '28px',
+                          paddingRight: '0px',
+                          lineHeight: 1.6,
+                          textDecoration: 'underline'
+                        }}
+                      >
+                        ... read more..
+                      </button>
+                    )}
+                    {isLong && isExpanded && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsExpanded(false);
                         }}
                         style={{
                           color: '#00a8ff',
@@ -404,17 +471,17 @@ export default function TestimonialsSection({
                           border: 'none',
                           fontStyle: 'italic',
                           fontWeight: '700',
-                          fontSize: '13.5px',
+                          fontSize: '12.5px',
                           cursor: 'pointer',
                           padding: 0,
-                          margin: '0 0 0 4px',
+                          margin: '4px 0 0 4px',
                           textDecoration: 'underline'
                         }}
                       >
-                        {isExpanded ? 'read less..' : 'read more..'}
+                        read less..
                       </button>
                     )}
-                  </p>
+                  </div>
                 );
               })()}
 
