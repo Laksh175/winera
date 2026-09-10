@@ -186,7 +186,7 @@ section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: infiniteMarquee 18s linear infinite;
+  animation: infiniteMarquee 42s linear infinite;
 }
 
 .marquee-track:hover {
@@ -3650,8 +3650,8 @@ html {
 }
 
 /* ==========================================================================
-   GLOBAL UNIFORM BUTTON OVERRIDE RULE (FONT 14PX, WEIGHT 600, SIZING MATCH)
-   Enforces identical width, height, font size, and font weight across CTA buttons
+   GLOBAL UNIFORM BUTTON OVERRIDE RULE (MATCHING IMAGE 2 EXACTLY)
+   Enforces identical width, height, font size, padding, and border radius across CTA buttons
    ========================================================================== */
 [class*="cta-wrapper"],
 [class*="cta-wrapper-sm"] {
@@ -3668,43 +3668,32 @@ html {
 .winera-yellow-white-cta-btn-sm,
 .winera-white-yellow-cta-btn,
 .winera-white-cyan-cta-btn,
-.winera-yellow-shimmer-btn {
+.winera-yellow-shimmer-btn,
+.winera-partner-card-btn {
   font-size: 14px !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
 }
 
-.winera-cyan-cta-btn:not(.winera-hero-cta-btn):not(.winera-partner-card-btn),
-.winera-cyan-cta-btn-sm:not(.winera-partner-card-btn),
-.winera-yellow-cyan-cta-btn:not(.winera-partner-card-btn),
-.winera-yellow-cyan-cta-btn-sm:not(.winera-partner-card-btn),
-.winera-yellow-white-cta-btn:not(.winera-partner-card-btn),
-.winera-yellow-white-cta-btn-sm:not(.winera-partner-card-btn),
-.winera-white-yellow-cta-btn:not(.winera-partner-card-btn),
-.winera-white-cyan-cta-btn:not(.winera-partner-card-btn),
-.winera-yellow-shimmer-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-width: 220px !important;
-  max-width: 100% !important;
-  height: 44px !important;
-  min-height: 44px !important;
-  padding: 0 24px !important;
-  box-sizing: border-box !important;
-  border-radius: 12px !important;
-}
-
+.winera-cyan-cta-btn:not(.winera-hero-cta-btn),
+.winera-cyan-cta-btn-sm,
+.winera-yellow-cyan-cta-btn,
+.winera-yellow-cyan-cta-btn-sm,
+.winera-yellow-white-cta-btn,
+.winera-yellow-white-cta-btn-sm,
+.winera-white-yellow-cta-btn,
+.winera-white-cyan-cta-btn,
+.winera-yellow-shimmer-btn,
 .winera-partner-card-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-width: auto !important;
-  height: 36px !important;
-  min-height: 36px !important;
-  padding: 0 18px !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  border-radius: 8px !important;
+  min-width: 140px !important;
+  max-width: 100% !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 0 24px !important;
+  box-sizing: border-box !important;
+  border-radius: 12px !important;
 }
 
 .winera-cta-btn-hover {

@@ -1761,7 +1761,7 @@ export const getContent = async (req, res) => {
         }
       ]
     };
-    if (!siteData.processHome || !Array.isArray(siteData.processHome?.cards) || siteData.processHome.cards.length !== 5) {
+    if (!siteData.processHome || !Array.isArray(siteData.processHome?.cards) || siteData.processHome.cards.length === 0) {
       siteData.processHome = defaultProcessHome;
       await Content.findOneAndUpdate(
         { sectionKey: 'processHome' },
@@ -1770,7 +1770,7 @@ export const getContent = async (req, res) => {
       );
     }
 
-    // Ensure testimonials in MongoDB has the 3 updated client testimonials
+    // Ensure testimonials in MongoDB has client testimonials default if empty
     const defaultTestimonialsList = [
       {
         founderImage: "",
@@ -1798,7 +1798,7 @@ export const getContent = async (req, res) => {
       }
     ];
 
-    if (!Array.isArray(siteData.testimonials) || siteData.testimonials.length !== 3 || siteData.testimonials[0]?.gameZoneName === 'House of pepe') {
+    if (!Array.isArray(siteData.testimonials) || siteData.testimonials.length === 0 || siteData.testimonials[0]?.gameZoneName === 'House of pepe') {
       siteData.testimonials = defaultTestimonialsList;
       await Content.findOneAndUpdate(
         { sectionKey: 'testimonials' },

@@ -998,7 +998,7 @@ export default function ArGames({ siteData }) {
                   {renderTitleMarkup(siteData?.arFeatures?.f1Title, "*Exciting* Attractions", '#38bdf8')}
                 </h3>
               </div>
-              <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+              <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
                 {siteData?.arFeatures?.f1Desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."}
               </p>
             </div>
@@ -1041,7 +1041,7 @@ export default function ArGames({ siteData }) {
                   {renderTitleMarkup(siteData?.arFeatures?.f2Title, "High-Quality *Equipment*", '#38bdf8')}
                 </h3>
               </div>
-              <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+              <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
                 {siteData?.arFeatures?.f2Desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."}
               </p>
             </div>
@@ -1066,7 +1066,7 @@ export default function ArGames({ siteData }) {
                   {renderTitleMarkup(siteData?.arFeatures?.f3Title, "*Budget-Friendly AR*<br/>Entertainment Setup", '#38bdf8')}
                 </h3>
               </div>
-              <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+              <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
                 {siteData?.arFeatures?.f3Desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."}
               </p>
             </div>
@@ -1091,26 +1091,6 @@ export default function ArGames({ siteData }) {
         background: 'rgb(245, 245, 249)',
         overflow: 'hidden'
       }}>
-        {/* Top Decorative Color Accent Tabs (Figma 1:1) */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: '5vw',
-          width: '140px',
-          height: '14px',
-          background: '#38bdf8',
-          clipPath: 'polygon(0 0, 100% 0, 80% 100%, 0 100%)'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          right: '5vw',
-          width: '260px',
-          height: '16px',
-          background: '#ffcd00',
-          clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0 100%)'
-        }}></div>
-
         <div style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -1143,31 +1123,33 @@ export default function ArGames({ siteData }) {
           {/* Grid Container: Centered Paragraphs + Right Side Gamers Graphic */}
           <div className="winera-ar-earn-grid" style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 280px',
-            gap: '30px',
+            gridTemplateColumns: '1fr 260px',
+            gap: '20px',
             alignItems: 'center',
             width: '100%'
           }}>
             {/* Paragraphs */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', textAlign: 'center', maxWidth: '850px', margin: '0 auto' }}>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', textAlign: 'center', maxWidth: '1020px', margin: '0 auto' }}>
+              <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 auto', width: '102%', maxWidth: '115%', marginLeft: '12%' }}>
                 {siteData?.arEarn?.p1 || "Most AR games suppliers in India present a product catalogue and a price list the financial planning is left entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before recommending any product or configuration, our team prepares a complete ROI report for your specific venue covering equipment cost, projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline."}
               </p>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: 0 }}>
+              <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 auto', width: '106%', maxWidth: '115%', marginLeft: '7%' }}>
                 {siteData?.arEarn?.p2 || "Every figure is calculated around your venue type, available floor space, and visitor demographic, not an industry benchmark that may have no relevance to your actual situation. Very few interactive gaming setup suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
               </p>
             </div>
 
             {/* Right Side Gamers Graphic */}
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
               <img
                 src={siteData?.arEarn?.imgUrl || arEarnGamers}
                 alt="AR Gaming Experience Gamers"
                 style={{
                   width: '100%',
-                  maxWidth: '260px',
+                  maxWidth: '250px',
                   height: 'auto',
-                  display: 'block'
+                  display: 'block',
+                  marginRight: '-35%',
+                  marginBottom: '14%'
                 }}
               />
             </div>

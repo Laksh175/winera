@@ -616,11 +616,11 @@ export default function VrGames({ siteData }) {
       {/* 6. COMMERCIAL-GRADE QUALITY AND RELIABILITY SECTION (MATCHING SCREENSHOT 1:1) */}
       <section className="winera-vr-reliability-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-vr-reliability-grid" style={{
-          maxWidth: '1240px',
+          maxWidth: '1120px',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: '1.15fr 0.85fr',
-          gap: '60px',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '20px',
           alignItems: 'center'
         }}>
           {/* Left Text Column */}
@@ -643,12 +643,12 @@ export default function VrGames({ siteData }) {
               </h2>
             </div>
 
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '580px' }}>
+            <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '549px' }}>
               {siteData?.vrReliability?.mainP || "Most VR machines look impressive in a showroom. What matters for your venue is how they perform after six months of daily public use. Every unit we supply is built specifically for commercial cycling not consumer hardware repackaged for public environments. The difference shows up in your maintenance bills, not the spec sheet."}
             </p>
 
             {/* Checkmark Feature Block 1: Right Machine for Every Venue Type */}
-            <div style={{ marginBottom: '24px', maxWidth: '580px' }}>
+            <div style={{ marginBottom: '24px', maxWidth: '549px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                 <span style={{ color: '#38bdf8', fontSize: '18px', fontWeight: '900' }}>✓</span>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
@@ -661,7 +661,7 @@ export default function VrGames({ siteData }) {
             </div>
 
             {/* Checkmark Feature Block 2: End-to-End Support and Service */}
-            <div style={{ maxWidth: '580px' }}>
+            <div style={{ maxWidth: '549px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                 <span style={{ color: '#38bdf8', fontSize: '18px', fontWeight: '900' }}>✓</span>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
@@ -675,7 +675,7 @@ export default function VrGames({ siteData }) {
           </div>
 
           {/* Right Column: Direct Image Asset */}
-          <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
             <img
               src={siteData?.vrReliability?.imgUrl || vrCommercialReliability}
               alt="Commercial-Grade Quality and Reliability"
@@ -799,7 +799,7 @@ export default function VrGames({ siteData }) {
               alt=""
               style={{
                 position: 'absolute',
-                left: '-4px',
+                left: '-8px',
                 top: '-2px',
                 height: '103%',
                 width: 'auto',
