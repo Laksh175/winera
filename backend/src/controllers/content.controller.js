@@ -199,6 +199,57 @@ export const defaultSiteData = {
       quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
     }
   ],
+  processHome: {
+    title: "*OUR WORKING* PROCESS",
+    subtitle: "How We Setup Your Game Zone",
+    cards: [
+      {
+        num: "01",
+        title: "Free Consultation",
+        points: [
+          "Share your project idea and business goal",
+          "Tell us your space size and budget",
+          "We suggest the best game zone setup for you"
+        ]
+      },
+      {
+        num: "02",
+        title: "Planning & Selection",
+        points: [
+          "We design a complete game zone layout for your space",
+          "Best equipment and activities selected as per your budget",
+          "Detailed project timeline and execution plan prepared"
+        ]
+      },
+      {
+        num: "03",
+        title: "Production & Procurement",
+        points: [
+          "Order confirmed with transparent pricing",
+          "Production process begins and Equipment sourcing",
+          "Quality checks done at every stage"
+        ]
+      },
+      {
+        num: "04",
+        title: "Project Installation",
+        points: [
+          "Complete equipment assembly at your site",
+          "Product installation and setup",
+          "Full equipment inspection after installation"
+        ]
+      },
+      {
+        num: "05",
+        title: "Forever Support",
+        points: [
+          "Technical support whenever you need assistance",
+          "Spare parts and maintenance support available",
+          "Expert guidance to keep operations running smoothly"
+        ]
+      }
+    ]
+  },
   about: {
     title: "About Winera International",
     subtitle: "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India.",
@@ -1654,6 +1705,104 @@ export const getContent = async (req, res) => {
       await Content.findOneAndUpdate(
         { sectionKey: 'arFaqs' },
         { sectionKey: 'arFaqs', data: defaultArFaqsList },
+        { upsert: true, new: true }
+      );
+    }
+
+    // Ensure processHome in MongoDB has the 5 new steps
+    const defaultProcessHome = {
+      title: "*OUR WORKING* PROCESS",
+      subtitle: "How We Setup Your Game Zone",
+      cards: [
+        {
+          num: "01",
+          title: "Free Consultation",
+          points: [
+            "Share your project idea and business goal",
+            "Tell us your space size and budget",
+            "We suggest the best game zone setup for you"
+          ]
+        },
+        {
+          num: "02",
+          title: "Planning & Selection",
+          points: [
+            "We design a complete game zone layout for your space",
+            "Best equipment and activities selected as per your budget",
+            "Detailed project timeline and execution plan prepared"
+          ]
+        },
+        {
+          num: "03",
+          title: "Production & Procurement",
+          points: [
+            "Order confirmed with transparent pricing",
+            "Production process begins and Equipment sourcing",
+            "Quality checks done at every stage"
+          ]
+        },
+        {
+          num: "04",
+          title: "Project Installation",
+          points: [
+            "Complete equipment assembly at your site",
+            "Product installation and setup",
+            "Full equipment inspection after installation"
+          ]
+        },
+        {
+          num: "05",
+          title: "Forever Support",
+          points: [
+            "Technical support whenever you need assistance",
+            "Spare parts and maintenance support available",
+            "Expert guidance to keep operations running smoothly"
+          ]
+        }
+      ]
+    };
+    if (!siteData.processHome || !Array.isArray(siteData.processHome?.cards) || siteData.processHome.cards.length !== 5) {
+      siteData.processHome = defaultProcessHome;
+      await Content.findOneAndUpdate(
+        { sectionKey: 'processHome' },
+        { sectionKey: 'processHome', data: defaultProcessHome },
+        { upsert: true, new: true }
+      );
+    }
+
+    // Ensure testimonials in MongoDB has the 3 updated client testimonials
+    const defaultTestimonialsList = [
+      {
+        founderImage: "",
+        gameZoneName: "Rebounce Game Zone",
+        reviewerRole: "Surat",
+        starRating: 5,
+        youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
+      },
+      {
+        founderImage: "",
+        gameZoneName: "Fun Houze",
+        reviewerRole: "Surat",
+        starRating: 5,
+        youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
+      },
+      {
+        founderImage: "",
+        gameZoneName: "Hulaboo Game Zone",
+        reviewerRole: "Surat",
+        starRating: 5,
+        youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
+      }
+    ];
+
+    if (!Array.isArray(siteData.testimonials) || siteData.testimonials.length !== 3 || siteData.testimonials[0]?.gameZoneName === 'House of pepe') {
+      siteData.testimonials = defaultTestimonialsList;
+      await Content.findOneAndUpdate(
+        { sectionKey: 'testimonials' },
+        { sectionKey: 'testimonials', data: defaultTestimonialsList },
         { upsert: true, new: true }
       );
     }

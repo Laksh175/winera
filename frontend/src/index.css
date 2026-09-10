@@ -36,7 +36,15 @@ body {
   overflow-x: hidden;
 }
 
-p, span, div, li, a, input, textarea, button, select {
+p,
+span,
+div,
+li,
+a,
+input,
+textarea,
+button,
+select {
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -77,6 +85,42 @@ p *,
   line-height: 26px !important;
   letter-spacing: 0px !important;
   color: rgba(55, 62, 65, 1);
+}
+
+/* Testimonial Quote Italic Override */
+.winera-testi-quote,
+.winera-testi-quote * {
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+  font-size: 20px !important;
+  line-height: 31.75px !important;
+  letter-spacing: -0.22px !important;
+  text-align: justify !important;
+  vertical-align: middle !important;
+  color: #334155 !important;
+  margin-bottom: 8px !important;
+}
+
+.winera-testi-quote button {
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  font-size: 20px !important;
+  line-height: 35.75px !important;
+  letter-spacing: -0.22px !important;
+  color: #00a8ff !important;
+}
+
+/* FAQ Answer Typography Override */
+.winera-faq-answer {
+  font-family: 'Urbanist', sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  font-size: 16px !important;
+  line-height: 100% !important;
+  letter-spacing: 0% !important;
+  color: rgba(55, 62, 65, 1) !important;
 }
 
 /* Dark Hero Section Paragraph Text Color Override */
@@ -264,9 +308,11 @@ html {
 
   /* Global Spacing & Typography Fixes (Excluding Hero Banner Sections) */
   section:not([class*="hero"]) {
-    padding-top: 40px !important;
-    padding-bottom: 50px !important;
+    padding-top: 70px !important;
+    padding-bottom: 55px !important;
+    scroll-margin-top: 85px !important;
   }
+
 
   /* Grid Layouts to 1-Column Stack */
   .grid-2col,
@@ -410,321 +456,385 @@ html {
     height: 52px !important;
   }
 
-@keyframes wineraPageHeroFade {
-  0% {
-    opacity: 0;
-    transform: translateY(40px) scale(0.97);
+  @keyframes wineraPageHeroFade {
+    0% {
+      opacity: 0;
+      transform: translateY(40px) scale(0.97);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+
+  .winera-hero-animate {
+    animation: wineraPageHeroFade 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-}
 
-.winera-hero-animate {
-  animation: wineraPageHeroFade 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
+  /* AOS and Reveal Scroll Animation Rules - Smooth Bottom-to-Top Slow Slide Up */
+  @keyframes wineraFadeUpCenter {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 50px, 0);
+    }
 
-/* AOS and Reveal Scroll Animation Rules - Smooth Bottom-to-Top Slow Slide Up */
-@keyframes wineraFadeUpCenter {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 50px, 0);
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+
+  @keyframes wineraFadeUpRight {
+    0% {
+      opacity: 0;
+      transform: translate3d(-70px, 50px, 0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
-}
 
-@keyframes wineraFadeUpRight {
-  0% {
-    opacity: 0;
-    transform: translate3d(-70px, 50px, 0);
+  @keyframes wineraFadeUpLeft {
+    0% {
+      opacity: 0;
+      transform: translate3d(70px, 50px, 0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
 
-@keyframes wineraFadeUpLeft {
-  0% {
-    opacity: 0;
-    transform: translate3d(70px, 50px, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.winera-reveal,
-.winera-animate-block,
-[data-aos="fade-up"] {
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-.winera-reveal-left,
-.fade-up-right,
-[data-aos="fade-up-right"] {
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-.winera-reveal-right,
-.fade-up-left,
-[data-aos="fade-up-left"] {
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-.winera-reveal.is-visible,
-.winera-animate-block.is-visible,
-[data-aos="fade-up"].is-visible,
-[data-aos="fade-up"].aos-animate {
-  animation: wineraFadeUpCenter 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-}
-
-.winera-reveal-left.is-visible,
-.fade-up-right.is-visible,
-[data-aos="fade-up-right"].is-visible,
-[data-aos="fade-up-right"].aos-animate {
-  animation: wineraFadeUpRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-}
-
-.winera-reveal-right.is-visible,
-.fade-up-left.is-visible,
-[data-aos="fade-up-left"].is-visible,
-[data-aos="fade-up-left"].aos-animate {
-  animation: wineraFadeUpLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-}
-
-.winera-reveal-delay-1, .delay-1 { animation-delay: 0.1s !important; }
-.winera-reveal-delay-2, .delay-2 { animation-delay: 0.22s !important; }
-.winera-reveal-delay-3, .delay-3 { animation-delay: 0.34s !important; }
-.winera-reveal-delay-4, .delay-4 { animation-delay: 0.46s !important; }
-.winera-reveal-delay-5, .delay-5 { animation-delay: 0.58s !important; }
-
-/* Mobile Animation Safety: Ensure elements are visible on mobile first load */
-@media (max-width: 768px) {
   .winera-reveal,
+  .winera-animate-block,
+  [data-aos="fade-up"] {
+    opacity: 0;
+    will-change: opacity, transform;
+  }
+
   .winera-reveal-left,
-  .winera-reveal-right,
   .fade-up-right,
+  [data-aos="fade-up-right"] {
+    opacity: 0;
+    will-change: opacity, transform;
+  }
+
+  .winera-reveal-right,
   .fade-up-left,
-  [data-aos] {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-  }
-}
-
-/* Immediate Hover Response (Override transition-delay on hover) */
-.winera-process-card-wrapper-cyan:hover,
-.winera-process-card-wrapper-yellow:hover,
-.winera-partner-box-wrapper-yellow:hover,
-.winera-partner-box-wrapper-cyan:hover {
-  transition-delay: 0s !important;
-}
-
-@keyframes wineraSlideUp {
-  0% {
+  [data-aos="fade-up-left"] {
     opacity: 0;
-    transform: translateY(22px);
+    will-change: opacity, transform;
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+
+  .winera-reveal.is-visible,
+  .winera-animate-block.is-visible,
+  [data-aos="fade-up"].is-visible,
+  [data-aos="fade-up"].aos-animate {
+    animation: wineraFadeUpCenter 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
   }
-}
 
-@keyframes wineraFadeIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.96);
+  .winera-reveal-left.is-visible,
+  .fade-up-right.is-visible,
+  [data-aos="fade-up-right"].is-visible,
+  [data-aos="fade-up-right"].aos-animate {
+    animation: wineraFadeUpRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
   }
-  100% {
-    opacity: 1;
-    transform: scale(1);
+
+  .winera-reveal-right.is-visible,
+  .fade-up-left.is-visible,
+  [data-aos="fade-up-left"].is-visible,
+  [data-aos="fade-up-left"].aos-animate {
+    animation: wineraFadeUpLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
   }
-}
 
-.winera-expanded-info-box {
-  animation: wineraSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
+  .winera-reveal-delay-1,
+  .delay-1 {
+    animation-delay: 0.1s !important;
+  }
 
-.winera-collapsed-title-anim {
-  animation: wineraFadeIn 0.35s ease forwards;
-}
+  .winera-reveal-delay-2,
+  .delay-2 {
+    animation-delay: 0.22s !important;
+  }
 
-/* Card Hover & Interactive Float Animations */
-.winera-process-card-wrapper-cyan::before,
-.winera-process-card-wrapper-yellow::before {
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease !important;
-}
+  .winera-reveal-delay-3,
+  .delay-3 {
+    animation-delay: 0.34s !important;
+  }
 
-.winera-process-card-wrapper-cyan:hover::before {
-  transform: translate(-5px, -5px) scale(1.03) !important;
-  filter: drop-shadow(0 8px 18px rgba(56, 189, 248, 0.55)) !important;
-}
+  .winera-reveal-delay-4,
+  .delay-4 {
+    animation-delay: 0.46s !important;
+  }
 
-.winera-process-card-wrapper-yellow:hover::before {
-  transform: translate(5px, -5px) scale(1.03) !important;
-  filter: drop-shadow(0 8px 18px rgba(255, 205, 0, 0.6)) !important;
-}
+  .winera-reveal-delay-5,
+  .delay-5 {
+    animation-delay: 0.58s !important;
+  }
 
-.winera-process-card-wrapper-cyan,
-.winera-process-card-wrapper-yellow {
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.85s ease !important;
-  cursor: pointer;
-  perspective: 1000px;
-}
+  /* Mobile Animation Safety: Ensure elements are visible on mobile first load */
+  @media (max-width: 768px) {
 
-.winera-process-card-wrapper-cyan:hover,
-.winera-process-card-wrapper-yellow:hover {
-  transform: translateY(-14px) scale(1.03) !important;
-}
+    .winera-reveal,
+    .winera-reveal-left,
+    .winera-reveal-right,
+    .fade-up-right,
+    .fade-up-left,
+    [data-aos] {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
 
-.winera-process-inner-card {
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease !important;
-}
+  /* Immediate Hover Response (Override transition-delay on hover) */
+  .winera-process-card-wrapper-cyan:hover,
+  .winera-process-card-wrapper-yellow:hover,
+  .winera-process-card-wrapper-yellow-left:hover,
+  .winera-process-card-wrapper-cyan-right:hover,
+  .winera-partner-box-wrapper-yellow:hover,
+  .winera-partner-box-wrapper-cyan:hover {
+    transition-delay: 0s !important;
+  }
 
-.winera-process-card-wrapper-cyan:hover .winera-process-inner-card {
-  box-shadow: 0 28px 60px rgba(56, 189, 248, 0.42), 0 10px 25px rgba(56, 189, 248, 0.22) !important;
-  border-color: #38bdf8 !important;
-}
+  @keyframes wineraSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(22px);
+    }
 
-.winera-process-card-wrapper-yellow:hover .winera-process-inner-card {
-  box-shadow: 0 28px 60px rgba(255, 205, 0, 0.45), 0 10px 25px rgba(255, 205, 0, 0.25) !important;
-  border-color: #ffcd00 !important;
-}
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-.winera-process-card-wrapper-cyan:hover .winera-process-inner-card > div:first-of-type,
-.winera-process-card-wrapper-yellow:hover .winera-process-inner-card > div:first-of-type {
-  transform: scale(1.25) rotate(10deg) !important;
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-}
+  @keyframes wineraFadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.96);
+    }
 
-.winera-process-card-wrapper-cyan:hover .winera-process-step-num {
-  color: #00a8ff !important;
-  opacity: 0.55 !important;
-  transform: scale(1.2) translate(4px, -4px) !important;
-  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-}
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 
-.winera-process-card-wrapper-yellow:hover .winera-process-step-num {
-  color: #d97706 !important;
-  opacity: 0.55 !important;
-  transform: scale(1.2) translate(-4px, -4px) !important;
-  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-}
+  .winera-expanded-info-box {
+    animation: wineraSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
 
-.winera-stats-card {
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease !important;
-  align-items: flex-start !important;
-  text-align: left !important;
-  border: none !important;
-}
+  .winera-collapsed-title-anim {
+    animation: wineraFadeIn 0.35s ease forwards;
+  }
 
-.winera-stats-card h3,
-.winera-stats-card h3 span,
-.winera-stats-card h3 *,
-.winera-stats-card h4 {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
-  font-size: 46.72px;
-  line-height: 51.39px;
-  letter-spacing: -1.4px;
-  color: rgba(0, 174, 239, 1);
-  text-align: left;
-}
+  /* Card Hover & Interactive Float Animations */
+  .winera-process-card-wrapper-cyan::before,
+  .winera-process-card-wrapper-yellow::before,
+  .winera-process-card-wrapper-yellow-left::before,
+  .winera-process-card-wrapper-cyan-right::before {
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease !important;
+  }
 
-.winera-stats-card h4 {
-  font-size: 28px;
-  line-height: 32px;
-  letter-spacing: normal;
-}
+  .winera-process-card-wrapper-cyan:hover::before,
+  .winera-process-card-wrapper-yellow-left:hover::before {
+    transform: translate(-5px, -5px) scale(1.03) !important;
+  }
 
-.winera-stats-card p,
-.winera-stats-card span {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
-  font-size: 13.35px;
-  line-height: 16.02px;
-  letter-spacing: 0.67px;
-  color: rgba(0, 28, 38, 1);
-  white-space: pre-line;
-  text-align: left;
-}
+  .winera-process-card-wrapper-cyan:hover::before {
+    filter: drop-shadow(0 8px 18px rgba(56, 189, 248, 0.55)) !important;
+  }
 
-.winera-stats-card:hover {
-  transform: translateY(-10px) scale(1.04) !important;
-  box-shadow: 0 22px 45px rgba(0, 168, 255, 0.25) !important;
-}
+  .winera-process-card-wrapper-yellow-left:hover::before {
+    filter: drop-shadow(0 8px 18px rgba(255, 205, 0, 0.6)) !important;
+  }
 
-.winera-partner-box-wrapper-yellow::before,
-.winera-partner-box-wrapper-cyan::before {
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease !important;
-}
+  .winera-process-card-wrapper-yellow:hover::before,
+  .winera-process-card-wrapper-cyan-right:hover::before {
+    transform: translate(5px, -5px) scale(1.03) !important;
+  }
 
-.winera-partner-box-wrapper-yellow:hover::before {
-  transform: translate(-6px, -6px) scale(1.04) !important;
-  filter: drop-shadow(0 8px 20px rgba(255, 205, 0, 0.65)) !important;
-}
+  .winera-process-card-wrapper-yellow:hover::before {
+    filter: drop-shadow(0 8px 18px rgba(255, 205, 0, 0.6)) !important;
+  }
 
-.winera-partner-box-wrapper-cyan:hover::before {
-  transform: translate(-6px, -6px) scale(1.04) !important;
-  filter: drop-shadow(0 8px 20px rgba(56, 189, 248, 0.65)) !important;
-}
+  .winera-process-card-wrapper-cyan-right:hover::before {
+    filter: drop-shadow(0 8px 18px rgba(56, 189, 248, 0.55)) !important;
+  }
 
-.winera-partner-box-wrapper-yellow,
-.winera-partner-box-wrapper-cyan {
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.85s ease !important;
-  cursor: pointer;
-  perspective: 1000px;
-}
+  .winera-process-card-wrapper-cyan,
+  .winera-process-card-wrapper-yellow,
+  .winera-process-card-wrapper-yellow-left,
+  .winera-process-card-wrapper-cyan-right {
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.85s ease !important;
+    cursor: pointer;
+    perspective: 1000px;
+  }
 
-.winera-partner-box-wrapper-yellow:hover,
-.winera-partner-box-wrapper-cyan:hover {
-  transform: translateY(-12px) scale(1.03) !important;
-}
+  .winera-process-card-wrapper-cyan:hover,
+  .winera-process-card-wrapper-yellow:hover,
+  .winera-process-card-wrapper-yellow-left:hover,
+  .winera-process-card-wrapper-cyan-right:hover {
+    transform: translateY(-14px) scale(1.03) !important;
+  }
 
-.winera-partner-box-yellow,
-.winera-partner-box-cyan {
-  transition: box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease, transform 0.35s ease !important;
-}
+  .winera-process-inner-card {
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease !important;
+  }
 
-.winera-partner-box-wrapper-yellow:hover .winera-partner-box-yellow {
-  background: #ffffff !important;
-  box-shadow: 0 26px 55px rgba(255, 205, 0, 0.42), 0 10px 24px rgba(255, 205, 0, 0.22) !important;
-  border-color: #ffcd00 !important;
-}
+  .winera-process-card-wrapper-cyan:hover .winera-process-inner-card,
+  .winera-process-card-wrapper-cyan-right:hover .winera-process-inner-card {
+    box-shadow: 0 28px 60px rgba(56, 189, 248, 0.42), 0 10px 25px rgba(56, 189, 248, 0.22) !important;
+    border-color: #38bdf8 !important;
+  }
 
-.winera-partner-box-wrapper-cyan:hover .winera-partner-box-cyan {
-  background: #ffffff !important;
-  box-shadow: 0 26px 55px rgba(56, 189, 248, 0.42), 0 10px 24px rgba(56, 189, 248, 0.22) !important;
-  border-color: #38bdf8 !important;
-}
+  .winera-process-card-wrapper-yellow:hover .winera-process-inner-card,
+  .winera-process-card-wrapper-yellow-left:hover .winera-process-inner-card {
+    box-shadow: 0 28px 60px rgba(255, 205, 0, 0.45), 0 10px 25px rgba(255, 205, 0, 0.25) !important;
+    border-color: #ffcd00 !important;
+  }
 
-.winera-partner-box-wrapper-yellow:hover .winera-partner-box-yellow h4 {
-  color: #d97706 !important;
-  transform: translateX(4px);
-  transition: transform 0.3s ease, color 0.3s ease !important;
-}
+  .winera-process-card-wrapper-cyan:hover .winera-process-inner-card>div:first-of-type,
+  .winera-process-card-wrapper-yellow:hover .winera-process-inner-card>div:first-of-type,
+  .winera-process-card-wrapper-yellow-left:hover .winera-process-inner-card>div:first-of-type,
+  .winera-process-card-wrapper-cyan-right:hover .winera-process-inner-card>div:first-of-type {
+    transform: scale(1.25) rotate(10deg) !important;
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  }
 
-.winera-partner-box-wrapper-cyan:hover .winera-partner-box-cyan h4 {
-  color: #00a8ff !important;
-  transform: translateX(4px);
-  transition: transform 0.3s ease, color 0.3s ease !important;
-}
+  .winera-process-card-wrapper-cyan:hover .winera-process-step-num,
+  .winera-process-card-wrapper-yellow-left:hover .winera-process-step-num {
+    color: #00a8ff !important;
+    opacity: 0.55 !important;
+    transform: scale(1.2) translate(4px, -4px) !important;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  }
 
-.winera-partner-box-wrapper-yellow:hover .winera-cyan-cta-btn,
-.winera-partner-box-wrapper-cyan:hover .winera-white-cyan-cta-btn {
-  transform: scale(1.08) !important;
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-}
+  .winera-process-card-wrapper-yellow-left:hover .winera-process-step-num {
+    color: #d97706 !important;
+  }
+
+  .winera-process-card-wrapper-yellow:hover .winera-process-step-num,
+  .winera-process-card-wrapper-cyan-right:hover .winera-process-step-num {
+    color: #d97706 !important;
+    opacity: 0.55 !important;
+    transform: scale(1.2) translate(-4px, -4px) !important;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  }
+
+  .winera-process-card-wrapper-cyan-right:hover .winera-process-step-num {
+    color: #00a8ff !important;
+  }
+
+  .winera-stats-card {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    border: none !important;
+  }
+
+  .winera-stats-card h3,
+  .winera-stats-card h3 span,
+  .winera-stats-card h3 *,
+  .winera-stats-card h4 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 46.72px;
+    line-height: 51.39px;
+    letter-spacing: -1.4px;
+    color: rgba(0, 174, 239, 1);
+    text-align: left;
+  }
+
+  .winera-stats-card h4 {
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: normal;
+  }
+
+  .winera-stats-card p,
+  .winera-stats-card span {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 13.35px;
+    line-height: 16.02px;
+    letter-spacing: 0.67px;
+    color: rgba(0, 28, 38, 1);
+    white-space: pre-line;
+    text-align: left;
+  }
+
+  .winera-stats-card:hover {
+    transform: translateY(-10px) scale(1.04) !important;
+    box-shadow: 0 22px 45px rgba(0, 168, 255, 0.25) !important;
+  }
+
+  .winera-partner-box-wrapper-yellow::before,
+  .winera-partner-box-wrapper-cyan::before {
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease !important;
+  }
+
+  .winera-partner-box-wrapper-yellow:hover::before {
+    transform: translate(-6px, -6px) scale(1.04) !important;
+    filter: drop-shadow(0 8px 20px rgba(255, 205, 0, 0.65)) !important;
+  }
+
+  .winera-partner-box-wrapper-cyan:hover::before {
+    transform: translate(-6px, -6px) scale(1.04) !important;
+    filter: drop-shadow(0 8px 20px rgba(56, 189, 248, 0.65)) !important;
+  }
+
+  .winera-partner-box-wrapper-yellow,
+  .winera-partner-box-wrapper-cyan {
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.85s ease !important;
+    cursor: pointer;
+    perspective: 1000px;
+  }
+
+  .winera-partner-box-wrapper-yellow:hover,
+  .winera-partner-box-wrapper-cyan:hover {
+    transform: translateY(-12px) scale(1.03) !important;
+  }
+
+  .winera-partner-box-yellow,
+  .winera-partner-box-cyan {
+    transition: box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease, transform 0.35s ease !important;
+  }
+
+  .winera-partner-box-wrapper-yellow:hover .winera-partner-box-yellow {
+    background: #ffffff !important;
+    box-shadow: 0 26px 55px rgba(255, 205, 0, 0.42), 0 10px 24px rgba(255, 205, 0, 0.22) !important;
+    border-color: #ffcd00 !important;
+  }
+
+  .winera-partner-box-wrapper-cyan:hover .winera-partner-box-cyan {
+    background: #ffffff !important;
+    box-shadow: 0 26px 55px rgba(56, 189, 248, 0.42), 0 10px 24px rgba(56, 189, 248, 0.22) !important;
+    border-color: #38bdf8 !important;
+  }
+
+  .winera-partner-box-wrapper-yellow:hover .winera-partner-box-yellow h4 {
+    color: #d97706 !important;
+    transform: translateX(4px);
+    transition: transform 0.3s ease, color 0.3s ease !important;
+  }
+
+  .winera-partner-box-wrapper-cyan:hover .winera-partner-box-cyan h4 {
+    color: #00a8ff !important;
+    transform: translateX(4px);
+    transition: transform 0.3s ease, color 0.3s ease !important;
+  }
+
+  .winera-partner-box-wrapper-yellow:hover .winera-cyan-cta-btn,
+  .winera-partner-box-wrapper-cyan:hover .winera-white-cyan-cta-btn {
+    transform: scale(1.08) !important;
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  }
 
   /* Industries Carousel Single Card Layout for Mobile */
   .winera-industries-wrapper {
@@ -761,25 +871,27 @@ html {
 
   /* Our Working Process 1-card vertical stack on mobile */
   .winera-process-section {
-    padding: 50px 4vw 60px !important;
+    padding: 75px 4vw 60px !important;
+    scroll-margin-top: 85px !important;
   }
 
   .winera-process-cards-container {
     display: flex !important;
     flex-direction: column !important;
-    gap: 18px !important;
+    gap: 28px !important;
   }
 
   .winera-process-cards-container>div,
   .winera-process-cards-container div[style*="gridTemplateColumns"],
   .winera-process-cards-container div[style*="grid-template-columns"],
   .winera-process-row {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 28px !important;
     max-width: 100% !important;
     width: 100% !important;
   }
+
 
   /* Remove background image for Our Clients Section on mobile */
   .winera-clients-section {
@@ -839,7 +951,7 @@ html {
   }
 
   .winera-cta-content-box,
-  .winera-cta-banner-container > div {
+  .winera-cta-banner-container>div {
     align-items: center !important;
     text-align: center !important;
     max-width: 100% !important;
@@ -1493,7 +1605,7 @@ html {
     border-radius: 18px !important;
   }
 
-  .winera-desktop-products-grid a > div {
+  .winera-desktop-products-grid a>div {
     height: 130px !important;
     border-radius: 14px !important;
     margin-bottom: 10px !important;
@@ -2196,7 +2308,7 @@ html {
     gap: 10px !important;
   }
 
-  .winera-bowling-types-mobile-specs > div {
+  .winera-bowling-types-mobile-specs>div {
     display: flex !important;
     justify-content: space-between !important;
     align-items: flex-start !important;
@@ -2204,7 +2316,7 @@ html {
     gap: 12px !important;
   }
 
-  .winera-bowling-types-mobile-specs > div > span:last-child {
+  .winera-bowling-types-mobile-specs>div>span:last-child {
     text-align: right !important;
     word-break: break-word !important;
     max-width: 65% !important;
@@ -2930,19 +3042,25 @@ html {
    HOME HERO CTA CONTINUOUS ANIMATION
    ========================================== */
 @keyframes wineraHeroFloat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-5px);
   }
 }
 
 @keyframes wineraIconPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     box-shadow: none;
   }
+
   50% {
     transform: scale(1.06);
     box-shadow: none;
@@ -2954,12 +3072,15 @@ html {
     transform: translateX(-160%) skewX(-20deg);
     opacity: 0;
   }
+
   15% {
     opacity: 1;
   }
+
   85% {
     opacity: 1;
   }
+
   100% {
     transform: translateX(200%) skewX(-20deg);
     opacity: 0;
@@ -3026,14 +3147,12 @@ html {
   left: 0;
   width: 55%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 205, 0, 0.2) 30%,
-    rgba(255, 255, 255, 0.7) 50%,
-    rgba(255, 205, 0, 0.2) 70%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 205, 0, 0.2) 30%,
+      rgba(255, 255, 255, 0.7) 50%,
+      rgba(255, 205, 0, 0.2) 70%,
+      rgba(255, 255, 255, 0) 100%);
   transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
   animation: wineraHeroShimmer 1.8s linear infinite;
@@ -3073,12 +3192,15 @@ html {
     transform: translateX(-160%) skewX(-20deg);
     opacity: 0;
   }
+
   15% {
     opacity: 1;
   }
+
   85% {
     opacity: 1;
   }
+
   100% {
     transform: translateX(200%) skewX(-20deg);
     opacity: 0;
@@ -3135,14 +3257,12 @@ html {
   left: 0;
   width: 55%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.25) 30%,
-    rgba(255, 255, 255, 0.65) 50%,
-    rgba(255, 255, 255, 0.25) 70%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.25) 30%,
+      rgba(255, 255, 255, 0.65) 50%,
+      rgba(255, 255, 255, 0.25) 70%,
+      rgba(255, 255, 255, 0) 100%);
   transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
   animation: wineraButtonShimmer 1.5s linear infinite;
@@ -3221,14 +3341,12 @@ html {
   left: 0;
   width: 55%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.25) 30%,
-    rgba(255, 255, 255, 0.65) 50%,
-    rgba(255, 255, 255, 0.25) 70%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.25) 30%,
+      rgba(255, 255, 255, 0.65) 50%,
+      rgba(255, 255, 255, 0.25) 70%,
+      rgba(255, 255, 255, 0) 100%);
   transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
   animation: wineraButtonShimmer 1.5s linear infinite;
@@ -3286,14 +3404,12 @@ html {
   left: 0;
   width: 55%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.35) 30%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0.35) 70%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.35) 30%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0.35) 70%,
+      rgba(255, 255, 255, 0) 100%);
   transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
   animation: wineraButtonShimmer 1.5s linear infinite;
@@ -3359,14 +3475,12 @@ html {
   left: 0;
   width: 55%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.25) 30%,
-    rgba(255, 255, 255, 0.65) 50%,
-    rgba(255, 255, 255, 0.25) 70%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.25) 30%,
+      rgba(255, 255, 255, 0.65) 50%,
+      rgba(255, 255, 255, 0.25) 70%,
+      rgba(255, 255, 255, 0) 100%);
   transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
   animation: wineraButtonShimmer 1.5s linear infinite;
@@ -3446,14 +3560,12 @@ html {
   left: 0;
   width: 55%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 205, 0, 0.15) 30%,
-    rgba(255, 205, 0, 0.45) 50%,
-    rgba(255, 205, 0, 0.15) 70%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 205, 0, 0.15) 30%,
+      rgba(255, 205, 0, 0.45) 50%,
+      rgba(255, 205, 0, 0.15) 70%,
+      rgba(255, 255, 255, 0) 100%);
   transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
   animation: wineraButtonShimmer 1.5s linear infinite;
@@ -3517,14 +3629,12 @@ html {
   left: 0;
   width: 55%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(0, 168, 255, 0.15) 30%,
-    rgba(0, 168, 255, 0.45) 50%,
-    rgba(0, 168, 255, 0.15) 70%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(0, 168, 255, 0.15) 30%,
+      rgba(0, 168, 255, 0.45) 50%,
+      rgba(0, 168, 255, 0.15) 70%,
+      rgba(255, 255, 255, 0) 100%);
   transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
   animation: wineraButtonShimmer 1.5s linear infinite;
@@ -3615,7 +3725,7 @@ html {
 .winera-process-card-wrapper-cyan::before {
   content: '';
   position: absolute;
-  top: -9px;
+  top: -13px;
   left: -11px;
   width: calc(100% - 48px);
   height: calc(100% - 45px);
@@ -3634,14 +3744,52 @@ html {
 .winera-process-card-wrapper-yellow::before {
   content: '';
   position: absolute;
-  top: -9px;
-  right: -11px;
+  top: -13px;
+  right: 0px;
   width: calc(100% - 48px);
   height: calc(100% - 45px);
   background: #ffcd00;
   border-radius: 28px;
   border-bottom-right-radius: 18px;
   border-top-left-radius: 18px;
+  z-index: 0;
+}
+
+.winera-process-card-wrapper-yellow-left {
+  position: relative;
+  height: 100%;
+}
+
+.winera-process-card-wrapper-yellow-left::before {
+  content: '';
+  position: absolute;
+  top: -13px;
+  left: -11px;
+  width: calc(100% - 48px);
+  height: calc(100% - 45px);
+  background: #ffcd00;
+  border-radius: 28px;
+  border-bottom-left-radius: 18px;
+  border-top-left-radius: 18px;
+  z-index: 0;
+}
+
+.winera-process-card-wrapper-cyan-right {
+  position: relative;
+  height: 100%;
+}
+
+.winera-process-card-wrapper-cyan-right::before {
+  content: '';
+  position: absolute;
+  top: -13px;
+  right: -11px;
+  width: calc(100% - 48px);
+  height: calc(100% - 45px);
+  background: #38bdf8;
+  border-radius: 28px;
+  border-bottom-right-radius: 18px;
+  border-top-right-radius: 18px;
   z-index: 0;
 }
 
@@ -3668,7 +3816,7 @@ html {
 .winera-partner-box-wrapper-yellow::before {
   content: '';
   position: absolute;
-  top: -4px;
+  top: -7px;
   left: -5px;
   width: calc(100% - 40px);
   height: calc(100% - 35px);
@@ -3698,7 +3846,7 @@ html {
 .winera-partner-box-wrapper-cyan::before {
   content: '';
   position: absolute;
-  top: -4px;
+  top: -7px;
   left: -5px;
   width: calc(100% - 40px);
   height: calc(100% - 35px);
@@ -3751,11 +3899,13 @@ textarea::placeholder,
   .winera-why-winera-grid-wrapper {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  .winera-why-winera-grid-wrapper > div {
+
+  .winera-why-winera-grid-wrapper>div {
     border-right: none !important;
     border-bottom: 1.5px solid #7dd3fc !important;
   }
 }
+
 @media (max-width: 992px) {
   .winera-bowling-premium-title {
     white-space: normal !important;
@@ -3767,6 +3917,7 @@ textarea::placeholder,
    PROJECT PAGE & HYPERGRID PAGE FULL RESPONSIVE MEDIA QUERIES
    ========================================================================== */
 @media (max-width: 992px) {
+
   /* Hero Sections Padding Fix across all sub-hero pages */
   .winera-project-hero-section,
   .winera-hypergrid-hero-section,
@@ -4058,7 +4209,8 @@ textarea::placeholder,
 
   .winera-amusement-options-section {
     padding: 50px 5vw 55px !important;
-    background: #f0f9ff !important; /* solid fallback light blue on mobile */
+    background: #f0f9ff !important;
+    /* solid fallback light blue on mobile */
   }
 
   .winera-amusement-title-wrapper {
@@ -4104,6 +4256,7 @@ textarea::placeholder,
 }
 
 @media (max-width: 600px) {
+
   /* Project Page Mobile Adjustments */
   .winera-project-hero-section {
     padding-top: 150px !important;
@@ -4174,7 +4327,7 @@ textarea::placeholder,
     word-break: break-word !important;
   }
 
-  .winera-project-basic-table-box > div {
+  .winera-project-basic-table-box>div {
     padding: 12px 10px !important;
   }
 
@@ -4234,6 +4387,7 @@ textarea::placeholder,
 }
 
 @media (max-width: 480px) {
+
   .winera-project-hero-section,
   .winera-hypergrid-hero-section,
   .winera-ar-hero-section,
@@ -4276,6 +4430,7 @@ textarea::placeholder,
 }
 
 @media (max-width: 380px) {
+
   .winera-project-hero-section,
   .winera-hypergrid-hero-section,
   .winera-safety-hero-section,
@@ -4487,6 +4642,7 @@ textarea::placeholder,
 
 /* Small Mobile (<= 480px) */
 @media (max-width: 480px) {
+
   .winera-safety-standards-h2,
   .winera-safety-material-h2,
   .winera-safety-electrical-h2,
@@ -4525,28 +4681,35 @@ textarea::placeholder,
     grid-template-columns: 1fr !important;
     gap: 32px !important;
   }
+
   .winera-trampoline-intro-text {
     text-align: center !important;
   }
+
   .winera-trampoline-intro-text img {
     margin: 0 auto 10px !important;
   }
+
   .winera-trampoline-grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
+
   .winera-trampoline-why-grid {
     grid-template-columns: 1fr !important;
   }
+
   .winera-trampoline-roi-grid {
     grid-template-columns: 1fr !important;
     gap: 32px !important;
   }
+
   .winera-trampoline-custom-container {
     padding-right: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
   }
+
   .winera-trampoline-mascot-img {
     position: relative !important;
     right: auto !important;
@@ -4555,6 +4718,7 @@ textarea::placeholder,
     display: flex !important;
     justify-content: center !important;
   }
+
   .winera-trampoline-mascot-img img {
     width: 140px !important;
   }
@@ -4564,23 +4728,28 @@ textarea::placeholder,
   .winera-trampoline-custom-container {
     padding-right: 0 !important;
   }
+
   .winera-trampoline-custom-container h2 {
     font-size: 1.5rem !important;
     line-height: 1.3 !important;
   }
+
   .winera-trampoline-custom-container h2 br {
     display: inline !important;
   }
+
   .winera-trampoline-custom-container p {
     font-size: 14px !important;
     line-height: 1.65 !important;
     text-align: center !important;
   }
+
   .winera-trampoline-hero-section {
     padding-top: 140px !important;
     padding-bottom: 50px !important;
     min-height: auto !important;
   }
+
   .winera-trampoline-hero-h1 {
     font-size: 1.15rem !important;
     white-space: nowrap !important;
@@ -4588,89 +4757,109 @@ textarea::placeholder,
     gap: 6px !important;
   }
 
-@media (max-width: 480px) {
-  .winera-trampoline-hero-h1 {
-    font-size: 1rem !important;
-    white-space: nowrap !important;
-    gap: 4px !important;
+  @media (max-width: 480px) {
+    .winera-trampoline-hero-h1 {
+      font-size: 1rem !important;
+      white-space: nowrap !important;
+      gap: 4px !important;
+    }
   }
-}
+
   .winera-trampoline-hero-p {
     font-size: 14px !important;
     margin-bottom: 24px !important;
   }
+
   .winera-section-title {
     font-size: 1.5rem !important;
     line-height: 1.25 !important;
   }
+
   .winera-trampoline-grid {
     grid-template-columns: 1fr !important;
   }
+
   .winera-trampoline-custom-grid {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
     text-align: center !important;
   }
+
   .winera-mascot-img {
     max-width: 120px !important;
     margin: 0 auto !important;
   }
+
   .winera-trampoline-specs-card {
     padding: 24px 16px !important;
     background-size: cover !important;
     border-radius: 18px !important;
   }
+
   .winera-specs-table-container {
     padding: 14px 12px !important;
     border-radius: 14px !important;
   }
+
   .winera-spec-label {
     width: 44% !important;
     font-size: 13px !important;
     padding: 8px 6px !important;
   }
+
   .winera-spec-val {
     font-size: 13px !important;
     padding: 8px 6px !important;
   }
+
   .winera-trampoline-inside-frame {
     padding: 60px 16px 55px !important;
     background-size: cover !important;
   }
+
   .winera-zone-tabs-bar {
     justify-content: flex-start !important;
     padding-left: 10px !important;
     padding-right: 10px !important;
     margin-bottom: 20px !important;
   }
+
   .winera-trampoline-zone-card {
     grid-template-columns: 1fr !important;
     padding: 24px 18px !important;
     gap: 20px !important;
   }
-  .winera-why-top-grid, .winera-why-bottom-grid {
+
+  .winera-why-top-grid,
+  .winera-why-bottom-grid {
     grid-template-columns: 1fr !important;
     gap: 30px !important;
   }
+
   .winera-why-h2 {
     font-size: 1.6rem !important;
     white-space: normal !important;
     line-height: 1.25 !important;
   }
+
   .winera-v-line {
     display: none !important;
   }
+
   .winera-trampoline-cta-card {
     padding: 36px 16px !important;
     border-radius: 18px !important;
   }
+
   .winera-cta-h2 {
     font-size: 1.5rem !important;
     line-height: 1.3 !important;
   }
+
   .winera-cta-p {
     font-size: 14px !important;
   }
+
   .winera-cta-p br {
     display: none !important;
   }
@@ -4714,9 +4903,11 @@ textarea::placeholder,
     display: block !important;
     text-align: center !important;
   }
-  .winera-home-hero-section h1 > span {
+
+  .winera-home-hero-section h1>span {
     display: block !important;
   }
+
   .winera-home-hero-section h1 span span {
     display: inline !important;
   }
@@ -4762,15 +4953,15 @@ textarea::placeholder,
   .winera-home-hero-section h1 {
     font-size: 1.65rem !important;
     line-height: 1.22 !important;
-    text-shadow: 0 3px 15px rgba(0,0,0,0.95) !important;
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 0.95) !important;
     display: block !important;
     text-align: center !important;
   }
 
-  .winera-home-hero-section h1 > span {
+  .winera-home-hero-section h1>span {
     display: block !important;
   }
-  
+
   .winera-home-hero-section h1 span span {
     display: inline !important;
   }
@@ -4782,7 +4973,7 @@ textarea::placeholder,
     gap: 10px !important;
   }
 
-  .winera-about-bullets-grid > div {
+  .winera-about-bullets-grid>div {
     justify-content: flex-start !important;
     text-align: left !important;
   }
@@ -4815,7 +5006,12 @@ img[src*="yellow-stroke-line"] {
 
 /* Home Page & Global Mobile Responsive Adjustments */
 @media (max-width: 768px) {
-  html, body, #root, main, #main-content {
+
+  html,
+  body,
+  #root,
+  main,
+  #main-content {
     overflow-x: hidden !important;
     width: 100% !important;
   }
@@ -4862,6 +5058,64 @@ img[src*="yellow-stroke-line"] {
     box-sizing: border-box !important;
   }
 
+  /* Disable card hover & click shift animations on mobile/responsive screen size */
+  .winera-partner-box-wrapper-yellow:hover,
+  .winera-partner-box-wrapper-cyan:hover,
+  .winera-partner-box-wrapper-yellow:active,
+  .winera-partner-box-wrapper-cyan:active,
+  .winera-partner-box-wrapper-yellow:focus,
+  .winera-partner-box-wrapper-cyan:focus,
+  .winera-process-card-wrapper-cyan:hover,
+  .winera-process-card-wrapper-yellow:hover,
+  .winera-process-card-wrapper-yellow-left:hover,
+  .winera-process-card-wrapper-cyan-right:hover,
+  .winera-process-card-wrapper-cyan:active,
+  .winera-process-card-wrapper-yellow:active,
+  .winera-process-card-wrapper-yellow-left:active,
+  .winera-process-card-wrapper-cyan-right:active,
+  .winera-process-card-wrapper-cyan:focus,
+  .winera-process-card-wrapper-yellow:focus,
+  .winera-process-card-wrapper-yellow-left:focus,
+  .winera-process-card-wrapper-cyan-right:focus,
+  .winera-stats-card:hover,
+  .winera-stats-card:active {
+    transform: none !important;
+  }
+
+  .winera-partner-box-wrapper-yellow:hover::before,
+  .winera-partner-box-wrapper-cyan:hover::before,
+  .winera-partner-box-wrapper-yellow:active::before,
+  .winera-partner-box-wrapper-cyan:active::before,
+  .winera-partner-box-wrapper-yellow:focus::before,
+  .winera-partner-box-wrapper-cyan:focus::before,
+  .winera-process-card-wrapper-cyan:hover::before,
+  .winera-process-card-wrapper-yellow:hover::before,
+  .winera-process-card-wrapper-yellow-left:hover::before,
+  .winera-process-card-wrapper-cyan-right:hover::before,
+  .winera-process-card-wrapper-cyan:active::before,
+  .winera-process-card-wrapper-yellow:active::before,
+  .winera-process-card-wrapper-yellow-left:active::before,
+  .winera-process-card-wrapper-cyan-right:active::before,
+  .winera-process-card-wrapper-cyan:focus::before,
+  .winera-process-card-wrapper-yellow:focus::before,
+  .winera-process-card-wrapper-yellow-left:focus::before,
+  .winera-process-card-wrapper-cyan-right:focus::before {
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .winera-partner-box-wrapper-yellow:hover .winera-partner-box-yellow h4,
+  .winera-partner-box-wrapper-cyan:hover .winera-partner-box-cyan h4,
+  .winera-partner-box-wrapper-yellow:active .winera-partner-box-yellow h4,
+  .winera-partner-box-wrapper-cyan:active .winera-partner-box-cyan h4,
+  .winera-partner-box-wrapper-yellow:hover .winera-cyan-cta-btn,
+  .winera-partner-box-wrapper-cyan:hover .winera-white-cyan-cta-btn,
+  .winera-partner-box-wrapper-yellow:active .winera-cyan-cta-btn,
+  .winera-partner-box-wrapper-cyan:active .winera-white-cyan-cta-btn {
+    transform: none !important;
+  }
+
+
   .winera-partner-box-yellow,
   .winera-partner-box-cyan {
     padding: 18px 16px !important;
@@ -4881,8 +5135,8 @@ img[src*="yellow-stroke-line"] {
     padding-top: 40px !important;
   }
 
-  .winera-partner-box-yellow > div,
-  .winera-partner-box-cyan > div {
+  .winera-partner-box-yellow>div,
+  .winera-partner-box-cyan>div {
     margin-top: 14px !important;
   }
 }
@@ -4895,10 +5149,12 @@ img[src*="yellow-stroke-line"] {
 .winera-country-dropdown-popup::-webkit-scrollbar {
   width: 5px;
 }
+
 .winera-country-dropdown-popup::-webkit-scrollbar-track {
   background: #f1f5f9;
   border-radius: 8px;
 }
+
 .winera-country-dropdown-popup::-webkit-scrollbar-thumb {
   background: #38bdf8;
   border-radius: 8px;
@@ -4997,8 +5253,8 @@ img[src*="yellow-stroke-line"] {
     align-items: center !important;
   }
 
-  .winera-roi-wrong-side > div,
-  .winera-roi-right-side > div {
+  .winera-roi-wrong-side>div,
+  .winera-roi-right-side>div {
     align-items: center !important;
   }
 
@@ -5156,6 +5412,7 @@ img[src*="yellow-stroke-line"] {
   width: 0 !important;
   height: 0 !important;
 }
+
 .winera-blog-pagination-container {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
@@ -5168,22 +5425,27 @@ img[src*="yellow-stroke-line"] {
     min-height: 155px !important;
     aspect-ratio: auto !important;
   }
+
   .winera-blog-hero-h1 {
     font-size: 1.1rem !important;
     gap: 6px !important;
   }
+
   .winera-blog-card-img-container {
     height: 180px !important;
   }
+
   .winera-blog-single-card {
     padding: 14px !important;
   }
+
   .winera-blog-pagination-container {
     padding: 5px 8px !important;
     gap: 4px !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
   }
+
   .winera-blog-pagination-container button {
     width: 27px !important;
     height: 27px !important;
@@ -5214,6 +5476,7 @@ img[src*="yellow-stroke-line"] {
 .winera-arrow-down {
   display: block !important;
 }
+
 .winera-arrow-left,
 .winera-arrow-right {
   display: none !important;
@@ -5233,21 +5496,26 @@ img[src*="yellow-stroke-line"] {
     grid-template-columns: 1fr !important;
     gap: 36px !important;
   }
+
   .winera-arcade-left-group {
     width: 100% !important;
     max-width: 580px !important;
     margin: 0 auto !important;
   }
+
   .winera-arcade-main-card {
     height: 420px !important;
   }
+
   .winera-arcade-thumb-column {
     height: 420px !important;
   }
+
   .winera-arcade-thumb-box {
     width: 76px !important;
     height: 76px !important;
   }
+
   .winera-arcade-details-col {
     display: flex !important;
     flex-direction: column !important;
@@ -5257,29 +5525,36 @@ img[src*="yellow-stroke-line"] {
     margin-top: 10px !important;
     width: 100% !important;
   }
+
   .winera-arcade-details-col img {
     margin: 0 auto 4px !important;
   }
+
   .winera-arcade-details-col h2 {
     text-align: center !important;
   }
+
   .winera-arcade-banner-pill {
     margin-left: auto !important;
     margin-right: auto !important;
     text-align: center !important;
   }
+
   .winera-arcade-specs-list {
     align-items: center !important;
     text-align: center !important;
   }
+
   .winera-arcade-dim-container {
     justify-content: center !important;
     width: 100% !important;
   }
+
   .winera-arcade-cta-row {
     justify-content: center !important;
     width: 100% !important;
   }
+
   .winera-spec-details-grid {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
@@ -5294,10 +5569,12 @@ img[src*="yellow-stroke-line"] {
 }
 
 @media (max-width: 767px) {
+
   .winera-arrow-up,
   .winera-arrow-down {
     display: none !important;
   }
+
   .winera-arrow-left,
   .winera-arrow-right {
     display: block !important;
@@ -5306,27 +5583,33 @@ img[src*="yellow-stroke-line"] {
     color: #0284c7 !important;
     flex-shrink: 0 !important;
   }
+
   .winera-arcade-hero-section {
     padding-top: 140px !important;
     padding-bottom: 35px !important;
   }
+
   .winera-arcade-hero-h1 {
     font-size: 1.15rem !important;
   }
+
   .winera-arcade-specs-grid {
     display: flex !important;
     flex-direction: column !important;
     gap: 24px !important;
   }
+
   .winera-arcade-left-group {
     flex-direction: column !important;
     gap: 16px !important;
   }
+
   .winera-arcade-main-card {
     order: 1 !important;
     height: 270px !important;
     width: 100% !important;
   }
+
   .winera-arcade-thumb-column {
     order: 2 !important;
     flex-direction: row !important;
@@ -5337,55 +5620,67 @@ img[src*="yellow-stroke-line"] {
     gap: 8px !important;
     padding: 8px 0 !important;
   }
+
   .winera-arcade-thumb-inner {
     flex-direction: row !important;
     height: auto !important;
     width: auto !important;
     gap: 8px !important;
   }
+
   .winera-arcade-thumb-box {
     width: 52px !important;
     height: 52px !important;
     border-radius: 14px !important;
     flex-shrink: 0 !important;
   }
+
   .winera-arcade-details-col {
     order: 3 !important;
     padding-left: 0 !important;
     align-items: center !important;
     text-align: center !important;
   }
+
   .winera-arcade-details-col h2 {
     font-size: 1.9rem !important;
     text-align: center !important;
   }
+
   .winera-arcade-details-col img {
     margin: 0 auto 4px !important;
   }
+
   .winera-arcade-banner-pill {
     width: 100% !important;
     max-width: 100% !important;
     text-align: center !important;
   }
+
   .winera-arcade-specs-list {
     align-items: center !important;
     text-align: center !important;
   }
+
   .winera-arcade-dim-container {
     justify-content: center !important;
     flex-wrap: wrap !important;
     gap: 10px !important;
   }
+
   .winera-arcade-dim-card {
     width: 95px !important;
   }
+
   .winera-arcade-cta-row {
     justify-content: center !important;
     width: 100% !important;
   }
+
   .winera-spec-details-grid {
     grid-template-columns: 1fr !important;
   }
+
   .winera-spec-detail-card-hover {
     padding: 22px 18px !important;
   }
@@ -5417,105 +5712,105 @@ img[src*="yellow-stroke-line"] {
   animation: wineraBreadcrumbPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.winera-arcade-hero-h1 > a,
-.winera-bowling-hero-h1 > a,
-.winera-softplay-hero-h1 > a,
-.winera-vr-hero-h1 > a,
-.winera-ar-hero-h1 > a,
-.winera-bumpercar-hero-h1 > a,
-.winera-amusement-hero-h1 > a,
-.winera-amusement-hero-title > a,
-.winera-trampoline-hero-h1 > a,
-.winera-hypergrid-hero-h1 > a,
-.winera-hypergrid-hero-title > a,
-.winera-safety-hero-h1 > a,
-.winera-project-hero-h1 > a,
-.winera-roi-hero-h1 > a,
-.winera-blog-hero-h1 > a,
-.winera-lasertag-hero-h1 > a,
-.winera-contact-hero-h1 > a,
-.winera-about-hero-breadcrumb > a,
-.winera-breadcrumb-hero > a {
+.winera-arcade-hero-h1>a,
+.winera-bowling-hero-h1>a,
+.winera-softplay-hero-h1>a,
+.winera-vr-hero-h1>a,
+.winera-ar-hero-h1>a,
+.winera-bumpercar-hero-h1>a,
+.winera-amusement-hero-h1>a,
+.winera-amusement-hero-title>a,
+.winera-trampoline-hero-h1>a,
+.winera-hypergrid-hero-h1>a,
+.winera-hypergrid-hero-title>a,
+.winera-safety-hero-h1>a,
+.winera-project-hero-h1>a,
+.winera-roi-hero-h1>a,
+.winera-blog-hero-h1>a,
+.winera-lasertag-hero-h1>a,
+.winera-contact-hero-h1>a,
+.winera-about-hero-breadcrumb>a,
+.winera-breadcrumb-hero>a {
   position: relative;
   transition: all 0.25s ease;
   padding: 2px 6px;
   border-radius: 6px;
 }
 
-.winera-arcade-hero-h1 > a:hover,
-.winera-bowling-hero-h1 > a:hover,
-.winera-softplay-hero-h1 > a:hover,
-.winera-vr-hero-h1 > a:hover,
-.winera-ar-hero-h1 > a:hover,
-.winera-bumpercar-hero-h1 > a:hover,
-.winera-amusement-hero-h1 > a:hover,
-.winera-amusement-hero-title > a:hover,
-.winera-trampoline-hero-h1 > a:hover,
-.winera-hypergrid-hero-h1 > a:hover,
-.winera-hypergrid-hero-title > a:hover,
-.winera-safety-hero-h1 > a:hover,
-.winera-project-hero-h1 > a:hover,
-.winera-roi-hero-h1 > a:hover,
-.winera-blog-hero-h1 > a:hover,
-.winera-lasertag-hero-h1 > a:hover,
-.winera-contact-hero-h1 > a:hover,
-.winera-about-hero-breadcrumb > a:hover,
-.winera-breadcrumb-hero > a:hover {
+.winera-arcade-hero-h1>a:hover,
+.winera-bowling-hero-h1>a:hover,
+.winera-softplay-hero-h1>a:hover,
+.winera-vr-hero-h1>a:hover,
+.winera-ar-hero-h1>a:hover,
+.winera-bumpercar-hero-h1>a:hover,
+.winera-amusement-hero-h1>a:hover,
+.winera-amusement-hero-title>a:hover,
+.winera-trampoline-hero-h1>a:hover,
+.winera-hypergrid-hero-h1>a:hover,
+.winera-hypergrid-hero-title>a:hover,
+.winera-safety-hero-h1>a:hover,
+.winera-project-hero-h1>a:hover,
+.winera-roi-hero-h1>a:hover,
+.winera-blog-hero-h1>a:hover,
+.winera-lasertag-hero-h1>a:hover,
+.winera-contact-hero-h1>a:hover,
+.winera-about-hero-breadcrumb>a:hover,
+.winera-breadcrumb-hero>a:hover {
   color: #38bdf8 !important;
   text-shadow: 0 0 10px rgba(56, 189, 248, 0.75);
   transform: translateY(-2px) scale(1.05);
 }
 
 /* Static Arrow (Animation Removed) */
-.winera-arcade-hero-h1 > span:nth-of-type(1),
-.winera-bowling-hero-h1 > span:nth-of-type(1),
-.winera-softplay-hero-h1 > span:nth-of-type(1),
-.winera-vr-hero-h1 > span:nth-of-type(1),
-.winera-ar-hero-h1 > span:nth-of-type(1),
-.winera-bumpercar-hero-h1 > span:nth-of-type(1),
-.winera-amusement-hero-h1 > span:nth-of-type(1),
-.winera-amusement-hero-title > span:nth-of-type(1),
-.winera-trampoline-hero-h1 > span:nth-of-type(1),
-.winera-hypergrid-hero-h1 > span:nth-of-type(1),
-.winera-hypergrid-hero-title > span:nth-of-type(1),
-.winera-safety-hero-h1 > span:nth-of-type(1),
-.winera-project-hero-h1 > span:nth-of-type(1),
-.winera-roi-hero-h1 > span:nth-of-type(1),
-.winera-blog-hero-h1 > span:nth-of-type(1),
-.winera-lasertag-hero-h1 > span:nth-of-type(1),
-.winera-contact-hero-h1 > span:nth-of-type(1),
-.winera-about-hero-breadcrumb > span:nth-of-type(1),
-.winera-breadcrumb-hero > span:nth-of-type(1) {
+.winera-arcade-hero-h1>span:nth-of-type(1),
+.winera-bowling-hero-h1>span:nth-of-type(1),
+.winera-softplay-hero-h1>span:nth-of-type(1),
+.winera-vr-hero-h1>span:nth-of-type(1),
+.winera-ar-hero-h1>span:nth-of-type(1),
+.winera-bumpercar-hero-h1>span:nth-of-type(1),
+.winera-amusement-hero-h1>span:nth-of-type(1),
+.winera-amusement-hero-title>span:nth-of-type(1),
+.winera-trampoline-hero-h1>span:nth-of-type(1),
+.winera-hypergrid-hero-h1>span:nth-of-type(1),
+.winera-hypergrid-hero-title>span:nth-of-type(1),
+.winera-safety-hero-h1>span:nth-of-type(1),
+.winera-project-hero-h1>span:nth-of-type(1),
+.winera-roi-hero-h1>span:nth-of-type(1),
+.winera-blog-hero-h1>span:nth-of-type(1),
+.winera-lasertag-hero-h1>span:nth-of-type(1),
+.winera-contact-hero-h1>span:nth-of-type(1),
+.winera-about-hero-breadcrumb>span:nth-of-type(1),
+.winera-breadcrumb-hero>span:nth-of-type(1) {
   display: inline-block;
   margin: 0 6px;
   color: rgba(255, 255, 255, 0.85);
 }
 
 /* Active Page Title Golden Breathing Glow Pulse */
-.winera-arcade-hero-h1 > span:nth-of-type(2),
-.winera-bowling-hero-h1 > span:nth-of-type(2),
-.winera-softplay-hero-h1 > span:nth-of-type(2),
-.winera-vr-hero-h1 > span:nth-of-type(2),
-.winera-ar-hero-h1 > span:nth-of-type(2),
-.winera-bumpercar-hero-h1 > span:nth-of-type(2),
-.winera-amusement-hero-h1 > span:nth-of-type(2),
-.winera-amusement-hero-title > span:nth-of-type(2),
-.winera-trampoline-hero-h1 > span:nth-of-type(2),
-.winera-hypergrid-hero-h1 > span:nth-of-type(2),
-.winera-hypergrid-hero-title > span:nth-of-type(2),
-.winera-safety-hero-h1 > span:nth-of-type(2),
-.winera-project-hero-h1 > span:nth-of-type(2),
-.winera-roi-hero-h1 > span:nth-of-type(2),
-.winera-blog-hero-h1 > span:nth-of-type(2),
-.winera-lasertag-hero-h1 > span:nth-of-type(2),
-.winera-contact-hero-h1 > span:nth-of-type(2),
-.winera-breadcrumb-hero > span:nth-of-type(2) {
+.winera-arcade-hero-h1>span:nth-of-type(2),
+.winera-bowling-hero-h1>span:nth-of-type(2),
+.winera-softplay-hero-h1>span:nth-of-type(2),
+.winera-vr-hero-h1>span:nth-of-type(2),
+.winera-ar-hero-h1>span:nth-of-type(2),
+.winera-bumpercar-hero-h1>span:nth-of-type(2),
+.winera-amusement-hero-h1>span:nth-of-type(2),
+.winera-amusement-hero-title>span:nth-of-type(2),
+.winera-trampoline-hero-h1>span:nth-of-type(2),
+.winera-hypergrid-hero-h1>span:nth-of-type(2),
+.winera-hypergrid-hero-title>span:nth-of-type(2),
+.winera-safety-hero-h1>span:nth-of-type(2),
+.winera-project-hero-h1>span:nth-of-type(2),
+.winera-roi-hero-h1>span:nth-of-type(2),
+.winera-blog-hero-h1>span:nth-of-type(2),
+.winera-lasertag-hero-h1>span:nth-of-type(2),
+.winera-contact-hero-h1>span:nth-of-type(2),
+.winera-breadcrumb-hero>span:nth-of-type(2) {
   display: inline-block;
   animation: wineraGoldPulse 2.8s ease-in-out infinite;
   letter-spacing: -0.2px;
 }
 
-.winera-about-hero-breadcrumb > span:nth-of-type(2) {
+.winera-about-hero-breadcrumb>span:nth-of-type(2) {
   display: inline-block;
   color: #ffffff !important;
   font-weight: 600 !important;
@@ -5528,6 +5823,7 @@ img[src*="yellow-stroke-line"] {
     opacity: 0;
     transform: translateY(14px) scale(0.96);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -5535,10 +5831,13 @@ img[src*="yellow-stroke-line"] {
 }
 
 @keyframes wineraGoldPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     color: #ffcd00;
     text-shadow: 0 0 10px rgba(255, 205, 0, 0.55), 0 0 20px rgba(255, 205, 0, 0.25);
   }
+
   50% {
     color: #ffe066;
     text-shadow: 0 0 16px rgba(255, 205, 0, 0.95), 0 0 32px rgba(255, 205, 0, 0.6), 0 0 48px rgba(255, 205, 0, 0.3);
@@ -5551,7 +5850,8 @@ img[src*="yellow-stroke-line"] {
    ========================================== */
 h2,
 .winera-section-heading-container h2,
-h1 span, h2 span,
+h1 span,
+h2 span,
 .winera-section-heading-container h2 span,
 .winera-section-heading-container h2 * {
   font-family: 'Black Han Sans', sans-serif !important;
@@ -5565,6 +5865,7 @@ h1 span, h2 span,
    ========================================================================== */
 
 @media (max-width: 992px) {
+
   /* --- Hypergrid Page --- */
   .winera-hypergrid-supplier-grid,
   .winera-hypergrid-banner-grid,
@@ -5614,7 +5915,7 @@ h1 span, h2 span,
   }
 
   .winera-trampoline-intro-text,
-  .winera-trampoline-roi-grid > div {
+  .winera-trampoline-roi-grid>div {
     text-align: center !important;
   }
 
@@ -5640,7 +5941,7 @@ h1 span, h2 span,
     align-items: center !important;
   }
 
-  .winera-trampoline-custom-container > div:first-child {
+  .winera-trampoline-custom-container>div:first-child {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
@@ -5655,7 +5956,7 @@ h1 span, h2 span,
     padding: 60px 16px 55px !important;
   }
 
-  .winera-trampoline-specs-card > div {
+  .winera-trampoline-specs-card>div {
     max-width: 100% !important;
   }
 
@@ -5739,6 +6040,7 @@ h1 span, h2 span,
 }
 
 @media (max-width: 992px) {
+
   /* --- Soft Play Page --- */
   .winera-softplay-supplier-grid,
   .winera-softplay-intro-grid,
@@ -5809,7 +6111,7 @@ h1 span, h2 span,
 
   .winera-amusement-supplier-text,
   .winera-amusement-banner-text,
-  .winera-amusement-roi-grid > div {
+  .winera-amusement-roi-grid>div {
     text-align: center !important;
   }
 
@@ -5833,6 +6135,7 @@ h1 span, h2 span,
 }
 
 @media (max-width: 768px) {
+
   /* Common Header Stroke Line Alignment */
   .winera-hypergrid-supplier-text img,
   .winera-hypergrid-banner-text img,
@@ -5901,6 +6204,7 @@ h1 span, h2 span,
 }
 
 @media (max-width: 480px) {
+
   .winera-hypergrid-supplier-text h2,
   .winera-hypergrid-banner-text h2,
   .winera-hypergrid-specs-container h2,

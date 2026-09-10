@@ -1197,15 +1197,54 @@ export default function Home({ siteData }) {
             </p>
 
             {/* Dynamic Working Process Cards */}
-            <div className="winera-process-cards-container" style={{ display: 'flex', flexDirection: 'column', gap: '40px', maxWidth: '1220px', margin: '0 auto', paddingTop: '12px' }}>
+            <div className="winera-process-cards-container" style={{ display: 'flex', flexDirection: 'column', gap: '80px', maxWidth: '1220px', margin: '0 auto', paddingTop: '12px' }}>
               {(() => {
                 const defaultCards = [
-                  { num: "01", title: "Free ROI Consultation", points: ["Share your project idea and business goal", "Tell us your space size and budget", "We suggest the best game zone setup for you"] },
-                  { num: "02", title: "Project planning", points: ["We design a complete game zone layout for your space", "Best equipment selected as per your budget", "Complete route planning for your project"] },
-                  { num: "03", title: "Order Confirmation", points: ["Contract signed with transparent pricing", "Payment confirmation and order finalized", "Game zone production process begins"] },
-                  { num: "04", title: "Interior Design", points: ["Structural information and details finalized", "Partial decoration work completed", "Overall decoration drawing shared for approval"] },
-                  { num: "05", title: "Project Installation", points: ["Complete equipment assembly at your site", "Management system installation and setup", "Full equipment inspection after installation"] },
-                  { num: "06", title: "Forever Support", points: ["Technical support whenever you need assistance", "Spare parts and maintenance support available", "Expert guidance to keep operations running smoothly"] }
+                  {
+                    num: "01",
+                    title: "Free Consultation",
+                    points: [
+                      "Share your project idea and business goal",
+                      "Tell us your space size and budget",
+                      "We suggest the best game zone setup for you"
+                    ]
+                  },
+                  {
+                    num: "02",
+                    title: "Planning & Selection",
+                    points: [
+                      "We design a complete game zone layout for your space",
+                      "Best equipment and activities selected as per your budget",
+                      "Detailed project timeline and execution plan prepared"
+                    ]
+                  },
+                  {
+                    num: "03",
+                    title: "Production & Procurement",
+                    points: [
+                      "Order confirmed with transparent pricing",
+                      "Production process begins and Equipment sourcing",
+                      "Quality checks done at every stage"
+                    ]
+                  },
+                  {
+                    num: "04",
+                    title: "Project Installation",
+                    points: [
+                      "Complete equipment assembly at your site",
+                      "Product installation and setup",
+                      "Full equipment inspection after installation"
+                    ]
+                  },
+                  {
+                    num: "05",
+                    title: "Forever Support",
+                    points: [
+                      "Technical support whenever you need assistance",
+                      "Spare parts and maintenance support available",
+                      "Expert guidance to keep operations running smoothly"
+                    ]
+                  }
                 ];
                 const cardList = (Array.isArray(siteData?.processHome?.cards) && siteData.processHome.cards.length > 0)
                   ? siteData.processHome.cards.filter(item => item && typeof item === 'object')
@@ -1223,9 +1262,15 @@ export default function Home({ siteData }) {
                 const renderCard = (step, idx, actualIndex) => {
                   const isYellow = actualIndex % 2 === 1;
                   const dirClass = actualIndex % 2 === 0 ? 'winera-reveal-left' : 'winera-reveal-right';
-                  const wrapperClass = isYellow
+                  let wrapperClass = isYellow
                     ? `winera-process-card-wrapper-yellow ${dirClass} winera-reveal-delay-${(actualIndex % 3) + 1}`
                     : `winera-process-card-wrapper-cyan ${dirClass} winera-reveal-delay-${(actualIndex % 3) + 1}`;
+
+                  if (actualIndex === 3) {
+                    wrapperClass = `winera-process-card-wrapper-yellow-left ${dirClass} winera-reveal-delay-${(actualIndex % 3) + 1}`;
+                  } else if (actualIndex === 4) {
+                    wrapperClass = `winera-process-card-wrapper-cyan-right ${dirClass} winera-reveal-delay-${(actualIndex % 3) + 1}`;
+                  }
                   const iconBg = isYellow ? '#fef9c3' : '#e0f2fe';
                   const iconComponent = iconsList[actualIndex % iconsList.length];
                   const rawNum = step?.num || `${actualIndex + 1}`;
@@ -1264,7 +1309,7 @@ export default function Home({ siteData }) {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          marginBottom: '20px',
+                          marginBottom: '40px',
                           flexShrink: 0,
                           boxShadow: isYellow ? '0 6px 18px rgba(234, 179, 8, 0.18)' : '0 6px 18px rgba(56, 189, 248, 0.18)'
                         }}>
@@ -1278,12 +1323,27 @@ export default function Home({ siteData }) {
 
                         {/* Bullet Points */}
                         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                          {(Array.isArray(step?.points) ? step.points : []).filter(p => p && p.trim() !== '').map((pt, pIdx) => (
-                            <li key={pIdx} style={{ fontSize: '13px', color: '#475569', fontWeight: '500', lineHeight: 1.6, display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                              <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '14px', fontWeight: '900', marginTop: '-1px' }}>•</span>
-                              <span>{pt}</span>
-                            </li>
-                          ))}
+                          {(() => {
+                            const validPts = (Array.isArray(step?.points) ? step.points : []).filter(p => p && p.trim() !== '');
+                            return validPts.map((pt, pIdx) => {
+                              const isLastInCard45 = actualIndex >= 3 && pIdx === validPts.length - 1;
+                              return (
+                                <li key={pIdx} style={{
+                                  fontSize: '12px',
+                                  color: '#475569',
+                                  fontWeight: '500',
+                                  lineHeight: 1.6,
+                                  display: 'flex',
+                                  alignItems: 'flex-start',
+                                  gap: '8px',
+                                  paddingBottom: isLastInCard45 ? '14px' : '0px'
+                                }}>
+                                  <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '12px', fontWeight: '900', marginTop: '-1px' }}>•</span>
+                                  <span>{pt}</span>
+                                </li>
+                              );
+                            });
+                          })()}
                         </ul>
                       </div>
                     </MotionCardFlip>
@@ -1294,7 +1354,7 @@ export default function Home({ siteData }) {
 
                 if (totalCards % 3 === 0) {
                   return (
-                    <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px', width: '100%' }}>
+                    <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', width: '100%' }}>
                       {cardList.map((step, idx) => renderCard(step, idx, idx))}
                     </div>
                   );

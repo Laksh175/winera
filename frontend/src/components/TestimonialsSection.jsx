@@ -55,6 +55,7 @@ export default function TestimonialsSection({
   const actualTitle = siteData?.testimonialsHeader?.title || title;
   const actualSubtitle = siteData?.testimonialsHeader?.subtitle || subtitle;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
   const { openVideoModal } = useVideoModal();
   const currentItem = list[activeIndex % list.length] || defaultTestimonials[0];
 
@@ -62,15 +63,21 @@ export default function TestimonialsSection({
     if (!url) return fallbackImg;
     const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
     if (match && match[1]) {
-      return `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg`;
+      return `https://img.youtube.com/vi/${match[1]}/sddefault.jpg`;
     }
     return fallbackImg;
   };
 
   const videoThumbnail = getYouTubeThumbnail(currentItem?.youtubeVideoUrl, currentItem?.founderImage || currentItem?.videoImg || currentItem?.img || testiOwner);
 
-  const goNext = () => setActiveIndex((prev) => (prev < list.length - 1 ? prev + 1 : 0));
-  const goPrev = () => setActiveIndex((prev) => (prev > 0 ? prev - 1 : list.length - 1));
+  const goNext = () => {
+    setIsExpanded(false);
+    setActiveIndex((prev) => (prev < list.length - 1 ? prev + 1 : 0));
+  };
+  const goPrev = () => {
+    setIsExpanded(false);
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : list.length - 1));
+  };
 
   const hasMultipleTestimonials = list.length > 1;
 
@@ -150,34 +157,67 @@ export default function TestimonialsSection({
               width: '100%',
               background: '#ffffff',
               borderRadius: '32px',
-              padding: '44px 470px 44px 48px',
-              minHeight: '340px',
+              padding: '36px 470px 36px 48px',
+              minHeight: '380px',
+              height: isExpanded ? 'auto' : '390px',
               boxShadow: '0 12px 40px rgba(0, 0, 0, 0.04)',
               border: '1px solid #f1f5f9',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              textAlign: 'left'
+              textAlign: 'left',
+              transition: 'all 0.3s ease'
             }}>
               {/* Top: Star Rating & Quote */}
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '18px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '14px' }}>
                   {[...Array(currentItem.starRating || currentItem.rating || 5)].map((_, i) => (
                     <Star key={i} style={{ width: '18px', height: '18px', fill: '#ffcd00', color: '#ffcd00' }} />
                   ))}
                 </div>
 
-                <p style={{
-                  color: '#334155',
-                  fontSize: '14.5px',
-                  fontStyle: 'italic',
-                  fontWeight: '500',
-                  lineHeight: 1.7,
-                  maxWidth: '520px',
-                  margin: '0 0 28px'
-                }}>
-                  "{currentItem.quote}"
-                </p>
+                {(() => {
+                  const quoteText = currentItem.quote || '';
+                  const isLong = quoteText.length > 280;
+                  const displayText = (isLong && !isExpanded) ? `${quoteText.slice(0, 255)}...` : quoteText;
+
+                  return (
+                    <p className="winera-testi-quote" style={{
+                      color: '#334155',
+                      fontSize: '14.5px',
+                      fontStyle: 'italic',
+                      fontWeight: '500',
+                      lineHeight: 1.5,
+                      maxWidth: '520px',
+                      margin: '0 0 8px'
+                    }}>
+                      {displayText}{' '}
+                      {isLong && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsExpanded(!isExpanded);
+                          }}
+                          style={{
+                            color: '#00a8ff',
+                            background: 'none',
+                            border: 'none',
+                            fontStyle: 'italic',
+                            fontWeight: '700',
+                            fontSize: '14px',
+                            cursor: 'pointer',
+                            padding: 0,
+                            margin: '0 0 0 4px',
+                            textDecoration: 'underline'
+                          }}
+                        >
+                          {isExpanded ? 'read less..' : 'read more..'}
+                        </button>
+                      )}
+                    </p>
+                  );
+                })()}
               </div>
 
               {/* Bottom: Founder / Client Profile Row */}
@@ -214,19 +254,18 @@ export default function TestimonialsSection({
                 </div>
               </div>
 
-              {/* Right Side: Floating / Pop-Out Video Frame (Exact User CSS) */}
+              {/* Right Side: Floating / Pop-Out Video Frame (Linear Gradient Fade matching Image 2) */}
               <div style={{
                 position: 'absolute',
-                right: '65px',
-                top: '50%',
-                transform: 'translateY(-62%)',
-                width: '377px',
-                height: '377px',
-                background: 'rgb(224, 242, 254)',
+                right: '55px',
+                top: '39%',
+                transform: 'translateY(-50%)',
+                width: '450px',
+                height: '450px',
+                background: 'linear-gradient(191.09deg, #F5F5F9 8.2%, #E0F4FC 116.74%)',
                 borderRadius: '48px',
-                padding: '14px',
-                zIndex: 10,
-                boxShadow: 'rgba(0, 168, 255, 0.15) 0px 15px 40px'
+                padding: '16px',
+                zIndex: 10
               }}>
                 <div style={{
                   width: '100%',
@@ -234,8 +273,26 @@ export default function TestimonialsSection({
                   borderRadius: '36px',
                   overflow: 'hidden',
                   position: 'relative',
-                  background: `#0f172a url(${videoThumbnail}) center/cover no-repeat`
+                  background: '#0f172a'
                 }}>
+                  <img
+                    src={videoThumbnail}
+                    alt={currentItem.name || "Client Review"}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                      position: 'absolute',
+                      inset: 0,
+                      transform: (videoThumbnail.includes('youtube') || videoThumbnail.includes('sddefault') || videoThumbnail.includes('hqdefault')) ? 'scale(1.35)' : 'scale(1.02)'
+                    }}
+                    onError={(e) => {
+                      if (e.target.src.includes('sddefault')) {
+                        e.target.src = e.target.src.replace('sddefault.jpg', 'hqdefault.jpg');
+                      }
+                    }}
+                  />
                   {Boolean(currentItem.youtubeVideoUrl && String(currentItem.youtubeVideoUrl).trim()) && (
                     <button
                       onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}
@@ -319,16 +376,47 @@ export default function TestimonialsSection({
               </div>
 
               {/* Quote */}
-              <p style={{
-                color: '#334155',
-                fontSize: '13.5px',
-                fontStyle: 'italic',
-                fontWeight: '500',
-                lineHeight: 1.6,
-                marginBottom: '20px'
-              }}>
-                "{currentItem.quote}"
-              </p>
+              {(() => {
+                const quoteText = currentItem.quote || '';
+                const isLong = quoteText.length > 280;
+                const displayText = (isLong && !isExpanded) ? `${quoteText.slice(0, 270)}...` : quoteText;
+
+                return (
+                  <p className="winera-testi-quote" style={{
+                    color: '#334155',
+                    fontSize: '13.5px',
+                    fontStyle: 'italic',
+                    fontWeight: '500',
+                    lineHeight: 1.6,
+                    marginBottom: '20px'
+                  }}>
+                    {displayText}{' '}
+                    {isLong && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsExpanded(!isExpanded);
+                        }}
+                        style={{
+                          color: '#00a8ff',
+                          background: 'none',
+                          border: 'none',
+                          fontStyle: 'italic',
+                          fontWeight: '700',
+                          fontSize: '13.5px',
+                          cursor: 'pointer',
+                          padding: 0,
+                          margin: '0 0 0 4px',
+                          textDecoration: 'underline'
+                        }}
+                      >
+                        {isExpanded ? 'read less..' : 'read more..'}
+                      </button>
+                    )}
+                  </p>
+                );
+              })()}
 
               {/* Profile */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
@@ -372,9 +460,27 @@ export default function TestimonialsSection({
                 borderRadius: '24px',
                 overflow: 'hidden',
                 position: 'relative',
-                background: `#000 url(${videoThumbnail}) center/cover no-repeat`,
+                background: '#000',
                 aspectRatio: '16/10'
               }}>
+                <img
+                  src={videoThumbnail}
+                  alt={currentItem.name || "Client Review"}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    position: 'absolute',
+                    inset: 0,
+                    transform: (videoThumbnail.includes('youtube') || videoThumbnail.includes('sddefault') || videoThumbnail.includes('hqdefault')) ? 'scale(1.35)' : 'scale(1.02)'
+                  }}
+                  onError={(e) => {
+                    if (e.target.src.includes('sddefault')) {
+                      e.target.src = e.target.src.replace('sddefault.jpg', 'hqdefault.jpg');
+                    }
+                  }}
+                />
                 {Boolean(currentItem.youtubeVideoUrl && String(currentItem.youtubeVideoUrl).trim()) && (
                   <button
                     onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}

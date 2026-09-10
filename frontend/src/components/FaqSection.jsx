@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { Plus, Minus } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
 
@@ -28,7 +28,7 @@ export default function FaqSection({
     <section id={id} className="winera-faq-section" style={{ padding: '25px 4vw 40px', background: bg, textAlign: 'center' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         <MotionFadeIn>
-        <SectionHeading marginBottom="8px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign} accentStyle={accentStyle}>
+        <SectionHeading marginBottom="48px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign} accentStyle={accentStyle}>
           {(() => {
             const rawTitle = title || "Frequently Asked *Questions*";
             const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -106,21 +106,22 @@ export default function FaqSection({
                       flexShrink: 0,
                       transition: 'all 0.3s'
                     }}>
-                      <ChevronDown aria-hidden="true" style={{
-                        width: '16px',
-                        height: '16px',
-                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.3s'
-                      }} />
+                      {isOpen ? (
+                        <Minus aria-hidden="true" style={{ width: '16px', height: '16px', strokeWidth: 2.5 }} />
+                      ) : (
+                        <Plus aria-hidden="true" style={{ width: '16px', height: '16px', strokeWidth: 2.5 }} />
+                      )}
                     </div>
                   </div>
                   {isOpen && (
-                    <p style={{
-                      color: '#334155',
-                      fontSize: '13.5px',
-                      lineHeight: 1.65,
-                      fontWeight: '500',
-                      letterSpacing: '0px',
+                    <p className="winera-faq-answer" style={{
+                      fontFamily: "'Urbanist', sans-serif",
+                      fontWeight: '400',
+                      fontStyle: 'normal',
+                      fontSize: '18px',
+                      lineHeight: '100%',
+                      letterSpacing: '0%',
+                      color: 'rgba(55, 62, 65, 1)',
                       marginTop: '14px',
                       paddingTop: '12px',
                       borderTop: '1px solid #f1f5f9'
@@ -181,21 +182,22 @@ export default function FaqSection({
                       flexShrink: 0,
                       transition: 'all 0.3s'
                     }}>
-                      <ChevronDown aria-hidden="true" style={{
-                        width: '16px',
-                        height: '16px',
-                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.3s'
-                      }} />
+                      {isOpen ? (
+                        <Minus aria-hidden="true" style={{ width: '16px', height: '16px', strokeWidth: 2.5 }} />
+                      ) : (
+                        <Plus aria-hidden="true" style={{ width: '16px', height: '16px', strokeWidth: 2.5 }} />
+                      )}
                     </div>
                   </div>
                   {isOpen && (
-                    <p style={{
-                      color: '#334155',
-                      fontSize: '13.5px',
-                      lineHeight: 1.65,
-                      fontWeight: '500',
-                      letterSpacing: '0px',
+                    <p className="winera-faq-answer" style={{
+                      fontFamily: "'Urbanist', sans-serif",
+                      fontWeight: '400',
+                      fontStyle: 'normal',
+                      fontSize: '18px',
+                      lineHeight: '100%',
+                      letterSpacing: '0%',
+                      color: 'rgba(55, 62, 65, 1)',
                       marginTop: '14px',
                       paddingTop: '12px',
                       borderTop: '1px solid #f1f5f9'

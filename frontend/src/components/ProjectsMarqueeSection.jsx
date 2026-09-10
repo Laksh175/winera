@@ -99,7 +99,7 @@ export default function ProjectsMarqueeSection({
         }}>
           <div className="marquee-track">
             {[...Array(4)].map((_, setIdx) => (
-              <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '24px', paddingRight: '24px' }}>
+              <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingRight: '14px' }}>
                 {items.map((proj, idx) => {
                   const cardSlug = proj.slug || (proj.name || proj.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                   const href = cardSlug ? `/project/${cardSlug}` : '/project';
@@ -114,8 +114,8 @@ export default function ProjectsMarqueeSection({
                       key={idx}
                       href={href}
                       style={{
-                        width: '350px',
-                        height: '350px',
+                        width: '325px',
+                        height: '325px',
                         borderRadius: '24px',
                         overflow: 'hidden',
                         position: 'relative',

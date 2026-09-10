@@ -3584,11 +3584,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     type="button"
                     onClick={() => {
                       const defaultInitial = [
-                        { num: "01", title: "Consultation & Concept", points: ["Initial Project Discussion", "ROI & Business Feasibility Analysis", "Space & Budget Evaluation"] },
-                        { num: "02", title: "2D/3D Layout & Planning", points: ["Custom Game Zone Layout Design", "Equipment Mix Selection", "Electrical & Interior Planning Guidance"] },
-                        { num: "03", title: "Equipment Sourcing & Manufacturing", points: ["High-Grade Commercial Amusement Machines", "Quality Inspection Before Shipping", "Branding & Theme Customization"] },
-                        { num: "04", title: "Installation & Setup", points: ["On-Site Assembly by Expert Technicians", "Safety & Operational Testing", "Card System Integration"] },
-                        { num: "05", title: "Handover & Support", points: ["Staff Operations Training", "Go-Live Assistance", "Lifetime Technical & Spare Parts Support"] }
+                        { num: "01", title: "Free Consultation", points: ["Share your project idea and business goal", "Tell us your space size and budget", "We suggest the best game zone setup for you"] },
+                        { num: "02", title: "Planning & Selection", points: ["We design a complete game zone layout for your space", "Best equipment and activities selected as per your budget", "Detailed project timeline and execution plan prepared"] },
+                        { num: "03", title: "Production & Procurement", points: ["Order confirmed with transparent pricing", "Production process begins and Equipment sourcing", "Quality checks done at every stage"] },
+                        { num: "04", title: "Project Installation", points: ["Complete equipment assembly at your site", "Product installation and setup", "Full equipment inspection after installation"] },
+                        { num: "05", title: "Forever Support", points: ["Technical support whenever you need assistance", "Spare parts and maintenance support available", "Expert guidance to keep operations running smoothly"] }
                       ];
                       const currentCards = (Array.isArray(formData.processHome?.cards) && formData.processHome.cards.length > 0)
                         ? [...formData.processHome.cards]
@@ -3620,11 +3620,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                 {(() => {
                   const defaultInitial = [
-                    { num: "01", title: "Consultation & Concept", points: ["Initial Project Discussion", "ROI & Business Feasibility Analysis", "Space & Budget Evaluation"] },
-                    { num: "02", title: "2D/3D Layout & Planning", points: ["Custom Game Zone Layout Design", "Equipment Mix Selection", "Electrical & Interior Planning Guidance"] },
-                    { num: "03", title: "Equipment Sourcing & Manufacturing", points: ["High-Grade Commercial Amusement Machines", "Quality Inspection Before Shipping", "Branding & Theme Customization"] },
-                    { num: "04", title: "Installation & Setup", points: ["On-Site Assembly by Expert Technicians", "Safety & Operational Testing", "Card System Integration"] },
-                    { num: "05", title: "Handover & Support", points: ["Staff Operations Training", "Go-Live Assistance", "Lifetime Technical & Spare Parts Support"] }
+                    { num: "01", title: "Free Consultation", points: ["Share your project idea and business goal", "Tell us your space size and budget", "We suggest the best game zone setup for you"] },
+                    { num: "02", title: "Planning & Selection", points: ["We design a complete game zone layout for your space", "Best equipment and activities selected as per your budget", "Detailed project timeline and execution plan prepared"] },
+                    { num: "03", title: "Production & Procurement", points: ["Order confirmed with transparent pricing", "Production process begins and Equipment sourcing", "Quality checks done at every stage"] },
+                    { num: "04", title: "Project Installation", points: ["Complete equipment assembly at your site", "Product installation and setup", "Full equipment inspection after installation"] },
+                    { num: "05", title: "Forever Support", points: ["Technical support whenever you need assistance", "Spare parts and maintenance support available", "Expert guidance to keep operations running smoothly"] }
                   ];
 
                   const cardsList = (Array.isArray(formData.processHome?.cards) && formData.processHome.cards.length > 0)
