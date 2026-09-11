@@ -714,9 +714,9 @@ export default function AboutUs({ siteData }) {
                 });
               })()}
             </SectionHeading>
-            <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: '#0f172a', marginBottom: '16px' }}>{siteData?.founder?.name || 'Mr. Unnit Jogani'}</h3>
+            <h3 style={{ fontSize: '1.8rem', fontWeight: '500', color: '#0f172a', marginBottom: '16px' }}>{siteData?.founder?.name || 'Mr. Unnit Jogani'}</h3>
 
-            <div style={{ color: '#475569', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '32px', whiteSpace: 'pre-line' }}>
+            <div style={{ color: '#475569', fontSize: '16px', lineHeight: 1.65, fontWeight: '500', marginBottom: '32px', whiteSpace: 'pre-line' }}>
               {(() => {
                 const defaultBio = "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.";
                 let rawText = siteData?.founder?.aboutDetails || defaultBio;

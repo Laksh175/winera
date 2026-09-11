@@ -26,6 +26,8 @@ import homeBlockBg from '../assets/home-block.webp';
 import homeBlock1 from '../assets/home-block-1.webp';
 import homeBlock2 from '../assets/home-block-2.webp';
 import homeRightSign from '../assets/home-right-sign.webp';
+import exploreMore1 from '../assets/explore-more-1.png';
+import exploreMore2 from '../assets/explore-more-2.png';
 import homePageIcon from '../assets/home-page-icon.png';
 import homeLeftArrow from '../assets/home-page-left-arrow.png';
 import homeRightArrow from '../assets/home-page-right-arrow.png';
@@ -912,22 +914,38 @@ export default function Home({ siteData }) {
               </p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
               {/* Box 1: Free ROI Consultancy */}
               <MotionCardFlip className="winera-partner-box-wrapper-yellow winera-reveal-right winera-reveal-delay-1">
                 <div className="winera-partner-box-yellow">
-                  <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px'  }}>
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                     {siteData?.partnerHome?.box1Title || "Free ROI Consultancy"}
                   </h4>
-                  <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.55, marginBottom: '14px' }}>
+                  <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.55, marginBottom: '0px' }}>
                     {siteData?.partnerHome?.box1Desc || "Before you invest a single rupee, our team consults with you on layout, equipment mix, and budget and hands you a complete ROI report covering projected revenue, footfall, and break-even timeline."}
                   </p>
-                  <div style={{ textAlign: 'right' }}>
-                    <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-                      <Link to={siteData?.partnerHome?.box1Link || "/roi"} title="Learn More about Free ROI Consultancy" className="winera-cyan-cta-btn winera-cyan-cta-btn-sm winera-partner-card-btn">
-                        <span>Explore More</span>
-                      </Link>
-                    </div>
+                  <div style={{ textAlign: 'right', marginTop: '-15px', marginBottom: '-12px' }}>
+                    <Link
+                      to={siteData?.partnerHome?.box1Link || "/roi"}
+                      title="Learn More about Free ROI Consultancy"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '160px',
+                        height: '75px',
+                        paddingTop: '5px',
+                        background: `url(${exploreMore1}) center center / 100% 100% no-repeat`,
+                        color: 'rgb(255, 255, 255)',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        transition: 'transform 0.25s ease'
+                      }}
+                    >
+                      <span>Explore More</span>
+                    </Link>
                   </div>
                 </div>
               </MotionCardFlip>
@@ -938,15 +956,31 @@ export default function Home({ siteData }) {
                   <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                     {siteData?.partnerHome?.box2Title || "Safety-Certified Installation"}
                   </h4>
-                  <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.55, marginBottom: '14px' }}>
+                  <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.55, marginBottom: '0px' }}>
                     {siteData?.partnerHome?.box2Desc || "Every product we install meets commercial safety standards tested for high-footfall environments, assembled by our own trained team, and handed over only after a full on-site safety inspection."}
                   </p>
-                  <div style={{ textAlign: 'right' }}>
-                    <div className="winera-white-cyan-cta-wrapper">
-                      <Link to={siteData?.partnerHome?.box2Link || "/safety-standards"} title="Learn More about Safety Standards" className="winera-white-cyan-cta-btn winera-partner-card-btn">
-                        <span>Explore More</span>
-                      </Link>
-                    </div>
+                  <div style={{ textAlign: 'right', marginTop: '-15px', marginBottom: '-12px' }}>
+                    <Link
+                      to={siteData?.partnerHome?.box2Link || "/safety-standards"}
+                      title="Learn More about Safety Standards"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '160px',
+                        height: '75px',
+                        paddingTop: '5px',
+                        background: `url(${exploreMore2}) center center / 100% 100% no-repeat`,
+                        color: 'rgb(9, 30, 43)',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        transition: 'transform 0.25s ease'
+                      }}
+                    >
+                      <span>Explore More</span>
+                    </Link>
                   </div>
                 </div>
               </MotionCardFlip>

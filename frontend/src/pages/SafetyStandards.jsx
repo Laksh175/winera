@@ -475,12 +475,12 @@ export default function SafetyStandards({ siteData }) {
           {/* 2-Column Grid: Left Numbered List Items, Right Image */}
           <div className="winera-safety-electrical-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(0, 1.15fr) minmax(0, 0.85fr)',
-            gap: '40px',
-            alignItems: 'center'
+            gridTemplateColumns: 'minmax(0, 1.3fr) minmax(0, 0.7fr)',
+            gap: '35px',
+            alignItems: 'flex-start'
           }}>
             {/* Left Numbered List Items */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               {(Array.isArray(siteData?.safetyElectrical?.items) && siteData.safetyElectrical.items.length > 0
                 ? siteData.safetyElectrical.items
                 : [
@@ -515,7 +515,7 @@ export default function SafetyStandards({ siteData }) {
                   style={{ textAlign: 'left' }}
                 >
                   {/* Badge + Title Row */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '22px', marginBottom: '10px' }}>
                     <div style={{
                       width: '32px',
                       height: '32px',
@@ -551,7 +551,7 @@ export default function SafetyStandards({ siteData }) {
                     margin: 0,
                     paddingLeft: 0,
                     textAlign: 'left',
-                    maxWidth: '650px'
+                    maxWidth: '750px'
                   }}>
                     {item.desc}
                   </p>
@@ -571,14 +571,14 @@ export default function SafetyStandards({ siteData }) {
                 ease: [0.16, 1, 0.3, 1]
               }}
               className="winera-safety-electrical-img"
-              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start', paddingTop: '5px' }}
             >
               <img
                 src={getValidImageUrl(siteData?.safetyElectrical?.imgUrl, safetyStandardImg3)}
                 alt="Electrical & Machine Safety"
                 style={{
                   width: '100%',
-                  maxWidth: '560px',
+                  maxWidth: '420px',
                   height: 'auto',
                   display: 'block',
                   borderRadius: '16px'
@@ -630,12 +630,14 @@ export default function SafetyStandards({ siteData }) {
             </p>
           </div>
 
-          {/* 3 Blocks Per Row Grid with Offset Colored Borders */}
+          {/* 2x2 Grid with Offset Colored Borders */}
           <div className="winera-safety-structure-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '32px 28px',
-            alignItems: 'stretch'
+            alignItems: 'stretch',
+            maxWidth: '1240px',
+            margin: '0 auto'
           }}>
             {(Array.isArray(siteData?.safetyStructure?.cards) && siteData.safetyStructure.cards.length > 0
               ? siteData.safetyStructure.cards
@@ -677,7 +679,7 @@ export default function SafetyStandards({ siteData }) {
                   viewport={{ once: false, amount: 0.15 }}
                   transition={{
                     duration: 0.8,
-                    delay: (idx % 3) * 0.12,
+                    delay: (idx % 2) * 0.12,
                     ease: [0.16, 1, 0.3, 1]
                   }}
                   style={{
@@ -691,8 +693,8 @@ export default function SafetyStandards({ siteData }) {
                   {/* Accent Offset Colored Backing (Stops at ~68% width on top, ~82% height on left) */}
                   <div style={{
                     position: 'absolute',
-                    top: 0,
-                    left: 0,
+                    top: '3px',
+                    left: '3px',
                     width: '68%',
                     height: '82%',
                     background: card.accent || '#00aeef',
@@ -706,7 +708,7 @@ export default function SafetyStandards({ siteData }) {
                     zIndex: 2,
                     background: '#ffffff',
                     borderRadius: '24px',
-                    padding: '28px 22px',
+                    padding: '26px 24px',
                     width: '100%',
                     height: '100%',
                     display: 'flex',
@@ -715,7 +717,7 @@ export default function SafetyStandards({ siteData }) {
                     overflow: 'hidden'
                   }}>
                     {/* Top Header Row: Small Icon Badge Left, Giant Watermark Number Right */}
-                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px' }}>
                       <div style={{
                         width: '42px',
                         height: '42px',
@@ -731,13 +733,13 @@ export default function SafetyStandards({ siteData }) {
                       </div>
                       <span className="winera-safety-watermark-num" style={{
                         fontFamily: "'Open Sans', sans-serif",
-                        fontSize: '8.6rem',
+                        fontSize: '5.2rem',
                         fontWeight: '800',
-                        color: '#f0f3f7',
+                        color: '#f1f5f9',
                         lineHeight: 0.9,
                         letterSpacing: '-2px',
                         userSelect: 'none',
-                        marginTop: '-6px',
+                        marginTop: '-4px',
                         marginRight: '-4px'
                       }}>
                         {card.num}
@@ -746,10 +748,10 @@ export default function SafetyStandards({ siteData }) {
 
                     {/* Card Title */}
                     <h3 style={{
-                      fontSize: '1.08rem',
+                      fontSize: '1.15rem',
                       fontWeight: '800',
                       color: '#0f172a',
-                      marginBottom: '8px',
+                      marginBottom: '10px',
                       lineHeight: 1.35,
                       textAlign: 'left'
                     }}>
@@ -758,9 +760,9 @@ export default function SafetyStandards({ siteData }) {
 
                     {/* Card Description */}
                     <p style={{
-                      fontSize: '10.5px',
-                      color: '#64748b',
-                      lineHeight: 1.55,
+                      fontSize: '14px',
+                      color: '#475569',
+                      lineHeight: 1.6,
                       fontWeight: '500',
                       margin: 0,
                       textAlign: 'left'
@@ -786,7 +788,7 @@ export default function SafetyStandards({ siteData }) {
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Centered Header */}
-          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '880px', margin: '0 auto 30px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '1060px', margin: '0 auto 30px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -803,13 +805,9 @@ export default function SafetyStandards({ siteData }) {
               <span style={{ color: '#38bdf8' }}>{(siteData?.safetyWhyMatters?.title1 || "Why This Matters").trim()}{' '}</span>
               <span style={{ color: '#0f172a' }}>{(siteData?.safetyWhyMatters?.title2 || "for Your Business").trim()}</span>
             </h2>
-            <p style={{
-              fontSize: '14.5px',
-              color: '#64748b',
-              fontWeight: '500',
+            <p className="winera-safety-why-matters-text" style={{
               margin: '0 auto',
-              lineHeight: 1.65,
-              maxWidth: '840px',
+              maxWidth: '1060px',
               textAlign: 'center'
             }}>
               {siteData?.safetyWhyMatters?.subtitle || "Good, certified equipment is a smart investment. It keeps visitors safe, protects your money, and helps you get your licence easier. In India, every game zone must pass checks for strong structure, fire safety, and electrical safety before it can open. Because we supply you certified equipment, fire-safe materials, and proper installation, your game zone is ready to pass these checks. The result: you open on time, stay within the rules, and win the trust of every family."}
@@ -818,7 +816,7 @@ export default function SafetyStandards({ siteData }) {
 
           {/* BUILD YOURS NOW CTA BANNER (MATCHING SCREENSHOT 1:1) */}
           <div className="winera-cta-banner-container winera-reveal winera-reveal-delay-2" style={{
-            maxWidth: '1240px',
+            maxWidth: '1100px',
             margin: '0 auto',
             position: 'relative',
             backgroundImage: `url(${getValidImageUrl(siteData?.safetyWhyMatters?.bgUrl || siteData?.safetyWhyMatters?.bg, hypergridWineraLastblock)})`,
@@ -826,8 +824,8 @@ export default function SafetyStandards({ siteData }) {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             borderRadius: '24px',
-            padding: '55px 20px',
-            minHeight: '340px',
+            padding: '35px 20px',
+            minHeight: '298px',
             boxShadow: '0 25px 60px rgba(0, 0, 0, 0.25)',
             display: 'flex',
             flexDirection: 'column',
@@ -850,11 +848,11 @@ export default function SafetyStandards({ siteData }) {
               alt="Build Yours Now Left"
               style={{
                 position: 'absolute',
-                left: '10px',
+                left: '15px',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                maxHeight: '96%',
-                maxWidth: '28%',
+                maxHeight: '92%',
+                maxWidth: '26%',
                 objectFit: 'contain',
                 zIndex: 2,
                 filter: 'drop-shadow(0 15px 35px rgba(0,0,0,0.6))'
@@ -867,11 +865,11 @@ export default function SafetyStandards({ siteData }) {
               alt="Build Yours Now Right"
               style={{
                 position: 'absolute',
-                right: '10px',
+                right: '15px',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                maxHeight: '96%',
-                maxWidth: '28%',
+                maxHeight: '92%',
+                maxWidth: '26%',
                 objectFit: 'contain',
                 zIndex: 2,
                 filter: 'drop-shadow(0 15px 35px rgba(0,0,0,0.6))'
@@ -879,11 +877,11 @@ export default function SafetyStandards({ siteData }) {
             />
 
             {/* Center Content Box */}
-            <div style={{ position: 'relative', zIndex: 3, maxWidth: '720px', padding: '0 20px' }}>
+            <div style={{ position: 'relative', zIndex: 3, maxWidth: '650px', padding: '0 15px' }}>
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '38px',
                 fontWeight: '900',
-                margin: '0 0 24px',
+                margin: '0 0 16px',
                 lineHeight: 1.15,
                 textTransform: 'uppercase',
                 letterSpacing: '1px',
@@ -908,7 +906,7 @@ export default function SafetyStandards({ siteData }) {
                 })()}
               </h2>
 
-              <div className="winera-cta-banner-btn-wrapper">
+              <div className="winera-cta-banner-btn-wrapper" style={{ display: 'inline-block' }}>
                 <a
                   href="#"
                   onClick={(e) => {

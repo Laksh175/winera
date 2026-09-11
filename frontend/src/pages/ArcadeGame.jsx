@@ -340,7 +340,7 @@ export default function ArcadeGame({ siteData }) {
                 marginBottom: fIdx === 0 ? '20px' : '32px',
                 background: '#F5F5F9',
                 borderRadius: '16px',
-                padding: '16px 20px',
+                padding: '0px 20px',
                 boxShadow: '0 8px 25px rgba(0,0,0,0.03)',
                 border: '1px solid #f1f5f9'
               }}>

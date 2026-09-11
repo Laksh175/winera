@@ -311,7 +311,7 @@ export default function VrGames({ siteData }) {
               </h2>
             </div>
 
-            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px' }}>
+            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '5px' }}>
               {siteData?.vrIntro?.desc || "India's ROI-first VR gaming supplier commercial-grade machines sourced, configured, and serviced by our own team across 50+ cities"}
             </p>
 
@@ -356,7 +356,7 @@ export default function VrGames({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '300px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
+                style={{ display: 'block', width: '300px', height: '10px', marginBottom: '7px', objectFit: 'fill' }}
               />
               <h2 style={{
                 fontSize: '42px',
@@ -374,7 +374,7 @@ export default function VrGames({ siteData }) {
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '36px', maxWidth: '540px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '5px', maxWidth: '540px' }}>
               <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
                 {siteData?.vrMatchedVenue?.p1 || "Winera International Pvt. Ltd. is a trusted VR gaming machine supplier in India sourcing and servicing commercial virtual reality machines end-to-end across India."}
               </p>
