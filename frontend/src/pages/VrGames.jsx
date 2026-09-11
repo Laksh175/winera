@@ -1030,7 +1030,7 @@ export default function VrGames({ siteData }) {
       {/* 9. OUR RECENT PROJECTS SHOWCASE SECTION */}
       <ProjectsMarqueeSection
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Project</span></>}
+        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="Know More"
       />

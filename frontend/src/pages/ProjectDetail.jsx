@@ -239,7 +239,7 @@ export default function ProjectDetail({ siteData }) {
       if (match && match[1]) {
         waMsg = decodeURIComponent(match[1]);
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   // If waMsg is empty or generic without project reference, include the current project name
@@ -330,30 +330,6 @@ export default function ProjectDetail({ siteData }) {
         color: '#ffffff'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          {/* Crafting Heading — TOP */}
-          <p style={{
-            fontSize: '12px',
-            fontWeight: '700',
-            color: '#38bdf8',
-            letterSpacing: '2.5px',
-            textTransform: 'uppercase',
-            marginBottom: '10px'
-          }}>Case Study</p>
-          <h2 style={{
-            fontSize: 'clamp(1.7rem, 3.5vw, 2.6rem)',
-            fontWeight: '900',
-            color: '#ffffff',
-            margin: '0 auto 10px',
-            lineHeight: 1.18,
-            maxWidth: '700px',
-            textShadow: '0 4px 18px rgba(0,0,0,0.45)'
-          }}>
-            {currentProject.name}
-          </h2>
-          <p style={{ fontSize: '14px', color: '#cbd5e1', maxWidth: '520px', margin: '0 auto', lineHeight: 1.65 }}>
-            {currentProject.type} &bull; {currentProject.location}
-          </p>
-
           {/* Breadcrumb: Home › Project › Name */}
           <h1 className="winera-project-hero-h1" style={{
             fontSize: '1.45rem',
@@ -363,7 +339,7 @@ export default function ProjectDetail({ siteData }) {
             alignItems: 'center',
             justifyContent: 'center',
             gap: '10px',
-            margin: '15px 0 0 0',
+            margin: 0,
             lineHeight: 1.2,
             textAlign: 'center',
             opacity: 0.95
@@ -473,30 +449,30 @@ export default function ProjectDetail({ siteData }) {
       </section>
 
       {/* 3. BASIC INFORMATION CARD BLOCK */}
-      <section className="winera-project-basic-section" style={{ padding: '0 4vw 90px', maxWidth: '1240px', margin: '0 auto' }}>
+      <section className="winera-project-basic-section" style={{ padding: '0 4vw 45px', maxWidth: '1240px', margin: '0 auto' }}>
         <div className="winera-project-basic-card" style={{
           position: 'relative',
           width: '100%',
           backgroundImage: `url(${basicBg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          borderRadius: '60px',
-          padding: '55px 65px',
+          borderRadius: '50px',
+          padding: '38px 50px',
           boxShadow: '0 20px 50px rgba(0,0,0,0.18)',
           overflow: 'hidden',
-          minHeight: '400px',
+          minHeight: 'auto',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center'
         }}>
-          <div style={{ marginBottom: '32px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <img
               src={strokeImg}
               alt=""
-              style={{ display: 'block', maxWidth: '100%', width: '260px', height: '8px', marginBottom: '12px', objectFit: 'fill' }}
+              style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h3 style={{
-              fontSize: '2.6rem',
+              fontSize: '2.5rem',
               fontWeight: '900',
               margin: 0,
               lineHeight: 1.15,
@@ -511,11 +487,13 @@ export default function ProjectDetail({ siteData }) {
             maxWidth: '520px',
             width: '100%',
             background: '#ffffff',
-            borderRadius: '28px',
+            borderRadius: '26px',
             border: '2px solid #ffcd00',
             boxShadow: '0 20px 45px rgba(0,0,0,0.25)',
             overflow: 'hidden',
-            paddingBottom: '16px'
+            paddingBottom: '0px',
+            marginTop:'15px',
+            marginBottom:'15px'
           }}>
             {basicRows.map((row, rIdx) => (
               <div
@@ -524,8 +502,8 @@ export default function ProjectDetail({ siteData }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '16px 36px',
-                  borderBottom: '1px solid #e2e8f0'
+                  padding: '11px 30px',
+                  borderBottom: rIdx === basicRows.length - 1 ? 'none' : '1px solid #e2e8f0'
                 }}
               >
                 <span style={{ fontSize: '14.5px', fontWeight: '800', color: '#0f172a', textAlign: 'left' }}>
@@ -541,15 +519,15 @@ export default function ProjectDetail({ siteData }) {
       </section>
 
       {/* 4. WHAT THE CLIENT WANTED BLOCK */}
-      <section className="winera-project-client-section" style={{ padding: '40px 4vw 70px', maxWidth: '1240px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '45px' }}>
+      <section className="winera-project-client-section" style={{ padding: '30px 4vw 20px', maxWidth: '1240px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <img
             src={strokeImg}
             alt=""
             style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
           />
           <h3 style={{
-            fontSize: '2.5rem',
+            fontSize: '2.4rem',
             fontWeight: '900',
             color: '#0f172a',
             margin: 0,
@@ -563,26 +541,26 @@ export default function ProjectDetail({ siteData }) {
         <div className="winera-project-client-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)',
-          gap: '50px',
+          gap: '40px',
           alignItems: 'center'
         }}>
           <div className="winera-project-client-text">
-            <p style={{ fontSize: '22px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '20px' }}>
+            <p style={{ fontSize: '21px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '16px' }}>
               {clientP1}
             </p>
-            <p style={{ fontSize: '22px', color: '#475569', lineHeight: 1.6, fontWeight: '400', margin: 0 }}>
+            <p style={{ fontSize: '21px', color: '#475569', lineHeight: 1.6, fontWeight: '400', margin: 0 }}>
               {clientP2}
             </p>
           </div>
 
           <div className="winera-project-client-img" style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-            <div style={{ position: 'relative', maxWidth: '430px', width: '100%' }}>
+            <div style={{ position: 'relative', maxWidth: '430px', width: '100%', aspectRatio: '16 / 10' }}>
               <div style={{
                 position: 'absolute',
-                top: '-18px',
-                right: '-18px',
-                bottom: '18px',
-                left: '18px',
+                top: '-16px',
+                right: '-16px',
+                bottom: '16px',
+                left: '16px',
                 border: '2px solid #38bdf8',
                 zIndex: 1,
                 pointerEvents: 'none'
@@ -592,7 +570,7 @@ export default function ProjectDetail({ siteData }) {
                 alt="What the Client Wanted"
                 style={{
                   width: '100%',
-                  height: 'auto',
+                  height: '100%',
                   borderRadius: '0px',
                   display: 'block',
                   position: 'relative',
@@ -607,15 +585,15 @@ export default function ProjectDetail({ siteData }) {
       </section>
 
       {/* 5. WHAT SOLUTION WE PROVIDE BLOCK */}
-      <section className="winera-project-solution-section" style={{ padding: '20px 4vw 90px', maxWidth: '1240px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '45px' }}>
+      <section className="winera-project-solution-section" style={{ padding: '20px 4vw 50px', maxWidth: '1240px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <img
             src={strokeImg}
             alt=""
             style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
           />
           <h3 style={{
-            fontSize: '2.5rem',
+            fontSize: '2.4rem',
             fontWeight: '900',
             color: '#0f172a',
             margin: 0,
@@ -629,14 +607,17 @@ export default function ProjectDetail({ siteData }) {
         <div className="winera-project-solution-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.2fr)',
-          gap: '50px',
+          gap: '40px',
           alignItems: 'center'
         }}>
           <div className="winera-project-solution-img" style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-            <div style={{ position: 'relative', maxWidth: '430px', width: '100%' }}>
+            <div style={{ position: 'relative', maxWidth: '430px', width: '100%', aspectRatio: '16 / 10' }}>
               <div style={{
                 position: 'absolute',
-                inset: '-15px -17px -17px 18px',
+                top: '16px',
+                right: '16px',
+                bottom: '-16px',
+                left: '-16px',
                 border: '2px solid #38bdf8',
                 zIndex: 1,
                 pointerEvents: 'none'
@@ -646,7 +627,7 @@ export default function ProjectDetail({ siteData }) {
                 alt="What Solution We Provide"
                 style={{
                   width: '100%',
-                  height: 'auto',
+                  height: '100%',
                   borderRadius: '0px',
                   display: 'block',
                   position: 'relative',
@@ -659,7 +640,7 @@ export default function ProjectDetail({ siteData }) {
           </div>
 
           <div className="winera-project-solution-text">
-            <p style={{ fontSize: '21px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '20px' }}>
+            <p style={{ fontSize: '21px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '16px' }}>
               {solutionP1}
             </p>
             <p style={{ fontSize: '21px', color: '#475569', lineHeight: 1.6, fontWeight: '400', margin: 0 }}>

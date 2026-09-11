@@ -455,8 +455,8 @@ export default function BumperCar({ siteData }) {
                 justifyContent: 'center',
                 width: '215px',
                 height: '60px',
-                paddingTop:'4px',
-                marginBottom:'35px',
+                paddingTop: '4px',
+                marginBottom: '35px',
                 background: `url(${downloadButtonImg}) center center / 100% 100% no-repeat`,
                 color: '#ffffff',
                 fontSize: '14px',
@@ -493,7 +493,7 @@ export default function BumperCar({ siteData }) {
           {/* Left Column: Heading, Intro, and 2 Option Cards */}
           <div className="winera-bumpercar-options-text">
             {/* Title */}
-            <div style={{ position: 'relative', display: 'block', marginBottom: '12px', marginTop:'35px' }}>
+            <div style={{ position: 'relative', display: 'block', marginBottom: '12px', marginTop: '35px' }}>
               <img
                 src={yellowStrokeLine}
                 alt=""
@@ -620,7 +620,7 @@ export default function BumperCar({ siteData }) {
             {/* LEFT COLUMN: Electric Floor Points (Yellow Arc Curve Layout) */}
             <div style={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'flex-end', position: 'relative' }}>
               {/* Point Pills List arranged in an outward curve */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-end', zIndex: 3, marginRight: '-80px'}}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-end', zIndex: 3, marginRight: '-80px' }}>
                 {(siteData?.bumpercarComparison?.electricPoints || defaultElectricPoints).map((pt, idx) => {
                   const curveOffsets = [0, 45, 90, 75, 40, 0];
                   const offsetRight = curveOffsets[idx] || 0;
@@ -642,11 +642,11 @@ export default function BumperCar({ siteData }) {
                       <span style={{ fontSize: '11.5px', fontWeight: '600', color: '#0f172a', textAlign: 'left', lineHeight: 1.3, marginRight: '14px' }}>
                         {pt.text && typeof pt.text === 'string'
                           ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                              <React.Fragment key={lIdx}>
-                                {lIdx > 0 && <br />}
-                                {line}
-                              </React.Fragment>
-                            ))
+                            <React.Fragment key={lIdx}>
+                              {lIdx > 0 && <br />}
+                              {line}
+                            </React.Fragment>
+                          ))
                           : pt.text}
                       </span>
                       <span style={{
@@ -750,7 +750,7 @@ export default function BumperCar({ siteData }) {
                 zIndex: 2,
                 position: 'relative'
               }}>
-                <span style={{ fontSize: '14px', fontWeight: '600', color: '#0284c7', lineHeight: 1.25, letterSpacing: '0.3px'}}>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#0284c7', lineHeight: 1.25, letterSpacing: '0.3px' }}>
                   BATTERY-<br />OPERATED
                 </span>
               </div>
@@ -807,11 +807,11 @@ export default function BumperCar({ siteData }) {
                       <span style={{ fontSize: '11.5px', fontWeight: '600', color: '#ffffff', textAlign: 'left', lineHeight: 1.3, marginLeft: '14px' }}>
                         {pt.text && typeof pt.text === 'string'
                           ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                              <React.Fragment key={lIdx}>
-                                {lIdx > 0 && <br />}
-                                {line}
-                              </React.Fragment>
-                            ))
+                            <React.Fragment key={lIdx}>
+                              {lIdx > 0 && <br />}
+                              {line}
+                            </React.Fragment>
+                          ))
                           : pt.text}
                       </span>
                     </div>
@@ -893,7 +893,7 @@ export default function BumperCar({ siteData }) {
             </p>
 
             {/* Subheading intro line */}
-            <p style={{ fontSize: '14.5px', color: '#1e293b', lineHeight: 1.6, fontWeight: 500, marginBottom: '18px', width: '99%' }}>
+            <p style={{ fontSize: '14.5px', color: '#1e293b', lineHeight: 1.6, fontWeight: '500', marginBottom: '18px', width: '99%' }}>
               {siteData?.bumpercarInvestment?.subtitleText || "Before confirming any bumper car ride setup, our team prepares a complete return-on-investment report specific to your venue. It covers:"}
             </p>
 
@@ -912,7 +912,7 @@ export default function BumperCar({ siteData }) {
                       marginTop: '3px'
                     }}
                   />
-                  <span style={{ fontSize: '18.5px', color: 'rgb(51, 65, 85)', fontWeight: 600, lineHeight: 1.5 }}>
+                  <span style={{ fontSize: '18.5px', color: 'rgb(51, 65, 85)', fontWeight: 500, lineHeight: 1.5 }}>
                     {bText}
                   </span>
                 </div>
@@ -1022,7 +1022,7 @@ export default function BumperCar({ siteData }) {
                         key={cIdx}
                         className="winera-bumpercar-whyus-card"
                         style={{
-                          padding: '0 35px 30px',
+                          padding: '0 15px 30px',
                           textAlign: 'center',
                           position: 'relative',
                           display: 'flex',
@@ -1065,21 +1065,21 @@ export default function BumperCar({ siteData }) {
                         <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                           {card.title && typeof card.title === 'string'
                             ? card.title.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                                <React.Fragment key={lIdx}>
-                                  {lIdx > 0 && <br />}
-                                  {line}
-                                </React.Fragment>
-                              ))
+                              <React.Fragment key={lIdx}>
+                                {lIdx > 0 && <br />}
+                                {line}
+                              </React.Fragment>
+                            ))
                             : card.title}
                         </h4>
-                        <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                        <p style={{ fontSize: '15px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '340px' }}>
                           {card.desc && typeof card.desc === 'string'
                             ? card.desc.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                                <React.Fragment key={lIdx}>
-                                  {lIdx > 0 && <br />}
-                                  {line}
-                                </React.Fragment>
-                              ))
+                              <React.Fragment key={lIdx}>
+                                {lIdx > 0 && <br />}
+                                {line}
+                              </React.Fragment>
+                            ))
                             : card.desc}
                         </p>
                       </div>
@@ -1114,7 +1114,7 @@ export default function BumperCar({ siteData }) {
                           key={bIdx}
                           className="winera-bumpercar-whyus-card"
                           style={{
-                            padding: '0 35px',
+                            padding: '0 15px',
                             textAlign: 'center',
                             position: 'relative',
                             display: 'flex',
@@ -1156,21 +1156,21 @@ export default function BumperCar({ siteData }) {
                           <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                             {card.title && typeof card.title === 'string'
                               ? card.title.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                                  <React.Fragment key={lIdx}>
-                                    {lIdx > 0 && <br />}
-                                    {line}
-                                  </React.Fragment>
-                                ))
+                                <React.Fragment key={lIdx}>
+                                  {lIdx > 0 && <br />}
+                                  {line}
+                                </React.Fragment>
+                              ))
                               : card.title}
                           </h4>
-                          <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                          <p style={{ fontSize: '15px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '340px' }}>
                             {card.desc && typeof card.desc === 'string'
                               ? card.desc.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                                  <React.Fragment key={lIdx}>
-                                    {lIdx > 0 && <br />}
-                                    {line}
-                                  </React.Fragment>
-                                ))
+                                <React.Fragment key={lIdx}>
+                                  {lIdx > 0 && <br />}
+                                  {line}
+                                </React.Fragment>
+                              ))
                               : card.desc}
                           </p>
                         </div>
@@ -1187,7 +1187,7 @@ export default function BumperCar({ siteData }) {
       {/* 11. OUR RECENT PROJECT SHOWCASE SECTION */}
       <ProjectsMarqueeSection
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Project</span></>}
+        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="View All Projects"
       />

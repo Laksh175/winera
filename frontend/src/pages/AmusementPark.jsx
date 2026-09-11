@@ -667,7 +667,7 @@ export default function AmusementPark({ siteData }) {
       <ProjectsMarqueeSection
         siteData={siteData}
         showTopHeader={false}
-        simpleTitle={<>OUR <span style={{ color: '#38bdf8' }}>RECENT PROJECTS</span></>}
+        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
       />
       <TestimonialsSection siteData={siteData} />
       <RelatedProductsSection sectionData={siteData?.amusementRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />

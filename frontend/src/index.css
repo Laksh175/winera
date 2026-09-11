@@ -87,6 +87,14 @@ p *,
   color: rgba(55, 62, 65, 1);
 }
 
+/* Project Detail Client & Solution Paragraph Font Size Override */
+.winera-project-client-text p,
+.winera-project-solution-text p {
+  font-size: 21px !important;
+  line-height: 1.6 !important;
+  color: #475569 !important;
+}
+
 /* Testimonial Quote Italic Override */
 .winera-testi-quote,
 .winera-testi-quote * {
@@ -3211,16 +3219,16 @@ html {
 .winera-cyan-cta-wrapper {
   position: relative;
   display: inline-block;
-  background: #ffcd00;
-  border-radius: 16px;
-  padding: 3px 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .winera-cyan-cta-wrapper:hover {
-  transform: translateY(-3px) scale(1.025);
-  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.22);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: none !important;
 }
 
 .winera-cyan-cta-wrapper:active {
@@ -3233,62 +3241,138 @@ html {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 10px 24px;
-  min-height: 42px;
+  min-width: 200px !important;
+  max-width: 100% !important;
+  height: 65px !important;
+  padding: 3px 24px 0 24px !important;
   box-sizing: border-box;
-  background: #38bdf8;
-  border-radius: 12px;
-  transform: rotate(-1.5deg);
-  transform-origin: center;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing: -0.2px;
+  background: url('./assets/get-quote-button-shape.png') center center / 100% 100% no-repeat !important;
+  border-radius: 0 !important;
+  transform: none !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  letter-spacing: -0.1px;
   text-decoration: none;
   white-space: nowrap;
-  overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s ease;
 }
 
 .winera-cyan-cta-btn::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 55%;
-  height: 100%;
-  background: linear-gradient(90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.25) 30%,
-      rgba(255, 255, 255, 0.65) 50%,
-      rgba(255, 255, 255, 0.25) 70%,
-      rgba(255, 255, 255, 0) 100%);
-  transform: translateX(-160%) skewX(-20deg);
-  pointer-events: none;
-  animation: wineraButtonShimmer 1.5s linear infinite;
-  border-radius: inherit;
+  display: none !important;
 }
 
 .winera-cyan-cta-wrapper:hover .winera-cyan-cta-btn {
-  transform: rotate(0deg);
+  transform: none !important;
 }
 
 .winera-cyan-cta-wrapper:hover .winera-cyan-cta-btn::after {
-  animation: wineraButtonShimmer 0.75s linear infinite;
+  display: none !important;
 }
 
 .winera-cyan-cta-wrapper-sm {
-  border-radius: 13px !important;
-  padding: 2px 3px !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .winera-cyan-cta-btn-sm {
-  padding: 10px 24px !important;
-  font-size: 14px !important;
+  padding: 3px 22px 0 22px !important;
+  font-size: 16px !important;
   font-weight: 600 !important;
-  min-height: 42px !important;
+  min-width: 200px !important;
+  max-width: 100% !important;
+  height: 65px !important;
   box-sizing: border-box !important;
-  border-radius: 12px !important;
+  border-radius: 0 !important;
+  background: url('./assets/get-quote-button-shape.png') center center / 100% 100% no-repeat !important;
+  transform: none !important;
+}
+
+/* CTA Banner Button with cta-banner-bg.png Background */
+.winera-cta-banner-btn-wrapper {
+  position: relative;
+  display: inline-block;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.winera-cta-banner-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 220px;
+  max-width: 100%;
+  height: 65px;
+  padding: 3px 28px 0 28px;
+  box-sizing: border-box;
+  background: url('./assets/cta-banner-bg.png') center center / 100% 100% no-repeat !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: none !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  font-size: 15.5px !important;
+  letter-spacing: -0.1px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.winera-cta-banner-btn:hover {
+  transform: scale(1.035) !important;
+}
+
+.winera-cta-banner-btn:active {
+  transform: scale(0.97) !important;
+}
+
+.winera-cta-banner-btn::after {
+  display: none !important;
+}
+
+/* White Button with Yellow Offset Backdrop (cta-banner-button-shape.png) */
+.winera-cta-banner-btn-white {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 220px;
+  max-width: 100%;
+  height: 65px;
+  padding: 3px 28px 0 28px;
+  box-sizing: border-box;
+  background: url('./assets/cta-banner-button-shape.png') center center / 100% 100% no-repeat !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: none !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  font-size: 15.5px !important;
+  letter-spacing: -0.1px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.winera-cta-banner-btn-white:hover {
+  transform: scale(1.035) !important;
+}
+
+.winera-cta-banner-btn-white:active {
+  transform: scale(0.97) !important;
+}
+
+.winera-cta-banner-btn-white::after {
+  display: none !important;
 }
 
 /* Yellow Button with Cyan Blue Offset Backdrop */
@@ -3670,8 +3754,8 @@ html {
 .winera-white-cyan-cta-btn,
 .winera-yellow-shimmer-btn,
 .winera-partner-card-btn {
-  font-size: 14px !important;
-  font-weight: 700 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
 }
 
 .winera-cyan-cta-btn:not(.winera-hero-cta-btn),
@@ -3687,13 +3771,13 @@ html {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-width: 140px !important;
+  min-width: 200px !important;
   max-width: 100% !important;
-  height: 42px !important;
-  min-height: 42px !important;
-  padding: 0 24px !important;
+  height: 65px !important;
+  min-height: 65px !important;
+  padding: 3px 24px 0 24px !important;
   box-sizing: border-box !important;
-  border-radius: 12px !important;
+  border-radius: 0 !important;
 }
 
 .winera-cta-btn-hover {

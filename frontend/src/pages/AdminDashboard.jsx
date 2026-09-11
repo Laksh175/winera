@@ -182,7 +182,7 @@ const defaultHypergridIntro = {
 };
 
 const defaultHypergridBanner = {
-  title: 'Interactive LED Floor Games<br/>*for High-Footfall Venues*',
+  title: 'Interactive LED Floor Games *for High-<br/>Footfall Venues*',
   paragraph1: 'Winera International is a trusted Hypergrid game supplier in India, sourcing and installing commercial Hypergrid interactive LED floor systems for malls, family entertainment centres, hotels, schools, trampoline parks, and bowling alleys since 2014. Every Hypergrid unit we supply is sourced from established global manufacturers — configured specifically for sustained daily commercial use in high-footfall Indian venues.',
   paragraph2: 'As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order to opening day',
   imgUrl: hypergridBannerImg

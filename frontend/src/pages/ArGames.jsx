@@ -1364,7 +1364,7 @@ export default function ArGames({ siteData }) {
       {/* 9. OUR RECENT PROJECTS SHOWCASE SECTION */}
       <ProjectsMarqueeSection
         showTopHeader={false}
-        simpleTitle={<>OUR <span style={{ color: '#38bdf8' }}>RECENT PROJECTS</span></>}
+        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
       />
 
       {/* 10. WHAT OUR CLIENTS SAY (TESTIMONIALS) SECTION */}

@@ -1372,16 +1372,16 @@ export default function Roi({ siteData }) {
           </p>
 
           {/* Styled Button offset wrap */}
-          <div className="winera-yellow-cyan-cta-wrapper winera-yellow-cyan-cta-wrapper-sm" style={{ position: 'relative', zIndex: 2 }}>
+          <div className="winera-cta-banner-btn-wrapper" style={{ position: 'relative', zIndex: 2 }}>
             <a
               href="#"
               onClick={(e) => {
                 e.preventDefault();
                 setIsModalOpen(true);
               }}
-              className="winera-yellow-cyan-cta-btn winera-yellow-cyan-cta-btn-sm"
+              className="winera-cta-banner-btn"
             >
-              {roiCta.buttonText}
+              <span>{roiCta.buttonText}</span>
             </a>
           </div>
         </div>

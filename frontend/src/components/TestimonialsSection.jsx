@@ -82,7 +82,7 @@ export default function TestimonialsSection({
   const hasMultipleTestimonials = list.length > 1;
 
   return (
-    <section id={id} style={{ padding: '90px 4vw 70px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+    <section id={id} style={{ padding: '45px 4vw 60px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         <MotionFadeIn>
           <SectionHeading marginBottom="12px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign}>
@@ -108,7 +108,7 @@ export default function TestimonialsSection({
             fontWeight: '500',
             lineHeight: 1.6,
             maxWidth: '750px',
-            margin: '0 auto 90px',
+            margin: '0 auto 60px',
             textAlign: 'center',
             whiteSpace: 'pre-line'
           }}>
@@ -121,8 +121,8 @@ export default function TestimonialsSection({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            maxWidth: '1100px',
-            margin: '60px auto 20px'
+            maxWidth: '920px',
+            margin: '25px auto 10px'
           }}>
             {/* Left Arrow Button (Only if > 1 testimonial) */}
             {hasMultipleTestimonials && (
@@ -156,10 +156,10 @@ export default function TestimonialsSection({
               position: 'relative',
               width: '100%',
               background: '#ffffff',
-              borderRadius: '32px',
-              padding: '36px 470px 36px 48px',
-              minHeight: '380px',
-              height: isExpanded ? 'auto' : '410px',
+              borderRadius: '24px',
+              padding: '28px 360px 28px 36px',
+              minHeight: '300px',
+              height: isExpanded ? 'auto' : '330px',
               boxShadow: '0 12px 40px rgba(0, 0, 0, 0.04)',
               border: '1px solid #f1f5f9',
               display: 'flex',
@@ -181,17 +181,17 @@ export default function TestimonialsSection({
                   const isLong = quoteText.length > 280;
 
                   return (
-                    <div style={{ position: 'relative', maxWidth: '520px', margin: '0 0 8px' }}>
+                    <div style={{ position: 'relative', maxWidth: '430px', margin: '0 0 8px' }}>
                       <p className="winera-testi-quote" style={{
                         color: '#334155',
-                        fontSize: '14.5px',
+                        fontSize: '13.5px',
                         fontStyle: 'italic',
                         fontWeight: '500',
                         lineHeight: 1.5,
                         margin: 0,
                         ...(isLong && !isExpanded ? {
                           display: '-webkit-box',
-                          WebkitLineClamp: 6,
+                          WebkitLineClamp: 5,
                           WebkitBoxOrient: 'vertical',
                           overflow: 'hidden'
                         } : {})
@@ -290,20 +290,20 @@ export default function TestimonialsSection({
               {/* Right Side: Floating / Pop-Out Video Frame (Linear Gradient Fade matching Image 2) */}
               <div style={{
                 position: 'absolute',
-                right: '55px',
+                right: '35px',
                 top: '39%',
                 transform: 'translateY(-50%)',
-                width: '450px',
-                height: '450px',
+                width: '340px',
+                height: '340px',
                 background: 'linear-gradient(191.09deg, #F5F5F9 8.2%, #E0F4FC 116.74%)',
-                borderRadius: '48px',
-                padding: '16px',
+                borderRadius: '32px',
+                padding: '12px',
                 zIndex: 10
               }}>
                 <div style={{
                   width: '100%',
                   height: '100%',
-                  borderRadius: '36px',
+                  borderRadius: '24px',
                   overflow: 'hidden',
                   position: 'relative',
                   background: '#0f172a'

@@ -25,7 +25,7 @@ export default function ProjectsMarqueeSection({
   bg = '#F5F5F9',
   buttonText = "View All",
   showBottomButton = false,
-  accentWidth = '250px',
+  accentWidth = '40%',
   accentMaxWidth = '100%',
   accentHeight = '11px',
   accentMarginBottom = '8px',
@@ -34,7 +34,7 @@ export default function ProjectsMarqueeSection({
   const items = Array.isArray(projects) && projects.length > 0 ? projects : defaultProjects;
 
   return (
-    <section id={id} style={{ padding: '35px 0 35px', background: bg, overflow: 'hidden' }}>
+    <section id={id} style={{ padding: '35px 0 10px', background: bg, overflow: 'hidden' }}>
       <MotionFadeIn>
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
         {showTopHeader ? (
@@ -177,7 +177,7 @@ export default function ProjectsMarqueeSection({
       </div>
 
       {showBottomButton && (
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '35px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '18px' }}>
           <div className="winera-cyan-cta-wrapper">
             <a href="/project" className="winera-cyan-cta-btn" style={{ textDecoration: 'none', padding: '12px 36px', fontSize: '15.5px' }}>
               <span>{buttonText}</span>

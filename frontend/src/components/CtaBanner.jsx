@@ -243,15 +243,7 @@ export default function CtaBanner({
                 </p>
               )}
 
-              <div
-                className={
-                  buttonTheme === 'yellow' || buttonTheme === 'yellow_cyan'
-                    ? "winera-yellow-cyan-cta-wrapper"
-                    : buttonTheme === 'yellow_white'
-                      ? "winera-yellow-white-cta-wrapper"
-                      : "winera-cyan-cta-wrapper"
-                }
-              >
+              <div className="winera-cta-banner-btn-wrapper">
                 <a
                   href={buttonLink || "#"}
                   onClick={(e) => {
@@ -260,11 +252,9 @@ export default function CtaBanner({
                   }}
                   aria-label={typeof buttonText === 'string' ? buttonText : "Get a Quote"}
                   className={
-                    buttonTheme === 'yellow' || buttonTheme === 'yellow_cyan'
-                      ? "winera-yellow-cyan-cta-btn"
-                      : buttonTheme === 'yellow_white'
-                        ? "winera-yellow-white-cta-btn"
-                        : "winera-cyan-cta-btn"
+                    buttonTheme === 'yellow_white' || buttonTheme === 'white_yellow'
+                      ? "winera-cta-banner-btn-white"
+                      : "winera-cta-banner-btn"
                   }
                 >
                   <span>{buttonText}</span>

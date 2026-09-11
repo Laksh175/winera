@@ -1116,7 +1116,7 @@ export default function BowlingAlley({ siteData }) {
       {/* 7. OUR RECENT PROJECT SHOWCASE SECTION */}
       <ProjectsMarqueeSection
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Project</span></>}
+        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="Know More"
       />

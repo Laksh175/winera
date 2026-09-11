@@ -908,40 +908,16 @@ export default function SafetyStandards({ siteData }) {
                 })()}
               </h2>
 
-              {/* Cyan Offset Backdrop Button Wrapper (Matching Image 2 100%) */}
-              <div style={{ position: 'relative', display: 'inline-block' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-4px',
-                  bottom: '-3px',
-                  left: '-6px',
-                  right: '-5px',
-                  background: '#38bdf8',
-                  borderRadius: '18px',
-                  transform: 'rotate(-1.5deg)',
-                  zIndex: 1
-                }} />
+              <div className="winera-cta-banner-btn-wrapper">
                 <a
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
                     setIsModalOpen(true);
                   }}
-                  style={{
-                    position: 'relative',
-                    zIndex: 2,
-                    background: '#ffcd00',
-                    color: '#0f172a',
-                    fontSize: '15px',
-                    fontWeight: '900',
-                    padding: '14px 34px',
-                    borderRadius: '16px',
-                    display: 'inline-block',
-                    textDecoration: 'none',
-                    cursor: 'pointer'
-                  }}
+                  className="winera-cta-banner-btn"
                 >
-                  {siteData?.safetyWhyMatters?.buttonText || "Talk to an ROI Expert"}
+                  <span>{siteData?.safetyWhyMatters?.buttonText || "Talk to an ROI Expert"}</span>
                 </a>
               </div>
             </div>
