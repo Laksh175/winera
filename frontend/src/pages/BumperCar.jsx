@@ -185,7 +185,7 @@ export default function BumperCar({ siteData }) {
             </div>
 
             {/* Subtitle Description Paragraph */}
-            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px' }}>
+            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '10px' }}>
               {siteData?.bumpercarIntro?.desc || "India's ROI-first bumper car manufacturer — electric floor and battery-operated cars, installed by our own team across 50+ cities, with a free ROI report before you invest."}
             </p>
 

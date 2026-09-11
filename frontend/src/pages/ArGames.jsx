@@ -496,7 +496,7 @@ export default function ArGames({ siteData }) {
               </h2>
             </div>
 
-            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '500px' }}>
+            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '10px', maxWidth: '500px' }}>
               {siteData?.arIntro?.desc || "India's ROI-first AR games supplier — we source, install, and service interactive gaming attractions that draw crowds."}
             </p>
 
@@ -587,7 +587,7 @@ export default function ArGames({ siteData }) {
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '36px', maxWidth: '540px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '12px', maxWidth: '540px' }}>
               <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
                 {siteData?.arMatchedVenue?.p1 || (
                   <>

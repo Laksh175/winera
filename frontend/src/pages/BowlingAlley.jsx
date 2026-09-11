@@ -300,7 +300,7 @@ export default function BowlingAlley({ siteData }) {
               lineHeight: 1.65,
               fontWeight: '500',
               maxWidth: '520px',
-              marginBottom: '32px'
+              marginBottom: '0px'
             }}>
               {siteData?.bowlingIntro?.desc || "India's trusted source for refurbished Brunswick bowling equipment — complete setup, installation, and a free ROI report before you invest."}
             </p>

@@ -255,7 +255,7 @@ export default function AmusementPark({ siteData }) {
             </div>
 
             {/* Subtitle Paragraph */}
-            <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '30px' }}>
+            <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '9px' }}>
               {siteData?.amusementIntro?.desc || "India's ROI-first amusement park partner rides and attractions sourced, installed, and serviced by our own team across 50+ cities."}
             </p>
 
