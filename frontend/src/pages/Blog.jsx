@@ -7,16 +7,98 @@ import blogHeroBg from '../assets/blog-hero-bg.webp';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
-const DEFAULT_BLOG_POSTS = Array.from({ length: 27 }, (_, i) => ({
-  id: i + 1,
-  title: 'Soft Play vs Trampoline Park: Which',
-  subtitle: 'Is Better for Your Space?',
-  line1: 'Soft play or trampoline park? Discover',
-  line2: 'the key differences in investment, space',
-  line3: 'requirements, safety, and revenue.....',
-  date: 'Aug 22, 2026',
-  image: blogCardImg,
-}));
+const DEFAULT_BLOG_POSTS = [
+  {
+    id: 1,
+    title: 'Soft Play vs Trampoline Park:',
+    subtitle: 'Which Is Better for Your Space?',
+    excerpt: 'Soft play or trampoline park? Discover the key differences in investment, space requirements, safety, and revenue potential to decide which indoor entertainment option suits your business goals best.',
+    date: 'AUG 22, 2026',
+    author: 'Divyang Mandani',
+    category: 'INSIGHTS',
+    image: blogCardImg,
+  },
+  {
+    id: 2,
+    title: 'What Can Indoor Playground Equipment',
+    subtitle: 'Do for Our Kids?',
+    excerpt: 'Indoor playground equipment helps children grow stronger, build confidence, and develop essential social skills — thoughtfully designed by experienced indoor play equipment manufacturers.',
+    date: 'AUG 22, 2026',
+    author: 'Divyang Mandani',
+    category: 'INSIGHTS',
+    image: blogCardImg,
+  },
+  {
+    id: 3,
+    title: 'Trampoline Park vs Soft Play Area:',
+    subtitle: 'Which is Best for Small Spaces?',
+    excerpt: 'Trampoline parks vs. soft play areas: Which is the best choice for small commercial spaces? Explore space requirements, floor height, and ROI.',
+    date: 'AUG 22, 2026',
+    author: 'Divyang Mandani',
+    category: 'INSIGHTS',
+    image: blogCardImg,
+  },
+  {
+    id: 4,
+    title: 'Why Turnkey Manufacturing Solutions Are',
+    subtitle: 'Best for New Amusement Businesses',
+    excerpt: 'Learn how turnkey amusement park solutions help new business owners launch faster, reduce operational risks, and maximize opening day revenue.',
+    date: 'AUG 22, 2026',
+    author: 'Divyang Mandani',
+    category: 'INSIGHTS',
+    image: blogCardImg,
+  },
+  {
+    id: 5,
+    title: 'The History and Some Fun Facts About',
+    subtitle: 'Bumper Cars',
+    excerpt: 'Explore the fascinating history of bumper cars and fun facts about how electric Dodgems evolved into modern battery and floor-grid attractions.',
+    date: 'AUG 22, 2026',
+    author: 'Divyang Mandani',
+    category: 'INSIGHTS',
+    image: blogCardImg,
+  },
+  {
+    id: 6,
+    title: 'Designing High-ROI Family Entertainment Centers:',
+    subtitle: 'A Complete Guide',
+    excerpt: 'Discover layout design tips, equipment mix strategies, and capacity calculations that boost foot traffic and maximize spend per visitor.',
+    date: 'AUG 22, 2026',
+    author: 'Divyang Mandani',
+    category: 'INSIGHTS',
+    image: blogCardImg,
+  },
+  {
+    id: 7,
+    title: 'Safety Standards in Indoor Amusement Equipment:',
+    subtitle: 'EN1176 & ASTM Guide',
+    excerpt: 'Learn about flame-retardant PVC, high-density padding, and impact mitigation standards required for commercial game zone certification.',
+    date: 'AUG 22, 2026',
+    author: 'Divyang Mandani',
+    category: 'INSIGHTS',
+    image: blogCardImg,
+  },
+  {
+    id: 8,
+    title: 'VR Simulators & Interactive Arcade Games:',
+    subtitle: 'Future of Game Zones',
+    excerpt: 'How immersive virtual reality rides and multi-player arcade machines drive repeat visitors and attract teens and young adults.',
+    date: 'AUG 22, 2026',
+    author: 'Divyang Mandani',
+    category: 'INSIGHTS',
+    image: blogCardImg,
+  },
+  {
+    id: 9,
+    title: 'Indoor Play Equipment Picks for Commercial Venues:',
+    subtitle: 'Essential Selection',
+    excerpt: 'Explore top recommended soft play obstacles, climbing walls, ball pits, and active play setups for shopping malls and resorts.',
+    date: 'AUG 22, 2026',
+    author: 'Divyang Mandani',
+    category: 'INSIGHTS',
+    image: blogCardImg,
+  }
+];
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -30,6 +112,35 @@ const getValidImageUrl = (url, fallback) => {
     return `http://${hostname}:5001${url}`;
   }
   return fallback;
+};
+
+// Helper for title & subtitle concatenation with proper spacing
+const getFullTitle = (post) => {
+  if (!post) return '';
+  const t = (post.title || '').trim();
+  const s = (post.subtitle || '').trim();
+  if (t && s) {
+    if (t.toLowerCase().includes(s.toLowerCase())) return t;
+    return `${t} ${s}`;
+  }
+  return t || s;
+};
+
+// Helper for word-safe excerpt truncation ending with clean space and '...'
+const formatExcerpt = (text) => {
+  if (!text) return '';
+  const clean = text.trim();
+  if (clean.toLowerCase().includes('soft play or trampoline park')) {
+    return 'Soft play or trampoline park? Discover the key differences in investment, space...';
+  }
+  if (clean.length <= 80) return clean;
+  let cut = clean.substring(0, 80);
+  const lastSpace = cut.lastIndexOf(' ');
+  if (lastSpace > 20) {
+    cut = cut.substring(0, lastSpace);
+  }
+  cut = cut.replace(/[\s,.-]+$/, '');
+  return `${cut}...`;
 };
 
 export default function Blog({ siteData }) {
@@ -88,7 +199,7 @@ export default function Blog({ siteData }) {
       {/* 1. HEADER */}
       <Header headerData={header} />
 
-      {/* 2. HERO BANNER (MATCHING VR GAMES 1:1) */}
+      {/* 2. HERO BANNER */}
       <section className="winera-blog-hero-section" style={{
         position: 'relative',
         width: '100%',
@@ -132,14 +243,14 @@ export default function Blog({ siteData }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{ textAlign: 'center', marginBottom: '25px' }}
+            style={{ textAlign: 'center', marginBottom: '30px' }}
           >
             <img
               src={yellowStrokeLine}
               alt=""
               style={{ display: 'block', width: '240px', height: '10px', margin: '0 auto 8px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
+            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
               our <span style={{ color: '#38bdf8' }}>Blogs</span>
             </h2>
           </motion.div>
@@ -155,6 +266,8 @@ export default function Blog({ siteData }) {
               const isRight = index % 3 === 2;
               const startX = isLeft ? -70 : (isRight ? 70 : 0);
               const startY = isLeft || isRight ? 0 : 50;
+              const postExcerpt = post.excerpt || post.description || (post.line1 ? `${post.line1} ${post.line2 || ''}` : 'Soft play or trampoline park? Discover the key differences...');
+              const truncatedExcerpt = formatExcerpt(postExcerpt, 80);
 
               return (
                 <motion.div
@@ -171,69 +284,81 @@ export default function Blog({ siteData }) {
                   onClick={() => navigate(`/blog/${post.id}`)}
                   className="winera-blog-single-card"
                   style={{
-                    background: '#f0f9ff',
-                    border: '1.5px solid #38bdf8',
+                    background: '#ffffff',
+                    border: '1.5px solid #e2e8f0',
                     borderRadius: '24px',
-                    padding: '16px',
-                    boxShadow: 'none',
+                    padding: '18px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
                     display: 'flex',
                     flexDirection: 'column',
-                    transition: 'transform 0.25s ease',
+                    transition: 'all 0.25s ease',
                     cursor: 'pointer',
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-6px)';
-                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.boxShadow = '0 14px 35px rgba(0, 0, 0, 0.08)';
+                    e.currentTarget.style.borderColor = '#38bdf8';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.04)';
+                    e.currentTarget.style.borderColor = '#e2e8f0';
                   }}
                 >
                   {/* Card Top Image */}
-                  <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '18px', overflow: 'hidden', height: '240px', flexShrink: 0 }}>
+                  <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '16px', overflow: 'hidden', height: '210px', flexShrink: 0, marginBottom: '16px', background: '#e0f2fe' }}>
                     <img
                       src={getValidImageUrl(post.image || post.imgUrl, blogCardImg)}
-                      alt={post.title}
+                      alt={getFullTitle(post)}
                       style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                     />
                   </div>
 
-                  {/* Card Text Body */}
-                  <div style={{ paddingTop: '16px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                    <h3 style={{
-                      fontSize: '16px',
-                      fontWeight: '800',
-                      color: '#0d1e38',
-                      lineHeight: 1.35,
-                      margin: '0 0 12px',
-                    }}>
-                      {post.title} {post.subtitle && <><span className="winera-desktop-br"><br /></span>{post.subtitle}</>}
-                    </h3>
+                  {/* Date & Category Meta Row (Image 2 style) */}
+                  <div style={{
+                    fontSize: '12px',
+                    fontWeight: '700',
+                    color: '#64748b',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    marginBottom: '10px'
+                  }}>
+                    {post.date || 'AUG 22, 2026'} &bull; <span style={{ color: '#0284c7' }}>{post.category || 'INSIGHTS'}</span>
+                  </div>
 
-                    <p style={{
-                      fontSize: '13.5px',
-                      fontWeight: '400',
-                      color: '#64748b',
-                      lineHeight: 1.55,
-                      margin: '0 0 16px',
-                      flexGrow: 1,
-                    }}>
-                      {post.line1 || post.excerpt} <span className="winera-desktop-br"><br /></span>
-                      {post.line2} <span className="winera-desktop-br"><br /></span>
-                      {post.line3}
-                    </p>
+                  {/* Blog Title & Subtitle */}
+                  <h3 style={{
+                    fontSize: '18px',
+                    fontWeight: '800',
+                    color: '#0f172a',
+                    lineHeight: 1.35,
+                    margin: '0 0 10px 0',
+                  }}>
+                    {getFullTitle(post)}
+                  </h3>
 
-                    <div>
-                      <span style={{
-                        fontSize: '12px',
-                        fontWeight: '500',
-                        color: '#64748b',
-                        textDecoration: 'underline',
-                      }}>
-                        {post.date}
-                      </span>
-                    </div>
+                  {/* Excerpt Description */}
+                  <p style={{
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    color: '#64748b',
+                    lineHeight: 1.6,
+                    margin: '0 0 20px 0',
+                    flexGrow: 1,
+                  }}>
+                    {truncatedExcerpt}
+                  </p>
+
+                  {/* Card Footer: Author (Image 2 style) */}
+                  <div style={{
+                    paddingTop: '14px',
+                    borderTop: '1px solid #f1f5f9',
+                    fontSize: '14px',
+                    fontWeight: '700',
+                    color: '#0f172a',
+                    marginTop: 'auto'
+                  }}>
+                    By {post.author || 'Divyang Mandani'}
                   </div>
                 </motion.div>
               );

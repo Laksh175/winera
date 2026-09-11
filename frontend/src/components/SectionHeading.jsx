@@ -90,12 +90,12 @@ export default function SectionHeading({
           )}
           <h2 style={{
             fontFamily: "'Black Han Sans', sans-serif",
-            fontSize: '50px',
+            fontSize: '42px',
             fontWeight: '400',
             fontStyle: 'normal',
             color: '#0f172a',
             letterSpacing: '0px',
-            lineHeight: '60px'
+            lineHeight: '1.2'
           }}>
             {parseStarText(children)}
           </h2>
@@ -152,12 +152,12 @@ export default function SectionHeading({
       )}
       <h2 style={{
         fontFamily: "'Black Han Sans', sans-serif",
-        fontSize: '50px',
+        fontSize: '42px',
         fontWeight: '400',
         fontStyle: 'normal',
         color: '#0f172a',
         letterSpacing: '0px',
-        lineHeight: '60px'
+        lineHeight: '1.2'
       }}>
         {parseStarText(children)}
       </h2>

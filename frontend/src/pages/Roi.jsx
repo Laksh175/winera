@@ -46,9 +46,9 @@ export default function Roi({ siteData }) {
   };
 
   const roiIntro = siteData?.roiIntro || {
-    tagline: "Return on Investment (ROI)",
+    tagline: "RETURN ON INVESTMENT (ROI)",
     titleLine1: "You don't need a game zone…",
-    titleLine2: "you need a",
+    titleLine2: "You need a",
     titleLine2Blue: "profit machine.",
     paragraph1: "Anyone can fill a room with arcade machines. Very few build a game zone that pays back your investment and keeps printing profit month after month.",
     paragraph2: "Most game zone owners lose money in year one — not because gaming is dead, but because the setup, game mix, and management were wrong from day one.",
@@ -95,21 +95,42 @@ export default function Roi({ siteData }) {
     title: "Why most game zones fail vs. why ours profit",
     subCaption: "The difference isn't the games. It's the system behind them.",
     wrongItems: [
-      { num: "01", text: "Random game selection", offset: "20px" },
-      { num: "02", text: "No space planning", offset: "65px" },
-      { num: "03", text: "Buy machines, then figure it out", offset: "95px" },
+      { num: "01", text: "Random game\nselection", offset: "0px" },
+      { num: "02", text: "No space planning", offset: "45px" },
+      { num: "03", text: "Buy machines, then\nfigure it out", offset: "95px" },
       { num: "04", text: "No pricing strategy", offset: "95px" },
-      { num: "05", text: "Owner manages everything manually", offset: "65px" },
-      { num: "06", text: "Guessing monthly income", offset: "20px" }
+      { num: "05", text: "Owner manages\neverything manually", offset: "45px" },
+      { num: "06", text: "Guessing monthly\nincome", offset: "0px" }
     ],
     rightItems: [
-      { num: "01", text: "Data-backed game mix (high footfall + high margin)", offset: "20px" },
-      { num: "02", text: "Optimized layout for max games per sq. ft.", offset: "65px" },
-      { num: "03", text: "ROI modeled before you spend a rupee", offset: "95px" },
-      { num: "04", text: "Dynamic pricing + package systems", offset: "95px" },
-      { num: "05", text: "Full management + POS + reporting system", offset: "65px" },
-      { num: "06", text: "Predictable, tracked revenue", offset: "20px" }
+      { num: "01", text: "Data-backed game mix\n(high footfall + high margin)", offset: "0px" },
+      { num: "02", text: "Optimized layout for\nmax games per sq. ft.", offset: "45px" },
+      { num: "03", text: "ROI modeled before\nyou spend a rupee", offset: "95px" },
+      { num: "04", text: "Dynamic pricing +\npackage systems", offset: "95px" },
+      { num: "05", text: "Full management + POS\n+ reporting system", offset: "45px" },
+      { num: "06", text: "Predictable, tracked\nrevenue", offset: "0px" }
     ]
+  };
+
+  const defaultRedOffsets = ["0px", "45px", "95px", "95px", "45px", "0px"];
+  const defaultGreenOffsets = ["0px", "45px", "95px", "95px", "45px", "0px"];
+
+  const formatPillText = (text) => {
+    if (!text) return "";
+    const mappings = {
+      "Random game selection": "Random game\nselection",
+      "Buy machines, then figure it out": "Buy machines, then\nfigure it out",
+      "Owner manages everything manually": "Owner manages\neverything manually",
+      "Guessing monthly income": "Guessing monthly\nincome",
+      "Data-backed game mix (high footfall + high margin)": "Data-backed game mix\n(high footfall + high margin)",
+      "Data-backed game mix (high footfall + highmargin)": "Data-backed game mix\n(high footfall + high margin)",
+      "Optimized layout for max games per sq. ft.": "Optimized layout for\nmax games per sq. ft.",
+      "ROI modeled before you spend a rupee": "ROI modeled before\nyou spend a rupee",
+      "Dynamic pricing + package systems": "Dynamic pricing +\npackage systems",
+      "Full management + POS + reporting system": "Full management + POS\n+ reporting system",
+      "Predictable, tracked revenue": "Predictable, tracked\nrevenue"
+    };
+    return mappings[text.trim()] || text;
   };
 
   const roiProcess = siteData?.roiProcess || {
@@ -235,109 +256,114 @@ export default function Roi({ siteData }) {
       {/* 2. RETURN ON INVESTMENT INTRO BLOCK */}
       <section className="winera-roi-intro-section" style={{
         padding: '40px 4vw 40px',
-        maxWidth: '1240px',
-        margin: '0 auto'
+        background: '#F5F5F9'
       }}>
-        <div className="winera-roi-intro-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1.3fr) minmax(0, 1fr)',
-          gap: '50px',
-          alignItems: 'center'
-        }}>
-          {/* Left Content */}
-          <motion.div
-            data-framer-motion="true"
-            initial={{ opacity: 0, x: -75 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="winera-roi-intro-text"
-          >
-            <img
-              src={yellowStrokeLine}
-              alt=""
-              style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
-            />
-            <p style={{
-              fontSize: '13px',
-              fontWeight: '700',
-              color: '#38bdf8',
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              marginBottom: '6px'
-            }}>
-              {roiIntro.tagline}
-            </p>
-            <h2 style={{
-              fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
-              fontWeight: '900',
-              color: '#0f172a',
-              lineHeight: 1.15,
-              marginBottom: '22px'
-            }}>
-              {roiIntro.titleLine1}<br />
-              {roiIntro.titleLine2}{' '}
-              <span style={{ color: '#38bdf8' }}>{roiIntro.titleLine2Blue}</span>
-            </h2>
+        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+          <div className="winera-roi-intro-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.2fr)',
+            gap: '55px',
+            alignItems: 'center'
+          }}>
+            {/* Left Content */}
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: -75 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="winera-roi-intro-text"
+            >
+              <img
+                src={yellowStrokeLine}
+                alt=""
+                style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
+              />
+              <p style={{
+                fontSize: '13px',
+                fontWeight: '800',
+                color: '#38bdf8',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                marginBottom: '10px'
+              }}>
+                {roiIntro.tagline || 'RETURN ON INVESTMENT (ROI)'}
+              </p>
+              <h2 style={{
+                fontSize: '42px',
+                fontWeight: '900',
+                color: '#0f172a',
+                lineHeight: 1.25,
+                marginBottom: '22px',
+                letterSpacing: '-0.5px'
+              }}>
+                <span style={{ display: 'block', whiteSpace: 'nowrap' }}>
+                  You don't need a game zone…
+                </span>
+                <span style={{ display: 'block', whiteSpace: 'nowrap' }}>
+                  You need a <span style={{ color: '#38bdf8' }}>profit machine.</span>
+                </span>
+              </h2>
 
-            <p style={{
-              fontSize: '15px',
-              color: '#475569',
-              lineHeight: 1.7,
-              marginBottom: '16px',
-              maxWidth: '540px'
-            }}>
-              {roiIntro.paragraph1}
-            </p>
-            <p style={{
-              fontSize: '15px',
-              color: '#475569',
-              lineHeight: 1.7,
-              marginBottom: '30px',
-              maxWidth: '540px'
-            }}>
-              {roiIntro.paragraph2}
-            </p>
+              <p style={{
+                fontSize: '15px',
+                color: '#475569',
+                lineHeight: 1.6,
+                marginBottom: '10px',
+                maxWidth: '560px'
+              }}>
+                {roiIntro.paragraph1}
+              </p>
+              <p style={{
+                fontSize: '15px',
+                color: '#475569',
+                lineHeight: 1.6,
+                marginBottom: '16px',
+                maxWidth: '560px'
+              }}>
+                {roiIntro.paragraph2}
+              </p>
 
-            {/* CTA Button — offset yellow front, cyan back matching figma design */}
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={roiButtonLink}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                {roiIntro.buttonText}
-              </a>
-            </div>
-          </motion.div>
+              {/* CTA Button */}
+              <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+                <a
+                  href={roiButtonLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                >
+                  {roiIntro.buttonText}
+                </a>
+              </div>
+            </motion.div>
 
-          {/* Right Image */}
-          <motion.div
-            data-framer-motion="true"
-            initial={{ opacity: 0, x: 75 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="winera-roi-intro-img"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <img
-              src={getValidImageUrl(roiIntro.image || roiIntro.imgUrl, roiImg1)}
-              alt="ROI Investment Growth"
+            {/* Right Image */}
+            <motion.div
+              data-framer-motion="true"
+              initial={{ opacity: 0, x: 75 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="winera-roi-intro-img"
               style={{
-                width: '100%',
-                maxWidth: '460px',
-                height: 'auto',
-                display: 'block',
-                objectFit: 'contain'
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
               }}
-            />
-          </motion.div>
+            >
+              <img
+                src={getValidImageUrl(roiIntro.image || roiIntro.imgUrl, roiImg1)}
+                alt="ROI Investment Growth"
+                style={{
+                  width: '100%',
+                  maxWidth: '460px',
+                  height: 'auto',
+                  display: 'block',
+                  objectFit: 'contain'
+                }}
+              />
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -363,6 +389,7 @@ export default function Roi({ siteData }) {
               viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="winera-roi-pain-text"
+              style={{ paddingTop: '60px' }}
             >
               <img
                 src={yellowStrokeLine}
@@ -370,14 +397,15 @@ export default function Roi({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: 'clamp(2rem, 3.6vw, 3rem)',
+                fontSize: '42px',
                 fontWeight: '900',
                 color: '#0f172a',
                 lineHeight: 1.12,
                 marginBottom: '20px'
               }}>
-                {roiMatters.title.split('. ')[0]}.<br />
-                <span style={{ color: '#38bdf8' }}>{roiMatters.title.split('. ')[1]}</span>
+                Opening a game zone<br />
+                is easy. <span style={{ color: '#38bdf8' }}>Making it</span><br />
+                <span style={{ color: '#38bdf8' }}>profitable is a system.</span>
               </h2>
               <p style={{
                 fontSize: '15px',
@@ -480,21 +508,21 @@ export default function Roi({ siteData }) {
 
       {/* 4. WHY MOST GAME ZONES FAIL VS WHY OURS PROFIT SECTION */}
       <section className="winera-roi-comparison-section" style={{
-        padding: '75px 4vw 75px',
+        padding: '80px 4vw 75px',
         background: `url(${roiImage3bg}) center top / 100% 100% no-repeat`,
         position: 'relative',
         overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center' }}>
           {/* Yellow Stroke + Title */}
-          <div style={{ marginBottom: '30px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '12px', objectFit: 'fill' }}
+              style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)',
+              fontSize: '42px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -511,7 +539,7 @@ export default function Roi({ siteData }) {
           <div className="winera-roi-comparison-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
-            gap: '140px',
+            gap: '110px',
             alignItems: 'center',
             justifyContent: 'center',
             maxWidth: '1240px',
@@ -530,13 +558,13 @@ export default function Roi({ siteData }) {
                 flexDirection: 'column',
                 alignItems: 'flex-end',
                 position: 'relative',
-                paddingRight: '45px'
+                paddingRight: '35px'
               }}
             >
               {/* Red Circle ✕ in center-right of left side */}
               <div className="winera-roi-center-circle-red" style={{
                 position: 'absolute',
-                right: '-90px',
+                right: '-55px',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 width: '270px',
@@ -567,7 +595,7 @@ export default function Roi({ siteData }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: '#ff0004',
-                    fontSize: '36px',
+                    fontSize: '34px',
                     fontWeight: '900',
                     lineHeight: '1'
                   }}>
@@ -577,7 +605,7 @@ export default function Roi({ siteData }) {
               </div>
 
               {/* Red Pills Stacked in an Arc */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '100%', alignItems: 'flex-end', zIndex: 2 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '9px', width: '100%', alignItems: 'flex-end', zIndex: 2, marginRight: '30px' }}>
                 {wrongItems.map((item, idx) => (
                   <div
                     key={idx}
@@ -586,30 +614,30 @@ export default function Roi({ siteData }) {
                       display: 'inline-flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      gap: '12px',
+                      gap: '10px',
                       background: 'linear-gradient(90deg, rgba(255, 0, 4, 1) 0%, rgba(255, 185, 187, 1) 100%)',
                       color: '#ffffff',
-                      padding: '8px 8px 8px 20px',
-                      borderRadius: '40px',
-                      fontSize: '13px',
-                      fontWeight: '700',
+                      padding: '10px 10px 10px 16px',
+                      borderRadius: '30px',
+                      fontSize: '12px',
+                      fontWeight: '400',
                       boxShadow: 'none',
-                      marginRight: item.offset,
-                      width: '260px'
+                      marginRight: item.offset || defaultRedOffsets[idx] || '0px',
+                      width: '195px'
                     }}
                   >
-                    <span style={{ textAlign: 'left', lineHeight: 1.3 }}>{item.text}</span>
+                    <span style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400' }}>{formatPillText(item.text)}</span>
                     <span style={{
-                      width: '32px',
-                      height: '32px',
-                      minWidth: '32px',
+                      width: '28px',
+                      height: '28px',
+                      minWidth: '28px',
                       borderRadius: '50%',
                       background: '#ffffff',
                       color: '#0f172a',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontWeight: '800',
+                      fontWeight: '600',
                       fontSize: '12px',
                       boxShadow: 'none'
                     }}>
@@ -633,13 +661,13 @@ export default function Roi({ siteData }) {
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 position: 'relative',
-                paddingLeft: '45px'
+                paddingLeft: '35px'
               }}
             >
-              {/* Green Circle ✓ in center-left of right side (dashed circle behind pills) */}
+              {/* Green Circle ✓ in center-left of right side */}
               <div className="winera-roi-center-circle-green" style={{
                 position: 'absolute',
-                left: '-90px',
+                left: '-55px',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 width: '270px',
@@ -670,7 +698,7 @@ export default function Roi({ siteData }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: '#22c55e',
-                    fontSize: '36px',
+                    fontSize: '34px',
                     fontWeight: '900',
                     lineHeight: '1'
                   }}>
@@ -680,7 +708,7 @@ export default function Roi({ siteData }) {
               </div>
 
               {/* Green Pills Stacked in an Arc */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '100%', alignItems: 'flex-start', zIndex: 2 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '9px', width: '100%', alignItems: 'flex-start', zIndex: 2, marginLeft: '30px' }}>
                 {rightItems.map((item, idx) => (
                   <div
                     key={idx}
@@ -689,35 +717,35 @@ export default function Roi({ siteData }) {
                       display: 'inline-flex',
                       alignItems: 'center',
                       justifyContent: 'flex-start',
-                      gap: '12px',
+                      gap: '10px',
                       background: 'linear-gradient(90deg, rgba(182, 236, 178, 1) 0%, rgba(107, 246, 97, 1) 100%)',
                       color: '#0f172a',
-                      padding: '8px 20px 8px 8px',
-                      borderRadius: '40px',
-                      fontSize: '13px',
-                      fontWeight: '800',
+                      padding: '10px 16px 10px 10px',
+                      borderRadius: '30px',
+                      fontSize: '12px',
+                      fontWeight: '400',
                       boxShadow: 'none',
-                      marginLeft: item.offset,
-                      width: '280px'
+                      marginLeft: item.offset || defaultGreenOffsets[idx] || '0px',
+                      width: '225px'
                     }}
                   >
                     <span style={{
-                      width: '32px',
-                      height: '32px',
-                      minWidth: '32px',
+                      width: '28px',
+                      height: '28px',
+                      minWidth: '28px',
                       borderRadius: '50%',
                       background: '#ffffff',
                       color: '#0f172a',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontWeight: '800',
+                      fontWeight: '600',
                       fontSize: '12px',
                       boxShadow: 'none'
                     }}>
                       {item.num}
                     </span>
-                    <span style={{ textAlign: 'left', lineHeight: 1.3 }}>{item.text}</span>
+                    <span style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400' }}>{formatPillText(item.text)}</span>
                   </div>
                 ))}
               </div>
@@ -729,7 +757,7 @@ export default function Roi({ siteData }) {
             fontSize: '15px',
             color: '#475569',
             fontWeight: '600',
-            marginTop: '45px',
+            marginTop: '25px',
             marginBottom: 0
           }}>
             {roiComparison.subCaption || "The difference isn't the games. It's the system behind them."}
@@ -751,7 +779,7 @@ export default function Roi({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '2px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)',
+              fontSize: '42px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -1001,7 +1029,7 @@ export default function Roi({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: 'clamp(2.2rem, 4.2vw, 3.6rem)',
+                fontSize: '42px',
                 fontWeight: '900',
                 color: '#0f172a',
                 lineHeight: 1.12,
@@ -1051,7 +1079,7 @@ export default function Roi({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '2px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)',
+              fontSize: '42px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -1074,7 +1102,9 @@ export default function Roi({ siteData }) {
             padding: '70px 60px',
             boxShadow: '0 20px 50px rgba(3, 15, 38, 0.25)',
             position: 'relative',
-            textAlign: 'left'
+            textAlign: 'left',
+            width: '1080px',
+            marginLeft: '8%',
           }}>
             {/* Checklist Grid */}
             <div className="winera-roi-checklist-grid" style={{
@@ -1334,7 +1364,7 @@ export default function Roi({ siteData }) {
 
           {/* Heading */}
           <h2 style={{
-            fontSize: 'clamp(1.8rem, 3.8vw, 2.5rem)',
+            fontSize: '42px',
             fontWeight: '900',
             lineHeight: 1.25,
             marginBottom: '14px',

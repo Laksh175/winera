@@ -212,7 +212,7 @@ export default function TermsAndConditions({ siteData }) {
         justifyContent: 'center', textAlign: 'center', color: '#ffffff'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          <h1 style={{ fontSize: '3.0rem', fontWeight: '900', letterSpacing: '-1px', marginBottom: '8px', lineHeight: 1.15 }}>
+          <h1 style={{ fontSize: '42px', fontWeight: '900', letterSpacing: '-1px', marginBottom: '8px', lineHeight: 1.15 }}>
             Terms & <span style={{ color: '#ffcd00' }}>Conditions</span>
           </h1>
           <p style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', opacity: 0.9, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>

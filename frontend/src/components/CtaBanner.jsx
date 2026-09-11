@@ -186,7 +186,7 @@ export default function CtaBanner({
 
               {title && (
                 <h2 className="winera-cta-title" style={{
-                  fontSize: titleFontSize || (isCentered ? (hasSideImages ? '1.95rem' : '2.3rem') : '2.4rem'),
+                  fontSize: titleFontSize || '42px',
                   fontWeight: titleFontWeight || '900',
                   lineHeight: 1.25,
                   marginBottom: '14px',

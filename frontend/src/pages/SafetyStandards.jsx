@@ -137,7 +137,7 @@ export default function SafetyStandards({ siteData }) {
                 alt=""
                 style={{ display: 'block', maxWidth: '100%', width: '320px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '2.7rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {siteData?.safetyIntro?.titleLine1 || "Game Zone & Kids Play"}<br />
                 <span style={{ color: '#38bdf8' }}>{siteData?.safetyIntro?.titleLine2 || "Equipment Safety Standards"}</span>
               </h2>
@@ -167,7 +167,7 @@ export default function SafetyStandards({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 className="winera-safety-standards-h2" style={{
-              fontSize: '2.6rem',
+              fontSize: '42px',
               fontWeight: '900',
               color: '#0f172a',
               margin: '0 0 12px',
@@ -306,7 +306,7 @@ export default function SafetyStandards({ siteData }) {
               style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill', marginLeft: 0 }}
             />
             <h2 className="winera-safety-material-h2" style={{
-              fontSize: '2.8rem',
+              fontSize: '42px',
               fontWeight: '900',
               color: '#0f172a',
               margin: '0 0 12px',
@@ -444,7 +444,7 @@ export default function SafetyStandards({ siteData }) {
               style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill', marginLeft: 0 }}
             />
             <h2 className="winera-safety-electrical-h2" style={{
-              fontSize: '2.8rem',
+              fontSize: '42px',
               fontWeight: '900',
               color: '#0f172a',
               margin: '0 0 12px',
@@ -607,7 +607,7 @@ export default function SafetyStandards({ siteData }) {
               style={{ display: 'block', maxWidth: '100%', width: '320px', height: '9px', marginBottom: '12px', objectFit: 'fill' }}
             />
             <h2 className="winera-safety-structure-h2" style={{
-              fontSize: '2.8rem',
+              fontSize: '42px',
               fontWeight: '900',
               color: '#0f172a',
               margin: '0 0 14px',
@@ -793,7 +793,7 @@ export default function SafetyStandards({ siteData }) {
               style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '12px', objectFit: 'fill' }}
             />
             <h2 className="winera-safety-why-h2" style={{
-              fontSize: '2.8rem',
+              fontSize: '42px',
               fontWeight: '900',
               color: '#0f172a',
               margin: '0 0 16px',
@@ -881,7 +881,7 @@ export default function SafetyStandards({ siteData }) {
             {/* Center Content Box */}
             <div style={{ position: 'relative', zIndex: 3, maxWidth: '720px', padding: '0 20px' }}>
               <h2 style={{
-                fontSize: '3rem',
+                fontSize: '42px',
                 fontWeight: '900',
                 margin: '0 0 24px',
                 lineHeight: 1.15,

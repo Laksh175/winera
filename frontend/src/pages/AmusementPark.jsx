@@ -249,7 +249,7 @@ export default function AmusementPark({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '2.6rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.amusementIntro?.title, "*Amusement Park Ride*<br/>Manufacturer in India", '#38bdf8')}
               </h2>
             </div>
@@ -306,7 +306,7 @@ export default function AmusementPark({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '380px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '2.2rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
+              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
                 {renderTitleMarkup(siteData?.amusementBanner?.title, "Complete Amusement Park<br/>*Setups, Built for Indian Venues*", '#38bdf8')}
               </h2>
             </div>
@@ -367,7 +367,7 @@ export default function AmusementPark({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
                 />
-                <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {renderTitleMarkup(siteData?.amusementOptions?.title, "*Rides & Attractions*<br/>We Supply", '#38bdf8')}
                 </h2>
               </div>
@@ -428,7 +428,7 @@ export default function AmusementPark({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '340px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
                 />
-                <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {renderTitleMarkup(siteData?.amusementRoi?.title, "Before You Build,<br/>*Know What It Will Earn*", '#38bdf8')}
                 </h2>
               </div>
@@ -509,7 +509,7 @@ export default function AmusementPark({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.amusementWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>
@@ -679,7 +679,7 @@ export default function AmusementPark({ siteData }) {
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="45px"
+        titleFontSize="42px"
         subtitleFontSize="24px"
         subtitleFontWeight="900"
         bgUrl={siteData?.amusementCta?.bgUrl}

@@ -70,8 +70,8 @@ export default function ProjectDetail({ siteData }) {
       name: "Hulaboo Game Zone",
       titleLine1: "Hulaboo: How We Turned",
       titleLine2: "An Empty Space Into ",
-      titleLine2Black: "Surat's Buzziest",
-      titleLine3: "Game Zone Destination",
+      titleLine2Black: "Surat's",
+      titleLine3: "Buzziest Game Zone Destination",
       description: "We turned a large empty space in Surat into one of the city's biggest indoor game zones — packed with games for every age, all under one roof.",
       metaTitle: "Hulaboo Game Zone Setup in Surat | Winera International",
       metaDescription: "Discover how Winera International built Hulaboo, a 27,000 sq. ft. indoor game zone setup in Surat with multi-age attractions and turnkey execution.",
@@ -370,7 +370,7 @@ export default function ProjectDetail({ siteData }) {
             />
 
             <h2 style={{
-              fontSize: '2.1rem',
+              fontSize: '42px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.18,
@@ -389,7 +389,7 @@ export default function ProjectDetail({ siteData }) {
               color: '#475569',
               lineHeight: 1.55,
               fontWeight: '400',
-              marginBottom: '24px',
+              marginBottom: '12px',
               maxWidth: '700px'
             }}>
               {description}
@@ -401,8 +401,7 @@ export default function ProjectDetail({ siteData }) {
                 href={buttonLink}
                 target="_blank"
                 rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm">
                 {buttonText}
               </a>
             </div>
@@ -418,13 +417,10 @@ export default function ProjectDetail({ siteData }) {
             }}>
               <div className="winera-project-frame-bg" style={{
                 position: 'absolute',
-                top: '-15px',
-                right: '-15px',
-                bottom: '15px',
-                left: '15px',
+                inset: '-25px -80px -25px 87px',
                 border: '2px solid #38bdf8',
-                borderRadius: '24px',
-                background: 'rgba(56, 189, 248, 0.08)',
+                borderRadius: '10px',
+                background: 'transparent',
                 zIndex: 1,
                 pointerEvents: 'none'
               }}></div>
@@ -435,7 +431,7 @@ export default function ProjectDetail({ siteData }) {
                 style={{
                   width: '100%',
                   height: '100%',
-                  borderRadius: '20px',
+                  borderRadius: '0px',
                   display: 'block',
                   position: 'relative',
                   zIndex: 2,
@@ -472,7 +468,7 @@ export default function ProjectDetail({ siteData }) {
               style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h3 style={{
-              fontSize: '2.5rem',
+              fontSize: '42px',
               fontWeight: '900',
               margin: 0,
               lineHeight: 1.15,
@@ -487,7 +483,7 @@ export default function ProjectDetail({ siteData }) {
             maxWidth: '520px',
             width: '100%',
             background: '#ffffff',
-            borderRadius: '26px',
+            borderRadius: '10px',
             border: '2px solid #ffcd00',
             boxShadow: '0 20px 45px rgba(0,0,0,0.25)',
             overflow: 'hidden',
@@ -527,7 +523,7 @@ export default function ProjectDetail({ siteData }) {
             style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
           />
           <h3 style={{
-            fontSize: '2.4rem',
+            fontSize: '42px',
             fontWeight: '900',
             color: '#0f172a',
             margin: 0,
@@ -540,8 +536,8 @@ export default function ProjectDetail({ siteData }) {
 
         <div className="winera-project-client-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)',
-          gap: '40px',
+          gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 1fr)',
+          gap: '20px',
           alignItems: 'center'
         }}>
           <div className="winera-project-client-text">
@@ -553,14 +549,11 @@ export default function ProjectDetail({ siteData }) {
             </p>
           </div>
 
-          <div className="winera-project-client-img" style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
+          <div className="winera-project-client-img" style={{ display: 'flex', justifyContent: 'flex-start', padding: '16px 20px 16px 0' }}>
             <div style={{ position: 'relative', maxWidth: '430px', width: '100%', aspectRatio: '16 / 10' }}>
               <div style={{
                 position: 'absolute',
-                top: '-16px',
-                right: '-16px',
-                bottom: '16px',
-                left: '16px',
+                inset: '-16px -20px -16px 44px',
                 border: '2px solid #38bdf8',
                 zIndex: 1,
                 pointerEvents: 'none'
@@ -593,7 +586,7 @@ export default function ProjectDetail({ siteData }) {
             style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
           />
           <h3 style={{
-            fontSize: '2.4rem',
+            fontSize: '42px',
             fontWeight: '900',
             color: '#0f172a',
             margin: 0,
@@ -606,18 +599,15 @@ export default function ProjectDetail({ siteData }) {
 
         <div className="winera-project-solution-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.2fr)',
-          gap: '40px',
+          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.1fr)',
+          gap: '50px',
           alignItems: 'center'
         }}>
-          <div className="winera-project-solution-img" style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
+          <div className="winera-project-solution-img" style={{ display: 'flex', justifyContent: 'flex-end', padding: '16px 0' }}>
             <div style={{ position: 'relative', maxWidth: '430px', width: '100%', aspectRatio: '16 / 10' }}>
               <div style={{
                 position: 'absolute',
-                top: '16px',
-                right: '16px',
-                bottom: '-16px',
-                left: '-16px',
+                inset: '-16px 44px -16px -20px',
                 border: '2px solid #38bdf8',
                 zIndex: 1,
                 pointerEvents: 'none'
@@ -671,7 +661,7 @@ export default function ProjectDetail({ siteData }) {
               alt=""
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
             />
-            <h3 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
+            <h3 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
               <span style={{ color: '#38bdf8' }}>{galleryTitleCyan}</span>
               <span>{galleryTitleDark}</span>
             </h3>

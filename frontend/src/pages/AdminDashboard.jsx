@@ -1902,8 +1902,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           name: "Hulaboo Game Zone",
           titleLine1: "Hulaboo: How We Turned",
           titleLine2: "An Empty Space Into ",
-          titleLine2Black: "Surat's Buzziest",
-          titleLine3: "Game Zone Destination",
+          titleLine2Black: "Surat's",
+          titleLine3: "Buzziest Game Zone Destination",
           description: "We turned a large empty space in Surat into one of the city's biggest indoor game zones — packed with games for every age, all under one roof.",
           type: "Game Zone Setup",
           category: "Game Zones",
@@ -22266,7 +22266,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         </div>
                         <div>
                           <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>
-                            Section Photo (What Client Wanted) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                            Section Photo (What Client Wanted) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Ratio: 16:10 (e.g. 430 × 270 px)</span>
                           </label>
                           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                             <label style={{ background: '#0284c7', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -22317,7 +22317,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         </div>
                         <div>
                           <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>
-                            Section Photo (What Solution We Provide) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                            Section Photo (What Solution We Provide) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Ratio: 16:10 (e.g. 430 × 270 px)</span>
                           </label>
                           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                             <label style={{ background: '#0284c7', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>

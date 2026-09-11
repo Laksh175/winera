@@ -249,7 +249,7 @@ export default function Hypergrid({ siteData }) {
                 alt=""
                 style={{ display: 'block', maxWidth: '100%', width: '320px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '2.6rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game*<br/>Supplier in India", '#38bdf8')}
               </h2>
             </div>
@@ -306,7 +306,7 @@ export default function Hypergrid({ siteData }) {
                 alt=""
                 style={{ display: 'block', maxWidth: '100%', width: '380px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '2.6rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, width: '1000px', maxWidth: '100%' }}>
+              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, width: '1000px', maxWidth: '100%' }}>
                 {renderTitleMarkup(siteData?.hypergridBanner?.title, "Interactive LED Floor Games *for High-<br/>Footfall Venues*", '#38bdf8')}
               </h2>
             </div>
@@ -392,7 +392,7 @@ export default function Hypergrid({ siteData }) {
               alt=""
               style={{ display: 'block', maxWidth: '100%', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '3rem', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
+            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
               {renderTitleMarkup(siteData?.hypergridSpecs?.title, "*Technical* Specifications", '#ffcd00')}
             </h2>
           </div>
@@ -488,7 +488,7 @@ export default function Hypergrid({ siteData }) {
               alt=""
               style={{ display: 'inline-block', maxWidth: '100%', width: '240px', height: '9px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: '0 0 14px' }}>
+            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: '0 0 14px' }}>
               {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid* the Right<br/>Choice for Your Venue", '#38bdf8')}
             </h2>
             <p style={{ fontSize: '13.5px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
@@ -567,7 +567,7 @@ export default function Hypergrid({ siteData }) {
               alt=""
               style={{ display: 'inline-block', width: '280px', height: '9px', marginBottom: '12px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '2.7rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
+            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
               {renderTitleMarkup(siteData?.hypergridRoi?.title, "Is Hypergrid a Smart<br/>*Investment for Your Venue?*", '#38bdf8')}
             </h2>
           </div>
@@ -674,7 +674,7 @@ export default function Hypergrid({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.hypergridWhyWinera?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>
@@ -902,7 +902,7 @@ export default function Hypergrid({ siteData }) {
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="45px"
+        titleFontSize="42px"
         subtitleFontSize="16px"
         subtitleFontWeight="600"
         bgUrl={siteData?.hypergridCta?.bgUrl}
