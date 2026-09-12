@@ -1514,7 +1514,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'projectHeader', name: '2. Section Heading Title' },
         { id: 'projectItems', name: '3. Categories & Projects Manager' },
         { id: 'projectCta', name: '4. Bottom CTA Graphic Banner' },
-        { id: 'projectSeo', name: '5. SEO Meta Title & Description' }
+        { id: 'projectRelated', name: '5. Related Products Carousel' },
+        { id: 'projectSeo', name: '6. SEO Meta Title & Description' }
       ]
     },
     roiPage: {

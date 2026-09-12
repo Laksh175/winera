@@ -760,7 +760,7 @@ export default function ProjectDetail({ siteData }) {
       />
 
       {/* 9. RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection />
+      <RelatedProductsSection sectionData={siteData?.projectRelated} />
 
       {/* FOOTER */}
       <Footer footerData={footer} />

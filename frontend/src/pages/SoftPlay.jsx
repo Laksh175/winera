@@ -1168,20 +1168,32 @@ export default function SoftPlay({ siteData }) {
 
 const defaultSoftPlayFaqs = [
   {
-    question: "What space is required to set up an indoor soft play area?",
-    answer: "A minimum of 500 sq ft is recommended for a compact soft play zone. We custom design soft play areas for any footprint from 500 sq ft up to 10,000+ sq ft multi-level play centers."
+    question: "Why does Winera International stand out as the best soft play equipment manufacturer in India?",
+    answer: "Winera International manufactures every soft play structure in-house, provides a free ROI report before every project, and installs across 50+ cities through our own team, not a third-party contractor. One partner, from 3D design to after-sales support."
   },
   {
-    question: "Are your soft play equipment safety certified?",
-    answer: "Yes, all our soft play structures utilize imported anti-UV LLDPE plastics, high-density impact-absorbing sponge foam padding, rounded edges, and heavy-duty PVC covers conforming to international commercial safety standards."
+    question: "How much does a soft play zone cost in India?",
+    answer: "Soft play zone cost in India depends on space size, design complexity, and materials. Winera International provides a complete cost breakdown before project confirmation. Contact our team for a customized quote based on your specific space and budget."
   },
   {
-    question: "How long does installation take for a soft play project?",
-    answer: "Standard soft play installations typically take 7 to 15 days on-site depending on the size and complexity of the structure. Our own in-house installation team manages everything pan-India."
+    question: "What businesses should install a soft play zone?",
+    answer: "Malls, hotels, schools, hospitals, airports, family entertainment centres, and residential township projects benefit most from soft play zones, any venue that regularly attracts families with children aged 2–12 years."
   },
   {
-    question: "Do you provide a customized 3D design before manufacturing?",
-    answer: "Absolutely. Every project begins with a 3D CAD design tailored to your specific venue dimensions, ceiling height, theme preferences, and budget before manufacturing begins."
+    question: "Can soft play zones be customized with themes?",
+    answer: "Yes. Winera International offers full customisation of jungle, ocean, space, and venue-branded themes with matching colours, structures, and visual elements. Every project includes a detailed 3D visual for client approval before manufacturing begins."
+  },
+  {
+    question: "What maintenance does commercial soft play equipment need?",
+    answer: "Winera soft play structures are designed for a 10+ year commercial lifespan with standard maintenance. Routine checks include: foam padding condition, PVC cover integrity, structural connection points, and slide surface smoothness — typically quarterly. Daily venue-side maintenance is limited to cleaning and a visual safety check before opening. Winera provides a maintenance schedule and inspection checklist with every installation."
+  },
+  {
+    question: "What kind of Soft Play Equipment does Winera International supply?",
+    answer: "Winera International manufactures and supplies themed play zones, toddler and junior play areas, multi-level play structures, and ball pit and sensory zones — all custom designed around your space, budget, and target age group, installed by our own team across 50+ cities in India."
+  },
+  {
+    question: "How much floor space is needed to install a soft play zone?",
+    answer: "A soft play zone can be installed in spaces starting from 500 sq ft. Our design team creates a custom layout around your exact floor dimensions, ensuring every square foot is used effectively — along with a free ROI report before confirming any project."
   }
 ];
 
