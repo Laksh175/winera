@@ -1497,25 +1497,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'arSeo', name: 'SEO Meta Title & Description' }
       ]
     },
-    lasertagPage: {
-      label: 'Laser Tag Page',
-      icon: <Gamepad2 style={{ width: '18px', height: '18px' }} />,
-      sections: [
-        { id: 'lasertagHero', name: 'Laser Tag Hero Banner' },
-        { id: 'lasertagRelated', name: 'Related Products Carousel' },
-        { id: 'lasertagSeo', name: 'SEO Meta Title & Description' }
-      ]
-    },
     projectPage: {
       label: 'Projects Page',
       icon: <Trophy style={{ width: '18px', height: '18px' }} />,
       sections: [
         { id: 'projectHero', name: '1. Hero Banner' },
-        { id: 'projectHeader', name: '2. Section Heading Title' },
-        { id: 'projectItems', name: '3. Categories & Projects Manager' },
-        { id: 'projectCta', name: '4. Bottom CTA Graphic Banner' },
-        { id: 'projectRelated', name: '5. Related Products Carousel' },
-        { id: 'projectSeo', name: '6. SEO Meta Title & Description' }
+        { id: 'projectItems', name: '2. Categories & Projects Manager' },
+        { id: 'projectCta', name: '3. Bottom CTA Graphic Banner' },
+        { id: 'projectRelated', name: '4. Related Products Carousel' },
+        { id: 'projectSeo', name: '5. SEO Meta Title & Description' }
       ]
     },
     roiPage: {
@@ -1531,15 +1521,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'roiChecklist', name: 'This is for you if Checklist' },
         { id: 'roiCta', name: 'Ready to See Your Numbers CTA' },
         { id: 'roiSeo', name: 'SEO Meta Title & Description' }
-      ]
-    },
-    blogPage: {
-      label: 'Blog Page',
-      icon: <FileText style={{ width: '18px', height: '18px' }} />,
-      sections: [
-        { id: 'blogHero', name: 'Blog Hero Banner' },
-        { id: 'blogPosts', name: 'Manage All Blog Posts' },
-        { id: 'blogSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     about: {
@@ -1576,22 +1557,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'safetyStructure', name: 'Structure & Installation Safety' },
         { id: 'safetyWhyMatters', name: 'Why This Matters & CTA Banner' },
         { id: 'safetySeo', name: 'SEO Meta Title & Description' }
-      ]
-    },
-    privacyPolicy: {
-      label: 'Privacy Policy Page',
-      icon: <FileText style={{ width: '18px', height: '18px' }} />,
-      sections: [
-        { id: 'privacySections', name: 'Privacy Policy Sections & Content' },
-        { id: 'privacySeo', name: 'SEO Meta Title & Description' }
-      ]
-    },
-    termsConditions: {
-      label: 'Terms & Conditions Page',
-      icon: <FileText style={{ width: '18px', height: '18px' }} />,
-      sections: [
-        { id: 'termsSections', name: 'Terms & Conditions Sections & Content' },
-        { id: 'termsSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     headerPage: {
@@ -15896,10 +15861,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* PROJECT HERO BANNER SECTION */}
           {activeSection === 'projectHero' && (() => {
             const currentSec = formData.projectHero || defaultProjectHero;
+            const headerSec = formData.projectHeader || { title: "Crafting *India's Best Play Destinations*" };
             const heroImg = getAdminValidImageUrl(currentSec.bannerImg, projectBanner);
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Projects Hero Banner</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Projects Hero Banner & Title</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -15951,43 +15917,29 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   </div>
-                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                    <button
-                      onClick={() => persistSectionToDatabase('projectHero', formData.projectHero || defaultProjectHero)}
-                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
-                    >
-                      Save Hero Banner
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })()}
 
-          {/* PROJECTS PAGE SECTION TITLE */}
-          {activeSection === 'projectHeader' && (() => {
-            const currentSec = formData.projectHeader || { title: "Crafting *India's Best Play Destinations*" };
-            return (
-              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Projects Section Heading Title</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <div>
+                  {/* Section Heading Title Field */}
+                  <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0', marginTop: '4px' }}>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                      Main Section Title (Use *word* for Cyan accent color)
+                      Main Section Heading Title (Use *word* for Cyan accent color)
                     </label>
                     <input
                       type="text"
-                      value={currentSec.title !== undefined ? currentSec.title : "Crafting *India's Best Play Destinations*"}
+                      value={headerSec.title !== undefined ? headerSec.title : "Crafting *India's Best Play Destinations*"}
                       onChange={(e) => setFormData(prev => ({ ...prev, projectHeader: { ...(prev.projectHeader || {}), title: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700' }}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700', background: '#ffffff' }}
                     />
                   </div>
+
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
-                      onClick={() => persistSectionToDatabase('projectHeader', formData.projectHeader || { title: "Crafting *India's Best Play Destinations*" })}
+                      onClick={async () => {
+                        await persistSectionToDatabase('projectHero', formData.projectHero || defaultProjectHero);
+                        await persistSectionToDatabase('projectHeader', formData.projectHeader || { title: "Crafting *India's Best Play Destinations*" });
+                      }}
                       style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer' }}
                     >
-                      Save Section Title
+                      Save Hero Banner & Title
                     </button>
                   </div>
                 </div>
