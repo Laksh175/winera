@@ -1019,7 +1019,6 @@ const defaultHeaderProductSubMenu = [
   { label: 'Soft Play', href: '/product/soft-play' },
   { label: 'Bumper Car', href: '/product/bumper-car' },
   { label: 'Hypergrid', href: '/product/hypergrid' },
-  { label: 'Laser tag', href: '/product/laser-tag' },
   { label: 'Amusement Park', href: '/product/amusement-park' }
 ];
 
@@ -1047,8 +1046,7 @@ const defaultFooterProductLinks = [
   { name: "AR Games", link: "/product/ar-games" },
   { name: "Bumper Car", link: "/product/bumper-car" },
   { name: "Amusement Park", link: "/product/amusement-park" },
-  { name: "Hypergrid", link: "/product/hypergrid" },
-  { name: "Laser tag", link: "/product/laser-tag" }
+  { name: "Hypergrid", link: "/product/hypergrid" }
 ];
 
 const defaultFooterQuickLinks = [

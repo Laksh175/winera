@@ -48,7 +48,6 @@ export default function Header({ headerData }) {
     { label: 'Soft Play', href: '/product/soft-play' },
     { label: 'Bumper Car', href: '/product/bumper-car' },
     { label: 'Hypergrid', href: '/product/hypergrid' },
-    { label: 'Laser tag', href: '/product/laser-tag' },
     { label: 'Amusement Park', href: '/product/amusement-park' }
   ];
 
@@ -60,7 +59,7 @@ export default function Header({ headerData }) {
 
   const logoSrc = getValidImageUrl(headerData?.logoUrl, wineraLogo);
   const navLinks = Array.isArray(headerData?.navLinks) && headerData.navLinks.length > 0 ? headerData.navLinks : defaultNavLinks;
-  const productSubMenu = Array.isArray(headerData?.productSubMenu) && headerData.productSubMenu.length > 0 ? headerData.productSubMenu : defaultProductSubMenu;
+  const productSubMenu = (Array.isArray(headerData?.productSubMenu) && headerData.productSubMenu.length > 0 ? headerData.productSubMenu : defaultProductSubMenu).filter(item => !(item.label || '').toLowerCase().includes('laser') && !(item.href || '').toLowerCase().includes('laser'));
   const resourcesSubMenu = Array.isArray(headerData?.resourcesSubMenu) && headerData.resourcesSubMenu.length > 0 ? headerData.resourcesSubMenu : defaultResourcesSubMenu;
   const ctaText = headerData?.ctaText || "Free Consultation";
   const ctaLink = headerData?.ctaLink || "https://wa.me/919428989488";
@@ -87,26 +86,53 @@ export default function Header({ headerData }) {
         .winera-hamburger { display: none; }
         .winera-logo-img { height: 48px; }
 
-        /* Custom Dropdown Scrollbar: Hidden when items fit, thin track when overflowed */
+        /* Custom Dropdown Scrollbar: Completely hidden to remove scrollbar line at bottom of sub-menu */
         .winera-dropdown-scroll {
-          scrollbar-width: thin;
-          scrollbar-color: #cbd5e1 transparent;
+          scrollbar-width: none !important;
+          -ms-overflow-style: none !important;
         }
         .winera-dropdown-scroll::-webkit-scrollbar {
-          width: 5px;
+          display: none !important;
+          width: 0 !important;
+          height: 0 !important;
         }
         .winera-dropdown-scroll::-webkit-scrollbar-track {
-          background: transparent;
+          background: transparent !important;
         }
         .winera-dropdown-scroll::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
-          border-radius: 10px;
-        }
-        .winera-dropdown-scroll::-webkit-scrollbar-thumb:hover {
-          background: #38bdf8;
+          background: transparent !important;
         }
 
-        @media (max-width: 1150px) {
+        @media (max-width: 1200px) and (min-width: 851px) {
+          .winera-header {
+            width: 96% !important;
+            padding: 8px 16px !important;
+            top: 12px !important;
+          }
+          .winera-nav-desktop {
+            display: flex !important;
+            gap: 12px !important;
+          }
+          .winera-nav-desktop a, .winera-nav-desktop span {
+            font-size: 13px !important;
+          }
+          .winera-socials-desktop {
+            display: flex !important;
+            gap: 6px !important;
+          }
+          .winera-socials-desktop a {
+            width: 30px !important;
+            height: 30px !important;
+          }
+          .winera-socials-desktop svg {
+            width: 15px !important;
+            height: 15px !important;
+          }
+          .winera-hamburger { display: none !important; }
+          .winera-logo-img { height: 40px !important; }
+        }
+
+        @media (max-width: 850px) {
           .winera-header {
             width: 94% !important;
             padding: 10px 16px !important;
@@ -238,6 +264,7 @@ export default function Header({ headerData }) {
                 minWidth: '215px',
                 maxHeight: 'calc(100vh - 110px)',
                 overflowY: 'auto',
+                overflowX: 'hidden',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
                 border: '1px solid #e2e8f0',
                 display: 'flex',
@@ -363,6 +390,7 @@ export default function Header({ headerData }) {
                 minWidth: '190px',
                 maxHeight: 'calc(100vh - 110px)',
                 overflowY: 'auto',
+                overflowX: 'hidden',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
                 border: '1px solid #e2e8f0',
                 display: 'flex',

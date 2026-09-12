@@ -37,11 +37,13 @@ import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
-import projSoft1 from '../assets/proj-softplay1.webp';
 import downloadButtonImg from '../assets/download-button.png';
-import arcadeBtn1 from '../assets/arcadegame-button-1.png';
+import ctaBannerBg from '../assets/cta-banner-bg.png';
 import bowlingBtnShape from '../assets/bowlling-button-shape.png';
 import ctaBtn3 from '../assets/cta-button-3.png';
+import bowlingDesign from '../assets/bowlling-design.png';
+import bowlingImage from '../assets/bowlling-image.png';
+import talkToRoiBtn from '../assets/talk-to-roi-button.png';
 
 
 
@@ -373,7 +375,7 @@ export default function BowlingAlley({ siteData }) {
               lineHeight: 1.15,
               letterSpacing: '-0.8px',
               margin: 0,
-              whiteSpace: 'nowrap',
+              whiteSpace: 'normal',
               width: '100%',
               textAlign: 'center'
             }}>
@@ -474,10 +476,10 @@ export default function BowlingAlley({ siteData }) {
                   style={{
                     width: '190px',
                     height: '70px',
-                    background: `url(${getValidImageUrl(siteData?.bowlingFreeFall?.videoBtnBg, arcadeBtn1)}) center center / 100% 100% no-repeat`,
-                    color: '#ffffff',
+                    background: `url(${getValidImageUrl(siteData?.bowlingFreeFall?.videoBtnBg, ctaBannerBg)}) center center / 100% 100% no-repeat`,
+                    color: '#0f172a',
                     fontSize: '15px',
-                    fontWeight: '600',
+                    fontWeight: '700',
                     border: 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -944,18 +946,18 @@ export default function BowlingAlley({ siteData }) {
           overflow: 'hidden',
           boxShadow: '0 20px 50px rgba(0,0,0,0.06)',
           display: 'grid',
-          gridTemplateColumns: '1fr 1.15fr',
-          minHeight: '440px'
+          gridTemplateColumns: '47% 62%',
+          minHeight: '360px'
         }}>
-          {/* Left Column: White background with Yellow Brush Title, Dual Paragraphs & Yellow Button */}
-          <div className="winera-bowling-roi-text" style={{ padding: '50px 55px', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left' }}>
-            <div style={{ position: 'relative', display: 'block', marginBottom: '20px' }}>
+          {/* Left Column: 41% width, fitted content */}
+          <div className="winera-bowling-roi-text" style={{ padding: '14px 15px', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left', position: 'relative', zIndex: 2 }}>
+            <div style={{ position: 'relative', display: 'block', marginBottom: '16px' }}>
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '320px', height: '14px', marginBottom: '10px', objectFit: 'fill' }}
+                style={{ display: 'block', width: '320px', height: '14px', marginBottom: '8px', objectFit: 'fill' }}
               />
-              <h3 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: 0 }}>
+              <h3 style={{ fontSize: '40px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: 0 }}>
                 {(() => {
                   const rawTitle = siteData?.bowlingRoi?.title || "*Investment* & ROI";
                   const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -973,11 +975,11 @@ export default function BowlingAlley({ siteData }) {
               </h3>
             </div>
 
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '18px' }}>
+            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '10px', width: '109%' }}>
               {siteData?.bowlingRoi?.p1 || "Setting up a bowling center is a significant investment which is why we don't just sell you equipment and walk away. We're India's ROI-First Game Zone Developer. Before you commit to a project, every client receives a complete report covering product costing, maintenance costs, and projected revenue timeline, so your investment decision is based on real numbers, not estimates."}
             </p>
 
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '32px' }}>
+            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '3px', width: '103%' }}>
               {siteData?.bowlingRoi?.p2 || "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment."}
             </p>
 
@@ -1006,7 +1008,7 @@ export default function BowlingAlley({ siteData }) {
                       width: '271px',
                       height: '70px',
                       paddingTop: '2px',
-                      background: `url(${getValidImageUrl(siteData?.bowlingRoi?.btnBg, bowlingBtnShape)}) center center / 100% 100% no-repeat`,
+                      background: `url(${getValidImageUrl(siteData?.bowlingRoi?.btnBg, talkToRoiBtn)}) center center / 100% 100% no-repeat`,
                       color: '#091E2B',
                       fontSize: '15px',
                       fontWeight: '700',
@@ -1037,18 +1039,34 @@ export default function BowlingAlley({ siteData }) {
             </div>
           </div>
 
-          {/* Right Column: High-Tech Bowling Alley Image (Vector.webp) */}
+          {/* Right Column: 59% width, bowlling-image.png with bowlling-design.png attached on left */}
           <div className="winera-bowling-roi-img" style={{
             position: 'relative',
             width: '100%',
             height: '100%',
             display: 'flex',
-            alignItems: 'stretch',
+            alignItems: 'center',
             justifyContent: 'flex-end',
             overflow: 'hidden'
           }}>
+            {/* Slanted Cyan Design Accent attached on left: bowlling-design.png */}
             <img
-              src={getValidImageUrl(siteData?.bowlingRoi?.mainImgUrl || siteData?.bowlingRoi?.imgUrl, vectorImg)}
+              src={bowlingDesign}
+              alt=""
+              style={{
+                position: 'absolute',
+                top: '-1px',
+                left: 0,
+                height: '100%',
+                width: 'auto',
+                zIndex: 2,
+                objectFit: 'cover',
+                pointerEvents: 'none'
+              }}
+            />
+            {/* Bowling Photo: bowlling-image.png */}
+            <img
+              src={getValidImageUrl(siteData?.bowlingRoi?.mainImgUrl || siteData?.bowlingRoi?.imgUrl, bowlingImage)}
               alt="Bowling Alley Lanes ROI"
               loading="lazy"
               decoding="async"
@@ -1056,7 +1074,9 @@ export default function BowlingAlley({ siteData }) {
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
-                display: 'block'
+                display: 'block',
+                position: 'relative',
+                zIndex: 1
               }}
             />
           </div>

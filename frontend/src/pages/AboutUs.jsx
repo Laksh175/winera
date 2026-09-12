@@ -368,7 +368,7 @@ export default function AboutUs({ siteData }) {
                 <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
                   <Target style={{ width: '22px', height: '22px', color: '#0284c7' }} />
                 </div>
-                <p style={{ fontSize: '0.94rem', fontWeight: '500', color: '#334155', lineHeight: 1.65, margin: 0 }}>
+                <p style={{ fontSize: '0.94rem', fontWeight: '500', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.65, margin: 0 }}>
                   {siteData?.aboutMissionVision?.missionText || "We deliver premium-quality game zone and indoor playground solutions to B2B clients across India combining expert design, international equipment, and seamless project execution to create entertainment spaces that last."}
                 </p>
               </div>
@@ -405,7 +405,7 @@ export default function AboutUs({ siteData }) {
                 <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
                   <Eye style={{ width: '22px', height: '22px', color: '#854d0e' }} />
                 </div>
-                <p style={{ fontSize: '0.94rem', fontWeight: '500', color: '#334155', lineHeight: 1.65, margin: 0 }}>
+                <p style={{ fontSize: '0.94rem', fontWeight: '500', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.65, margin: 0 }}>
                   {siteData?.aboutMissionVision?.visionText || "To be India's most trusted partner in building world-class indoor entertainment destinations where every space we touch becomes a thriving hub of joy, play, and business success."}
                 </p>
               </div>
@@ -462,13 +462,13 @@ export default function AboutUs({ siteData }) {
           </SectionHeading>
 
           <div className="winera-about-mindmap-container" style={{ position: 'relative', width: '100%', maxWidth: '1080px', height: '260px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg className="winera-about-mindmap-svg" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }}>
-              <line x1="321" y1="45" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
-              <line x1="315" y1="130" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
-              <line x1="385" y1="235" x2="540" y2="130" stroke="#00a8ff" strokeWidth="1.8" opacity="0.65" />
-              <line x1="714" y1="35" x2="540" y2="130" stroke="#d97706" strokeWidth="1.8" opacity="0.65" />
-              <line x1="734" y1="130" x2="540" y2="130" stroke="#d97706" strokeWidth="1.8" opacity="0.65" />
-              <line x1="704" y1="235" x2="540" y2="130" stroke="#d97706" strokeWidth="1.8" opacity="0.65" />
+            <svg className="winera-about-mindmap-svg" viewBox="0 0 1080 260" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }}>
+              <line x1="321" y1="45" x2="540" y2="130" stroke="#00a8ff" strokeWidth="2.2" opacity="0.8" />
+              <line x1="315" y1="130" x2="540" y2="130" stroke="#00a8ff" strokeWidth="2.2" opacity="0.8" />
+              <line x1="385" y1="215" x2="540" y2="130" stroke="#00a8ff" strokeWidth="2.2" opacity="0.8" />
+              <line x1="714" y1="45" x2="540" y2="130" stroke="#d97706" strokeWidth="2.2" opacity="0.8" />
+              <line x1="734" y1="130" x2="540" y2="130" stroke="#d97706" strokeWidth="2.2" opacity="0.8" />
+              <line x1="704" y1="215" x2="540" y2="130" stroke="#d97706" strokeWidth="2.2" opacity="0.8" />
             </svg>
             <div className="winera-about-mindmap-badge" style={{ position: 'relative', zIndex: 10, width: '200px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', filter: 'drop-shadow(0 15px 35px rgba(0, 168, 255, 0.45))' }}>
               <img src={wineraWBadge} alt="Winera Badge" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
@@ -487,14 +487,14 @@ export default function AboutUs({ siteData }) {
                 : defaultPills;
 
               const leftItems = [
-                { icon: TrendingUp, text: pills[0], offset: '66px' },
+                { icon: TrendingUp, text: pills[0], offset: '76px' },
                 { icon: Maximize2, text: pills[1], offset: '85px' },
-                { icon: Headset, text: pills[2], offset: '42px' }
+                { icon: Headset, text: pills[2], offset: '65px' }
               ];
               const rightItems = [
-                { icon: Clock, text: pills[3], offset: '10px' },
-                { icon: RefreshCw, text: pills[4], offset: '0px' },
-                { icon: Award, text: pills[5], offset: '0px' }
+                { icon: Clock, text: pills[3], offset: '21px' },
+                { icon: RefreshCw, text: pills[4], offset: '7px' },
+                { icon: Award, text: pills[5], offset: '19px' }
               ];
 
               return (
@@ -529,7 +529,7 @@ export default function AboutUs({ siteData }) {
                         <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <item.icon style={{ width: '15px', height: '15px', color: '#0284c7' }} />
                         </div>
-                        <span style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>{item.text}</span>
+                        <span style={{ fontSize: '12.5px', fontWeight: '600', color: '#0f172a' }}>{item.text}</span>
                       </div>
                     ))}
                   </div>
@@ -563,7 +563,7 @@ export default function AboutUs({ siteData }) {
                         <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <item.icon style={{ width: '15px', height: '15px', color: '#d97706' }} />
                         </div>
-                        <span style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>{item.text}</span>
+                        <span style={{ fontSize: '12.5px', fontWeight: '600', color: '#0f172a' }}>{item.text}</span>
                       </div>
                     ))}
                   </div>
@@ -598,7 +598,7 @@ export default function AboutUs({ siteData }) {
                 return (
                   <div key={idx} style={{ background: '#ffffff', borderRadius: '24px', padding: '36px 30px', boxShadow: '0 15px 40px rgba(0, 168, 255, 0.08)', border: '1px solid #f1f5f9' }}>
                     <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: styleObj.bg, color: styleObj.color, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}><IconComponent style={{ width: '20px', height: '20px' }} /></div>
-                    <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: '#0f172a', marginBottom: '12px' }}>{c.title}</h3>
+                    <h3 style={{ fontSize: '1.4rem', fontWeight: '600', color: '#0f172a', marginBottom: '12px' }}>{c.title}</h3>
                     <p style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', lineHeight: 1.6 }}>{c.desc}</p>
                   </div>
                 );
@@ -722,7 +722,7 @@ export default function AboutUs({ siteData }) {
             </SectionHeading>
             <h3 style={{ fontSize: '1.8rem', fontWeight: '500', color: '#0f172a', marginBottom: '16px' }}>{siteData?.founder?.name || 'Mr. Unnit Jogani'}</h3>
 
-            <div style={{ color: '#475569', fontSize: '16px', lineHeight: 1.65, fontWeight: '500', marginBottom: '32px', whiteSpace: 'pre-line' }}>
+            <div style={{ color: '#475569', fontSize: '16px', lineHeight: 1.65, fontWeight: '400', marginBottom: '15px', whiteSpace: 'pre-line' }}>
               {(() => {
                 const defaultBio = "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.";
                 let rawText = siteData?.founder?.aboutDetails || defaultBio;

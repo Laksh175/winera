@@ -164,12 +164,12 @@ export default function ContactUs({ siteData }) {
                     <Phone style={{ width: '22px', height: '22px' }} />
                   </motion.div>
                   <div style={{ position: 'relative', zIndex: 3 }}>
-                    <h5 className="winera-contact-card-title" style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
+                    <h5 className="winera-contact-card-title" style={{ fontSize: '12px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.callTitle || "CALL US DIRECTLY"}
                     </h5>
                     <div className="winera-contact-phones-row" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-                      <a href={`tel:${(siteData?.contactPage?.phone1 || "+91 94289 89488").replace(/\s+/g, '')}`} style={{ fontSize: '13.5px', fontWeight: '700', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.phone1 || "+91 94289 89488"}</a>
-                      <a href={`tel:${(siteData?.contactPage?.phone2 || "+91 95123 56766").replace(/\s+/g, '')}`} style={{ fontSize: '13.5px', fontWeight: '700', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.phone2 || "+91 95123 56766"}</a>
+                      <a href={`tel:${(siteData?.contactPage?.phone1 || "+91 94289 89488").replace(/\s+/g, '')}`} style={{ fontSize: '13.5px', fontWeight: '300', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.phone1 || "+91 94289 89488"}</a>
+                      <a href={`tel:${(siteData?.contactPage?.phone2 || "+91 95123 56766").replace(/\s+/g, '')}`} style={{ fontSize: '13.5px', fontWeight: '300', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.phone2 || "+91 95123 56766"}</a>
                     </div>
                   </div>
                 </div>
@@ -240,10 +240,10 @@ export default function ContactUs({ siteData }) {
                     <Mail style={{ width: '22px', height: '22px' }} />
                   </motion.div>
                   <div style={{ position: 'relative', zIndex: 3 }}>
-                    <h5 className="winera-contact-card-title" style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
+                    <h5 className="winera-contact-card-title" style={{ fontSize: '12px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.emailTitle || "EMAIL OUR TEAM"}
                     </h5>
-                    <a href={`mailto:${siteData?.contactPage?.email || "info@winera.in"}`} style={{ fontSize: '13.5px', fontWeight: '700', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.email || "info@winera.in"}</a>
+                    <a href={`mailto:${siteData?.contactPage?.email || "info@winera.in"}`} style={{ fontSize: '13.5px', fontWeight: '300', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.email || "info@winera.in"}</a>
                   </div>
                 </div>
               </motion.div>
@@ -300,7 +300,7 @@ export default function ContactUs({ siteData }) {
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
                 <div>
-                  <label htmlFor="contact_name" style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  <label htmlFor="contact_name" className="winera-contact-form-label" style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
                     FULL NAME
                   </label>
                   <input
@@ -312,12 +312,12 @@ export default function ContactUs({ siteData }) {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="John Doe"
-                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '500', color: '#0f172a', outline: 'none' }}
+                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '300', color: '#0f172a', outline: 'none' }}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="contact_phone" style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  <label htmlFor="contact_phone" className="winera-contact-form-label" style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
                     PHONE NUMBER
                   </label>
                   <input
@@ -329,12 +329,12 @@ export default function ContactUs({ siteData }) {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+1 (555) 000-0000"
-                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '500', color: '#0f172a', outline: 'none' }}
+                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '300', color: '#0f172a', outline: 'none' }}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="contact_email" style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  <label htmlFor="contact_email" className="winera-contact-form-label" style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
                     EMAIL ADDRESS
                   </label>
                   <input
@@ -345,12 +345,12 @@ export default function ContactUs({ siteData }) {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="john@company.com"
-                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '500', color: '#0f172a', outline: 'none' }}
+                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '300', color: '#0f172a', outline: 'none' }}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="contact_inquiry" style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  <label htmlFor="contact_inquiry" className="winera-contact-form-label" style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
                     PROJECT DETAILS / INQUIRY
                   </label>
                   <textarea
@@ -362,7 +362,7 @@ export default function ContactUs({ siteData }) {
                     value={formData.inquiry}
                     onChange={(e) => setFormData({ ...formData, inquiry: e.target.value })}
                     placeholder="Tell us about your venue requirements, space dimensions, or technical questions..."
-                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '500', color: '#0f172a', outline: 'none', resize: 'vertical' }}
+                    style={{ width: '100%', padding: '14px 18px', borderRadius: '10px', background: '#f1f5f9', border: 'none', fontSize: '14px', fontWeight: '300', color: '#0f172a', outline: 'none', resize: 'vertical' }}
                   />
                 </div>
 
@@ -450,7 +450,7 @@ export default function ContactUs({ siteData }) {
                       <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq1Badge || "Corporate & Sales Office"}</span>
                     </div>
                   </div>
-                  <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', margin: 0, whiteSpace: 'pre-line' }}>
+                  <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '300', margin: 0, whiteSpace: 'pre-line' }}>
                     {siteData?.contactPage?.hq1Address || "Winera International Pvt. Ltd.\nSurat, Gujarat, India.\nHotline: +91 94289 89488 / +91 95123 56766"}
                   </p>
                 </div>
@@ -516,7 +516,7 @@ export default function ContactUs({ siteData }) {
                       <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq2Badge || "Sourcing & Assembly Hub"}</span>
                     </div>
                   </div>
-                  <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', margin: 0, whiteSpace: 'pre-line' }}>
+                  <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '300', margin: 0, whiteSpace: 'pre-line' }}>
                     {siteData?.contactPage?.hq2Address || "Winera International Global Assembly Base\nGuangzhou / Panyu Amusement Equipment Zone,\nGuangdong Province, China."}
                   </p>
                 </div>

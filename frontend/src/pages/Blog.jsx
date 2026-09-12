@@ -6,112 +6,20 @@ import Footer from '../components/Footer';
 import blogHeroBg from '../assets/blog-hero-bg.webp';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
-
-const DEFAULT_BLOG_POSTS = [
-  {
-    id: 1,
-    title: 'Soft Play vs Trampoline Park:',
-    subtitle: 'Which Is Better for Your Space?',
-    excerpt: 'Soft play or trampoline park? Discover the key differences in investment, space requirements, safety, and revenue potential to decide which indoor entertainment option suits your business goals best.',
-    date: 'AUG 22, 2026',
-    author: 'Divyang Mandani',
-    category: 'INSIGHTS',
-    image: blogCardImg,
-  },
-  {
-    id: 2,
-    title: 'What Can Indoor Playground Equipment',
-    subtitle: 'Do for Our Kids?',
-    excerpt: 'Indoor playground equipment helps children grow stronger, build confidence, and develop essential social skills — thoughtfully designed by experienced indoor play equipment manufacturers.',
-    date: 'AUG 22, 2026',
-    author: 'Divyang Mandani',
-    category: 'INSIGHTS',
-    image: blogCardImg,
-  },
-  {
-    id: 3,
-    title: 'Trampoline Park vs Soft Play Area:',
-    subtitle: 'Which is Best for Small Spaces?',
-    excerpt: 'Trampoline parks vs. soft play areas: Which is the best choice for small commercial spaces? Explore space requirements, floor height, and ROI.',
-    date: 'AUG 22, 2026',
-    author: 'Divyang Mandani',
-    category: 'INSIGHTS',
-    image: blogCardImg,
-  },
-  {
-    id: 4,
-    title: 'Why Turnkey Manufacturing Solutions Are',
-    subtitle: 'Best for New Amusement Businesses',
-    excerpt: 'Learn how turnkey amusement park solutions help new business owners launch faster, reduce operational risks, and maximize opening day revenue.',
-    date: 'AUG 22, 2026',
-    author: 'Divyang Mandani',
-    category: 'INSIGHTS',
-    image: blogCardImg,
-  },
-  {
-    id: 5,
-    title: 'The History and Some Fun Facts About',
-    subtitle: 'Bumper Cars',
-    excerpt: 'Explore the fascinating history of bumper cars and fun facts about how electric Dodgems evolved into modern battery and floor-grid attractions.',
-    date: 'AUG 22, 2026',
-    author: 'Divyang Mandani',
-    category: 'INSIGHTS',
-    image: blogCardImg,
-  },
-  {
-    id: 6,
-    title: 'Designing High-ROI Family Entertainment Centers:',
-    subtitle: 'A Complete Guide',
-    excerpt: 'Discover layout design tips, equipment mix strategies, and capacity calculations that boost foot traffic and maximize spend per visitor.',
-    date: 'AUG 22, 2026',
-    author: 'Divyang Mandani',
-    category: 'INSIGHTS',
-    image: blogCardImg,
-  },
-  {
-    id: 7,
-    title: 'Safety Standards in Indoor Amusement Equipment:',
-    subtitle: 'EN1176 & ASTM Guide',
-    excerpt: 'Learn about flame-retardant PVC, high-density padding, and impact mitigation standards required for commercial game zone certification.',
-    date: 'AUG 22, 2026',
-    author: 'Divyang Mandani',
-    category: 'INSIGHTS',
-    image: blogCardImg,
-  },
-  {
-    id: 8,
-    title: 'VR Simulators & Interactive Arcade Games:',
-    subtitle: 'Future of Game Zones',
-    excerpt: 'How immersive virtual reality rides and multi-player arcade machines drive repeat visitors and attract teens and young adults.',
-    date: 'AUG 22, 2026',
-    author: 'Divyang Mandani',
-    category: 'INSIGHTS',
-    image: blogCardImg,
-  },
-  {
-    id: 9,
-    title: 'Indoor Play Equipment Picks for Commercial Venues:',
-    subtitle: 'Essential Selection',
-    excerpt: 'Explore top recommended soft play obstacles, climbing walls, ball pits, and active play setups for shopping malls and resorts.',
-    date: 'AUG 22, 2026',
-    author: 'Divyang Mandani',
-    category: 'INSIGHTS',
-    image: blogCardImg,
-  }
-];
+import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 
 const getValidImageUrl = (url, fallback) => {
-  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+  if (!url || typeof url !== 'string' || url.trim() === '') {
     return fallback;
   }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:') || url.startsWith('/')) {
     return url;
   }
-  if (url.startsWith('/uploads')) {
+  if (url.startsWith('uploads/')) {
     const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${url}`;
+    return `http://${hostname}:5001/${url}`;
   }
-  return fallback;
+  return url || fallback;
 };
 
 // Helper for title & subtitle concatenation with proper spacing
@@ -152,9 +60,11 @@ export default function Blog({ siteData }) {
     breadcrumbText: 'Blog',
     bgUrl: blogHeroBg,
   };
-  const heroBg = getValidImageUrl(blogHero.bgUrl, blogHeroBg);
+  const heroBg = (blogHero?.bgUrl && (blogHero.bgUrl.startsWith('http') || blogHero.bgUrl.startsWith('uploads') || blogHero.bgUrl.startsWith('/uploads')))
+    ? getValidImageUrl(blogHero.bgUrl, blogHeroBg)
+    : blogHeroBg;
 
-  const blogPosts = Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0
+  const blogPosts = (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length >= 12 && siteData.blogPosts[0]?.fullContent?.length > 300 && siteData.blogPosts[1]?.title !== siteData.blogPosts[0]?.title)
     ? siteData.blogPosts
     : DEFAULT_BLOG_POSTS;
 
@@ -164,7 +74,7 @@ export default function Blog({ siteData }) {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 9;
+  const ITEMS_PER_PAGE = 12;
   const totalPages = Math.ceil(blogPosts.length / ITEMS_PER_PAGE);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -314,16 +224,16 @@ export default function Blog({ siteData }) {
                     />
                   </div>
 
-                  {/* Date & Category Meta Row (Image 2 style) */}
+                  {/* Category Tag Meta Row */}
                   <div style={{
                     fontSize: '12px',
                     fontWeight: '700',
-                    color: '#64748b',
+                    color: '#0284c7',
                     textTransform: 'uppercase',
                     letterSpacing: '0.5px',
                     marginBottom: '10px'
                   }}>
-                    {post.date || 'AUG 22, 2026'} &bull; <span style={{ color: '#0284c7' }}>{post.category || 'INSIGHTS'}</span>
+                    {post.category || 'INSIGHTS'}
                   </div>
 
                   {/* Blog Title & Subtitle */}
@@ -349,16 +259,30 @@ export default function Blog({ siteData }) {
                     {truncatedExcerpt}
                   </p>
 
-                  {/* Card Footer: Author (Image 2 style) */}
+                  {/* Card Footer: Date & Read More link */}
                   <div style={{
                     paddingTop: '14px',
                     borderTop: '1px solid #f1f5f9',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontWeight: '700',
-                    color: '#0f172a',
-                    marginTop: 'auto'
+                    color: '#64748b',
+                    marginTop: 'auto',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
                   }}>
-                    By {post.author || 'Divyang Mandani'}
+                    <span style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      {post.date || 'SEP 12, 2026'}
+                    </span>
+                    <span style={{
+                      color: '#0284c7',
+                      fontWeight: '700',
+                      fontSize: '13px',
+                      textDecoration: 'underline',
+                      letterSpacing: '0.2px'
+                    }}>
+                      Read More...
+                    </span>
                   </div>
                 </motion.div>
               );

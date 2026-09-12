@@ -369,9 +369,41 @@ html {
 }
 
 /* ==========================================
-   MOBILE & TABLET RESPONSIVE STYLES (≤ 1150px)
+   LAPTOP SCREEN RESPONSIVE STYLES (851px - 1280px)
    ========================================== */
-@media (max-width: 1150px) {
+@media (max-width: 1280px) and (min-width: 851px) {
+  html, body {
+    overflow-x: hidden !important;
+  }
+
+  section {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    box-sizing: border-box !important;
+  }
+
+  .container,
+  [class*="-container"],
+  [class*="-grid"],
+  [class*="-wrapper"] {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  h1 { font-size: clamp(2rem, 3.5vw, 2.75rem) !important; }
+  h2 { font-size: clamp(1.75rem, 3vw, 2.35rem) !important; }
+  h3 { font-size: clamp(1.5rem, 2.5vw, 1.85rem) !important; }
+
+  .grid-2col {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE STYLES (≤ 850px)
+   ========================================== */
+@media (max-width: 850px) {
 
   /* Global Spacing & Typography Fixes (Excluding Hero Banner Sections) */
   section:not([class*="hero"]) {
@@ -2558,6 +2590,60 @@ html {
     display: none !important;
   }
 
+  /* ─── Laptop Screens (851px - 1280px) Fluid Responsive Scaling ─── */
+  @media (max-width: 1280px) and (min-width: 851px) {
+    .winera-bowling-supplier-section,
+    .winera-bowling-premium-section,
+    .winera-bowling-types-section,
+    .winera-bowling-roi-section,
+    .winera-bowling-whyus-section {
+      padding-left: 24px !important;
+      padding-right: 24px !important;
+    }
+
+    .winera-bowling-supplier-grid {
+      grid-template-columns: 1.1fr 1fr !important;
+      gap: 30px !important;
+    }
+    .winera-bowling-supplier-text h2 {
+      font-size: 34px !important;
+    }
+
+    .winera-bowling-premium-title {
+      font-size: 34px !important;
+    }
+
+    .winera-bowling-types-text h3 {
+      font-size: 32px !important;
+    }
+
+    .winera-bowling-roi-grid {
+      grid-template-columns: 45% 55% !important;
+      height: 360px !important;
+      max-height: 360px !important;
+    }
+    .winera-bowling-roi-text {
+      padding: 20px 24px !important;
+    }
+    .winera-bowling-roi-text h3 {
+      font-size: 28px !important;
+    }
+    .winera-bowling-roi-text p {
+      font-size: 12px !important;
+      margin-bottom: 8px !important;
+    }
+
+    .winera-bowling-whyus-grid {
+      gap: 24px !important;
+    }
+    .winera-bowling-whyus-text h2 {
+      font-size: 32px !important;
+    }
+    .winera-bowling-whyus-text p {
+      font-size: 13px !important;
+    }
+  }
+
   /* ─── Bowling Alley Page Mobile Responsive Spacing ─── */
 
   /* Hero */
@@ -2911,7 +2997,7 @@ html {
   }
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 850px) {
   .winera-bowling-whyus-section {
     padding: 50px 5vw 55px !important;
   }
@@ -3515,6 +3601,7 @@ html {
     white-space: normal !important;
     word-break: break-word !important;
     font-size: 12.5px !important;
+    font-weight: 600 !important;
     line-height: 1.35 !important;
   }
 
@@ -7458,5 +7545,96 @@ h2 span,
   /* CTA Banner Section Mobile Adjustments */
   .winera-cta-banner-section {
     padding: 35px 16px !important;
+  }
+}
+
+/* ==========================================================================
+   GLOBAL BUTTON HOVER ZOOM ANIMATION (MATCHING OUR FOUNDER BUTTON IN ABOUT US)
+   Applies smooth zoom / scale animation on hover to all buttons across all pages,
+   including custom image background buttons (Get Started, View Our Products, etc.).
+   ========================================================================== */
+
+button,
+a[style*="background"],
+button[style*="background"],
+.winera-cyan-cta-wrapper,
+.winera-cyan-cta-btn,
+.winera-cyan-cta-btn-sm,
+.winera-yellow-cyan-cta-wrapper,
+.winera-yellow-cyan-cta-btn,
+.winera-yellow-cyan-cta-btn-sm,
+.winera-yellow-white-cta-wrapper,
+.winera-yellow-white-cta-btn,
+.winera-yellow-white-cta-btn-sm,
+.winera-white-yellow-cta-wrapper,
+.winera-white-yellow-cta-btn,
+.winera-white-cyan-cta-wrapper,
+.winera-white-cyan-cta-btn,
+.winera-hero-cta-wrapper,
+.winera-hero-cta-btn,
+.winera-cta-banner-btn,
+.winera-cta-banner-btn-white,
+.winera-partner-card-btn,
+.winera-cta-btn-hover,
+.winera-about-whyus-cta-btns a,
+.winera-about-whyus-cta-btns button,
+[class*="cta-wrapper"] {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease !important;
+}
+
+button:hover,
+a[style*="background"]:hover,
+button[style*="background"]:hover,
+.winera-cyan-cta-wrapper:hover,
+.winera-yellow-cyan-cta-wrapper:hover,
+.winera-yellow-white-cta-wrapper:hover,
+.winera-white-yellow-cta-wrapper:hover,
+.winera-white-cyan-cta-wrapper:hover,
+.winera-hero-cta-wrapper:hover,
+.winera-cta-banner-btn:hover,
+.winera-cta-banner-btn-white:hover,
+.winera-partner-card-btn:hover,
+.winera-cta-btn-hover:hover,
+.winera-about-whyus-cta-btns a:hover,
+.winera-about-whyus-cta-btns button:hover,
+[class*="cta-wrapper"]:hover {
+  transform: translateY(-2px) scale(1.04) !important;
+}
+
+/* Standalone CTA buttons without wrappers */
+.winera-cyan-cta-btn:not([class*="cta-wrapper"] *):hover,
+.winera-cyan-cta-btn-sm:not([class*="cta-wrapper"] *):hover,
+.winera-yellow-cyan-cta-btn:not([class*="cta-wrapper"] *):hover,
+.winera-hero-cta-btn:not([class*="cta-wrapper"] *):hover {
+  transform: translateY(-2px) scale(1.04) !important;
+}
+
+/* Prevent double scale when a button is nested inside a wrapper */
+.winera-cyan-cta-wrapper:hover .winera-cyan-cta-btn,
+.winera-cyan-cta-wrapper:hover .winera-cyan-cta-btn-sm,
+.winera-yellow-cyan-cta-wrapper:hover .winera-yellow-cyan-cta-btn,
+.winera-yellow-cyan-cta-wrapper:hover .winera-yellow-cyan-cta-btn-sm,
+.winera-yellow-white-cta-wrapper:hover .winera-yellow-white-cta-btn,
+.winera-white-yellow-cta-wrapper:hover .winera-white-yellow-cta-btn,
+.winera-white-cyan-cta-wrapper:hover .winera-white-cyan-cta-btn,
+.winera-hero-cta-wrapper:hover .winera-hero-cta-btn,
+[class*="cta-wrapper"]:hover [class*="cta-btn"] {
+  transform: none !important;
+}
+
+/* Contact Us Page Input & Textarea Placeholder Font Weight */
+.winera-contact-form-card input,
+.winera-contact-form-card textarea,
+.winera-contact-form-card input::placeholder,
+.winera-contact-form-card textarea::placeholder {
+  font-weight: 300 !important;
+}
+
+/* Desktop override for Contact Us card titles & form labels */
+@media (min-width: 769px) {
+  .winera-contact-card-title,
+  .winera-contact-form-label {
+    font-size: 12px !important;
+    font-weight: 700 !important;
   }
 }

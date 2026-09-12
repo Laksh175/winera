@@ -26,7 +26,6 @@ export default function RelatedProductsSection({
     { title: "Soft Play", link: "/products/soft-play", img: projSoft1 },
     { title: "Bumper Cars", link: "/products/bumper-cars", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
     { title: "Hypergrid", link: "/products/hypergrid", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
-    { title: "Laser Tag", link: "/products/laser-tag", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
     { title: "Amusement Park", link: "/products/amusement-park", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" },
     { title: "Lights", link: "/products/lights", img: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80" },
     { title: "Sculpture", link: "/products/sculpture", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80" },
@@ -34,9 +33,9 @@ export default function RelatedProductsSection({
     { title: "Other Furniture", link: "/products/other-furniture", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80" }
   ];
 
-  const rawItems = Array.isArray(sectionData?.items) && sectionData.items.length > 0
+  const rawItems = ((Array.isArray(sectionData?.items) && sectionData.items.length > 0)
     ? sectionData.items
-    : defaultCategories;
+    : defaultCategories).filter(item => !(item.title || '').toLowerCase().includes('laser') && !(item.link || '').toLowerCase().includes('laser'));
 
   const baseCategories = rawItems.map((item, idx) => ({
     title: item.title,

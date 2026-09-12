@@ -27,8 +27,7 @@ export default function Footer({ footerData }) {
     { name: "AR Games", link: "/product/ar-games" },
     { name: "Bumper Car", link: "/product/bumper-car" },
     { name: "Amusement Park", link: "/product/amusement-park" },
-    { name: "Hypergrid", link: "/product/hypergrid" },
-    { name: "Laser tag", link: "/product/laser-tag" }
+    { name: "Hypergrid", link: "/product/hypergrid" }
   ];
 
   const defaultQuickLinks = [
@@ -47,7 +46,7 @@ export default function Footer({ footerData }) {
 
   const logoSrc = getValidImageUrl(footerData?.logoUrl, logo);
   const tagline = footerData?.tagline || "Winera is a professional solution provider and builder specializing in indoor amusement parks and playground equipment.";
-  const productLinks = Array.isArray(footerData?.productLinks) && footerData.productLinks.length > 0 ? footerData.productLinks : defaultProductLinks;
+  const productLinks = (Array.isArray(footerData?.productLinks) && footerData.productLinks.length > 0 ? footerData.productLinks : defaultProductLinks).filter(prod => !(prod.name || '').toLowerCase().includes('laser') && !(prod.link || '').toLowerCase().includes('laser'));
   const quickLinks = Array.isArray(footerData?.quickLinks) && footerData.quickLinks.length > 0 ? footerData.quickLinks : defaultQuickLinks;
   const resourceLinks = Array.isArray(footerData?.resourceLinks) && footerData.resourceLinks.length > 0 ? footerData.resourceLinks : defaultResourceLinks;
   const phone1 = footerData?.phone1 || "+91 94289 89488";
