@@ -39,6 +39,12 @@ import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
 import downloadButtonImg from '../assets/download-button.png';
+import arcadeBtn1 from '../assets/arcadegame-button-1.png';
+import bowlingBtnShape from '../assets/bowlling-button-shape.png';
+import ctaBtn3 from '../assets/cta-button-3.png';
+
+
+
 
 import { Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight } from 'lucide-react';
 
@@ -391,7 +397,7 @@ export default function BowlingAlley({ siteData }) {
           {/* Grid Layout: Text in center/left (3 lines each) and Bowling Pins Graphic fully on Right Side */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px' }}>
             {/* Left/Center Text Content Block */}
-            <div style={{ flex: '1 1 800px', color: '#475569', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', textAlign: 'center' }}>
+            <div className="winera-bowling-premium-text" style={{ flex: '1 1 800px', color: '#475569', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', textAlign: 'center' }}>
               <p style={{ marginBottom: '22px', maxWidth: '860px', margin: '0 auto 22px' }}>
                 {siteData?.bowlingManufacturer?.p1 || "At Winera International Pvt. Ltd., we are proud to be India's leading bowling alley manufacturer and supplier of refurbished Brunswick bowling equipment. With over 15 years of expertise in the industry, we have built a reputation for delivering top-quality bowling alley equipment and exceptional customer service, tailored to fit the unique needs and budgets of our clients."}
               </p>
@@ -462,39 +468,27 @@ export default function BowlingAlley({ siteData }) {
               </p>
 
               <div className="winera-bowling-types-btn-row" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
-                <div style={{ position: 'relative', display: 'inline-block' }}>
-                  <div style={{
-                    position: 'absolute',
-                    top: '-3px',
-                    bottom: '-3px',
-                    left: '-4px',
-                    right: '-4px',
-                    background: '#38bdf8',
-                    borderRadius: '10px',
-                    transform: 'rotate(-1.8deg)',
-                    zIndex: 1
-                  }} />
-                  <button
-                    onClick={() => openVideoModal(siteData?.bowlingFreeFall?.videoUrl, "Free Fall Bowling Showcase")}
-                    aria-label="Watch Free Fall Bowling Video"
-                    style={{
-                      position: 'relative',
-                      zIndex: 2,
-                      background: '#ffcd00',
-                      color: '#0f172a',
-                      fontSize: '14px',
-                      fontWeight: '800',
-                      padding: '12px 28px',
-                      borderRadius: '10px',
-                      border: '1.5px solid #38bdf8',
-                      boxShadow: 'none',
-                      display: 'inline-block',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {siteData?.bowlingFreeFall?.btnText || "Watch Video"}
-                  </button>
-                </div>
+                <button
+                  onClick={() => openVideoModal(siteData?.bowlingFreeFall?.videoUrl, "Free Fall Bowling Showcase")}
+                  aria-label="Watch Free Fall Bowling Video"
+                  style={{
+                    width: '190px',
+                    height: '70px',
+                    background: `url(${getValidImageUrl(siteData?.bowlingFreeFall?.videoBtnBg, arcadeBtn1)}) center center / 100% 100% no-repeat`,
+                    color: '#ffffff',
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    border: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    padding: '7px 5px 2px 0',
+                    textDecoration: 'none'
+                  }}
+                >
+                  <span>{siteData?.bowlingFreeFall?.btnText || "Watch Video"}</span>
+                </button>
               </div>
 
               {/* Mobile Specs List */}
@@ -999,31 +993,45 @@ export default function BowlingAlley({ siteData }) {
                 }
 
                 return (
-                  <div className="winera-white-yellow-cta-wrapper">
-                    <a
-                      href={hrefLink}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Talk to an ROI Expert on WhatsApp"
-                      className="winera-white-yellow-cta-btn"
-                    >
-                      <div style={{
-                        width: '26px',
-                        height: '26px',
-                        borderRadius: '50%',
-                        background: '#25D366',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0
-                      }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 448 512" fill="white">
-                          <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
-                        </svg>
-                      </div>
-                      <span>{siteData?.bowlingRoi?.btnText || "Get Custom Bowling ROI Calculation"}</span>
-                    </a>
-                  </div>
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Talk to an ROI Expert on WhatsApp"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '12px',
+                      width: '271px',
+                      height: '70px',
+                      paddingTop: '2px',
+                      background: `url(${getValidImageUrl(siteData?.bowlingRoi?.btnBg, bowlingBtnShape)}) center center / 100% 100% no-repeat`,
+                      color: '#091E2B',
+                      fontSize: '15px',
+                      fontWeight: '700',
+                      textDecoration: 'none',
+                      border: 'none',
+                      outline: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: '#25d366',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0
+                    }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 448 512" fill="white">
+                        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+                      </svg>
+                    </div>
+                    <span>{siteData?.bowlingRoi?.btnText || "Talk to an ROI Expert"}</span>
+                  </a>
                 );
               })()}
             </div>
@@ -1165,6 +1173,7 @@ export default function BowlingAlley({ siteData }) {
         showOverlay={false}
         align="center"
         buttonTheme="yellow_white"
+        buttonBg={getValidImageUrl(siteData?.bowlingCta?.btnBg, ctaBtn3)}
         gradientTitle={true}
         minHeight="300px"
         descriptionFontSize="18px"

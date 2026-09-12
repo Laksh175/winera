@@ -55,6 +55,7 @@ export default function CtaBanner({
   buttonText = "Talk to an Expert",
   buttonLink = "https://wa.me/919428989488",
   buttonTheme = "cyan",
+  buttonBg = null,
   bgUrl = null,
   bg = ctaGamersBg,
   leftImgUrl = null,
@@ -244,21 +245,50 @@ export default function CtaBanner({
               )}
 
               <div className="winera-cta-banner-btn-wrapper">
-                <a
-                  href={buttonLink || "#"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsModalOpen(true);
-                  }}
-                  aria-label={typeof buttonText === 'string' ? buttonText : "Get a Quote"}
-                  className={
-                    buttonTheme === 'yellow_white' || buttonTheme === 'white_yellow'
-                      ? "winera-cta-banner-btn-white"
-                      : "winera-cta-banner-btn"
-                  }
-                >
-                  <span>{buttonText}</span>
-                </a>
+                {buttonBg ? (
+                  <a
+                    href={buttonLink || "#"}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsModalOpen(true);
+                    }}
+                    aria-label={typeof buttonText === 'string' ? buttonText : "Get a Quote"}
+                    style={{
+                      width: '271px',
+                      maxWidth: '82%',
+                      height: '73px',
+                      background: `url(${buttonBg}) center center / 100% 100% no-repeat`,
+                      color: '#0f172a',
+                      fontSize: '15px',
+                      fontWeight: '700',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: 'none',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                      padding: '4px 5px 2px 0'
+                    }}
+                  >
+                    <span>{buttonText}</span>
+                  </a>
+                ) : (
+                  <a
+                    href={buttonLink || "#"}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsModalOpen(true);
+                    }}
+                    aria-label={typeof buttonText === 'string' ? buttonText : "Get a Quote"}
+                    className={
+                      buttonTheme === 'yellow_white' || buttonTheme === 'white_yellow'
+                        ? "winera-cta-banner-btn-white"
+                        : "winera-cta-banner-btn"
+                    }
+                  >
+                    <span>{buttonText}</span>
+                  </a>
+                )}
               </div>
             </div>
 

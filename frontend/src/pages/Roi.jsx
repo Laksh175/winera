@@ -1103,8 +1103,10 @@ export default function Roi({ siteData }) {
             boxShadow: '0 20px 50px rgba(3, 15, 38, 0.25)',
             position: 'relative',
             textAlign: 'left',
-            width: '1080px',
-            marginLeft: '8%',
+            maxWidth: '1080px',
+            width: '100%',
+            margin: '0 auto',
+            boxSizing: 'border-box'
           }}>
             {/* Checklist Grid */}
             <div className="winera-roi-checklist-grid" style={{

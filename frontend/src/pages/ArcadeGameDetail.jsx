@@ -16,6 +16,8 @@ import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.webp';
 import arcadeCtaBg from '../assets/arcadegame-cta-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeHall from '../assets/arcade-hall.webp';
+import arcadeBtn1 from '../assets/arcadegame-button-1.png';
+import arcadeBtn2 from '../assets/arcadegame-button-2.png';
 
 import { 
   ChevronUp, ChevronDown, ChevronLeft, ChevronRight, MoveHorizontal, Box, Ruler, MessageCircle, ArrowRight 
@@ -637,46 +639,30 @@ export default function ArcadeGameDetail({ siteData }) {
                 </div>
 
                 {/* CTA Action Buttons */}
-                <div style={{ display: 'flex', gap: '14px', alignItems: 'center', marginTop: '18px', flexWrap: 'wrap' }} className="winera-arcade-cta-row">
-                  {/* Button 1: Watch Video with Offset Rotated Yellow Backdrop */}
-                  <div style={{ position: 'relative', display: 'inline-block' }}>
-                    <div style={{
-                      position: 'absolute',
-                      top: '-3px',
-                      bottom: '-3px',
-                      left: '-4px',
-                      right: '-4px',
-                      background: '#ffcd00',
-                      borderRadius: '14px',
-                      transform: 'rotate(-1.8deg)',
-                      zIndex: 1
-                    }} />
-                    <button
-                      onClick={() => openVideoModal(product.videoUrl, `${product.name} Showcase`)}
-                      style={{
-                        position: 'relative',
-                        zIndex: 2,
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        background: 'linear-gradient(90deg, #28b4ee 0%, #0284c7 100%)',
-                        color: '#ffffff',
-                        fontSize: '13.5px',
-                        fontWeight: '800',
-                        padding: '10px 24px',
-                        borderRadius: '12px',
-                        border: 'none',
-                        cursor: 'pointer',
-                        boxShadow: 'none',
-                        transition: 'all 0.25s ease'
-                      }}
-                      className="winera-cta-btn-hover"
-                    >
-                      <span>Watch Video</span>
-                    </button>
-                  </div>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '18px', flexWrap: 'wrap' }} className="winera-arcade-cta-row">
+                  {/* Button 1: Watch Video with arcadegame-button-1.png BG */}
+                  <button
+                    onClick={() => openVideoModal(product.videoUrl, `${product.name} Showcase`)}
+                    style={{
+                      width: '190px',
+                      height: '70px',
+                      background: `url(${getValidImageUrl(siteData?.arcadeIntro?.videoBtnBg, arcadeBtn1)}) center center / 100% 100% no-repeat`,
+                      color: '#ffffff',
+                      fontSize: '15px',
+                      fontWeight: '600',
+                      border: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      padding: '7px 5px 2px 0',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    <span>{siteData?.arcadeIntro?.videoBtnText || "Watch Video"}</span>
+                  </button>
 
-                  {/* Button 2: Get a Quote with Offset Rotated Cyan Backdrop */}
+                  {/* Button 2: Get a Quote with arcadegame-button-2.png BG */}
                   {(() => {
                     const rawQuoteUrl = product.quoteUrl || "https://wa.me/919428989488";
                     let hrefUrl = rawQuoteUrl;
@@ -687,44 +673,28 @@ export default function ArcadeGameDetail({ siteData }) {
                     }
 
                     return (
-                      <div style={{ position: 'relative', display: 'inline-block' }}>
-                        <div style={{
-                          position: 'absolute',
-                          top: '-3px',
-                          bottom: '-3px',
-                          left: '-4px',
-                          right: '-4px',
-                          background: '#38bdf8',
-                          borderRadius: '14px',
-                          transform: 'rotate(-1.8deg)',
-                          zIndex: 1
-                        }} />
-                        <a
-                          href={hrefUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            position: 'relative',
-                            zIndex: 2,
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            background: '#e0f2fe',
-                            color: '#0f172a',
-                            fontSize: '13.5px',
-                            fontWeight: '800',
-                            padding: '10px 24px',
-                            borderRadius: '12px',
-                            border: '1.5px solid #38bdf8',
-                            textDecoration: 'none',
-                            boxShadow: '0 6px 18px rgba(0, 0, 0, 0.05)',
-                            transition: 'all 0.25s ease'
-                          }}
-                          className="winera-cta-btn-hover"
-                        >
-                          <span>Get a Quote</span>
-                        </a>
-                      </div>
+                      <a
+                        href={hrefUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          width: '190px',
+                          height: '70px',
+                          background: `url(${getValidImageUrl(siteData?.arcadeIntro?.quoteBtnBg, arcadeBtn2)}) center center / 100% 100% no-repeat`,
+                          color: '#0f172a',
+                          fontSize: '15px',
+                          fontWeight: '700',
+                          border: 'none',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          padding: '6px 5px 2px 0',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        <span>{siteData?.arcadeIntro?.quoteBtnText || "Get a Quote"}</span>
+                      </a>
                     );
                   })()}
                 </div>

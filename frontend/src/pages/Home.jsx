@@ -263,7 +263,7 @@ export default function Home({ siteData }) {
           />
           <div className="winera-hero-animate" style={{ width: '100%', maxWidth: '951px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
             {/* Badge */}
-            <div style={{
+            <div className="winera-hero-badge" style={{
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -285,31 +285,43 @@ export default function Home({ siteData }) {
             </div>
 
             {/* Main Title */}
-            <h1 style={{
-              fontFamily: "'Black Han Sans', sans-serif",
-              fontSize: 'clamp(32px, 5vw, 60px)',
-              fontWeight: 400,
-              lineHeight: 'clamp(40px, 5.5vw, 70px)',
-              color: '#ffffff',
-              marginBottom: '18px',
-              letterSpacing: '0px',
-              maxWidth: '951px',
-              margin: '0 auto 18px',
-              textAlign: 'center'
-            }}>
+            <h1 className="winera-home-hero-h1">
               {(() => {
                 const rawTitle = hero?.title || "Game Zone Equipment *Manufacturer* & Supplier";
-                const parts = rawTitle.split('*');
-                if (parts.length >= 3) {
-                  return (
-                    <>
-                      {parts[0]}
-                      <span style={{ color: '#ffcd00', fontFamily: "'Black Han Sans', sans-serif", fontWeight: 400 }}>{parts[1]}</span>
-                      {parts.slice(2).join('')}
-                    </>
-                  );
+                let l1 = "Game Zone Equipment";
+                let l2Highlight = "Manufacturer";
+                let l2Rest = " & Supplier";
+
+                const str = String(rawTitle).trim();
+                if (str.includes('*')) {
+                  const parts = str.split('*');
+                  l1 = parts[0].trim();
+                  l2Highlight = parts[1] || "";
+                  l2Rest = parts.slice(2).join('');
+                } else if (str.toLowerCase().includes("manufacturer")) {
+                  const lower = str.toLowerCase();
+                  const idx = lower.indexOf("manufacturer");
+                  l1 = str.substring(0, idx).trim() || "Game Zone Equipment";
+                  const rest = str.substring(idx).trim();
+                  const spaceIdx = rest.indexOf(' ');
+                  if (spaceIdx !== -1) {
+                    l2Highlight = rest.substring(0, spaceIdx);
+                    l2Rest = ' ' + rest.substring(spaceIdx).trim();
+                  } else {
+                    l2Highlight = rest;
+                    l2Rest = "";
+                  }
                 }
-                return rawTitle;
+
+                return (
+                  <>
+                    <div className="winera-hero-line1">{l1}</div>
+                    <div className="winera-hero-line2">
+                      {l2Highlight ? <span className="winera-hero-highlight">{l2Highlight}</span> : null}
+                      {l2Rest}
+                    </div>
+                  </>
+                );
               })()}
             </h1>
 

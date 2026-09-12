@@ -82,7 +82,7 @@ export default function TestimonialsSection({
   const hasMultipleTestimonials = list.length > 1;
 
   return (
-    <section id={id} style={{ padding: '45px 4vw 60px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+    <section id={id} className="winera-testi-section" style={{ padding: '45px 4vw 60px', background: bg, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         <MotionFadeIn>
           <SectionHeading marginBottom="12px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign}>
@@ -102,7 +102,7 @@ export default function TestimonialsSection({
             })()}
           </SectionHeading>
 
-          <p style={{
+          <p className="winera-testi-subtitle" style={{
             color: '#475569',
             fontSize: '14px',
             fontWeight: '500',
@@ -129,22 +129,13 @@ export default function TestimonialsSection({
               <button
                 onClick={goPrev}
                 aria-label="Previous Testimonial"
+                className="winera-testi-nav-btn winera-testi-btn-prev"
                 style={{
                   position: 'absolute',
                   left: '-24px',
                   zIndex: 30,
-                  background: '#ffffff',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '50%',
                   width: '48px',
-                  height: '48px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#1e293b',
-                  cursor: 'pointer',
-                  boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
-                  transition: 'all 0.2s'
+                  height: '48px'
                 }}
               >
                 <ChevronLeft style={{ width: '26px', height: '26px', strokeWidth: 2 }} />
@@ -368,22 +359,13 @@ export default function TestimonialsSection({
               <button
                 onClick={goNext}
                 aria-label="Next Testimonial"
+                className="winera-testi-nav-btn winera-testi-btn-next"
                 style={{
                   position: 'absolute',
                   right: '-24px',
                   zIndex: 30,
-                  background: '#ffffff',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '50%',
                   width: '48px',
-                  height: '48px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#1e293b',
-                  cursor: 'pointer',
-                  boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
-                  transition: 'all 0.2s'
+                  height: '48px'
                 }}
               >
                 <ChevronRight style={{ width: '26px', height: '26px', strokeWidth: 2 }} />
@@ -594,20 +576,13 @@ export default function TestimonialsSection({
                 <button
                   onClick={goPrev}
                   aria-label="Previous Testimonial"
+                  className="winera-testi-nav-btn winera-testi-btn-prev"
                   style={{
                     width: '44px',
-                    height: '44px',
-                    borderRadius: '50%',
-                    background: '#ffffff',
-                    border: '2px solid #e2e8f0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
+                    height: '44px'
                   }}
                 >
-                  <ChevronLeft aria-hidden="true" style={{ width: '22px', height: '22px', color: '#475569' }} />
+                  <ChevronLeft aria-hidden="true" style={{ width: '22px', height: '22px' }} />
                 </button>
 
                 <span style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a' }}>
@@ -617,20 +592,13 @@ export default function TestimonialsSection({
                 <button
                   onClick={goNext}
                   aria-label="Next Testimonial"
+                  className="winera-testi-nav-btn winera-testi-btn-next"
                   style={{
                     width: '44px',
-                    height: '44px',
-                    borderRadius: '50%',
-                    background: '#00a8ff',
-                    border: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 14px rgba(0,168,255,0.35)'
+                    height: '44px'
                   }}
                 >
-                  <ChevronRight aria-hidden="true" style={{ width: '22px', height: '22px', color: '#ffffff' }} />
+                  <ChevronRight aria-hidden="true" style={{ width: '22px', height: '22px' }} />
                 </button>
               </div>
             )}

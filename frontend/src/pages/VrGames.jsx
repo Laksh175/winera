@@ -694,35 +694,35 @@ export default function VrGames({ siteData }) {
       <section className="winera-vr-earn-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '85px 4vw 95px',
+        padding: '50px 4vw 50px',
         background: `url(${siteData?.vrEarn?.bgUrl || vrRoiFrame}) center/100% 100% no-repeat`,
         overflow: 'hidden'
       }}>
         <div className="winera-vr-earn-card" style={{
-          maxWidth: '1080px',
+          maxWidth: '1240px',
           margin: '0 auto',
           position: 'relative',
           background: 'transparent',
           padding: '0',
           display: 'grid',
-          gridTemplateColumns: '1.08fr 1fr',
+          gridTemplateColumns: '1.1fr 1fr',
           alignItems: 'center',
-          overflow: 'visible',
+          overflow: 'hidden',
           boxShadow: 'none',
-          minHeight: '430px'
+          minHeight: '365px'
         }}>
           {/* Left Content Column */}
-          <div className="winera-vr-earn-text" style={{ padding: '42px 35px 42px 45px', textAlign: 'left', zIndex: 3 }}>
-            <div style={{ position: 'relative', display: 'block', marginBottom: '16px' }}>
+          <div className="winera-vr-earn-text" style={{ padding: '24px 30px 24px 40px', textAlign: 'left', zIndex: 3 }}>
+            <div style={{ position: 'relative', display: 'block', marginBottom: '12px' }}>
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '260px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
+                style={{ display: 'block', width: '240px', height: '9px', marginBottom: '6px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '38px',
                 fontWeight: '900',
-                lineHeight: 1.16,
+                lineHeight: 1.15,
                 margin: 0,
                 color: '#0f172a',
                 letterSpacing: '-0.5px'
@@ -735,11 +735,11 @@ export default function VrGames({ siteData }) {
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '26px', maxWidth: '520px' }}>
-              <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px', maxWidth: '540px' }}>
+              <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
                 {siteData?.vrEarn?.p1 || "Most VR machine suppliers in India quote a price and leave the financial decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any order, our team prepares a complete ROI report for your specific venue covering machine cost, projected daily sessions, estimated revenue per player, maintenance costs, and break-even timeline."}
               </p>
-              <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+              <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
                 {siteData?.vrEarn?.p2 || "Every figure is calculated around your venue type, footfall, and machine selection, not an industry average pulled from a brochure. Very few VR gaming suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
               </p>
             </div>
@@ -772,12 +772,12 @@ export default function VrGames({ siteData }) {
           <div className="winera-vr-earn-img-container" style={{
             position: 'relative',
             width: '100%',
-            height: '100%',
-            minHeight: '430px',
+            height: 'auto',
+            minHeight: '365px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end',
-            overflow: 'hidden'
+            justifyContent: 'center',
+            overflow: 'hidden',
           }}>
             <img
               src={getValidImageUrl(siteData?.vrEarn?.imgUrl, vrGameImg)}
@@ -786,11 +786,11 @@ export default function VrGames({ siteData }) {
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
-                objectPosition: 'left center',
+                objectPosition: 'center center',
                 display: 'block',
                 position: 'relative',
                 zIndex: 1,
-                paddingLeft: '12px'
+                marginLeft: '15px'
               }}
             />
             {/* Yellow Wave Accent Stroke sitting along the curve */}
@@ -918,10 +918,10 @@ export default function VrGames({ siteData }) {
                             iconsList[cIdx % iconsList.length]
                           )}
                         </div>
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                        <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                           {card.title}
                         </h4>
-                        <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                           {card.desc}
                         </p>
                       </div>
@@ -996,10 +996,10 @@ export default function VrGames({ siteData }) {
                               iconsList[(topCards.length + bIdx) % iconsList.length]
                             )}
                           </div>
-                          <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                          <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                             {card.title}
                           </h4>
-                          <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                             {card.desc}
                           </p>
                         </div>

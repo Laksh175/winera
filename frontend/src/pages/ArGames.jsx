@@ -97,315 +97,315 @@ export default function ArGames({ siteData }) {
 
 
   const defaultCategoryProducts = {
-  "Sports Simulators": [
-    {
-      "name": "Super Air Hockey",
-      "img": superAirHockeyImg
-    },
-    {
-      "name": "Puck Carnival Air Hockey",
-      "img": puckCarnivalAirHockeyImg
-    },
-    {
-      "name": "Dazzling Air Hockey - Multi Puck",
-      "img": dazzlingAirHockeyImg
-    },
-    {
-      "name": "Aurora Air Hockey",
-      "img": auroraAirHockeyImg
-    },
-    {
-      "name": "Ocha Air Hockey",
-      "img": ochaAirHockeyImg
-    },
-    {
-      "name": "Aero X Air Hockey",
-      "img": aeroXAirHockeyImg
-    }
-  ],
-  "Interactive Games": [
-    {
-      "name": "SAIO All-in-One 2.0",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "SAIO (LED Version)",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Omniball LED Version",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Omniball",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Combat 6",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber Dunk Reality",
-      "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Running Wall",
-      "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Curling",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber AR Boxing",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bikes — Luxe",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Rock Climbing",
-      "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Billiard",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Dynamic Kayaking",
-      "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Billiards",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Whac-a-Mole on Wall",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wonder Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Slide",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Magic Swing",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Music Wall",
-      "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Legend Archery",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Roll Action",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Particle Man",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Super Grid",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Laser Maze",
-      "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Motion Master Console",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "AR & VR Experiences": [
-    {
-      "name": "AR Bumper Car",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Garden",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bikes — Luxe",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Laser Shooting",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "10M High Range High Accuracy Laser Shooting",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Hunting Storm Realistic",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wireless Laser Tag",
-      "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "7D Imax Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Dynamic Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Room",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Restaurant",
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AI Holographic Bot",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Fog Screen Machine",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Radar",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Interactive Floors & Walls": [
-    {
-      "name": "Magic Floor — Integrated",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Floor — Outdoor",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Floor — Indoor",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Active Game LED Floor",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Digital Display Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wonderful World",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magical Waterfall",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wonder Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Kids & Family": [
-    {
-      "name": "Interactive Trampoline",
-      "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Sandbox",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Egg Fort",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Slide",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Garden",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Gesture Interactive Book",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Bowling & Ball Games": [
-    {
-      "name": "Top Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Mini Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Fitness & Education": [
-    {
-      "name": "Gym Education Interactive Training System",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Rock Climbing",
-      "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber AR Boxing",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Immersive Zones": [
-    {
-      "name": "Immersive Room",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Restaurant",
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Dynamic Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "7D Imax Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    }
-  ]
-};
+    "Sports Simulators": [
+      {
+        "name": "Super Air Hockey",
+        "img": superAirHockeyImg
+      },
+      {
+        "name": "Puck Carnival Air Hockey",
+        "img": puckCarnivalAirHockeyImg
+      },
+      {
+        "name": "Dazzling Air Hockey - Multi Puck",
+        "img": dazzlingAirHockeyImg
+      },
+      {
+        "name": "Aurora Air Hockey",
+        "img": auroraAirHockeyImg
+      },
+      {
+        "name": "Ocha Air Hockey",
+        "img": ochaAirHockeyImg
+      },
+      {
+        "name": "Aero X Air Hockey",
+        "img": aeroXAirHockeyImg
+      }
+    ],
+    "Interactive Games": [
+      {
+        "name": "SAIO All-in-One 2.0",
+        "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "SAIO (LED Version)",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Omniball LED Version",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Omniball",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Combat 6",
+        "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Cyber Dunk Reality",
+        "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Running Wall",
+        "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Curling",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Cyber AR Boxing",
+        "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bike",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bikes — Luxe",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Rock Climbing",
+        "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magic Billiard",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Dynamic Kayaking",
+        "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Billiards",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Whac-a-Mole on Wall",
+        "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wonder Wall",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Slide",
+        "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Magic Swing",
+        "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Music Wall",
+        "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Legend Archery",
+        "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Roll Action",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Particle Man",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Super Grid",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Laser Maze",
+        "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Motion Master Console",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "AR & VR Experiences": [
+      {
+        "name": "AR Bumper Car",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Garden",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bike",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bikes — Luxe",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Laser Shooting",
+        "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "10M High Range High Accuracy Laser Shooting",
+        "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Hunting Storm Realistic",
+        "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wireless Laser Tag",
+        "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "7D Imax Cinema",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Dynamic Cinema",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Room",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Restaurant",
+        "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AI Holographic Bot",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Fog Screen Machine",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Radar",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Interactive Floors & Walls": [
+      {
+        "name": "Magic Floor — Integrated",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magic Floor — Outdoor",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magic Floor — Indoor",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Active Game LED Floor",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Digital Display Wall",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wonderful World",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magical Waterfall",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wonder Wall",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Kids & Family": [
+      {
+        "name": "Interactive Trampoline",
+        "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Sandbox",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magic Egg Fort",
+        "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Slide",
+        "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Garden",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Gesture Interactive Book",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Bowling & Ball Games": [
+      {
+        "name": "Top Bowling",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Bowling",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Mini Bowling",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Bowling",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Fitness & Education": [
+      {
+        "name": "Gym Education Interactive Training System",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bike",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Rock Climbing",
+        "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Cyber AR Boxing",
+        "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Immersive Zones": [
+      {
+        "name": "Immersive Room",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Restaurant",
+        "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Dynamic Cinema",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "7D Imax Cinema",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  };
 
   const categoriesData = siteData?.arCategoriesData || defaultCategoryProducts;
   const categories = Object.keys(categoriesData);
@@ -999,7 +999,7 @@ export default function ArGames({ siteData }) {
                 </h3>
               </div>
               <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
-                {siteData?.arFeatures?.f1Desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."}
+                {siteData?.arFeatures?.f1Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
               </p>
             </div>
 
@@ -1042,7 +1042,7 @@ export default function ArGames({ siteData }) {
                 </h3>
               </div>
               <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
-                {siteData?.arFeatures?.f2Desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."}
+                {siteData?.arFeatures?.f2Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
               </p>
             </div>
           </div>
@@ -1067,7 +1067,7 @@ export default function ArGames({ siteData }) {
                 </h3>
               </div>
               <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
-                {siteData?.arFeatures?.f3Desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."}
+                {siteData?.arFeatures?.f3Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
               </p>
             </div>
 
@@ -1129,11 +1129,11 @@ export default function ArGames({ siteData }) {
             width: '100%'
           }}>
             {/* Paragraphs */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', textAlign: 'center', maxWidth: '1020px', margin: '0 auto' }}>
-              <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 auto', width: '102%', maxWidth: '115%', marginLeft: '12%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', textAlign: 'center', maxWidth: '850px', margin: '0 auto' }}>
+              <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 auto', maxWidth: '100%' }}>
                 {siteData?.arEarn?.p1 || "Most AR games suppliers in India present a product catalogue and a price list the financial planning is left entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before recommending any product or configuration, our team prepares a complete ROI report for your specific venue covering equipment cost, projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline."}
               </p>
-              <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 auto', width: '106%', maxWidth: '115%', marginLeft: '7%' }}>
+              <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 auto', maxWidth: '100%' }}>
                 {siteData?.arEarn?.p2 || "Every figure is calculated around your venue type, available floor space, and visitor demographic, not an industry benchmark that may have no relevance to your actual situation. Very few interactive gaming setup suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
               </p>
             </div>
@@ -1266,27 +1266,27 @@ export default function ArGames({ siteData }) {
                             iconsList[cIdx % iconsList.length]
                           )}
                         </div>
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                        <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
                           {card.title}
                         </h4>
-                        <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                           {card.desc}
                         </p>
                       </div>
                     ))}
                   </div>
 
-                   {/* Horizontal Center Cyan Divider Line with Shade Fading */}
-                   {bottomCards.length > 0 && (
-                     <div className="winera-ar-whyus-horizontal-divider" style={{
-                       width: '100%',
-                       height: '2px',
-                       background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
-                       position: 'relative',
-                       zIndex: 3,
-                       margin: '0 0 30px'
-                     }}></div>
-                   )}
+                  {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                  {bottomCards.length > 0 && (
+                    <div className="winera-ar-whyus-horizontal-divider" style={{
+                      width: '100%',
+                      height: '2px',
+                      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                      position: 'relative',
+                      zIndex: 3,
+                      margin: '0 0 30px'
+                    }}></div>
+                  )}
 
                   {/* BOTTOM ROW */}
                   {bottomCards.length > 0 && (
@@ -1344,10 +1344,10 @@ export default function ArGames({ siteData }) {
                               iconsList[(topCards.length + bIdx) % iconsList.length]
                             )}
                           </div>
-                          <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                          <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
                             {card.title}
                           </h4>
-                          <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                             {card.desc}
                           </p>
                         </div>
@@ -1388,9 +1388,9 @@ export default function ArGames({ siteData }) {
         titleFontSize="42px"
         bgUrl={
           siteData?.arCta?.bgUrl &&
-          !siteData.arCta.bgUrl.includes('cta-consultations') &&
-          !siteData.arCta.bgUrl.includes('need-consultations') &&
-          !siteData.arCta.bgUrl.includes('project-lastbg')
+            !siteData.arCta.bgUrl.includes('cta-consultations') &&
+            !siteData.arCta.bgUrl.includes('need-consultations') &&
+            !siteData.arCta.bgUrl.includes('project-lastbg')
             ? getValidImageUrl(siteData.arCta.bgUrl, amusementParkCtaBg)
             : null
         }

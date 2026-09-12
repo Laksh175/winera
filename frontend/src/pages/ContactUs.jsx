@@ -164,7 +164,7 @@ export default function ContactUs({ siteData }) {
                     <Phone style={{ width: '22px', height: '22px' }} />
                   </motion.div>
                   <div style={{ position: 'relative', zIndex: 3 }}>
-                    <h5 style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
+                    <h5 className="winera-contact-card-title" style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.callTitle || "CALL US DIRECTLY"}
                     </h5>
                     <div className="winera-contact-phones-row" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
@@ -240,7 +240,7 @@ export default function ContactUs({ siteData }) {
                     <Mail style={{ width: '22px', height: '22px' }} />
                   </motion.div>
                   <div style={{ position: 'relative', zIndex: 3 }}>
-                    <h5 style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
+                    <h5 className="winera-contact-card-title" style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.emailTitle || "EMAIL OUR TEAM"}
                     </h5>
                     <a href={`mailto:${siteData?.contactPage?.email || "info@winera.in"}`} style={{ fontSize: '13.5px', fontWeight: '700', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.email || "info@winera.in"}</a>
@@ -446,7 +446,7 @@ export default function ContactUs({ siteData }) {
                       <MapPin style={{ width: '22px', height: '22px' }} />
                     </motion.div>
                     <div>
-                      <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq1Name || "Surat Headquarters (India)"}</h3>
+                      <h3 className="winera-contact-hq-title" style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq1Name || "Surat Headquarters (India)"}</h3>
                       <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq1Badge || "Corporate & Sales Office"}</span>
                     </div>
                   </div>
@@ -512,7 +512,7 @@ export default function ContactUs({ siteData }) {
                       <Globe style={{ width: '22px', height: '22px' }} />
                     </motion.div>
                     <div>
-                      <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq2Name || "China Manufacturing Facility"}</h3>
+                      <h3 className="winera-contact-hq-title" style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq2Name || "China Manufacturing Facility"}</h3>
                       <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq2Badge || "Sourcing & Assembly Hub"}</span>
                     </div>
                   </div>

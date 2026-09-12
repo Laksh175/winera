@@ -4761,128 +4761,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
-              {/* Left Side Card Image */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Left Side Card Image (Tilted Card) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (Portrait 4:5)</span>
-                </label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                  <div style={{ position: 'relative', width: '70px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.ctaBanner?.leftImgUrl || formData.ctaBanner?.leftImg, homeBlock1)}
-                      alt="Left Card Preview"
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  </div>
-                  <label style={{
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    padding: '10px 18px',
-                    borderRadius: '12px',
-                    fontWeight: '800',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)'
-                  }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Left Card Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.ctaBanner || {}), leftImgUrl: res.url };
-                          setFormData(prev => ({ ...prev, ctaBanner: updated }));
-                          await persistSectionToDatabase('ctaBanner', updated);
-                        } catch (err) {
-                          console.error(err);
-                        }
-                      }}
-                    />
-                  </label>
-                  {formData.ctaBanner?.leftImgUrl && (
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        const updated = { ...(formData.ctaBanner || {}), leftImgUrl: '' };
-                        setFormData(prev => ({ ...prev, ctaBanner: updated }));
-                        await persistSectionToDatabase('ctaBanner', updated);
-                      }}
-                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
-                    >
-                      Reset to Default Left Image
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {/* Right Side Card Image */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Right Side Card Image (Tilted Card) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (Portrait 4:5)</span>
-                </label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                  <div style={{ position: 'relative', width: '70px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.ctaBanner?.rightImgUrl || formData.ctaBanner?.rightImg, homeBlock2)}
-                      alt="Right Card Preview"
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  </div>
-                  <label style={{
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    padding: '10px 18px',
-                    borderRadius: '12px',
-                    fontWeight: '800',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)'
-                  }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Right Card Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.ctaBanner || {}), rightImgUrl: res.url };
-                          setFormData(prev => ({ ...prev, ctaBanner: updated }));
-                          await persistSectionToDatabase('ctaBanner', updated);
-                        } catch (err) {
-                          console.error(err);
-                        }
-                      }}
-                    />
-                  </label>
-                  {formData.ctaBanner?.rightImgUrl && (
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        const updated = { ...(formData.ctaBanner || {}), rightImgUrl: '' };
-                        setFormData(prev => ({ ...prev, ctaBanner: updated }));
-                        await persistSectionToDatabase('ctaBanner', updated);
-                      }}
-                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
-                    >
-                      Reset to Default Right Image
-                    </button>
-                  )}
-                </div>
-              </div>
-
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('ctaBanner', formData.ctaBanner || {})}
@@ -8415,76 +8293,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
-              {/* Tilted Side Cards Image Uploads */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    Left Tilted Card Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </label>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.amusementCta?.leftImgUrl, amusementLeftImg)}
-                      alt="Left Card Preview"
-                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.amusementCta || {}), leftImgUrl: res.url };
-                            setFormData(prev => ({ ...prev, amusementCta: updated }));
-                            await persistSectionToDatabase('amusementCta', updated);
-                            setStatusMsg('Left image uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                  </div>
-                </div>
 
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    Right Tilted Card Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </label>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.amusementCta?.rightImgUrl, amusementRightImg)}
-                      alt="Right Card Preview"
-                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.amusementCta || {}), rightImgUrl: res.url };
-                            setFormData(prev => ({ ...prev, amusementCta: updated }));
-                            await persistSectionToDatabase('amusementCta', updated);
-                            setStatusMsg('Right image uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
@@ -9468,76 +9277,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
-              {/* Tilted Side Cards Image Uploads */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    Left Tilted Card Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </label>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.hypergridCta?.leftImgUrl, leftTiltedCard)}
-                      alt="Left Card Preview"
-                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'contain', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.hypergridCta || {}), leftImgUrl: res.url };
-                            setFormData(prev => ({ ...prev, hypergridCta: updated }));
-                            await persistSectionToDatabase('hypergridCta', updated);
-                            setStatusMsg('Left image uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                  </div>
-                </div>
 
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    Right Tilted Card Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </label>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.hypergridCta?.rightImgUrl, rightTiltedCard)}
-                      alt="Right Card Preview"
-                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'contain', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.hypergridCta || {}), rightImgUrl: res.url };
-                            setFormData(prev => ({ ...prev, hypergridCta: updated }));
-                            await persistSectionToDatabase('hypergridCta', updated);
-                            setStatusMsg('Right image uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Title (*word* for cyan, &lt;br/&gt; for linebreaks)</label>
@@ -10874,78 +10614,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
-              {/* Tilted Side Cards Image Uploads */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    2. Left Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </label>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.bumpercarCta?.leftImgUrl, bumperCarCtaLeft)}
-                      alt="Left Card Preview"
-                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'contain', background: '#0f172a', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading left CTA image graphic...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.bumpercarCta || {}), leftImgUrl: res.url };
-                            setFormData(prev => ({ ...prev, bumpercarCta: updated }));
-                            await persistSectionToDatabase('bumpercarCta', updated);
-                            setStatusMsg('Left image uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                  </div>
-                </div>
 
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    3. Right Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </label>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.bumpercarCta?.rightImgUrl, bumperCarCtaRight)}
-                      alt="Right Card Preview"
-                      style={{ width: '60px', height: '70px', borderRadius: '8px', objectFit: 'contain', background: '#0f172a', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ background: '#38bdf8', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading right CTA image graphic...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.bumpercarCta || {}), rightImgUrl: res.url };
-                            setFormData(prev => ({ ...prev, bumpercarCta: updated }));
-                            await persistSectionToDatabase('bumpercarCta', updated);
-                            setStatusMsg('Right image uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Top Tagline Text</label>
@@ -12083,7 +11752,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <textarea
                   rows={3}
                   placeholder="Row 1 Description"
-                  value={formData.arFeatures?.f1Desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."}
+                  value={formData.arFeatures?.f1Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
                   onChange={(e) => handleFieldChange('arFeatures', 'f1Desc', e.target.value)}
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                 />
@@ -12147,7 +11816,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <textarea
                   rows={3}
                   placeholder="Row 2 Description"
-                  value={formData.arFeatures?.f2Desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."}
+                  value={formData.arFeatures?.f2Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
                   onChange={(e) => handleFieldChange('arFeatures', 'f2Desc', e.target.value)}
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                 />
@@ -12211,7 +11880,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <textarea
                   rows={3}
                   placeholder="Row 3 Description"
-                  value={formData.arFeatures?.f3Desc || "Bumper Cars Have Long Held A Special Place In The Hearts Of Amusement Park Enthusiasts, And At Winera International, We Take Immense Pride In Delivering High-Quality Options That Enhance The Overall Park Experience. As A Leading Bumper Car Manufacturer In India And Trusted Bumper Car Manufacturer, Our Creations Are Not Just Rides; They're An Exhilarating Blend Of Thrilling Collisions And Smooth Handling, Designed With A Laser Focus On Safety And Durability."}
+                  value={formData.arFeatures?.f3Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
                   onChange={(e) => handleFieldChange('arFeatures', 'f3Desc', e.target.value)}
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                 />
@@ -12618,68 +12287,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
-              {/* Side Images (Left & Right Tilted Cards) */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
-                    Left Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </h4>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.arCta?.leftImgUrl, homeBlock1)}
-                      alt="Left Image Preview"
-                      style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            const res = await uploadImageFile(file, admin.token);
-                            handleFieldChange('arCta', 'leftImgUrl', res.url);
-                            await persistSectionToDatabase('arCta', { ...(formData.arCta || {}), leftImgUrl: res.url });
-                            setStatusMsg('Left image uploaded successfully!');
-                          }
-                        }}
-                      />
-                    </label>
-                  </div>
-                </div>
 
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
-                    Right Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </h4>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.arCta?.rightImgUrl, vrCtaRightImg)}
-                      alt="Right Image Preview"
-                      style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            const res = await uploadImageFile(file, admin.token);
-                            handleFieldChange('arCta', 'rightImgUrl', res.url);
-                            await persistSectionToDatabase('arCta', { ...(formData.arCta || {}), rightImgUrl: res.url });
-                            setStatusMsg('Right image uploaded successfully!');
-                          }
-                        }}
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Main Title Heading Text</label>
@@ -13981,68 +13589,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
-              {/* Side Images (Left & Right Tilted Cards) */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
-                    Left Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </h4>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.vrCta?.leftImgUrl, homeBlock1)}
-                      alt="Left Image Preview"
-                      style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            const res = await uploadImageFile(file, admin.token);
-                            handleFieldChange('vrCta', 'leftImgUrl', res.url);
-                            await persistSectionToDatabase('vrCta', { ...(formData.vrCta || {}), leftImgUrl: res.url });
-                            setStatusMsg('Left image uploaded successfully!');
-                          }
-                        }}
-                      />
-                    </label>
-                  </div>
-                </div>
 
-                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
-                    Right Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 400 × 500 px (4:5)</span>
-                  </h4>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <img
-                      src={getAdminValidImageUrl(formData.vrCta?.rightImgUrl, vrCtaRightImg)}
-                      alt="Right Image Preview"
-                      style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
-                    />
-                    <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                      <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            const res = await uploadImageFile(file, admin.token);
-                            handleFieldChange('vrCta', 'rightImgUrl', res.url);
-                            await persistSectionToDatabase('vrCta', { ...(formData.vrCta || {}), rightImgUrl: res.url });
-                            setStatusMsg('Right image uploaded successfully!');
-                          }
-                        }}
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
@@ -18116,68 +17663,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
 
-                  {/* Side Tilted Card Images */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                    <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                      <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
-                        Left Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 400 × 500 px (4:5)</span>
-                      </h4>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                        <img
-                          src={getAdminValidImageUrl(currentSec.leftImgUrl, rightTiltedCard)}
-                          alt="Left Image Preview"
-                          style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
-                        />
-                        <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                          <Upload style={{ width: '14px', height: '14px' }} /> Upload Left Image
-                          <input
-                            type="file"
-                            accept="image/*"
-                            style={{ display: 'none' }}
-                            onChange={async (e) => {
-                              const file = e.target.files[0];
-                              if (file) {
-                                const res = await uploadImageFile(file, admin.token);
-                                setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), leftImgUrl: res.url } }));
-                                await persistSectionToDatabase('safetyWhyMatters', { ...(formData.safetyWhyMatters || defaultSafetyWhyMatters), leftImgUrl: res.url });
-                                setStatusMsg('Left image uploaded successfully!');
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
-                    </div>
 
-                    <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
-                      <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
-                        Right Tilted Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 400 × 500 px (4:5)</span>
-                      </h4>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                        <img
-                          src={getAdminValidImageUrl(currentSec.rightImgUrl, leftTiltedCard)}
-                          alt="Right Image Preview"
-                          style={{ width: '70px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
-                        />
-                        <label style={{ padding: '10px 14px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                          <Upload style={{ width: '14px', height: '14px' }} /> Upload Right Image
-                          <input
-                            type="file"
-                            accept="image/*"
-                            style={{ display: 'none' }}
-                            onChange={async (e) => {
-                              const file = e.target.files[0];
-                              if (file) {
-                                const res = await uploadImageFile(file, admin.token);
-                                setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), rightImgUrl: res.url } }));
-                                await persistSectionToDatabase('safetyWhyMatters', { ...(formData.safetyWhyMatters || defaultSafetyWhyMatters), rightImgUrl: res.url });
-                                setStatusMsg('Right image uploaded successfully!');
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
 
 
                   <div>

@@ -17,6 +17,8 @@ import doodleArrow from '../assets/doodle-arrow.webp';
 import bikeArcade from '../assets/bike-arcade.webp';
 import builtCommercialBg from '../assets/built-commercial-bg.webp';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
+import arcadeBtn1 from '../assets/arcadegame-button-1.png';
+import arcadeBtn2 from '../assets/arcadegame-button-2.png';
 import commercialTeam from '../assets/commercial-team.webp';
 import aboutUsSectionImg from '../assets/about-us-section.webp';
 import arcadeCtaBg from '../assets/arcadegame-cta-bg.webp';
@@ -184,21 +186,21 @@ export default function ArcadeGame({ siteData }) {
       </section>
 
       {/* 3. ARCADE GAME MACHINES IN INDIA SECTION (1:1 FIGMA SCREENSHOT MATCH) */}
-      <section className="winera-arcade-intro-section" style={{ padding: '90px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-arcade-intro-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{
           maxWidth: '1240px',
           margin: '0 auto',
           display: 'grid',
           gridTemplateColumns: '1fr 1.05fr',
-          gap: '60px',
+          gap: '50px',
           alignItems: 'center'
         }}>
           {/* Left Overlapping Image Collage Stack with Wavy Doodle Arrow & Blue Dots matching Screenshot 1:1 */}
           <div className="winera-arcade-intro-images" style={{ position: 'relative', width: '100%', minHeight: '440px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
             {/* Top-Left Main Rounded Image: Boy Playing Racing Game */}
             <div style={{
-              width: '320px',
-              height: '320px',
+              width: '345px',
+              height: '345px',
               borderRadius: '24px',
               overflow: 'hidden',
               boxShadow: '0 20px 45px rgba(0,0,0,0.12)',
@@ -211,9 +213,9 @@ export default function ArcadeGame({ siteData }) {
             <div style={{
               position: 'absolute',
               bottom: '0px',
-              right: '20px',
-              width: '320px',
-              height: '240px',
+              right: '10px',
+              width: '315px',
+              height: '235px',
               borderRadius: '24px',
               overflow: 'hidden',
               boxShadow: '0 20px 50px rgba(0,0,0,0.2)',
@@ -263,10 +265,10 @@ export default function ArcadeGame({ siteData }) {
             {/* Blue Decorative Grid Dots Accent */}
             <div style={{
               position: 'absolute',
-              top: '160px',
-              left: '315px',
-              width: '120px',
-              height: '120px',
+              top: '170px',
+              left: '335px',
+              width: '130px',
+              height: '130px',
               backgroundImage: 'radial-gradient(#38bdf8 2px, transparent 2px)',
               backgroundSize: '16px 16px',
               zIndex: 1,
@@ -279,8 +281,8 @@ export default function ArcadeGame({ siteData }) {
               alt="Doodle Arrow Accent"
               style={{
                 position: 'absolute',
-                top: '40px',
-                left: '325px',
+                top: '35px',
+                left: '340px',
                 width: '150px',
                 height: '150px',
                 objectFit: 'contain',
@@ -311,8 +313,8 @@ export default function ArcadeGame({ siteData }) {
             </SectionHeading>
 
             {/* Description Paragraph */}
-            <p style={{
-              fontSize: '13px',
+            <p className="winera-arcade-intro-desc" style={{
+              fontSize: '15px',
               color: '#475569',
               fontWeight: '500',
               lineHeight: 1.65,
@@ -372,46 +374,30 @@ export default function ArcadeGame({ siteData }) {
             ))}
 
             {/* Action Buttons Row */}
-            <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
-              {/* Button 1: Watch Video with Offset Rotated Yellow Backdrop */}
-              <div style={{ position: 'relative', display: 'inline-block' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-3px',
-                  bottom: '-3px',
-                  left: '-4px',
-                  right: '-4px',
-                  background: '#ffcd00',
-                  borderRadius: '14px',
-                  transform: 'rotate(-1.8deg)',
-                  zIndex: 1
-                }} />
-                <button
-                  onClick={() => openVideoModal(siteData?.arcadeIntro?.videoLink || "https://youtube.com", "Arcade Game Showcase")}
-                  style={{
-                    position: 'relative',
-                    zIndex: 2,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'linear-gradient(90deg, #28b4ee 0%, #0284c7 100%)',
-                    color: '#ffffff',
-                    fontSize: '14px',
-                    fontWeight: '800',
-                    padding: '11px 28px',
-                    borderRadius: '12px',
-                    border: 'none',
-                    cursor: 'pointer',
-                    boxShadow: 'none',
-                    transition: 'all 0.25s ease'
-                  }}
-                  className="winera-cta-btn-hover"
-                >
-                  <span>{siteData?.arcadeIntro?.videoBtnText || "Watch Video"}</span>
-                </button>
-              </div>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
+              {/* Button 1: Watch Video with arcadegame-button-1.png BG */}
+              <button
+                onClick={() => openVideoModal(siteData?.arcadeIntro?.videoLink || "https://youtube.com", "Arcade Game Showcase")}
+                style={{
+                  width: '190px',
+                  height: '70px',
+                  background: `url(${getValidImageUrl(siteData?.arcadeIntro?.videoBtnBg, arcadeBtn1)}) center center / 100% 100% no-repeat`,
+                  color: '#ffffff',
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  border: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  padding: '7px 5px 2px 0',
+                  textDecoration: 'none'
+                }}
+              >
+                <span>{siteData?.arcadeIntro?.videoBtnText || "Watch Video"}</span>
+              </button>
 
-              {/* Button 2: Get a Quote with Offset Rotated Cyan Backdrop */}
+              {/* Button 2: Get a Quote with arcadegame-button-2.png BG */}
               {(() => {
                 const baseLink = siteData?.arcadeIntro?.quoteLink || "https://wa.me/919428989488";
                 const defaultMsg = siteData?.arcadeIntro?.waMessage || "Hello Winera International! I want to inquire about Commercial Arcade Game Machines. Please share catalog and details. [Ref: Arcade Games Page]";
@@ -423,16 +409,28 @@ export default function ArcadeGame({ siteData }) {
                 }
 
                 return (
-                  <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-                    <a
-                      href={hrefLink}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-                    >
-                      <span>{siteData?.arcadeIntro?.quoteBtnText || "Get a Quote"}</span>
-                    </a>
-                  </div>
+                  <a
+                    href={hrefLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      width: '190px',
+                      height: '70px',
+                      background: `url(${getValidImageUrl(siteData?.arcadeIntro?.quoteBtnBg, arcadeBtn2)}) center center / 100% 100% no-repeat`,
+                      color: '#0f172a',
+                      fontSize: '15px',
+                      fontWeight: '700',
+                      border: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      padding: '6px 5px 2px 0',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    <span>{siteData?.arcadeIntro?.quoteBtnText || "Get a Quote"}</span>
+                  </a>
                 );
               })()}
             </div>
@@ -1265,10 +1263,10 @@ export default function ArcadeGame({ siteData }) {
                         </svg>
                       </div>
 
-                      <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
+                      <h3 style={{ fontSize: '1.05rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
                         {item.title}
                       </h3>
-                      <p style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '260px', margin: 0 }}>
+                      <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '260px', margin: 0 }}>
                         {item.desc}
                       </p>
                     </div>
@@ -1338,10 +1336,10 @@ export default function ArcadeGame({ siteData }) {
                           </svg>
                         </div>
 
-                        <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
+                        <h3 style={{ fontSize: '1.05rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
                           {item.title}
                         </h3>
-                        <p style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '280px', margin: 0 }}>
+                        <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '280px', margin: 0 }}>
                           {item.desc}
                         </p>
                       </div>

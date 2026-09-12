@@ -16,6 +16,8 @@ import founderUnnit from '../assets/founder-unnit.webp';
 import aboutLounge from '../assets/about-lounge.webp';
 import welcomeWineraImg from '../assets/welcome-to-winera.webp';
 import aboutusCtaBg from '../assets/aboutus-cta-bg.webp';
+import arcadeBtn1 from '../assets/arcadegame-button-1.png';
+import arcadeBtn2 from '../assets/arcadegame-button-2.png';
 import { Shield, Users, Target, Eye, TrendingUp, Maximize2, Clock, RefreshCw, Award, Headset, Settings } from 'lucide-react';
 
 const getValidImageUrl = (url, fallback) => {
@@ -201,8 +203,8 @@ export default function AboutUs({ siteData }) {
           maxWidth: '1240px',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: '1fr 1.05fr',
-          gap: '60px',
+          gridTemplateColumns: '0.85fr 1.3fr',
+          gap: '40px',
           alignItems: 'center'
         }}>
           <div className="winera-about-welcome-collage" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
@@ -211,7 +213,7 @@ export default function AboutUs({ siteData }) {
               alt="Welcome to Winera International 13+ Years Experience"
               style={{
                 width: '100%',
-                maxHeight: '480px',
+                maxHeight: '440px',
                 objectFit: 'contain',
                 display: 'block'
               }}
@@ -236,20 +238,20 @@ export default function AboutUs({ siteData }) {
               })()}
             </SectionHeading>
 
-            <p style={{ color: '#64748b', fontSize: '13px', lineHeight: 1.65, fontWeight: '500', marginBottom: '30px', maxWidth: '540px' }}>
+            <p style={{ color: '#64748b', fontSize: '13px', lineHeight: 1.65, fontWeight: '500', marginBottom: '24px', maxWidth: '100%' }}>
               {siteData?.aboutWelcome?.desc || "Winera International Pvt. Ltd. is a Surat-based B2B leader in indoor amusement and playground solutions. Since 2014, we have been transforming commercial spaces into world-class entertainment destinations, handling everything from design and manufacturing to installation and after-sales support."}
             </p>
 
-            <div className="winera-about-welcome-box-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '32px' }}>
-              <MotionCardFlip style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 18px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
+            <div className="winera-about-welcome-box-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '28px' }}>
+              <MotionCardFlip style={{ position: 'relative', background: '#ffffff', borderRadius: '18px', padding: '20px 22px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
                 <div style={{ color: '#00a8ff', marginBottom: '10px' }}><Shield style={{ width: '24px', height: '24px', fill: '#00a8ff', color: '#00a8ff' }} /></div>
-                <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box1Title || "Quality Assurance"}</h4>
-                <p style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '500', lineHeight: 1.45 }}>{siteData?.aboutWelcome?.box1Desc || "At Winera International, Quality Is Key. Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety. We Don't Just Build Equipment; We Build Experiences You Can Trust."}</p>
+                <h4 style={{ fontSize: '15px', fontWeight: 600, color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box1Title || "Quality Assurance"}</h4>
+                <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5 }}>{siteData?.aboutWelcome?.box1Desc || "At Winera International, Quality Is Key. Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety. We Don't Just Build Equipment; We Build Experiences You Can Trust."}</p>
               </MotionCardFlip>
-              <MotionCardFlip style={{ position: 'relative', background: '#F5F5F9', borderRadius: '20px', padding: '24px 18px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
+              <MotionCardFlip style={{ position: 'relative', background: '#ffffff', borderRadius: '18px', padding: '20px 22px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
                 <div style={{ color: '#00a8ff', marginBottom: '10px' }}><Users style={{ width: '24px', height: '24px', color: '#00a8ff' }} /></div>
-                <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box2Title || "Your Success, Our Commitment"}</h4>
-                <p style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '500', lineHeight: 1.45 }}>{siteData?.aboutWelcome?.box2Desc || "At Winera International, We Prioritize Your Satisfaction. From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step."}</p>
+                <h4 style={{ fontSize: '15px', fontWeight: 600, color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box2Title || "Your Success, Our Commitment"}</h4>
+                <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5 }}>{siteData?.aboutWelcome?.box2Desc || "At Winera International, We Prioritize Your Satisfaction. From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step."}</p>
               </MotionCardFlip>
             </div>
 
@@ -273,7 +275,7 @@ export default function AboutUs({ siteData }) {
           <div className="winera-about-stats-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px' }}>
             {(() => {
               const defaultStats = [
-                { number: "14+", label: "YEARS EXPERIENCE" },
+                { number: "14+", label: "YEARS<br/>EXPERIENCE" },
                 { number: "200+", label: "Project Completed" },
                 { number: "98%", label: "Happy Clients" },
                 { number: "50+", label: "Cities Covered" }
@@ -288,6 +290,24 @@ export default function AboutUs({ siteData }) {
                 label: item.title || item.label || (defaultStats[idx] ? defaultStats[idx].label : 'Stat Label')
               }));
 
+              const renderStatLabel = (labelStr) => {
+                if (!labelStr || typeof labelStr !== 'string') return labelStr;
+                let formatted = labelStr;
+                if (formatted.toUpperCase() === 'YEARS EXPERIENCE') {
+                  formatted = 'YEARS<br/>EXPERIENCE';
+                } else if (formatted.toUpperCase() === 'YEARS OF EXPERIENCE') {
+                  formatted = 'YEARS OF<br/>EXPERIENCE';
+                } else if (formatted.toUpperCase() === 'CUSTOMER SATISFACTION') {
+                  formatted = 'CUSTOMER<br/>SATISFACTION';
+                }
+                return formatted.split(/<br\s*\/?>|\n/i).map((line, lIdx) => (
+                  <React.Fragment key={lIdx}>
+                    {lIdx > 0 && <br />}
+                    {line}
+                  </React.Fragment>
+                ));
+              };
+
               return stats.map((stat, idx) => (
                 <div key={idx} style={{
                   background: '#ffffff',
@@ -300,7 +320,9 @@ export default function AboutUs({ siteData }) {
                   <h3 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0284c7', lineHeight: 1, marginBottom: '10px' }}>
                     <CountUpNumber value={stat.number} />
                   </h3>
-                  <p style={{ fontSize: '12.5px', fontWeight: '700', color: '#475569', lineHeight: 1.35, margin: 0 }}>{stat.label}</p>
+                  <p style={{ fontSize: '12.5px', fontWeight: '700', color: 'rgba(110, 120, 129, 1)', lineHeight: 1.3, margin: 0 }}>
+                    {renderStatLabel(stat.label)}
+                  </p>
                 </div>
               ));
             })()}
@@ -585,65 +607,49 @@ export default function AboutUs({ siteData }) {
           </div>
 
           {/* CTA Buttons: Get Started & View Our Products */}
-          <div style={{ textAlign: 'center', marginTop: '55px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-            {/* Primary Button: Get Started with Offset Rotated Yellow Backdrop (Protrudes Left-Bottom & Right-Top) */}
-            <div style={{ position: 'relative', display: 'inline-block' }}>
-              <div style={{
-                position: 'absolute',
-                top: '-4px',
-                bottom: '-4px',
-                left: '-5px',
-                right: '-5px',
-                background: '#ffcd00',
-                borderRadius: '18px',
-                transform: 'rotate(-1.8deg)',
-                zIndex: 1
-              }} />
-              <a
-                href={whyUsButtonLink}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  position: 'relative',
-                  zIndex: 2,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  background: 'linear-gradient(90deg, #28b4ee 0%, #0284c7 100%)',
-                  color: '#ffffff',
-                  fontSize: '15px',
-                  fontWeight: '900',
-                  padding: '14px 40px',
-                  borderRadius: '16px',
-                  textDecoration: 'none',
-                  boxShadow: 'none',
-                  transition: 'all 0.25s ease'
-                }}
-                className="winera-cta-btn-hover"
-              >
-                <span>{siteData?.aboutWhyUsDetail?.ctaPrimaryText || "Get Started"}</span>
-              </a>
-            </div>
+          <div className="winera-about-whyus-cta-btns" style={{ textAlign: 'center', marginTop: '55px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+            {/* Primary Button: Get Started with arcadegame-button-1.png BG */}
+            <a
+              href={whyUsButtonLink}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                width: '190px',
+                height: '70px',
+                background: `url(${getValidImageUrl(siteData?.aboutWhyUsDetail?.ctaPrimaryBg, arcadeBtn1)}) center center / 100% 100% no-repeat`,
+                color: '#ffffff',
+                fontSize: '15px',
+                fontWeight: '600',
+                border: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                padding: '7px 5px 2px 0',
+                textDecoration: 'none'
+              }}
+            >
+              <span>{siteData?.aboutWhyUsDetail?.ctaPrimaryText || "Get Started"}</span>
+            </a>
 
-            {/* Secondary Button: View Our Products */}
+            {/* Secondary Button: View Our Products with arcadegame-button-2.png BG */}
             <a
               href={siteData?.aboutWhyUsDetail?.ctaSecondaryLink || "/arcade-game"}
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: '#ffffff',
+                width: '190px',
+                height: '70px',
+                background: `url(${getValidImageUrl(siteData?.aboutWhyUsDetail?.ctaSecondaryBg, arcadeBtn2)}) center center / 100% 100% no-repeat`,
                 color: '#0f172a',
                 fontSize: '15px',
-                fontWeight: '900',
-                padding: '14px 40px',
-                borderRadius: '16px',
-                border: '2.5px solid #28b4ee',
-                boxShadow: 'none',
-                textDecoration: 'none',
-                transition: 'all 0.25s ease'
+                fontWeight: '700',
+                border: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                padding: '7px 5px 2px 0',
+                textDecoration: 'none'
               }}
-              className="winera-cta-btn-hover"
             >
               <span>{siteData?.aboutWhyUsDetail?.ctaSecondaryText || "View Our Products"}</span>
             </a>

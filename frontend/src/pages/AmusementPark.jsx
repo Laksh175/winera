@@ -572,10 +572,10 @@ export default function AmusementPark({ siteData }) {
                         whyUsIcons[cIdx % whyUsIcons.length]
                       )}
                     </div>
-                    <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                    <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                       {card.title}
                     </h4>
-                    <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                    <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                       {card.desc || card.description}
                     </p>
                   </div>
@@ -648,10 +648,10 @@ export default function AmusementPark({ siteData }) {
                           whyUsIcons[(topCards.length + bIdx) % whyUsIcons.length]
                         )}
                       </div>
-                      <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                      <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                         {card.title}
                       </h4>
-                      <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                      <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                         {card.desc || card.description}
                       </p>
                     </div>

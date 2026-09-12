@@ -547,7 +547,7 @@ export default function Hypergrid({ siteData }) {
                     </h3>
                   </div>
                   {/* Paragraph text starting at left edge vertically aligned with icon */}
-                  <p style={{ fontSize: '13px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, width: '450px' }}>
+                  <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, width: '450px' }}>
                     {card.desc}
                   </p>
                 </div>
@@ -668,7 +668,7 @@ export default function Hypergrid({ siteData }) {
       <section className="winera-hypergrid-whywinera-section" style={{ paddingTop: '35px', paddingBottom: '45px', paddingLeft: '4vw', paddingRight: '4vw', background: '#F5F5F9', textAlign: 'center', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Centered Section Heading Title */}
-          <div style={{ textAlign: 'center', marginBottom: '45px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="winera-hypergrid-whywinera-heading" style={{ textAlign: 'center', marginBottom: '45px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -744,10 +744,10 @@ export default function Hypergrid({ siteData }) {
                             renderWhyWineraIcon(card.icon, cIdx)
                           )}
                         </div>
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                        <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                           {card.title}
                         </h4>
-                        <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                           {card.desc || card.description}
                         </p>
                       </div>
@@ -816,10 +816,10 @@ export default function Hypergrid({ siteData }) {
                               renderWhyWineraIcon(card.icon, topCards.length + bIdx)
                             )}
                           </div>
-                          <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                          <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                             {card.title}
                           </h4>
-                          <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                             {card.desc || card.description}
                           </p>
                         </div>

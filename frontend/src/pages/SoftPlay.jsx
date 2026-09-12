@@ -30,6 +30,8 @@ import roiBlock5Img4 from '../assets/roi-block5-img4.webp';
 import softPalyImage from '../assets/soft-paly-image.webp';
 import downloadButtonImg from '../assets/download-button.png';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
+import ctaBtn3 from '../assets/cta-button-3.png';
+
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -1002,10 +1004,10 @@ export default function SoftPlay({ siteData }) {
                             defaultIcons[cIdx % defaultIcons.length]
                           )}
                         </div>
-                        <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px' }}>
                           {card.title}
                         </h3>
-                        <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                           {card.desc}
                         </p>
                       </div>
@@ -1080,10 +1082,10 @@ export default function SoftPlay({ siteData }) {
                               defaultIcons[(topCards.length + cIdx) % defaultIcons.length]
                             )}
                           </div>
-                          <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                          <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px' }}>
                             {card.title}
                           </h3>
-                          <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
                             {card.desc}
                           </p>
                         </div>
@@ -1127,6 +1129,7 @@ export default function SoftPlay({ siteData }) {
         showOverlay={false}
         align="center"
         buttonTheme="yellow_white"
+        buttonBg={getValidImageUrl(siteData?.softplayCta?.btnBg, ctaBtn3)}
         titleFontSize="42px"
         titleFontWeight="900"
         subtitleFontSize="15px"

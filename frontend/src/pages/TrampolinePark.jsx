@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
@@ -21,6 +21,8 @@ import tampolineImage6 from '../assets/tampoline-image-6.webp';
 import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.webp';
 import downloadButtonImg from '../assets/download-button.png';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
+import ctaBtn3 from '../assets/cta-button-3.png';
+
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -65,6 +67,16 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 export default function TrampolinePark({ siteData }) {
   const [activeZoneIndex, setActiveZoneIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const tabsScrollRef = useRef(null);
+
+  useEffect(() => {
+    if (tabsScrollRef.current) {
+      const activeEl = tabsScrollRef.current.querySelector('.active-tab');
+      if (activeEl) {
+        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+  }, [activeZoneIndex]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -542,7 +554,7 @@ export default function TrampolinePark({ siteData }) {
           <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 4vw' }}>
             
             {/* Header: Title + Subtitle */}
-            <div style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 35px', position: 'relative' }}>
+            <div className="winera-trampoline-inside-header" style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 35px', position: 'relative' }}>
               <div style={{ display: 'inline-block', position: 'relative' }}>
                 <img
                   src={yellowStrokeLine}
@@ -684,60 +696,63 @@ export default function TrampolinePark({ siteData }) {
             </div>
 
             {/* Bottom Menu & Animated Single Progress Line Track matching Screenshot 2 */}
-            <div style={{ maxWidth: '1180px', margin: '0 auto', position: 'relative' }}>
-              {/* Full Width Horizontal Base Line Track with Animated Active Line */}
-              <div style={{
-                position: 'relative',
-                width: '100%',
-                height: '2px',
-                background: '#cbd5e1',
-                borderRadius: '1px',
-                marginBottom: '16px'
-              }}>
-                {/* Active Sliding Cyan Highlight Line */}
+            <div className="winera-trampoline-tabs-scroll-container" ref={tabsScrollRef} style={{ maxWidth: '1180px', margin: '0 auto', position: 'relative' }}>
+              <div className="winera-trampoline-tabs-inner" style={{ position: 'relative', width: '100%' }}>
+                {/* Full Width Horizontal Base Line Track with Animated Active Line */}
                 <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: `${(activeZoneIndex * 100) / customParkZones.length}%`,
-                  width: `${100 / customParkZones.length}%`,
-                  height: '3px',
-                  background: '#38bdf8',
-                  borderRadius: '2px',
-                  transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 0 8px rgba(56, 189, 248, 0.6)'
-                }} />
-              </div>
+                  position: 'relative',
+                  width: '100%',
+                  height: '2px',
+                  background: '#cbd5e1',
+                  borderRadius: '1px',
+                  marginBottom: '16px'
+                }}>
+                  {/* Active Sliding Cyan Highlight Line */}
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: `${(activeZoneIndex * 100) / customParkZones.length}%`,
+                    width: `${100 / customParkZones.length}%`,
+                    height: '3px',
+                    background: '#38bdf8',
+                    borderRadius: '2px',
+                    transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: '0 0 8px rgba(56, 189, 248, 0.6)'
+                  }} />
+                </div>
 
-              {/* Menu items row with font-weight: 600 */}
-              <div className="winera-trampoline-tabs-wrapper" style={{
-                display: 'grid',
-                gridTemplateColumns: `repeat(${customParkZones.length}, 1fr)`,
-                width: '100%',
-                gap: '8px'
-              }}>
-                {customParkZones.map((zone, idx) => {
-                  const isActive = activeZoneIndex === idx;
-                  return (
-                    <button
-                      key={zone.id}
-                      onClick={() => setActiveZoneIndex(idx)}
-                      style={{
-                        background: 'transparent',
-                        border: 'none',
-                        padding: '4px 0',
-                        cursor: 'pointer',
-                        fontSize: '14.5px',
-                        fontWeight: '600',
-                        color: isActive ? '#0f172a' : '#64748b',
-                        whiteSpace: 'nowrap',
-                        transition: 'color 0.2s ease',
-                        textAlign: 'center'
-                      }}
-                    >
-                      {zone.title}
-                    </button>
-                  );
-                })}
+                {/* Menu items row with font-weight: 600 */}
+                <div className="winera-trampoline-tabs-wrapper" style={{
+                  display: 'grid',
+                  gridTemplateColumns: `repeat(${customParkZones.length}, 1fr)`,
+                  width: '100%',
+                  gap: '8px'
+                }}>
+                  {customParkZones.map((zone, idx) => {
+                    const isActive = activeZoneIndex === idx;
+                    return (
+                      <button
+                        key={zone.id}
+                        onClick={() => setActiveZoneIndex(idx)}
+                        className={isActive ? 'active-tab' : ''}
+                        style={{
+                          background: 'transparent',
+                          border: 'none',
+                          padding: '4px 0',
+                          cursor: 'pointer',
+                          fontSize: '14.5px',
+                          fontWeight: isActive ? '800' : '600',
+                          color: isActive ? '#0f172a' : '#64748b',
+                          whiteSpace: 'nowrap',
+                          transition: 'color 0.2s ease',
+                          textAlign: 'center'
+                        }}
+                      >
+                        {zone.title}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
@@ -930,10 +945,10 @@ export default function TrampolinePark({ siteData }) {
                           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
                       </div>
-                      <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                      <h3 style={{ fontSize: '1.2rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                         {item.title}
                       </h3>
-                      <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
+                      <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
                         {item.desc}
                       </p>
                       {idx < topRow.length - 1 && (
@@ -988,10 +1003,10 @@ export default function TrampolinePark({ siteData }) {
                             <line x1="12" y1="17" x2="12" y2="21"/>
                           </svg>
                         </div>
-                        <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
+                        <h3 style={{ fontSize: '1.2rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                           {item.title}
                         </h3>
-                        <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
+                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
                           {item.desc}
                         </p>
                         {idx < bottomRow.length - 1 && (
@@ -1081,14 +1096,6 @@ export default function TrampolinePark({ siteData }) {
             overflow: 'hidden'
           }} className="winera-trampoline-cta-card">
 
-            {/* Dark Overlay for 100% Crisp White Text Visibility */}
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'rgba(8, 12, 22, 0.7)',
-              zIndex: 1
-            }} />
-
             <div style={{ position: 'relative', zIndex: 2 }}>
               <h2 style={{
                 fontSize: '42px',
@@ -1129,7 +1136,23 @@ export default function TrampolinePark({ siteData }) {
                     e.preventDefault();
                     setIsModalOpen(true);
                   }}
-                  className="winera-cta-banner-btn-white"
+                  aria-label="Get Quote Now"
+                  style={{
+                    width: '271px',
+                    maxWidth: '82%',
+                    height: '73px',
+                    background: `url(${getValidImageUrl(siteData?.trampolineCta?.btnBg, ctaBtn3)}) center center / 100% 100% no-repeat`,
+                    color: '#0f172a',
+                    fontSize: '15px',
+                    fontWeight: '700',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: 'none',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    padding: '4px 5px 2px 0'
+                  }}
                 >
                   <span>{siteData?.trampolineCta?.buttonText || "Get Quote Now"}</span>
                 </a>
