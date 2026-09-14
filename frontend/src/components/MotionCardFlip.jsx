@@ -4,13 +4,13 @@ import { motion } from 'framer-motion';
 export default function MotionCardFlip({ children, className = "", style = {}, ...props }) {
   const [isDesktop, setIsDesktop] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth > 1024;
+      return window.innerWidth >= 1440;
     }
     return false;
   });
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 1025px)');
+    const mediaQuery = window.matchMedia('(min-width: 1440px)');
     const handleChange = (e) => setIsDesktop(e.matches);
     setIsDesktop(mediaQuery.matches);
 

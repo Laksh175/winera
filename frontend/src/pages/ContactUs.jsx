@@ -99,10 +99,11 @@ export default function ContactUs({ siteData }) {
             </p>
 
             {/* Stack of 2 Contact Info Cards (Call Us & Email Our Team) */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '36px', paddingTop: '10px' }}>
+            <div className="winera-contact-info-cards-stack" style={{ display: 'flex', flexDirection: 'column', gap: '36px', paddingTop: '10px' }}>
 
               {/* CALL US card — clean white background with top-left cyan accent wing */}
               <motion.div
+                className="winera-contact-info-card"
                 data-framer-motion="true"
                 initial={{ opacity: 0, x: -65, scale: 0.95 }}
                 whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -177,6 +178,7 @@ export default function ContactUs({ siteData }) {
 
               {/* EMAIL card — clean white background with top-left yellow accent wing */}
               <motion.div
+                className="winera-contact-info-card"
                 data-framer-motion="true"
                 initial={{ opacity: 0, x: -65, scale: 0.95 }}
                 whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -389,10 +391,11 @@ export default function ContactUs({ siteData }) {
               <span style={{ color: '#0f172a' }}>Where We’re </span>
               <span style={{ color: '#38bdf8' }}>Globally Present</span>
             </SectionHeading>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+            <div className="winera-contact-locations-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
 
               {/* Surat HQ — light cyan background fill with top-left cyan accent wing */}
               <motion.div
+                className="winera-contact-location-card"
                 data-framer-motion="true"
                 initial={{ opacity: 0, x: -70, scale: 0.95 }}
                 whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -458,6 +461,7 @@ export default function ContactUs({ siteData }) {
 
               {/* China Facility — light yellow background fill with top-left yellow accent wing */}
               <motion.div
+                className="winera-contact-location-card"
                 data-framer-motion="true"
                 initial={{ opacity: 0, x: 70, scale: 0.95 }}
                 whileInView={{ opacity: 1, x: 0, scale: 1 }}

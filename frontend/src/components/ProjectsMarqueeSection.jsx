@@ -39,7 +39,7 @@ export default function ProjectsMarqueeSection({
       <MotionFadeIn>
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
         {showTopHeader ? (
-          <div style={{
+          <div className="winera-projects-marquee-header" style={{
             maxWidth: '1340px',
             margin: '0 auto 45px',
             padding: '0 5vw',

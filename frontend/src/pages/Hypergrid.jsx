@@ -727,15 +727,17 @@ export default function Hypergrid({ siteData }) {
                         }}
                       >
                         {/* Vertical Gradient Divider Line on Right of Top Row Item */}
-                        <div className="winera-hypergrid-whyus-vertical-divider" style={{
-                          position: 'absolute',
-                          right: '9px',
-                          top: 0,
-                          bottom: 0,
-                          width: '1.5px',
-                          background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, #38bdf8 100%)',
-                          zIndex: 3
-                        }}></div>
+                        {cIdx < topCards.length - 1 && (
+                          <div className="winera-hypergrid-whyus-vertical-divider" style={{
+                            position: 'absolute',
+                            right: '0px',
+                            top: 0,
+                            bottom: 0,
+                            width: '1.5px',
+                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, #38bdf8 100%)',
+                            zIndex: 3
+                          }}></div>
+                        )}
 
                         <div style={{
                           width: '52px',
@@ -800,7 +802,7 @@ export default function Hypergrid({ siteData }) {
                         {bIdx < bottomCards.length - 1 && (
                           <div className="winera-hypergrid-whyus-vertical-divider" style={{
                             position: 'absolute',
-                            right: '-10px',
+                            right: '0px',
                             top: 0,
                             bottom: 0,
                             width: '1.5px',

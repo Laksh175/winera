@@ -669,7 +669,7 @@ export default function ProjectDetail({ siteData }) {
 
           <div className="winera-project-gallery-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
             gap: '24px',
             maxWidth: '1000px',
             margin: '0 auto'

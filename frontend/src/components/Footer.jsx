@@ -70,7 +70,7 @@ export default function Footer({ footerData }) {
         {/* Main Footer Links Columns Grid */}
         <div className="winera-footer-grid" style={{
           display: 'grid',
-          gridTemplateColumns: '320px 2.2fr 1fr 1fr 1fr',
+          gridTemplateColumns: '280px 2.2fr 1.2fr 1.2fr',
           gap: '35px',
           marginBottom: '40px',
           textAlign: 'left'
@@ -90,7 +90,7 @@ export default function Footer({ footerData }) {
             <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '18px' }}>
               Product
             </h4>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
+            <div className="winera-footer-menu-grid winera-footer-product-links" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
               {productLinks.map((prod, idx) => (
                 <a
                   key={idx}
@@ -114,7 +114,7 @@ export default function Footer({ footerData }) {
             <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '18px' }}>
               Quick Links
             </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div className="winera-footer-menu-grid winera-footer-quick-links" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {quickLinks.map((item, idx) => (
                 <a
                   key={idx}
@@ -138,7 +138,7 @@ export default function Footer({ footerData }) {
             <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '18px' }}>
               Resources
             </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div className="winera-footer-menu-grid winera-footer-resource-links" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {resourceLinks.map((item, idx) => (
                 <a
                   key={idx}
