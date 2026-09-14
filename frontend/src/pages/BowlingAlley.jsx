@@ -1190,6 +1190,7 @@ export default function BowlingAlley({ siteData }) {
 
       {/* 11. CTA BANNER SECTION (MATCHING FIGMA 1:1) */}
       <CtaBanner
+        containerPadding="10px 30px"
         showOverlay={false}
         align="center"
         buttonTheme="yellow_white"

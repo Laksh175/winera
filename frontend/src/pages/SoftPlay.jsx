@@ -1131,11 +1131,12 @@ export default function SoftPlay({ siteData }) {
 
       {/* 14. READY TO BUILD YOUR SOFT PLAY ZONE CTA BANNER SECTION */}
       <CtaBanner
+        containerPadding="35px 40px"
         showOverlay={false}
         align="center"
         buttonTheme="yellow_white"
         buttonBg={getValidImageUrl(siteData?.softplayCta?.btnBg, ctaBtn3)}
-        titleFontSize="42px"
+        titleFontSize="50px"
         titleFontWeight="900"
         subtitleFontSize="15px"
         subtitleFontWeight="500"

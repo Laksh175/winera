@@ -1088,7 +1088,7 @@ export default function TrampolinePark({ siteData }) {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             borderRadius: '24px',
-            padding: '36px 30px',
+            padding: '30px 30px',
             textAlign: 'center',
             color: '#ffffff',
             boxShadow: '0 12px 36px rgba(0,0,0,0.12)',
@@ -1100,7 +1100,7 @@ export default function TrampolinePark({ siteData }) {
               <h2 style={{
                 fontSize: '42px',
                 fontWeight: '900',
-                margin: '0 0 16px 0',
+                margin: '0 0 10px 0',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px',
                 lineHeight: 1.25,
@@ -1119,7 +1119,7 @@ export default function TrampolinePark({ siteData }) {
                 color: '#ffffff',
                 opacity: 1,
                 maxWidth: '740px',
-                margin: '0 auto 36px auto',
+                margin: '0 auto 16px auto',
                 lineHeight: 1.6,
                 fontWeight: '500',
                 textShadow: '0 2px 10px rgba(0,0,0,0.85)'
