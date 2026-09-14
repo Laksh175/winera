@@ -2,6 +2,7 @@ import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { fetchSiteContent } from './services/api';
+import wineraLogo from './assets/logo.webp';
 
 // Route Level Code Splitting with React.lazy
 const Home = lazy(() => import('./pages/Home'));
@@ -130,7 +131,22 @@ function AppRoutes({ siteData, loadData }) {
     <>
       <GlobalScrollAnimation />
       <WhatsAppFloat whatsAppUrl={siteData?.header?.whatsAppUrl} />
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#F5F5F9' }} />}>
+      <Suspense fallback={
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: '#F5F5F9'
+        }}>
+          <img
+            src={wineraLogo}
+            alt="Loading Winera..."
+            className="winera-logo-blinking"
+            style={{ width: '120px', height: 'auto', objectFit: 'contain' }}
+          />
+        </div>
+      }>
         <Routes location={location} key={location.pathname}>
           {/* 1. Home Page */}
           <Route path="/" element={<Home siteData={siteData} />} />
