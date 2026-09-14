@@ -1149,11 +1149,11 @@ export default function ArGames({ siteData }) {
                 src={siteData?.arEarn?.imgUrl || arEarnGamers}
                 alt="AR Gaming Experience Gamers"
                 style={{
-                  width: '100%',
-                  maxWidth: '250px',
+                  width: '150%',
+                  maxWidth: '290px',
                   height: 'auto',
                   display: 'block',
-                  marginRight: '-35%',
+                  marginRight: '-32%',
                   marginBottom: '14%'
                 }}
               />

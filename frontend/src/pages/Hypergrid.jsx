@@ -289,7 +289,7 @@ export default function Hypergrid({ siteData }) {
       </section>
 
       {/* 4. INTERACTIVE LED FLOOR GAMES FOR HIGH-FOOTFALL VENUES SECTION */}
-      <section className="winera-hypergrid-banner-section" style={{ paddingTop: '0px', paddingBottom: '0px', paddingLeft: '4vw', paddingRight: '4vw', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-hypergrid-banner-section" style={{ paddingTop: '40px', paddingBottom: '50px', paddingLeft: '4vw', paddingRight: '4vw', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-hypergrid-banner-grid" style={{
           maxWidth: '1280px',
           margin: '0 auto',
@@ -371,7 +371,7 @@ export default function Hypergrid({ siteData }) {
       </section>
 
       {/* 5. TECHNICAL SPECIFICATIONS SECTION */}
-      <section className="winera-hypergrid-specs-section" style={{ paddingTop: '0px', paddingBottom: '30px', paddingLeft: '4vw', paddingRight: '4vw', background: '#F5F5F9' }}>
+      <section className="winera-hypergrid-specs-section" style={{ paddingTop: '30px', paddingBottom: '60px', paddingLeft: '4vw', paddingRight: '4vw', background: '#F5F5F9' }}>
         <div className="winera-hypergrid-specs-container" style={{
           maxWidth: '1085px',
           margin: '0 auto',

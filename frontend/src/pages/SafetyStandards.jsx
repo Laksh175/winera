@@ -622,7 +622,8 @@ export default function SafetyStandards({ siteData }) {
               lineHeight: 1.2,
               textAlign: 'center'
             }}>
-              <span style={{ color: '#38bdf8' }}>{siteData?.safetyStructure?.title1 || "Structure, Installation & "}</span>
+              <span style={{ color: '#38bdf8' }}>{siteData?.safetyStructure?.title1 || "Structure, Installation &"}</span>
+              <br />
               <span style={{ color: '#0f172a' }}>{siteData?.safetyStructure?.title2 || "Operational Safety"}</span>
             </h2>
             <p style={{

@@ -311,7 +311,7 @@ export default function AmusementPark({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '380px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
+              <h2 style={{ fontSize: '41px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
                 {renderTitleMarkup(siteData?.amusementBanner?.title, "Complete Amusement Park<br/>*Setups, Built for Indian Venues*", '#38bdf8')}
               </h2>
             </div>
