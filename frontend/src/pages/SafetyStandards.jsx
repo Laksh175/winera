@@ -19,6 +19,9 @@ const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
+  if (url.includes('home-block') || url.includes('cta-consultations') || url.includes('hypergrid-winera-lastblock') || url.includes('cta-gamers')) {
+    return fallback;
+  }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
     return url;
   }

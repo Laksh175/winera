@@ -17,12 +17,16 @@ import roiBlock5Img6 from '../assets/roi-block5-img6.webp';
 import roiBlock6 from '../assets/roi-block6.webp';
 import roiBlock7Bg from '../assets/roi-block7-bg.webp';
 import homeBlockBg from '../assets/home-block.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import TestimonialsSection from '../components/TestimonialsSection';
 import MotionCardFlip from '../components/MotionCardFlip';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    return fallback;
+  }
+  if (url.includes('home-block') || url.includes('cta-consultations') || url.includes('cta-gamers')) {
     return fallback;
   }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
@@ -1339,7 +1343,7 @@ export default function Roi({ siteData }) {
           maxWidth: '1240px',
           margin: '0 auto',
           position: 'relative',
-          backgroundImage: `url(${roiCta.bgUrl && (roiCta.bgUrl.startsWith('http') || roiCta.bgUrl.startsWith('data:')) ? roiCta.bgUrl : homeBlockBg})`,
+          backgroundImage: `url(${getValidImageUrl(roiCta?.bgUrl || roiCta?.bg, ctaMainBanner)})`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
