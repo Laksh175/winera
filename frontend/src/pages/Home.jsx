@@ -39,10 +39,23 @@ const getValidImageUrl = (url, fallback) => {
     return fallback;
   }
   let finalUrl = url;
+  const isClientLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
   if (url.startsWith('/uploads')) {
-    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    finalUrl = `http://${hostname}:5001${url}`;
+    if (isClientLocal) {
+      finalUrl = `http://localhost:5001${url}`;
+    } else {
+      const protocol = typeof window !== 'undefined' ? window.location.protocol : 'https:';
+      const host = typeof window !== 'undefined' ? window.location.host : '';
+      finalUrl = `${protocol}//${host}${url}`;
+    }
+  } else if (!isClientLocal && (url.includes('localhost:5001') || url.includes('127.0.0.1:5001'))) {
+    const uploadPath = url.substring(url.indexOf('/uploads'));
+    const protocol = typeof window !== 'undefined' ? window.location.protocol : 'https:';
+    const host = typeof window !== 'undefined' ? window.location.host : '';
+    finalUrl = `${protocol}//${host}${uploadPath}`;
   }
+
   if (finalUrl.includes('/uploads/')) {
     finalUrl = finalUrl.replace(/\.(png|jpg|jpeg)$/i, '.webp');
   }
@@ -1138,10 +1151,14 @@ export default function Home({ siteData }) {
                         }}
                       >
                         <img
-                          src={getValidImageUrl(ind.img, '')}
+                          src={getValidImageUrl(ind.img, defaultIndustries[idx % defaultIndustries.length]?.img || indMall)}
                           alt={ind.title}
                           loading="lazy"
                           decoding="async"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = defaultIndustries[idx % defaultIndustries.length]?.img || indMall;
+                          }}
                           style={{
                             position: 'absolute',
                             inset: 0,

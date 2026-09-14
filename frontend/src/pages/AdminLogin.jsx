@@ -6,8 +6,8 @@ import { Lock, ShieldCheck, User, Key, Gamepad2, ArrowRight } from 'lucide-react
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 
 export default function AdminLogin() {
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin123');
+  const [username, setUsername] = useState('ravi@wineraindia.com');
+  const [password, setPassword] = useState('Winera@2026#Ravi');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -231,7 +231,7 @@ export default function AdminLogin() {
           textAlign: 'center',
           fontWeight: '500'
         }}>
-          Default Credentials: <b style={{ color: '#0f172a' }}>admin</b> / <b style={{ color: '#0f172a' }}>admin123</b>
+          Default Credentials: <b style={{ color: '#0f172a' }}>ravi@wineraindia.com</b> / <b style={{ color: '#0f172a' }}>Winera@2026#Ravi</b>
         </div>
       </div>
     </div>
