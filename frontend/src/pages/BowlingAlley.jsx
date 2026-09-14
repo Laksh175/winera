@@ -430,7 +430,7 @@ export default function BowlingAlley({ siteData }) {
       {/* 3.6 FREE-FALL & STRING BOWLING MACHINES COMPARISON SECTION (FULL WIDTH FIGMA 1:1) */}
       <section className="winera-bowling-types-section" style={{
         width: '100%',
-        padding: '140px 5vw 70px',
+        padding: '90px 5vw 60px',
         background: `url(${bowlingTypesBg}) center/100% 100% no-repeat`,
         textAlign: 'left'
       }}>
@@ -439,7 +439,7 @@ export default function BowlingAlley({ siteData }) {
           margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
-          gap: '70px'
+          gap: '30px'
         }}>
           {/* TOP BLOCK: Free-Fall Bowling (Text Left, Image & Spec Badges Right) */}
           <div className="winera-bowling-types-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '30px', alignItems: 'center' }}>
@@ -890,7 +890,7 @@ export default function BowlingAlley({ siteData }) {
               <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}>
                 {siteData?.bowlingString?.p1 || "Add a complete, ready-to-play bowling setup to your venue at a lower upfront cost than a traditional free-fall system. We supply and install full string bowling lanes pins, strings, scoring screens, and commissioning so you get a finished attraction, not just a machine."}
               </p>
-              <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '24px', textAlign: 'justify' }}>
+              <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '7px', textAlign: 'justify' }}>
                 {siteData?.bowlingString?.p2 || "String systems have fewer moving parts, which means quieter lanes, easier maintenance your own team can handle, and a compact footprint that fits where a full 89 ft lane won't. That's why family entertainment centers, malls, resorts, and cafés choose them. Lower to set up, lower to run, and quick to start earning."}
               </p>
 
