@@ -1359,11 +1359,11 @@ export default function Roi({ siteData }) {
           textAlign: 'center',
           overflow: 'hidden'
         }}>
-          {/* Dark Background Overlay matching Hypergrid (rgba 8, 12, 22, 0.85) */}
+          {/* Dark Background Overlay */}
           <div style={{
             position: 'absolute',
             inset: 0,
-            background: 'rgba(8, 12, 22, 0.85)',
+            background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)',
             borderRadius: '24px',
             zIndex: 1
           }} />

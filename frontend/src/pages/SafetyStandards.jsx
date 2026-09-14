@@ -842,7 +842,7 @@ export default function SafetyStandards({ siteData }) {
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'rgba(8, 12, 22, 0.75)',
+              background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)',
               zIndex: 1
             }}></div>
 

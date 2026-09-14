@@ -10,7 +10,7 @@ const getValidImg = (url, fallback) => {
   if (url.includes('home-block') || url.includes('cta-consultations') || url.includes('hypergrid-winera-lastblock') || url.includes('cta-gamers')) {
     return fallback;
   }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/assets') || url.startsWith('assets/')) {
     return url;
   }
   if (url.startsWith('/uploads')) {
@@ -120,7 +120,7 @@ export default function CtaBanner({
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'rgba(8, 12, 22, 0.85)',
+                background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)',
                 borderRadius: '24px',
                 zIndex: 1
               }} />
