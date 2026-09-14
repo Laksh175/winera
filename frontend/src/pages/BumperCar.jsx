@@ -55,9 +55,20 @@ const getValidImageUrl = (url, fallback) => {
     return fallback;
   }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    if (url.includes('localhost:5001') && typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+      return fallback;
+    }
     return url;
   }
   if (url.startsWith('/uploads')) {
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+      const apiEnv = import.meta.env.VITE_API_URL;
+      if (apiEnv) {
+        const baseUrl = apiEnv.replace(/\/api\/?$/, '');
+        return `${baseUrl}${url}`;
+      }
+      return fallback;
+    }
     const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
     return `http://${hostname}:5001${url}`;
   }
@@ -271,7 +282,7 @@ export default function BumperCar({ siteData }) {
           {/* 20% Right Area: 3D Neon Bumper Car Image */}
           <div className="winera-bumpercar-intro-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
-              src={siteData?.bumpercarBanner?.imgUrl || bumpercar3dNeon}
+              src={getValidImageUrl(siteData?.bumpercarBanner?.imgUrl, bumpercar3dNeon)}
               alt="Bumper Car 2026"
               style={{
                 width: '100%',
@@ -579,7 +590,7 @@ export default function BumperCar({ siteData }) {
           {/* Right Column: Bumper Car Collage Graphic */}
           <div className="winera-bumpercar-options-img" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '30px', marginLeft: '20px' }}>
             <img
-              src={siteData?.bumpercarOptions?.imgUrl || bumpercarOptionsCollage}
+              src={getValidImageUrl(siteData?.bumpercarOptions?.imgUrl, bumpercarOptionsCollage)}
               alt="Bumper Car Options Collage"
               style={{
                 width: '100%',
@@ -862,7 +873,7 @@ export default function BumperCar({ siteData }) {
           {/* Left Column: 4-Grid Rounded Collage Artwork */}
           <div className="winera-bumpercar-investment-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
-              src={siteData?.bumpercarInvestment?.imgUrl || bumpercarInvestmentCollage}
+              src={getValidImageUrl(siteData?.bumpercarInvestment?.imgUrl, bumpercarInvestmentCollage)}
               alt="Bumper Car Investment Collage"
               style={{
                 width: '100%',
