@@ -14,7 +14,7 @@ import bumpercar3dNeon from '../assets/bumpercar-3d-neon.webp';
 import bumpercarSpecsBg from '../assets/bumpercar-specs-bg.webp';
 import bumpercarOptionsBg from '../assets/bumper-car-bg.png';
 import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.webp';
-import bumpercarInvestmentCollage from '../assets/bumpercar-options-collage.webp';
+import bumpercarInvestmentCollage from '../assets/bumper-car-images.png';
 import bumpercarCtaBannerBg from '../assets/cta-consultations-banner.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
 import bumperCarCtaLeft from '../assets/bumperCar-cta-left.webp';
@@ -592,6 +592,10 @@ export default function BumperCar({ siteData }) {
             <img
               src={getValidImageUrl(siteData?.bumpercarOptions?.imgUrl, bumpercarOptionsCollage)}
               alt="Bumper Car Options Collage"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = bumpercarOptionsCollage;
+              }}
               style={{
                 width: '100%',
                 maxWidth: '550px',
@@ -875,6 +879,10 @@ export default function BumperCar({ siteData }) {
             <img
               src={getValidImageUrl(siteData?.bumpercarInvestment?.imgUrl, bumpercarInvestmentCollage)}
               alt="Bumper Car Investment Collage"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = bumpercarInvestmentCollage;
+              }}
               style={{
                 width: '100%',
                 maxWidth: '520px',
