@@ -110,6 +110,10 @@ import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
 import bumpercarCtaBannerBg from '../assets/cta-consultations-banner.webp';
 import bumpercarOptionsBg from '../assets/bumper-car-bg.png';
 import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.webp';
+import bumpercarInvestmentCollage from '../assets/bumper-car-images.png';
+import bumpercar3dNeon from '../assets/bumpercar-3d-neon.webp';
+import bumpercarCollageFrame from '../assets/bumpercar-collage-frame.webp';
+import bumpercarSpecsBg from '../assets/bumpercar-specs-bg.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
 import bumperCarCtaLeft from '../assets/bumperCar-cta-left.webp';
 import bumperCarCtaRight from '../assets/bumperCar-cta-right.webp';
@@ -9512,9 +9516,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.bumpercarIntro?.mainImgUrl && (
-                    <img src={formData.bumpercarIntro.mainImgUrl} alt="" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px' }} />
-                  )}
+                  <img src={getAdminValidImageUrl(formData.bumpercarIntro?.mainImgUrl, bumpercarCollageFrame)} alt="Intro Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
               </div>
 
@@ -9579,9 +9581,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.bumpercarBanner?.imgUrl && (
-                    <img src={formData.bumpercarBanner.imgUrl} alt="" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px' }} />
-                  )}
+                  <img src={getAdminValidImageUrl(formData.bumpercarBanner?.imgUrl, bumpercar3dNeon)} alt="3D Neon Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
               </div>
 
@@ -9715,9 +9715,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.bumpercarSpecs?.bgUrl && (
-                    <img src={formData.bumpercarSpecs.bgUrl} alt="" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px' }} />
-                  )}
+                  <img src={getAdminValidImageUrl(formData.bumpercarSpecs?.bgUrl, bumpercarSpecsBg)} alt="Specs Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
               </div>
 
@@ -10332,9 +10330,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.bumpercarInvestment?.imgUrl && (
-                    <img src={formData.bumpercarInvestment.imgUrl} alt="" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px' }} />
-                  )}
+                  <img src={getAdminValidImageUrl(formData.bumpercarInvestment?.imgUrl, bumpercarInvestmentCollage)} alt="Collage Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
               </div>
 
