@@ -10,6 +10,10 @@ const getValidImg = (url, fallback) => {
   if (url.includes('home-block') || url.includes('cta-consultations') || url.includes('hypergrid-winera-lastblock') || url.includes('cta-gamers')) {
     return fallback;
   }
+  const isClientLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  if (!isClientLocal && (url.includes('localhost') || url.includes('127.0.0.1') || url.startsWith('/uploads'))) {
+    return fallback;
+  }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/assets') || url.startsWith('assets/')) {
     return url;
   }

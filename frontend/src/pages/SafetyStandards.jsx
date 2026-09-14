@@ -22,7 +22,11 @@ const getValidImageUrl = (url, fallback) => {
   if (url.includes('home-block') || url.includes('cta-consultations') || url.includes('hypergrid-winera-lastblock') || url.includes('cta-gamers')) {
     return fallback;
   }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+  const isClientLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  if (!isClientLocal && (url.includes('localhost') || url.includes('127.0.0.1') || url.startsWith('/uploads'))) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/assets') || url.startsWith('assets/')) {
     return url;
   }
   if (url.startsWith('/uploads')) {
@@ -823,10 +827,6 @@ export default function SafetyStandards({ siteData }) {
             maxWidth: '1100px',
             margin: '0 auto',
             position: 'relative',
-            backgroundImage: `url(${getValidImageUrl(siteData?.safetyWhyMatters?.bgUrl || siteData?.safetyWhyMatters?.bg, ctaMainBanner)})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
             borderRadius: '24px',
             padding: '35px 20px',
             minHeight: '298px',
@@ -838,6 +838,18 @@ export default function SafetyStandards({ siteData }) {
             textAlign: 'center',
             overflow: 'hidden'
           }}>
+            {/* Background Image Layer with Opacity */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: `url(${getValidImageUrl(siteData?.safetyWhyMatters?.bgUrl || siteData?.safetyWhyMatters?.bg, ctaMainBanner)})`,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              opacity: 0.85,
+              zIndex: 0
+            }} />
+
             {/* Dark Overlay */}
             <div style={{
               position: 'absolute',
