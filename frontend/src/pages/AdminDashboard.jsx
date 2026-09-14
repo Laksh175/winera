@@ -168,6 +168,29 @@ const getAdminValidImageUrl = (url, fallback = bikeArcade) => {
   return fallback;
 };
 
+const defaultBumperCarThrillCards = [
+  {
+    title: "The Perfect Blend of Thrill and Safety:",
+    desc: "When it comes to bumper cars, safety is paramount. At Winera International, we’ve made it our unwavering commitment to ensure the safety of every rider. Our bumper cars are equipped with state-of-the-art safety features and technology, making the bumper car experience a thrilling yet secure adventure. Visitors can enjoy the excitement of collisions without compromising their well-being."
+  },
+  {
+    title: "A Long-Term, Low-Maintenance Investment:",
+    desc: "Choosing Winera International’s bumper cars means investing in a long-term, low-maintenance attraction that guarantees maximum fun for your visitors. Our bumper cars are built to withstand the rigors of continuous use, which means less downtime for maintenance and more ride time for your guests. The reliability and durability of our bumper cars ensure that your investment pays off year after year."
+  },
+  {
+    title: "Customization Options from India’s Trusted Bumper Car Manufacturer:",
+    desc: "We recognize that every amusement park has its own unique theme and ambiance. That’s why we offer a wide array of designs and features for you to choose from. Our customization options allow you to tailor your bumper car attraction to seamlessly align with the overall look and feel of your park. Whether you’re aiming for a classic, nostalgic atmosphere or a modern, futuristic vibe, our range of choices ensures you can create the perfect fit."
+  },
+  {
+    title: "Elevating Entertainment and Safety Standards:",
+    desc: "At Winera International, we’re dedicated to supplying amusement park products that not only enhance the entertainment factor but also raise the bar for safety standards. Our bumper cars exemplify this commitment, where the pursuit of fun is always in harmony with ensuring the safety and well-being of your guests. By investing in our high-quality bumper cars, you’re not just providing memorable experiences; you’re also guaranteeing a secure environment for all riders."
+  },
+  {
+    title: "Contact India’s Leading Bumper Car Manufacturer:",
+    desc: "If you’re looking to elevate your amusement park to new heights, Winera International is your partner in making it happen. Our comprehensive range of offerings includes bumper cars designed to capture the hearts of visitors. As a reputed Bumper Car manufacturer in India, we’re ready to assist you in creating an attraction that draws families, friends, and thrill-seekers alike to your park. Contact us today to explore our extensive catalog and discover how our bumper cars can be the highlight of your amusement park."
+  }
+];
+
 const defaultHypergridHero = {
   bgUrl: hypergridHeroBg,
   breadcrumbText: 'Hypergrid'
@@ -9574,81 +9597,83 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           )}
 
           {/* BUMPER CAR THRILL & SAFETY CAROUSEL CARDS FORM */}
-          {activeSection === 'bumpercarThrill' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>The Perfect Blend Of Thrill And Safety Carousel Cards</h3>
-              
-              <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <label style={{ fontWeight: '800', fontSize: '14px', color: '#0369a1' }}>Carousel Cards List</label>
+          {activeSection === 'bumpercarThrill' && (() => {
+            const currentCards = formData.bumpercarThrill?.cards || defaultBumperCarThrillCards;
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>The Perfect Blend Of Thrill And Safety Carousel Cards</h3>
+                
+                <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <label style={{ fontWeight: '800', fontSize: '14px', color: '#0369a1' }}>Carousel Cards List</label>
+                    <button
+                      onClick={() => {
+                        handleFieldChange('bumpercarThrill', 'cards', [...currentCards, { title: '', desc: '' }]);
+                      }}
+                      style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
+                    >
+                      + Add New Card
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    {currentCards.map((card, idx) => (
+                      <div key={idx} style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0f172a' }}>Card #{idx + 1}</span>
+                          <button
+                            onClick={() => {
+                              const list = [...currentCards];
+                              list.splice(idx, 1);
+                              handleFieldChange('bumpercarThrill', 'cards', list);
+                            }}
+                            style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800' }}
+                          >
+                            ×
+                          </button>
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Title</label>
+                          <input
+                            type="text"
+                            value={card.title || ''}
+                            onChange={(e) => {
+                              const list = [...currentCards];
+                              list[idx] = { ...list[idx], title: e.target.value };
+                              handleFieldChange('bumpercarThrill', 'cards', list);
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Description</label>
+                          <textarea
+                            rows={3}
+                            value={card.desc || ''}
+                            onChange={(e) => {
+                              const list = [...currentCards];
+                              list[idx] = { ...list[idx], desc: e.target.value };
+                              handleFieldChange('bumpercarThrill', 'cards', list);
+                            }}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
                   <button
-                    onClick={() => {
-                      const cur = formData.bumpercarThrill?.cards || defaultBumperCarThrillCards;
-                      handleFieldChange('bumpercarThrill', 'cards', [...cur, { title: '', desc: '' }]);
-                    }}
-                    style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
+                    onClick={() => persistSectionToDatabase('bumpercarThrill', { ...(formData.bumpercarThrill || {}), cards: currentCards })}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
-                    + Add New Card
+                    Save Thrill & Safety Carousel Cards
                   </button>
                 </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  {(formData.bumpercarThrill?.cards || defaultBumperCarThrillCards).map((card, idx) => (
-                    <div key={idx} style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0f172a' }}>Card #{idx + 1}</span>
-                        <button
-                          onClick={() => {
-                            const list = [...(formData.bumpercarThrill?.cards || [])];
-                            list.splice(idx, 1);
-                            handleFieldChange('bumpercarThrill', 'cards', list);
-                          }}
-                          style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800' }}
-                        >
-                          ×
-                        </button>
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Title</label>
-                        <input
-                          type="text"
-                          value={card.title}
-                          onChange={(e) => {
-                            const list = [...(formData.bumpercarThrill?.cards || [])];
-                            list[idx] = { ...list[idx], title: e.target.value };
-                            handleFieldChange('bumpercarThrill', 'cards', list);
-                          }}
-                          style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Description</label>
-                        <textarea
-                          rows={3}
-                          value={card.desc}
-                          onChange={(e) => {
-                            const list = [...(formData.bumpercarThrill?.cards || [])];
-                            list[idx] = { ...list[idx], desc: e.target.value };
-                            handleFieldChange('bumpercarThrill', 'cards', list);
-                          }}
-                          style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('bumpercarThrill', formData.bumpercarThrill || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Thrill & Safety Carousel Cards
-                </button>
-              </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* BUMPER CAR TECHNICAL SPECIFICATIONS CARD FORM */}
           {activeSection === 'bumpercarSpecs' && (
