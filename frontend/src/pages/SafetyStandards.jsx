@@ -894,7 +894,7 @@ export default function SafetyStandards({ siteData }) {
             />
 
             {/* Center Content Box */}
-            <div style={{ position: 'relative', zIndex: 3, maxWidth: '650px', padding: '0 15px' }}>
+            <div style={{ position: 'relative', zIndex: 3, maxWidth: '560px', margin: '0 auto', padding: '0 15px' }}>
               <h2 style={{
                 fontSize: '38px',
                 fontWeight: '900',

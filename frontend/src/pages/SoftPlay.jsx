@@ -31,6 +31,7 @@ import softPalyImage from '../assets/soft-paly-image.webp';
 import downloadButtonImg from '../assets/download-button.png';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
 import ctaBtn3 from '../assets/cta-button-3.png';
+import homePageIcon from '../assets/home-page-icon.png';
 
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
@@ -148,8 +149,8 @@ export default function SoftPlay({ siteData }) {
           maxWidth: '1240px',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: '1.05fr 1fr',
-          gap: '70px',
+          gridTemplateColumns: '1fr 1.2fr',
+          gap: '40px',
           alignItems: 'center'
         }}>
           {/* Left Side Direct Soft Play Image */}
@@ -184,8 +185,12 @@ export default function SoftPlay({ siteData }) {
                 height={10}
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.softplayIntro?.title, "*Indoor Soft Play*<br/>Equipment Manufacturer in India")}
+              <h2 style={{ fontSize: '38px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <span style={{ color: '#38bdf8' }}>Indoor Soft Play</span>
+                <br />
+                <span style={{ whiteSpace: 'nowrap' }}>Equipment Manufacturer</span>
+                <br />
+                <span>in India</span>
               </h2>
             </div>
 
@@ -415,10 +420,10 @@ export default function SoftPlay({ siteData }) {
                 : defaultMaterialsSubpoints
               ).map((item, idx) => (
                 <div key={idx} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  {/* Black Checkmark Icon */}
-                  <span style={{ fontSize: '16px', fontWeight: '900', color: '#0f172a', marginTop: '1px' }}>✓</span>
+                  {/* Home Page Icon */}
+                  <img src={homePageIcon} alt="" style={{ width: '16px', height: '16px', marginTop: '3px', objectFit: 'contain', flexShrink: 0 }} />
                   <div>
-                    <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', margin: '0 0 4px 0' }}>
+                    <h4 style={{ fontSize: '17px', fontWeight: '600', color: '#0f172a', margin: '0 0 4px 0' }}>
                       {item.title}
                     </h4>
                     <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>

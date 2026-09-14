@@ -1233,6 +1233,7 @@ export default function BumperCar({ siteData }) {
         gradientTagline={true}
         gradientTitle={true}
         buttonTheme="yellow"
+        titleFontSize="30px"
         subtitleFontSize="16px"
         bgUrl={siteData?.bumpercarCta?.bgUrl ? getValidImageUrl(siteData.bumpercarCta.bgUrl, ctaMainBanner) : null}
         bg={ctaMainBanner}

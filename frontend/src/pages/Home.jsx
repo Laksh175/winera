@@ -1640,6 +1640,7 @@ export default function Home({ siteData }) {
           buttonTheme="yellow_white"
           gradientTagline={true}
           gradientTitle={false}
+          titleFontSize="33px"
           bgUrl={siteData?.ctaBanner?.bgUrl !== undefined ? siteData.ctaBanner.bgUrl : null}
           bg={ctaMainBanner}
           leftImgUrl={siteData?.ctaBanner?.leftImgUrl !== undefined ? siteData.ctaBanner.leftImgUrl : null}

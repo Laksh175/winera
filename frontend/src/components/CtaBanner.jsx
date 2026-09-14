@@ -178,7 +178,7 @@ export default function CtaBanner({
               textAlign: isCentered ? 'center' : 'left',
               margin: isCentered ? '0 auto' : '0',
               width: '100%',
-              maxWidth: isCentered ? '820px' : '650px'
+              maxWidth: isCentered ? (hasSideImages ? '560px' : '820px') : '650px'
             }}>
               {tagline && (
                 <div className="winera-cta-tagline" style={{
@@ -211,6 +211,7 @@ export default function CtaBanner({
                   lineHeight: 1.25,
                   marginBottom: '14px',
                   letterSpacing: '0.2px',
+                  maxWidth: hasSideImages ? '560px' : '100%',
                   textAlign: isCentered ? 'center' : 'left',
                   ...(gradientTitle ? {
                     background: 'linear-gradient(90deg, rgba(255, 212, 0, 1) 0%, rgba(238, 229, 183, 1) 30%, rgba(0, 174, 239, 1) 68%, rgba(167, 229, 245, 1) 100%)',
@@ -238,7 +239,7 @@ export default function CtaBanner({
                   color: '#ffffff',
                   lineHeight: 1.35,
                   marginBottom: '24px',
-                  maxWidth: '820px',
+                  maxWidth: hasSideImages ? '560px' : '820px',
                   textAlign: isCentered ? 'center' : 'left',
                   textShadow: showTextShadow ? '0 2px 10px rgba(0,0,0,0.85)' : 'none'
                 }}>
@@ -257,7 +258,7 @@ export default function CtaBanner({
                   color: '#e2e8f0',
                   lineHeight: 1.6,
                   marginBottom: '24px',
-                  maxWidth: '620px'
+                  maxWidth: hasSideImages ? '560px' : '620px'
                 }}>
                   {description}
                 </p>
