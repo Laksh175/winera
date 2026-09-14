@@ -13,7 +13,7 @@ import bumpercarCollageFrame from '../assets/bumpercar-collage-frame.webp';
 import bumpercar3dNeon from '../assets/bumpercar-3d-neon.webp';
 import bumpercarSpecsBg from '../assets/bumpercar-specs-bg.webp';
 import bumpercarOptionsBg from '../assets/bumper-car-bg.png';
-import bumpercarOptionsCollage from '../assets/bumpercar-options-collage.webp';
+import bumpercarOptionsCollage from '../assets/bumper-car-image-block.png';
 import bumpercarInvestmentCollage from '../assets/bumper-car-images.png';
 import bumpercarCtaBannerBg from '../assets/cta-consultations-banner.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
