@@ -18,6 +18,7 @@ import needConsultationsBg from '../assets/cta-consultations-banner.webp';
 import homeBlock1 from '../assets/home-block-1.webp';
 import vrCtaRightImg from '../assets/vr-cta-right-img.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import superAirHockeyImg from '../assets/super-air-hockey.webp';
 import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.webp';
 import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.webp';
@@ -1395,10 +1396,10 @@ export default function ArGames({ siteData }) {
             !siteData.arCta.bgUrl.includes('cta-consultations') &&
             !siteData.arCta.bgUrl.includes('need-consultations') &&
             !siteData.arCta.bgUrl.includes('project-lastbg')
-            ? getValidImageUrl(siteData.arCta.bgUrl, amusementParkCtaBg)
+            ? getValidImageUrl(siteData.arCta.bgUrl, ctaMainBanner)
             : null
         }
-        bg={amusementParkCtaBg}
+        bg={ctaMainBanner}
         leftImgUrl={
           siteData?.arCta?.leftImgUrl
             ? getValidImageUrl(siteData.arCta.leftImgUrl, homeBlock1)

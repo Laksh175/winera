@@ -17,6 +17,7 @@ import bumpercarOptionsCollage from '../assets/bumper-car-image-block.png';
 import bumpercarInvestmentCollage from '../assets/bumper-car-images.png';
 import bumpercarCtaBannerBg from '../assets/cta-consultations-banner.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import bumperCarCtaLeft from '../assets/bumperCar-cta-left.webp';
 import bumperCarCtaRight from '../assets/bumperCar-cta-right.webp';
 import bumperCarIcon from '../assets/bumper-car-icon.webp';
@@ -1239,8 +1240,8 @@ export default function BumperCar({ siteData }) {
         gradientTitle={true}
         buttonTheme="yellow"
         subtitleFontSize="16px"
-        bgUrl={siteData?.bumpercarCta?.bgUrl}
-        bg={amusementParkCtaBg}
+        bgUrl={siteData?.bumpercarCta?.bgUrl ? getValidImageUrl(siteData.bumpercarCta.bgUrl, ctaMainBanner) : null}
+        bg={ctaMainBanner}
         leftImgUrl={siteData?.bumpercarCta?.leftImgUrl}
         leftImg={bumperCarCtaLeft}
         rightImgUrl={siteData?.bumpercarCta?.rightImgUrl}

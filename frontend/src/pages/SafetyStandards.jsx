@@ -11,6 +11,7 @@ import safetyStandardBg2 from '../assets/safety-standard-bg-2.webp';
 import safetyStandard2 from '../assets/safety-standard-2.webp';
 import safetyStandardImg3 from '../assets/safety-standard-img3.webp';
 import hypergridWineraLastblock from '../assets/hypergrid-winera-lastblock.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import leftTiltedCard from '../assets/Left Tilted Card.webp';
 import rightTiltedCard from '../assets/Right Tilted Card.webp';
 
@@ -819,7 +820,7 @@ export default function SafetyStandards({ siteData }) {
             maxWidth: '1100px',
             margin: '0 auto',
             position: 'relative',
-            backgroundImage: `url(${getValidImageUrl(siteData?.safetyWhyMatters?.bgUrl || siteData?.safetyWhyMatters?.bg, hypergridWineraLastblock)})`,
+            backgroundImage: `url(${getValidImageUrl(siteData?.safetyWhyMatters?.bgUrl || siteData?.safetyWhyMatters?.bg, ctaMainBanner)})`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',

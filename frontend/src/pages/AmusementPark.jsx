@@ -15,6 +15,7 @@ import amusementOptionsBottomImg from '../assets/amusement-options-bottom-img.we
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
 import amusementCtaBg from '../assets/cta-consultations-banner.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import amusementLeftImg from '../assets/amusement-park-left-img.webp';
 import amusementRightImg from '../assets/amusement-park-right-img.webp';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
@@ -682,8 +683,8 @@ export default function AmusementPark({ siteData }) {
         titleFontSize="42px"
         subtitleFontSize="24px"
         subtitleFontWeight="900"
-        bgUrl={siteData?.amusementCta?.bgUrl}
-        bg={amusementCtaBg}
+        bgUrl={siteData?.amusementCta?.bgUrl ? getValidImageUrl(siteData.amusementCta.bgUrl, ctaMainBanner) : null}
+        bg={ctaMainBanner}
         leftImgUrl={siteData?.amusementCta?.leftImgUrl}
         leftImg={amusementLeftImg}
         rightImgUrl={siteData?.amusementCta?.rightImgUrl}

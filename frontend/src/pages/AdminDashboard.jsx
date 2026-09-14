@@ -104,6 +104,7 @@ import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
 import aboutusCtaBg from '../assets/aboutus-cta-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 import bowlingHeroBg from '../assets/bowling-hero-bg.webp';
 import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
@@ -4699,7 +4700,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
                   <div style={{ position: 'relative', width: '140px', height: '60px', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid #38bdf8' }}>
                     <img
-                      src={getAdminValidImageUrl(formData.ctaBanner?.bgUrl, homeBlockBg)}
+                      src={getAdminValidImageUrl(formData.ctaBanner?.bgUrl, ctaMainBanner)}
                       alt="Banner Background Preview"
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />

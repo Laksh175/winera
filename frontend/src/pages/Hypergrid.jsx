@@ -15,6 +15,7 @@ import hypergridWhyUsBg from '../assets/hypergrid-why-us-bg.webp';
 import hypergridWhyUsLeft from '../assets/hypergrid-why-us-left.webp';
 import hypergridImage from '../assets/hypergrid-image.webp';
 import hypergridWineraLastblock from '../assets/hypergrid-winera-lastblock.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import leftTiltedCard from '../assets/Left Tilted Card.webp';
 import rightTiltedCard from '../assets/Right Tilted Card.webp';
 import arImage from '../assets/AR-image.webp';
@@ -905,8 +906,8 @@ export default function Hypergrid({ siteData }) {
         titleFontSize="42px"
         subtitleFontSize="16px"
         subtitleFontWeight="600"
-        bgUrl={siteData?.hypergridCta?.bgUrl}
-        bg={hypergridWineraLastblock}
+        bgUrl={siteData?.hypergridCta?.bgUrl ? getValidImageUrl(siteData.hypergridCta.bgUrl, ctaMainBanner) : null}
+        bg={ctaMainBanner}
         leftImgUrl={siteData?.hypergridCta?.leftImgUrl}
         leftImg={leftTiltedCard}
         rightImgUrl={siteData?.hypergridCta?.rightImgUrl}

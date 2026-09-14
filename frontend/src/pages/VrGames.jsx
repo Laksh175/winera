@@ -11,6 +11,7 @@ import { ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, 
 import vrHeroBg from '../assets/vrgame-hero-bg.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeBoy from '../assets/arcade-boy.webp';
 import arcadeHall from '../assets/arcade-hall.webp';
@@ -1067,10 +1068,10 @@ export default function VrGames({ siteData }) {
           siteData?.vrCta?.bgUrl &&
             !siteData.vrCta.bgUrl.includes('cta-consultations') &&
             !siteData.vrCta.bgUrl.includes('project-lastbg')
-            ? getValidImageUrl(siteData.vrCta.bgUrl, amusementParkCtaBg)
+            ? getValidImageUrl(siteData.vrCta.bgUrl, ctaMainBanner)
             : null
         }
-        bg={amusementParkCtaBg}
+        bg={ctaMainBanner}
         leftImgUrl={
           siteData?.vrCta?.leftImgUrl && !siteData.vrCta.leftImgUrl.includes('home-block-1')
             ? getValidImageUrl(siteData.vrCta.leftImgUrl, vrgameCtaBg)

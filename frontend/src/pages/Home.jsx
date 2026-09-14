@@ -23,6 +23,7 @@ import indMall from '../assets/ind-mall.webp';
 import indResort from '../assets/ind-resort.webp';
 import indSchool from '../assets/ind-school.webp';
 import homeBlockBg from '../assets/home-block.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import homeBlock1 from '../assets/home-block-1.webp';
 import homeBlock2 from '../assets/home-block-2.webp';
 import homeRightSign from '../assets/home-right-sign.webp';
@@ -1639,7 +1640,7 @@ export default function Home({ siteData }) {
           gradientTagline={true}
           gradientTitle={false}
           bgUrl={siteData?.ctaBanner?.bgUrl !== undefined ? siteData.ctaBanner.bgUrl : null}
-          bg={homeBlockBg}
+          bg={ctaMainBanner}
           leftImgUrl={siteData?.ctaBanner?.leftImgUrl !== undefined ? siteData.ctaBanner.leftImgUrl : null}
           leftImg={homeBlock1}
           rightImgUrl={siteData?.ctaBanner?.rightImgUrl !== undefined ? siteData.ctaBanner.rightImgUrl : null}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ctaGamersBg from '../assets/cta-gamers-bg.webp';
+import ctaMainBanner from '../assets/cta-main-banner.png';
 import LeadCaptureModal from './LeadCaptureModal';
 import MotionFadeIn from './MotionFadeIn';
 
@@ -57,7 +57,7 @@ export default function CtaBanner({
   buttonTheme = "cyan",
   buttonBg = null,
   bgUrl = null,
-  bg = ctaGamersBg,
+  bg = ctaMainBanner,
   leftImgUrl = null,
   leftImg = null,
   rightImgUrl = null,
