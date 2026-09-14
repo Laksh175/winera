@@ -23,7 +23,7 @@ const getValidImageUrl = (url, fallback) => {
     return fallback;
   }
   const isClientLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-  if (!isClientLocal && (url.includes('localhost') || url.includes('127.0.0.1') || url.startsWith('/uploads'))) {
+  if (!isClientLocal && (url.includes('localhost') || url.includes('127.0.0.1') || url.includes('/uploads')) && !url.includes('cloudinary')) {
     return fallback;
   }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/assets') || url.startsWith('assets/')) {
@@ -827,10 +827,11 @@ export default function SafetyStandards({ siteData }) {
             maxWidth: '1100px',
             margin: '0 auto',
             position: 'relative',
+            backgroundColor: '#0c0f17',
             borderRadius: '24px',
             padding: '35px 20px',
             minHeight: '298px',
-            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.25)',
+            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.35)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -846,7 +847,7 @@ export default function SafetyStandards({ siteData }) {
               backgroundPosition: 'center',
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
-              opacity: 0.85,
+              opacity: 0.3,
               zIndex: 0
             }} />
 
@@ -854,7 +855,7 @@ export default function SafetyStandards({ siteData }) {
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)',
+              background: 'linear-gradient(180deg, rgba(8, 11, 18, 0.75) 0%, rgba(8, 11, 18, 0.88) 100%)',
               zIndex: 1
             }}></div>
 

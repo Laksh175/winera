@@ -11,7 +11,7 @@ const getValidImg = (url, fallback) => {
     return fallback;
   }
   const isClientLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-  if (!isClientLocal && (url.includes('localhost') || url.includes('127.0.0.1') || url.startsWith('/uploads'))) {
+  if (!isClientLocal && (url.includes('localhost') || url.includes('127.0.0.1') || url.includes('/uploads')) && !url.includes('cloudinary')) {
     return fallback;
   }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/assets') || url.startsWith('assets/')) {

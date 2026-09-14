@@ -400,10 +400,10 @@ export default function BowlingAlley({ siteData }) {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px' }}>
             {/* Left/Center Text Content Block */}
             <div className="winera-bowling-premium-text" style={{ flex: '1 1 800px', color: '#475569', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', textAlign: 'center' }}>
-              <p style={{ marginBottom: '22px', maxWidth: '860px', margin: '0 auto 22px' }}>
+              <p style={{ marginBottom: '22px', maxWidth: '1024px', margin: '0 auto 22px' }}>
                 {siteData?.bowlingManufacturer?.p1 || "At Winera International Pvt. Ltd., we are proud to be India's leading bowling alley manufacturer and supplier of refurbished Brunswick bowling equipment. With over 15 years of expertise in the industry, we have built a reputation for delivering top-quality bowling alley equipment and exceptional customer service, tailored to fit the unique needs and budgets of our clients."}
               </p>
-              <p style={{ maxWidth: '860px', margin: '0 auto' }}>
+              <p style={{ maxWidth: '1024px', margin: '0 auto' }}>
                 {siteData?.bowlingManufacturer?.p2 || "We specialize in providing refurbished Brunswick GS98 & GSX equipment, enhanced with the latest Frameworx or Vector Scoring Systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience."}
               </p>
             </div>

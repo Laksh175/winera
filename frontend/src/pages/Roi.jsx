@@ -29,6 +29,10 @@ const getValidImageUrl = (url, fallback) => {
   if (url.includes('home-block') || url.includes('cta-consultations') || url.includes('cta-gamers')) {
     return fallback;
   }
+  const isClientLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  if (!isClientLocal && (url.includes('localhost') || url.includes('127.0.0.1') || url.includes('/uploads')) && !url.includes('cloudinary')) {
+    return fallback;
+  }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
     return url;
   }
@@ -1343,15 +1347,12 @@ export default function Roi({ siteData }) {
           maxWidth: '1240px',
           margin: '0 auto',
           position: 'relative',
-          backgroundImage: `url(${getValidImageUrl(roiCta?.bgUrl || roiCta?.bg, ctaMainBanner)})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
+          backgroundColor: '#0c0f17',
           borderRadius: '24px',
           padding: '60px 40px',
           minHeight: '290px',
           aspectRatio: '1920 / 520',
-          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.25)',
+          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.35)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -1359,11 +1360,23 @@ export default function Roi({ siteData }) {
           textAlign: 'center',
           overflow: 'hidden'
         }}>
+          {/* Background Image Layer with Opacity */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url(${getValidImageUrl(roiCta?.bgUrl || roiCta?.bg, ctaMainBanner)})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.3,
+            zIndex: 0
+          }} />
+
           {/* Dark Background Overlay */}
           <div style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)',
+            background: 'linear-gradient(180deg, rgba(8, 11, 18, 0.75) 0%, rgba(8, 11, 18, 0.88) 100%)',
             borderRadius: '24px',
             zIndex: 1
           }} />

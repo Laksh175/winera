@@ -55,21 +55,14 @@ const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
+  const isClientLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  if (!isClientLocal && (url.includes('localhost') || url.includes('127.0.0.1') || url.includes('/uploads')) && !url.includes('cloudinary')) {
+    return fallback;
+  }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
-    if (url.includes('localhost:5001') && typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-      return fallback;
-    }
     return url;
   }
   if (url.startsWith('/uploads')) {
-    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-      const apiEnv = import.meta.env.VITE_API_URL;
-      if (apiEnv) {
-        const baseUrl = apiEnv.replace(/\/api\/?$/, '');
-        return `${baseUrl}${url}`;
-      }
-      return fallback;
-    }
     const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
     return `http://${hostname}:5001${url}`;
   }
