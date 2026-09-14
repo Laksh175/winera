@@ -1057,6 +1057,7 @@ export default function VrGames({ siteData }) {
 
       {/* 9. NEED ANY CONSULTATIONS CTA BANNER SECTION */}
       <CtaBanner
+        blurBg={true}
         showOverlay={true}
         align="center"
         gradientTitle={true}

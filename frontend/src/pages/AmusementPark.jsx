@@ -676,6 +676,7 @@ export default function AmusementPark({ siteData }) {
 
       {/* CTA BANNER SECTION WITH DYNAMIC CONTENT & EXACT TILTED CARDS MATCHING UI 1:1 */}
       <CtaBanner
+        blurBg={true}
         showOverlay={true}
         align="center"
         gradientTitle={true}

@@ -1386,6 +1386,7 @@ export default function ArGames({ siteData }) {
 
       {/* 13. CTA BANNER SECTION (MATCHING VR GAMES STYLE 1:1) */}
       <CtaBanner
+        blurBg={true}
         showOverlay={true}
         align="center"
         gradientTitle={true}

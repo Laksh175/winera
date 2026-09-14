@@ -1635,6 +1635,7 @@ export default function Home({ siteData }) {
 
         {/* 15. READY TO GET STARTED CTA BANNER SECTION */}
         <CtaBanner
+          blurBg={true}
           align="center"
           buttonTheme="yellow_white"
           gradientTagline={true}

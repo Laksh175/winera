@@ -704,7 +704,7 @@ export default function BowlingAlley({ siteData }) {
               {/* Stacked Yellow Specification Pills matching Figma Screenshot 1:1 */}
               <div style={{
                 position: 'absolute',
-                left: '-115px',
+                left: '-40px',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 display: 'flex',
@@ -722,7 +722,7 @@ export default function BowlingAlley({ siteData }) {
                   alignItems: 'center',
                   gap: '18px',
                   maxWidth: '335px',
-                  transform: 'translateX(50px)'
+                  transform: 'translateX(90px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
@@ -751,7 +751,7 @@ export default function BowlingAlley({ siteData }) {
                   alignItems: 'center',
                   gap: '18px',
                   maxWidth: '345px',
-                  transform: 'translateX(10px)'
+                  transform: 'translateX(30px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
@@ -788,7 +788,7 @@ export default function BowlingAlley({ siteData }) {
                   alignItems: 'center',
                   gap: '18px',
                   maxWidth: '295px',
-                  transform: 'translateX(-40px)'
+                  transform: 'translateX(-25px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
@@ -817,7 +817,7 @@ export default function BowlingAlley({ siteData }) {
                   alignItems: 'center',
                   gap: '18px',
                   maxWidth: '335px',
-                  transform: 'translateX(10px)'
+                  transform: 'translateX(0px)'
                 }}>
                   <span style={{
                     background: '#ffffff',

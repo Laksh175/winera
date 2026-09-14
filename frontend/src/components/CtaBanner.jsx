@@ -74,7 +74,8 @@ export default function CtaBanner({
   minHeight = "300px",
   leftImgMaxWidth = "280px",
   containerPadding = null,
-  showTextShadow = true
+  showTextShadow = true,
+  blurBg = false
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -101,10 +102,6 @@ export default function CtaBanner({
             maxWidth: '1240px',
             margin: '0 auto',
             position: 'relative',
-            backgroundImage: `url(${finalBg})`,
-            backgroundPosition: 'center center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
             borderRadius: '24px',
             padding: containerPadding || (isCentered ? (hasSideImages ? '48px 30px 48px' : '52px 40px 52px') : '52px 48px'),
             minHeight: minHeight || '320px',
@@ -115,12 +112,25 @@ export default function CtaBanner({
             justifyContent: isCentered ? 'center' : 'flex-start'
           }}>
 
+            {/* Background Image Layer (with optional blur) */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: `url(${finalBg})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              filter: blurBg ? 'blur(6px) scale(1.05)' : 'none',
+              borderRadius: '24px',
+              zIndex: 0
+            }} />
+
             {/* Dark Background Overlay (optional) */}
             {showOverlay && (
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)',
+                background: blurBg ? 'rgba(8, 12, 22, 0.82)' : 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)',
                 borderRadius: '24px',
                 zIndex: 1
               }} />
