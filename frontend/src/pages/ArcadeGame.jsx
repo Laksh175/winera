@@ -1063,7 +1063,7 @@ export default function ArcadeGame({ siteData }) {
               <div key={pIdx} style={{ marginBottom: pIdx === 0 ? '22px' : '30px' }}>
                 <div className="winera-commercial-point-title" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '8px', textAlign: 'left' }}>
                   <CheckCheck style={{ width: '22px', height: '22px', color: '#00a8ff', strokeWidth: 3, flexShrink: 0, marginTop: '2px' }} />
-                  <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, lineHeight: 1.35, textAlign: 'left' }}>
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: '600', color: '#0f172a', margin: 0, lineHeight: 1.35, textAlign: 'left' }}>
                     {point.title}
                   </h4>
                 </div>
