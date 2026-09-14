@@ -479,7 +479,7 @@ export default function ArGames({ siteData }) {
       </section>
 
       {/* 3. AR GAMES SUPPLIER IN INDIA SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-ar-supplier-section" style={{ padding: '90px 4vw 80px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-ar-supplier-section" style={{ padding: '45px 4vw 25px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-ar-supplier-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -545,7 +545,7 @@ export default function ArGames({ siteData }) {
       </section>
 
       {/* 4. INTERACTIVE AR ATTRACTIONS, BUILT FOR YOUR VENUE SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-ar-attractions-section" style={{ padding: '70px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-ar-attractions-section" style={{ padding: '25px 4vw 45px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-ar-attractions-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -635,7 +635,7 @@ export default function ArGames({ siteData }) {
       </section>
 
       {/* 5. CATEGORIES SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-ar-categories-section" style={{ padding: '80px 4vw 90px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section className="winera-ar-categories-section" style={{ padding: '45px 4vw 50px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Title: Categories: with yellow bar */}
           <div style={{ textAlign: 'center', marginBottom: '45px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

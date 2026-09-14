@@ -520,7 +520,7 @@ export default function Hypergrid({ siteData }) {
             </div>
 
             {/* Right Features List Column */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '480px', margin: '0 0 0 auto' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '480px', width: '100%', margin: '0 0 0 auto' }}>
               {(siteData?.hypergridWhyUs?.cards || [
                 {
                   title: "An Attraction That Draws a Crowd Without Marketing",
@@ -535,22 +535,32 @@ export default function Hypergrid({ siteData }) {
                   desc: "Visitors can start and play Hypergrid on their own without needing staff assistance. This helps reduce operating costs while generating consistent revenue, making it an ideal attraction for Indian FECs, malls, and hotels."
                 }
               ]).map((card, idx) => (
-                <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {/* Header Row: Icon + Title */}
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                <div key={idx} className="winera-hypergrid-whyus-item" style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', textAlign: 'left', width: '100%' }}>
+                  <div style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '8px',
+                    background: '#e0f2fe',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    marginTop: '2px'
+                  }}>
                     <img
                       src={homePageIcon}
                       alt=""
-                      style={{ width: '20px', height: '20px', display: 'block', objectFit: 'contain', flexShrink: 0 }}
+                      style={{ width: '18px', height: '18px', display: 'block', objectFit: 'contain' }}
                     />
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: '600', color: '#0f172a', margin: 0, lineHeight: 1.3 }}>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left', flex: 1, width: '100%' }}>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0f172a', margin: 0, lineHeight: 1.35, textAlign: 'left' }}>
                       {card.title}
                     </h3>
+                    <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, width: '100%', maxWidth: '100%', textAlign: 'left' }}>
+                      {card.desc}
+                    </p>
                   </div>
-                  {/* Paragraph text starting at left edge vertically aligned with icon */}
-                  <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, width: '450px' }}>
-                    {card.desc}
-                  </p>
                 </div>
               ))}
             </div>

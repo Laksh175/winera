@@ -4743,12 +4743,21 @@ textarea::placeholder,
     width: 100% !important;
   }
 
-  .winera-hypergrid-whyus-grid h3 {
+  .winera-hypergrid-whyus-item {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+
+  .winera-hypergrid-whyus-item h3 {
     text-align: left !important;
     font-size: 1rem !important;
   }
 
-  .winera-hypergrid-whyus-grid p {
+  .winera-hypergrid-whyus-item p {
     width: 100% !important;
     max-width: 100% !important;
     text-align: left !important;
@@ -7700,4 +7709,188 @@ button[style*="background:transparent"]:hover,
   max-height: 60px;
   width: 50%;
   object-fit: contain;
+}
+
+/* ==========================================================================
+   COMPREHENSIVE LAPTOP SCREEN RESPONSIVE DESIGN SYSTEM (1024px - 1440px)
+   Provides pixel-perfect layout, fluid typography, and grid scaling
+   across all 13", 14", 15", 16" laptops & 1024p-1440p displays.
+   ========================================================================== */
+@media (min-width: 1024px) and (max-width: 1440px) {
+
+  /* Global Body & Container Protection */
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+
+  /* Standardized Section Padding for Laptop Viewports */
+  section:not([class*="hero"]) {
+    padding-left: 3.5vw !important;
+    padding-right: 3.5vw !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure containers do not exceed laptop viewport width */
+  .container,
+  [class*="-container"],
+  [class*="-grid"],
+  [class*="-wrapper"],
+  [class*="-section"] > div {
+    max-width: 1200px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Fluid Laptop Headings */
+  h1 { font-size: clamp(2.2rem, 3.2vw, 2.9rem) !important; }
+  h2 { font-size: clamp(1.8rem, 2.5vw, 2.35rem) !important; }
+  h3 { font-size: clamp(1.35rem, 2vw, 1.7rem) !important; }
+
+  /* 2-Column Grid Gap Scaling for Laptops */
+  [class*="-grid"] {
+    gap: clamp(20px, 3vw, 40px) !important;
+  }
+
+  /* Fix Images with Oversized Widths in Laptop Containers */
+  [class*="-grid"] img,
+  [class*="-img"] img,
+  [class*="-col"] img {
+    max-width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* Header Navbar Laptop Fit */
+  .winera-header {
+    width: 94% !important;
+    max-width: 1240px !important;
+    padding: 10px 22px !important;
+  }
+
+  .winera-nav-desktop {
+    gap: 16px !important;
+  }
+
+  .winera-nav-desktop a,
+  .winera-nav-desktop span {
+    font-size: 13.5px !important;
+  }
+
+  /* Hypergrid Laptop Optimizations */
+  .winera-hypergrid-supplier-grid,
+  .winera-hypergrid-banner-grid,
+  .winera-hypergrid-whyus-grid,
+  .winera-hypergrid-roi-grid {
+    grid-template-columns: 1.1fr 1fr !important;
+    gap: 30px !important;
+  }
+
+  .winera-hypergrid-banner-text h2,
+  .winera-hypergrid-supplier-text h2,
+  .winera-hypergrid-whyus-container h2,
+  .winera-hypergrid-roi-section h2 {
+    font-size: clamp(2rem, 2.5vw, 2.4rem) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .winera-hypergrid-banner-text p,
+  .winera-hypergrid-supplier-text p,
+  .winera-hypergrid-roi-text p {
+    max-width: 100% !important;
+    font-size: 13.5px !important;
+  }
+
+  .winera-hypergrid-banner-img img,
+  .winera-hypergrid-supplier-img img,
+  .winera-hypergrid-whyus-grid img,
+  .winera-hypergrid-roi-img img {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 0 !important;
+  }
+
+  .winera-hypergrid-specs-container {
+    max-width: 1000px !important;
+    padding: 40px 40px !important;
+  }
+
+  .winera-hypergrid-specs-table-wrapper {
+    max-width: 550px !important;
+    padding: 18px 24px !important;
+  }
+
+  .winera-hypergrid-specs-table-wrapper table th {
+    font-size: 22px !important;
+  }
+
+  .winera-hypergrid-specs-table-wrapper table td {
+    font-size: 14.5px !important;
+  }
+
+  /* AR Games Page Laptop Optimizations */
+  .winera-ar-supplier-grid,
+  .winera-ar-attractions-grid,
+  .winera-ar-earn-grid,
+  .winera-ar-feature-row {
+    gap: 30px !important;
+  }
+
+  .winera-ar-supplier-text h2,
+  .winera-ar-attractions-text h2,
+  .winera-ar-earn-section h2,
+  .winera-ar-whyus-h2 {
+    font-size: clamp(2rem, 2.5vw, 2.4rem) !important;
+  }
+
+  .winera-ar-earn-grid img[src*="ar-earn-gamers"] {
+    width: 100% !important;
+    max-width: 240px !important;
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Bowling Alley Laptop Optimizations */
+  .winera-bowling-supplier-grid,
+  .winera-bowling-premium-grid,
+  .winera-bowling-types-grid,
+  .winera-bowling-roi-grid {
+    gap: 30px !important;
+  }
+
+  /* Trampoline Park, Soft Play, Bumper Car & Amusement Park Laptop Scaling */
+  .winera-trampoline-hero-title,
+  .winera-softplay-hero-title,
+  .winera-bumpercar-hero-title,
+  .winera-amusement-hero-title {
+    font-size: clamp(2.2rem, 3vw, 2.8rem) !important;
+  }
+
+  /* Category & Product Cards Scaling */
+  .winera-ar-categories-grid {
+    grid-template-columns: 240px 1fr !important;
+    gap: 20px !important;
+  }
+
+  .winera-ar-products-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 18px !important;
+  }
+
+  .winera-ar-whyus-card,
+  .winera-hypergrid-whywinera-container div {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  /* FAQ Accordion Scaling */
+  .winera-faq-container {
+    max-width: 1050px !important;
+  }
+
+  /* CTA Banner Laptop Scaling */
+  .winera-cta-banner-wrapper,
+  .winera-cta-banner-container {
+    max-width: 1150px !important;
+  }
 }
