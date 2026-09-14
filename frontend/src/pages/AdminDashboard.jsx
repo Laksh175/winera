@@ -8256,7 +8256,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
-                    src={getAdminValidImageUrl(formData.amusementCta?.bgUrl, amusementCtaBg)}
+                    src={getAdminValidImageUrl(formData.amusementCta?.bgUrl, ctaMainBanner)}
                     alt="Banner Background Preview"
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
@@ -9262,7 +9262,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   <img
-                    src={getAdminValidImageUrl(formData.hypergridCta?.bgUrl, hypergridWineraLastblock)}
+                    src={getAdminValidImageUrl(formData.hypergridCta?.bgUrl, ctaMainBanner)}
                     alt="Banner Background Preview"
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
@@ -10571,7 +10571,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
-                    src={getAdminValidImageUrl(formData.bumpercarCta?.bgUrl, amusementParkCtaBg)}
+                    src={getAdminValidImageUrl(formData.bumpercarCta?.bgUrl, ctaMainBanner)}
                     alt="Banner Background Preview"
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
@@ -12224,7 +12224,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       (formData.arCta?.bgUrl && !formData.arCta.bgUrl.includes('cta-consultations') && !formData.arCta.bgUrl.includes('need-consultations') && !formData.arCta.bgUrl.includes('project-lastbg'))
                         ? formData.arCta.bgUrl
                         : (formData.arCta?.bg && !formData.arCta.bg.includes('cta-consultations') && !formData.arCta.bg.includes('need-consultations') && !formData.arCta.bg.includes('project-lastbg') ? formData.arCta.bg : ''),
-                      amusementParkCtaBg
+                      ctaMainBanner
                     )}
                     alt="CTA Background Preview"
                     style={{ width: '140px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
@@ -13526,7 +13526,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       (formData.vrCta?.bgUrl && !formData.vrCta.bgUrl.includes('cta-consultations') && !formData.vrCta.bgUrl.includes('project-lastbg'))
                         ? formData.vrCta.bgUrl
                         : (formData.vrCta?.bg && !formData.vrCta.bg.includes('cta-consultations') && !formData.vrCta.bg.includes('project-lastbg') ? formData.vrCta.bg : ''),
-                      amusementParkCtaBg
+                      ctaMainBanner
                     )}
                     alt="CTA Background Preview"
                     style={{ width: '140px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
@@ -16835,8 +16835,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {activeSection === 'projectCta' && (() => {
             const currentSec = formData.projectCta || {};
             const bgImg = (currentSec.bgUrl && !currentSec.bgUrl.includes('project-lastbg'))
-              ? getAdminValidImageUrl(currentSec.bgUrl, projectCtaBg)
-              : projectCtaBg;
+              ? getAdminValidImageUrl(currentSec.bgUrl, ctaMainBanner)
+              : ctaMainBanner;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Project Page CTA Banner Section</h3>
@@ -17605,7 +17605,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </h4>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                       <img
-                        src={getAdminValidImageUrl(currentSec.bgUrl || currentSec.bg, hypergridWineraLastblock)}
+                        src={getAdminValidImageUrl(currentSec.bgUrl || currentSec.bg, ctaMainBanner)}
                         alt="CTA Background Preview"
                         style={{ width: '140px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
                       />
