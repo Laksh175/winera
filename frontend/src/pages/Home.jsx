@@ -1060,10 +1060,8 @@ export default function Home({ siteData }) {
                   justifyContent: 'center',
                   cursor: 'pointer',
                   padding: '8px',
-                  transition: 'all 0.25s ease'
+                  transition: 'opacity 0.2s ease'
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
               >
                 <img src={homeLeftArrow} alt="Previous" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </button>
@@ -1208,10 +1206,8 @@ export default function Home({ siteData }) {
                   justifyContent: 'center',
                   cursor: 'pointer',
                   padding: '8px',
-                  transition: 'all 0.25s ease'
+                  transition: 'opacity 0.2s ease'
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}
               >
                 <img src={homeRightArrow} alt="Next" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </button>
