@@ -3,32 +3,53 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AuthProvider } from './context/AuthContext';
 import { fetchSiteContent } from './services/api';
 import wineraLogo from './assets/logo.webp';
+import ErrorBoundary from './components/ErrorBoundary';
+
+// Dynamic Import with automatic retry to prevent blank screens on chunk load failures
+const lazyWithRetry = (componentImport) =>
+  lazy(async () => {
+    const pageHasBeenRefreshed = sessionStorage.getItem('winera_page_refreshed');
+    try {
+      const component = await componentImport();
+      sessionStorage.removeItem('winera_page_refreshed');
+      return component;
+    } catch (error) {
+      console.error('Dynamic import error caught:', error);
+      if (!pageHasBeenRefreshed) {
+        sessionStorage.setItem('winera_page_refreshed', 'true');
+        window.location.reload();
+        return new Promise(() => {});
+      }
+      sessionStorage.removeItem('winera_page_refreshed');
+      throw error;
+    }
+  });
 
 // Route Level Code Splitting with React.lazy
-const Home = lazy(() => import('./pages/Home'));
-const AboutUs = lazy(() => import('./pages/AboutUs'));
-const ArcadeGame = lazy(() => import('./pages/ArcadeGame'));
-const ArcadeGameDetail = lazy(() => import('./pages/ArcadeGameDetail'));
-const BowlingAlley = lazy(() => import('./pages/BowlingAlley'));
-const ContactUs = lazy(() => import('./pages/ContactUs'));
-const AdminLogin = lazy(() => import('./pages/AdminLogin'));
-const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
-const SoftPlay = lazy(() => import('./pages/SoftPlay'));
-const BumperCar = lazy(() => import('./pages/BumperCar'));
-const VrGames = lazy(() => import('./pages/VrGames'));
-const ArGames = lazy(() => import('./pages/ArGames'));
-const AmusementPark = lazy(() => import('./pages/AmusementPark'));
-const Hypergrid = lazy(() => import('./pages/Hypergrid'));
-const Project = lazy(() => import('./pages/Project'));
-const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
-const SafetyStandards = lazy(() => import('./pages/SafetyStandards'));
-const TrampolinePark = lazy(() => import('./pages/TrampolinePark'));
-const Roi = lazy(() => import('./pages/Roi'));
-const Blog = lazy(() => import('./pages/Blog'));
-const BlogDetail = lazy(() => import('./pages/BlogDetail'));
-const LaserTag = lazy(() => import('./pages/LaserTag'));
-const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
+const Home = lazyWithRetry(() => import('./pages/Home'));
+const AboutUs = lazyWithRetry(() => import('./pages/AboutUs'));
+const ArcadeGame = lazyWithRetry(() => import('./pages/ArcadeGame'));
+const ArcadeGameDetail = lazyWithRetry(() => import('./pages/ArcadeGameDetail'));
+const BowlingAlley = lazyWithRetry(() => import('./pages/BowlingAlley'));
+const ContactUs = lazyWithRetry(() => import('./pages/ContactUs'));
+const AdminLogin = lazyWithRetry(() => import('./pages/AdminLogin'));
+const AdminDashboard = lazyWithRetry(() => import('./pages/AdminDashboard'));
+const SoftPlay = lazyWithRetry(() => import('./pages/SoftPlay'));
+const BumperCar = lazyWithRetry(() => import('./pages/BumperCar'));
+const VrGames = lazyWithRetry(() => import('./pages/VrGames'));
+const ArGames = lazyWithRetry(() => import('./pages/ArGames'));
+const AmusementPark = lazyWithRetry(() => import('./pages/AmusementPark'));
+const Hypergrid = lazyWithRetry(() => import('./pages/Hypergrid'));
+const Project = lazyWithRetry(() => import('./pages/Project'));
+const ProjectDetail = lazyWithRetry(() => import('./pages/ProjectDetail'));
+const SafetyStandards = lazyWithRetry(() => import('./pages/SafetyStandards'));
+const TrampolinePark = lazyWithRetry(() => import('./pages/TrampolinePark'));
+const Roi = lazyWithRetry(() => import('./pages/Roi'));
+const Blog = lazyWithRetry(() => import('./pages/Blog'));
+const BlogDetail = lazyWithRetry(() => import('./pages/BlogDetail'));
+const LaserTag = lazyWithRetry(() => import('./pages/LaserTag'));
+const PrivacyPolicy = lazyWithRetry(() => import('./pages/PrivacyPolicy'));
+const TermsAndConditions = lazyWithRetry(() => import('./pages/TermsAndConditions'));
 
 // Helper component that resets window scroll position and initializes smooth scroll-reveal animations across all pages
 function GlobalScrollAnimation() {
@@ -90,6 +111,21 @@ function GlobalScrollAnimation() {
         if (el.classList.contains('framer-motion-wrapper') || el.dataset.noAutoReveal === 'true') {
           return;
         }
+
+        const rect = el.getBoundingClientRect();
+        // Immediately reveal elements that are already inside or near the viewport
+        if (rect.top < window.innerHeight * 1.1 && rect.bottom > 0) {
+          el.classList.add('is-visible');
+          el.classList.add('aos-animate');
+        }
+
+        // Hero sections should never be hidden
+        if (el.tagName === 'SECTION' && (el.className.includes('hero') || el.querySelector('[class*="hero"]'))) {
+          el.classList.add('is-visible');
+          el.classList.add('aos-animate');
+          return;
+        }
+
         // If section contains explicit side-slide elements or framer motion elements, do not force section-wide winera-reveal
         if (el.tagName === 'SECTION' && el.querySelector('.winera-reveal-left, .winera-reveal-right, [data-framer-motion="true"]')) {
           return;
@@ -110,10 +146,23 @@ function GlobalScrollAnimation() {
     const interval = setInterval(scanAndObserve, 250);
     const timeout = setTimeout(() => clearInterval(interval), 3000);
 
+    // Safety fallback: after 400ms force reveal all elements in initial viewport so page never stays blank
+    const safetyTimeout = setTimeout(() => {
+      const topElements = document.querySelectorAll('.winera-reveal:not(.is-visible), .winera-reveal-left:not(.is-visible), .winera-reveal-right:not(.is-visible)');
+      topElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 1.2) {
+          el.classList.add('is-visible');
+          el.classList.add('aos-animate');
+        }
+      });
+    }, 400);
+
     return () => {
       cancelAnimationFrame(animationFrameId);
       clearInterval(interval);
       clearTimeout(timeout);
+      clearTimeout(safetyTimeout);
       observer.disconnect();
     };
   }, [pathname]);
@@ -128,7 +177,7 @@ function AppRoutes({ siteData, loadData }) {
   const location = useLocation();
 
   return (
-    <>
+    <ErrorBoundary>
       <GlobalScrollAnimation />
       <WhatsAppFloat whatsAppUrl={siteData?.header?.whatsAppUrl} />
       <Suspense fallback={
@@ -255,7 +304,7 @@ function AppRoutes({ siteData, loadData }) {
           <Route path="/admin" element={<AdminDashboard siteData={siteData} refreshContent={loadData} />} />
         </Routes>
       </Suspense>
-    </>
+    </ErrorBoundary>
   );
 }
 
