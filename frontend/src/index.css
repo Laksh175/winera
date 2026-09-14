@@ -7760,20 +7760,74 @@ button[style*="background:transparent"]:hover,
     object-fit: contain !important;
   }
 
+  /* Home Page About Section & Stats Tablet/Laptop Optimization */
+  .winera-about-content-wrapper {
+    grid-template-columns: 1.1fr 1fr !important;
+    gap: 30px !important;
+    align-items: center !important;
+  }
+
+  .winera-about-content-wrapper p {
+    font-size: 14.5px !important;
+    line-height: 1.65 !important;
+    text-align: left !important;
+  }
+
+  .winera-about-bullets-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px 14px !important;
+  }
+
+  .winera-about-bullets-grid span {
+    font-size: 14px !important;
+  }
+
+  .winera-about-images-grid {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .winera-about-images-grid img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
   /* Header Navbar Laptop Fit */
-  .winera-header {
-    width: 94% !important;
-    max-width: 1240px !important;
-    padding: 10px 22px !important;
-  }
+  @media (max-width: 1280px) and (min-width: 1024px) {
+    .winera-header {
+      width: 96% !important;
+      padding: 8px 14px !important;
+      top: 14px !important;
+    }
 
-  .winera-nav-desktop {
-    gap: 16px !important;
-  }
+    .winera-logo-img {
+      height: 38px !important;
+    }
 
-  .winera-nav-desktop a,
-  .winera-nav-desktop span {
-    font-size: 13.5px !important;
+    .winera-nav-desktop {
+      gap: 11px !important;
+    }
+
+    .winera-nav-desktop a,
+    .winera-nav-desktop span {
+      font-size: 12.5px !important;
+      font-weight: 700 !important;
+    }
+
+    .winera-socials-desktop {
+      gap: 4px !important;
+    }
+
+    .winera-socials-desktop a {
+      width: 28px !important;
+      height: 28px !important;
+    }
+
+    .winera-socials-desktop svg {
+      width: 14px !important;
+      height: 14px !important;
+    }
   }
 
   /* Hypergrid Laptop Optimizations */

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import wineraLogo from '../assets/logo.webp';
 import { MessageSquare } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
@@ -11,6 +11,21 @@ export default function Header({ headerData }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
   const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('.winera-header')) {
+        setProductDropdown(false);
+        setResourcesDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('touchstart', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('touchstart', handleOutsideClick);
+    };
+  }, []);
 
   const facebookUrl = headerData?.facebookUrl || "https://facebook.com";
   const instagramUrl = headerData?.instagramUrl || "https://instagram.com";
@@ -218,13 +233,19 @@ export default function Header({ headerData }) {
             onMouseLeave={() => setProductDropdown(false)}
             style={{ position: 'relative', padding: '6px 0' }}
           >
-            <a
-              href="/#products"
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={(e) => {
+                e.stopPropagation();
+                setProductDropdown(prev => !prev);
+                setResourcesDropdown(false);
+              }}
               style={{
                 fontSize: '14px',
                 fontWeight: '700',
                 letterSpacing: '0px',
-                color: isProductActive ? '#38bdf8' : '#0f172a',
+                color: isProductActive || productDropdown ? '#38bdf8' : '#0f172a',
                 textShadow: isProductActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none',
                 textDecoration: 'none',
                 display: 'inline-flex',
@@ -232,6 +253,7 @@ export default function Header({ headerData }) {
                 gap: '4px',
                 position: 'relative',
                 padding: '6px 0',
+                cursor: 'pointer',
                 transition: 'all 0.2s ease'
               }}
             >
@@ -249,7 +271,7 @@ export default function Header({ headerData }) {
                   borderRadius: '2px'
                 }} />
               )}
-            </a>
+            </div>
 
             {/* Floating Product Dropdown Card */}
             {productDropdown && (
@@ -277,7 +299,10 @@ export default function Header({ headerData }) {
                     <Link
                       key={idx}
                       to={item.href}
-                      onClick={() => setProductDropdown(false)}
+                      onClick={() => {
+                        setProductDropdown(false);
+                        setMobileMenuOpen(false);
+                      }}
                       style={{
                         padding: '8px 18px',
                         color: isSubActive ? '#38bdf8' : '#0f172a',
@@ -344,13 +369,19 @@ export default function Header({ headerData }) {
             onMouseLeave={() => setResourcesDropdown(false)}
             style={{ position: 'relative', padding: '6px 0' }}
           >
-            <a
-              href="/#resources"
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={(e) => {
+                e.stopPropagation();
+                setResourcesDropdown(prev => !prev);
+                setProductDropdown(false);
+              }}
               style={{
                 fontSize: '14px',
                 fontWeight: '700',
                 letterSpacing: '0px',
-                color: isResourcesActive ? '#38bdf8' : '#0f172a',
+                color: isResourcesActive || resourcesDropdown ? '#38bdf8' : '#0f172a',
                 textShadow: isResourcesActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none',
                 textDecoration: 'none',
                 display: 'inline-flex',
@@ -358,6 +389,7 @@ export default function Header({ headerData }) {
                 gap: '4px',
                 position: 'relative',
                 padding: '6px 0',
+                cursor: 'pointer',
                 transition: 'all 0.2s ease'
               }}
             >
@@ -375,7 +407,7 @@ export default function Header({ headerData }) {
                   borderRadius: '2px'
                 }} />
               )}
-            </a>
+            </div>
 
             {/* Floating Resources Dropdown Card */}
             {resourcesDropdown && (
@@ -403,7 +435,10 @@ export default function Header({ headerData }) {
                     <Link
                       key={idx}
                       to={item.href}
-                      onClick={() => setResourcesDropdown(false)}
+                      onClick={() => {
+                        setResourcesDropdown(false);
+                        setMobileMenuOpen(false);
+                      }}
                       style={{
                         padding: '9px 18px',
                         color: isSubActive ? '#38bdf8' : '#0f172a',

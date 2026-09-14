@@ -547,7 +547,7 @@ export default function Home({ siteData }) {
               })()}
             </SectionHeading>
 
-            <div className="winera-about-content-wrapper" style={{ display: 'grid', gridTemplateColumns: '1fr 520px', gap: '50px', alignItems: 'center', textAlign: 'left' }}>
+            <div className="winera-about-content-wrapper" style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '35px', alignItems: 'center', textAlign: 'left' }}>
               <div className="winera-reveal-left">
                 <p style={{ color: '#373E41', fontFamily: "'Open Sans', sans-serif", fontSize: '16px', lineHeight: '28px', fontWeight: 400, textAlign: 'justify', marginBottom: '16px' }}>
                   {siteData?.aboutHome?.paragraph1 || "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project."}
