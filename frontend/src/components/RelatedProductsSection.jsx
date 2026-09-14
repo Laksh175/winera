@@ -184,17 +184,19 @@ export default function RelatedProductsSection({
                       e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.12)';
                     }}
                   >
-                    <WineraImage
+                    <img
                       src={item.img}
                       alt={item.title}
+                      loading="eager"
+                      decoding="async"
                       style={{
                         position: 'absolute',
                         inset: 0,
                         width: '100%',
                         height: '100%',
+                        objectFit: 'cover',
                         zIndex: 0
                       }}
-                      objectFit="cover"
                     />
                     <div style={{
                       position: 'absolute',

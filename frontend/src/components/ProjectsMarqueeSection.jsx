@@ -128,19 +128,23 @@ export default function ProjectsMarqueeSection({
                         display: 'block'
                       }}
                     >
-                      <WineraImage
+                      <img
                         src={finalImgSrc}
                         alt={proj.name || proj.title || "Built Game Zone"}
-                        loading="lazy"
+                        loading="eager"
                         decoding="async"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = projHulaboo;
+                        }}
                         style={{
                           position: 'absolute',
                           inset: 0,
                           width: '100%',
                           height: '100%',
+                          objectFit: 'cover',
                           zIndex: 0
                         }}
-                        objectFit="cover"
                       />
                       <div style={{
                         position: 'absolute',
