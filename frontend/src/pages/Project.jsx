@@ -546,6 +546,8 @@ export default function Project({ siteData }) {
         align="center"
         buttonTheme="yellow"
         sectionPadding="20px 4vw 30px"
+        containerPadding="25px 40px"
+        showTextShadow={false}
         bgUrl={
           siteData?.projectCta?.bgUrl && !siteData.projectCta.bgUrl.includes('project-lastbg')
             ? getValidImageUrl(siteData.projectCta.bgUrl, projectCtaBg)
@@ -558,10 +560,10 @@ export default function Project({ siteData }) {
             renderTitleMarkup(siteData.projectCta.title, "*Planning a Game Zone* <cyan>of Your Own?</cyan>", "#ffcd00")
           ) : (
             <>
-              <span style={{ color: '#ffcd00', textShadow: '0 4px 18px rgba(0,0,0,0.85), 2px 2px 4px rgba(0,0,0,0.95)' }}>
+              <span style={{ color: '#ffcd00' }}>
                 Planning a Game Zone{' '}
               </span>
-              <span style={{ color: '#38bdf8', textShadow: '0 4px 18px rgba(0,0,0,0.85), 2px 2px 4px rgba(0,0,0,0.95)' }}>
+              <span style={{ color: '#38bdf8' }}>
                 of Your Own?
               </span>
             </>

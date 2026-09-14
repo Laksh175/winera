@@ -69,7 +69,9 @@ export default function CtaBanner({
   gradientTagline = false,
   gradientTitle = false,
   minHeight = "300px",
-  leftImgMaxWidth = "280px"
+  leftImgMaxWidth = "280px",
+  containerPadding = null,
+  showTextShadow = true
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -101,7 +103,7 @@ export default function CtaBanner({
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             borderRadius: '24px',
-            padding: isCentered ? (hasSideImages ? '48px 30px 48px' : '52px 40px 52px') : '52px 48px',
+            padding: containerPadding || (isCentered ? (hasSideImages ? '48px 30px 48px' : '52px 40px 52px') : '52px 48px'),
             minHeight: minHeight || '320px',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.15)',
             overflow: 'hidden',
@@ -201,7 +203,7 @@ export default function CtaBanner({
                     display: 'inline-block'
                   } : {
                     color: '#ffffff',
-                    textShadow: '0 4px 15px rgba(0,0,0,0.6)'
+                    textShadow: showTextShadow ? '0 4px 15px rgba(0,0,0,0.6)' : 'none'
                   })
                 }}>
                   {typeof title === 'string' ? (
@@ -221,7 +223,7 @@ export default function CtaBanner({
                   marginBottom: '24px',
                   maxWidth: '820px',
                   textAlign: isCentered ? 'center' : 'left',
-                  textShadow: '0 2px 10px rgba(0,0,0,0.85)'
+                  textShadow: showTextShadow ? '0 2px 10px rgba(0,0,0,0.85)' : 'none'
                 }}>
                   {typeof subtitle === 'string' ? (
                     renderTextWithBreaks(subtitle, false)
