@@ -7,6 +7,8 @@ import ctaArcade from '../assets/cta-arcade.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
 
+import WineraImage from './WineraImage';
+
 export default function RelatedProductsSection({
   sectionData,
   accentColor = '#38bdf8',
@@ -169,7 +171,7 @@ export default function RelatedProductsSection({
                       overflow: 'hidden',
                       position: 'relative',
                       boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                      background: `url(${item.img}) center/cover no-repeat`,
+                      background: '#0f172a',
                       cursor: 'pointer',
                       transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), boxShadow 0.25s'
                     }}
@@ -182,6 +184,18 @@ export default function RelatedProductsSection({
                       e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.12)';
                     }}
                   >
+                    <WineraImage
+                      src={item.img}
+                      alt={item.title}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        zIndex: 0
+                      }}
+                      objectFit="cover"
+                    />
                     <div style={{
                       position: 'absolute',
                       inset: 0,

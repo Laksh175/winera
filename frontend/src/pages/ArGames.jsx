@@ -497,7 +497,7 @@ export default function ArGames({ siteData }) {
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.arIntro?.title, "*AR Games* Supplier in India", '#38bdf8')}
+                {renderTitleMarkup(siteData?.arIntro?.title, "*AR Games* Supplier<br/>in India", '#38bdf8')}
               </h2>
             </div>
 
@@ -577,7 +577,7 @@ export default function ArGames({ siteData }) {
                 style={{ display: 'block', width: '300px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '36px',
                 fontWeight: '900',
                 lineHeight: 1.15,
                 margin: 0,

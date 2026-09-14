@@ -904,7 +904,7 @@ export default function Hypergrid({ siteData }) {
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="42px"
+        titleFontSize="39px"
         subtitleFontSize="16px"
         subtitleFontWeight="600"
         bgUrl={siteData?.hypergridCta?.bgUrl ? getValidImageUrl(siteData.hypergridCta.bgUrl, ctaMainBanner) : null}

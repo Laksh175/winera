@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
+import WineraImage from './WineraImage';
 import projectImage01 from '../assets/project-image01.webp';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
@@ -127,7 +128,7 @@ export default function ProjectsMarqueeSection({
                         display: 'block'
                       }}
                     >
-                      <img
+                      <WineraImage
                         src={finalImgSrc}
                         alt={proj.name || proj.title || "Built Game Zone"}
                         loading="lazy"
@@ -137,9 +138,9 @@ export default function ProjectsMarqueeSection({
                           inset: 0,
                           width: '100%',
                           height: '100%',
-                          objectFit: 'cover',
                           zIndex: 0
                         }}
+                        objectFit="cover"
                       />
                       <div style={{
                         position: 'absolute',

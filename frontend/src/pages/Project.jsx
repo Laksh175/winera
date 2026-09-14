@@ -545,6 +545,7 @@ export default function Project({ siteData }) {
         showOverlay={false}
         align="center"
         buttonTheme="yellow"
+        titleFontSize="38px"
         sectionPadding="20px 4vw 30px"
         containerPadding="25px 40px"
         showTextShadow={false}

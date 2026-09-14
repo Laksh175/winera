@@ -685,7 +685,7 @@ export default function AmusementPark({ siteData }) {
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="42px"
+        titleFontSize="38px"
         subtitleFontSize="24px"
         subtitleFontWeight="900"
         bgUrl={siteData?.amusementCta?.bgUrl ? getValidImageUrl(siteData.amusementCta.bgUrl, ctaMainBanner) : null}

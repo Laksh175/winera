@@ -7638,3 +7638,46 @@ button[style*="background"]:hover,
     font-weight: 700 !important;
   }
 }
+
+/* ==========================================================================
+   WINERA IMAGE LOADING ANIMATION WITH LOGO
+   Shows pulsing/blinking Winera logo placeholder with opacity while images load
+   ========================================================================== */
+
+@keyframes wineraLogoBlink {
+  0% {
+    opacity: 0.25;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.70;
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 0.25;
+    transform: scale(0.96);
+  }
+}
+
+.winera-img-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(226, 232, 240, 0.95) 100%);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.winera-logo-blinking {
+  animation: wineraLogoBlink 1.4s ease-in-out infinite;
+  pointer-events: none;
+  user-select: none;
+  max-width: 140px;
+  max-height: 60px;
+  width: 50%;
+  object-fit: contain;
+}

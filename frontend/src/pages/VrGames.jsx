@@ -791,7 +791,7 @@ export default function VrGames({ siteData }) {
                 display: 'block',
                 position: 'relative',
                 zIndex: 1,
-                marginLeft: '15px'
+                marginLeft: '33px'
               }}
             />
             {/* Yellow Wave Accent Stroke sitting along the curve */}
@@ -800,7 +800,7 @@ export default function VrGames({ siteData }) {
               alt=""
               style={{
                 position: 'absolute',
-                left: '-8px',
+                left: '2px',
                 top: '-2px',
                 height: '103%',
                 width: 'auto',
@@ -1062,7 +1062,7 @@ export default function VrGames({ siteData }) {
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="42px"
+        titleFontSize="38px"
         subtitleFontSize="24px"
         subtitleFontWeight="900"
         bgUrl={

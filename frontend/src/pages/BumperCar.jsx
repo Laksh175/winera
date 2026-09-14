@@ -184,7 +184,7 @@ export default function BumperCar({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '30px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.bumpercarIntro?.title, "*Bumper Car*<br/>Manufacturer in India", '#38bdf8')}
               </h2>
             </div>
@@ -249,15 +249,16 @@ export default function BumperCar({ siteData }) {
           columnGap: '10%',
           alignItems: 'center'
         }}>
-          {/* 70% Left Area: Left-Aligned Heading & Sub Text */}
+          {/* 70% Left Area: Center-Aligned Heading & Sub Text */}
           <div className="winera-bumpercar-intro-text">
             <h2 style={{
-              fontSize: '42px',
+              fontSize: '39px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
               marginBottom: '20px',
-              textAlign: 'left'
+              marginLeft: '19%',
+              textAlign: 'center'
             }}>
               {renderTitleMarkup(siteData?.bumpercarBanner?.title, "*Bumper Car* Manufacturer in India", '#38bdf8')}
             </h2>
@@ -267,7 +268,7 @@ export default function BumperCar({ siteData }) {
               lineHeight: 1.8,
               fontWeight: '500',
               margin: 0,
-              textAlign: 'left'
+              textAlign: 'center'
             }}>
               {siteData?.bumpercarBanner?.desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading Bumper Car manufacturer in India and trusted Bumper Car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
             </p>
