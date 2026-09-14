@@ -370,7 +370,9 @@ html {
    LAPTOP SCREEN RESPONSIVE STYLES (851px - 1280px)
    ========================================== */
 @media (max-width: 1280px) and (min-width: 851px) {
-  html, body {
+
+  html,
+  body {
     overflow-x: hidden !important;
   }
 
@@ -388,9 +390,17 @@ html {
     box-sizing: border-box !important;
   }
 
-  h1 { font-size: clamp(2rem, 3.5vw, 2.75rem) !important; }
-  h2 { font-size: clamp(1.75rem, 3vw, 2.35rem) !important; }
-  h3 { font-size: clamp(1.5rem, 2.5vw, 1.85rem) !important; }
+  h1 {
+    font-size: clamp(2rem, 3.5vw, 2.75rem) !important;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 3vw, 2.35rem) !important;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 2.5vw, 1.85rem) !important;
+  }
 
   .grid-2col {
     grid-template-columns: 1fr 1fr !important;
@@ -1761,8 +1771,27 @@ html {
   .winera-commercial-mobile-img {
     display: flex !important;
     justify-content: center !important;
-    height: 180px !important;
-    margin: 12px auto !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 270px !important;
+    height: auto !important;
+    margin: 10px auto 16px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    overflow: visible !important;
+  }
+
+  .winera-commercial-mobile-img img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    display: block !important;
   }
 
   /* Why Choose Winera Section Mobile Card Format - Compact Spacing */
@@ -2590,6 +2619,7 @@ html {
 
   /* ─── Laptop Screens (851px - 1280px) Fluid Responsive Scaling ─── */
   @media (max-width: 1280px) and (min-width: 851px) {
+
     .winera-bowling-supplier-section,
     .winera-bowling-premium-section,
     .winera-bowling-types-section,
@@ -2603,6 +2633,7 @@ html {
       grid-template-columns: 1.1fr 1fr !important;
       gap: 30px !important;
     }
+
     .winera-bowling-supplier-text h2 {
       font-size: 34px !important;
     }
@@ -2620,12 +2651,15 @@ html {
       height: 360px !important;
       max-height: 360px !important;
     }
+
     .winera-bowling-roi-text {
       padding: 20px 24px !important;
     }
+
     .winera-bowling-roi-text h3 {
       font-size: 28px !important;
     }
+
     .winera-bowling-roi-text p {
       font-size: 12px !important;
       margin-bottom: 8px !important;
@@ -2634,9 +2668,11 @@ html {
     .winera-bowling-whyus-grid {
       gap: 24px !important;
     }
+
     .winera-bowling-whyus-text h2 {
       font-size: 32px !important;
     }
+
     .winera-bowling-whyus-text p {
       font-size: 13px !important;
     }
@@ -7661,6 +7697,7 @@ button[style*="background:transparent"]:hover,
 
 /* Desktop override for Contact Us card titles & form labels */
 @media (min-width: 769px) {
+
   .winera-contact-card-title,
   .winera-contact-form-label {
     font-size: 12px !important;
@@ -7678,10 +7715,12 @@ button[style*="background:transparent"]:hover,
     opacity: 0.25;
     transform: scale(0.96);
   }
+
   50% {
     opacity: 0.70;
     transform: scale(1.04);
   }
+
   100% {
     opacity: 0.25;
     transform: scale(0.96);
@@ -7719,7 +7758,8 @@ button[style*="background:transparent"]:hover,
 @media (min-width: 1024px) and (max-width: 1440px) {
 
   /* Global Body & Container Protection */
-  html, body {
+  html,
+  body {
     overflow-x: hidden !important;
     width: 100% !important;
   }
@@ -7736,15 +7776,23 @@ button[style*="background:transparent"]:hover,
   [class*="-container"],
   [class*="-grid"],
   [class*="-wrapper"],
-  [class*="-section"] > div {
+  [class*="-section"]>div {
     max-width: 1200px !important;
     box-sizing: border-box !important;
   }
 
   /* Fluid Laptop Headings */
-  h1 { font-size: clamp(2.2rem, 3.2vw, 2.9rem) !important; }
-  h2 { font-size: clamp(1.8rem, 2.5vw, 2.35rem) !important; }
-  h3 { font-size: clamp(1.35rem, 2vw, 1.7rem) !important; }
+  h1 {
+    font-size: clamp(2.2rem, 3.2vw, 2.9rem) !important;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 2.5vw, 2.35rem) !important;
+  }
+
+  h3 {
+    font-size: clamp(1.35rem, 2vw, 1.7rem) !important;
+  }
 
   /* 2-Column Grid Gap Scaling for Laptops */
   [class*="-grid"] {
@@ -7946,5 +7994,161 @@ button[style*="background:transparent"]:hover,
   .winera-cta-banner-wrapper,
   .winera-cta-banner-container {
     max-width: 1150px !important;
+  }
+}
+
+/* ==========================================================================
+   COMPANY STATS SECTION FONT SIZE ENHANCEMENT FOR LAPTOP & TABLET (768px - 1440px)
+   ========================================================================== */
+@media (min-width: 768px) and (max-width: 1440px) {
+
+  .winera-company-stats-section h2,
+  .winera-company-stats-section .winera-section-heading-container h2 {
+    font-size: 46px !important;
+    line-height: 52px !important;
+  }
+
+  .winera-company-stats-desc {
+    font-size: 19px !important;
+    line-height: 32px !important;
+  }
+
+  .winera-company-stats-section .winera-stats-card h3,
+  .winera-company-stats-section .winera-stats-card h3 span,
+  .winera-company-stats-section .winera-stats-card h3 * {
+    font-size: 54px !important;
+    line-height: 60px !important;
+  }
+
+  .winera-company-stats-section .winera-stats-card p {
+    font-size: 16px !important;
+    line-height: 22px !important;
+    font-weight: 500 !important;
+  }
+
+  .winera-company-stats-section .winera-stats-card h4 {
+    font-size: 32px !important;
+    line-height: 36px !important;
+  }
+
+  .winera-company-stats-section .winera-stats-card div span {
+    font-size: 17px !important;
+    line-height: 22px !important;
+  }
+
+  /* VR Games Earn Section - Small Screen View (<= 850px) */
+  @media (max-width: 850px) {
+    .winera-vr-earn-img-container {
+      position: relative !important;
+      min-height: auto !important;
+      height: auto !important;
+      max-height: 240px !important;
+      width: 100% !important;
+      max-width: 360px !important;
+      margin: 12px auto 0 !important;
+      border-radius: 16px !important;
+      overflow: hidden !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .winera-vr-earn-img-container img:first-child {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center center !important;
+      margin-left: 0 !important;
+      border-radius: 16px !important;
+    }
+
+    .winera-vr-earn-img-container img:last-child {
+      display: block !important;
+      position: absolute !important;
+      left: -7px !important;
+      top: -2px !important;
+      height: 104% !important;
+      width: auto !important;
+      z-index: 2 !important;
+      pointer-events: none !important;
+    }
+  }
+
+  /* VR Games Earn Section - 1024px Laptop View (1024px - 1279px) */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .winera-vr-earn-card {
+      grid-template-columns: 1.1fr 1fr !important;
+      gap: 24px !important;
+      align-items: center !important;
+    }
+
+    .winera-vr-earn-img-container {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 80% !important;
+      min-height: 350px !important;
+      overflow: hidden !important;
+      border-radius: 16px !important;
+      position: relative !important;
+    }
+
+    .winera-vr-earn-img-container img:first-child {
+      margin-left: 0 !important;
+      width: 90% !important;
+      height: 68% !important;
+      object-fit: cover !important;
+      object-position: center center !important;
+      border-radius: 16px !important;
+    }
+
+    .winera-vr-earn-img-container img:last-child {
+      display: block !important;
+      position: absolute !important;
+      left: -2px !important;
+      top: 72px !important;
+      height: 69% !important;
+      width: auto !important;
+      z-index: 2 !important;
+      pointer-events: none !important;
+    }
+  }
+
+  /* VR Games Earn Section - 1280px to 1440px Laptop View */
+  @media (min-width: 1280px) {
+    .winera-vr-earn-card {
+      grid-template-columns: 1.1fr 1fr !important;
+      gap: 24px !important;
+      align-items: center !important;
+    }
+
+    .winera-vr-earn-img-container {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 80% !important;
+      min-height: 350px !important;
+      overflow: hidden !important;
+      border-radius: 16px !important;
+      position: relative !important;
+    }
+
+    .winera-vr-earn-img-container img:first-child {
+      margin-left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center center !important;
+      border-radius: 16px !important;
+    }
+
+    .winera-vr-earn-img-container img:last-child {
+      display: block !important;
+      position: absolute !important;
+      left: -10px !important;
+      top: -7px !important;
+      height: 103% !important;
+      width: auto !important;
+      z-index: 2 !important;
+      pointer-events: none !important;
+    }
   }
 }

@@ -381,7 +381,7 @@ export default function Home({ siteData }) {
           </div>
         </section>
 
-        <section style={{ padding: '70px 5vw 35px', background: '#F5F5F9', textAlign: 'center' }}>
+        <section className="winera-company-stats-section" style={{ padding: '70px 5vw 35px', background: '#F5F5F9', textAlign: 'center' }}>
           <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
             <SectionHeading marginBottom="12px" accentWidth="480px" accentMaxWidth="420px">
               {(() => {
@@ -400,7 +400,7 @@ export default function Home({ siteData }) {
               })()}
             </SectionHeading>
 
-            <p style={{
+            <p className="winera-company-stats-desc" style={{
               fontFamily: "'Geist', 'Open Sans', sans-serif",
               fontWeight: 400,
               fontSize: '16px',
