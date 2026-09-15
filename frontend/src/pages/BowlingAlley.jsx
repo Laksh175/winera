@@ -1127,7 +1127,7 @@ export default function BowlingAlley({ siteData }) {
                 margin: '0 0 20px',
                 letterSpacing: '-0.5px'
               }}>
-                <span style={{ color: '#38bdf8' }}>Why Choose</span><br />Winera International?
+                <span style={{ color: '#38bdf8' }}>Why Choose </span>Winera International?
               </h2>
               <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', maxWidth: '780px', margin: '0 auto 14px' }}>
                 {siteData?.bowlingWhyUs?.p1 || "At Winera International, we bring over 15 years of industry experience as a trusted bowling alley manufacturer in India. We are the largest bowling alley supplier in the country, with more than 30 complete setups delivered successfully."}

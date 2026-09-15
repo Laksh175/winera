@@ -551,7 +551,8 @@ export default function ArGames({ siteData }) {
               alt="AR Games Supplier in India"
               style={{
                 width: '100%',
-                maxWidth: '580px',
+                maxWidth: '520px',
+                marginBottom: '3%',
                 height: 'auto',
                 display: 'block'
               }}
