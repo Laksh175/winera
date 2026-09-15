@@ -106,6 +106,15 @@ export default function Header({ headerData }) {
           scrollbar-width: none !important;
           -ms-overflow-style: none !important;
         }
+        .winera-dropdown-scroll::before {
+          content: '';
+          position: absolute;
+          top: -20px;
+          left: 0;
+          right: 0;
+          height: 24px;
+          background: transparent;
+        }
         .winera-dropdown-scroll::-webkit-scrollbar {
           display: none !important;
           width: 0 !important;
@@ -231,7 +240,7 @@ export default function Header({ headerData }) {
           <div
             onMouseEnter={() => setProductDropdown(true)}
             onMouseLeave={() => setProductDropdown(false)}
-            style={{ position: 'relative', padding: '6px 0' }}
+            style={{ position: 'relative', padding: '6px 0 28px', marginBottom: '-22px' }}
           >
             <div
               role="button"
@@ -277,7 +286,7 @@ export default function Header({ headerData }) {
             {productDropdown && (
               <div className="winera-dropdown-scroll" style={{
                 position: 'absolute',
-                top: '100%',
+                top: 'calc(100% - 10px)',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 background: '#ffffff',
@@ -367,7 +376,7 @@ export default function Header({ headerData }) {
           <div
             onMouseEnter={() => setResourcesDropdown(true)}
             onMouseLeave={() => setResourcesDropdown(false)}
-            style={{ position: 'relative', padding: '6px 0' }}
+            style={{ position: 'relative', padding: '6px 0 28px', marginBottom: '-22px' }}
           >
             <div
               role="button"
@@ -413,7 +422,7 @@ export default function Header({ headerData }) {
             {resourcesDropdown && (
               <div className="winera-dropdown-scroll" style={{
                 position: 'absolute',
-                top: '100%',
+                top: 'calc(100% - 10px)',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 background: '#ffffff',
