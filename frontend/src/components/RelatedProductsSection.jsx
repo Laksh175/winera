@@ -45,30 +45,54 @@ export default function RelatedProductsSection({
     img: item.img || defaultCategories[idx % defaultCategories.length].img
   }));
 
-  const relatedCategories = [...baseCategories, ...baseCategories];
+  const N = baseCategories.length;
+  // Repeat baseCategories enough times so track is always full
+  const repeatCount = N < 4 ? Math.ceil(12 / (N || 1)) : 3;
+  const relatedCategories = Array(repeatCount).fill(baseCategories).flat();
 
-  const [relatedIndex, setRelatedIndex] = useState(0);
+  const [relatedIndex, setRelatedIndex] = useState(N > 0 ? N : 0);
   const [isPaused, setIsPaused] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
+  // Seamless loop reset when sliding past 2*N or before N
   useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      setRelatedIndex((prev) => {
-        const next = prev + 1;
-        if (next >= baseCategories.length) {
-          setTimeout(() => {
-            setIsTransitioning(false);
-            setRelatedIndex(0);
-            setTimeout(() => setIsTransitioning(true), 50);
-          }, 450);
-        }
-        return next;
-      });
-    }, 1000);
+    if (!isTransitioning || N === 0) return;
 
-    return () => clearInterval(timer);
-  }, [isPaused, baseCategories.length]);
+    if (relatedIndex >= 2 * N) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setRelatedIndex(prev => prev - N);
+      }, 450);
+      return () => clearTimeout(timer);
+    } else if (relatedIndex < N) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setRelatedIndex(prev => prev + N);
+      }, 450);
+      return () => clearTimeout(timer);
+    }
+  }, [relatedIndex, isTransitioning, N]);
+
+  // Re-enable transition after instant snap
+  useEffect(() => {
+    if (!isTransitioning) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(true);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [isTransitioning]);
+
+  // Infinite Auto-Slide Interval
+  useEffect(() => {
+    if (isPaused || N === 0) return;
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setRelatedIndex(prev => prev + 1);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, [isPaused, N]);
 
   return (
     <section
@@ -107,16 +131,8 @@ export default function RelatedProductsSection({
           <button
             aria-label="Previous Related Products"
             onClick={() => {
-              if (relatedIndex <= 0) {
-                setIsTransitioning(false);
-                setRelatedIndex(baseCategories.length * 2 - 1);
-                setTimeout(() => {
-                  setIsTransitioning(true);
-                  setRelatedIndex(baseCategories.length - 1);
-                }, 50);
-              } else {
-                setRelatedIndex((prev) => prev - 1);
-              }
+              setIsTransitioning(true);
+              setRelatedIndex((prev) => prev - 1);
             }}
             style={{
               width: '36px',
@@ -235,6 +251,7 @@ export default function RelatedProductsSection({
           <button
             aria-label="Next Related Products"
             onClick={() => {
+              setIsTransitioning(true);
               setRelatedIndex((prev) => prev + 1);
             }}
             style={{

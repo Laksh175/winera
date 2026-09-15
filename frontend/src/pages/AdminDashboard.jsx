@@ -5715,51 +5715,112 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           )}
 
           {/* RELATED PRODUCTS SECTION FORM (GENERIC FOR ALL PAGES) */}
-          {(activeSection.endsWith('Related') || activeSection.includes('Related')) && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Related Products Carousel Section</h3>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Title (Use *word* for Cyan Highlight)
-                </label>
-                <input
-                  type="text"
-                  value={formData[activeSection]?.title || '*Related* Products'}
-                  onChange={(e) => handleFieldChange(activeSection, 'title', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+          {(activeSection.endsWith('Related') || activeSection.includes('Related')) && (() => {
+            const defaultList = [
+              { title: "Arcade Games", link: "/products/arcade-games", img: "" },
+              { title: "VR Games", link: "/products/vr-games", img: "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80" },
+              { title: "AR Games", link: "/products/ar-games", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80" },
+              { title: "Bowling Alley", link: "/products/bowling-alley", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" },
+              { title: "Trampoline Park", link: "/products/trampoline-park", img: "" },
+              { title: "Soft Play", link: "/products/soft-play", img: "" },
+              { title: "Bumper Cars", link: "/products/bumper-cars", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
+              { title: "Hypergrid", link: "/products/hypergrid", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
+              { title: "Laser Tag", link: "/products/laser-tag", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
+              { title: "Amusement Park", link: "/products/amusement-park", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" },
+              { title: "Lights", link: "/products/lights", img: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80" },
+              { title: "Sculpture", link: "/products/sculpture", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80" },
+              { title: "Reception Table", link: "/products/reception-table", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
+              { title: "Other Furniture", link: "/products/other-furniture", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80" }
+            ];
 
-              {/* Product Cards List (14 Category Cards) */}
-              <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '18px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', marginBottom: '14px' }}>Product Category Cards & Cover Images</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  {(() => {
-                    const defaultList = [
-                      { title: "Arcade Games", link: "/products/arcade-games", img: "" },
-                      { title: "VR Games", link: "/products/vr-games", img: "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80" },
-                      { title: "AR Games", link: "/products/ar-games", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Bowling Alley", link: "/products/bowling-alley", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Trampoline Park", link: "/products/trampoline-park", img: "" },
-                      { title: "Soft Play", link: "/products/soft-play", img: "" },
-                      { title: "Bumper Cars", link: "/products/bumper-cars", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Hypergrid", link: "/products/hypergrid", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Laser Tag", link: "/products/laser-tag", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Amusement Park", link: "/products/amusement-park", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Lights", link: "/products/lights", img: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Sculpture", link: "/products/sculpture", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Reception Table", link: "/products/reception-table", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Other Furniture", link: "/products/other-furniture", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80" }
-                    ];
+            const itemsList = (Array.isArray(formData[activeSection]?.items) && formData[activeSection].items.length > 0)
+              ? formData[activeSection].items
+              : defaultList;
 
-                    const itemsList = (Array.isArray(formData[activeSection]?.items) && formData[activeSection].items.length > 0)
-                      ? formData[activeSection].items
-                      : defaultList;
+            const handleAddItem = () => {
+              const updated = [...itemsList, { title: "New Product", link: "/products/new-product", img: "" }];
+              const updatedSection = { ...(formData[activeSection] || {}), items: updated };
+              setFormData(prev => ({ ...prev, [activeSection]: updatedSection }));
+            };
 
-                    return itemsList.map((item, idx) => (
+            const handleDeleteItem = (idxToDelete) => {
+              setDeleteConfirmModal({
+                title: 'Delete Related Product Card?',
+                message: `Are you sure you want to delete '${itemsList[idxToDelete]?.title || `Card #${idxToDelete + 1}`}'?`,
+                onConfirm: async () => {
+                  const updated = itemsList.filter((_, i) => i !== idxToDelete);
+                  const updatedSection = { ...(formData[activeSection] || {}), items: updated };
+                  setFormData(prev => ({ ...prev, [activeSection]: updatedSection }));
+                  await persistSectionToDatabase(activeSection, updatedSection);
+                }
+              });
+            };
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Related Products Carousel Section</h3>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Section Title (Use *word* for Cyan Highlight)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData[activeSection]?.title || '*Related* Products'}
+                    onChange={(e) => handleFieldChange(activeSection, 'title', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+
+                {/* Product Cards List */}
+                <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '18px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                    <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Product Category Cards & Cover Images</h4>
+                    <button
+                      type="button"
+                      onClick={handleAddItem}
+                      style={{
+                        background: '#38bdf8',
+                        color: '#ffffff',
+                        border: 'none',
+                        padding: '8px 16px',
+                        borderRadius: '10px',
+                        fontWeight: '800',
+                        fontSize: '13px',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        boxShadow: '0 2px 8px rgba(56, 189, 248, 0.3)'
+                      }}
+                    >
+                      <Plus style={{ width: '15px', height: '15px' }} /> Add New Product Card
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    {itemsList.map((item, idx) => (
                       <div key={idx} style={{ background: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>Category Card #{idx + 1}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteItem(idx)}
+                            style={{
+                              background: '#fef2f2',
+                              color: '#dc2626',
+                              border: 'none',
+                              padding: '6px 12px',
+                              borderRadius: '8px',
+                              cursor: 'pointer',
+                              fontWeight: '800',
+                              fontSize: '12px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '4px'
+                            }}
+                          >
+                            <Trash2 style={{ width: '13px', height: '13px' }} /> Delete
+                          </button>
                         </div>
 
                         <div>
@@ -5770,6 +5831,24 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             onChange={(e) => {
                               const updated = [...itemsList];
                               updated[idx] = { ...updated[idx], title: e.target.value };
+                              setFormData(prev => ({
+                                ...prev,
+                                [activeSection]: { ...(prev[activeSection] || {}), items: updated }
+                              }));
+                            }}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Target Link / URL</label>
+                          <input
+                            type="text"
+                            value={item.link || ''}
+                            placeholder="/products/your-product-slug"
+                            onChange={(e) => {
+                              const updated = [...itemsList];
+                              updated[idx] = { ...updated[idx], link: e.target.value };
                               setFormData(prev => ({
                                 ...prev,
                                 [activeSection]: { ...(prev[activeSection] || {}), items: updated }
@@ -5825,21 +5904,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           </div>
                         </div>
                       </div>
-                    ));
-                  })()}
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <button
+                    onClick={() => persistSectionToDatabase(activeSection, { ...(formData[activeSection] || {}), items: itemsList })}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                  >
+                    Save Related Products Section
+                  </button>
                 </div>
               </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase(activeSection, formData[activeSection] || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Related Products Section
-                </button>
-              </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* ARCADE CTA BANNER SECTION FORM */}
           {activeSection === 'arcadeCta' && (
@@ -8254,7 +8333,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
                   Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   <img
                     src={getAdminValidImageUrl(formData.amusementCta?.bgUrl, ctaMainBanner)}
                     alt="Banner Background Preview"
@@ -8282,6 +8361,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
+                  {formData.amusementCta?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.amusementCta || {}), bgUrl: '' };
+                        setFormData(prev => ({ ...prev, amusementCta: updated }));
+                        await persistSectionToDatabase('amusementCta', updated);
+                        setStatusMsg('Banner reset to default successfully!');
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset to Default Banner
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -9227,7 +9320,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
                   Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.hypergridCta?.bgUrl, ctaMainBanner)}
+                    alt="Banner Background Preview"
+                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -9261,11 +9359,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  <img
-                    src={getAdminValidImageUrl(formData.hypergridCta?.bgUrl, ctaMainBanner)}
-                    alt="Banner Background Preview"
-                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
-                  />
+                  {formData.hypergridCta?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.hypergridCta || {}), bgUrl: '' };
+                        setFormData(prev => ({ ...prev, hypergridCta: updated }));
+                        await persistSectionToDatabase('hypergridCta', updated);
+                        setStatusMsg('Banner reset to default successfully!');
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset to Default Banner
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -10569,7 +10676,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
                   1. Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   <img
                     src={getAdminValidImageUrl(formData.bumpercarCta?.bgUrl, ctaMainBanner)}
                     alt="Banner Background Preview"
@@ -10597,6 +10704,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
+                  {formData.bumpercarCta?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.bumpercarCta || {}), bgUrl: '' };
+                        setFormData(prev => ({ ...prev, bumpercarCta: updated }));
+                        await persistSectionToDatabase('bumpercarCta', updated);
+                        setStatusMsg('Banner reset to default successfully!');
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset to Default Banner
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -14590,32 +14711,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-          {/* BOWLING RELATED PRODUCTS FORM */}
-          {activeSection === 'bowlingRelated' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Related Products Carousel Section</h3>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Title (Use *word* for Cyan Highlight)
-                </label>
-                <input
-                  type="text"
-                  value={formData.bowlingRelated?.title || '*Related* Products'}
-                  onChange={(e) => handleFieldChange('bowlingRelated', 'title', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('bowlingRelated', formData.bowlingRelated || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Related Products Section
-                </button>
-              </div>
-            </div>
-          )}
 
           {/* BOWLING CTA BANNER FORM */}
           {activeSection === 'bowlingCta' && (

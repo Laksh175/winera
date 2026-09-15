@@ -7,19 +7,15 @@ const getValidImg = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
-  if (url.includes('home-block') || url.includes('cta-consultations') || url.includes('hypergrid-winera-lastblock') || url.includes('cta-gamers')) {
-    return fallback;
-  }
-  const isClientLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-  if (!isClientLocal && (url.includes('localhost') || url.includes('127.0.0.1') || url.includes('/uploads')) && !url.includes('cloudinary')) {
-    return fallback;
-  }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/assets') || url.startsWith('assets/')) {
     return url;
   }
-  if (url.startsWith('/uploads')) {
+  if (url.startsWith('/uploads') || url.includes('/uploads/')) {
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
     const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${url}`;
+    const port = typeof window !== 'undefined' && (window.location.port === '5173' || window.location.port === '3000') ? '5001' : (window.location.port || '5001');
+    const protocol = typeof window !== 'undefined' ? window.location.protocol : 'http:';
+    return `${protocol}//${hostname}:${port}${url.startsWith('/') ? '' : '/'}${url}`;
   }
   return fallback;
 };
@@ -83,9 +79,16 @@ export default function CtaBanner({
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const isCustomBgUploaded = Boolean(
+    bgUrl &&
+    typeof bgUrl === 'string' &&
+    bgUrl.trim() !== '' &&
+    getValidImg(bgUrl, null) !== null
+  );
+
   const finalBg = getValidImg(bgUrl, bg);
-  const finalLeftImg = getValidImg(leftImgUrl, leftImg);
-  const finalRightImg = getValidImg(rightImgUrl, rightImg);
+  const finalLeftImg = isCustomBgUploaded ? null : getValidImg(leftImgUrl, leftImg);
+  const finalRightImg = isCustomBgUploaded ? null : getValidImg(rightImgUrl, rightImg);
   const isCentered = align === 'center';
   const hasSideImages = Boolean(finalLeftImg || finalRightImg);
 
@@ -102,13 +105,14 @@ export default function CtaBanner({
       />
       <section style={{ padding: sectionPadding, background: '#F5F5F9' }}>
         <MotionFadeIn>
-          <div className="winera-cta-banner-container" style={{
+          <div className={`winera-cta-banner-container ${isCustomBgUploaded ? 'winera-cta-custom-bg' : ''}`} style={{
             maxWidth: '1240px',
             margin: '0 auto',
             position: 'relative',
             borderRadius: '24px',
             padding: containerPadding || (isCentered ? (hasSideImages ? '48px 30px 48px' : '52px 40px 52px') : '52px 48px'),
-            minHeight: minHeight || '320px',
+            minHeight: isCustomBgUploaded ? '360px' : (minHeight || '320px'),
+            aspectRatio: isCustomBgUploaded ? '1920 / 600' : 'auto',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.15)',
             overflow: 'hidden',
             display: 'flex',
@@ -116,7 +120,7 @@ export default function CtaBanner({
             justifyContent: isCentered ? 'center' : 'flex-start'
           }}>
 
-            {/* Background Image Layer (with optional blur) */}
+            {/* Background Image Layer (with optional blur - disabled for custom uploaded banners) */}
             <div style={{
               position: 'absolute',
               inset: 0,
@@ -124,17 +128,21 @@ export default function CtaBanner({
               backgroundPosition: 'center center',
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
-              filter: blurBg ? 'blur(6px) scale(1.05)' : 'none',
+              filter: (blurBg && !isCustomBgUploaded) ? 'blur(6px) scale(1.05)' : 'none',
               borderRadius: '24px',
               zIndex: 0
             }} />
 
-            {/* Dark Background Overlay (optional) */}
+            {/* Dark Background Overlay (disabled/transparent for custom uploaded banners to preserve 100% image brightness) */}
             {showOverlay && (
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: blurBg ? 'rgba(8, 12, 22, 0.82)' : 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)',
+                background: isCustomBgUploaded
+                  ? 'transparent'
+                  : ((blurBg && !isCustomBgUploaded)
+                      ? 'rgba(8, 12, 22, 0.82)'
+                      : 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)'),
                 borderRadius: '24px',
                 zIndex: 1
               }} />
@@ -178,9 +186,11 @@ export default function CtaBanner({
               textAlign: isCentered ? 'center' : 'left',
               margin: isCentered ? '0 auto' : '0',
               width: '100%',
-              maxWidth: isCentered ? (hasSideImages ? '560px' : '820px') : '650px'
+              maxWidth: isCentered ? (hasSideImages ? '560px' : '820px') : '650px',
+              justifyContent: isCustomBgUploaded ? 'flex-end' : 'center',
+              paddingTop: isCustomBgUploaded ? '140px' : '0'
             }}>
-              {tagline && (
+              {!isCustomBgUploaded && tagline && (
                 <div className="winera-cta-tagline" style={{
                   fontSize: '1.75rem',
                   fontWeight: '900',
@@ -204,7 +214,7 @@ export default function CtaBanner({
                 </div>
               )}
 
-              {title && (
+              {!isCustomBgUploaded && title && (
                 <h2 className="winera-cta-title" style={{
                   fontSize: titleFontSize || '42px',
                   fontWeight: titleFontWeight || '900',
@@ -232,7 +242,7 @@ export default function CtaBanner({
                 </h2>
               )}
 
-              {subtitle && (
+              {!isCustomBgUploaded && subtitle && (
                 <div className="winera-cta-subtitle" style={{
                   fontSize: subtitleFontSize || 'clamp(1.2rem, 2.2vw, 1.6rem)',
                   fontWeight: subtitleFontWeight || '800',
@@ -251,7 +261,7 @@ export default function CtaBanner({
                 </div>
               )}
 
-              {description && (
+              {!isCustomBgUploaded && description && (
                 <p className="winera-cta-description" style={{
                   fontSize: descriptionFontSize || '13px',
                   fontWeight: '500',

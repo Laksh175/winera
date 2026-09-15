@@ -270,8 +270,8 @@ export default function AboutUs({ siteData }) {
       </section>
 
       {/* 4. STATS & OUR PURPOSE & PROMISE SECTION */}
-      <section style={{ padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
-        <div style={{ background: 'linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%)', padding: '40px 4vw 50px', marginBottom: '50px' }}>
+      <section className="winera-about-stats-section" style={{ padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
+        <div className="winera-about-stats-banner" style={{ background: 'linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%)', padding: '40px 4vw 50px', marginBottom: '50px' }}>
           <div className="winera-about-stats-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px' }}>
             {(() => {
               const defaultStats = [

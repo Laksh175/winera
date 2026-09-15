@@ -370,18 +370,25 @@ export default function ProjectDetail({ siteData }) {
             />
 
             <h2 style={{
-              fontSize: '42px',
+              fontSize: '38px',
               fontWeight: '900',
               color: '#0f172a',
-              lineHeight: 1.18,
-              marginBottom: '14px'
+              lineHeight: 1.2,
+              marginBottom: '14px',
+              maxWidth: '680px',
+              wordBreak: 'normal',
+              overflowWrap: 'break-word'
             }}>
-              <span style={{ color: '#38bdf8' }}>{titleLine1}</span>
-              <br />
-              <span style={{ color: '#38bdf8' }}>{titleLine2}</span>
-              <span style={{ color: '#0f172a' }}>{titleLine2Black}</span>
-              <br />
-              <span style={{ color: '#0f172a' }}>{titleLine3}</span>
+              {(() => {
+                const cyanPart = [titleLine1, titleLine2].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+                const blackPart = [titleLine2Black, titleLine3].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+                return (
+                  <>
+                    <span style={{ color: '#38bdf8' }}>{cyanPart} </span>
+                    <span style={{ color: '#0f172a' }}>{blackPart}</span>
+                  </>
+                );
+              })()}
             </h2>
 
             <p style={{
@@ -669,7 +676,7 @@ export default function ProjectDetail({ siteData }) {
 
           <div className="winera-project-gallery-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '24px',
             maxWidth: '1000px',
             margin: '0 auto'

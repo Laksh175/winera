@@ -8189,6 +8189,32 @@ button[style*="background:transparent"]:hover,
       border-bottom-right-radius: 24px !important;
     }
 
+    /* ROI Page "What You Get With Winera" Section 1024px Laptop Layout */
+    .winera-roi-get-grid {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) !important;
+      gap: 28px !important;
+    }
+
+    .winera-roi-get-card-box {
+      padding: 28px 22px !important;
+      gap: 20px !important;
+    }
+
+    .winera-roi-get-img-wrapper img {
+      width: 165px !important;
+      height: 165px !important;
+    }
+
+    .winera-roi-get-content {
+      padding-left: 10px !important;
+    }
+
+    .winera-roi-get-content h2 {
+      font-size: 34px !important;
+      line-height: 1.18 !important;
+      margin-bottom: 16px !important;
+    }
+
     /* Hypergrid Why Choose Winera Section 1024px Layout (Matching Image 1 Reference) */
     .winera-hypergrid-whywinera-row {
       gap: 0px !important;
@@ -8203,6 +8229,7 @@ button[style*="background:transparent"]:hover,
       max-width: 1.5px !important;
       min-width: 1.5px !important;
       right: 0px !important;
+      padding: 0 !important;
       display: block !important;
     }
 
@@ -8210,6 +8237,7 @@ button[style*="background:transparent"]:hover,
       height: 1.5px !important;
       max-height: 1.5px !important;
       min-height: 1.5px !important;
+      padding: 0 !important;
       display: block !important;
     }
 
@@ -8381,8 +8409,15 @@ button[style*="background:transparent"]:hover,
     gap: 18px !important;
   }
 
+  /* Blog Card Image 1024px Laptop View Fit */
+  .winera-blog-card-img-container img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
   .winera-ar-whyus-card,
-  .winera-hypergrid-whywinera-container div {
+  .winera-hypergrid-whywinera-row > div {
     padding-left: 15px !important;
     padding-right: 15px !important;
   }
@@ -8392,10 +8427,123 @@ button[style*="background:transparent"]:hover,
     max-width: 1050px !important;
   }
 
-  /* CTA Banner Laptop Scaling */
+  /* CTA Banner Laptop Scaling & Fit */
   .winera-cta-banner-wrapper,
   .winera-cta-banner-container {
-    max-width: 1150px !important;
+    width: 100% !important;
+    max-width: 1060px !important;
+    margin: 0 auto !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    aspect-ratio: auto !important;
+    min-height: auto !important;
+    padding: 48px 40px !important;
+  }
+
+  .winera-cta-banner-container > div[style*="absolute"] {
+    border-radius: 24px !important;
+    overflow: hidden !important;
+  }
+
+  .winera-cta-banner-container .winera-cta-content-box[style*="text-align: left"],
+  .winera-cta-banner-container .winera-cta-content-box[style*="text-align:left"],
+  .winera-cta-banner-container .winera-cta-content-box[style*="align-items: flex-start"],
+  .winera-cta-banner-container .winera-cta-content-box[style*="alignItems: flex-start"] {
+    align-items: flex-start !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    max-width: 550px !important;
+  }
+
+  .winera-cta-banner-container .winera-cta-content-box[style*="text-align: left"] h2,
+  .winera-cta-banner-container .winera-cta-content-box[style*="text-align:left"] h2,
+  .winera-cta-banner-container .winera-cta-content-box[style*="align-items: flex-start"] h2 {
+    text-align: left !important;
+  }
+
+  .winera-cta-banner-container .winera-cta-content-box[style*="text-align: left"] p,
+  .winera-cta-banner-container .winera-cta-content-box[style*="text-align:left"] p,
+  .winera-cta-banner-container .winera-cta-content-box[style*="align-items: flex-start"] p {
+    text-align: left !important;
+    margin-left: 0 !important;
+  }
+
+  .winera-cta-banner-container .winera-cta-content-box[style*="text-align: left"] .winera-cta-banner-btn-wrapper,
+  .winera-cta-banner-container .winera-cta-content-box[style*="text-align:left"] .winera-cta-banner-btn-wrapper,
+  .winera-cta-banner-container .winera-cta-content-box[style*="align-items: flex-start"] .winera-cta-banner-btn-wrapper {
+    justify-content: flex-start !important;
+    margin-left: 0 !important;
+  }
+
+  .winera-cta-banner-container h2 {
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem) !important;
+    line-height: 1.25 !important;
+    margin-bottom: 12px !important;
+  }
+
+  .winera-cta-banner-container p {
+    font-size: 14.5px !important;
+    line-height: 1.55 !important;
+    max-width: 580px !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* Safety Standards Material Section 1024px Image Layout Override */
+  .winera-safety-material-img {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: 100% !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+
+  .winera-safety-material-img img {
+    width: 160% !important;
+    max-width: 160% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+  }
+
+  /* About Us Page 1024px Laptop Layout & Full Width Fixes */
+  section.winera-about-stats-section,
+  section.winera-about-mindmap-section,
+  section#why-choose-us-detail,
+  .winera-about-mindmap-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-about-stats-banner,
+  .winera-about-mindmap-section > div:first-child,
+  .winera-about-whyus-bottom-bg {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 4vw !important;
+    padding-right: 4vw !important;
+    background-size: cover !important;
+    background-position: center top !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-about-stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .winera-about-purpose-frame {
+    display: none !important;
+  }
+
+  .winera-about-purpose-grid {
+    gap: 32px !important;
   }
 }
 
@@ -8869,5 +9017,18 @@ button[style*="background:transparent"]:hover,
   .winera-process-cards-container div[style*="grid-template-columns"],
   .winera-process-row {
     display: contents !important;
+  }
+}
+
+/* Custom Banner Image 1920x600 Aspect Ratio Support for CTA Banners */
+.winera-cta-banner-container.winera-cta-custom-bg {
+  aspect-ratio: 1920 / 600 !important;
+  min-height: 320px !important;
+}
+
+@media (max-width: 768px) {
+  .winera-cta-banner-container.winera-cta-custom-bg {
+    aspect-ratio: auto !important;
+    min-height: 260px !important;
   }
 }
