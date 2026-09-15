@@ -27,7 +27,7 @@ export default function ContactUs({ siteData }) {
   const footer = siteData?.footer;
 
   return (
-    <div style={{ background: '#F5F5F9', minHeight: '100vh', color: '#0f172a', fontFamily: "'Outfit', 'Inter', sans-serif" }}>
+    <div style={{ background: '#F5F5F9', minHeight: '100vh', color: '#0f172a', fontFamily: "'Open Sans', sans-serif" }}>
       {/* 1. HEADER */}
       <Header headerData={siteData?.header} />
 

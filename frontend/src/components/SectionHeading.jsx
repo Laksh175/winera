@@ -90,7 +90,7 @@ export default function SectionHeading({
           )}
           <h2 style={{
             fontFamily: "'Black Han Sans', sans-serif",
-            fontSize: '45px',
+            fontSize: '35px',
             fontWeight: '400',
             fontStyle: 'normal',
             color: '#0f172a',
@@ -152,7 +152,7 @@ export default function SectionHeading({
       )}
       <h2 style={{
         fontFamily: "'Black Han Sans', sans-serif",
-        fontSize: '45px',
+        fontSize: '35px',
         fontWeight: '400',
         fontStyle: 'normal',
         color: '#0f172a',

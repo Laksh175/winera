@@ -92,7 +92,7 @@ export default function FaqSection({
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-                    <h3 style={{ fontSize: '1.02rem', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
+                    <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
                       {item.q || item.question}
                     </h3>
                     <div style={{
@@ -116,11 +116,11 @@ export default function FaqSection({
                   </div>
                   {isOpen && (
                     <p className="winera-faq-answer" style={{
-                      fontFamily: "'Urbanist', sans-serif",
+                      fontFamily: "'Open Sans', sans-serif",
                       fontWeight: '400',
                       fontStyle: 'normal',
-                      fontSize: '18px',
-                      lineHeight: '100%',
+                      fontSize: '16px',
+                      lineHeight: '115%',
                       letterSpacing: '0%',
                       color: 'rgba(55, 62, 65, 1)',
                       marginTop: '14px',
@@ -168,7 +168,7 @@ export default function FaqSection({
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-                    <h3 style={{ fontSize: '1.02rem', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
+                    <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
                       {item.q || item.question}
                     </h3>
                     <div style={{
@@ -192,11 +192,11 @@ export default function FaqSection({
                   </div>
                   {isOpen && (
                     <p className="winera-faq-answer" style={{
-                      fontFamily: "'Urbanist', sans-serif",
+                      fontFamily: "'Open Sans', sans-serif",
                       fontWeight: '400',
                       fontStyle: 'normal',
-                      fontSize: '18px',
-                      lineHeight: '100%',
+                      fontSize: '16px',
+                      lineHeight: '115%',
                       letterSpacing: '0%',
                       color: 'rgba(55, 62, 65, 1)',
                       marginTop: '14px',

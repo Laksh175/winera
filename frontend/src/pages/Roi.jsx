@@ -223,7 +223,7 @@ export default function Roi({ siteData }) {
   const rightItems = Array.isArray(roiComparison.rightItems) ? roiComparison.rightItems : [];
 
   return (
-    <div style={{ fontFamily: "'Inter', sans-serif", color: '#0f172a', background: '#F5F5F9', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div style={{ fontFamily: "'Open Sans', sans-serif", color: '#0f172a', background: '#F5F5F9', minHeight: '100vh', overflowX: 'hidden' }}>
       {/* HEADER */}
       <Header headerData={header} />
 
@@ -298,7 +298,7 @@ export default function Roi({ siteData }) {
                 {roiIntro.tagline || 'RETURN ON INVESTMENT (ROI)'}
               </p>
               <h2 style={{
-                fontSize: '45px',
+                fontSize: '35px',
                 fontWeight: '900',
                 color: '#0f172a',
                 lineHeight: 1.25,
@@ -405,7 +405,7 @@ export default function Roi({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '45px',
+                fontSize: '35px',
                 fontWeight: '900',
                 color: '#0f172a',
                 lineHeight: 1.12,
@@ -530,7 +530,7 @@ export default function Roi({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: '45px',
+              fontSize: '35px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -787,7 +787,7 @@ export default function Roi({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '2px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: '45px',
+              fontSize: '35px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -872,7 +872,7 @@ export default function Roi({ siteData }) {
                         fontSize: '18px',
                         fontWeight: '800',
                         margin: '0 0 8px 0',
-                        fontFamily: "'Inter', sans-serif"
+                        fontFamily: "'Open Sans', sans-serif"
                       }}>
                         {step.title}
                       </h3>
@@ -881,7 +881,7 @@ export default function Roi({ siteData }) {
                         fontSize: '13.5px',
                         lineHeight: '1.5',
                         margin: 0,
-                        fontFamily: "'Inter', sans-serif"
+                        fontFamily: "'Open Sans', sans-serif"
                       }}>
                         {step.desc}
                       </p>
@@ -955,7 +955,7 @@ export default function Roi({ siteData }) {
                   borderRadius: '30px',
                   boxShadow: 'none',
                   border: '2.5px solid #ffffff',
-                  fontFamily: "'Inter', sans-serif"
+                  fontFamily: "'Open Sans', sans-serif"
                 }}>
                   {roiGet.badgeText || "Built for Profit."}
                 </div>
@@ -1008,10 +1008,10 @@ export default function Roi({ siteData }) {
                         {stepIcon}
                       </div>
                       <div>
-                        <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', margin: '0 0 3px 0', fontFamily: "'Inter', sans-serif" }}>
+                        <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', margin: '0 0 3px 0', fontFamily: "'Open Sans', sans-serif" }}>
                           {step.title}
                         </h4>
-                        <p style={{ fontSize: '12.5px', color: '#475569', margin: 0, fontFamily: "'Inter', sans-serif" }}>
+                        <p style={{ fontSize: '12.5px', color: '#475569', margin: 0, fontFamily: "'Open Sans', sans-serif" }}>
                           {step.desc}
                         </p>
                       </div>
@@ -1037,7 +1037,7 @@ export default function Roi({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '45px',
+                fontSize: '35px',
                 fontWeight: '900',
                 color: '#0f172a',
                 lineHeight: 1.12,
@@ -1064,7 +1064,7 @@ export default function Roi({ siteData }) {
                 color: '#475569',
                 lineHeight: 1.6,
                 margin: 0,
-                fontFamily: "'Inter', sans-serif"
+                fontFamily: "'Open Sans', sans-serif"
               }}>
                 {roiGet.subtitle}
               </p>
@@ -1087,7 +1087,7 @@ export default function Roi({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '2px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: '45px',
+              fontSize: '35px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -1179,7 +1179,7 @@ export default function Roi({ siteData }) {
                       transform: 'skewX(16deg)',
                       fontSize: '13.5px',
                       fontWeight: '800',
-                      fontFamily: "'Inter', sans-serif"
+                      fontFamily: "'Open Sans', sans-serif"
                     }}>
                       {roiChecklist.fitPill || "You're a fit"}
                     </span>
@@ -1220,7 +1220,7 @@ export default function Roi({ siteData }) {
                         lineHeight: '1.45',
                         fontWeight: '500',
                         margin: '0px',
-                        fontFamily: "'Inter', sans-serif"
+                        fontFamily: "'Open Sans', sans-serif"
                       }}>
                         {itemText}
                       </p>
@@ -1284,7 +1284,7 @@ export default function Roi({ siteData }) {
                       transform: 'skewX(16deg)',
                       fontSize: '13.5px',
                       fontWeight: '800',
-                      fontFamily: "'Inter', sans-serif"
+                      fontFamily: "'Open Sans', sans-serif"
                     }}>
                       {roiChecklist.unfitPill === "You're a fit" ? "Not for you if" : (roiChecklist.unfitPill || "Not for you if")}
                     </span>
@@ -1325,7 +1325,7 @@ export default function Roi({ siteData }) {
                         lineHeight: '1.45',
                         fontWeight: '500',
                         margin: '0px',
-                        fontFamily: "'Inter', sans-serif"
+                        fontFamily: "'Open Sans', sans-serif"
                       }}>
                         {itemText}
                       </p>
@@ -1383,7 +1383,7 @@ export default function Roi({ siteData }) {
 
           {/* Heading */}
           <h2 style={{
-            fontSize: '45px',
+            fontSize: '35px',
             fontWeight: '900',
             lineHeight: 1.25,
             marginBottom: '14px',

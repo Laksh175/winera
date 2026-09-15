@@ -267,11 +267,33 @@ export default function ArcadeGameDetail({ siteData }) {
     getValidImageUrl(cmsFoundCard?.gallery4, defaultGallery[3] || resolvedMainImg)
   ];
 
+  // Calculate nameBase and nameHighlight cleanly to avoid duplicating title text
+  let finalNameBase = defaultProduct.nameBase;
+  let finalNameHighlight = defaultProduct.nameHighlight;
+
+  if (cmsFoundCard?.nameBase !== undefined && cmsFoundCard?.nameHighlight !== undefined) {
+    finalNameBase = cmsFoundCard.nameBase;
+    finalNameHighlight = cmsFoundCard.nameHighlight;
+  } else if (cmsFoundCard?.title || cmsFoundCard?.name) {
+    const fullTitle = cmsFoundCard.title || cmsFoundCard.name;
+    const highlight = cmsFoundCard?.nameHighlight || defaultProduct?.nameHighlight || '';
+    if (highlight && fullTitle.endsWith(highlight)) {
+      finalNameBase = fullTitle.slice(0, fullTitle.length - highlight.length);
+      finalNameHighlight = highlight;
+    } else if (defaultProduct?.nameBase && defaultProduct?.nameHighlight && fullTitle === defaultProduct.name) {
+      finalNameBase = defaultProduct.nameBase;
+      finalNameHighlight = defaultProduct.nameHighlight;
+    } else {
+      finalNameBase = fullTitle;
+      finalNameHighlight = '';
+    }
+  }
+
   // Construct dynamic product object
   const product = {
     name: cmsFoundCard?.name || cmsFoundCard?.title || defaultProduct.name,
-    nameBase: cmsFoundCard?.nameBase !== undefined ? cmsFoundCard.nameBase : (cmsFoundCard?.title || defaultProduct.nameBase),
-    nameHighlight: cmsFoundCard?.nameHighlight !== undefined ? cmsFoundCard.nameHighlight : defaultProduct.nameHighlight,
+    nameBase: finalNameBase,
+    nameHighlight: finalNameHighlight,
     category: cmsFoundCard?.category || cmsFoundCard?.specsCategory || defaultProduct.category,
     tagline: cmsFoundCard?.tagline || cmsFoundCard?.desc || defaultProduct.tagline,
     img: resolvedMainImg,
@@ -517,7 +539,7 @@ export default function ArcadeGameDetail({ siteData }) {
                 />
 
                 {/* Title */}
-                <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {product.nameBase || "Parkour Motor "}
                   <span style={{ color: '#38bdf8' }}>{product.nameHighlight || "II (DX)"}</span>
                 </h2>
@@ -715,7 +737,7 @@ export default function ArcadeGameDetail({ siteData }) {
                 alt=""
                 style={{ width: '380px', maxWidth: '90%', height: '8px', objectFit: 'fill', marginBottom: '4px' }}
               />
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
                 Specification <span style={{ color: '#38bdf8' }}>Detail</span>
               </h2>
             </div>

@@ -185,7 +185,7 @@ export default function SoftPlay({ siteData }) {
                 height={10}
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 <span style={{ color: '#38bdf8' }}>Indoor Soft Play</span>
                 <br />
                 <span style={{ whiteSpace: 'nowrap' }}>Equipment Manufacturer</span>
@@ -247,7 +247,7 @@ export default function SoftPlay({ siteData }) {
                 height={10}
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.softplayManufacture?.title, "Soft Play *Equipment Manufacture*")}
               </h2>
             </div>
@@ -316,7 +316,7 @@ export default function SoftPlay({ siteData }) {
               alt=""
               style={{ display: 'block', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
+            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
               {renderTitleMarkup(siteData?.softplaySpecs?.title, "*Technical* Specifications", "#ffcd00")}
             </h2>
           </div>
@@ -387,7 +387,7 @@ export default function SoftPlay({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
                 />
-                <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {renderTitleMarkup(siteData?.softplayMaterials?.title, "*Materials Quality That Defines a* Trusted Soft Play Manufacturer")}
                 </h2>
               </div>
@@ -453,7 +453,7 @@ export default function SoftPlay({ siteData }) {
               alt=""
               style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.softplayTypes?.title, "Types of Soft Play Zones *We<br />Design & Install*")}
             </h2>
           </motion.div>
@@ -814,7 +814,7 @@ export default function SoftPlay({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.softplayRoi?.title, "Know Your Returns<br />*Before You Invest*")}
               </h2>
             </div>
@@ -916,7 +916,7 @@ export default function SoftPlay({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.softplayWhyUs?.title, "Why Choose *Winera International*")}
             </h2>
           </div>

@@ -296,9 +296,10 @@ export default function VrGames({ siteData }) {
               alt="VR Gaming Machine Supplier in India"
               style={{
                 width: '100%',
-                maxWidth: '560px',
+                maxWidth: '460px',
                 height: 'auto',
-                display: 'block'
+                display: 'block',
+                borderRadius: '0px'
               }}
             />
           </div>
@@ -311,7 +312,7 @@ export default function VrGames({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.vrIntro?.title, "*VR Gaming Machine*<br/>supplier in India", '#38bdf8')}
               </h2>
             </div>
@@ -364,7 +365,7 @@ export default function VrGames({ siteData }) {
                 style={{ display: 'block', width: '300px', height: '10px', marginBottom: '7px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '45px',
+                fontSize: '35px',
                 fontWeight: '900',
                 lineHeight: 1.15,
                 margin: 0,
@@ -445,7 +446,7 @@ export default function VrGames({ siteData }) {
               alt=""
               style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: '0 0 12px 0' }}>
+            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: '0 0 12px 0' }}>
               {renderTitleMarkup(siteData?.vrRange?.title, "*Our VR Gaming* Machine Range", '#38bdf8')}
             </h2>
             <p style={{ fontSize: '13.5px', color: '#64748b', fontWeight: '500', maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
@@ -621,7 +622,7 @@ export default function VrGames({ siteData }) {
       </section>
 
       {/* 6. COMMERCIAL-GRADE QUALITY AND RELIABILITY SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-vr-reliability-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-vr-reliability-section" style={{ padding: '90px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-vr-reliability-grid" style={{
           maxWidth: '1120px',
           margin: '0 auto',
@@ -639,7 +640,7 @@ export default function VrGames({ siteData }) {
                 style={{ display: 'block', width: '300px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '45px',
+                fontSize: '35px',
                 fontWeight: '900',
                 lineHeight: 1.15,
                 margin: 0,
@@ -729,7 +730,7 @@ export default function VrGames({ siteData }) {
                 style={{ display: 'block', width: '240px', height: '9px', marginBottom: '6px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '45px',
+                fontSize: '35px',
                 fontWeight: '900',
                 lineHeight: 1.15,
                 margin: 0,
@@ -832,7 +833,7 @@ export default function VrGames({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 className="winera-vr-whyus-h2" style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 className="winera-vr-whyus-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.vrWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>

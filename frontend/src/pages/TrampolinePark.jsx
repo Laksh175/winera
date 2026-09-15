@@ -317,7 +317,7 @@ export default function TrampolinePark({ siteData }) {
                 alt=""
                 style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '12px', objectFit: 'fill', marginLeft: 0 }}
               />
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.trampolineIntro?.title, "Trampoline Park *Manufacturer in India*", '#38bdf8')}
               </h2>
             </div>
@@ -375,7 +375,7 @@ export default function TrampolinePark({ siteData }) {
               />
               
               {/* H2 Title */}
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: '0 0 14px 0' }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: '0 0 14px 0' }}>
                 <span>{siteData?.trampolineCustom?.title1 || "Custom Trampoline Parks "}</span>
                 <span style={{ color: '#38bdf8' }}>{siteData?.trampolineCustom?.title2 || "by Winera"}</span><br />
                 <span style={{ color: '#38bdf8' }}>{siteData?.trampolineCustom?.title3 || "International"}</span>
@@ -446,7 +446,7 @@ export default function TrampolinePark({ siteData }) {
               />
 
               {/* Title */}
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#ffffff', margin: '0 0 24px 0', lineHeight: 1.15, width: '500%', maxWidth: '500%' }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', margin: '0 0 24px 0', lineHeight: 1.15, width: '500%', maxWidth: '500%' }}>
                 {(() => {
                   let raw = siteData?.trampolineSpecs?.title;
                   if (!raw || raw === "Technical *Specifications*") {
@@ -572,7 +572,7 @@ export default function TrampolinePark({ siteData }) {
                     zIndex: 1
                   }}
                 />
-                <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#091E2B', lineHeight: 1.2, margin: '0 0 14px 0', letterSpacing: '-0.02em' }}>
+                <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#091E2B', lineHeight: 1.2, margin: '0 0 14px 0', letterSpacing: '-0.02em' }}>
                   {(() => {
                     const rawTitle = siteData?.trampolineInside?.title;
                     if (!rawTitle || rawTitle.includes("custom") || rawTitle.includes("inside") || rawTitle.includes("*custom")) {
@@ -773,7 +773,7 @@ export default function TrampolinePark({ siteData }) {
               alt=""
               style={{ display: 'inline-block', maxWidth: '95%', width: '480px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#091E2B', lineHeight: 1.18, margin: '0 0 14px 0' }}>
+            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#091E2B', lineHeight: 1.18, margin: '0 0 14px 0' }}>
               {(() => {
                 const rawTitle = siteData?.trampolineRoi?.title;
                 if (!rawTitle || rawTitle.includes("Trampoline") || rawTitle.includes("Earn")) {
@@ -899,7 +899,7 @@ export default function TrampolinePark({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }} className="winera-why-h2">
+            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }} className="winera-why-h2">
               {renderTitleMarkup(siteData?.trampolineWhyChoose?.title, "Why Choose *Winera International*", '#28b4ee')}
             </h2>
           </div>

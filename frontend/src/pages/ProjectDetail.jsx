@@ -311,7 +311,7 @@ export default function ProjectDetail({ siteData }) {
   }, [slug, currentProject]);
 
   return (
-    <div style={{ fontFamily: "'Inter', sans-serif", color: '#0f172a', background: '#F5F5F9', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div style={{ fontFamily: "'Open Sans', sans-serif", color: '#0f172a', background: '#F5F5F9', minHeight: '100vh', overflowX: 'hidden' }}>
       {/* HEADER */}
       <Header headerData={header} />
 
@@ -370,7 +370,7 @@ export default function ProjectDetail({ siteData }) {
             />
 
             <h2 style={{
-              fontSize: '45px',
+              fontSize: '35px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.2,
@@ -475,7 +475,7 @@ export default function ProjectDetail({ siteData }) {
               style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: '45px',
+              fontSize: '35px',
               fontWeight: '900',
               margin: 0,
               lineHeight: 1.15,
@@ -530,7 +530,7 @@ export default function ProjectDetail({ siteData }) {
             style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
           />
           <h2 style={{
-            fontSize: '45px',
+            fontSize: '35px',
             fontWeight: '900',
             color: '#0f172a',
             margin: 0,
@@ -593,7 +593,7 @@ export default function ProjectDetail({ siteData }) {
             style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
           />
           <h2 style={{
-            fontSize: '45px',
+            fontSize: '35px',
             fontWeight: '900',
             color: '#0f172a',
             margin: 0,

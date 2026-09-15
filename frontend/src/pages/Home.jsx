@@ -401,7 +401,7 @@ export default function Home({ siteData }) {
             </SectionHeading>
 
             <p className="winera-company-stats-desc" style={{
-              fontFamily: "'Geist', 'Open Sans', sans-serif",
+              fontFamily: "'Open Sans', sans-serif",
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '28.8px',
@@ -1344,10 +1344,10 @@ export default function Home({ siteData }) {
                           style={{
                             position: 'absolute',
                             top: '-15px',
-                            right: '25px',
+                            right: '0px',
                             width: '165px',
                             height: '140px',
-                            fontSize: '140px',
+                            fontSize: '115px',
                             fontWeight: '800',
                             fontFamily: "'Open Sans', sans-serif",
                             lineHeight: '140px',
@@ -1388,7 +1388,7 @@ export default function Home({ siteData }) {
                               const isLastInCard45 = actualIndex >= 3 && pIdx === validPts.length - 1;
                               return (
                                 <li key={pIdx} style={{
-                                  fontSize: '12px',
+                                  fontSize: '15px',
                                   color: '#475569',
                                   fontWeight: '500',
                                   lineHeight: 1.6,
@@ -1397,7 +1397,7 @@ export default function Home({ siteData }) {
                                   gap: '8px',
                                   paddingBottom: isLastInCard45 ? '14px' : '0px'
                                 }}>
-                                  <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '12px', fontWeight: '900', marginTop: '-1px' }}>•</span>
+                                  <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '15px', fontWeight: '900', marginTop: '-1px' }}>•</span>
                                   <span>{pt}</span>
                                 </li>
                               );

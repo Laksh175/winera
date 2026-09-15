@@ -184,7 +184,7 @@ export default function BumperCar({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.bumpercarIntro?.title, "*Bumper Car*<br/>Manufacturer in India", '#38bdf8')}
               </h2>
             </div>
@@ -252,7 +252,7 @@ export default function BumperCar({ siteData }) {
           {/* 70% Left Area: Center-Aligned Heading & Sub Text */}
           <div className="winera-bumpercar-intro-text">
             <h2 style={{
-              fontSize: '45px',
+              fontSize: '35px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -410,7 +410,7 @@ export default function BumperCar({ siteData }) {
               alt=""
               style={{ display: 'block', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
+            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
               {renderTitleMarkup(siteData?.bumpercarSpecs?.title, "*Technical* Specifications", "#ffcd00")}
             </h2>
           </div>
@@ -505,7 +505,7 @@ export default function BumperCar({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '65%', height: '9px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.bumpercarOptions?.title, "Indoor Bumper Car<br/>Options *for Your Venue*", '#38bdf8')}
               </h2>
             </div>
@@ -612,7 +612,7 @@ export default function BumperCar({ siteData }) {
               alt=""
               style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.bumpercarComparison?.title, "*QUICK COMPARISON* TABLE", '#38bdf8')}
             </h2>
           </div>
@@ -896,7 +896,7 @@ export default function BumperCar({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '80%', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.bumpercarInvestment?.title, "Is a Bumper Car Ride a<br/>Smart *Investment for<br/>Your Venue?*", '#38bdf8')}
               </h2>
             </div>
@@ -995,7 +995,7 @@ export default function BumperCar({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.bumpercarWhyChoose?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>

@@ -529,7 +529,7 @@ export default function AboutUs({ siteData }) {
                         <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <item.icon style={{ width: '15px', height: '15px', color: '#0284c7' }} />
                         </div>
-                        <span style={{ fontSize: '12.5px', fontWeight: '600', color: '#0f172a' }}>{item.text}</span>
+                        <span style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>{item.text}</span>
                       </div>
                     ))}
                   </div>
@@ -563,7 +563,7 @@ export default function AboutUs({ siteData }) {
                         <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <item.icon style={{ width: '15px', height: '15px', color: '#d97706' }} />
                         </div>
-                        <span style={{ fontSize: '12.5px', fontWeight: '600', color: '#0f172a' }}>{item.text}</span>
+                        <span style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>{item.text}</span>
                       </div>
                     ))}
                   </div>

@@ -303,7 +303,7 @@ export default function Project({ siteData }) {
   }, [seoData]);
 
   return (
-    <div style={{ fontFamily: "'Inter', sans-serif", color: '#0f172a', background: '#F5F5F9', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div style={{ fontFamily: "'Open Sans', sans-serif", color: '#0f172a', background: '#F5F5F9', minHeight: '100vh', overflowX: 'hidden' }}>
       {/* 1. HEADER */}
       <Header headerData={header} />
 

@@ -27,13 +27,20 @@
 body {
   background-color: var(--bg-main);
   color: var(--text-dark);
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  line-height: 26px;
-  font-weight: 400;
-  font-style: normal;
   letter-spacing: 0px;
   overflow-x: hidden;
+}
+
+/* Master Section Title h2 Desktop Font Size */
+h2,
+section h2,
+.winera-section-heading-container h2,
+div[class*="winera"] h2,
+div[class*="section"] h2,
+div[class*="text"] h2,
+div[class*="container"] h2,
+div[class*="grid"] h2 {
+  font-size: 35px !important;
 }
 
 p,
@@ -95,15 +102,14 @@ p *,
   color: #475569 !important;
 }
 
-/* Testimonial Quote Italic Override */
+/* Testimonial Quote Typography Override */
 .winera-testi-quote,
 .winera-testi-quote * {
   font-family: 'Open Sans', sans-serif !important;
   font-weight: 400 !important;
-  font-style: italic !important;
+  font-style: normal !important;
   font-size: 20px !important;
-  line-height: 31.75px !important;
-  letter-spacing: -0.22px !important;
+  line-height: 29.75px !important;
   text-align: justify !important;
   vertical-align: middle !important;
   color: #334155 !important;
@@ -113,7 +119,7 @@ p *,
 .winera-testi-quote button {
   font-family: 'Open Sans', sans-serif !important;
   font-weight: 700 !important;
-  font-style: italic !important;
+  font-style: normal !important;
   font-size: 20px !important;
   line-height: 35.75px !important;
   letter-spacing: -0.22px !important;
@@ -131,11 +137,10 @@ p *,
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: all 0.25s ease !important;
 }
 
-.winera-testi-nav-btn:hover,
-.winera-testi-nav-btn:active {
+.winera-testi-nav-btn:hover {
   background: #38bdf8 !important;
   border-color: #38bdf8 !important;
   color: #ffffff !important;
@@ -151,11 +156,11 @@ p *,
 
 /* FAQ Answer Typography Override */
 .winera-faq-answer {
-  font-family: 'Urbanist', sans-serif !important;
+  font-family: 'Open Sans', sans-serif !important;
   font-weight: 400 !important;
   font-style: normal !important;
   font-size: 16px !important;
-  line-height: 100% !important;
+  line-height: 115% !important;
   letter-spacing: 0% !important;
   color: rgba(55, 62, 65, 1) !important;
 }
@@ -7420,34 +7425,83 @@ h2 span,
   font-weight: 400 !important;
 }
 
-@media (max-width: 768px) {
-  .winera-hero-line1 {
-    font-size: clamp(20px, 5.5vw, 32px) !important;
-    line-height: 1.25 !important;
+@media (min-width: 1281px) {
+  .winera-home-hero-h1 {
+    max-width: 1100px !important;
+  }
+  .winera-hero-line1,
+  h1.winera-home-hero-h1 .winera-hero-line1 {
+    font-size: 60px !important;
+    line-height: 1.18 !important;
     white-space: nowrap !important;
     display: block !important;
   }
-
-  .winera-hero-line2 {
-    font-size: clamp(18px, 5vw, 28px) !important;
-    line-height: 1.25 !important;
+  .winera-hero-line2,
+  h1.winera-home-hero-h1 .winera-hero-line2 {
+    font-size: 60px !important;
+    line-height: 1.18 !important;
     white-space: nowrap !important;
     display: block !important;
   }
 }
 
-@media (max-width: 480px) {
-  .winera-hero-line1 {
-    font-size: clamp(18px, 5.2vw, 24px) !important;
-    line-height: 1.25 !important;
-    white-space: nowrap !important;
+/* Responsive Home Hero Main Title Font Sizes for 425px, 768px, and 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .winera-hero-line1,
+  h1.winera-home-hero-h1 .winera-hero-line1 {
+    font-size: 60px !important;
+    line-height: 1.18 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
     display: block !important;
   }
 
-  .winera-hero-line2 {
-    font-size: clamp(16px, 4.6vw, 21px) !important;
-    line-height: 1.25 !important;
-    white-space: nowrap !important;
+  .winera-hero-line2,
+  h1.winera-home-hero-h1 .winera-hero-line2 {
+    font-size: 54px !important;
+    line-height: 1.18 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: block !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .winera-hero-line1,
+  h1.winera-home-hero-h1 .winera-hero-line1 {
+    font-size: 48px !important;
+    line-height: 1.18 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: block !important;
+  }
+
+  .winera-hero-line2,
+  h1.winera-home-hero-h1 .winera-hero-line2 {
+    font-size: 42px !important;
+    line-height: 1.18 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: block !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .winera-hero-line1,
+  h1.winera-home-hero-h1 .winera-hero-line1 {
+    font-size: 43px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: block !important;
+  }
+
+  .winera-hero-line2,
+  h1.winera-home-hero-h1 .winera-hero-line2 {
+    font-size: 43px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
     display: block !important;
   }
 }
@@ -7466,7 +7520,7 @@ h2 span,
 
   .winera-home-hero-section h1,
   .winera-home-hero-h1 {
-    font-size: clamp(16px, 5.2vw, 24px) !important;
+    font-size: inherit !important;
     line-height: 1.35 !important;
     margin-bottom: 14px !important;
     max-width: 100% !important;
@@ -7494,7 +7548,8 @@ h2 span,
     display: block !important;
     width: 100% !important;
     text-align: center !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    word-break: break-word !important;
     margin: 0 auto !important;
   }
 
@@ -7505,7 +7560,8 @@ h2 span,
     display: block !important;
     width: 100% !important;
     text-align: center !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    word-break: break-word !important;
     margin: 0 auto !important;
   }
 
@@ -9323,6 +9379,6 @@ button[style*="background:transparent"]:hover,
   h2 *,
   section h2 *,
   div[class*="winera"] h2 * {
-    font-size: 45px !important;
+    font-size: 35px !important;
   }
 }
