@@ -1229,6 +1229,7 @@ export default function BumperCar({ siteData }) {
 
       {/* 15. CTA BANNER SECTION (MATCHING FIGMA SPEC EXACTLY) */}
       <CtaBanner
+        containerPadding="15px 32px"
         blurBg={true}
         align="center"
         gradientTagline={true}

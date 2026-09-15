@@ -911,6 +911,7 @@ export default function Hypergrid({ siteData }) {
 
       {/* 9. READY TO ADD HYPERGRID TO YOUR VENUE CTA BANNER SECTION */}
       <CtaBanner
+        containerPadding="10px 32px"
         blurBg={true}
         showOverlay={true}
         align="center"

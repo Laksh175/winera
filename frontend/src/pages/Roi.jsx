@@ -1349,9 +1349,9 @@ export default function Roi({ siteData }) {
           position: 'relative',
           backgroundColor: '#0c0f17',
           borderRadius: '24px',
-          padding: '60px 40px',
-          minHeight: '290px',
-          aspectRatio: '1920 / 520',
+          padding: '20px 40px',
+          minHeight: 'auto',
+          aspectRatio: 'auto',
           boxShadow: '0 25px 60px rgba(0, 0, 0, 0.35)',
           display: 'flex',
           flexDirection: 'column',
@@ -1376,7 +1376,7 @@ export default function Roi({ siteData }) {
           <div style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(180deg, rgba(8, 11, 18, 0.75) 0%, rgba(8, 11, 18, 0.88) 100%)',
+            background: 'linear-gradient(180deg, rgba(8, 11, 18, 0.45) 0%, rgba(8, 11, 18, 0.8) 100%)',
             borderRadius: '24px',
             zIndex: 1
           }} />

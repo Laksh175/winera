@@ -680,13 +680,14 @@ export default function AmusementPark({ siteData }) {
 
       {/* CTA BANNER SECTION WITH DYNAMIC CONTENT & EXACT TILTED CARDS MATCHING UI 1:1 */}
       <CtaBanner
+        containerPadding="30px 32px"
         blurBg={true}
         showOverlay={true}
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="38px"
-        subtitleFontSize="24px"
+        titleFontSize="clamp(24px, 2.8vw, 38px)"
+        subtitleFontSize="clamp(20px, 2.4vw, 28px)"
         subtitleFontWeight="900"
         bgUrl={siteData?.amusementCta?.bgUrl ? getValidImageUrl(siteData.amusementCta.bgUrl, ctaMainBanner) : null}
         bg={ctaMainBanner}

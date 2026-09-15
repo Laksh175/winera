@@ -74,6 +74,7 @@ export default function CtaBanner({
   minHeight = "300px",
   leftImgMaxWidth = "280px",
   containerPadding = null,
+  contentBoxPadding = null,
   showTextShadow = true,
   blurBg = false
 }) {
@@ -110,9 +111,9 @@ export default function CtaBanner({
             margin: '0 auto',
             position: 'relative',
             borderRadius: '24px',
-            padding: containerPadding || (isCentered ? (hasSideImages ? '48px 30px 48px' : '52px 40px 52px') : '52px 48px'),
-            minHeight: isCustomBgUploaded ? '360px' : (minHeight || '320px'),
-            aspectRatio: isCustomBgUploaded ? '1920 / 600' : 'auto',
+            padding: containerPadding || '0px 32px',
+            minHeight: 'auto',
+            aspectRatio: 'auto',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.15)',
             overflow: 'hidden',
             display: 'flex',
@@ -186,13 +187,13 @@ export default function CtaBanner({
               textAlign: isCentered ? 'center' : 'left',
               margin: isCentered ? '0 auto' : '0',
               width: '100%',
-              maxWidth: isCentered ? (hasSideImages ? '560px' : '820px') : '650px',
+              maxWidth: isCentered ? (hasSideImages ? '680px' : '860px') : '650px',
               justifyContent: isCustomBgUploaded ? 'flex-end' : 'center',
-              paddingTop: isCustomBgUploaded ? '140px' : '0'
+              padding: contentBoxPadding || (isCustomBgUploaded ? '120px 0 24px' : '24px 0')
             }}>
               {!isCustomBgUploaded && tagline && (
                 <div className="winera-cta-tagline" style={{
-                  fontSize: '1.75rem',
+                  fontSize: 'clamp(1.3rem, 2.2vw, 1.7rem)',
                   fontWeight: '900',
                   letterSpacing: '0.5px',
                   marginBottom: '6px',
@@ -216,15 +217,15 @@ export default function CtaBanner({
 
               {!isCustomBgUploaded && title && (
                 <h2 className="winera-cta-title" style={{
-                  fontSize: titleFontSize || '42px',
+                  fontSize: titleFontSize || 'clamp(24px, 2.6vw, 34px)',
                   fontWeight: titleFontWeight || '900',
-                  lineHeight: 1.25,
-                  marginBottom: '14px',
+                  lineHeight: 1.22,
+                  marginBottom: '10px',
                   letterSpacing: '0.2px',
-                  maxWidth: hasSideImages ? '560px' : '100%',
+                  maxWidth: hasSideImages ? '680px' : '100%',
                   textAlign: isCentered ? 'center' : 'left',
                   ...(gradientTitle ? {
-                    background: 'linear-gradient(90deg, rgba(255, 212, 0, 1) 0%, rgba(238, 229, 183, 1) 30%, rgba(0, 174, 239, 1) 68%, rgba(167, 229, 245, 1) 100%)',
+                    background: 'linear-gradient(90deg, rgba(255, 212, 0, 1) 0%, rgba(238, 229, 183, 1) 35%, rgba(0, 174, 239, 1) 70%, rgba(125, 211, 252, 1) 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.85))',
@@ -244,12 +245,12 @@ export default function CtaBanner({
 
               {!isCustomBgUploaded && subtitle && (
                 <div className="winera-cta-subtitle" style={{
-                  fontSize: subtitleFontSize || 'clamp(1.2rem, 2.2vw, 1.6rem)',
+                  fontSize: subtitleFontSize || 'clamp(15px, 1.8vw, 22px)',
                   fontWeight: subtitleFontWeight || '800',
                   color: '#ffffff',
-                  lineHeight: 1.35,
-                  marginBottom: '24px',
-                  maxWidth: hasSideImages ? '560px' : '820px',
+                  lineHeight: 1.3,
+                  marginBottom: '14px',
+                  maxWidth: hasSideImages ? '680px' : '840px',
                   textAlign: isCentered ? 'center' : 'left',
                   textShadow: showTextShadow ? '0 2px 10px rgba(0,0,0,0.85)' : 'none'
                 }}>

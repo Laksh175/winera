@@ -1057,13 +1057,14 @@ export default function VrGames({ siteData }) {
 
       {/* 9. NEED ANY CONSULTATIONS CTA BANNER SECTION */}
       <CtaBanner
+        contentBoxPadding="50px 0px"
         blurBg={true}
         showOverlay={true}
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="38px"
-        subtitleFontSize="24px"
+        titleFontSize="clamp(24px, 2.8vw, 38px)"
+        subtitleFontSize="clamp(20px, 2.4vw, 28px)"
         subtitleFontWeight="900"
         bgUrl={
           siteData?.vrCta?.bgUrl &&

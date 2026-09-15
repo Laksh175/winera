@@ -1391,7 +1391,7 @@ export default function ArGames({ siteData }) {
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="42px"
+        titleFontSize="50px"
         bgUrl={
           siteData?.arCta?.bgUrl &&
             !siteData.arCta.bgUrl.includes('cta-consultations') &&
@@ -1424,7 +1424,7 @@ export default function ArGames({ siteData }) {
             ? siteData?.arCta?.subtitle || siteData?.arCta?.description || siteData?.arCta?.whiteText
             : "Get in touch with India's ROI-First Game Zone Developer"
         }
-        subtitleFontSize="18px"
+        subtitleFontSize="25px"
         description={null}
         buttonText={
           siteData?.arCta?.buttonText !== undefined

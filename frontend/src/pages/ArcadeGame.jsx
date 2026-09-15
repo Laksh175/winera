@@ -1069,12 +1069,12 @@ export default function ArcadeGame({ siteData }) {
                 </div>
                 {Array.isArray(point.paragraphs) ? (
                   point.paragraphs.map((para, paraIdx) => (
-                    <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '580px' }}>
+                    <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '800px' }}>
                       {para}
                     </p>
                   ))
                 ) : (
-                  <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, maxWidth: '580px' }}>
+                  <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, maxWidth: '800px' }}>
                     {point.desc || point.text}
                   </p>
                 )}
@@ -1082,7 +1082,7 @@ export default function ArcadeGame({ siteData }) {
             ))}
 
             {/* WhatsApp CTA Button: Talk to an ROI Expert */}
-            <div style={{ marginTop: '36px' }}>
+            <div style={{ marginTop: '-17px' }}>
               {(() => {
                 const baseLink = siteData?.arcadeCommercial?.ctaLink || "https://wa.me/919428989488";
                 const defaultMsg = siteData?.arcadeCommercial?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for setup & commercial guidance. Please share details. [Ref: Arcade Game Page]";

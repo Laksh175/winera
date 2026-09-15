@@ -804,7 +804,7 @@ export default function SafetyStandards({ siteData }) {
               style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '12px', objectFit: 'fill' }}
             />
             <h2 className="winera-safety-why-h2" style={{
-              fontSize: '42px',
+              fontSize: '45px',
               fontWeight: '900',
               color: '#0f172a',
               margin: '0 0 16px',
@@ -830,8 +830,9 @@ export default function SafetyStandards({ siteData }) {
             position: 'relative',
             backgroundColor: '#0c0f17',
             borderRadius: '24px',
-            padding: '35px 20px',
-            minHeight: '298px',
+            padding: '70px',
+            minHeight: 'auto',
+            aspectRatio: 'auto',
             boxShadow: '0 25px 60px rgba(0, 0, 0, 0.35)',
             display: 'flex',
             flexDirection: 'column',
@@ -848,7 +849,7 @@ export default function SafetyStandards({ siteData }) {
               backgroundPosition: 'center',
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
-              opacity: 0.3,
+              opacity: 0.2,
               zIndex: 0
             }} />
 
@@ -856,7 +857,7 @@ export default function SafetyStandards({ siteData }) {
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(180deg, rgba(8, 11, 18, 0.75) 0%, rgba(8, 11, 18, 0.88) 100%)',
+              background: 'linear-gradient(180deg, rgba(8, 11, 18, 0.45) 0%, rgba(8, 11, 18, 0.6) 100%)',
               zIndex: 1
             }}></div>
 
@@ -897,7 +898,7 @@ export default function SafetyStandards({ siteData }) {
             {/* Center Content Box */}
             <div style={{ position: 'relative', zIndex: 3, maxWidth: '560px', margin: '0 auto', padding: '0 15px' }}>
               <h2 style={{
-                fontSize: '38px',
+                fontSize: '45px',
                 fontWeight: '900',
                 margin: '0 0 16px',
                 lineHeight: 1.15,
