@@ -94,12 +94,11 @@ const renderWhyWineraIcon = (iconName, idx) => {
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
   let text = rawText || defaultText;
 
-  // Fix line breaks for hypergrid banner title specifically
+  // Sanitize line breaks and markup for Hypergrid page titles specifically
   if (text.toLowerCase().includes('interactive led floor games')) {
-    text = text.replace(/Games\s*<br\s*\/?>\s*\*{0,2}\s*for High-/gi, 'Games *for High-');
-    if (text.includes('for High-') && !text.includes('for High-<br/>') && !text.includes('for High-<br />')) {
-      text = text.replace(/for High-\s*/gi, 'for High-<br/>');
-    }
+    text = "Interactive LED Floor Games<br/>*for High-Footfall Venues*";
+  } else if (text.toLowerCase().includes('what makes hypergrid')) {
+    text = "*What Makes Hypergrid*<br/>the Right Choice for Your Venue";
   }
 
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
@@ -110,8 +109,9 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
     if (typeof part === 'string' && (part.includes('<br/>') || part.includes('<br />') || part.includes('<br>'))) {
       const subParts = part.split(/<br\s*\/?>/i);
       const content = subParts.map((subPart, sIdx) => {
-        const formattedSubPart = subPart.includes('for High-') ? (
-          <span style={{ whiteSpace: 'nowrap' }}>{subPart}</span>
+        const needsNowrap = subPart.includes('High-Footfall') || subPart.includes('Right Choice') || subPart.includes('for Your Venue');
+        const formattedSubPart = needsNowrap ? (
+          <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>{subPart}</span>
         ) : (
           subPart
         );
@@ -131,12 +131,14 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
       );
     }
     
+    const needsNowrap = typeof part === 'string' && (part.includes('High-Footfall') || part.includes('Right Choice') || part.includes('for Your Venue'));
+    
     return isHighlight ? (
-      <span key={index} style={{ color: highlightColor }}>
+      <span key={index} style={{ color: highlightColor, whiteSpace: needsNowrap ? 'nowrap' : 'normal', display: needsNowrap ? 'inline-block' : 'inline' }}>
         {part}
       </span>
     ) : (
-      part
+      needsNowrap ? <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>{part}</span> : part
     );
   });
 };
@@ -308,7 +310,7 @@ export default function Hypergrid({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '380px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, width: '1000px', maxWidth: '100%' }}>
-                {renderTitleMarkup(siteData?.hypergridBanner?.title, "Interactive LED Floor Games *for High-<br/>Footfall Venues*", '#38bdf8')}
+                {renderTitleMarkup(siteData?.hypergridBanner?.title, "Interactive LED Floor Games<br/>*for High-Footfall Venues*", '#38bdf8')}
               </h2>
             </div>
 
@@ -490,7 +492,7 @@ export default function Hypergrid({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '240px', height: '9px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: '0 0 14px' }}>
-              {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid* the Right<br/>Choice for Your Venue", '#38bdf8')}
+              {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid*<br/>*the Right Choice for Your Venue*", '#38bdf8')}
             </h2>
             <p style={{ fontSize: '13.5px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
               {siteData?.hypergridWhyUs?.subtitle || "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:"}

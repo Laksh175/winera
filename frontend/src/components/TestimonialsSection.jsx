@@ -143,7 +143,7 @@ export default function TestimonialsSection({
             )}
 
             {/* White Rectangle Card Container */}
-            <div style={{
+            <div className="winera-testi-card-box" style={{
               position: 'relative',
               width: '100%',
               background: '#ffffff',
@@ -279,7 +279,7 @@ export default function TestimonialsSection({
               </div>
 
               {/* Right Side: Floating / Pop-Out Video Frame (Linear Gradient Fade matching Image 2) */}
-              <div style={{
+              <div className="winera-testi-floating-img" style={{
                 position: 'absolute',
                 right: '35px',
                 top: '39%',

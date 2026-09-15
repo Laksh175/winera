@@ -18,7 +18,7 @@ const defaultProjects = [
 
 export default function ProjectsMarqueeSection({
   id = 'projects',
-  title = <>GAME ZONES WE HAVE<br />BUILT <span style={{ color: '#00a8ff' }}>ACROSS INDIA</span></>,
+  title = <><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>GAME ZONES WE HAVE</span><br /><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span></span></>,
   simpleTitle = null,
   showTopHeader = true,
   subtext = "Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers.",
@@ -49,11 +49,23 @@ export default function ProjectsMarqueeSection({
             gap: '30px',
             flexWrap: 'wrap'
           }}>
-            <div style={{ flex: '1 1 500px', minWidth: '280px' }}>
+            <div style={{ flex: '1 1 580px', minWidth: '300px' }}>
               <SectionHeading align="left" marginBottom="0" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign}>
                 {typeof title === 'string' ? (
                   (() => {
-                    const parts = title.split(/\*{1,2}(.*?)\*{1,2}/g);
+                    let cleaned = title.replace(/GAME ZONES WE HAVE\s*<br\s*\/?>\s*/gi, 'GAME ZONES WE HAVE ');
+                    if (cleaned.toLowerCase().includes('game zones we have')) {
+                      return (
+                        <>
+                          <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>GAME ZONES WE HAVE</span>
+                          <br />
+                          <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
+                            BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span>
+                          </span>
+                        </>
+                      );
+                    }
+                    const parts = cleaned.split(/\*{1,2}(.*?)\*{1,2}/g);
                     return parts.map((part, index) => {
                       if (index % 2 === 1) {
                         return (

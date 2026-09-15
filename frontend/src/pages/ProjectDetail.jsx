@@ -474,7 +474,7 @@ export default function ProjectDetail({ siteData }) {
               alt=""
               style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h3 style={{
+            <h2 style={{
               fontSize: '45px',
               fontWeight: '900',
               margin: 0,
@@ -483,7 +483,7 @@ export default function ProjectDetail({ siteData }) {
             }}>
               <span style={{ color: '#ffcd00' }}>Basic </span>
               <span style={{ color: '#ffffff' }}>Information</span>
-            </h3>
+            </h2>
           </div>
 
           <div className="winera-project-basic-table-box" style={{
@@ -529,7 +529,7 @@ export default function ProjectDetail({ siteData }) {
             alt=""
             style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
           />
-          <h3 style={{
+          <h2 style={{
             fontSize: '45px',
             fontWeight: '900',
             color: '#0f172a',
@@ -538,7 +538,7 @@ export default function ProjectDetail({ siteData }) {
           }}>
             <span>{clientTitlePrefix}</span>
             <span style={{ color: '#38bdf8' }}>{clientTitleCyan}</span>
-          </h3>
+          </h2>
         </div>
 
         <div className="winera-project-client-grid" style={{
@@ -592,7 +592,7 @@ export default function ProjectDetail({ siteData }) {
             alt=""
             style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
           />
-          <h3 style={{
+          <h2 style={{
             fontSize: '45px',
             fontWeight: '900',
             color: '#0f172a',
@@ -601,7 +601,7 @@ export default function ProjectDetail({ siteData }) {
           }}>
             <span style={{ color: '#38bdf8' }}>{solutionTitleCyan}</span>
             <span>{solutionTitleSuffix}</span>
-          </h3>
+          </h2>
         </div>
 
         <div className="winera-project-solution-grid" style={{
@@ -668,10 +668,10 @@ export default function ProjectDetail({ siteData }) {
               alt=""
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
             />
-            <h3 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
+            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
               <span style={{ color: '#38bdf8' }}>{galleryTitleCyan}</span>
               <span>{galleryTitleDark}</span>
-            </h3>
+            </h2>
           </motion.div>
 
           <div className="winera-project-gallery-grid" style={{

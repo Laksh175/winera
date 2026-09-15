@@ -451,7 +451,7 @@ export default function BowlingAlley({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '320px', height: '14px', marginBottom: '10px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {(() => {
                     let titleStr = siteData?.bowlingFreeFall?.title;
                     if (!titleStr || !titleStr.includes('<br/>')) {
@@ -459,7 +459,7 @@ export default function BowlingAlley({ siteData }) {
                     }
                     return renderTitleMarkup(titleStr, "*Free-Fall Bowling:* Give the<br/>Full Professional Experience", '#38bdf8');
                   })()}
-                </h3>
+                </h2>
               </div>
 
               <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}>
@@ -876,7 +876,7 @@ export default function BowlingAlley({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '320px', height: '14px', marginBottom: '10px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {(() => {
                     let titleStr = siteData?.bowlingString?.title;
                     if (!titleStr || !titleStr.includes('<br/>')) {
@@ -884,7 +884,7 @@ export default function BowlingAlley({ siteData }) {
                     }
                     return renderTitleMarkup(titleStr, "String Bowling<br/>Machines: *Affordable*<br/>*Bowling Setup for Every*<br/>*Venue*", '#38bdf8');
                   })()}
-                </h3>
+                </h2>
               </div>
 
               <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}>
@@ -957,7 +957,7 @@ export default function BowlingAlley({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '14px', marginBottom: '8px', objectFit: 'fill' }}
               />
-              <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: 0 }}>
+              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: 0 }}>
                 {(() => {
                   const rawTitle = siteData?.bowlingRoi?.title || "*Investment* & ROI";
                   const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -972,7 +972,7 @@ export default function BowlingAlley({ siteData }) {
                     return part;
                   });
                 })()}
-              </h3>
+              </h2>
             </div>
 
             <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '10px', width: '109%' }}>
@@ -1125,10 +1125,9 @@ export default function BowlingAlley({ siteData }) {
                 color: '#0f172a',
                 lineHeight: 1.15,
                 margin: '0 0 20px',
-                letterSpacing: '-0.5px',
-                whiteSpace: 'nowrap'
+                letterSpacing: '-0.5px'
               }}>
-                <span style={{ color: '#38bdf8' }}>Why Choose</span> Winera International?
+                <span style={{ color: '#38bdf8' }}>Why Choose</span><br />Winera International?
               </h2>
               <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', maxWidth: '780px', margin: '0 auto 14px' }}>
                 {siteData?.bowlingWhyUs?.p1 || "At Winera International, we bring over 15 years of industry experience as a trusted bowling alley manufacturer in India. We are the largest bowling alley supplier in the country, with more than 30 complete setups delivered successfully."}

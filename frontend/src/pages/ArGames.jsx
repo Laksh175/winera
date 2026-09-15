@@ -56,12 +56,12 @@ function renderTitleMarkup(rawText, defaultText, highlightColor = '#ffcd00') {
 
   return lines.map((line, lineIdx) => {
     const parts = line.split(/\*{1,2}(.*?)\*{1,2}/g);
-    const needsNowrap = line.includes("Interactive AR Attractions") || line.includes("Commercial-Grade Quality") || line.includes("Commercial VR Machines") || line.includes("Know Your Returns Before You Invest in");
+    const needsNowrap = line.includes("Interactive AR Attractions") || line.includes("Commercial-Grade Quality") || line.includes("Commercial VR Machines");
     return (
       <React.Fragment key={lineIdx}>
         {lineIdx > 0 && <br />}
         {needsNowrap ? (
-          <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
+          <span className="winera-nowrap-text" style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
             {parts.map((part, index) => {
               if (index % 2 === 1) {
                 return (
@@ -1015,9 +1015,9 @@ export default function ArGames({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '260px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
+                <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
                   {renderTitleMarkup(siteData?.arFeatures?.f1Title, "*Exciting* Attractions", '#38bdf8')}
-                </h3>
+                </h2>
               </div>
               <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
                 {siteData?.arFeatures?.f1Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
@@ -1058,9 +1058,9 @@ export default function ArGames({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '260px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
+                <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
                   {renderTitleMarkup(siteData?.arFeatures?.f2Title, "High-Quality *Equipment*", '#38bdf8')}
-                </h3>
+                </h2>
               </div>
               <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
                 {siteData?.arFeatures?.f2Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
@@ -1083,9 +1083,9 @@ export default function ArGames({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '280px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
+                <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
                   {renderTitleMarkup(siteData?.arFeatures?.f3Title, "*Budget-Friendly AR*<br/>Entertainment Setup", '#38bdf8')}
-                </h3>
+                </h2>
               </div>
               <p className="winera-ar-feature-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: 'justify' }}>
                 {siteData?.arFeatures?.f3Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
@@ -1135,7 +1135,7 @@ export default function ArGames({ siteData }) {
             }}>
               {renderTitleMarkup(
                 siteData?.arEarn?.title,
-                "*Know Your Returns Before You Invest in*<br/>AR Gaming Equipment",
+                "*Know Your Returns*<br/>Before You Invest in AR Gaming Equipment",
                 '#38bdf8'
               )}
             </h2>
