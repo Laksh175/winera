@@ -160,7 +160,7 @@ export default function Blog({ siteData }) {
               alt=""
               style={{ display: 'block', width: '240px', height: '10px', margin: '0 auto 8px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
+            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
               our <span style={{ color: '#38bdf8' }}>Blogs</span>
             </h2>
           </motion.div>

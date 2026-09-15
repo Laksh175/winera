@@ -48,16 +48,20 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
   return parts.map((part, pIdx) => {
     const isHighlighted = pIdx % 2 === 1;
     const lines = part.split(/<br\s*\/?>/i);
-    const renderedContent = lines.map((line, lIdx) => (
-      <React.Fragment key={lIdx}>
-        {lIdx > 0 && <br />}
-        {line}
-      </React.Fragment>
-    ));
+    const renderedContent = lines.map((line, lIdx) => {
+      const needsNowrap = line.includes("Commercial VR Machines") || line.includes("Commercial-Grade Quality") || line.includes("What Will Your VR Gaming");
+      return (
+        <React.Fragment key={lIdx}>
+          {lIdx > 0 && <br />}
+          {needsNowrap ? <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>{line}</span> : line}
+        </React.Fragment>
+      );
+    });
 
     if (isHighlighted) {
+      const hasBr = part.toLowerCase().includes('<br');
       return (
-        <span key={pIdx} style={{ color: highlightColor }}>
+        <span key={pIdx} style={{ color: highlightColor, whiteSpace: hasBr ? 'normal' : 'nowrap' }}>
           {renderedContent}
         </span>
       );
@@ -307,7 +311,7 @@ export default function VrGames({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.vrIntro?.title, "*VR Gaming Machine*<br/>supplier in India", '#38bdf8')}
               </h2>
             </div>
@@ -360,12 +364,14 @@ export default function VrGames({ siteData }) {
                 style={{ display: 'block', width: '300px', height: '10px', marginBottom: '7px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '45px',
                 fontWeight: '900',
                 lineHeight: 1.15,
                 margin: 0,
                 color: '#0f172a',
-                letterSpacing: '-0.5px'
+                letterSpacing: '-0.5px',
+                width: '100%',
+                maxWidth: '100%'
               }}>
                 {renderTitleMarkup(
                   siteData?.vrMatchedVenue?.title || (siteData?.vrMatchedVenue?.titleLine1 ? `${siteData.vrMatchedVenue.titleLine1}<br/>${siteData.vrMatchedVenue.titleLine2 || ''}` : null),
@@ -375,7 +381,7 @@ export default function VrGames({ siteData }) {
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '5px', maxWidth: '540px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '5px', width: '100%', maxWidth: '100%' }}>
               <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
                 {siteData?.vrMatchedVenue?.p1 || "Winera International Pvt. Ltd. is a trusted VR gaming machine supplier in India sourcing and servicing commercial virtual reality machines end-to-end across India."}
               </p>
@@ -439,7 +445,7 @@ export default function VrGames({ siteData }) {
               alt=""
               style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: '0 0 12px 0' }}>
+            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: '0 0 12px 0' }}>
               {renderTitleMarkup(siteData?.vrRange?.title, "*Our VR Gaming* Machine Range", '#38bdf8')}
             </h2>
             <p style={{ fontSize: '13.5px', color: '#64748b', fontWeight: '500', maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
@@ -633,23 +639,25 @@ export default function VrGames({ siteData }) {
                 style={{ display: 'block', width: '300px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '45px',
                 fontWeight: '900',
                 lineHeight: 1.15,
                 margin: 0,
                 color: '#0f172a',
-                letterSpacing: '-0.5px'
+                letterSpacing: '-0.5px',
+                width: '100%',
+                maxWidth: '100%'
               }}>
-                {renderTitleMarkup(siteData?.vrReliability?.title, "*Commercial-Grade* Quality<br/>and Reliability", '#38bdf8')}
+                {renderTitleMarkup(siteData?.vrReliability?.title, "*Commercial-Grade Quality*<br/>and Reliability", '#38bdf8')}
               </h2>
             </div>
 
-            <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '549px' }}>
+            <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', width: '100%', maxWidth: '100%' }}>
               {siteData?.vrReliability?.mainP || "Most VR machines look impressive in a showroom. What matters for your venue is how they perform after six months of daily public use. Every unit we supply is built specifically for commercial cycling not consumer hardware repackaged for public environments. The difference shows up in your maintenance bills, not the spec sheet."}
             </p>
 
             {/* Checkmark Feature Block 1: Right Machine for Every Venue Type */}
-            <div style={{ marginBottom: '24px', maxWidth: '549px' }}>
+            <div style={{ marginBottom: '24px', width: '100%', maxWidth: '100%' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                 <span style={{ color: '#38bdf8', fontSize: '18px', fontWeight: '900' }}>✓</span>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
@@ -662,7 +670,7 @@ export default function VrGames({ siteData }) {
             </div>
 
             {/* Checkmark Feature Block 2: End-to-End Support and Service */}
-            <div style={{ maxWidth: '549px' }}>
+            <div style={{ width: '100%', maxWidth: '100%' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                 <span style={{ color: '#38bdf8', fontSize: '18px', fontWeight: '900' }}>✓</span>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
@@ -676,7 +684,7 @@ export default function VrGames({ siteData }) {
           </div>
 
           {/* Right Column: Direct Image Asset */}
-          <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+          <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'flex-start', marginTop: '35px' }}>
             <img
               src={siteData?.vrReliability?.imgUrl || vrCommercialReliability}
               alt="Commercial-Grade Quality and Reliability"
@@ -721,12 +729,14 @@ export default function VrGames({ siteData }) {
                 style={{ display: 'block', width: '240px', height: '9px', marginBottom: '6px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '38px',
+                fontSize: '45px',
                 fontWeight: '900',
                 lineHeight: 1.15,
                 margin: 0,
                 color: '#0f172a',
-                letterSpacing: '-0.5px'
+                letterSpacing: '-0.5px',
+                width: '100%',
+                maxWidth: '100%'
               }}>
                 {renderTitleMarkup(
                   siteData?.vrEarn?.title || (siteData?.vrEarn?.titleLine1 ? `${siteData.vrEarn.titleLine1}<br/>${siteData.vrEarn.titleLine2 || ''}` : null),
@@ -736,7 +746,7 @@ export default function VrGames({ siteData }) {
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px', maxWidth: '540px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px', width: '100%', maxWidth: '100%' }}>
               <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
                 {siteData?.vrEarn?.p1 || "Most VR machine suppliers in India quote a price and leave the financial decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any order, our team prepares a complete ROI report for your specific venue covering machine cost, projected daily sessions, estimated revenue per player, maintenance costs, and break-even timeline."}
               </p>
@@ -822,7 +832,7 @@ export default function VrGames({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 className="winera-vr-whyus-h2" style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 className="winera-vr-whyus-h2" style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.vrWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>

@@ -56,19 +56,35 @@ function renderTitleMarkup(rawText, defaultText, highlightColor = '#ffcd00') {
 
   return lines.map((line, lineIdx) => {
     const parts = line.split(/\*{1,2}(.*?)\*{1,2}/g);
+    const needsNowrap = line.includes("Interactive AR Attractions") || line.includes("Commercial-Grade Quality") || line.includes("Commercial VR Machines") || line.includes("Know Your Returns Before You Invest in");
     return (
       <React.Fragment key={lineIdx}>
-        {parts.map((part, index) => {
-          if (index % 2 === 1) {
-            return (
-              <span key={index} style={{ color: highlightColor }}>
-                {part}
-              </span>
-            );
-          }
-          return part;
-        })}
-        {lineIdx < lines.length - 1 && <br />}
+        {lineIdx > 0 && <br />}
+        {needsNowrap ? (
+          <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
+            {parts.map((part, index) => {
+              if (index % 2 === 1) {
+                return (
+                  <span key={index} style={{ color: highlightColor }}>
+                    {part}
+                  </span>
+                );
+              }
+              return part;
+            })}
+          </span>
+        ) : (
+          parts.map((part, index) => {
+            if (index % 2 === 1) {
+              return (
+                <span key={index} style={{ color: highlightColor }}>
+                  {part}
+                </span>
+              );
+            }
+            return part;
+          })
+        )}
       </React.Fragment>
     );
   });
@@ -496,7 +512,7 @@ export default function ArGames({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.arIntro?.title, "*AR Games* Supplier<br/>in India", '#38bdf8')}
               </h2>
             </div>
@@ -577,7 +593,7 @@ export default function ArGames({ siteData }) {
                 style={{ display: 'block', width: '300px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '36px',
+                fontSize: '45px',
                 fontWeight: '900',
                 lineHeight: 1.15,
                 margin: 0,
@@ -640,7 +656,7 @@ export default function ArGames({ siteData }) {
           {/* Section Title: Categories: with yellow bar */}
           <div style={{ textAlign: 'center', marginBottom: '45px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ width: '60px', height: '6px', backgroundColor: '#ffcd00', borderRadius: '3px', marginBottom: '14px' }}></div>
-            <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
+            <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
               Categories:
             </h2>
           </div>
@@ -999,7 +1015,7 @@ export default function ArGames({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '260px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
+                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
                   {renderTitleMarkup(siteData?.arFeatures?.f1Title, "*Exciting* Attractions", '#38bdf8')}
                 </h3>
               </div>
@@ -1042,7 +1058,7 @@ export default function ArGames({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '260px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
+                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
                   {renderTitleMarkup(siteData?.arFeatures?.f2Title, "High-Quality *Equipment*", '#38bdf8')}
                 </h3>
               </div>
@@ -1067,7 +1083,7 @@ export default function ArGames({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '280px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
+                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
                   {renderTitleMarkup(siteData?.arFeatures?.f3Title, "*Budget-Friendly AR*<br/>Entertainment Setup", '#38bdf8')}
                 </h3>
               </div>
@@ -1109,7 +1125,7 @@ export default function ArGames({ siteData }) {
               style={{ display: 'block', width: '320px', height: '10px', marginBottom: '14px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: '42px',
+              fontSize: '45px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.2,
@@ -1119,7 +1135,7 @@ export default function ArGames({ siteData }) {
             }}>
               {renderTitleMarkup(
                 siteData?.arEarn?.title,
-                "*Know Your Returns Before* You Invest in<br/>AR Gaming Equipment",
+                "*Know Your Returns Before You Invest in*<br/>AR Gaming Equipment",
                 '#38bdf8'
               )}
             </h2>
@@ -1172,7 +1188,7 @@ export default function ArGames({ siteData }) {
               alt=""
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
-            <h2 className="winera-ar-whyus-h2" style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+            <h2 className="winera-ar-whyus-h2" style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.arWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>
@@ -1391,7 +1407,7 @@ export default function ArGames({ siteData }) {
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="50px"
+        titleFontSize="45px"
         bgUrl={
           siteData?.arCta?.bgUrl &&
             !siteData.arCta.bgUrl.includes('cta-consultations') &&

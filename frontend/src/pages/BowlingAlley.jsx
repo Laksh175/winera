@@ -268,7 +268,7 @@ export default function BowlingAlley({ siteData }) {
                 style={{ display: 'block', width: '320px', height: '14px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '45px',
                 fontWeight: '900',
                 lineHeight: 1.1,
                 color: '#0f172a',
@@ -369,7 +369,7 @@ export default function BowlingAlley({ siteData }) {
               style={{ display: 'block', width: '380px', height: '12px', marginBottom: '8px', objectFit: 'fill' }}
             />
             <h2 className="winera-bowling-premium-title" style={{
-              fontSize: '42px',
+              fontSize: '45px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -451,7 +451,7 @@ export default function BowlingAlley({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '320px', height: '14px', marginBottom: '10px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {(() => {
                     let titleStr = siteData?.bowlingFreeFall?.title;
                     if (!titleStr || !titleStr.includes('<br/>')) {
@@ -876,7 +876,7 @@ export default function BowlingAlley({ siteData }) {
                   alt=""
                   style={{ display: 'block', width: '320px', height: '14px', marginBottom: '10px', objectFit: 'fill' }}
                 />
-                <h3 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {(() => {
                     let titleStr = siteData?.bowlingString?.title;
                     if (!titleStr || !titleStr.includes('<br/>')) {
@@ -957,7 +957,7 @@ export default function BowlingAlley({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '14px', marginBottom: '8px', objectFit: 'fill' }}
               />
-              <h3 style={{ fontSize: '40px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: 0 }}>
+              <h3 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: 0 }}>
                 {(() => {
                   const rawTitle = siteData?.bowlingRoi?.title || "*Investment* & ROI";
                   const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -1120,7 +1120,7 @@ export default function BowlingAlley({ siteData }) {
               />
               {/* Single-line title */}
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '45px',
                 fontWeight: '900',
                 color: '#0f172a',
                 lineHeight: 1.15,
@@ -1196,7 +1196,7 @@ export default function BowlingAlley({ siteData }) {
         buttonTheme="yellow_white"
         buttonBg={getValidImageUrl(siteData?.bowlingCta?.btnBg, ctaBtn3)}
         gradientTitle={true}
-        titleFontSize="50px"
+        titleFontSize="45px"
         descriptionFontSize="18px"
         bgUrl={siteData?.bowlingCta?.bgUrl && !siteData.bowlingCta.bgUrl.includes('bowling-last-image-bg') ? siteData.bowlingCta.bgUrl : null}
         bg={trampolineParkCtaBg}

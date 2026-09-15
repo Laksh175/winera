@@ -517,7 +517,7 @@ export default function ArcadeGameDetail({ siteData }) {
                 />
 
                 {/* Title */}
-                <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {product.nameBase || "Parkour Motor "}
                   <span style={{ color: '#38bdf8' }}>{product.nameHighlight || "II (DX)"}</span>
                 </h2>
@@ -715,7 +715,7 @@ export default function ArcadeGameDetail({ siteData }) {
                 alt=""
                 style={{ width: '380px', maxWidth: '90%', height: '8px', objectFit: 'fill', marginBottom: '4px' }}
               />
-              <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
+              <h2 style={{ fontSize: '45px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
                 Specification <span style={{ color: '#38bdf8' }}>Detail</span>
               </h2>
             </div>

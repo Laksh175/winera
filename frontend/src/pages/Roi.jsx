@@ -298,7 +298,7 @@ export default function Roi({ siteData }) {
                 {roiIntro.tagline || 'RETURN ON INVESTMENT (ROI)'}
               </p>
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '45px',
                 fontWeight: '900',
                 color: '#0f172a',
                 lineHeight: 1.25,
@@ -405,7 +405,7 @@ export default function Roi({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '45px',
                 fontWeight: '900',
                 color: '#0f172a',
                 lineHeight: 1.12,
@@ -530,7 +530,7 @@ export default function Roi({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: '42px',
+              fontSize: '45px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -787,7 +787,7 @@ export default function Roi({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '2px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: '42px',
+              fontSize: '45px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -1037,7 +1037,7 @@ export default function Roi({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
               <h2 style={{
-                fontSize: '42px',
+                fontSize: '45px',
                 fontWeight: '900',
                 color: '#0f172a',
                 lineHeight: 1.12,
@@ -1087,7 +1087,7 @@ export default function Roi({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '2px', objectFit: 'fill' }}
             />
             <h2 style={{
-              fontSize: '42px',
+              fontSize: '45px',
               fontWeight: '900',
               color: '#0f172a',
               lineHeight: 1.15,
@@ -1383,7 +1383,7 @@ export default function Roi({ siteData }) {
 
           {/* Heading */}
           <h2 style={{
-            fontSize: '42px',
+            fontSize: '45px',
             fontWeight: '900',
             lineHeight: 1.25,
             marginBottom: '14px',
