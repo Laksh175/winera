@@ -549,11 +549,11 @@ export default function Home({ siteData }) {
 
             <div className="winera-about-content-wrapper" style={{ display: 'grid', gridTemplateColumns: '1fr 520px', gap: '50px', alignItems: 'center', textAlign: 'left' }}>
               <div className="winera-reveal-left">
-                <p style={{ color: '#373E41', fontFamily: "'Open Sans', sans-serif", fontSize: '16px', lineHeight: '28px', fontWeight: 400, textAlign: 'justify', marginBottom: '16px' }}>
+                <p style={{ color: '#373E41', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: 400, textAlign: 'justify', marginBottom: '16px' }}>
                   {siteData?.aboutHome?.paragraph1 || "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project."}
                 </p>
 
-                <p style={{ color: '#373E41', fontFamily: "'Open Sans', sans-serif", fontSize: '16px', lineHeight: '28px', fontWeight: 400, textAlign: 'justify', marginBottom: '24px' }}>
+                <p style={{ color: '#373E41', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: 400, textAlign: 'justify', marginBottom: '24px' }}>
                   {siteData?.aboutHome?.paragraph2 || "Our team calculates a complete ROI Blueprint for your space, covering projected footfall, revenue potential, and break-even timeline. At Winera International Pvt. Ltd, we've built a reputation for efficiency and reliability, making us the go-to choice for exceptional gaming experiences in the B2B sector."}
                 </p>
 

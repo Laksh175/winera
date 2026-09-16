@@ -108,6 +108,15 @@ p *,
   color: #475569 !important;
 }
 
+/* Home Page About Section Paragraph Font Size Override */
+.winera-about-content-wrapper p,
+.winera-about-content-wrapper p *,
+#about .winera-about-content-wrapper p,
+#about p {
+  font-size: 17px !important;
+  line-height: 28px !important;
+}
+
 /* Testimonial Quote Typography Override */
 .winera-testi-quote,
 .winera-testi-quote * {
@@ -10412,8 +10421,8 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-about-content-wrapper p {
-    font-size: 15px !important;
-    line-height: 25px !important;
+    font-size: 17px !important;
+    line-height: 27px !important;
     color: #373E41 !important;
     text-align: left !important;
     margin-bottom: 14px !important;
@@ -12440,6 +12449,11 @@ button[style*="background:transparent"]:hover,
   display: none !important;
   width: 0 !important;
   height: 0 !important;
+}
+
+.winera-project-filter-tabs.has-overflow-tabs {
+  justify-content: flex-start !important;
+  gap: 14px !important;
 }
 
 @media (max-width: 768px) {

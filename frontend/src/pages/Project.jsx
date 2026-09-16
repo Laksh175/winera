@@ -395,12 +395,12 @@ export default function Project({ siteData }) {
         }}>
           <div
             ref={categoryTabsRef}
-            className="winera-project-filter-tabs"
+            className={`winera-project-filter-tabs ${categoriesList.length > 6 ? 'has-overflow-tabs' : ''}`}
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '12px',
+              justifyContent: categoriesList.length > 6 ? 'flex-start' : 'space-between',
+              gap: categoriesList.length > 6 ? '14px' : '12px',
               overflowX: 'auto',
               width: '100%',
               scrollbarWidth: 'none',
