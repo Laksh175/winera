@@ -16066,13 +16066,27 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
           {/* MANAGE PORTFOLIO PROJECTS LIST & CATEGORIES SECTION */}
           {activeSection === 'projectItems' && (() => {
-            const categoriesList = formData.projectCategories || [
+            const defaultProjectCategories = [
               "Game Zones",
               "Bowling",
               "Soft Play",
               "Arcade & VR",
               "Hospitality"
             ];
+            const categoriesList = (Array.isArray(formData.projectCategories) && formData.projectCategories.length > 0)
+              ? Array.from(new Set([...formData.projectCategories, "Hospitality"]))
+              : defaultProjectCategories;
+
+            const handleAddProjectCategory = async () => {
+              const val = (newCategoryInput || '').trim();
+              if (!val) return;
+              if (!categoriesList.some(c => c.toLowerCase() === val.toLowerCase())) {
+                const newCats = [...categoriesList, val];
+                setFormData(prev => ({ ...prev, projectCategories: newCats }));
+                await persistSectionToDatabase('projectCategories', newCats);
+              }
+              setNewCategoryInput('');
+            };
 
             const rawList = Array.isArray(formData.projectItems) && formData.projectItems.length > 0 ? formData.projectItems : [
               { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: projectImage01, metaTitle: 'FifthAlley Sport Bowling Setup in Surat | Winera International', metaDescription: 'Explore FifthAlley Sport Bowling in Surat by Winera International — a 3,000 sq. ft. complete bowling alley setup delivered from empty space to ready venue.' },
@@ -16133,22 +16147,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <input
                         type="text"
                         placeholder="Type new category name..."
-                        id="newCatInput"
+                        value={newCategoryInput}
+                        onChange={(e) => setNewCategoryInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddProjectCategory();
+                          }
+                        }}
                         style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', width: '220px', maxWidth: '100%' }}
                       />
                       <button
-                        onClick={() => {
-                          const inp = document.getElementById('newCatInput');
-                          if (inp && inp.value.trim()) {
-                            const val = inp.value.trim();
-                            if (!categoriesList.includes(val)) {
-                              const newCats = [...categoriesList, val];
-                              setFormData(prev => ({ ...prev, projectCategories: newCats }));
-                              persistSectionToDatabase('projectCategories', newCats);
-                            }
-                            inp.value = '';
-                          }
-                        }}
+                        type="button"
+                        onClick={handleAddProjectCategory}
                         style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
                       >
                         <Plus style={{ width: '15px', height: '15px' }} /> Add Category
@@ -21531,7 +21542,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* PORTFOLIO PROJECT ITEMS FIELDS */}
               {(activeSection === 'projectItems' || modalTargetSection === 'projectItems') && (() => {
-                const cats = formData.projectCategories || ["Game Zones", "Bowling", "Soft Play", "Arcade & VR", "Hospitality"];
+                const defaultProjectCategories = ["Game Zones", "Bowling", "Soft Play", "Arcade & VR", "Hospitality"];
+                const cats = (Array.isArray(formData.projectCategories) && formData.projectCategories.length > 0)
+                  ? Array.from(new Set([...formData.projectCategories, "Hospitality"]))
+                  : defaultProjectCategories;
                 return (
                   <>
                     <div>

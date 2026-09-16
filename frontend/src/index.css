@@ -12421,3 +12421,9 @@ button[style*="background:transparent"]:hover,
   width: 0 !important;
   height: 0 !important;
 }
+
+@media (max-width: 768px) {
+  .winera-project-filter-tabs {
+    justify-content: flex-start !important;
+  }
+}

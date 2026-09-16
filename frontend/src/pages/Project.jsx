@@ -267,9 +267,10 @@ export default function Project({ siteData }) {
   const hasFifthAlley = rawProjectList.some(p => p.slug === "fifthalley-sport-bowling" || (p.name || "").toLowerCase().includes("fifthalley"));
   const projectList = hasFifthAlley ? rawProjectList : [fifthAlleyObj, ...rawProjectList];
 
+  const defaultCategories = ["Game Zones", "Bowling", "Soft Play", "Arcade & VR", "Hospitality"];
   const baseCategories = (Array.isArray(siteData?.projectCategories) && siteData.projectCategories.length > 0)
-    ? siteData.projectCategories
-    : ["Game Zones", "Bowling", "Soft Play", "Arcade & VR", "Hospitality"];
+    ? Array.from(new Set([...siteData.projectCategories, "Hospitality"]))
+    : defaultCategories;
 
   // Merge unique categories from projectCategories and project list
   const dynamicCategories = Array.from(new Set([
@@ -398,7 +399,7 @@ export default function Project({ siteData }) {
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'flex-start',
+              justifyContent: 'space-between',
               gap: '12px',
               overflowX: 'auto',
               width: '100%',
