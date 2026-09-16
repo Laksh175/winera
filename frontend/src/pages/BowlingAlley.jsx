@@ -1195,7 +1195,7 @@ export default function BowlingAlley({ siteData }) {
         buttonTheme="yellow_white"
         buttonBg={getValidImageUrl(siteData?.bowlingCta?.btnBg, ctaBtn3)}
         gradientTitle={true}
-        titleFontSize="45px"
+        titleFontSize="35px"
         descriptionFontSize="18px"
         bgUrl={siteData?.bowlingCta?.bgUrl && !siteData.bowlingCta.bgUrl.includes('bowling-last-image-bg') ? siteData.bowlingCta.bgUrl : null}
         bg={trampolineParkCtaBg}

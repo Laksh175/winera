@@ -15,7 +15,7 @@ import projNeonPanda from '../assets/proj-neonpanda1.webp';
 import trampolineParkImg1 from '../assets/trampoline-park-img1.webp';
 import trampolineParkImg2 from '../assets/trampoline-park-img-2.webp';
 import trampolineImg3 from '../assets/trampoline-img-3.webp';
-import tampolineImg4 from '../assets/tampoline-img-4.webp';
+import tampolineImg4 from '../assets/tampoline-img-4.backup.webp';
 import tampolineImg5 from '../assets/tampoline-img-5.webp';
 import tampolineImage6 from '../assets/tampoline-image-6.webp';
 import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.webp';
@@ -542,13 +542,17 @@ export default function TrampolinePark({ siteData }) {
         overflow: 'hidden',
         width: '100%'
       }}>
-        {/* Outer Frame Container with tampoline-img-4.webp Full 100% Width Edge-to-Edge Background */}
+        {/* Outer Frame Container with tampoline-img-4.backup.webp Background */}
         <div className="winera-trampoline-inside-frame" style={{
           position: 'relative',
           width: '100%',
+          maxWidth: '100%',
+          margin: '0 auto',
           background: `url(${tampolineImg4}) center center / 100% 100% no-repeat`,
+          backgroundSize: '100% 100%',
           padding: '70px 0 60px',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          boxSizing: 'border-box'
         }}>
           {/* Inner Content Centered Container */}
           <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 4vw' }}>

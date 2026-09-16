@@ -32,10 +32,28 @@ app.use('/uploads', (req, res, next) => {
 
 app.use('/uploads', express.static('uploads'));
 
+// Global process error safety guards for production stability
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception thrown:', err);
+});
+
 app.use('/api', apiRoutes);
 
 app.get('/', (req, res) => {
   res.send('Winera Backend API is running...');
+});
+
+// Global Express Error Handler Middleware
+app.use((err, req, res, next) => {
+  console.error('Global Express Error:', err);
+  res.status(500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
+  });
 });
 
 const PORT = process.env.PORT || 5001;

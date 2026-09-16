@@ -326,12 +326,7 @@ export default function Hypergrid({ siteData }) {
                     ))
                   : siteData.hypergridBanner.paragraph1
               ) : (
-                <>
-                  Winera International is a trusted Hypergrid game supplier in India, sourcing and installing commercial Hypergrid<br />
-                  interactive LED floor systems for malls, family entertainment centres, hotels, schools, trampoline parks, and bowling alleys<br />
-                  since 2014. Every Hypergrid unit we supply is sourced from established global manufacturers — configured specifically for<br />
-                  sustained daily commercial use in high-footfall Indian venues.
-                </>
+                "Winera International is a trusted Hypergrid game supplier in India, sourcing and installing commercial Hypergrid interactive LED floor systems for malls, family entertainment centres, hotels, schools, trampoline parks, and bowling alleys since 2014. Every Hypergrid unit we supply is sourced from established global manufacturers — configured specifically for sustained daily commercial use in high-footfall Indian venues."
               )}
             </p>
 
@@ -347,11 +342,7 @@ export default function Hypergrid({ siteData }) {
                     ))
                   : siteData.hypergridBanner.paragraph2
               ) : (
-                <>
-                  As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product<br />
-                  configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order<br />
-                  to opening day
-                </>
+                "As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order to opening day."
               )}
             </p>
           </div>

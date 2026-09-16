@@ -175,7 +175,7 @@ export default function TestimonialsSection({
                     <div style={{ position: 'relative', maxWidth: '430px', margin: '0 0 8px' }}>
                       <p className="winera-testi-quote" style={{
                         color: '#334155',
-                        fontSize: '13.5px',
+                        fontSize: '15px',
                         fontStyle: 'normal',
                         fontWeight: '500',
                         lineHeight: 1.5,
@@ -399,7 +399,7 @@ export default function TestimonialsSection({
                   <div style={{ position: 'relative', margin: '0 0 20px' }}>
                     <p className="winera-testi-quote" style={{
                       color: '#334155',
-                      fontSize: '13.5px',
+                      fontSize: '15px',
                       fontStyle: 'normal',
                       fontWeight: '500',
                       lineHeight: 1.6,

@@ -424,7 +424,7 @@ export default function ProjectDetail({ siteData }) {
             }}>
               <div className="winera-project-frame-bg" style={{
                 position: 'absolute',
-                inset: '-25px -80px -25px 87px',
+                inset: '-18px -20px -18px 22px',
                 border: '2px solid #38bdf8',
                 borderRadius: '10px',
                 background: 'transparent',
@@ -548,10 +548,10 @@ export default function ProjectDetail({ siteData }) {
           alignItems: 'center'
         }}>
           <div className="winera-project-client-text">
-            <p style={{ fontSize: '21px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '16px' }}>
+            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '16px' }}>
               {clientP1}
             </p>
-            <p style={{ fontSize: '21px', color: '#475569', lineHeight: 1.6, fontWeight: '400', margin: 0 }}>
+            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, fontWeight: '400', margin: 0 }}>
               {clientP2}
             </p>
           </div>
@@ -637,10 +637,10 @@ export default function ProjectDetail({ siteData }) {
           </div>
 
           <div className="winera-project-solution-text">
-            <p style={{ fontSize: '21px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '16px' }}>
+            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '16px' }}>
               {solutionP1}
             </p>
-            <p style={{ fontSize: '21px', color: '#475569', lineHeight: 1.6, fontWeight: '400', margin: 0 }}>
+            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, fontWeight: '400', margin: 0 }}>
               {solutionP2}
             </p>
           </div>

@@ -1136,7 +1136,7 @@ export default function SoftPlay({ siteData }) {
         align="center"
         buttonTheme="yellow_white"
         buttonBg={getValidImageUrl(siteData?.softplayCta?.btnBg, ctaBtn3)}
-        titleFontSize="45px"
+        titleFontSize="35px"
         titleFontWeight="900"
         subtitleFontSize="15px"
         subtitleFontWeight="500"

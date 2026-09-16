@@ -48,6 +48,7 @@ const Roi = lazyWithRetry(() => import('./pages/Roi'));
 const Blog = lazyWithRetry(() => import('./pages/Blog'));
 const BlogDetail = lazyWithRetry(() => import('./pages/BlogDetail'));
 const LaserTag = lazyWithRetry(() => import('./pages/LaserTag'));
+const NotFoundPage = lazyWithRetry(() => import('./pages/NotFoundPage'));
 const PrivacyPolicy = lazyWithRetry(() => import('./pages/PrivacyPolicy'));
 const TermsAndConditions = lazyWithRetry(() => import('./pages/TermsAndConditions'));
 
@@ -302,6 +303,9 @@ function AppRoutes({ siteData, loadData }) {
           {/* 19. Admin CMS */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard siteData={siteData} refreshContent={loadData} />} />
+
+          {/* 20. Fallback 404 Page Not Found Route */}
+          <Route path="*" element={<NotFoundPage siteData={siteData} />} />
         </Routes>
       </Suspense>
     </ErrorBoundary>

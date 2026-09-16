@@ -787,7 +787,7 @@ export default function ArcadeGameDetail({ siteData }) {
           align="center"
           gradientTitle={true}
           buttonTheme="yellow"
-          titleFontSize="42px"
+          titleFontSize="35px"
           subtitleFontSize="24px"
           subtitleFontWeight="900"
           bgUrl={siteData?.arcadeCta?.bgUrl && !siteData.arcadeCta.bgUrl.includes('project-cta-bg') && !siteData.arcadeCta.bgUrl.includes('need-consultations-bg') ? siteData.arcadeCta.bgUrl : null}

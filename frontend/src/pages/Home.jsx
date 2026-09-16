@@ -414,7 +414,7 @@ export default function Home({ siteData }) {
               {siteData?.statsHeader?.description || "Helping businesses build profitable, safe, and unforgettable entertainment destinations with precision and luxury in mind."}
             </p>
 
-            <div style={{
+            <div className="winera-company-stats-grid" style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
               gap: '20px',
