@@ -12410,3 +12410,14 @@ button[style*="background:transparent"]:hover,
     display: block !important;
   }
 }
+
+.winera-project-filter-tabs {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.winera-project-filter-tabs::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}

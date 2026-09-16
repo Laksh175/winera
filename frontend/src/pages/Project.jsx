@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from '../components/Header';
@@ -285,6 +285,36 @@ export default function Project({ siteData }) {
     ? projectList
     : projectList.filter(p => (p.category || "").toLowerCase().includes(activeCategory.toLowerCase()));
 
+  const categoryTabsRef = useRef(null);
+  const categoryBtnRefs = useRef({});
+
+  const scrollToCategory = (catName) => {
+    const container = categoryTabsRef.current;
+    if (!container) return;
+
+    if (catName === "All" || categoriesList.indexOf(catName) === 0) {
+      container.scrollTo({ left: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const btn = categoryBtnRefs.current[catName];
+    if (btn) {
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+      const offset = (btnRect.left - containerRect.left) + container.scrollLeft - (containerRect.width / 2) + (btnRect.width / 2);
+      container.scrollTo({
+        left: Math.max(0, offset),
+        behavior: 'smooth'
+      });
+    } else {
+      container.scrollBy({ left: 140, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    scrollToCategory(activeCategory);
+  }, [activeCategory]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -362,21 +392,29 @@ export default function Project({ siteData }) {
           margin: '0 auto 50px',
           boxShadow: 'none'
         }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '12px',
-            overflowX: 'auto',
-            width: '100%',
-            scrollbarWidth: 'none',
-            paddingRight: '6px'
-          }}>
+          <div
+            ref={categoryTabsRef}
+            className="winera-project-filter-tabs"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              gap: '12px',
+              overflowX: 'auto',
+              width: '100%',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
+              scrollBehavior: 'smooth',
+              paddingRight: '6px'
+            }}
+          >
             {categoriesList.map((cat, idx) => {
               const isSelected = activeCategory === cat;
               return (
                 <button
                   key={idx}
+                  ref={(el) => { categoryBtnRefs.current[cat] = el; }}
                   onClick={() => setActiveCategory(cat)}
                   style={{
                     padding: '8px 24px',
@@ -405,7 +443,8 @@ export default function Project({ siteData }) {
             onClick={() => {
               const currentIdx = categoriesList.indexOf(activeCategory);
               const nextIdx = (currentIdx + 1) % categoriesList.length;
-              setActiveCategory(categoriesList[nextIdx]);
+              const nextCat = categoriesList[nextIdx];
+              setActiveCategory(nextCat);
             }}
             aria-label="Next Category"
             style={{
