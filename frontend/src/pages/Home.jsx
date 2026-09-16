@@ -1043,7 +1043,7 @@ export default function Home({ siteData }) {
               {siteData?.industriesHeader?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
             </p>
 
-            <div style={{
+            <div className="winera-industries-carousel-wrapper" style={{
               position: 'relative',
               display: 'flex',
               alignItems: 'center',
@@ -1079,7 +1079,7 @@ export default function Home({ siteData }) {
                 <img src={homeLeftArrow} alt="Previous" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </button>
 
-              <div style={{
+              <div className="winera-industries-track" style={{
                 position: 'relative',
                 width: '100%',
                 height: '440px',
@@ -1134,7 +1134,7 @@ export default function Home({ siteData }) {
                             setActiveIndustryIndex(idx);
                           }
                         }}
-                        className={`winera-industry-card ${isCenter ? 'is-center-card' : 'is-side-card'}`}
+                        className={`winera-industry-card ${isCenter ? 'is-center-card' : 'is-side-card'} industry-offset-${offset}`}
                         style={{
                           position: 'absolute',
                           width: '260px',
