@@ -119,55 +119,57 @@ export default function SectionHeading({
       width: '100%',
       ...style
     }}>
-      {accentColor ? (
-        <div className="winera-section-heading-accent" style={{
-          display: 'block',
-          width: accentWidth,
-          maxWidth: accentMaxWidth,
-          height: accentHeight,
-          margin: isLeft ? `0 0 ${accentMarginBottom} 0` : `0 auto ${accentMarginBottom}`,
-          backgroundColor: accentColor,
-          WebkitMaskImage: `url(${yellowStrokeLine})`,
-          maskImage: `url(${yellowStrokeLine})`,
-          WebkitMaskSize: '100% 100%',
-          maskSize: '100% 100%',
-          WebkitMaskRepeat: 'no-repeat',
-          maskRepeat: 'no-repeat',
-          ...accentStyle
-        }} />
-      ) : (
-        <img
-          className="winera-section-heading-accent"
-          src={yellowStrokeLine}
-          alt=""
-          style={{
+      <div className="winera-section-heading-inner" style={{ display: 'inline-block', textAlign: align, maxWidth: '100%' }}>
+        {accentColor ? (
+          <div className="winera-section-heading-accent" style={{
             display: 'block',
             width: accentWidth,
             maxWidth: accentMaxWidth,
             height: accentHeight,
             margin: isLeft ? `0 0 ${accentMarginBottom} 0` : `0 auto ${accentMarginBottom}`,
-            objectFit: 'fill',
-            filter: accentFilter || 'none',
+            backgroundColor: accentColor,
+            WebkitMaskImage: `url(${yellowStrokeLine})`,
+            maskImage: `url(${yellowStrokeLine})`,
+            WebkitMaskSize: '100% 100%',
+            maskSize: '100% 100%',
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
             ...accentStyle
-          }}
-        />
-      )}
-      <h2 style={{
-        fontFamily: "'Black Han Sans', sans-serif",
-        fontSize: '35px',
-        fontWeight: '400',
-        fontStyle: 'normal',
-        color: '#0f172a',
-        letterSpacing: '0px',
-        lineHeight: '1.2'
-      }}>
-        {parseStarText(children)}
-      </h2>
-      {subtitle && (
-        <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginTop: '8px' }}>
-          {subtitle}
-        </p>
-      )}
+          }} />
+        ) : (
+          <img
+            className="winera-section-heading-accent"
+            src={yellowStrokeLine}
+            alt=""
+            style={{
+              display: 'block',
+              width: accentWidth,
+              maxWidth: accentMaxWidth,
+              height: accentHeight,
+              margin: isLeft ? `0 0 ${accentMarginBottom} 0` : `0 auto ${accentMarginBottom}`,
+              objectFit: 'fill',
+              filter: accentFilter || 'none',
+              ...accentStyle
+            }}
+          />
+        )}
+        <h2 style={{
+          fontFamily: "'Black Han Sans', sans-serif",
+          fontSize: '35px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          color: '#0f172a',
+          letterSpacing: '0px',
+          lineHeight: '1.2'
+        }}>
+          {parseStarText(children)}
+        </h2>
+        {subtitle && (
+          <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginTop: '8px' }}>
+            {subtitle}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
