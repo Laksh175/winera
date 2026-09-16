@@ -11,7 +11,7 @@ export default function ClientsMarqueeSection({
   bg = clientsBg
 }) {
   return (
-    <section id={id} className="winera-clients-section" style={{
+    <section id={id} className="winera-clients-section winera-marquee-fullwidth" style={{
       position: 'relative',
       width: '100%',
       padding: '120px 0 65px',

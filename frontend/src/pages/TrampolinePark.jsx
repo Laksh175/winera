@@ -536,7 +536,7 @@ export default function TrampolinePark({ siteData }) {
       </section>
 
       {/* 6. WHAT IS INSIDE A CUSTOM TRAMPOLINE PARK? (100% FULL SCREEN WIDTH BACKGROUND MATCHING SCREENSHOT 1 & 2) */}
-      <section className="winera-trampoline-inside-section" style={{
+      <section className="winera-trampoline-inside-section winera-marquee-fullwidth" style={{
         padding: '0',
         background: '#F5F5F9',
         overflow: 'hidden',

@@ -297,7 +297,7 @@ export default function Roi({ siteData }) {
               }}>
                 {roiIntro.tagline || 'RETURN ON INVESTMENT (ROI)'}
               </p>
-              <h2 style={{
+              <h2 className="winera-roi-intro-h2" style={{
                 fontSize: '35px',
                 fontWeight: '900',
                 color: '#0f172a',
@@ -305,10 +305,10 @@ export default function Roi({ siteData }) {
                 marginBottom: '22px',
                 letterSpacing: '-0.5px'
               }}>
-                <span style={{ display: 'block', whiteSpace: 'nowrap' }}>
+                <span className="winera-roi-intro-h2-span" style={{ display: 'block' }}>
                   You don't need a game zone…
                 </span>
-                <span style={{ display: 'block', whiteSpace: 'nowrap' }}>
+                <span className="winera-roi-intro-h2-span" style={{ display: 'block' }}>
                   You need a <span style={{ color: '#38bdf8' }}>profit machine.</span>
                 </span>
               </h2>
@@ -397,7 +397,6 @@ export default function Roi({ siteData }) {
               viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="winera-roi-pain-text"
-              style={{ paddingTop: '60px' }}
             >
               <img
                 src={yellowStrokeLine}
@@ -441,7 +440,7 @@ export default function Roi({ siteData }) {
               }}
             >
               {painPoints.map((point, idx) => (
-                <div key={idx} style={{
+                <div key={idx} className="winera-roi-pain-card-item" style={{
                   display: 'flex',
                   alignItems: 'flex-start',
                   gap: '0',
@@ -478,7 +477,7 @@ export default function Roi({ siteData }) {
                     ✕
                   </div>
                   {/* Card */}
-                  <div style={{
+                  <div className="winera-roi-pain-card-inner" style={{
                     flex: 1,
                     background: '#fde8e8',
                     borderRadius: '12px',
@@ -496,7 +495,7 @@ export default function Roi({ siteData }) {
               ))}
 
               {/* Bottom warning text */}
-              <div style={{
+              <div className="winera-roi-pain-warning-box" style={{
                 marginTop: '18px',
                 padding: '18px 24px',
                 background: '#ffffff',
@@ -1220,6 +1219,7 @@ export default function Roi({ siteData }) {
                         lineHeight: '1.45',
                         fontWeight: '500',
                         margin: '0px',
+                        textAlign: 'left',
                         fontFamily: "'Open Sans', sans-serif"
                       }}>
                         {itemText}
@@ -1325,6 +1325,7 @@ export default function Roi({ siteData }) {
                         lineHeight: '1.45',
                         fontWeight: '500',
                         margin: '0px',
+                        textAlign: 'left',
                         fontFamily: "'Open Sans', sans-serif"
                       }}>
                         {itemText}

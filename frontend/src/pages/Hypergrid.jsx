@@ -102,26 +102,18 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
   }
 
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
-  
+
   return parts.map((part, index) => {
     const isHighlight = index % 2 === 1;
-    
+
     if (typeof part === 'string' && (part.includes('<br/>') || part.includes('<br />') || part.includes('<br>'))) {
       const subParts = part.split(/<br\s*\/?>/i);
-      const content = subParts.map((subPart, sIdx) => {
-        const needsNowrap = subPart.includes('High-Footfall') || subPart.includes('Right Choice') || subPart.includes('for Your Venue');
-        const formattedSubPart = needsNowrap ? (
-          <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>{subPart}</span>
-        ) : (
-          subPart
-        );
-        return (
-          <React.Fragment key={sIdx}>
-            {formattedSubPart}
-            {sIdx < subParts.length - 1 && <br />}
-          </React.Fragment>
-        );
-      });
+      const content = subParts.map((subPart, sIdx) => (
+        <React.Fragment key={sIdx}>
+          {subPart}
+          {sIdx < subParts.length - 1 && <br />}
+        </React.Fragment>
+      ));
       return isHighlight ? (
         <span key={index} style={{ color: highlightColor }}>
           {content}
@@ -130,15 +122,13 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
         <React.Fragment key={index}>{content}</React.Fragment>
       );
     }
-    
-    const needsNowrap = typeof part === 'string' && (part.includes('High-Footfall') || part.includes('Right Choice') || part.includes('for Your Venue'));
-    
+
     return isHighlight ? (
-      <span key={index} style={{ color: highlightColor, whiteSpace: needsNowrap ? 'nowrap' : 'normal', display: needsNowrap ? 'inline-block' : 'inline' }}>
+      <span key={index} style={{ color: highlightColor }}>
         {part}
       </span>
     ) : (
-      needsNowrap ? <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>{part}</span> : part
+      <React.Fragment key={index}>{part}</React.Fragment>
     );
   });
 };
@@ -353,7 +343,7 @@ export default function Hypergrid({ siteData }) {
               src={getValidImageUrl(siteData?.hypergridBanner?.imgUrl, hypergridBannerImg)}
               alt="Interactive LED Floor Games for High-Footfall Venues"
               style={{
-                width: '166%',
+                width: '100%',
                 maxWidth: '702px',
                 height: 'auto',
                 display: 'block'
@@ -504,7 +494,7 @@ export default function Hypergrid({ siteData }) {
                 src={getValidImageUrl(siteData?.hypergridWhyUs?.leftImgUrl, arImage)}
                 alt="What Makes Hypergrid the Right Choice for Your Venue"
                 style={{
-                  width: '300%',
+                  width: '100%',
                   maxWidth: '700px',
                   height: 'auto',
                   display: 'block'

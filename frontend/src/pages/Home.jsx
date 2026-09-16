@@ -547,7 +547,7 @@ export default function Home({ siteData }) {
               })()}
             </SectionHeading>
 
-            <div className="winera-about-content-wrapper" style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '35px', alignItems: 'center', textAlign: 'left' }}>
+            <div className="winera-about-content-wrapper" style={{ display: 'grid', gridTemplateColumns: '1fr 520px', gap: '50px', alignItems: 'center', textAlign: 'left' }}>
               <div className="winera-reveal-left">
                 <p style={{ color: '#373E41', fontFamily: "'Open Sans', sans-serif", fontSize: '16px', lineHeight: '28px', fontWeight: 400, textAlign: 'justify', marginBottom: '16px' }}>
                   {siteData?.aboutHome?.paragraph1 || "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project."}
@@ -580,7 +580,7 @@ export default function Home({ siteData }) {
                 </div>
 
                 {/* CTA Button */}
-                <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '8px' }}>
+                <div className="winera-about-cta-container" style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '8px' }}>
                   <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
                     {(() => {
                       const btnUrl = siteData?.aboutHome?.btnUrl || "/why-us";
@@ -1453,7 +1453,7 @@ export default function Home({ siteData }) {
           subtext={siteData?.builtProjectsHeader?.subtext}
         />
 
-        <section id="partners" className="winera-channel-partners-section" style={{ padding: '70px 5vw 0px', background: '#f5F5F9' }}>
+        <section id="partners" className="winera-channel-partners-section winera-marquee-fullwidth" style={{ padding: '70px 5vw 0px', background: '#f5F5F9' }}>
           <div className="winera-channel-partners-grid" style={{
             maxWidth: '1240px',
             margin: '0 auto',
@@ -1517,7 +1517,7 @@ export default function Home({ siteData }) {
               </div>
 
               {/* Mobile Infinite Scrolling Marquee Track */}
-              <div className="winera-mobile-partners-marquee" style={{ display: 'none', width: '100vw', overflow: 'hidden', margin: '16px 0 0', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
+              <div className="winera-mobile-partners-marquee" style={{ display: 'none', width: '100%', maxWidth: '100vw', overflow: 'hidden', margin: '16px 0 0', position: 'relative' }}>
                 <div className="marquee-track">
                   {[...Array(4)].map((_, setIdx) => (
                     <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '45px', paddingRight: '45px' }}>
@@ -1620,11 +1620,11 @@ export default function Home({ siteData }) {
                       marginTop: '2px'
                     }}
                   />
-                  <div>
-                    <h4 style={{ fontSize: '1.1rem', fontWeight: '600', color: '#0f172a', marginBottom: '0px' }}>
+                  <div style={{ textAlign: 'left', flex: 1 }}>
+                    <h4 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#0f172a', marginBottom: '4px', textAlign: 'left' }}>
                       {item.title}
                     </h4>
-                    <p className="winera-why-us-desc" style={{ fontSize: '14px', color: '#334155', fontWeight: '500', lineHeight: 1.4, margin: 0, width: '70%' }}>
+                    <p className="winera-why-us-desc" style={{ fontSize: '13.5px', color: '#334155', fontWeight: '500', lineHeight: 1.45, margin: 0, width: '100%', textAlign: 'left' }}>
                       {item.desc}
                     </p>
                   </div>

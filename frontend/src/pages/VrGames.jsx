@@ -347,7 +347,7 @@ export default function VrGames({ siteData }) {
       </section>
 
       {/* 4. COMMERCIAL VR MACHINES, MATCHED TO YOUR VENUE SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-vr-attractions-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-vr-attractions-section" style={{ padding: '5px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-vr-attractions-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -685,7 +685,7 @@ export default function VrGames({ siteData }) {
           </div>
 
           {/* Right Column: Direct Image Asset */}
-          <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'flex-start', marginTop: '35px' }}>
+          <div className="winera-vr-reliability-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'flex-start', marginTop: '35px' }}>
             <img
               src={siteData?.vrReliability?.imgUrl || vrCommercialReliability}
               alt="Commercial-Grade Quality and Reliability"

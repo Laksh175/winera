@@ -562,7 +562,7 @@ export default function ArGames({ siteData }) {
       </section>
 
       {/* 4. INTERACTIVE AR ATTRACTIONS, BUILT FOR YOUR VENUE SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-ar-attractions-section" style={{ padding: '25px 4vw 45px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-ar-attractions-section" style={{ padding: '5px 4vw 45px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div className="winera-ar-attractions-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',

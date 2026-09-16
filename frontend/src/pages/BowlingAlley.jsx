@@ -249,7 +249,7 @@ export default function BowlingAlley({ siteData }) {
       </section>
 
       {/* 3. BOWLING ALLEY MANUFACTURERS IN INDIA SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-bowling-supplier-section" style={{ padding: '45px 4vw', background: '#F5F5F9' }}>
+      <section className="winera-bowling-supplier-section" style={{ padding: '35px 4vw 15px', background: '#F5F5F9' }}>
         <div className="winera-bowling-supplier-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -359,7 +359,7 @@ export default function BowlingAlley({ siteData }) {
       </section>
 
       {/* 3.5 PREMIUM BOWLING ALLEY MANUFACTURER IN INDIA SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-bowling-premium-section" style={{ padding: '45px 4vw', background: '#F5F5F9', position: 'relative', overflow: 'hidden' }}>
+      <section className="winera-bowling-premium-section" style={{ padding: '10px 4vw 35px', background: '#F5F5F9', position: 'relative', overflow: 'hidden' }}>
         <div className="winera-bowling-premium-container" style={{ maxWidth: '1280px', margin: '0 auto' }}>
           {/* Section Title with Yellow Brush Accent Line in 1 Single Line */}
           <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px', textAlign: 'center', width: '100%' }}>

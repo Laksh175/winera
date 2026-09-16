@@ -442,7 +442,7 @@ export default function AboutUs({ siteData }) {
       </section>
 
       {/* 5. WHY CHOOSE US MINDMAP & 3-CARD SECTION */}
-      <section id="why-choose-us-detail" className="winera-about-mindmap-section" style={{ position: 'relative', width: '100%', padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section id="why-choose-us-detail" className="winera-about-mindmap-section winera-marquee-fullwidth" style={{ position: 'relative', width: '100%', padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ position: 'relative', width: '100%', background: `url(${getValidImageUrl(siteData?.aboutWhyUsDetail?.bgUrl, aboutUsTopBg)}) center top / 100% 100% no-repeat`, padding: '80px 4vw 80px', minHeight: '775px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <SectionHeading marginBottom="40px" accentWidth="370px" accentMaxWidth="95%" accentHeight="11px" accentMarginBottom="8px" accentAlign="left-inline" style={{ zIndex: 10 }}>
             {(() => {

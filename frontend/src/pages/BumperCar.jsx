@@ -257,8 +257,7 @@ export default function BumperCar({ siteData }) {
               color: '#0f172a',
               lineHeight: 1.15,
               marginBottom: '20px',
-              textAlign: 'center',
-              whiteSpace: 'nowrap'
+              textAlign: 'center'
             }}>
               {renderTitleMarkup(siteData?.bumpercarBanner?.title, "*Bumper Car* Manufacturer in India", '#38bdf8')}
             </h2>

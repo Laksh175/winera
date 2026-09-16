@@ -896,11 +896,23 @@ export default function SafetyStandards({ siteData }) {
             />
 
             {/* Center Content Box */}
-            <div style={{ position: 'relative', zIndex: 3, maxWidth: '560px', margin: '0 auto', padding: '0 15px' }}>
+            <div style={{
+              position: 'relative',
+              zIndex: 3,
+              maxWidth: '560px',
+              width: '100%',
+              margin: '0 auto',
+              padding: '0 15px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center'
+            }}>
               <h2 style={{
                 fontSize: '35px',
                 fontWeight: '900',
-                margin: '0 0 16px',
+                margin: '0 auto 20px',
                 lineHeight: 1.15,
                 textTransform: 'uppercase',
                 letterSpacing: '1px',
@@ -908,7 +920,9 @@ export default function SafetyStandards({ siteData }) {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.85))',
-                display: 'inline-block'
+                display: 'block',
+                width: '100%',
+                textAlign: 'center'
               }}>
                 {(() => {
                   let combined = siteData?.safetyWhyMatters?.ctaTitle;
@@ -925,7 +939,7 @@ export default function SafetyStandards({ siteData }) {
                 })()}
               </h2>
 
-              <div className="winera-cta-banner-btn-wrapper" style={{ display: 'inline-block' }}>
+              <div className="winera-cta-banner-btn-wrapper" style={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '0 auto' }}>
                 <a
                   href="#"
                   onClick={(e) => {
