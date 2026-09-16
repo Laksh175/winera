@@ -57,7 +57,7 @@ export default function SectionHeading({
       }}>
         <div style={{ display: 'inline-block', textAlign: 'left', maxWidth: '100%' }}>
           {accentColor ? (
-            <div style={{
+            <div className="winera-section-heading-accent" style={{
               display: 'block',
               width: accentWidth,
               maxWidth: accentMaxWidth,
@@ -74,6 +74,7 @@ export default function SectionHeading({
             }} />
           ) : (
             <img
+              className="winera-section-heading-accent"
               src={yellowStrokeLine}
               alt=""
               style={{
@@ -119,7 +120,7 @@ export default function SectionHeading({
       ...style
     }}>
       {accentColor ? (
-        <div style={{
+        <div className="winera-section-heading-accent" style={{
           display: 'block',
           width: accentWidth,
           maxWidth: accentMaxWidth,
@@ -136,6 +137,7 @@ export default function SectionHeading({
         }} />
       ) : (
         <img
+          className="winera-section-heading-accent"
           src={yellowStrokeLine}
           alt=""
           style={{

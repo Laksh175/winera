@@ -1319,8 +1319,14 @@ html {
     margin-right: auto !important;
   }
 
-  .winera-section-heading-container img {
+  .winera-section-heading-container img,
+  .winera-section-heading-accent,
+  .winera-section-heading-container > div > img,
+  .winera-section-heading-container > div > div {
     margin: 0 auto 10px !important;
+    max-width: 170px !important;
+    width: 170px !important;
+    height: auto !important;
   }
 
   .winera-section-heading-container h2 {
@@ -6203,6 +6209,21 @@ img[src*="yellow-stroke-line"] {
   .winera-section-heading-container {
     padding: 0 10px !important;
     box-sizing: border-box !important;
+  }
+
+  .winera-section-heading-container img,
+  .winera-section-heading-accent,
+  .winera-section-heading-container > div > img,
+  .winera-section-heading-container > div > div,
+  img[src*="yellow-stroke-line"],
+  img[src*="yellow-stroke"],
+  img[src*="stroke-line"] {
+    max-width: 170px !important;
+    width: 170px !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
   }
 
   .winera-section-heading-container h2 {
@@ -11934,5 +11955,42 @@ button[style*="background:transparent"]:hover,
   [class*="-wrapper"]:not(.winera-marquee-fullwidth):not(.marquee-track):not([class*="marquee"]) {
     box-sizing: border-box !important;
     max-width: 100% !important;
+  }
+
+  /* Yellow Stroke Line Width on Mobile View */
+  .winera-section-heading-container img,
+  .winera-section-heading-accent,
+  .winera-section-heading-container > div > img,
+  .winera-section-heading-container > div > div,
+  .winera-company-stats-section .winera-section-heading-container img,
+  .winera-company-stats-section .winera-section-heading-accent,
+  img[src*="yellow-stroke-line"],
+  img[src*="yellow-stroke"],
+  img[src*="stroke-line"] {
+    max-width: 170px !important;
+    width: 170px !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .winera-section-heading-container img,
+  .winera-section-heading-accent,
+  .winera-section-heading-container > div > img,
+  .winera-section-heading-container > div > div,
+  .winera-company-stats-section .winera-section-heading-container img,
+  .winera-company-stats-section .winera-section-heading-accent,
+  img[src*="yellow-stroke-line"],
+  img[src*="yellow-stroke"],
+  img[src*="stroke-line"] {
+    max-width: 150px !important;
+    width: 150px !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
   }
 }
