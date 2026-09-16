@@ -16078,13 +16078,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               : defaultProjectCategories;
 
             const handleAddProjectCategory = async () => {
-              const val = (newCategoryInput || '').trim();
-              if (!val) return;
-              if (!categoriesList.some(c => c.toLowerCase() === val.toLowerCase())) {
-                const newCats = [...categoriesList, val];
-                setFormData(prev => ({ ...prev, projectCategories: newCats }));
-                await persistSectionToDatabase('projectCategories', newCats);
+              let val = (newCategoryInput || '').trim();
+              if (!val) {
+                const promptVal = window.prompt('Enter new category name:');
+                if (!promptVal || !promptVal.trim()) return;
+                val = promptVal.trim();
               }
+              if (categoriesList.some(c => c.toLowerCase() === val.toLowerCase())) {
+                alert(`Category "${val}" already exists.`);
+                return;
+              }
+              const newCats = [...categoriesList, val];
+              setFormData(prev => ({ ...prev, projectCategories: newCats }));
+              await persistSectionToDatabase('projectCategories', newCats);
+              setStatusMsg(`Category "${val}" added successfully!`);
               setNewCategoryInput('');
             };
 

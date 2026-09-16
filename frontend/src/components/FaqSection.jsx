@@ -117,12 +117,12 @@ export default function FaqSection({
                   {isOpen && (
                     <p className="winera-faq-answer" style={{
                       fontFamily: "'Open Sans', sans-serif",
-                      fontWeight: '400',
+                      fontWeight: '500',
                       fontStyle: 'normal',
-                      fontSize: '16px',
-                      lineHeight: '115%',
-                      letterSpacing: '0%',
-                      color: 'rgba(55, 62, 65, 1)',
+                      fontSize: '14px',
+                      lineHeight: 1.45,
+                      letterSpacing: 'normal',
+                      color: '#334155',
                       marginTop: '14px',
                       paddingTop: '12px',
                       borderTop: '1px solid #f1f5f9'
@@ -193,12 +193,12 @@ export default function FaqSection({
                   {isOpen && (
                     <p className="winera-faq-answer" style={{
                       fontFamily: "'Open Sans', sans-serif",
-                      fontWeight: '400',
+                      fontWeight: '500',
                       fontStyle: 'normal',
-                      fontSize: '16px',
-                      lineHeight: '115%',
-                      letterSpacing: '0%',
-                      color: 'rgba(55, 62, 65, 1)',
+                      fontSize: '14px',
+                      lineHeight: 1.45,
+                      letterSpacing: 'normal',
+                      color: '#334155',
                       marginTop: '14px',
                       paddingTop: '12px',
                       borderTop: '1px solid #f1f5f9'
