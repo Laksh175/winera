@@ -9107,9 +9107,11 @@ button[style*="background:transparent"]:hover,
 @media (min-width: 1025px) and (max-width: 1440px) {
 
   .winera-company-stats-section h2,
-  .winera-company-stats-section .winera-section-heading-container h2 {
-    font-size: 35px !important;
-    line-height: 44px !important;
+  .winera-company-stats-section .winera-section-heading-container h2,
+  .winera-company-stats-section h2 *,
+  .winera-company-stats-section .winera-section-heading-container h2 * {
+    font-size: 37px !important;
+    line-height: 42px !important;
   }
 
   .winera-company-stats-desc {
@@ -10077,15 +10079,15 @@ button[style*="background:transparent"]:hover,
   .winera-bowling-supplier-text h2 *,
   .winera-bowling-types-text h2 *,
   .winera-bowling-roi-text h2 *,
-  .winera-softplay-supplier-text h2 *,
-  .winera-softplay-intro-text h2 *,
-  .winera-softplay-roi-text h2 *,
   .winera-cta-banner-container h2,
   .winera-home-cta-h2,
+  h2,
   h2 *,
+  section h2,
   section h2 *,
+  div[class*="winera"] h2,
   div[class*="winera"] h2 * {
-    font-size: 25px !important;
+    font-size: 37px !important;
   }
 }
 
