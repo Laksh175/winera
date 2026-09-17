@@ -1401,14 +1401,17 @@ export default function ArGames({ siteData }) {
         faqsList={Array.isArray(siteData?.arFaqs) && siteData.arFaqs.length > 0 ? siteData.arFaqs : defaultArFaqs}
       />
 
-      {/* 13. CTA BANNER SECTION (MATCHING VR GAMES STYLE 1:1) */}
+      {/* 13. CTA BANNER SECTION (MATCHING DESIGN SYSTEM SPEC) */}
       <CtaBanner
+        containerPadding="15px 32px"
         blurBg={true}
         showOverlay={true}
         align="center"
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="35px"
+        titleFontSize="clamp(24px, 2.6vw, 32px)"
+        subtitleFontSize="16px"
+        subtitleFontWeight="600"
         bgUrl={
           siteData?.arCta?.bgUrl &&
             !siteData.arCta.bgUrl.includes('cta-consultations') &&
@@ -1430,18 +1433,17 @@ export default function ArGames({ siteData }) {
             : null
         }
         rightImg={vrCtaRightImg}
-        tagline={null}
+        tagline={siteData?.arCta?.tagline || null}
         title={
           siteData?.arCta?.title
-            ? siteData.arCta.title
-            : "READY TO SET UP YOUR GAMING ZONE?"
+            ? (siteData.arCta.title.toUpperCase())
+            : "READY TO SET UP<br/>YOUR GAMING ZONE?"
         }
         subtitle={
           siteData?.arCta?.subtitle || siteData?.arCta?.description || siteData?.arCta?.whiteText
             ? siteData?.arCta?.subtitle || siteData?.arCta?.description || siteData?.arCta?.whiteText
             : "Get in touch with India's ROI-First Game Zone Developer"
         }
-        subtitleFontSize="25px"
         description={null}
         buttonText={
           siteData?.arCta?.buttonText !== undefined

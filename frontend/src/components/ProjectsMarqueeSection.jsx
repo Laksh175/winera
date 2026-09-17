@@ -173,7 +173,7 @@ export default function ProjectsMarqueeSection({
                           <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#ffffff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
                             {proj.name || proj.title}
                           </h3>
-                          <p style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.75)', fontWeight: '400', margin: '2px 0 0 0', textTransform: 'capitalize' }}>
+                          <p className="winera-project-marquee-city" style={{ fontSize: '13.5px', color: '#e2e8f0', fontWeight: '500', margin: '2px 0 0 0', textTransform: 'capitalize' }}>
                             {proj.city || proj.location}
                           </p>
                         </div>

@@ -63,7 +63,8 @@ export default function Header({ headerData }) {
     { label: 'Soft Play', href: '/product/soft-play' },
     { label: 'Bumper Car', href: '/product/bumper-car' },
     { label: 'Hypergrid', href: '/product/hypergrid' },
-    { label: 'Amusement Park', href: '/product/amusement-park' }
+    { label: 'Amusement Park', href: '/product/amusement-park' },
+    { label: 'Laser Tag', href: '/product/laser-tag' }
   ];
 
   const defaultResourcesSubMenu = [
@@ -74,7 +75,7 @@ export default function Header({ headerData }) {
 
   const logoSrc = getValidImageUrl(headerData?.logoUrl, wineraLogo);
   const navLinks = Array.isArray(headerData?.navLinks) && headerData.navLinks.length > 0 ? headerData.navLinks : defaultNavLinks;
-  const productSubMenu = (Array.isArray(headerData?.productSubMenu) && headerData.productSubMenu.length > 0 ? headerData.productSubMenu : defaultProductSubMenu).filter(item => !(item.label || '').toLowerCase().includes('laser') && !(item.href || '').toLowerCase().includes('laser'));
+  const productSubMenu = Array.isArray(headerData?.productSubMenu) && headerData.productSubMenu.length > 0 ? headerData.productSubMenu : defaultProductSubMenu;
   const resourcesSubMenu = Array.isArray(headerData?.resourcesSubMenu) && headerData.resourcesSubMenu.length > 0 ? headerData.resourcesSubMenu : defaultResourcesSubMenu;
   const ctaText = headerData?.ctaText || "Free Consultation";
   const ctaLink = headerData?.ctaLink || "https://wa.me/919428989488";
