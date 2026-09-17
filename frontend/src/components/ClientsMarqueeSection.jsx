@@ -10,6 +10,9 @@ export default function ClientsMarqueeSection({
   subtitle = 'Our Complete Game Zone Equipment & Setup Solutions',
   bg = clientsBg
 }) {
+  const listToDisplay = (clientLogos && clientLogos.length > 0) ? clientLogos : [];
+  const dynamicDuration = Math.max(70, (listToDisplay.length > 0 ? Math.max(listToDisplay.length, 8) : 8) * 11);
+
   return (
     <section id={id} className="winera-clients-section winera-marquee-fullwidth" style={{
       position: 'relative',
@@ -55,7 +58,7 @@ export default function ClientsMarqueeSection({
           overflow: 'hidden',
           position: 'relative'
         }}>
-          <div className="marquee-track winera-clients-marquee-track">
+          <div className="marquee-track winera-clients-marquee-track" style={{ animationDuration: `${dynamicDuration}s` }}>
             {[...Array(4)].map((_, setIdx) => (
               <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '60px', paddingRight: '60px' }}>
                 {(clientLogos && clientLogos.length > 0) ? (

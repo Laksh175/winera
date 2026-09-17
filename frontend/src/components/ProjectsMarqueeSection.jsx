@@ -33,6 +33,7 @@ export default function ProjectsMarqueeSection({
   accentAlign = 'center'
 }) {
   const items = Array.isArray(projects) && projects.length > 0 ? projects : defaultProjects;
+  const dynamicProjectsDuration = Math.max(70, items.length * 15);
 
   return (
     <section id={id} className="winera-projects-marquee-section winera-marquee-fullwidth" style={{ padding: '35px 0 10px', background: bg, overflow: 'hidden' }}>
@@ -110,7 +111,7 @@ export default function ProjectsMarqueeSection({
           position: 'relative',
           padding: '10px 0'
         }}>
-          <div className="marquee-track">
+          <div className="marquee-track winera-projects-marquee-track" style={{ animationDuration: `${dynamicProjectsDuration}s` }}>
             {[...Array(4)].map((_, setIdx) => (
               <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingRight: '14px' }}>
                 {items.map((proj, idx) => {

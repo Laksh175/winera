@@ -253,17 +253,10 @@ section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: infiniteMarquee 115s linear infinite;
-}
-
-.winera-projects-marquee-section .marquee-track,
-.winera-projects-marquee-track {
-  animation: infiniteMarquee 115s linear infinite !important;
-}
-
-.winera-clients-section .marquee-track,
-.winera-clients-marquee-track {
-  animation: infiniteMarquee 125s linear infinite !important;
+  animation-name: infiniteMarquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 110s;
 }
 
 .winera-clients-section img,
