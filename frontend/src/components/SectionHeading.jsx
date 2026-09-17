@@ -101,7 +101,7 @@ export default function SectionHeading({
             {parseStarText(children)}
           </h2>
           {subtitle && (
-            <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginTop: '8px' }}>
+            <p className="winera-section-subtitle" style={{ color: 'rgb(55, 62, 65)', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: '400', letterSpacing: '0px', marginTop: '10px', textAlign: align || 'center' }}>
               {subtitle}
             </p>
           )}
@@ -165,7 +165,7 @@ export default function SectionHeading({
           {parseStarText(children)}
         </h2>
         {subtitle && (
-          <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginTop: '8px' }}>
+          <p className="winera-section-subtitle" style={{ color: 'rgb(55, 62, 65)', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: '400', letterSpacing: '0px', marginTop: '10px', textAlign: align || 'center' }}>
             {subtitle}
           </p>
         )}

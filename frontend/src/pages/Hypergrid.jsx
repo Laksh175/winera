@@ -494,8 +494,8 @@ export default function Hypergrid({ siteData }) {
                 src={getValidImageUrl(siteData?.hypergridWhyUs?.leftImgUrl, arImage)}
                 alt="What Makes Hypergrid the Right Choice for Your Venue"
                 style={{
-                  width: '100%',
-                  maxWidth: '700px',
+                  width: '170%',
+                  maxWidth: '750px',
                   height: 'auto',
                   display: 'block'
                 }}

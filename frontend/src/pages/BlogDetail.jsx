@@ -514,9 +514,9 @@ export default function BlogDetail({ siteData }) {
                   </h4>
                   
                   <p style={{
-                    fontSize: '13px',
-                    color: '#94a3b8',
-                    lineHeight: 1.5,
+                    fontSize: '13.5px',
+                    color: '#ffffff',
+                    lineHeight: 1.55,
                     margin: '0 0 20px'
                   }}>
                     One-stop turnkey solution for 15+ indoor play equipment & custom 3D layout setup.
@@ -529,7 +529,7 @@ export default function BlogDetail({ siteData }) {
                     gap: '10px',
                     marginBottom: '22px',
                     fontSize: '13px',
-                    color: '#e2e8f0',
+                    color: '#ffffff',
                     fontWeight: '600'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

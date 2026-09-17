@@ -54,6 +54,33 @@ const getValidImageUrl = (url, fallback) => {
   return fallback;
 };
 
+// Helper function to render title with *word* highlights and <br/> linebreaks
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
+  const text = rawText || defaultText;
+  const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
+
+  return parts.map((part, pIdx) => {
+    const isHighlighted = pIdx % 2 === 1;
+    const lines = part.split(/<br\s*\/?>/i);
+    const renderedContent = lines.map((line, lIdx) => (
+      <React.Fragment key={lIdx}>
+        {lIdx > 0 && <br />}
+        {line}
+      </React.Fragment>
+    ));
+
+    if (isHighlighted) {
+      const hasBr = part.toLowerCase().includes('<br');
+      return (
+        <span key={pIdx} style={{ color: highlightColor, whiteSpace: hasBr ? 'normal' : 'nowrap' }}>
+          {renderedContent}
+        </span>
+      );
+    }
+    return <React.Fragment key={pIdx}>{renderedContent}</React.Fragment>;
+  });
+};
+
 import { useVideoModal } from '../context/VideoModalContext';
 
 export default function ArcadeGame({ siteData }) {
@@ -1068,7 +1095,7 @@ export default function ArcadeGame({ siteData }) {
               <div key={pIdx} style={{ marginBottom: pIdx === 0 ? '22px' : '30px' }}>
                 <div className="winera-commercial-point-title" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '8px', textAlign: 'left' }}>
                   <CheckCheck style={{ width: '22px', height: '22px', color: '#00a8ff', strokeWidth: 3, flexShrink: 0, marginTop: '2px' }} />
-                  <h4 style={{ fontSize: '1.05rem', fontWeight: '600', color: '#0f172a', margin: 0, lineHeight: 1.35, textAlign: 'left' }}>
+                  <h4 style={{ fontSize: '20px', fontWeight: '600', color: '#0f172a', margin: 0, lineHeight: 1.35, textAlign: 'left' }}>
                     {point.title}
                   </h4>
                 </div>
@@ -1169,23 +1196,17 @@ export default function ArcadeGame({ siteData }) {
       {/* 6. WHY CHOOSE WINERA INTERNATIONAL SECTION (1:1 UI MATCH WITH SCREENSHOT) */}
       <section className="winera-arcade-why-section" style={{ padding: '70px 4vw 75px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          {/* Section Heading with Yellow Accent Line Above */}
-          <SectionHeading marginBottom="40px" accentWidth="510px" accentMaxWidth="95%" accentHeight="11px" accentMarginBottom="8px" accentAlign="center">
-            {(() => {
-              const rawTitle = typeof siteData?.arcadeWhyUs?.title === 'string' ? siteData.arcadeWhyUs.title : "Why Choose *Winera International*";
-              const parts = String(rawTitle).split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#00a8ff', whiteSpace: 'nowrap', display: 'inline-block' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </SectionHeading>
+          {/* Section Heading */}
+          <div style={{ textAlign: 'center', marginBottom: '60px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img
+              src={yellowBrushAccent}
+              alt=""
+              style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+            />
+            <h2 className="winera-arcade-why-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              {renderTitleMarkup(siteData?.arcadeWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
+            </h2>
+          </div>
 
           {/* Grid Container with Light Blue Border Separator Lines */}
           {(() => {
@@ -1343,7 +1364,7 @@ export default function ArcadeGame({ siteData }) {
                         {renderWhyIcon(item, idx)}
                       </div>
 
-                      <h3 style={{ fontSize: '1.05rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
                         {item.title}
                       </h3>
                       <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '260px', margin: 0 }}>
@@ -1411,7 +1432,7 @@ export default function ArcadeGame({ siteData }) {
                           {renderWhyIcon(item, topRow.length + idx)}
                         </div>
 
-                        <h3 style={{ fontSize: '1.05rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
+                        <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
                           {item.title}
                         </h3>
                         <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '280px', margin: 0 }}>

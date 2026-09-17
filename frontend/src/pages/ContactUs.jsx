@@ -165,7 +165,7 @@ export default function ContactUs({ siteData }) {
                     <Phone style={{ width: '22px', height: '22px' }} />
                   </motion.div>
                   <div style={{ position: 'relative', zIndex: 3 }}>
-                    <h5 className="winera-contact-card-title" style={{ fontSize: '12px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
+                    <h5 className="winera-contact-card-title" style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.callTitle || "CALL US DIRECTLY"}
                     </h5>
                     <div className="winera-contact-phones-row" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
@@ -242,7 +242,7 @@ export default function ContactUs({ siteData }) {
                     <Mail style={{ width: '22px', height: '22px' }} />
                   </motion.div>
                   <div style={{ position: 'relative', zIndex: 3 }}>
-                    <h5 className="winera-contact-card-title" style={{ fontSize: '12px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
+                    <h5 className="winera-contact-card-title" style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', letterSpacing: '0.5px', textTransform: 'uppercase', margin: '0 0 4px' }}>
                       {siteData?.contactPage?.emailTitle || "EMAIL OUR TEAM"}
                     </h5>
                     <a href={`mailto:${siteData?.contactPage?.email || "info@winera.in"}`} style={{ fontSize: '13.5px', fontWeight: '300', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.email || "info@winera.in"}</a>

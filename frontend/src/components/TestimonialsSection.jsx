@@ -174,11 +174,13 @@ export default function TestimonialsSection({
                   return (
                     <div style={{ position: 'relative', maxWidth: '430px', margin: '0 0 8px' }}>
                       <p className="winera-testi-quote" style={{
-                        color: '#334155',
-                        fontSize: '15px',
+                        fontFamily: "'Open Sans', sans-serif",
+                        color: 'rgb(55, 62, 65)',
+                        fontSize: '17px',
                         fontStyle: 'normal',
-                        fontWeight: '500',
-                        lineHeight: 1.5,
+                        fontWeight: '400',
+                        lineHeight: '28px',
+                        letterSpacing: '0px',
                         margin: 0,
                         ...(isLong && !isExpanded ? {
                           display: '-webkit-box',
@@ -398,11 +400,13 @@ export default function TestimonialsSection({
                 return (
                   <div style={{ position: 'relative', margin: '0 0 20px' }}>
                     <p className="winera-testi-quote" style={{
-                      color: '#334155',
-                      fontSize: '15px',
+                      fontFamily: "'Open Sans', sans-serif",
+                      color: 'rgb(55, 62, 65)',
+                      fontSize: '17px',
                       fontStyle: 'normal',
-                      fontWeight: '500',
-                      lineHeight: 1.6,
+                      fontWeight: '400',
+                      lineHeight: '28px',
+                      letterSpacing: '0px',
                       margin: 0,
                       ...(isLong && !isExpanded ? {
                         display: '-webkit-box',

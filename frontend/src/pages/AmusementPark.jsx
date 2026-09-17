@@ -377,24 +377,24 @@ export default function AmusementPark({ siteData }) {
                 </h2>
               </div>
 
-              <p style={{ fontSize: '13.5px', color: '#475569', fontWeight: '600', lineHeight: 1.5, marginBottom: '20px' }}>
+              <p style={{ fontSize: '17px', color: 'rgb(55, 62, 65)', fontWeight: '400', lineHeight: '28px', letterSpacing: '0px', marginBottom: '20px' }}>
                 {siteData?.amusementOptions?.subtitle || "We Supply Many Types Of Rides So You Can Build The Right Experience For Your Space And Visitors."}
               </p>
 
               {/* Bullet Points List */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
                 {rideItems.map((item, idx) => (
-                  <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: '#334155' }}>
-                    <span style={{ color: '#38bdf8', fontWeight: '900', fontSize: '14px' }}>&#10148;</span>
+                  <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '17px', lineHeight: '28px', color: 'rgb(55, 62, 65)', fontWeight: '400', letterSpacing: '0px' }}>
+                    <span style={{ color: '#38bdf8', fontWeight: '900', fontSize: '16px', marginTop: '2px' }}>&#10148;</span>
                     <div>
-                      <strong style={{ color: '#0f172a', fontWeight: '800' }}>{item.boldText || item.title} :-</strong>{' '}
-                      <span style={{ fontWeight: '500', color: '#475569' }}>{item.desc || item.description}</span>
+                      <strong style={{ color: '#0f172a', fontWeight: '700' }}>{item.boldText || item.title} :-</strong>{' '}
+                      <span style={{ fontWeight: '400', color: 'rgb(55, 62, 65)' }}>{item.desc || item.description}</span>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <p style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', lineHeight: 1.6, margin: 0 }}>
+              <p style={{ fontSize: '17px', color: 'rgb(55, 62, 65)', fontWeight: '400', lineHeight: '28px', letterSpacing: '0px', margin: 0 }}>
                 {siteData?.amusementOptions?.footerText || "Every Ride Comes With Strong Safety Belts, Automatic Sensors That Stop The Ride If Something Goes Wrong, And A Tough, Durable Build. We Test Each Ride On-Site Before Handing It Over To You."}
               </p>
             </div>

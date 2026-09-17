@@ -439,8 +439,8 @@ export default function BumperCar({ siteData }) {
                   : defaultBumperCarSpecs
                 ).map((row, idx, arr) => (
                   <tr key={idx} style={{ borderBottom: idx === arr.length - 1 ? 'none' : '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '10px 12px 10px 28px', fontWeight: '500', color: '#334155', fontSize: '13px', wordBreak: 'break-word' }}>{row.spec}</td>
-                    <td style={{ padding: '1px 28px 10px 12px', fontWeight: '500', color: '#334155', fontSize: '13px', wordBreak: 'break-word' }}>{row.details}</td>
+                    <td style={{ padding: '10px 12px 10px 28px', fontWeight: 400, color: 'rgb(55,62,65)', fontSize: '16px', lineHeight: '28px', letterSpacing: '0', wordBreak: 'break-word' }}>{row.spec}</td>
+                    <td style={{ padding: '1px 28px 10px 12px', fontWeight: 400, color: 'rgb(55,62,65)', fontSize: '16px', lineHeight: '28px', letterSpacing: '0', wordBreak: 'break-word' }}>{row.details}</td>
                   </tr>
                 ))}
               </tbody>
@@ -648,7 +648,7 @@ export default function BumperCar({ siteData }) {
                       minHeight: '38px',
                       transition: 'all 0.3s ease'
                     }}>
-                      <span style={{ fontSize: '11.5px', fontWeight: '600', color: '#0f172a', textAlign: 'left', lineHeight: 1.3, marginRight: '14px' }}>
+                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a', textAlign: 'left', lineHeight: 1.3, marginRight: '14px' }}>
                         {pt.text && typeof pt.text === 'string'
                           ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
                             <React.Fragment key={lIdx}>
@@ -813,7 +813,7 @@ export default function BumperCar({ siteData }) {
                       }}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <span style={{ fontSize: '11.5px', fontWeight: '600', color: '#ffffff', textAlign: 'left', lineHeight: 1.3, marginLeft: '14px' }}>
+                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#ffffff', textAlign: 'left', lineHeight: 1.3, marginLeft: '14px' }}>
                         {pt.text && typeof pt.text === 'string'
                           ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
                             <React.Fragment key={lIdx}>
@@ -1234,7 +1234,7 @@ export default function BumperCar({ siteData }) {
         gradientTagline={true}
         gradientTitle={true}
         buttonTheme="yellow"
-        titleFontSize="30px"
+        titleFontSize="26px"
         subtitleFontSize="16px"
         bgUrl={siteData?.bumpercarCta?.bgUrl ? getValidImageUrl(siteData.bumpercarCta.bgUrl, ctaMainBanner) : null}
         bg={ctaMainBanner}
@@ -1251,7 +1251,7 @@ export default function BumperCar({ siteData }) {
         subtitle={
           siteData?.bumpercarCta?.subtitle || siteData?.bumpercarCta?.whiteText
             ? siteData?.bumpercarCta?.subtitle || siteData?.bumpercarCta?.whiteText
-            : "We'll assess your space and send a free<br/>ROI report before you spend anything."
+            : "Our team will assess your space, prepare a free ROI report,<br/>and recommend the right setup before you spend anything."
         }
         description={null}
         buttonText={siteData?.bumpercarCta?.buttonText || "Get a Quote From an Expert"}

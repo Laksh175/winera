@@ -339,8 +339,8 @@ export default function Home({ siteData }) {
               })()}
             </h1>
 
-            {/* Subtitle Paragraph (Image 3: Open Sans, Weight 400, Size 18px, Line height 28px, Color rgba(241, 241, 241, 1), Width 721px) */}
-            <p style={{
+            {/* Subtitle Paragraph (Image 3: Open Sans, Weight 400, Size 16px, Line height 28px, Color rgba(241, 241, 241, 1), Width 721px) */}
+            <p className="winera-home-hero-subtitle" style={{
               fontFamily: "'Open Sans', sans-serif",
               fontSize: '16px',
               color: 'rgba(241, 241, 241, 1)',
@@ -934,7 +934,7 @@ export default function Home({ siteData }) {
                 })()}
               </SectionHeading>
 
-              <p style={{ color: '#475569', fontSize: '13px', lineHeight: 1.6, maxWidth: '600px', marginTop: '18px', width: '80%'}}>
+              <p style={{ color: 'rgb(55, 62, 65)', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: 400, maxWidth: '600px', marginTop: '18px', width: '80%'}}>
                 {siteData?.partnerHome?.subtitle || "Discover how Winera International helps you plan, build, and launch a successful game zone from free ROI consultation to safety-certified equipment and complete installation support."}
               </p>
             </div>
@@ -946,7 +946,7 @@ export default function Home({ siteData }) {
                   <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                     {siteData?.partnerHome?.box1Title || "Free ROI Consultancy"}
                   </h4>
-                  <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.55, marginBottom: '0px' }}>
+                  <p style={{ color: 'rgb(55, 62, 65)', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: 400, marginBottom: '0px' }}>
                     {siteData?.partnerHome?.box1Desc || "Before you invest a single rupee, our team consults with you on layout, equipment mix, and budget and hands you a complete ROI report covering projected revenue, footfall, and break-even timeline."}
                   </p>
                   <div style={{ textAlign: 'right', marginTop: '-15px', marginBottom: '-12px' }}>
@@ -981,7 +981,7 @@ export default function Home({ siteData }) {
                   <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                     {siteData?.partnerHome?.box2Title || "Safety-Certified Installation"}
                   </h4>
-                  <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.55, marginBottom: '0px' }}>
+                  <p style={{ color: 'rgb(55, 62, 65)', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: 400, marginBottom: '0px' }}>
                     {siteData?.partnerHome?.box2Desc || "Every product we install meets commercial safety standards tested for high-footfall environments, assembled by our own trained team, and handed over only after a full on-site safety inspection."}
                   </p>
                   <div style={{ textAlign: 'right', marginTop: '-15px', marginBottom: '-12px' }}>
@@ -1039,7 +1039,7 @@ export default function Home({ siteData }) {
               })()}
             </SectionHeading>
 
-            <p className="winera-industries-subtitle" style={{ color: 'rgb(26, 30, 36)', fontSize: '15px', fontWeight: '500', marginBottom: '50px' }}>
+            <p className="winera-industries-subtitle" style={{ color: 'rgb(55, 62, 65)', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: 400, marginBottom: '50px', textAlign: 'center' }}>
               {siteData?.industriesHeader?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
             </p>
 
@@ -1376,16 +1376,18 @@ export default function Home({ siteData }) {
                               const isLastInCard45 = actualIndex >= 3 && pIdx === validPts.length - 1;
                               return (
                                 <li key={pIdx} style={{
-                                  fontSize: '15px',
-                                  color: '#475569',
-                                  fontWeight: '500',
-                                  lineHeight: 1.6,
+                                  fontFamily: "'Open Sans', sans-serif",
+                                  fontSize: '16px',
+                                  color: 'rgb(55, 62, 65)',
+                                  fontWeight: '400',
+                                  lineHeight: '26px',
+                                  letterSpacing: '0px',
                                   display: 'flex',
                                   alignItems: 'flex-start',
                                   gap: '8px',
                                   paddingBottom: isLastInCard45 ? '14px' : '0px'
                                 }}>
-                                  <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '15px', fontWeight: '900', marginTop: '-1px' }}>•</span>
+                                  <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '16px', fontWeight: '900', marginTop: '-1px', flexShrink: 0 }}>•</span>
                                   <span>{pt}</span>
                                 </li>
                               );
@@ -1612,7 +1614,7 @@ export default function Home({ siteData }) {
                     <h4 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#0f172a', marginBottom: '4px', textAlign: 'left' }}>
                       {item.title}
                     </h4>
-                    <p className="winera-why-us-desc" style={{ fontSize: '13.5px', color: '#334155', fontWeight: '500', lineHeight: 1.45, margin: 0, width: '100%', textAlign: 'left' }}>
+                    <p className="winera-why-us-desc" style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '17px', color: 'rgb(55, 62, 65)', fontWeight: '400', lineHeight: '28px', letterSpacing: '0px', margin: 0, width: '100%', textAlign: 'left' }}>
                       {item.desc}
                     </p>
                   </div>

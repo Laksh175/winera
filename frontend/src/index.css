@@ -18,17 +18,25 @@
   --shadow-hover: 0 18px 40px rgba(0, 168, 255, 0.18);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+html,
 body {
   background-color: var(--bg-main);
   color: var(--text-dark);
   letter-spacing: 0px;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* Master Section Title h2 Desktop Font Size */
@@ -63,12 +71,9 @@ select {
    Line-height: 26px
    Letter-spacing: 0px
    ========================================================================== */
-p,
-p *,
+p:not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-right-sidebar-sticky p):not(.winera-blog-right-sidebar-sticky *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p),
+p:not(.winera-bowling-roi-text p):not(.winera-blog-right-sidebar-sticky p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p) *,
 .lead,
-.winera-hero-subtitle,
-.winera-hero-desc,
-.winera-hero-subtext,
 .winera-section-desc,
 .winera-card-desc,
 .winera-product-desc,
@@ -94,8 +99,29 @@ p *,
   color: rgba(55, 62, 65, 1);
 }
 
+/* Home Hero Subtitle Paragraph 16px Typography */
+.winera-home-hero-subtitle,
+.winera-home-hero-section p,
+p.winera-home-hero-subtitle {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 28px !important;
+  color: rgba(241, 241, 241, 1) !important;
+}
+
+/* Bowling ROI Paragraphs 16px Typography */
+.winera-bowling-roi-text p,
+.winera-bowling-roi-text p *,
+.winera-bowling-roi-section .winera-bowling-roi-text p,
+section.winera-bowling-roi-section p {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
 /* Desktop Only Typography Overrides (Project Detail & About Section) */
 @media (min-width: 769px) {
+
   .winera-project-block-text p,
   .winera-project-block-text p *,
   .winera-project-client-text p,
@@ -124,17 +150,16 @@ p *,
   color: #ffffff !important;
 }
 
-/* Testimonial Quote Typography Override */
+/* Testimonial Quote Typography */
 .winera-testi-quote,
 .winera-testi-quote * {
   font-family: 'Open Sans', sans-serif !important;
   font-weight: 400 !important;
   font-style: normal !important;
-  font-size: 20px !important;
-  line-height: 29.75px !important;
+  font-size: 17px !important;
+  line-height: 28px !important;
   text-align: justify !important;
-  vertical-align: middle !important;
-  color: #334155 !important;
+  color: rgb(55, 62, 65) !important;
   margin-bottom: 8px !important;
 }
 
@@ -142,9 +167,9 @@ p *,
   font-family: 'Open Sans', sans-serif !important;
   font-weight: 700 !important;
   font-style: normal !important;
-  font-size: 20px !important;
-  line-height: 35.75px !important;
-  letter-spacing: -0.22px !important;
+  font-size: 17px !important;
+  line-height: 28px !important;
+  letter-spacing: 0px !important;
   color: #00a8ff !important;
 }
 
@@ -176,27 +201,84 @@ p *,
   transition: color 0.25s ease !important;
 }
 
-/* FAQ Answer Typography Override (Matching Why Choose Us typography with 14px size) */
+/* ==========================================================================
+   GLOBAL CONTENT PARAGRAPH TYPOGRAPHY (Matching Home About Section)
+   font-size: 17px; line-height: 28px; font-family: 'Open Sans'; font-weight: 400;
+   letter-spacing: 0px; color: rgb(55,62,65);
+   Alignments (left/right/center) naturally preserved from original design.
+   ========================================================================== */
+.winera-process-inner-card ul li,
+.winera-process-inner-card ul li span:not(:first-child),
+.winera-process-inner-card li {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px !important;
+  line-height: 26px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0px !important;
+  color: rgb(55, 62, 65) !important;
+}
+
 .winera-faq-answer,
 .winera-faq-answer *,
 .winera-faq-section .winera-faq-answer,
-p.winera-faq-answer {
+p.winera-faq-answer,
+.winera-testi-quote,
+.winera-testi-quote *,
+p.winera-testi-quote,
+.winera-partner-section p,
+.winera-partner-box-yellow p,
+.winera-partner-box-cyan p,
+.winera-vr-reliability p,
+.winera-about-content-wrapper p,
+.winera-project-block-text p,
+.winera-section-subtitle,
+.winera-testi-subtitle,
+.winera-why-choose-us-section p,
+.winera-specs-section p,
+.winera-timeline-section p,
+.winera-materials-section p,
+.winera-mindmap-section p,
+.winera-laser-specs-box p,
+.winera-roi-card p,
+.winera-safety-card p,
+.winera-amusement-card p,
+.winera-arcade-card p,
+.winera-clients-section p,
+.winera-projects-marquee-section .winera-projects-marquee-header p,
+.winera-section-heading-container p,
+.winera-section-heading-container .winera-section-subtitle,
+section:not([class*="hero"]):not([class*="footer"]):not([class*="cta"]):not([class*="bowling-roi"]):not(.winera-bowling-roi-section):not(.admin-content) p:not(.winera-hero-h1):not(.winera-hero-h2):not(.winera-hero-p):not([class*="hero"]):not([class*="badge"]):not([class*="tag"]):not([class*="btn"]):not([class*="nav"]):not(.footer-bottom-text):not(.admin-content *):not(.winera-cta-description):not(.winera-cta-banner-container *):not([class*="cta"] *):not(.winera-bowling-roi-text *):not(.winera-bowling-roi-text p):not(.winera-roi-checklist-card *):not(.winera-roi-checklist-card p):not(.winera-blog-right-sidebar-sticky *):not(.winera-blog-right-sidebar-sticky p):not(.winera-roi-process-card *):not(.winera-roi-process-card p),
+.winera-content-paragraph {
   font-family: 'Open Sans', sans-serif !important;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
   font-style: normal !important;
-  font-size: 14px !important;
-  line-height: 1.45 !important;
-  letter-spacing: normal !important;
-  color: #334155 !important;
+  font-size: 17px !important;
+  line-height: 28px !important;
+  letter-spacing: 0px !important;
+  color: rgb(55, 62, 65) !important;
 }
 
-/* Dark Hero Section Paragraph Text Color Override */
+/* Dark Hero & CTA Banner Paragraph Text Color Override */
 [class*="hero"] p,
 .winera-hero-desc,
 .winera-hero-subtitle,
 .winera-hero-subtext,
-.winera-hero-section p {
-  color: rgba(241, 241, 241, 1) !important;
+.winera-hero-section p,
+[class*="cta"] p,
+.winera-cta-banner-container p,
+.winera-cta-banner-section p,
+.winera-cta-description,
+p.winera-cta-description,
+.winera-roi-checklist-card p,
+.winera-roi-checklist-col-left p,
+.winera-roi-checklist-col-right p,
+.winera-blog-right-sidebar-sticky p,
+.winera-blog-right-sidebar-sticky p *,
+.winera-blog-right-sidebar-sticky span,
+.winera-roi-process-card p,
+.winera-roi-process-card p * {
+  color: #ffffff !important;
+  text-shadow: none;
 }
 
 a {
@@ -352,14 +434,28 @@ section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*
 .winera-industries-subtitle,
 #industries .winera-industries-subtitle,
 #industries p.winera-industries-subtitle {
-  font-size: 15px !important;
-  font-weight: 500 !important;
-  color: rgb(26, 30, 36) !important;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 17px !important;
+  line-height: 28px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0px !important;
+  color: rgb(55, 62, 65) !important;
+  text-align: center !important;
 }
 
 .winera-why-us-desc,
 .winera-why-us-grid p,
 #why-us p.winera-why-us-desc,
+#why-us .winera-why-us-desc {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 17px !important;
+  line-height: 28px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0px !important;
+  color: rgb(55, 62, 65) !important;
+  text-align: left !important;
+}
+
 .winera-arcade-intro-desc,
 .winera-arcade-intro-section p,
 .winera-bumpercar-whyus-card p,
@@ -1122,6 +1218,16 @@ html {
     padding: 50px 0 60px !important;
   }
 
+  .winera-clients-section h2,
+  #clients h2,
+  .winera-clients-section .winera-section-heading-h2 {
+    white-space: nowrap !important;
+    font-size: clamp(20px, 5.8vw, 28px) !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    box-sizing: border-box !important;
+  }
+
   /* Our Channel Partners section mobile layout - Infinite Marquee style */
   .winera-channel-partners-section {
     padding: 50px 0 60px !important;
@@ -1360,7 +1466,7 @@ html {
   }
 
   .winera-section-heading-inner,
-  .winera-section-heading-container > div {
+  .winera-section-heading-container>div {
     display: block !important;
     text-align: center !important;
     width: 100% !important;
@@ -1370,8 +1476,8 @@ html {
 
   .winera-section-heading-container img,
   .winera-section-heading-accent,
-  .winera-section-heading-container > div > img,
-  .winera-section-heading-container > div > div {
+  .winera-section-heading-container>div>img,
+  .winera-section-heading-container>div>div {
     margin: 0 auto 10px !important;
     width: 82% !important;
     max-width: 320px !important;
@@ -4861,9 +4967,12 @@ html {
 
 .winera-partner-box-yellow p,
 .winera-partner-box-cyan p {
-  font-size: 15px !important;
-  line-height: 1.55 !important;
-  color: #475569 !important;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 17px !important;
+  line-height: 28px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0px !important;
+  color: rgb(55, 62, 65) !important;
   margin-bottom: 0px !important;
 }
 
@@ -5106,9 +5215,9 @@ textarea::placeholder,
     margin: 0 auto !important;
   }
 
-  .winera-project-block-img > div,
-  .winera-project-client-img > div,
-  .winera-project-solution-img > div {
+  .winera-project-block-img>div,
+  .winera-project-client-img>div,
+  .winera-project-solution-img>div {
     width: 100% !important;
     max-width: 360px !important;
     margin: 0 auto !important;
@@ -5971,6 +6080,7 @@ textarea::placeholder,
   }
 
   @media (max-width: 767px) {
+
     section.winera-trampoline-inside-section,
     .winera-trampoline-inside-section {
       padding: 0 !important;
@@ -6286,7 +6396,7 @@ img[src*="yellow-stroke-line"] {
   }
 
   .winera-section-heading-inner,
-  .winera-section-heading-container > div {
+  .winera-section-heading-container>div {
     display: block !important;
     text-align: center !important;
     width: 100% !important;
@@ -6296,8 +6406,8 @@ img[src*="yellow-stroke-line"] {
 
   .winera-section-heading-container img,
   .winera-section-heading-accent,
-  .winera-section-heading-container > div > img,
-  .winera-section-heading-container > div > div,
+  .winera-section-heading-container>div>img,
+  .winera-section-heading-container>div>div,
   img[src*="yellow-stroke-line"],
   img[src*="yellow-stroke"],
   img[src*="stroke-line"] {
@@ -6570,8 +6680,8 @@ img[src*="yellow-stroke-line"] {
     width: 100% !important;
   }
 
-  .winera-roi-wrong-side > div,
-  .winera-roi-right-side > div {
+  .winera-roi-wrong-side>div,
+  .winera-roi-right-side>div {
     align-items: stretch !important;
     margin-left: auto !important;
     margin-right: auto !important;
@@ -6648,8 +6758,8 @@ img[src*="yellow-stroke-line"] {
     gap: 20px !important;
   }
 
-  .winera-roi-checklist-col-left > div,
-  .winera-roi-checklist-col-right > div {
+  .winera-roi-checklist-col-left>div,
+  .winera-roi-checklist-col-right>div {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
@@ -6814,8 +6924,8 @@ img[src*="yellow-stroke-line"] {
     gap: 24px !important;
   }
 
-  .winera-roi-wrong-side > div,
-  .winera-roi-right-side > div {
+  .winera-roi-wrong-side>div,
+  .winera-roi-right-side>div {
     max-width: 100% !important;
     gap: 8px !important;
   }
@@ -7965,52 +8075,52 @@ h2 span,
     font-family: 'Open Sans', sans-serif !important;
   }
 
-  .winera-arcade-hero-h1 > a,
-  .winera-bowling-hero-h1 > a,
-  .winera-softplay-hero-h1 > a,
-  .winera-vr-hero-h1 > a,
-  .winera-ar-hero-h1 > a,
-  .winera-bumpercar-hero-h1 > a,
-  .winera-amusement-hero-h1 > a,
-  .winera-amusement-hero-title > a,
-  .winera-trampoline-hero-h1 > a,
-  .winera-hypergrid-hero-h1 > a,
-  .winera-hypergrid-hero-title > a,
-  .winera-safety-hero-h1 > a,
-  .winera-project-hero-h1 > a,
-  .winera-roi-hero-h1 > a,
-  .winera-blog-hero-h1 > a,
-  .winera-lasertag-hero-h1 > a,
-  .winera-contact-hero-h1 > a,
-  .winera-about-hero-breadcrumb > a,
-  .winera-breadcrumb-hero > a,
-  .winera-arcade-hero-h1 > span,
-  .winera-bowling-hero-h1 > span,
-  .winera-softplay-hero-h1 > span,
-  .winera-vr-hero-h1 > span,
-  .winera-ar-hero-h1 > span,
-  .winera-bumpercar-hero-h1 > span,
-  .winera-amusement-hero-h1 > span,
-  .winera-amusement-hero-title > span,
-  .winera-trampoline-hero-h1 > span,
-  .winera-hypergrid-hero-h1 > span,
-  .winera-hypergrid-hero-title > span,
-  .winera-safety-hero-h1 > span,
-  .winera-project-hero-h1 > span,
-  .winera-roi-hero-h1 > span,
-  .winera-blog-hero-h1 > span,
-  .winera-lasertag-hero-h1 > span,
-  .winera-contact-hero-h1 > span,
-  .winera-about-hero-breadcrumb > span,
-  .winera-breadcrumb-hero > span,
-  .winera-arcade-hero-breadcrumb > *,
-  .winera-vr-hero-breadcrumb > *,
-  .winera-bowling-hero-breadcrumb > *,
-  .winera-softplay-hero-breadcrumb > *,
-  .winera-bumpercar-hero-breadcrumb > *,
-  .winera-ar-hero-breadcrumb > *,
-  div[class*="hero-breadcrumb"] > *,
-  div[class*="hero-h1"] > * {
+  .winera-arcade-hero-h1>a,
+  .winera-bowling-hero-h1>a,
+  .winera-softplay-hero-h1>a,
+  .winera-vr-hero-h1>a,
+  .winera-ar-hero-h1>a,
+  .winera-bumpercar-hero-h1>a,
+  .winera-amusement-hero-h1>a,
+  .winera-amusement-hero-title>a,
+  .winera-trampoline-hero-h1>a,
+  .winera-hypergrid-hero-h1>a,
+  .winera-hypergrid-hero-title>a,
+  .winera-safety-hero-h1>a,
+  .winera-project-hero-h1>a,
+  .winera-roi-hero-h1>a,
+  .winera-blog-hero-h1>a,
+  .winera-lasertag-hero-h1>a,
+  .winera-contact-hero-h1>a,
+  .winera-about-hero-breadcrumb>a,
+  .winera-breadcrumb-hero>a,
+  .winera-arcade-hero-h1>span,
+  .winera-bowling-hero-h1>span,
+  .winera-softplay-hero-h1>span,
+  .winera-vr-hero-h1>span,
+  .winera-ar-hero-h1>span,
+  .winera-bumpercar-hero-h1>span,
+  .winera-amusement-hero-h1>span,
+  .winera-amusement-hero-title>span,
+  .winera-trampoline-hero-h1>span,
+  .winera-hypergrid-hero-h1>span,
+  .winera-hypergrid-hero-title>span,
+  .winera-safety-hero-h1>span,
+  .winera-project-hero-h1>span,
+  .winera-roi-hero-h1>span,
+  .winera-blog-hero-h1>span,
+  .winera-lasertag-hero-h1>span,
+  .winera-contact-hero-h1>span,
+  .winera-about-hero-breadcrumb>span,
+  .winera-breadcrumb-hero>span,
+  .winera-arcade-hero-breadcrumb>*,
+  .winera-vr-hero-breadcrumb>*,
+  .winera-bowling-hero-breadcrumb>*,
+  .winera-softplay-hero-breadcrumb>*,
+  .winera-bumpercar-hero-breadcrumb>*,
+  .winera-ar-hero-breadcrumb>*,
+  div[class*="hero-breadcrumb"]>*,
+  div[class*="hero-h1"]>* {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -8308,6 +8418,7 @@ h2 span,
 
   /* Why Choose Us Section Mobile Adjustments (under 768px) */
   @media (max-width: 767px) {
+
     #why-us,
     .winera-why-us-section {
       min-height: auto !important;
@@ -8447,7 +8558,11 @@ button[style*="background:transparent"]:hover,
 /* Desktop override for Contact Us card titles & form labels */
 @media (min-width: 769px) {
 
-  .winera-contact-card-title,
+  .winera-contact-card-title {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+  }
+
   .winera-contact-form-label {
     font-size: 12px !important;
     font-weight: 700 !important;
@@ -8805,7 +8920,7 @@ button[style*="background:transparent"]:hover,
 
     .winera-bowling-roi-img {
       position: relative !important;
-      width: 100% !important;
+      width: 103% !important;
       height: 100% !important;
       min-height: 380px !important;
       overflow: hidden !important;
@@ -10025,7 +10140,6 @@ button[style*="background:transparent"]:hover,
   .winera-bowling-supplier-text p,
   .winera-bowling-premium-container p,
   .winera-bowling-types-text p,
-  .winera-bowling-roi-text p,
   .winera-bowling-whyus-text p,
   .winera-bowling-card p,
   .winera-softplay-supplier-text p,
@@ -10060,14 +10174,23 @@ button[style*="background:transparent"]:hover,
     line-height: 1.6 !important;
   }
 
+  .winera-bowling-roi-text p,
+  .winera-bowling-roi-text p *,
+  .winera-bowling-roi-section .winera-bowling-roi-text p,
+  section.winera-bowling-roi-section p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
   .winera-faq-answer,
   .winera-faq-answer *,
   .winera-faq-section .winera-faq-answer,
   p.winera-faq-answer {
-    font-size: 14px !important;
-    line-height: 1.45 !important;
-    font-weight: 500 !important;
-    color: #334155 !important;
+    font-size: 16px !important;
+    line-height: 26px !important;
+    font-weight: 400 !important;
+    color: rgb(55, 62, 65) !important;
+    text-align: justify !important;
   }
 
   .winera-nowrap-text {
@@ -11031,10 +11154,11 @@ button[style*="background:transparent"]:hover,
   .winera-faq-answer,
   .winera-faq-section .winera-faq-answer,
   p.winera-faq-answer {
-    font-size: 14px !important;
-    line-height: 1.45 !important;
-    font-weight: 500 !important;
-    color: #334155 !important;
+    font-size: 17px !important;
+    line-height: 28px !important;
+    font-weight: 400 !important;
+    color: rgb(55, 62, 65) !important;
+    text-align: justify !important;
   }
 
   /* Testimonial Quote Comment Font Size for 1024px Screen Size */
@@ -11860,7 +11984,7 @@ button[style*="background:transparent"]:hover,
 
   .winera-hypergrid-whyus-grid>div:first-child img {
     width: 100% !important;
-    max-width: 280px !important;
+    max-width: 480px !important;
     height: auto !important;
     display: block !important;
     margin: 0 auto !important;
@@ -12373,6 +12497,7 @@ button[style*="background:transparent"]:hover,
    EXCEPT continuous horizontal scrolling marquee/ticker sections & full-width frames.
    ========================================================================== */
 @media (max-width: 850px) {
+
   section:not(.winera-marquee-fullwidth):not(.winera-clients-section):not(.winera-projects-marquee-section):not(.winera-trampoline-inside-section):not(.winera-about-mindmap-section):not(#why-choose-us-detail):not(#clients):not(#projects),
   .winera-section:not(.winera-marquee-fullwidth):not(.winera-clients-section):not(.winera-projects-marquee-section):not(.winera-trampoline-inside-section):not(.winera-about-mindmap-section):not(#why-choose-us-detail),
   div[class*="-section"]:not(.winera-marquee-fullwidth):not(.winera-clients-section):not(.winera-projects-marquee-section):not(.winera-trampoline-inside-section):not(.winera-about-mindmap-section):not(#why-choose-us-detail):not(#clients):not(#projects) {
@@ -12440,17 +12565,23 @@ button[style*="background:transparent"]:hover,
 
   /* Retain 30px padding for text headers inside marquee sections */
   .winera-projects-marquee-header,
-  #clients .winera-section-heading-container,
-  .winera-clients-section .winera-section-heading-container,
   #partners .winera-section-heading-container,
-  #partners .winera-channel-partners-grid > div:first-child,
-  .winera-channel-partners-section .winera-channel-partners-grid > div:first-child,
-  #clients h2,
+  #partners .winera-channel-partners-grid>div:first-child,
+  .winera-channel-partners-section .winera-channel-partners-grid>div:first-child,
   #clients p,
-  .winera-clients-section h2,
   .winera-clients-section p {
     padding-left: 30px !important;
     padding-right: 30px !important;
+    box-sizing: border-box !important;
+  }
+
+  #clients h2,
+  .winera-clients-section h2,
+  .winera-clients-section .winera-section-heading-h2 {
+    white-space: nowrap !important;
+    font-size: clamp(20px, 5.8vw, 28px) !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
     box-sizing: border-box !important;
   }
 
@@ -12480,7 +12611,7 @@ button[style*="background:transparent"]:hover,
 
   /* Yellow Stroke Line Dynamic Width on Mobile View */
   .winera-section-heading-inner,
-  .winera-section-heading-container > div {
+  .winera-section-heading-container>div {
     display: block !important;
     text-align: center !important;
     width: 100% !important;
@@ -12490,8 +12621,8 @@ button[style*="background:transparent"]:hover,
 
   .winera-section-heading-container img,
   .winera-section-heading-accent,
-  .winera-section-heading-container > div > img,
-  .winera-section-heading-container > div > div,
+  .winera-section-heading-container>div>img,
+  .winera-section-heading-container>div>div,
   .winera-company-stats-section .winera-section-heading-container img,
   .winera-company-stats-section .winera-section-heading-accent,
   img[src*="yellow-stroke-line"],

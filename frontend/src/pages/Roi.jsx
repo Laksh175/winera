@@ -269,8 +269,8 @@ export default function Roi({ siteData }) {
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           <div className="winera-roi-intro-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.2fr)',
-            gap: '55px',
+            gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 0.95fr)',
+            gap: '50px',
             alignItems: 'center'
           }}>
             {/* Left Content */}
@@ -305,11 +305,11 @@ export default function Roi({ siteData }) {
                 marginBottom: '22px',
                 letterSpacing: '-0.5px'
               }}>
-                <span className="winera-roi-intro-h2-span" style={{ display: 'block' }}>
-                  You don't need a game zone…
+                <span className="winera-roi-intro-h2-span" style={{ display: 'block', whiteSpace: 'nowrap' }}>
+                  {roiIntro.titleLine1 || "You don't need a game zone…"}
                 </span>
-                <span className="winera-roi-intro-h2-span" style={{ display: 'block' }}>
-                  You need a <span style={{ color: '#38bdf8' }}>profit machine.</span>
+                <span className="winera-roi-intro-h2-span" style={{ display: 'block', whiteSpace: 'nowrap' }}>
+                  {roiIntro.titleLine2 || "You need a"} <span style={{ color: '#38bdf8' }}>{roiIntro.titleLine2Blue || "profit machine."}</span>
                 </span>
               </h2>
 
@@ -626,14 +626,14 @@ export default function Roi({ siteData }) {
                       color: '#ffffff',
                       padding: '10px 10px 10px 16px',
                       borderRadius: '30px',
-                      fontSize: '12px',
+                      fontSize: '13px',
                       fontWeight: '400',
                       boxShadow: 'none',
                       marginRight: item.offset || defaultRedOffsets[idx] || '0px',
-                      width: '195px'
+                      width: '235px'
                     }}
                   >
-                    <span style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400' }}>{formatPillText(item.text)}</span>
+                    <span style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400', fontSize: '13px' }}>{formatPillText(item.text)}</span>
                     <span style={{
                       width: '28px',
                       height: '28px',
@@ -729,11 +729,11 @@ export default function Roi({ siteData }) {
                       color: '#0f172a',
                       padding: '10px 16px 10px 10px',
                       borderRadius: '30px',
-                      fontSize: '12px',
+                      fontSize: '13px',
                       fontWeight: '400',
                       boxShadow: 'none',
                       marginLeft: item.offset || defaultGreenOffsets[idx] || '0px',
-                      width: '225px'
+                      width: '235px'
                     }}
                   >
                     <span style={{
@@ -752,7 +752,7 @@ export default function Roi({ siteData }) {
                     }}>
                       {item.num}
                     </span>
-                    <span style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400' }}>{formatPillText(item.text)}</span>
+                    <span style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400', fontSize: '13px' }}>{formatPillText(item.text)}</span>
                   </div>
                 ))}
               </div>
@@ -876,7 +876,7 @@ export default function Roi({ siteData }) {
                         {step.title}
                       </h3>
                       <p style={{
-                        color: '#cbd5e1',
+                        color: '#ffffff',
                         fontSize: '13.5px',
                         lineHeight: '1.5',
                         margin: 0,
@@ -1215,7 +1215,7 @@ export default function Roi({ siteData }) {
                       </div>
                       <p style={{
                         fontSize: '16px',
-                        color: 'rgb(226, 232, 240)',
+                        color: '#ffffff',
                         lineHeight: '1.45',
                         fontWeight: '500',
                         margin: '0px',
@@ -1321,7 +1321,7 @@ export default function Roi({ siteData }) {
                       </div>
                       <p style={{
                         fontSize: '16px',
-                        color: 'rgb(226, 232, 240)',
+                        color: '#ffffff',
                         lineHeight: '1.45',
                         fontWeight: '500',
                         margin: '0px',

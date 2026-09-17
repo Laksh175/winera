@@ -904,7 +904,7 @@ export default function TrampolinePark({ siteData }) {
               style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }} className="winera-why-h2">
-              {renderTitleMarkup(siteData?.trampolineWhyChoose?.title, "Why Choose *Winera International*", '#28b4ee')}
+              {renderTitleMarkup(siteData?.trampolineWhyChoose?.title, "Why Choose *Winera International*", '#38bdf8')}
             </h2>
           </div>
 
@@ -948,7 +948,7 @@ export default function TrampolinePark({ siteData }) {
                           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
                       </div>
-                      <h3 style={{ fontSize: '1.2rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                         {item.title}
                       </h3>
                       <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
@@ -1006,7 +1006,7 @@ export default function TrampolinePark({ siteData }) {
                             <line x1="12" y1="17" x2="12" y2="21"/>
                           </svg>
                         </div>
-                        <h3 style={{ fontSize: '1.2rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                        <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                           {item.title}
                         </h3>
                         <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>

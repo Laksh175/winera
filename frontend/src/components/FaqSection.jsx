@@ -86,9 +86,7 @@ export default function FaqSection({
                     border: isOpen ? `1.5px solid ${highlightColor}` : '1.5px solid #e2e8f0',
                     boxShadow: isOpen ? '0 10px 30px rgba(0, 168, 255, 0.1)' : '0 4px 16px rgba(0,0,0,0.03)',
                     cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    WebkitFontSmoothing: 'antialiased',
-                    MozOsxFontSmoothing: 'grayscale'
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
@@ -117,12 +115,12 @@ export default function FaqSection({
                   {isOpen && (
                     <p className="winera-faq-answer" style={{
                       fontFamily: "'Open Sans', sans-serif",
-                      fontWeight: '500',
+                      fontWeight: 400,
                       fontStyle: 'normal',
-                      fontSize: '14px',
-                      lineHeight: 1.45,
-                      letterSpacing: 'normal',
-                      color: '#334155',
+                      fontSize: '17px',
+                      lineHeight: '28px',
+                      letterSpacing: '0px',
+                      color: 'rgb(55, 62, 65)',
                       marginTop: '14px',
                       paddingTop: '12px',
                       borderTop: '1px solid #f1f5f9'
@@ -162,9 +160,7 @@ export default function FaqSection({
                     border: isOpen ? `1.5px solid ${highlightColor}` : '1.5px solid #e2e8f0',
                     boxShadow: isOpen ? '0 10px 30px rgba(0, 168, 255, 0.1)' : '0 4px 16px rgba(0,0,0,0.03)',
                     cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    WebkitFontSmoothing: 'antialiased',
-                    MozOsxFontSmoothing: 'grayscale'
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
@@ -193,12 +189,12 @@ export default function FaqSection({
                   {isOpen && (
                     <p className="winera-faq-answer" style={{
                       fontFamily: "'Open Sans', sans-serif",
-                      fontWeight: '500',
+                      fontWeight: 400,
                       fontStyle: 'normal',
-                      fontSize: '14px',
-                      lineHeight: 1.45,
-                      letterSpacing: 'normal',
-                      color: '#334155',
+                      fontSize: '17px',
+                      lineHeight: '28px',
+                      letterSpacing: '0px',
+                      color: 'rgb(55, 62, 65)',
                       marginTop: '14px',
                       paddingTop: '12px',
                       borderTop: '1px solid #f1f5f9'

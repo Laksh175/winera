@@ -530,35 +530,37 @@ export default function BowlingAlley({ siteData }) {
                 transform: 'translateY(-50%)',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '14px',
+                gap: '13px',
                 zIndex: 10,
                 filter: 'drop-shadow(0 12px 25px rgba(56, 189, 248, 0.25))'
               }}>
                 {/* Pill 1: Lane length */}
                 <div style={{
                   background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '290px',
+                  gap: '16px',
+                  maxWidth: '340px',
                   transform: 'translateX(-20px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Lane length:
                   </span>
-                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '12px', whiteSpace: 'nowrap' }}>
+                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '14px', whiteSpace: 'nowrap', paddingRight: '6px' }}>
                     {siteData?.bowlingFreeFall?.specLaneLength || "89 feet per lane"}
                   </span>
                 </div>
@@ -566,28 +568,30 @@ export default function BowlingAlley({ siteData }) {
                 {/* Pill 2: Lane width */}
                 <div style={{
                   background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '290px',
+                  gap: '16px',
+                  maxWidth: '320px',
                   transform: 'translateX(35px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Lane width:
                   </span>
-                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '12px', whiteSpace: 'nowrap' }}>
+                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '14px', whiteSpace: 'nowrap', paddingRight: '6px' }}>
                     {siteData?.bowlingFreeFall?.specLaneWidth || "6 feet per lane"}
                   </span>
                 </div>
@@ -595,28 +599,30 @@ export default function BowlingAlley({ siteData }) {
                 {/* Pill 3: Pinsetter type */}
                 <div style={{
                   background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '320px',
+                  gap: '16px',
+                  maxWidth: '380px',
                   transform: 'translateX(75px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Pinsetter type:
                   </span>
-                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '11.5px', whiteSpace: 'nowrap' }}>
+                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '14px', whiteSpace: 'nowrap', paddingRight: '6px' }}>
                     {siteData?.bowlingFreeFall?.specPinsetter || "Free-fall (gravity-based)"}
                   </span>
                 </div>
@@ -624,28 +630,30 @@ export default function BowlingAlley({ siteData }) {
                 {/* Pill 4: Experience */}
                 <div style={{
                   background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '305px',
+                  gap: '16px',
+                  maxWidth: '360px',
                   transform: 'translateX(45px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Experience:
                   </span>
-                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '11.5px', lineHeight: 1.25, whiteSpace: 'pre-line' }}>
+                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '14px', lineHeight: 1.3, whiteSpace: 'pre-line', paddingRight: '6px' }}>
                     {siteData?.bowlingFreeFall?.specExperience || "Professional /\ncompetition-grade"}
                   </span>
                 </div>
@@ -653,28 +661,30 @@ export default function BowlingAlley({ siteData }) {
                 {/* Pill 5: Best for */}
                 <div style={{
                   background: 'linear-gradient(90deg, #38bdf8 0%, #29b6f6 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '305px',
+                  gap: '16px',
+                  maxWidth: '360px',
                   transform: 'translateX(-15px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Best for:
                   </span>
-                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '11.5px', lineHeight: 1.25, whiteSpace: 'pre-line' }}>
+                  <span style={{ color: '#ffffff', fontWeight: '600', fontSize: '14px', lineHeight: 1.3, whiteSpace: 'pre-line', paddingRight: '6px' }}>
                     {siteData?.bowlingFreeFall?.specBestFor || "Dedicated bowling\ncenters, premium venues"}
                   </span>
                 </div>
@@ -709,35 +719,37 @@ export default function BowlingAlley({ siteData }) {
                 transform: 'translateY(-50%)',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '14px',
+                gap: '13px',
                 zIndex: 10,
                 filter: 'drop-shadow(0 12px 25px rgba(255, 205, 0, 0.3))'
               }}>
                 {/* Pill 1: Pin reset */}
                 <div style={{
                   background: 'linear-gradient(90deg, #ffcd00 0%, #facc15 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '335px',
+                  gap: '16px',
+                  maxWidth: '360px',
                   transform: 'translateX(90px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Pin reset:
                   </span>
-                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '11.5px', lineHeight: 1.25, whiteSpace: 'pre-line' }}>
+                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '13px', lineHeight: 1.3, whiteSpace: 'pre-line', paddingRight: '6px' }}>
                     {siteData?.bowlingString?.specPinReset || "Overhead string\nmechanism"}
                   </span>
                 </div>
@@ -745,28 +757,30 @@ export default function BowlingAlley({ siteData }) {
                 {/* Pill 2: Lane footprint */}
                 <div style={{
                   background: 'linear-gradient(90deg, #ffcd00 0%, #facc15 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '345px',
+                  gap: '16px',
+                  maxWidth: '380px',
                   transform: 'translateX(30px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Lane footprint :
                   </span>
-                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '11.5px', lineHeight: 1.25, whiteSpace: 'pre-line' }}>
+                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '13px', lineHeight: 1.3, whiteSpace: 'pre-line', paddingRight: '6px' }}>
                     {(() => {
                       const raw = siteData?.bowlingString?.specFootprint || "Shorter than a full 89 ft\nfree-fall lane";
                       return raw.includes('<br') ? raw.split(/<br\s*\/?>/i).map((part, i) => (
@@ -782,28 +796,30 @@ export default function BowlingAlley({ siteData }) {
                 {/* Pill 3: Lane width */}
                 <div style={{
                   background: 'linear-gradient(90deg, #ffcd00 0%, #facc15 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '295px',
+                  gap: '16px',
+                  maxWidth: '320px',
                   transform: 'translateX(-25px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Lane width :
                   </span>
-                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '12px', whiteSpace: 'nowrap' }}>
+                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '13px', whiteSpace: 'nowrap', paddingRight: '6px' }}>
                     {siteData?.bowlingString?.specLaneWidth || "6 feet per lane"}
                   </span>
                 </div>
@@ -811,28 +827,30 @@ export default function BowlingAlley({ siteData }) {
                 {/* Pill 4: Maintenance */}
                 <div style={{
                   background: 'linear-gradient(90deg, #ffcd00 0%, #facc15 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '335px',
+                  gap: '16px',
+                  maxWidth: '360px',
                   transform: 'translateX(0px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Maintenance:
                   </span>
-                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '11.5px', lineHeight: 1.25, whiteSpace: 'pre-line' }}>
+                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '13px', lineHeight: 1.3, whiteSpace: 'pre-line', paddingRight: '6px' }}>
                     {siteData?.bowlingString?.specMaintenance || "Low — fewer parts,\neasy servicing"}
                   </span>
                 </div>
@@ -840,28 +858,30 @@ export default function BowlingAlley({ siteData }) {
                 {/* Pill 5: Best for */}
                 <div style={{
                   background: 'linear-gradient(90deg, #ffcd00 0%, #facc15 100%)',
-                  padding: '4px 18px 4px 13px',
-                  borderRadius: '35px',
+                  padding: '7px 22px 7px 7px',
+                  borderRadius: '40px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '18px',
-                  maxWidth: '355px',
+                  gap: '16px',
+                  maxWidth: '380px',
                   transform: 'translateX(50px)'
                 }}>
                   <span style={{
                     background: '#ffffff',
                     color: '#475569',
-                    padding: '5px 15px',
-                    margin: '3px',
-                    borderRadius: '25px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
                     fontWeight: '600',
                     fontSize: '12px',
                     whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     Best for:
                   </span>
-                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '11.5px', lineHeight: 1.25, whiteSpace: 'pre-line' }}>
+                  <span style={{ color: '#0f172a', fontWeight: '600', fontSize: '13px', lineHeight: 1.3, whiteSpace: 'pre-line', paddingRight: '6px' }}>
                     {siteData?.bowlingString?.specBestFor || "FECs, malls, resorts,\ncafés, gaming zones"}
                   </span>
                 </div>
@@ -975,11 +995,17 @@ export default function BowlingAlley({ siteData }) {
               </h2>
             </div>
 
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '10px', width: '109%' }}>
-              {siteData?.bowlingRoi?.p1 || "Setting up a bowling center is a significant investment which is why we don't just sell you equipment and walk away. We're India's ROI-First Game Zone Developer. Before you commit to a project, every client receives a complete report covering product costing, maintenance costs, and projected revenue timeline, so your investment decision is based on real numbers, not estimates."}
+            <p style={{ fontSize: '16px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '10px', width: '109%' }}>
+              {(() => {
+                const p1Text = siteData?.bowlingRoi?.p1;
+                if (!p1Text || p1Text.includes("Add a complete, ready-to-play") || p1Text.includes("string bowling")) {
+                  return "Setting up a bowling center is a significant investment which is why we don't just sell you equipment and walk away. We're India's ROI-First Game Zone Developer. Before you commit to a project, every client receives a complete report covering product costing, maintenance costs, and projected revenue timeline, so your investment decision is based on real numbers, not estimates.";
+                }
+                return p1Text;
+              })()}
             </p>
 
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '3px', width: '103%' }}>
+            <p style={{ fontSize: '16px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '3px', width: '103%' }}>
               {siteData?.bowlingRoi?.p2 || "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment."}
             </p>
 
@@ -992,6 +1018,11 @@ export default function BowlingAlley({ siteData }) {
                 if (!baseLink.includes('text=')) {
                   const separator = baseLink.includes('?') ? '&' : '?';
                   hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+                }
+
+                let btnBgImg = talkToRoiBtn;
+                if (siteData?.bowlingRoi?.btnBg && !siteData?.bowlingRoi?.btnBg.includes('bowlling-button-shape') && !siteData?.bowlingRoi?.btnBg.includes('download-button') && !siteData?.bowlingRoi?.btnBg.includes('cta-banner-bg')) {
+                  btnBgImg = getValidImageUrl(siteData?.bowlingRoi?.btnBg, talkToRoiBtn);
                 }
 
                 return (
@@ -1008,7 +1039,7 @@ export default function BowlingAlley({ siteData }) {
                       width: '271px',
                       height: '70px',
                       paddingTop: '2px',
-                      background: `url(${getValidImageUrl(siteData?.bowlingRoi?.btnBg, talkToRoiBtn)}) center center / 100% 100% no-repeat`,
+                      background: `url(${btnBgImg}) center center / 100% 100% no-repeat`,
                       color: '#091E2B',
                       fontSize: '15px',
                       fontWeight: '700',
@@ -1127,7 +1158,7 @@ export default function BowlingAlley({ siteData }) {
                 margin: '0 0 20px',
                 letterSpacing: '-0.5px'
               }}>
-                <span style={{ color: '#38bdf8' }}>Why Choose </span>Winera International?
+                {renderTitleMarkup(siteData?.bowlingWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
               </h2>
               <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', maxWidth: '780px', margin: '0 auto 14px' }}>
                 {siteData?.bowlingWhyUs?.p1 || "At Winera International, we bring over 15 years of industry experience as a trusted bowling alley manufacturer in India. We are the largest bowling alley supplier in the country, with more than 30 complete setups delivered successfully."}
