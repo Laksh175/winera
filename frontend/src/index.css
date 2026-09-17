@@ -11062,13 +11062,14 @@ button[style*="background:transparent"]:hover,
   }
 
   /* Amusement Park Rides & Attractions and ROI Sections 1024px Laptop Screen Fit */
+  section.winera-amusement-options-section,
   .winera-amusement-options-section {
-    padding: 55px 4vw 65px !important;
+    padding: 75px 4vw 85px !important;
     background-size: 100% 100% !important;
   }
 
   .winera-amusement-options-container {
-    gap: 36px !important;
+    gap: 40px !important;
   }
 
   .winera-amusement-options-grid {
@@ -12612,12 +12613,6 @@ button[style*="background:transparent"]:hover,
 
   .winera-amusement-banner-grid {
     gap: 15px !important;
-  }
-
-  section.winera-amusement-options-section,
-  .winera-amusement-options-section {
-    padding-top: 25px !important;
-    padding-bottom: 25px !important;
   }
 
   section.winera-amusement-whyus-section,
