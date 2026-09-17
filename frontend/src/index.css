@@ -618,10 +618,10 @@ html {
    ========================================== */
 @media (max-width: 850px) {
 
-  /* Global Spacing & Typography Fixes (30px side padding on all pages & sections) */
+  /* Global Spacing & Typography Fixes (25px side padding on all pages & sections) */
   section:not(.winera-marquee-fullwidth):not(.marquee-track):not(.winera-trampoline-inside-section):not(.winera-about-mindmap-section):not(#why-choose-us-detail) {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
     box-sizing: border-box !important;
   }
 
@@ -8429,9 +8429,9 @@ h2 span,
   }
 
   .winera-process-cards-container {
-    gap: 18px !important;
+    gap: 36px !important;
     margin-bottom: 0 !important;
-    padding-top: 0 !important;
+    padding-top: 10px !important;
   }
 
   .winera-process-section p {
@@ -12623,8 +12623,8 @@ button[style*="background:transparent"]:hover,
 }
 
 /* ==========================================================================
-   GLOBAL 30PX SIDE PADDING FOR ALL MOBILE & TABLET SCREENS (<= 850px)
-   Ensures 30px breathing room on left and right across all pages & blocks,
+   GLOBAL 25PX SIDE PADDING FOR ALL MOBILE & TABLET SCREENS (<= 850px)
+   Ensures 25px breathing room on left and right across all pages & blocks,
    EXCEPT continuous horizontal scrolling marquee/ticker sections & full-width frames.
    ========================================================================== */
 @media (max-width: 850px) {
@@ -12632,8 +12632,8 @@ button[style*="background:transparent"]:hover,
   section:not(.winera-marquee-fullwidth):not(.winera-clients-section):not(.winera-projects-marquee-section):not(.winera-trampoline-inside-section):not(.winera-about-mindmap-section):not(#why-choose-us-detail):not(#clients):not(#projects),
   .winera-section:not(.winera-marquee-fullwidth):not(.winera-clients-section):not(.winera-projects-marquee-section):not(.winera-trampoline-inside-section):not(.winera-about-mindmap-section):not(#why-choose-us-detail),
   div[class*="-section"]:not(.winera-marquee-fullwidth):not(.winera-clients-section):not(.winera-projects-marquee-section):not(.winera-trampoline-inside-section):not(.winera-about-mindmap-section):not(#why-choose-us-detail):not(#clients):not(#projects) {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
     box-sizing: border-box !important;
   }
 
@@ -12655,8 +12655,8 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-about-mindmap-container {
-    padding-left: 28px !important;
-    padding-right: 28px !important;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
     box-sizing: border-box !important;
   }
 
@@ -12674,8 +12674,8 @@ button[style*="background:transparent"]:hover,
   #process,
   #testimonials,
   #faqs {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
     box-sizing: border-box !important;
   }
 
@@ -12694,15 +12694,15 @@ button[style*="background:transparent"]:hover,
     max-width: 100vw !important;
   }
 
-  /* Retain 30px padding for text headers inside marquee sections */
+  /* Retain 25px padding for text headers inside marquee sections */
   .winera-projects-marquee-header,
   #partners .winera-section-heading-container,
   #partners .winera-channel-partners-grid>div:first-child,
   .winera-channel-partners-section .winera-channel-partners-grid>div:first-child,
   #clients p,
   .winera-clients-section p {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
     box-sizing: border-box !important;
   }
 
@@ -12740,14 +12740,113 @@ button[style*="background:transparent"]:hover,
     max-width: 100% !important;
   }
 
-  /* Yellow Stroke Line Dynamic Width on Mobile View */
+  /* Perfect Title & Yellow Stroke Line Centering on Mobile View */
+  .winera-section-heading-container,
   .winera-section-heading-inner,
-  .winera-section-heading-container>div {
-    display: block !important;
+  .winera-section-heading-container>div,
+  .winera-projects-marquee-header .winera-section-heading-container,
+  .winera-projects-marquee-header .winera-section-heading-inner,
+  .winera-clients-section .winera-section-heading-container,
+  .winera-clients-section .winera-section-heading-inner,
+  .winera-channel-partners-section .winera-section-heading-container,
+  .winera-channel-partners-section .winera-section-heading-inner,
+  .winera-section-title-wrapper,
+  div[class*="title-wrapper"],
+  div[class*="heading-wrapper"] {
     text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center !important;
+    align-items: center !important;
     width: 100% !important;
     max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Projects Marquee Header 25px Screen Boundary & Height Reset */
+  .winera-projects-marquee-header {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 25px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 12px !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+
+  .winera-projects-marquee-header>div,
+  .winera-projects-marquee-header-left,
+  .winera-projects-marquee-header-right,
+  .winera-projects-marquee-header>div:first-child,
+  .winera-projects-marquee-header>div:last-child {
+    flex: 0 0 auto !important;
+    flex-basis: auto !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
     margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    gap: 12px !important;
+  }
+
+  .winera-section-heading-h2,
+  .winera-section-heading-container h2,
+  .winera-projects-marquee-header h2,
+  .winera-clients-section h2,
+  .winera-channel-partners-section h2,
+  h2.winera-section-heading-h2,
+  section h2,
+  div[class*="section"] h2,
+  div[class*="container"] h2 {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-section-heading-h2 span,
+  .winera-projects-marquee-header h2 span,
+  .winera-section-heading-container h2 span,
+  h2 span {
+    text-align: center !important;
+    display: inline !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-section-subtitle,
+  .winera-section-heading-container p,
+  .winera-projects-marquee-header p,
+  .winera-clients-section p,
+  section p.winera-section-subtitle {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    line-height: 1.6 !important;
+  }
+
+  .winera-projects-marquee-header .winera-cyan-cta-wrapper {
+    margin: 6px auto 0 auto !important;
+    align-self: center !important;
   }
 
   .winera-section-heading-container img,
@@ -12759,15 +12858,48 @@ button[style*="background:transparent"]:hover,
   img[src*="yellow-stroke-line"],
   img[src*="yellow-stroke"],
   img[src*="stroke-line"] {
-    width: 82% !important;
-    max-width: 320px !important;
+    width: 75% !important;
+    max-width: 260px !important;
     min-width: 120px !important;
     height: 9px !important;
     object-fit: fill !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    margin-bottom: 10px !important;
+    margin: 0 auto 10px auto !important;
     display: block !important;
+  }
+
+  /* Working Process Cards Mobile Spacing */
+  .winera-process-cards-container,
+  div.winera-process-cards-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 36px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding-top: 15px !important;
+  }
+
+  .winera-process-row,
+  div.winera-process-row,
+  .winera-process-cards-container>div,
+  .winera-process-cards-container div[style*="gridTemplateColumns"],
+  .winera-process-cards-container div[style*="grid-template-columns"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 36px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .winera-process-card-wrapper-cyan,
+  .winera-process-card-wrapper-yellow,
+  .winera-process-card-wrapper-yellow-left,
+  .winera-process-card-wrapper-cyan-right {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-top: 10px !important;
+    margin-bottom: 5px !important;
   }
 }
 

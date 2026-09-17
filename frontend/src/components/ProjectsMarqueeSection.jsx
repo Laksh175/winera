@@ -18,7 +18,7 @@ const defaultProjects = [
 
 export default function ProjectsMarqueeSection({
   id = 'projects',
-  title = <><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>GAME ZONES WE HAVE</span><br /><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span></span></>,
+  title = <><span>GAME ZONES WE HAVE</span><br /><span>BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span></span></>,
   simpleTitle = null,
   showTopHeader = true,
   subtext = "Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers.",
@@ -50,7 +50,7 @@ export default function ProjectsMarqueeSection({
             gap: '30px',
             flexWrap: 'wrap'
           }}>
-            <div style={{ flex: '1 1 580px', minWidth: '300px' }}>
+            <div className="winera-projects-marquee-header-left" style={{ flex: '1 1 580px', minWidth: '300px' }}>
               <SectionHeading align="left" marginBottom="0" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign}>
                 {typeof title === 'string' ? (
                   (() => {
@@ -58,9 +58,9 @@ export default function ProjectsMarqueeSection({
                     if (cleaned.toLowerCase().includes('game zones we have')) {
                       return (
                         <>
-                          <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>GAME ZONES WE HAVE</span>
+                          <span>GAME ZONES WE HAVE</span>
                           <br />
-                          <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
+                          <span>
                             BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span>
                           </span>
                         </>
@@ -84,7 +84,7 @@ export default function ProjectsMarqueeSection({
               </SectionHeading>
             </div>
 
-            <div style={{ textAlign: 'left', maxWidth: '420px', flex: '0 1 420px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '14px' }}>
+            <div className="winera-projects-marquee-header-right" style={{ textAlign: 'left', maxWidth: '420px', flex: '0 1 420px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '14px' }}>
               <p style={{ color: '#334155', fontSize: '13.5px', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
                 {subtext}
               </p>
