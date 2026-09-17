@@ -1180,21 +1180,9 @@ export default function Home({ siteData }) {
                             textAlign: 'left',
                             boxShadow: '0 12px 30px rgba(0,0,0,0.25)'
                           }}>
-                            <h3 style={{ fontSize: '1.2rem', fontWeight: '900', color: '#00a8ff', marginBottom: '4px' }}>
+                            <h3 style={{ fontSize: '1.2rem', fontWeight: '900', color: '#00a8ff', margin: 0 }}>
                               {ind.title}
                             </h3>
-                            <div style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              fontSize: '12px',
-                              fontWeight: '700',
-                              color: '#334155',
-                              marginTop: '2px'
-                            }}>
-                              <span>Explore Experience</span>
-                              <ArrowRight style={{ width: '13px', height: '13px', color: '#334155' }} />
-                            </div>
                           </div>
                         )}
                       </div>

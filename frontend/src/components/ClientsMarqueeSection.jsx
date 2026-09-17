@@ -55,28 +55,34 @@ export default function ClientsMarqueeSection({
           overflow: 'hidden',
           position: 'relative'
         }}>
-          <div className="marquee-track">
+          <div className="marquee-track winera-clients-marquee-track">
             {[...Array(4)].map((_, setIdx) => (
               <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '60px', paddingRight: '60px' }}>
                 {(clientLogos && clientLogos.length > 0) ? (
-                  clientLogos.map((client, idx) => (
-                    <div
-                      key={idx}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: '80px',
-                        userSelect: 'none'
-                      }}
-                    >
-                      {client.logoUrl ? (
-                        <img src={client.logoUrl} alt={client.name} loading="lazy" decoding="async" style={{ maxHeight: '75px', maxWidth: '240px', objectFit: 'contain' }} />
-                      ) : (
-                        <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px' }}>{client.name}</span>
-                      )}
-                    </div>
-                  ))
+                  (() => {
+                    let list = [...clientLogos];
+                    while (list.length < 8) {
+                      list = [...list, ...clientLogos];
+                    }
+                    return list.map((client, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: '80px',
+                          userSelect: 'none'
+                        }}
+                      >
+                        {client.logoUrl ? (
+                          <img src={client.logoUrl} alt={client.name || 'Client Logo'} loading="lazy" decoding="async" style={{ maxHeight: '75px', maxWidth: '240px', objectFit: 'contain' }} />
+                        ) : (
+                          <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px' }}>{client.name}</span>
+                        )}
+                      </div>
+                    ));
+                  })()
                 ) : (
                   [
                     { name: "Infinity", text: "∞", font: "bold" },
