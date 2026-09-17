@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import wineraLogo from '../assets/logo.webp';
 
 export default function WineraImage({
@@ -16,16 +16,51 @@ export default function WineraImage({
   wrapperProps = {},
   ...props
 }) {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(() => {
+    if (!src) return true;
+    return false;
+  });
   const [hasError, setHasError] = useState(false);
+  const imgRef = useRef(null);
 
   useEffect(() => {
     if (!src) {
       setIsLoaded(true);
       return;
     }
-    setIsLoaded(false);
-    setHasError(false);
+
+    // Check if the DOM image is already complete in browser memory
+    if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
+      setIsLoaded(true);
+      return;
+    }
+
+    // Preload check for instant cache hit
+    const imgTester = new Image();
+    imgTester.src = src;
+    if (imgTester.complete && imgTester.naturalWidth > 0) {
+      setIsLoaded(true);
+      return;
+    }
+
+    imgTester.onload = () => {
+      setIsLoaded(true);
+    };
+    imgTester.onerror = () => {
+      setIsLoaded(true);
+      setHasError(true);
+    };
+
+    // Fast safety fallback: Never let placeholder hang if image is ready
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 350);
+
+    return () => {
+      clearTimeout(timer);
+      imgTester.onload = null;
+      imgTester.onerror = null;
+    };
   }, [src]);
 
   const handleLoad = (e) => {
@@ -45,7 +80,7 @@ export default function WineraImage({
       style={{
         position: 'relative',
         overflow: 'hidden',
-        display: 'inline-block',
+        display: 'block',
         backgroundColor: '#f1f5f9',
         ...style
       }}
@@ -63,6 +98,7 @@ export default function WineraImage({
             alignItems: 'center',
             justifyContent: 'center',
             background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+            pointerEvents: 'none',
             ...placeholderStyle
           }}
         >
@@ -83,6 +119,7 @@ export default function WineraImage({
 
       {/* Actual Image */}
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         onLoad={handleLoad}
@@ -91,8 +128,8 @@ export default function WineraImage({
           width: '100%',
           height: '100%',
           objectFit: objectFit,
-          opacity: isLoaded ? 1 : 0,
-          transition: 'opacity 0.35s ease-in-out',
+          opacity: isLoaded ? 1 : 0.85,
+          transition: 'opacity 0.2s ease-in-out',
           display: 'block',
           ...imgStyle
         }}
