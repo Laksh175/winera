@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import blogHeroBg from '../assets/blog-hero-bg.webp';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import WineraImage from '../components/WineraImage';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 
 const getValidImageUrl = (url, fallback) => {
@@ -217,10 +218,11 @@ export default function Blog({ siteData }) {
                 >
                   {/* Card Top Image */}
                   <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '16px', overflow: 'hidden', height: '210px', flexShrink: 0, marginBottom: '16px', background: '#e0f2fe' }}>
-                    <img
+                    <WineraImage
                       src={getValidImageUrl(post.image || post.imgUrl, blogCardImg)}
                       alt={getFullTitle(post)}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      style={{ width: '100%', height: '100%' }}
+                      imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                     />
                   </div>
 

@@ -6,6 +6,7 @@ import LeadCaptureModal from '../components/LeadCaptureModal';
 import blogHeroBg from '../assets/blog-hero-bg.webp';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+import WineraImage from '../components/WineraImage';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 
 const getValidImageUrl = (url, fallback) => {
@@ -452,10 +453,11 @@ export default function BlogDetail({ siteData }) {
                 marginBottom: '35px',
                 background: '#e0f2fe'
               }}>
-                <img
+                <WineraImage
                   src={postImg}
                   alt={post.title}
-                  style={{
+                  style={{ width: '100%', display: 'block' }}
+                  imgStyle={{
                     width: '100%',
                     height: 'auto',
                     maxHeight: '440px',
@@ -630,10 +632,11 @@ export default function BlogDetail({ siteData }) {
                       >
                         {/* Card Top Image */}
                         <div style={{ width: '100%', height: '165px', borderRadius: '14px', overflow: 'hidden', flexShrink: 0, marginBottom: '12px', background: '#e0f2fe' }}>
-                          <img
+                          <WineraImage
                             src={recImage}
                             alt={getFullTitle(recPost)}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                            style={{ width: '100%', height: '100%' }}
+                            imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                           />
                         </div>
 

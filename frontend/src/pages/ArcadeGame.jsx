@@ -8,6 +8,7 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import CtaBanner from '../components/CtaBanner';
 import RelatedProductsSection from '../components/RelatedProductsSection';
+import WineraImage from '../components/WineraImage';
 import arcadeHeroBg from '../assets/arcadegame-hero-bg.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
@@ -740,14 +741,14 @@ export default function ArcadeGame({ siteData }) {
                               boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
                               border: '4px solid #ffffff'
                             }}>
-                              <img
+                              <WineraImage
                                 src={card.imageUrl || card.img}
                                 alt={card.name}
-                                loading="lazy"
-                                decoding="async"
-                                width={300}
-                                height={180}
                                 style={{
+                                  width: '100%',
+                                  height: '100%'
+                                }}
+                                imgStyle={{
                                   width: '100%',
                                   height: '100%',
                                   objectFit: 'cover'
@@ -802,10 +803,14 @@ export default function ArcadeGame({ siteData }) {
                             background: '#ffffff',
                             boxShadow: '0 6px 18px rgba(0,0,0,0.08)'
                           }}>
-                            <img
+                            <WineraImage
                               src={prodCards[mobileProdIndex].imageUrl || prodCards[mobileProdIndex].img}
                               alt={prodCards[mobileProdIndex].name}
                               style={{
+                                width: '100%',
+                                height: '100%'
+                              }}
+                              imgStyle={{
                                 width: '100%',
                                 height: '100%',
                                 objectFit: 'cover'
