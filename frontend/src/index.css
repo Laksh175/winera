@@ -12830,8 +12830,43 @@ button[style*="background:transparent"]:hover,
     box-sizing: border-box !important;
   }
 
+  /* Section Headings & Titles Spacing on Mobile (<= 850px) */
   .winera-section-heading-container {
+    margin-bottom: 24px !important;
+  }
+
+  /* When Section Heading has a subtitle inside it */
+  .winera-section-heading-container:has(.winera-section-subtitle),
+  .winera-section-heading-container:has(p) {
     margin-bottom: 0 !important;
+  }
+
+  /* When Section Heading has a sibling paragraph immediately following it */
+  .winera-section-heading-container:has(+ p),
+  .winera-section-heading-container:has(+ .winera-section-subtitle),
+  .winera-section-heading-container:has(+ .winera-industries-subtitle) {
+    margin-bottom: 8px !important;
+  }
+
+  .winera-section-heading-h2,
+  .winera-section-heading-container h2,
+  .winera-projects-marquee-header h2,
+  .winera-clients-section h2,
+  .winera-channel-partners-section h2,
+  h2.winera-section-heading-h2,
+  section h2,
+  div[class*="section"] h2,
+  div[class*="container"] h2 {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    line-height: 1.25 !important;
   }
 
   .winera-section-subtitle,
@@ -12842,12 +12877,13 @@ button[style*="background:transparent"]:hover,
   section p.winera-section-subtitle,
   #industries p.winera-industries-subtitle,
   #process p,
-  .winera-process-section p {
+  .winera-process-section p,
+  .winera-section-heading-container + p {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    margin-top: 4px !important;
-    margin-bottom: 18px !important;
+    margin-top: 6px !important;
+    margin-bottom: 22px !important;
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -12876,6 +12912,25 @@ button[style*="background:transparent"]:hover,
     object-fit: fill !important;
     margin: 0 auto 6px auto !important;
     display: block !important;
+  }
+
+  /* Location Cards on Contact Page & Cards with Accent Wings */
+  .winera-contact-locations-grid {
+    grid-template-columns: 1fr !important;
+    gap: 26px !important;
+    margin-top: 16px !important;
+  }
+
+  .winera-contact-location-card {
+    margin-top: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .winera-contact-info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    margin-top: 14px !important;
   }
 
   /* Industries Section Compact Responsive Spacing */
