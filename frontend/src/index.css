@@ -94,27 +94,34 @@ p *,
   color: rgba(55, 62, 65, 1);
 }
 
-/* Project Detail All Paragraphs / Sub-content Font Size Override */
-.winera-project-block-text p,
-.winera-project-block-text p *,
-.winera-project-client-text p,
-.winera-project-client-text p *,
-.winera-project-solution-text p,
-.winera-project-solution-text p *,
-.winera-project-block-desc,
-.winera-project-detail-desc {
-  font-size: 18px !important;
-  line-height: 1.6 !important;
-  color: #475569 !important;
+/* Desktop Only Typography Overrides (Project Detail & About Section) */
+@media (min-width: 769px) {
+  .winera-project-block-text p,
+  .winera-project-block-text p *,
+  .winera-project-client-text p,
+  .winera-project-client-text p *,
+  .winera-project-solution-text p,
+  .winera-project-solution-text p *,
+  .winera-project-block-desc,
+  .winera-project-detail-desc {
+    font-size: 18px !important;
+    line-height: 1.6 !important;
+    color: #475569 !important;
+  }
+
+  .winera-about-content-wrapper p,
+  .winera-about-content-wrapper p *,
+  #about .winera-about-content-wrapper p,
+  #about p {
+    font-size: 17px !important;
+    line-height: 28px !important;
+  }
 }
 
-/* Home Page About Section Paragraph Font Size Override */
-.winera-about-content-wrapper p,
-.winera-about-content-wrapper p *,
-#about .winera-about-content-wrapper p,
-#about p {
-  font-size: 17px !important;
-  line-height: 28px !important;
+/* Lead Management Dashboard Banner Text Override */
+.winera-lead-banner-desc,
+.winera-lead-banner-desc * {
+  color: #ffffff !important;
 }
 
 /* Testimonial Quote Typography Override */
@@ -1333,14 +1340,19 @@ html {
   .winera-section-heading-container {
     text-align: center !important;
     display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
 
-  .winera-section-heading-inner {
-    display: inline-block !important;
+  .winera-section-heading-inner,
+  .winera-section-heading-container > div {
+    display: block !important;
     text-align: center !important;
+    width: 100% !important;
     max-width: 100% !important;
+    margin: 0 auto !important;
   }
 
   .winera-section-heading-container img,
@@ -1349,16 +1361,31 @@ html {
   .winera-section-heading-container > div > div {
     margin: 0 auto 10px !important;
     width: 82% !important;
-    max-width: 95% !important;
+    max-width: 320px !important;
     min-width: 120px !important;
     height: 9px !important;
     object-fit: fill !important;
+    display: block !important;
   }
 
-  .winera-section-heading-container h2 {
+  .winera-section-heading-container h2,
+  .winera-section-heading-h2,
+  h2.winera-section-heading-h2 {
     text-align: center !important;
-    font-size: 25px !important;
+    font-size: clamp(23px, 6.2vw, 29px) !important;
     line-height: 1.22 !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-section-heading-container h2 br.winera-desktop-only-br,
+  .winera-section-heading-container h2 br.winera-desktop-br {
+    display: none !important;
   }
 
   /* Center all section subheadings/paragraphs on mobile */
@@ -6239,14 +6266,19 @@ img[src*="yellow-stroke-line"] {
   }
 
   .winera-section-heading-container {
-    padding: 0 10px !important;
+    padding: 0 !important;
     box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
-  .winera-section-heading-inner {
-    display: inline-block !important;
+  .winera-section-heading-inner,
+  .winera-section-heading-container > div {
+    display: block !important;
     text-align: center !important;
+    width: 100% !important;
     max-width: 100% !important;
+    margin: 0 auto !important;
   }
 
   .winera-section-heading-container img,
@@ -6257,7 +6289,7 @@ img[src*="yellow-stroke-line"] {
   img[src*="yellow-stroke"],
   img[src*="stroke-line"] {
     width: 82% !important;
-    max-width: 95% !important;
+    max-width: 320px !important;
     min-width: 120px !important;
     height: 9px !important;
     object-fit: fill !important;
@@ -6267,11 +6299,17 @@ img[src*="yellow-stroke-line"] {
     display: block !important;
   }
 
-  .winera-section-heading-container h2 {
-    font-size: 25px !important;
+  .winera-section-heading-container h2,
+  .winera-section-heading-h2,
+  h2.winera-section-heading-h2 {
+    font-size: clamp(23px, 6.2vw, 29px) !important;
     line-height: 1.22 !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
   }
 
   .winera-partner-section {
@@ -7815,7 +7853,7 @@ h2 span,
   }
 
   .winera-home-hero-section p {
-    font-size: 15px !important;
+    font-size: 14px !important;
     line-height: 24px !important;
     margin-bottom: 16px !important;
     max-width: 680px !important;
@@ -7852,7 +7890,7 @@ h2 span,
 
   .winera-hero-line1,
   h1.winera-home-hero-h1 .winera-hero-line1 {
-    font-size: 35px !important;
+    font-size: 37px !important;
     line-height: 1.15 !important;
     white-space: normal !important;
     word-break: break-word !important;
@@ -7861,7 +7899,7 @@ h2 span,
 
   .winera-hero-line2,
   h1.winera-home-hero-h1 .winera-hero-line2 {
-    font-size: 35px !important;
+    font-size: 37px !important;
     line-height: 1.15 !important;
     white-space: normal !important;
     word-break: break-word !important;
@@ -8041,7 +8079,7 @@ h2 span,
   }
 
   .winera-home-hero-section p {
-    font-size: 13.5px !important;
+    font-size: 14px !important;
     line-height: 1.55 !important;
     margin-bottom: 20px !important;
     max-width: 100% !important;
@@ -8103,7 +8141,7 @@ h2 span,
   }
 
   .winera-about-content-wrapper p {
-    font-size: 14px !important;
+    font-size: 15px !important;
     line-height: 1.6 !important;
     text-align: left !important;
     margin-bottom: 14px !important;
@@ -8113,6 +8151,10 @@ h2 span,
     grid-template-columns: 1fr !important;
     gap: 10px !important;
     margin-bottom: 20px !important;
+  }
+
+  .winera-about-bullets-grid span {
+    font-size: 16px !important;
   }
 
   .winera-about-cta-container {
@@ -8521,7 +8563,7 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-about-bullets-grid span {
-    font-size: 14px !important;
+    font-size: 16px !important;
   }
 
   .winera-about-images-grid {
@@ -9983,6 +10025,12 @@ button[style*="background:transparent"]:hover,
   .winera-project-solution-text p,
   .winera-project-client-section p,
   .winera-project-detail p,
+  .winera-project-block-text p,
+  .winera-project-block-text p *,
+  .winera-project-client-text p,
+  .winera-project-client-text p *,
+  .winera-project-block-desc,
+  .winera-project-detail-desc,
   .winera-hypergrid-roi-text p,
   .winera-hypergrid-whyus-item p,
   .winera-safety-intro-text p,
@@ -9995,7 +10043,7 @@ button[style*="background:transparent"]:hover,
   .winera-testi-desktop .winera-testi-quote,
   .winera-testi-mobile .winera-testi-quote,
   p.winera-testi-quote {
-    font-size: 16px !important;
+    font-size: 15px !important;
     line-height: 1.6 !important;
   }
 
@@ -10453,7 +10501,7 @@ button[style*="background:transparent"]:hover,
 
   .winera-about-bullets-grid span {
     font-family: 'Open Sans', sans-serif !important;
-    font-size: 14.5px !important;
+    font-size: 16px !important;
     font-weight: 500 !important;
     color: #373E41 !important;
     text-align: left !important;
@@ -12418,10 +12466,13 @@ button[style*="background:transparent"]:hover,
   }
 
   /* Yellow Stroke Line Dynamic Width on Mobile View */
-  .winera-section-heading-inner {
-    display: inline-block !important;
+  .winera-section-heading-inner,
+  .winera-section-heading-container > div {
+    display: block !important;
     text-align: center !important;
+    width: 100% !important;
     max-width: 100% !important;
+    margin: 0 auto !important;
   }
 
   .winera-section-heading-container img,
@@ -12434,7 +12485,7 @@ button[style*="background:transparent"]:hover,
   img[src*="yellow-stroke"],
   img[src*="stroke-line"] {
     width: 82% !important;
-    max-width: 95% !important;
+    max-width: 320px !important;
     min-width: 120px !important;
     height: 9px !important;
     object-fit: fill !important;

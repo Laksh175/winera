@@ -914,8 +914,8 @@ export default function Home({ siteData }) {
             <div className="winera-reveal-left" style={{ textAlign: 'left', paddingTop: '4px' }}>
               <SectionHeading align="left" marginBottom="16px" accentWidth="340px" accentMaxWidth="360px" accentHeight="7px">
                 {(() => {
-                  const rawTitle = siteData?.partnerHome?.title || "*Your Partner* in\nBuilding a Profitable\nGame Zone";
-                  const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                  const rawTitle = siteData?.partnerHome?.title || "*Your Partner* in Building a Profitable Game Zone";
+                  const parts = String(rawTitle).split(/\*{1,2}(.*?)\*{1,2}/g);
                   return parts.map((part, index) => {
                     if (index % 2 === 1) {
                       return (
@@ -926,7 +926,7 @@ export default function Home({ siteData }) {
                     }
                     return part.split('\n').map((line, lIdx) => (
                       <React.Fragment key={lIdx}>
-                        {lIdx > 0 && <br />}
+                        {lIdx > 0 && <br className="winera-desktop-only-br" />}
                         {line}
                       </React.Fragment>
                     ));

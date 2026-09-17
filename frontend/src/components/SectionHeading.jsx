@@ -89,7 +89,7 @@ export default function SectionHeading({
               }}
             />
           )}
-          <h2 style={{
+          <h2 className="winera-section-heading-h2" style={{
             fontFamily: "'Black Han Sans', sans-serif",
             fontSize: '35px',
             fontWeight: '400',
@@ -153,7 +153,7 @@ export default function SectionHeading({
             }}
           />
         )}
-        <h2 style={{
+        <h2 className="winera-section-heading-h2" style={{
           fontFamily: "'Black Han Sans', sans-serif",
           fontSize: '35px',
           fontWeight: '400',

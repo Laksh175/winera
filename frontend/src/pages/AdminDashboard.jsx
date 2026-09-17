@@ -11374,16 +11374,33 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         placeholder="New Category Name..."
                         value={newCategoryInput}
                         onChange={(e) => setNewCategoryInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            let catName = newCategoryInput.trim();
+                            if (!catName) return;
+                            const updated = { ...categoriesData, [catName]: [] };
+                            setFormData(prev => ({ ...prev, arCategoriesData: updated }));
+                            setAdminSelectedCat(catName);
+                            setNewCategoryInput('');
+                            persistSectionToDatabase('arCategoriesData', updated);
+                          }
+                        }}
                         style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                       />
                       <button
                         onClick={() => {
-                          if (!newCategoryInput.trim()) return;
-                          const catName = newCategoryInput.trim();
+                          let catName = newCategoryInput.trim();
+                          if (!catName) {
+                            catName = prompt('Enter new category name:');
+                            if (!catName || !catName.trim()) return;
+                            catName = catName.trim();
+                          }
                           const updated = { ...categoriesData, [catName]: [] };
                           setFormData(prev => ({ ...prev, arCategoriesData: updated }));
                           setAdminSelectedCat(catName);
                           setNewCategoryInput('');
+                          persistSectionToDatabase('arCategoriesData', updated);
                         }}
                         style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer' }}
                       >
@@ -11439,6 +11456,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         });
                         setFormData(prev => ({ ...prev, arCategoriesData: updated }));
                         setAdminSelectedCat(newTitle);
+                        persistSectionToDatabase('arCategoriesData', updated);
                       }}
                       style={{ padding: '8px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', fontWeight: '800', color: '#0284c7', flex: 1 }}
                     />
@@ -11458,6 +11476,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           delete updated[selectedCat];
                           setFormData(prev => ({ ...prev, arCategoriesData: updated }));
                           setAdminSelectedCat(Object.keys(updated)[0]);
+                          persistSectionToDatabase('arCategoriesData', updated);
                         }
                       });
                     }}

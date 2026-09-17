@@ -267,14 +267,14 @@ export default function LeadManagementSection({ siteData, onUpdateSiteData, auth
       <div style={{ background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)', borderRadius: '20px', padding: '28px 32px', color: '#ffffff', marginBottom: '28px', boxShadow: '0 10px 25px rgba(2, 132, 199, 0.2)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.2)', padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: '700', marginBottom: '8px' }}>
-              <Users style={{ width: '14px', height: '14px' }} />
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.2)', padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: '700', marginBottom: '8px', color: '#ffffff' }}>
+              <Users style={{ width: '14px', height: '14px', color: '#ffffff' }} />
               CTA POPUP LEADS & INQUIRIES
             </div>
-            <h2 style={{ fontSize: '1.8rem', fontWeight: '900', margin: 0 }}>
+            <h2 style={{ fontSize: '1.8rem', fontWeight: '900', margin: 0, color: '#ffffff' }}>
               Lead Management Dashboard
             </h2>
-            <p style={{ fontSize: '14px', opacity: 0.9, margin: '4px 0 0' }}>
+            <p className="winera-lead-banner-desc" style={{ fontSize: '14px', color: '#ffffff', opacity: 0.95, margin: '6px 0 0' }}>
               Track inquiries from CTA banners and export to Excel/CSV or PDF with one click.
             </p>
           </div>
