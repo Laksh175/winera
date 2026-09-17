@@ -71,8 +71,8 @@ select {
    Line-height: 26px
    Letter-spacing: 0px
    ========================================================================== */
-p:not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-right-sidebar-sticky p):not(.winera-blog-right-sidebar-sticky *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p),
-p:not(.winera-bowling-roi-text p):not(.winera-blog-right-sidebar-sticky p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p) *,
+p:not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-sticky-register-card p):not(.winera-blog-sticky-register-card *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p),
+p:not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p) *,
 .lead,
 .winera-section-desc,
 .winera-card-desc,
@@ -276,9 +276,9 @@ p.winera-cta-description,
 }
 
 .winera-roi-checklist-col-right p,
-.winera-blog-right-sidebar-sticky p,
-.winera-blog-right-sidebar-sticky p *,
-.winera-blog-right-sidebar-sticky span,
+.winera-blog-sticky-register-card p,
+.winera-blog-sticky-register-card p *,
+.winera-blog-sticky-register-card span,
 .winera-roi-process-card p,
 .winera-roi-process-card p *,
 .winera-project-marquee-city,
@@ -287,6 +287,53 @@ p.winera-project-marquee-city,
 .winera-projects-marquee-section a p {
   color: #e2e8f0 !important;
   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.winera-blog-sticky-register-card p,
+.winera-blog-sticky-register-card p *,
+.winera-blog-sticky-register-card span {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+.winera-blog-more-explore-section h4 {
+  color: #0f172a !important;
+}
+
+.winera-blog-more-explore-section span.winera-blog-explore-accent {
+  color: #0284c7 !important;
+  text-shadow: none !important;
+}
+
+.winera-blog-more-explore-card h5 {
+  color: #0f172a !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+
+.winera-blog-more-explore-card p,
+p.winera-blog-card-desc {
+  font-size: 13px !important;
+  color: #475569 !important;
+  line-height: 1.55 !important;
+}
+
+.winera-blog-more-explore-card span.winera-blog-card-category {
+  color: #0284c7 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+
+.winera-blog-more-explore-card span.winera-blog-card-date {
+  color: #64748b !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.winera-blog-more-explore-card span.winera-blog-card-readmore {
+  color: #0284c7 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
 }
 
 .winera-project-marquee-city,

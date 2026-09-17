@@ -480,7 +480,7 @@ export default function BlogDetail({ siteData }) {
               top: '110px',
               alignSelf: 'start'
             }}>
-              <div style={{
+              <div className="winera-blog-sticky-register-card" style={{
                 background: 'linear-gradient(150deg, #0f172a 0%, #1e293b 100%)',
                 borderRadius: '24px',
                 padding: '28px 22px',
@@ -586,19 +586,19 @@ export default function BlogDetail({ siteData }) {
               </div>
 
               {/* ── MORE TO EXPLORE (VERTICAL SIDEBAR CARDS) ── */}
-              <div style={{ margin: '13% 25px 22px' }}>
+              <div className="winera-blog-more-explore-section" style={{ margin: '36px 0 20px 0' }}>
                 <h4 style={{
-                  fontSize: '30px',
+                  fontSize: '26px',
                   fontWeight: '900',
                   color: '#0f172a',
                   margin: 0,
                   letterSpacing: '-0.3px',
                 }}>
-                  More to <span style={{ color: '#38bdf8' }}>Explore</span>
+                  More to <span className="winera-blog-explore-accent" style={{ color: '#0284c7' }}>Explore</span>
                 </h4>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                   {recentPosts.slice(0, 3).map((recPost) => {
                     const recImage = getValidImageUrl(recPost.image || recPost.imgUrl, blogCardImg);
                     const recExcerpt = recPost.excerpt || recPost.line1 || 'Soft play or trampoline park? Discover the key differences in investment...';
@@ -607,6 +607,7 @@ export default function BlogDetail({ siteData }) {
                     return (
                       <div
                         key={recPost.id}
+                        className="winera-blog-more-explore-card"
                         onClick={() => navigate(`/blog/${recPost.id}`)}
                         style={{
                           background: '#ffffff',
@@ -620,7 +621,7 @@ export default function BlogDetail({ siteData }) {
                           boxShadow: '0 4px 18px rgba(0,0,0,0.04)'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = '#38bdf8';
+                          e.currentTarget.style.borderColor = '#0284c7';
                           e.currentTarget.style.transform = 'translateY(-4px)';
                           e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.08)';
                         }}
@@ -641,7 +642,7 @@ export default function BlogDetail({ siteData }) {
                         </div>
 
                         {/* Category Tag Meta Row */}
-                        <div style={{
+                        <div className="winera-blog-card-category" style={{
                           fontSize: '11px',
                           fontWeight: '700',
                           color: '#0284c7',
@@ -664,9 +665,9 @@ export default function BlogDetail({ siteData }) {
                         </h5>
 
                         {/* Excerpt Description */}
-                        <p style={{
+                        <p className="winera-blog-card-desc" style={{
                           fontSize: '13px',
-                          color: '#64748b',
+                          color: '#475569',
                           lineHeight: 1.5,
                           margin: '0 0 14px 0',
                           flexGrow: 1
@@ -686,10 +687,10 @@ export default function BlogDetail({ siteData }) {
                           alignItems: 'center',
                           justifyContent: 'space-between'
                         }}>
-                          <span style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                          <span className="winera-blog-card-date" style={{ textTransform: 'uppercase', letterSpacing: '0.5px', color: '#64748b' }}>
                             {recPost.date || 'SEP 12, 2026'}
                           </span>
-                          <span style={{
+                          <span className="winera-blog-card-readmore" style={{
                             color: '#0284c7',
                             fontWeight: '700',
                             fontSize: '12px',

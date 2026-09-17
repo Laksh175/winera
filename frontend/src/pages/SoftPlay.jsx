@@ -329,14 +329,14 @@ export default function SoftPlay({ siteData }) {
             background: '#ffffff',
             borderRadius: '28px',
             border: '2.5px solid #ffcd00',
-            padding: '28px 40px',
+            padding: '10px 30px',
             boxShadow: '0 25px 50px rgba(0, 0, 0, 0.25)'
           }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1.5px solid #e2e8f0' }}>
-                  <th style={{ paddingBottom: '16px', fontSize: '22px', fontWeight: '800', color: '#0f172a', width: '48%', paddingRight: '20px' }}>Specification</th>
-                  <th style={{ paddingBottom: '16px', fontSize: '22px', fontWeight: '800', color: '#0f172a', paddingLeft: '25px' }}>Details</th>
+                  <th style={{ padding: '10px 20px 10px 0', fontSize: '20px', fontWeight: '800', color: '#0f172a', width: '48%' }}>Specification</th>
+                  <th style={{ padding: '6px 0 6px 25px', fontSize: '20px', fontWeight: '800', color: '#0f172a' }}>Details</th>
                 </tr>
               </thead>
               <tbody>
@@ -345,8 +345,8 @@ export default function SoftPlay({ siteData }) {
                   : defaultSpecsList
                 ).map((row, idx, arr) => (
                   <tr key={idx} style={{ borderBottom: idx === arr.length - 1 ? 'none' : '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '12px 24px 12px 0', fontWeight: '500', color: '#334155', fontSize: '14px', lineHeight: 1.5, wordBreak: 'break-word' }}>{row.spec}</td>
-                    <td style={{ padding: '12px 0 12px 25px', fontWeight: '500', color: '#334155', fontSize: '14px', lineHeight: 1.5, wordBreak: 'break-word' }}>{row.details}</td>
+                    <td style={{ padding: '10px 20px 10px 0', fontWeight: 400, color: '#334155', fontSize: '15px', lineHeight: 1.35, wordBreak: 'break-word' }}>{row.spec}</td>
+                    <td style={{ padding: '5px 0 5px 25px', fontWeight: 400, color: '#334155', fontSize: '15px', lineHeight: 1.35, wordBreak: 'break-word' }}>{row.details}</td>
                   </tr>
                 ))}
               </tbody>
