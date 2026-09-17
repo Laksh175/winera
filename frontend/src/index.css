@@ -10859,7 +10859,7 @@ button[style*="background:transparent"]:hover,
 
   /* Soft Play Materials Quality Section 1024px Laptop Screen Fit */
   .winera-softplay-materials-section {
-    padding: 55px 4vw 60px !important;
+    padding: 70px 4vw 75px !important;
     background-size: 100% 100% !important;
     align-items: center !important;
     display: flex !important;
@@ -10868,35 +10868,42 @@ button[style*="background:transparent"]:hover,
   .winera-softplay-materials-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 32px !important;
+    gap: 28px !important;
     align-items: center !important;
   }
 
   .winera-softplay-materials-text h2,
   .winera-softplay-materials-text h2 span,
   .winera-softplay-materials-text h2 * {
-    font-size: 25px !important;
-    line-height: 1.18 !important;
-    margin-bottom: 6px !important;
+    font-size: 24px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 4px !important;
   }
 
   .winera-softplay-materials-text p {
-    font-size: 13px !important;
-    line-height: 1.48 !important;
-    margin-bottom: 16px !important;
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 12px !important;
     color: #475569 !important;
   }
 
   .winera-softplay-materials-text img[src*="yellow-stroke"] {
-    width: 220px !important;
-    height: 8px !important;
-    margin-bottom: 8px !important;
+    width: 200px !important;
+    height: 7px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .winera-softplay-materials-text img[alt*="Soft Play"] {
+    max-height: 220px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 16px !important;
   }
 
   .winera-softplay-materials-points {
     display: flex !important;
     flex-direction: column !important;
-    gap: 12px !important;
+    gap: 10px !important;
     justify-content: center !important;
   }
 
@@ -10907,14 +10914,14 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-softplay-materials-points img {
-    width: 15px !important;
-    height: 15px !important;
+    width: 14px !important;
+    height: 14px !important;
     margin-top: 2px !important;
     flex-shrink: 0 !important;
   }
 
   .winera-softplay-materials-points h4 {
-    font-size: 14.5px !important;
+    font-size: 14px !important;
     font-weight: 700 !important;
     color: #0f172a !important;
     margin: 0 0 2px 0 !important;
@@ -10922,9 +10929,9 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-softplay-materials-points p {
-    font-size: 12px !important;
+    font-size: 11.5px !important;
     color: #475569 !important;
-    line-height: 1.4 !important;
+    line-height: 1.38 !important;
     margin: 0 !important;
   }
 
@@ -10977,6 +10984,81 @@ button[style*="background:transparent"]:hover,
     width: 100% !important;
     height: auto !important;
     display: block !important;
+  }
+
+  /* Bumper Car Options Section 1024px Laptop Screen Fit */
+  section.winera-bumpercar-options-section,
+  .winera-bumpercar-options-section {
+    padding: 70px 4vw 75px !important;
+    background-size: 100% 100% !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .winera-bumpercar-options-grid {
+    display: grid !important;
+    grid-template-columns: 1.1fr 1fr !important;
+    gap: 32px !important;
+    align-items: center !important;
+  }
+
+  .winera-bumpercar-options-text {
+    margin-top: 0 !important;
+  }
+
+  .winera-bumpercar-options-text>div:first-child {
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .winera-bumpercar-options-text h2,
+  .winera-bumpercar-options-text h2 span,
+  .winera-bumpercar-options-text h2 * {
+    font-size: 26px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .winera-bumpercar-options-text p {
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 18px !important;
+    color: #475569 !important;
+    width: 100% !important;
+  }
+
+  .winera-bumpercar-options-text>div[style*="marginBottom"] {
+    margin-bottom: 16px !important;
+  }
+
+  .winera-bumpercar-options-text>div[style*="marginBottom"]:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .winera-bumpercar-options-text div[style*="padding: '18px"] {
+    padding: 14px 18px 12px !important;
+  }
+
+  .winera-bumpercar-options-text h4 {
+    font-size: 15px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .winera-bumpercar-options-text h4+p {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .winera-bumpercar-options-img {
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .winera-bumpercar-options-img img {
+    max-width: 440px !important;
+    width: 100% !important;
+    height: auto !important;
   }
 
   /* Amusement Park Rides & Attractions and ROI Sections 1024px Laptop Screen Fit */
@@ -12371,12 +12453,6 @@ button[style*="background:transparent"]:hover,
     padding-bottom: 20px !important;
   }
 
-  section.winera-softplay-materials-section,
-  .winera-softplay-materials-section {
-    padding-top: 25px !important;
-    padding-bottom: 25px !important;
-  }
-
   section.winera-softplay-timeline-section,
   .winera-softplay-timeline-section {
     padding-top: 20px !important;
@@ -12435,12 +12511,6 @@ button[style*="background:transparent"]:hover,
   section.winera-bumpercar-specs-section,
   .winera-bumpercar-specs-section {
     padding-top: 15px !important;
-    padding-bottom: 20px !important;
-  }
-
-  section.winera-bumpercar-options-section,
-  .winera-bumpercar-options-section {
-    padding-top: 20px !important;
     padding-bottom: 20px !important;
   }
 
