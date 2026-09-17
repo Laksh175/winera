@@ -5148,6 +5148,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               ? cardsList
               : cardsList.filter(item => (item.category || item.tag || "").toLowerCase().includes(activeFilterCat.toLowerCase()));
 
+            const handleAddArcadeCategory = async () => {
+              let val = (newCategoryInput || '').trim();
+              if (!val) {
+                const promptVal = window.prompt('Enter new arcade category name:');
+                if (!promptVal || !promptVal.trim()) return;
+                val = promptVal.trim();
+              }
+              if (categoriesList.some(c => c.toLowerCase() === val.toLowerCase())) {
+                alert(`Category "${val}" already exists.`);
+                return;
+              }
+              const newCats = [...categoriesList, val];
+              const updated = { categoriesList: newCats, cards: cardsList };
+              setFormData(prev => ({ ...prev, arcadeCategories: updated }));
+              await persistSectionToDatabase('arcadeCategories', updated);
+              setStatusMsg(`Category "${val}" added successfully!`);
+              setNewCategoryInput('');
+            };
+
             return (
               <div className="winera-admin-card" style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 
@@ -5190,26 +5209,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <input
                         type="text"
                         placeholder="Type new category name..."
-                        id="newArcadeCatInput"
+                        value={newCategoryInput}
+                        onChange={(e) => setNewCategoryInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddArcadeCategory();
+                          }
+                        }}
                         style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', width: '220px', maxWidth: '100%' }}
                       />
                       <button
-                        onClick={() => {
-                          const inp = document.getElementById('newArcadeCatInput');
-                          if (inp && inp.value.trim()) {
-                            const val = inp.value.trim();
-                            if (!categoriesList.includes(val)) {
-                              const newCats = [...categoriesList, val];
-                              const updated = { categoriesList: newCats, cards: cardsList };
-                              setFormData(prev => ({ ...prev, arcadeCategories: updated }));
-                              persistSectionToDatabase('arcadeCategories', updated);
-                              inp.value = '';
-                            }
-                          }
-                        }}
-                        style={{ background: '#0F172B', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer' }}
+                        type="button"
+                        onClick={handleAddArcadeCategory}
+                        style={{ background: '#0F172B', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
                       >
-                        + Add Category
+                        <Plus style={{ width: '15px', height: '15px' }} /> Add Category
                       </button>
                     </div>
                   </div>

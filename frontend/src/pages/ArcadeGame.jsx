@@ -1172,7 +1172,7 @@ export default function ArcadeGame({ siteData }) {
               return parts.map((part, index) => {
                 if (index % 2 === 1) {
                   return (
-                    <span key={index} style={{ color: '#00a8ff' }}>
+                    <span key={index} style={{ color: '#00a8ff', whiteSpace: 'nowrap', display: 'inline-block' }}>
                       {part}
                     </span>
                   );

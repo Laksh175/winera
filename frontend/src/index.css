@@ -1983,6 +1983,11 @@ html {
     margin-bottom: 16px !important;
   }
 
+  .winera-arcade-why-section .winera-section-heading-container h2 span {
+    white-space: nowrap !important;
+    display: inline-block !important;
+  }
+
   .winera-arcade-why-row {
     grid-template-columns: 1fr !important;
     gap: 10px !important;
@@ -2409,7 +2414,7 @@ html {
     position: absolute !important;
     left: -6px !important;
     top: -5 !important;
-    height: 105% !important;
+    height: 104% !important;
     width: auto !important;
     z-index: 2 !important;
     pointer-events: none !important;
@@ -11539,7 +11544,7 @@ button[style*="background:transparent"]:hover,
   .winera-vr-earn-img-container img:last-child {
     display: block !important;
     position: absolute !important;
-    left: -12px !important;
+    left: -16px !important;
     top: 0px !important;
     height: 102% !important;
     max-height: none !important;
