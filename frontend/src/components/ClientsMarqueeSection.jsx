@@ -71,12 +71,12 @@ export default function ClientsMarqueeSection({
                           display: 'inline-flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          height: '80px',
+                          height: '115px',
                           userSelect: 'none'
                         }}
                       >
                         {client.logoUrl ? (
-                          <img src={client.logoUrl} alt={client.name || 'Client Logo'} loading="lazy" decoding="async" style={{ maxHeight: '75px', maxWidth: '240px', objectFit: 'contain' }} />
+                          <img src={client.logoUrl} alt={client.name || 'Client Logo'} loading="lazy" decoding="async" style={{ maxHeight: '110px', maxWidth: '271px', objectFit: 'contain' }} />
                         ) : (
                           <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px' }}>{client.name}</span>
                         )}
