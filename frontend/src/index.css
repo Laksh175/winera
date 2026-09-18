@@ -13988,6 +13988,7 @@ button[style*="background:transparent"]:hover,
   .winera-projects-marquee-section .winera-section-heading-inner,
   .winera-projects-marquee-header .winera-section-heading-inner {
     margin-top: 25% !important;
+    margin-left: -17px !important;
   }
 
   .winera-projects-marquee-header-right {
