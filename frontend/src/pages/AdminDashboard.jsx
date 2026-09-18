@@ -3363,7 +3363,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.industriesHeader?.title || "INDUSTRIES *WE SERVE*"}
+                  value={formData.industriesHeader?.title || "Industries *We Serve*"}
                   onChange={(e) => handleFieldChange('industriesHeader', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -3550,7 +3550,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.processHome?.title || "*OUR WORKING* PROCESS"}
+                  value={formData.processHome?.title || "*Our Working* Process"}
                   onChange={(e) => handleFieldChange('processHome', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -3725,7 +3725,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.whyChooseUs?.title || "*WHY* CHOOSE US"}
+                  value={formData.whyChooseUs?.title || "*Why* Choose Us"}
                   onChange={(e) => handleFieldChange('whyChooseUs', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -3913,7 +3913,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </label>
                     <input
                       type="text"
-                      value={formData.statsHeader?.title || "DISCOVER OUR *COMPANY STATS*"}
+                      value={formData.statsHeader?.title || "Discover Our *Company Stats*"}
                       onChange={(e) => handleFieldChange('statsHeader', 'title', e.target.value)}
                       style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '600' }}
                     />

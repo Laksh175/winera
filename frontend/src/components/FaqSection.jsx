@@ -114,6 +114,7 @@ export default function FaqSection({
                   </div>
                   {isOpen && (
                     <p className="winera-faq-answer" style={{
+                      display: 'block',
                       fontFamily: "'Open Sans', sans-serif",
                       fontWeight: 400,
                       fontStyle: 'normal',
@@ -122,8 +123,8 @@ export default function FaqSection({
                       letterSpacing: '0px',
                       color: 'rgb(55, 62, 65)',
                       marginTop: '14px',
-                      paddingTop: '12px',
-                      borderTop: '1px solid #f1f5f9'
+                      paddingTop: '0px',
+                      borderTop: 'none'
                     }}>
                       {item.a || item.answer}
                     </p>
@@ -188,6 +189,7 @@ export default function FaqSection({
                   </div>
                   {isOpen && (
                     <p className="winera-faq-answer" style={{
+                      display: 'block',
                       fontFamily: "'Open Sans', sans-serif",
                       fontWeight: 400,
                       fontStyle: 'normal',
@@ -196,8 +198,8 @@ export default function FaqSection({
                       letterSpacing: '0px',
                       color: 'rgb(55, 62, 65)',
                       marginTop: '14px',
-                      paddingTop: '12px',
-                      borderTop: '1px solid #f1f5f9'
+                      paddingTop: '0px',
+                      borderTop: 'none'
                     }}>
                       {item.a || item.answer}
                     </p>

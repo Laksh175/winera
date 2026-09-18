@@ -8,6 +8,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
+import MobileExpandableText from '../components/MobileExpandableText';
 import needConsultationsBg from '../assets/cta-consultations-banner.webp';
 import softplayCtaBg from '../assets/softplay-cta-bg.webp';
 import softplayHeroBg from '../assets/softplay-hero-bg.webp';
@@ -32,6 +33,7 @@ import downloadButtonImg from '../assets/download-button.png';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
 import ctaBtn3 from '../assets/cta-button-3.png';
 import homePageIcon from '../assets/home-page-icon.png';
+import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
@@ -252,13 +254,18 @@ export default function SoftPlay({ siteData }) {
               </h2>
             </div>
 
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}>
-              {siteData?.softplayManufacture?.p1 || "At Winera International, we are one of India's leading soft play equipment manufacturers, designing and supplying custom indoor play areas for kids across malls, hotels, schools, hospitals, and family entertainment centres since 2014. As a direct soft play manufacturer in India, we ensure every project starts with a detailed 3D design and ends with a fully installed, safety-certified play zone with our own team managing every step from concept to handover."}
-            </p>
-
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '8px' }}>
-              {siteData?.softplayManufacture?.p2 || "Whether you are setting up a compact 500 sq ft play corner or a large-scale interactive soft play zone, we deliver indoor kids play zone equipment tailored precisely to your space, budget, and audience, not a pre-packaged, off-the-shelf solution."}
-            </p>
+            <MobileExpandableText
+              preview={
+                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}>
+                  {siteData?.softplayManufacture?.p1 || "At Winera International, we are one of India's leading soft play equipment manufacturers, designing and supplying custom indoor play areas for kids across malls, hotels, schools, hospitals, and family entertainment centres since 2014. As a direct soft play manufacturer in India, we ensure every project starts with a detailed 3D design and ends with a fully installed, safety-certified play zone with our own team managing every step from concept to handover."}
+                </p>
+              }
+              expandedContent={
+                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '8px' }}>
+                  {siteData?.softplayManufacture?.p2 || "Whether you are setting up a compact 500 sq ft play corner or a large-scale interactive soft play zone, we deliver indoor kids play zone equipment tailored precisely to your space, budget, and audience, not a pre-packaged, off-the-shelf solution."}
+                </p>
+              }
+            />
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
               <button
@@ -819,17 +826,23 @@ export default function SoftPlay({ siteData }) {
               </h2>
             </div>
 
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '14px' }}>
-              {siteData?.softplayRoi?.p1 || "Most soft play suppliers will quote you a price and ask you to decide. Winera International works differently."}
-            </p>
-
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '14px' }}>
-              {siteData?.softplayRoi?.p2 || "Before any equipment is selected, our team prepares a complete ROI report for your specific venue covering your exact soft play area cost, projected monthly footfall, estimated revenue, maintenance costs, and break-even timeline. Every number is calculated around your space, your city, and your business, not an industry average copied from a brochure."}
-            </p>
-
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '28px' }}>
-              {siteData?.softplayRoi?.p3 || "No other soft play manufacturer or supplier in India currently offers this as a standard part of their process. For Winera, it is not an add-on, it is how every project starts."}
-            </p>
+            <MobileExpandableText
+              preview={
+                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px' }}>
+                  {siteData?.softplayRoi?.p1 || "Most soft play suppliers will quote you a price and ask you to decide. Winera International works differently."}
+                </p>
+              }
+              expandedContent={
+                <>
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px' }}>
+                    {siteData?.softplayRoi?.p2 || "Before any equipment is selected, our team prepares a complete ROI report for your specific venue covering your exact soft play area cost, projected monthly footfall, estimated revenue, maintenance costs, and break-even timeline. Every number is calculated around your space, your city, and your business, not an industry average copied from a brochure."}
+                  </p>
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px' }}>
+                    {siteData?.softplayRoi?.p3 || "No other soft play manufacturer or supplier in India currently offers this as a standard part of their process. For Winera, it is not an add-on, it is how every project starts."}
+                  </p>
+                </>
+              }
+            />
 
             {(() => {
               const baseLink = siteData?.softplayRoi?.buttonLink || "https://wa.me/919428989488";
@@ -955,99 +968,22 @@ export default function SoftPlay({ siteData }) {
               ];
 
               return (
-                <div style={{ position: 'relative' }}>
-                  {/* TOP ROW */}
-                  <div className="winera-softplay-whyus-row winera-softplay-whyus-top-row" style={{
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
-                    gap: '0px',
-                    position: 'relative',
-                    zIndex: 2
-                  }}>
-                    {topCards.map((card, cIdx) => (
-                      <div
-                        key={cIdx}
-                        className="winera-softplay-whyus-card"
-                        style={{
-                          padding: '0 35px 30px',
-                          textAlign: 'center',
-                          position: 'relative',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center'
-                        }}
-                      >
-                        {/* Vertical Shade/Gradient Divider Line for Top Row */}
-                        {cIdx < topCards.length - 1 && (
-                          <div className="winera-softplay-whyus-divider" style={{
-                            position: 'absolute',
-                            right: 0,
-                            top: '20px',
-                            bottom: 0,
-                            width: '2px',
-                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
-                            zIndex: 3
-                          }}></div>
-                        )}
-
-                        {/* Cyan Icon Pill Badge */}
-                        <div style={{
-                          width: '46px',
-                          height: '46px',
-                          borderRadius: '12px',
-                          background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                          color: '#ffffff',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          marginBottom: '16px',
-                          boxShadow: 'none'
-                        }}>
-                          {card.iconUrl ? (
-                            <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
-                          ) : (
-                            defaultIcons[cIdx % defaultIcons.length]
-                          )}
-                        </div>
-                        <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px' }}>
-                          {card.title}
-                        </h3>
-                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                          {card.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Horizontal Center Cyan Divider Line with Shade Fading */}
-                  {bottomCards.length > 0 && (
-                    <div className="winera-softplay-whyus-horizontal-divider" style={{
-                      width: '100%',
-                      height: '2px',
-                      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
-                      position: 'relative',
-                      zIndex: 3,
-                      margin: '0 0 30px'
-                    }}></div>
-                  )}
-
-                  {/* BOTTOM ROW */}
-                  {bottomCards.length > 0 && (
-                    <div className="winera-softplay-whyus-row winera-softplay-whyus-bottom-row" style={{
+                <>
+                  <div className="winera-softplay-whyus-desktop-container" style={{ position: 'relative' }}>
+                    {/* TOP ROW */}
+                    <div className="winera-softplay-whyus-row winera-softplay-whyus-top-row" style={{
                       display: 'grid',
-                      gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
-                      maxWidth: bottomCards.length === 2 ? '740px' : '100%',
-                      margin: '0 auto',
+                      gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
                       gap: '0px',
                       position: 'relative',
                       zIndex: 2
                     }}>
-                      {bottomCards.map((card, cIdx) => (
+                      {topCards.map((card, cIdx) => (
                         <div
                           key={cIdx}
                           className="winera-softplay-whyus-card"
                           style={{
-                            padding: '0 35px',
+                            padding: '0 35px 30px',
                             textAlign: 'center',
                             position: 'relative',
                             display: 'flex',
@@ -1055,15 +991,15 @@ export default function SoftPlay({ siteData }) {
                             alignItems: 'center'
                           }}
                         >
-                          {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
-                          {cIdx < bottomCards.length - 1 && (
+                          {/* Vertical Shade/Gradient Divider Line for Top Row */}
+                          {cIdx < topCards.length - 1 && (
                             <div className="winera-softplay-whyus-divider" style={{
                               position: 'absolute',
                               right: 0,
-                              top: '-30px',
-                              bottom: '20px',
+                              top: '20px',
+                              bottom: 0,
                               width: '2px',
-                              background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                              background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
                               zIndex: 3
                             }}></div>
                           )}
@@ -1084,7 +1020,7 @@ export default function SoftPlay({ siteData }) {
                             {card.iconUrl ? (
                               <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
                             ) : (
-                              defaultIcons[(topCards.length + cIdx) % defaultIcons.length]
+                              defaultIcons[cIdx % defaultIcons.length]
                             )}
                           </div>
                           <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px' }}>
@@ -1096,8 +1032,99 @@ export default function SoftPlay({ siteData }) {
                         </div>
                       ))}
                     </div>
-                  )}
-                </div>
+
+                    {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-softplay-whyus-horizontal-divider" style={{
+                        width: '100%',
+                        height: '2px',
+                        background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                        position: 'relative',
+                        zIndex: 3,
+                        margin: '0 0 30px'
+                      }}></div>
+                    )}
+
+                    {/* BOTTOM ROW */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-softplay-whyus-row winera-softplay-whyus-bottom-row" style={{
+                        display: 'grid',
+                        gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
+                        maxWidth: bottomCards.length === 2 ? '740px' : '100%',
+                        margin: '0 auto',
+                        gap: '0px',
+                        position: 'relative',
+                        zIndex: 2
+                      }}>
+                        {bottomCards.map((card, cIdx) => (
+                          <div
+                            key={cIdx}
+                            className="winera-softplay-whyus-card"
+                            style={{
+                              padding: '0 35px',
+                              textAlign: 'center',
+                              position: 'relative',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center'
+                            }}
+                          >
+                            {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
+                            {cIdx < bottomCards.length - 1 && (
+                              <div className="winera-softplay-whyus-divider" style={{
+                                position: 'absolute',
+                                right: 0,
+                                top: '-30px',
+                                bottom: '20px',
+                                width: '2px',
+                                background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                                zIndex: 3
+                              }}></div>
+                            )}
+
+                            {/* Cyan Icon Pill Badge */}
+                            <div style={{
+                              width: '46px',
+                              height: '46px',
+                              borderRadius: '12px',
+                              background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
+                              color: '#ffffff',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              marginBottom: '16px',
+                              boxShadow: 'none'
+                            }}>
+                              {card.iconUrl ? (
+                                <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+                              ) : (
+                                defaultIcons[(topCards.length + cIdx) % defaultIcons.length]
+                              )}
+                            </div>
+                            <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px' }}>
+                              {card.title}
+                            </h3>
+                            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                              {card.desc}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Mobile Slider View */}
+                  <WhyChooseUsMobileSlider
+                    items={cards}
+                    renderIcon={(item, idx) =>
+                      item.iconUrl ? (
+                        <img src={item.iconUrl} alt="" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+                      ) : (
+                        defaultIcons[idx % defaultIcons.length]
+                      )
+                    }
+                  />
+                </>
               );
             })()}
           </div>

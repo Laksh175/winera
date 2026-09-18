@@ -7,6 +7,7 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import LeadCaptureModal from '../components/LeadCaptureModal';
+import MobileExpandableText from '../components/MobileExpandableText';
 import trampolineParkBg from '../assets/trampoline-park-hero-bg.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
@@ -22,6 +23,7 @@ import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.webp';
 import downloadButtonImg from '../assets/download-button.png';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
 import ctaBtn3 from '../assets/cta-button-3.png';
+import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 
 const getValidImageUrl = (url, fallback) => {
@@ -382,17 +384,69 @@ export default function TrampolinePark({ siteData }) {
               </h2>
 
               {/* 4-Row Wide Paragraph Text */}
-              <p style={{
-                fontSize: '15px',
-                color: '#475569',
-                lineHeight: 1.65,
-                fontWeight: '500',
-                margin: '0 auto',
-                maxWidth: '1200px',
-                textAlign: 'center'
-              }}>
-                {siteData?.trampolineCustom?.paragraph || "At Winera International, we specialize in creating custom-built trampoline parks tailored to your space, budget, and activity preferences. As a leading trampoline manufacturer in India we ensure top-quality design, safety, and durability in every project. Whether you're envisioning a compact jump zone or a large-scale interactive entertainment center, we are the trampoline park manufacturer that delivers complete turnkey solutions to bring your vision to life. We have been designing and supplying commercial trampoline parks for malls, hotels, schools, resorts, and family entertainment centres since 2014."}
-              </p>
+              {(() => {
+                const fullText = siteData?.trampolineCustom?.paragraph || "At Winera International, we specialize in creating custom-built trampoline parks tailored to your space, budget, and activity preferences. As a leading trampoline manufacturer in India we ensure top-quality design, safety, and durability in every project. Whether you're envisioning a compact jump zone or a large-scale interactive entertainment center, we are the trampoline park manufacturer that delivers complete turnkey solutions to bring your vision to life. We have been designing and supplying commercial trampoline parks for malls, hotels, schools, resorts, and family entertainment centres since 2014.";
+
+                const splitIndex = fullText.indexOf("Whether you're");
+                let p1 = fullText;
+                let p2 = "";
+                if (splitIndex !== -1) {
+                  p1 = fullText.substring(0, splitIndex).trim();
+                  p2 = fullText.substring(splitIndex).trim();
+                } else {
+                  const sentences = fullText.split('. ');
+                  if (sentences.length >= 3) {
+                    p1 = sentences.slice(0, 2).join('. ') + '.';
+                    p2 = sentences.slice(2).join('. ');
+                  }
+                }
+
+                if (p2) {
+                  return (
+                    <MobileExpandableText
+                      preview={
+                        <p style={{
+                          fontSize: '15px',
+                          color: '#475569',
+                          lineHeight: 1.65,
+                          fontWeight: '500',
+                          margin: '0 auto',
+                          maxWidth: '1200px',
+                          textAlign: 'center'
+                        }}>
+                          {p1}
+                        </p>
+                      }
+                      expandedContent={
+                        <p style={{
+                          fontSize: '15px',
+                          color: '#475569',
+                          lineHeight: 1.65,
+                          fontWeight: '500',
+                          margin: '10px auto 0',
+                          maxWidth: '1200px',
+                          textAlign: 'center'
+                        }}>
+                          {p2}
+                        </p>
+                      }
+                    />
+                  );
+                }
+                return (
+                  <p style={{
+                    fontSize: '15px',
+                    color: '#475569',
+                    lineHeight: 1.65,
+                    fontWeight: '500',
+                    margin: '0 auto',
+                    maxWidth: '1200px',
+                    textAlign: 'center'
+                  }}>
+                    {fullText}
+                  </p>
+                );
+              })()}
             </div>
 
             {/* Right Side Compact Mascot Panda Image */}
@@ -808,13 +862,18 @@ export default function TrampolinePark({ siteData }) {
             
             {/* Left Column: Text Copy & CTA Button */}
             <div style={{ textAlign: 'left' }}>
-              <p style={{ fontSize: '15.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 0 20px 0', textAlign: 'justify' }}>
-                As <strong style={{ color: '#0f172a', fontWeight: '700 !' }}>India's ROI-First Game Zone Developer</strong>, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact <strong style={{ color: '#0f172a', fontWeight: '700' }}>trampoline park setup cost</strong>, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline. Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average.
-              </p>
-
-              <p style={{ fontSize: '15.5px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 0 32px 0', textAlign: 'justify' }}>
-                {siteData?.trampolineRoi?.paragraph2 || "Very few indoor trampoline park suppliers in India include this as a standard part of their process. For Winera, the ROI report is not an add-on, it is how every project starts."}
-              </p>
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 14px 0', textAlign: 'justify' }}>
+                    As India's ROI-First Game Zone Developer, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact trampoline park setup cost, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline. Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average.
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 20px 0', textAlign: 'justify' }}>
+                    {siteData?.trampolineRoi?.paragraph2 || "Very few indoor trampoline park suppliers in India include this as a standard part of their process. For Winera, the ROI report is not an add-on, it is how every project starts."}
+                  </p>
+                }
+              />
 
               {(() => {
                   const baseLink = siteData?.trampolineRoi?.buttonLink || "https://wa.me/919428989488";
@@ -923,72 +982,17 @@ export default function TrampolinePark({ siteData }) {
             const bottomRow = itemsList.slice(3);
 
             return (
-              <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-                {/* Top Row */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: `repeat(${topRow.length || 1}, 1fr)`,
-                  gap: '0px',
-                  position: 'relative'
-                }} className="winera-why-top-grid">
-                  {topRow.map((item, idx) => (
-                    <div key={idx} style={{ padding: '20px 30px 30px', textAlign: 'center', position: 'relative' }}>
-                      <div style={{
-                        width: '50px',
-                        height: '50px',
-                        borderRadius: '14px',
-                        background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                        boxShadow: 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        margin: '0 auto 16px'
-                      }}>
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                      </div>
-                      <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
-                        {item.title}
-                      </h3>
-                      <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
-                        {item.desc}
-                      </p>
-                      {idx < topRow.length - 1 && (
-                        <div className="winera-v-line" style={{
-                          position: 'absolute',
-                          right: 0,
-                          top: 0,
-                          bottom: 0,
-                          width: '1.5px',
-                          background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, rgba(56, 189, 248, 0.65) 100%)'
-                        }} />
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Horizontal Separator */}
-                {bottomRow.length > 0 && (
-                  <div style={{
-                    height: '1.5px',
-                    background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.05) 0%, rgba(56, 189, 248, 0.65) 50%, rgba(56, 189, 248, 0.05) 100%)',
-                    margin: '0'
-                  }} />
-                )}
-
-                {/* Bottom Row */}
-                {bottomRow.length > 0 && (
+              <>
+                <div className="winera-trampoline-why-desktop-container" style={{ maxWidth: '1080px', margin: '0 auto' }}>
+                  {/* Top Row */}
                   <div style={{
                     display: 'grid',
-                    gridTemplateColumns: `repeat(${bottomRow.length}, 1fr)`,
+                    gridTemplateColumns: `repeat(${topRow.length || 1}, 1fr)`,
                     gap: '0px',
-                    maxWidth: bottomRow.length === 2 ? '780px' : '1080px',
-                    margin: '0 auto',
                     position: 'relative'
-                  }} className="winera-why-bottom-grid">
-                    {bottomRow.map((item, idx) => (
-                      <div key={idx} style={{ padding: '30px 30px 20px', textAlign: 'center', position: 'relative' }}>
+                  }} className="winera-why-top-grid">
+                    {topRow.map((item, idx) => (
+                      <div key={idx} style={{ padding: '20px 30px 30px', textAlign: 'center', position: 'relative' }}>
                         <div style={{
                           width: '50px',
                           height: '50px',
@@ -1001,9 +1005,7 @@ export default function TrampolinePark({ siteData }) {
                           margin: '0 auto 16px'
                         }}>
                           <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                            <line x1="8" y1="21" x2="16" y2="21"/>
-                            <line x1="12" y1="17" x2="12" y2="21"/>
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                           </svg>
                         </div>
                         <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
@@ -1012,21 +1014,98 @@ export default function TrampolinePark({ siteData }) {
                         <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
                           {item.desc}
                         </p>
-                        {idx < bottomRow.length - 1 && (
+                        {idx < topRow.length - 1 && (
                           <div className="winera-v-line" style={{
                             position: 'absolute',
                             right: 0,
                             top: 0,
                             bottom: 0,
                             width: '1.5px',
-                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.65) 0%, rgba(56, 189, 248, 0.05) 100%)'
+                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, rgba(56, 189, 248, 0.65) 100%)'
                           }} />
                         )}
                       </div>
                     ))}
                   </div>
-                )}
-              </div>
+
+                  {/* Horizontal Separator */}
+                  {bottomRow.length > 0 && (
+                    <div style={{
+                      height: '1.5px',
+                      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.05) 0%, rgba(56, 189, 248, 0.65) 50%, rgba(56, 189, 248, 0.05) 100%)',
+                      margin: '0'
+                    }} />
+                  )}
+
+                  {/* Bottom Row */}
+                  {bottomRow.length > 0 && (
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: `repeat(${bottomRow.length}, 1fr)`,
+                      gap: '0px',
+                      maxWidth: bottomRow.length === 2 ? '780px' : '1080px',
+                      margin: '0 auto',
+                      position: 'relative'
+                    }} className="winera-why-bottom-grid">
+                      {bottomRow.map((item, idx) => (
+                        <div key={idx} style={{ padding: '30px 30px 20px', textAlign: 'center', position: 'relative' }}>
+                          <div style={{
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '14px',
+                            background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
+                            boxShadow: 'none',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: '0 auto 16px'
+                          }}>
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                              <line x1="8" y1="21" x2="16" y2="21"/>
+                              <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                          </div>
+                          <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                            {item.title}
+                          </h3>
+                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
+                            {item.desc}
+                          </p>
+                          {idx < bottomRow.length - 1 && (
+                            <div className="winera-v-line" style={{
+                              position: 'absolute',
+                              right: 0,
+                              top: 0,
+                              bottom: 0,
+                              width: '1.5px',
+                              background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.65) 0%, rgba(56, 189, 248, 0.05) 100%)'
+                            }} />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Mobile Slider View */}
+                <WhyChooseUsMobileSlider
+                  items={itemsList}
+                  renderIcon={(item, idx) =>
+                    idx < 3 ? (
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                      </svg>
+                    )
+                  }
+                />
+              </>
             );
           })()}
         </div>

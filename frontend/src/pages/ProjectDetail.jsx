@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
+import MobileExpandableText from '../components/MobileExpandableText';
 import projectBanner from '../assets/project-hero-bg.webp';
 import projectImage01 from '../assets/project-image01.webp';
 import projectImage2Bg from '../assets/project-image2-bg.webp';
@@ -392,11 +393,11 @@ export default function ProjectDetail({ siteData }) {
             </h2>
 
             <p style={{
-              fontSize: '18px',
+              fontSize: '15px',
               color: '#475569',
-              lineHeight: 1.55,
-              fontWeight: '400',
-              marginBottom: '12px',
+              lineHeight: 1.65,
+              fontWeight: '500',
+              marginBottom: '16px',
               maxWidth: '700px'
             }}>
               {description}
@@ -548,12 +549,24 @@ export default function ProjectDetail({ siteData }) {
           alignItems: 'center'
         }}>
           <div className="winera-project-client-text">
-            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '16px' }}>
-              {clientP1}
-            </p>
-            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, fontWeight: '400', margin: 0 }}>
-              {clientP2}
-            </p>
+            {clientP2 ? (
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}>
+                    {clientP1}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                    {clientP2}
+                  </p>
+                }
+              />
+            ) : (
+              <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                {clientP1}
+              </p>
+            )}
           </div>
 
           <div className="winera-project-client-img" style={{ display: 'flex', justifyContent: 'flex-start', padding: '16px 20px 16px 0' }}>
@@ -637,12 +650,24 @@ export default function ProjectDetail({ siteData }) {
           </div>
 
           <div className="winera-project-solution-text">
-            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, fontWeight: '400', marginBottom: '16px' }}>
-              {solutionP1}
-            </p>
-            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, fontWeight: '400', margin: 0 }}>
-              {solutionP2}
-            </p>
+            {solutionP2 ? (
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}>
+                    {solutionP1}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                    {solutionP2}
+                  </p>
+                }
+              />
+            ) : (
+              <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                {solutionP1}
+              </p>
+            )}
           </div>
         </div>
       </section>

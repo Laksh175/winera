@@ -6,6 +6,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
+import MobileExpandableText from '../components/MobileExpandableText';
 import { ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity } from 'lucide-react';
 
 import vrHeroBg from '../assets/vrgame-hero-bg.webp';
@@ -39,6 +40,7 @@ import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
 import vrgameCtaBg from '../assets/vrgame-cta-bg.webp';
 import vrCtaRightImg from '../assets/vr-cta-right-img.webp';
 import amusementParkCtaBg from '../assets/cta-consultations-banner.webp';
+import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -382,19 +384,27 @@ export default function VrGames({ siteData }) {
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '5px', width: '100%', maxWidth: '100%' }}>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {siteData?.vrMatchedVenue?.p1 || "Winera International Pvt. Ltd. is a trusted VR gaming machine supplier in India sourcing and servicing commercial virtual reality machines end-to-end across India."}
-              </p>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {siteData?.vrMatchedVenue?.p2 || "With over 15 years of industry expertise, we source every VR gaming machine from established global manufacturers and configure it with the right game library, payment system, and safety setup to match your venue's requirements."}
-              </p>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {siteData?.vrMatchedVenue?.p3 || "Before delivery, each unit goes through a commercial-grade durability check — built for high-footfall environments like malls, hotels, and family entertainment centres."}
-              </p>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {siteData?.vrMatchedVenue?.p4 || "From sourcing to installation and after-sales support, our own team manages the entire process."}
-              </p>
+            <div style={{ marginBottom: '14px', width: '100%', maxWidth: '100%' }}>
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 8px 0' }}>
+                    {siteData?.vrMatchedVenue?.p1 || "Winera International Pvt. Ltd. is a trusted VR gaming machine supplier in India sourcing and servicing commercial virtual reality machines end-to-end across India."}
+                  </p>
+                }
+                expandedContent={
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '8px' }}>
+                    <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                      {siteData?.vrMatchedVenue?.p2 || "With over 15 years of industry expertise, we source every VR gaming machine from established global manufacturers and configure it with the right game library, payment system, and safety setup to match your venue's requirements."}
+                    </p>
+                    <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                      {siteData?.vrMatchedVenue?.p3 || "Before delivery, each unit goes through a commercial-grade durability check — built for high-footfall environments like malls, hotels, and family entertainment centres."}
+                    </p>
+                    <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                      {siteData?.vrMatchedVenue?.p4 || "From sourcing to installation and after-sales support, our own team manages the entire process."}
+                    </p>
+                  </div>
+                }
+              />
             </div>
 
             <div className="winera-cyan-cta-wrapper">
@@ -747,13 +757,19 @@ export default function VrGames({ siteData }) {
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px', width: '100%', maxWidth: '100%' }}>
-              <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
-                {siteData?.vrEarn?.p1 || "Most VR machine suppliers in India quote a price and leave the financial decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any order, our team prepares a complete ROI report for your specific venue covering machine cost, projected daily sessions, estimated revenue per player, maintenance costs, and break-even timeline."}
-              </p>
-              <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
-                {siteData?.vrEarn?.p2 || "Every figure is calculated around your venue type, footfall, and machine selection, not an industry average pulled from a brochure. Very few VR gaming suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
-              </p>
+            <div style={{ marginBottom: '16px', width: '100%', maxWidth: '100%' }}>
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: '0 0 6px 0' }}>
+                    {siteData?.vrEarn?.p1 || "Most VR machine suppliers in India quote a price and leave the financial decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any order, our team prepares a complete ROI report for your specific venue covering machine cost, projected daily sessions, estimated revenue per player, maintenance costs, and break-even timeline."}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: '6px 0 0 0' }}>
+                    {siteData?.vrEarn?.p2 || "Every figure is calculated around your venue type, footfall, and machine selection, not an industry average pulled from a brochure. Very few VR gaming suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
+                  </p>
+                }
+              />
             </div>
 
             {/* Get Quote Button matching Image 1 1:1 */}
@@ -876,99 +892,22 @@ export default function VrGames({ siteData }) {
               const bottomCards = cards.slice(topCount);
 
               return (
-                <div style={{ position: 'relative' }}>
-                  {/* TOP ROW */}
-                  <div className="winera-vr-whyus-row winera-vr-whyus-top-row" style={{
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
-                    gap: '0px',
-                    position: 'relative',
-                    zIndex: 2
-                  }}>
-                    {topCards.map((card, cIdx) => (
-                      <div
-                        key={cIdx}
-                        className="winera-vr-whyus-card"
-                        style={{
-                          padding: '0 35px 30px',
-                          textAlign: 'center',
-                          position: 'relative',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center'
-                        }}
-                      >
-                        {/* Vertical Shade/Gradient Divider Line for Top Row */}
-                        {cIdx < topCards.length - 1 && (
-                          <div className="winera-vr-whyus-vertical-divider" style={{
-                            position: 'absolute',
-                            right: 0,
-                            top: '20px',
-                            bottom: 0,
-                            width: '2px',
-                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
-                            zIndex: 3
-                          }}></div>
-                        )}
-
-                        {/* Cyan Icon Box */}
-                        <div style={{
-                          width: '48px',
-                          height: '48px',
-                          borderRadius: '14px',
-                          background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                          color: '#ffffff',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          marginBottom: '16px',
-                          boxShadow: 'none'
-                        }}>
-                          {card.iconUrl ? (
-                            <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
-                          ) : (
-                            iconsList[cIdx % iconsList.length]
-                          )}
-                        </div>
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
-                          {card.title}
-                        </h4>
-                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                          {card.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Horizontal Center Cyan Divider Line with Shade Fading */}
-                  {bottomCards.length > 0 && (
-                    <div className="winera-vr-whyus-horizontal-divider" style={{
-                      width: '100%',
-                      height: '2px',
-                      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
-                      position: 'relative',
-                      zIndex: 3,
-                      margin: '0 0 30px'
-                    }}></div>
-                  )}
-
-                  {/* BOTTOM ROW (CENTERED ODD/EVEN REMAINDER) */}
-                  {bottomCards.length > 0 && (
-                    <div className="winera-vr-whyus-row winera-vr-whyus-bottom-row" style={{
+                <>
+                  <div className="winera-vr-whyus-desktop-container" style={{ position: 'relative' }}>
+                    {/* TOP ROW */}
+                    <div className="winera-vr-whyus-row winera-vr-whyus-top-row" style={{
                       display: 'grid',
-                      gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
-                      maxWidth: bottomCards.length === 2 ? '780px' : '100%',
-                      margin: '0 auto',
+                      gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
                       gap: '0px',
                       position: 'relative',
                       zIndex: 2
                     }}>
-                      {bottomCards.map((card, bIdx) => (
+                      {topCards.map((card, cIdx) => (
                         <div
-                          key={bIdx}
+                          key={cIdx}
                           className="winera-vr-whyus-card"
                           style={{
-                            padding: '0 35px',
+                            padding: '0 35px 30px',
                             textAlign: 'center',
                             position: 'relative',
                             display: 'flex',
@@ -976,15 +915,15 @@ export default function VrGames({ siteData }) {
                             alignItems: 'center'
                           }}
                         >
-                          {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
-                          {bIdx < bottomCards.length - 1 && (
+                          {/* Vertical Shade/Gradient Divider Line for Top Row */}
+                          {cIdx < topCards.length - 1 && (
                             <div className="winera-vr-whyus-vertical-divider" style={{
                               position: 'absolute',
                               right: 0,
-                              top: '-30px',
-                              bottom: '20px',
+                              top: '20px',
+                              bottom: 0,
                               width: '2px',
-                              background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                              background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
                               zIndex: 3
                             }}></div>
                           )}
@@ -1005,7 +944,7 @@ export default function VrGames({ siteData }) {
                             {card.iconUrl ? (
                               <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
                             ) : (
-                              iconsList[(topCards.length + bIdx) % iconsList.length]
+                              iconsList[cIdx % iconsList.length]
                             )}
                           </div>
                           <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
@@ -1017,8 +956,99 @@ export default function VrGames({ siteData }) {
                         </div>
                       ))}
                     </div>
-                  )}
-                </div>
+
+                    {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-vr-whyus-horizontal-divider" style={{
+                        width: '100%',
+                        height: '2px',
+                        background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                        position: 'relative',
+                        zIndex: 3,
+                        margin: '0 0 30px'
+                      }}></div>
+                    )}
+
+                    {/* BOTTOM ROW (CENTERED ODD/EVEN REMAINDER) */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-vr-whyus-row winera-vr-whyus-bottom-row" style={{
+                        display: 'grid',
+                        gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
+                        maxWidth: bottomCards.length === 2 ? '780px' : '100%',
+                        margin: '0 auto',
+                        gap: '0px',
+                        position: 'relative',
+                        zIndex: 2
+                      }}>
+                        {bottomCards.map((card, bIdx) => (
+                          <div
+                            key={bIdx}
+                            className="winera-vr-whyus-card"
+                            style={{
+                              padding: '0 35px',
+                              textAlign: 'center',
+                              position: 'relative',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center'
+                            }}
+                          >
+                            {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
+                            {bIdx < bottomCards.length - 1 && (
+                              <div className="winera-vr-whyus-vertical-divider" style={{
+                                position: 'absolute',
+                                right: 0,
+                                top: '-30px',
+                                bottom: '20px',
+                                width: '2px',
+                                background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                                zIndex: 3
+                              }}></div>
+                            )}
+
+                            {/* Cyan Icon Box */}
+                            <div style={{
+                              width: '48px',
+                              height: '48px',
+                              borderRadius: '14px',
+                              background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
+                              color: '#ffffff',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              marginBottom: '16px',
+                              boxShadow: 'none'
+                            }}>
+                              {card.iconUrl ? (
+                                <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+                              ) : (
+                                iconsList[(topCards.length + bIdx) % iconsList.length]
+                              )}
+                            </div>
+                            <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                              {card.title}
+                            </h4>
+                            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                              {card.desc}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Mobile Slider View */}
+                  <WhyChooseUsMobileSlider
+                    items={cards}
+                    renderIcon={(item, idx) =>
+                      item.iconUrl ? (
+                        <img src={item.iconUrl} alt="" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+                      ) : (
+                        iconsList[idx % iconsList.length]
+                      )
+                    }
+                  />
+                </>
               );
             })()}
           </div>

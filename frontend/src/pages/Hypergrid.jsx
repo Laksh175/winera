@@ -7,6 +7,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
+import MobileExpandableText from '../components/MobileExpandableText';
 import hypergridHeroBg from '../assets/hypergrid-hero-bg.webp';
 import hypergridSupplierCollage from '../assets/hypergrid-supplier-collage.webp';
 import hypergridBannerImg from '../assets/hypergrid-banner-img.webp';
@@ -23,6 +24,7 @@ import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import downloadButtonImg from '../assets/download-button.png';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
 import homePageIcon from '../assets/home-page-icon.png';
+import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 const defaultHypergridWhyWineraItems = [
   {
@@ -304,37 +306,41 @@ export default function Hypergrid({ siteData }) {
               </h2>
             </div>
 
-            {/* Paragraph 1 */}
-            <p style={{ fontSize: '14px', color: 'rgba(45, 45, 45, 1)', lineHeight: 1.65, fontWeight: 400, marginBottom: '20px', maxWidth: '905px' }}>
-              {siteData?.hypergridBanner?.paragraph1 ? (
-                typeof siteData.hypergridBanner.paragraph1 === 'string'
-                  ? siteData.hypergridBanner.paragraph1.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                      <React.Fragment key={lIdx}>
-                        {lIdx > 0 && <br />}
-                        {line}
-                      </React.Fragment>
-                    ))
-                  : siteData.hypergridBanner.paragraph1
-              ) : (
-                "Winera International is a trusted Hypergrid game supplier in India, sourcing and installing commercial Hypergrid interactive LED floor systems for malls, family entertainment centres, hotels, schools, trampoline parks, and bowling alleys since 2014. Every Hypergrid unit we supply is sourced from established global manufacturers — configured specifically for sustained daily commercial use in high-footfall Indian venues."
-              )}
-            </p>
-
-            {/* Paragraph 2 */}
-            <p style={{ fontSize: '14px', color: 'rgba(45, 45, 45, 1)', lineHeight: 1.65, fontWeight: 400, margin: 0, maxWidth: '905px' }}>
-              {siteData?.hypergridBanner?.paragraph2 ? (
-                typeof siteData.hypergridBanner.paragraph2 === 'string'
-                  ? siteData.hypergridBanner.paragraph2.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                      <React.Fragment key={lIdx}>
-                        {lIdx > 0 && <br />}
-                        {line}
-                      </React.Fragment>
-                    ))
-                  : siteData.hypergridBanner.paragraph2
-              ) : (
-                "As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order to opening day."
-              )}
-            </p>
+            {/* Paragraphs with Mobile Expandable Text */}
+            <MobileExpandableText
+              preview={
+                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '20px', maxWidth: '905px' }}>
+                  {siteData?.hypergridBanner?.paragraph1 ? (
+                    typeof siteData.hypergridBanner.paragraph1 === 'string'
+                      ? siteData.hypergridBanner.paragraph1.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                          <React.Fragment key={lIdx}>
+                            {lIdx > 0 && <br />}
+                            {line}
+                          </React.Fragment>
+                        ))
+                      : siteData.hypergridBanner.paragraph1
+                  ) : (
+                    "Winera International is a trusted Hypergrid game supplier in India, sourcing and installing commercial Hypergrid interactive LED floor systems for malls, family entertainment centres, hotels, schools, trampoline parks, and bowling alleys since 2014. Every Hypergrid unit we supply is sourced from established global manufacturers — configured specifically for sustained daily commercial use in high-footfall Indian venues."
+                  )}
+                </p>
+              }
+              expandedContent={
+                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, maxWidth: '905px' }}>
+                  {siteData?.hypergridBanner?.paragraph2 ? (
+                    typeof siteData.hypergridBanner.paragraph2 === 'string'
+                      ? siteData.hypergridBanner.paragraph2.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                          <React.Fragment key={lIdx}>
+                            {lIdx > 0 && <br />}
+                            {line}
+                          </React.Fragment>
+                        ))
+                      : siteData.hypergridBanner.paragraph2
+                  ) : (
+                    "As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order to opening day."
+                  )}
+                </p>
+              }
+            />
           </div>
 
           {/* Right Collage Graphic Column */}
@@ -575,15 +581,19 @@ export default function Hypergrid({ siteData }) {
           }}>
             {/* Left Text Content Column */}
             <div className="winera-hypergrid-roi-text">
-              {/* Paragraph 1 */}
-              <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '22px', maxWidth: '620px', textAlign: 'justify' }}>
-                {siteData?.hypergridRoi?.paragraph1 || "Most interactive LED floor game suppliers quote a unit price and leave the business decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any Hypergrid order, our team prepares a complete ROI report for your specific venue \u2014 covering equipment cost, projected daily sessions, estimated revenue per session, maintenance costs, and break-even timeline."}
-              </p>
-
-              {/* Paragraph 2 */}
-              <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '620px', textAlign: 'justify' }}>
-                {siteData?.hypergridRoi?.paragraph2 || "Every figure is calculated around your venue type, daily footfall, and target visitor demographic \u2014 not an industry average. Very few Hypergrid game suppliers in India include this as a standard part of their process. For Winera, it is where every project starts."}
-              </p>
+              {/* Paragraphs with Mobile Expandable Text */}
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '22px', maxWidth: '620px', textAlign: 'justify' }}>
+                    {siteData?.hypergridRoi?.paragraph1 || "Most interactive LED floor game suppliers quote a unit price and leave the business decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any Hypergrid order, our team prepares a complete ROI report for your specific venue \u2014 covering equipment cost, projected daily sessions, estimated revenue per session, maintenance costs, and break-even timeline."}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '620px', textAlign: 'justify' }}>
+                    {siteData?.hypergridRoi?.paragraph2 || "Every figure is calculated around your venue type, daily footfall, and target visitor demographic \u2014 not an industry average. Very few Hypergrid game suppliers in India include this as a standard part of their process. For Winera, it is where every project starts."}
+                  </p>
+                }
+              />
 
               {(() => {
                 const baseLink = siteData?.hypergridRoi?.buttonLink || "https://wa.me/919428989488";
@@ -674,7 +684,7 @@ export default function Hypergrid({ siteData }) {
           </div>
 
           {/* 3x2 Grid Container matching screenshot 1:1 */}
-          <div className="winera-hypergrid-whywinera-container" style={{
+          <div className="winera-hypergrid-whywinera-container winera-hypergrid-whywinera-desktop-container" style={{
             position: 'relative',
             maxWidth: '1100px',
             margin: '0 auto'
@@ -826,6 +836,25 @@ export default function Hypergrid({ siteData }) {
               );
             })()}
           </div>
+
+          {/* Mobile Slider View */}
+          {(() => {
+            const cards = Array.isArray(siteData?.hypergridWhyWinera?.items) && siteData.hypergridWhyWinera.items.length > 0
+              ? siteData.hypergridWhyWinera.items
+              : defaultHypergridWhyWineraItems;
+            return (
+              <WhyChooseUsMobileSlider
+                items={cards}
+                renderIcon={(item, idx) =>
+                  item.iconUrl ? (
+                    <img src={item.iconUrl} alt="" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+                  ) : (
+                    renderWhyWineraIcon(item.icon, idx)
+                  )
+                }
+              />
+            );
+          })()}
         </div>
       </section>
 

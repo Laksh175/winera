@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import MotionCardFlip from '../components/MotionCardFlip';
 import CountUpNumber from '../components/CountUpNumber';
 import SectionHeading from '../components/SectionHeading';
+import MobileExpandableText from '../components/MobileExpandableText';
 import CtaBanner from '../components/CtaBanner';
 import aboutHeroBg from '../assets/about-us-banner.webp';
 import about1 from '../assets/about-01.webp';
@@ -238,7 +239,7 @@ export default function AboutUs({ siteData }) {
               })()}
             </SectionHeading>
 
-            <p style={{ color: '#64748b', fontSize: '13px', lineHeight: 1.65, fontWeight: '500', marginBottom: '24px', maxWidth: '100%' }}>
+            <p style={{ color: '#475569', fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '24px', maxWidth: '100%' }}>
               {siteData?.aboutWelcome?.desc || "Winera International Pvt. Ltd. is a Surat-based B2B leader in indoor amusement and playground solutions. Since 2014, we have been transforming commercial spaces into world-class entertainment destinations, handling everything from design and manufacturing to installation and after-sales support."}
             </p>
 
@@ -368,7 +369,7 @@ export default function AboutUs({ siteData }) {
                 <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
                   <Target style={{ width: '22px', height: '22px', color: '#0284c7' }} />
                 </div>
-                <p style={{ fontSize: '0.94rem', fontWeight: '500', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.65, margin: 0 }}>
+                <p style={{ fontSize: '15px', fontWeight: '500', color: '#475569', lineHeight: 1.65, margin: 0 }}>
                   {siteData?.aboutMissionVision?.missionText || "We deliver premium-quality game zone and indoor playground solutions to B2B clients across India combining expert design, international equipment, and seamless project execution to create entertainment spaces that last."}
                 </p>
               </div>
@@ -405,7 +406,7 @@ export default function AboutUs({ siteData }) {
                 <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
                   <Eye style={{ width: '22px', height: '22px', color: '#854d0e' }} />
                 </div>
-                <p style={{ fontSize: '0.94rem', fontWeight: '500', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.65, margin: 0 }}>
+                <p style={{ fontSize: '15px', fontWeight: '500', color: '#475569', lineHeight: 1.65, margin: 0 }}>
                   {siteData?.aboutMissionVision?.visionText || "To be India's most trusted partner in building world-class indoor entertainment destinations where every space we touch becomes a thriving hub of joy, play, and business success."}
                 </p>
               </div>
@@ -720,29 +721,29 @@ export default function AboutUs({ siteData }) {
                 });
               })()}
             </SectionHeading>
-            <h3 style={{ fontSize: '1.8rem', fontWeight: '500', color: '#0f172a', marginBottom: '16px' }}>{siteData?.founder?.name || 'Mr. Unnit Jogani'}</h3>
+            <h3 style={{ fontSize: '24px', fontWeight: '700', color: '#0f172a', marginBottom: '14px', lineHeight: 1.3 }}>{siteData?.founder?.name || 'Mr. Unnit Jogani'}</h3>
 
-            <div style={{ color: 'rgb(55, 62, 65)', fontSize: '17px', lineHeight: '28px', fontWeight: '400', letterSpacing: '0px', marginBottom: '15px', whiteSpace: 'pre-line' }}>
+            <div style={{ color: '#475569', fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '15px' }}>
               {(() => {
                 const defaultBio = "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.";
                 let rawText = siteData?.founder?.aboutDetails || defaultBio;
-                const targetPhrase = "game zone equipment manufacturers and indoor amusement park solution providers.";
+                const cleanText = rawText.replace(/\*/g, '');
+                const paragraphs = cleanText.split(/\n\s*\n/).filter(p => p.trim() !== '');
 
-                if (rawText.includes(targetPhrase) && !rawText.includes(`*${targetPhrase}*`)) {
-                  rawText = rawText.replace(targetPhrase, `*${targetPhrase}*`);
+                if (paragraphs.length > 1) {
+                  return (
+                    <MobileExpandableText
+                      preview={<p style={{ margin: '0 0 14px 0', fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500' }}>{paragraphs[0]}</p>}
+                      expandedContent={
+                        paragraphs.slice(1).map((para, pIdx) => (
+                          <p key={pIdx} style={{ margin: '0 0 14px 0', fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500' }}>{para}</p>
+                        ))
+                      }
+                    />
+                  );
                 }
 
-                const parts = rawText.split(/\*{1,2}(.*?)\*{1,2}/g);
-                return parts.map((part, index) => {
-                  if (index % 2 === 1) {
-                    return (
-                      <strong key={index} style={{ fontWeight: '600', color: 'rgba(55, 62, 65, 1)' }}>
-                        {part}
-                      </strong>
-                    );
-                  }
-                  return part;
-                });
+                return <p style={{ margin: 0, fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500' }}>{cleanText}</p>;
               })()}
             </div>
 

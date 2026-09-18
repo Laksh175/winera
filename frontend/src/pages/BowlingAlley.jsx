@@ -7,6 +7,7 @@ import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import CtaBanner from '../components/CtaBanner';
 import RelatedProductsSection from '../components/RelatedProductsSection';
+import MobileExpandableText from '../components/MobileExpandableText';
 
 import wineraLogo from '../assets/logo.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
@@ -400,12 +401,18 @@ export default function BowlingAlley({ siteData }) {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px' }}>
             {/* Left/Center Text Content Block */}
             <div className="winera-bowling-premium-text" style={{ flex: '1 1 800px', color: '#475569', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', textAlign: 'center' }}>
-              <p style={{ marginBottom: '22px', maxWidth: '1024px', margin: '0 auto 22px' }}>
-                {siteData?.bowlingManufacturer?.p1 || "At Winera International Pvt. Ltd., we are proud to be India's leading bowling alley manufacturer and supplier of refurbished Brunswick bowling equipment. With over 15 years of expertise in the industry, we have built a reputation for delivering top-quality bowling alley equipment and exceptional customer service, tailored to fit the unique needs and budgets of our clients."}
-              </p>
-              <p style={{ maxWidth: '1024px', margin: '0 auto' }}>
-                {siteData?.bowlingManufacturer?.p2 || "We specialize in providing refurbished Brunswick GS98 & GSX equipment, enhanced with the latest Frameworx or Vector Scoring Systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience."}
-              </p>
+              <MobileExpandableText
+                preview={
+                  <p style={{ maxWidth: '1024px', margin: '0 auto 10px' }}>
+                    {siteData?.bowlingManufacturer?.p1 || "At Winera International Pvt. Ltd., we are proud to be India's leading bowling alley manufacturer and supplier of refurbished Brunswick bowling equipment. With over 15 years of expertise in the industry, we have built a reputation for delivering top-quality bowling alley equipment and exceptional customer service, tailored to fit the unique needs and budgets of our clients."}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ maxWidth: '1024px', margin: '10px auto 0' }}>
+                    {siteData?.bowlingManufacturer?.p2 || "We specialize in providing refurbished Brunswick GS98 & GSX equipment, enhanced with the latest Frameworx or Vector Scoring Systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience."}
+                  </p>
+                }
+              />
             </div>
 
             {/* Right Side: Exploding Bowling Pins & Ball Graphic fully visible */}
@@ -462,12 +469,18 @@ export default function BowlingAlley({ siteData }) {
                 </h2>
               </div>
 
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}>
-                {siteData?.bowlingFreeFall?.p1 || "Free-fall bowling is the traditional game you'll find in professional bowling centers worldwide. When the ball hits the pins, they fall freely and naturally, and a pinsetter machine clears and resets them for the next throw. It delivers the true feel of real bowling, the satisfying strike and the competition-grade experience serious players expect."}
-              </p>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '24px', textAlign: 'justify' }}>
-                {siteData?.bowlingFreeFall?.p2 || "We specialise in refurbished Brunswick GS98 and GS-X equipment, restored to perform like new and enhanced with the latest Frameworx or Vector scoring systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience. It's the ideal choice for dedicated bowling centers and premium venues where bowling is the main attraction."}
-              </p>
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}>
+                    {siteData?.bowlingFreeFall?.p1 || "Free-fall bowling is the traditional game you'll find in professional bowling centers worldwide. When the ball hits the pins, they fall freely and naturally, and a pinsetter machine clears and resets them for the next throw. It delivers the true feel of real bowling, the satisfying strike and the competition-grade experience serious players expect."}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '24px', textAlign: 'justify' }}>
+                    {siteData?.bowlingFreeFall?.p2 || "We specialise in refurbished Brunswick GS98 and GS-X equipment, restored to perform like new and enhanced with the latest Frameworx or Vector scoring systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience. It's the ideal choice for dedicated bowling centers and premium venues where bowling is the main attraction."}
+                  </p>
+                }
+              />
 
               <div className="winera-bowling-types-btn-row" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
                 <button
@@ -907,12 +920,18 @@ export default function BowlingAlley({ siteData }) {
                 </h2>
               </div>
 
-              <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}>
-                {siteData?.bowlingString?.p1 || "Add a complete, ready-to-play bowling setup to your venue at a lower upfront cost than a traditional free-fall system. We supply and install full string bowling lanes pins, strings, scoring screens, and commissioning so you get a finished attraction, not just a machine."}
-              </p>
-              <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '7px', textAlign: 'justify' }}>
-                {siteData?.bowlingString?.p2 || "String systems have fewer moving parts, which means quieter lanes, easier maintenance your own team can handle, and a compact footprint that fits where a full 89 ft lane won't. That's why family entertainment centers, malls, resorts, and cafés choose them. Lower to set up, lower to run, and quick to start earning."}
-              </p>
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}>
+                    {siteData?.bowlingString?.p1 || "Add a complete, ready-to-play bowling setup to your venue at a lower upfront cost than a traditional free-fall system. We supply and install full string bowling lanes pins, strings, scoring screens, and commissioning so you get a finished attraction, not just a machine."}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '7px', textAlign: 'justify' }}>
+                    {siteData?.bowlingString?.p2 || "String systems have fewer moving parts, which means quieter lanes, easier maintenance your own team can handle, and a compact footprint that fits where a full 89 ft lane won't. That's why family entertainment centers, malls, resorts, and cafés choose them. Lower to set up, lower to run, and quick to start earning."}
+                  </p>
+                }
+              />
 
               <div style={{ marginBottom: '45px' }}>
                 <a
@@ -995,19 +1014,24 @@ export default function BowlingAlley({ siteData }) {
               </h2>
             </div>
 
-            <p style={{ fontSize: '16px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '10px', width: '109%' }}>
-              {(() => {
-                const p1Text = siteData?.bowlingRoi?.p1;
-                if (!p1Text || p1Text.includes("Add a complete, ready-to-play") || p1Text.includes("string bowling")) {
-                  return "Setting up a bowling center is a significant investment which is why we don't just sell you equipment and walk away. We're India's ROI-First Game Zone Developer. Before you commit to a project, every client receives a complete report covering product costing, maintenance costs, and projected revenue timeline, so your investment decision is based on real numbers, not estimates.";
-                }
-                return p1Text;
-              })()}
-            </p>
-
-            <p style={{ fontSize: '16px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '3px', width: '103%' }}>
-              {siteData?.bowlingRoi?.p2 || "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment."}
-            </p>
+            <MobileExpandableText
+              preview={
+                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '10px', width: '109%' }}>
+                  {(() => {
+                    const p1Text = siteData?.bowlingRoi?.p1;
+                    if (!p1Text || p1Text.includes("Add a complete, ready-to-play") || p1Text.includes("string bowling")) {
+                      return "Setting up a bowling center is a significant investment which is why we don't just sell you equipment and walk away. We're India's ROI-First Game Zone Developer. Before you commit to a project, every client receives a complete report covering product costing, maintenance costs, and projected revenue timeline, so your investment decision is based on real numbers, not estimates.";
+                    }
+                    return p1Text;
+                  })()}
+                </p>
+              }
+              expandedContent={
+                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '3px', width: '103%' }}>
+                  {siteData?.bowlingRoi?.p2 || "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment."}
+                </p>
+              }
+            />
 
             <div>
               {(() => {
@@ -1160,12 +1184,18 @@ export default function BowlingAlley({ siteData }) {
               }}>
                 {renderTitleMarkup(siteData?.bowlingWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
               </h2>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', maxWidth: '780px', margin: '0 auto 14px' }}>
-                {siteData?.bowlingWhyUs?.p1 || "At Winera International, we bring over 15 years of industry experience as a trusted bowling alley manufacturer in India. We are the largest bowling alley supplier in the country, with more than 30 complete setups delivered successfully."}
-              </p>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 auto', maxWidth: '780px' }}>
-                {siteData?.bowlingWhyUs?.p2 || "Our equipment is sourced from the USA/China, ensuring proven quality. We provide affordable refurbished options along with installation, maintenance, and support across India with low failure rates and easy servicing, tailored to your budget and space."}
-              </p>
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', maxWidth: '780px', margin: '0 auto 14px' }}>
+                    {siteData?.bowlingWhyUs?.p1 || "At Winera International, we bring over 15 years of industry experience as a trusted bowling alley manufacturer in India. We are the largest bowling alley supplier in the country, with more than 30 complete setups delivered successfully."}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 auto', maxWidth: '780px' }}>
+                    {siteData?.bowlingWhyUs?.p2 || "Our equipment is sourced from the USA/China, ensuring proven quality. We provide affordable refurbished options along with installation, maintenance, and support across India with low failure rates and easy servicing, tailored to your budget and space."}
+                  </p>
+                }
+              />
             </div>
           </div>
         </div>

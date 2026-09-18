@@ -1,12 +1,11 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useRef, useEffect, useState } from 'react';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
-import WineraImage from './WineraImage';
-import projectImage01 from '../assets/project-image01.webp';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
+import projectImage01 from '../assets/project-image01.webp';
+import clientsBg from '../assets/clients-bg.webp';
 
 const defaultProjects = [
   { name: "Hulaboo", title: "Hulaboo", city: "Surat", location: "Surat", slug: "hulaboo", img: projHulaboo },
@@ -23,20 +22,151 @@ export default function ProjectsMarqueeSection({
   showTopHeader = true,
   subtext = "Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers.",
   projects = defaultProjects,
-  bg = '#F5F5F9',
+  bg = clientsBg,
   buttonText = "View All",
   showBottomButton = false,
-  accentWidth = '40%',
+  accentWidth = '75%',
   accentMaxWidth = '100%',
   accentHeight = '11px',
   accentMarginBottom = '8px',
-  accentAlign = 'center'
+  accentAlign = 'left'
 }) {
   const items = Array.isArray(projects) && projects.length > 0 ? projects : defaultProjects;
-  const dynamicProjectsDuration = Math.max(70, items.length * 15);
+  const isImageBg = bg && (typeof bg === 'string' && (bg.includes('.webp') || bg.includes('.png') || bg.includes('.jpg') || bg.startsWith('/')) || typeof bg === 'object');
+
+  const trackRef = useRef(null);
+  const currentXRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const isInteractingRef = useRef(false);
+  const startXRef = useRef(0);
+  const dragStartCurrentXRef = useRef(0);
+  const hasMovedRef = useRef(false);
+  const lastTouchTimeRef = useRef(0);
+  const lastTouchXRef = useRef(0);
+  const velocityRef = useRef(0);
+  const resumeTimeoutRef = useRef(null);
+  const animFrameIdRef = useRef(null);
+  const [isGrabbing, setIsGrabbing] = useState(false);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let lastTime = performance.now();
+    const baseSpeed = 38; // px per second
+
+    const loop = (now) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      const firstSet = track.children[0];
+      const setWidth = firstSet ? firstSet.offsetWidth : 1695;
+
+      if (!isInteractingRef.current) {
+        if (Math.abs(velocityRef.current) > 0.5) {
+          currentXRef.current += velocityRef.current * dt * 60;
+          velocityRef.current *= 0.93; // smooth deceleration friction
+        } else {
+          velocityRef.current = 0;
+          currentXRef.current -= baseSpeed * dt;
+        }
+      }
+
+      // Seamless infinite looping wrap
+      if (setWidth > 0) {
+        while (currentXRef.current <= -setWidth * 2) {
+          currentXRef.current += setWidth;
+        }
+        while (currentXRef.current >= -setWidth * 0.5) {
+          currentXRef.current -= setWidth;
+        }
+      }
+
+      track.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
+      animFrameIdRef.current = requestAnimationFrame(loop);
+    };
+
+    animFrameIdRef.current = requestAnimationFrame(loop);
+
+    return () => {
+      if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
+      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    };
+  }, [items]);
+
+  // Touch & Pointer gesture handlers
+  const handleStart = (clientX) => {
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    isInteractingRef.current = true;
+    isDraggingRef.current = true;
+    hasMovedRef.current = false;
+    velocityRef.current = 0;
+
+    startXRef.current = clientX;
+    lastTouchXRef.current = clientX;
+    lastTouchTimeRef.current = performance.now();
+    dragStartCurrentXRef.current = currentXRef.current;
+    setIsGrabbing(true);
+  };
+
+  const handleMove = (clientX) => {
+    if (!isDraggingRef.current) return;
+    const deltaX = clientX - startXRef.current;
+
+    if (Math.abs(deltaX) > 5) {
+      hasMovedRef.current = true;
+    }
+
+    const now = performance.now();
+    const timeDiff = now - lastTouchTimeRef.current;
+    if (timeDiff > 10) {
+      velocityRef.current = ((clientX - lastTouchXRef.current) / timeDiff) * 16;
+      lastTouchXRef.current = clientX;
+      lastTouchTimeRef.current = now;
+    }
+
+    currentXRef.current = dragStartCurrentXRef.current + deltaX;
+
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
+    }
+  };
+
+  const handleEnd = () => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    setIsGrabbing(false);
+
+    // Limit max fling velocity
+    velocityRef.current = Math.max(-20, Math.min(20, velocityRef.current));
+
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    resumeTimeoutRef.current = setTimeout(() => {
+      isInteractingRef.current = false;
+      velocityRef.current = 0;
+    }, 1500);
+
+    setTimeout(() => {
+      hasMovedRef.current = false;
+    }, 80);
+  };
+
+  const handleCardClick = (e) => {
+    if (hasMovedRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
 
   return (
-    <section id={id} className="winera-projects-marquee-section winera-marquee-fullwidth" style={{ padding: '35px 0 10px', background: bg, overflow: 'hidden' }}>
+    <section id={id} className="winera-projects-marquee-section winera-marquee-fullwidth" style={{
+      position: 'relative',
+      width: '100%',
+      padding: isImageBg ? '110px 0 50px' : '35px 0 10px',
+      background: isImageBg ? `url(${bg}) center/100% 100% no-repeat` : bg,
+      minHeight: isImageBg ? '400px' : 'auto',
+      overflow: 'hidden'
+    }}>
       <MotionFadeIn>
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
         {showTopHeader ? (
@@ -58,10 +188,10 @@ export default function ProjectsMarqueeSection({
                     if (cleaned.toLowerCase().includes('game zones we have')) {
                       return (
                         <>
-                          <span>GAME ZONES WE HAVE</span>
+                          <span>Game Zones We Have</span>
                           <br />
                           <span>
-                            BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span>
+                            Built <span style={{ color: '#38bdf8' }}>Across India</span>
                           </span>
                         </>
                       );
@@ -103,15 +233,35 @@ export default function ProjectsMarqueeSection({
           </div>
         )}
 
-        {/* Continuous Infinite Marquee Projects Showcase */}
-        <div style={{
-          width: '100%',
-          maxWidth: '100vw',
-          overflow: 'hidden',
-          position: 'relative',
-          padding: '10px 0'
-        }}>
-          <div className="marquee-track winera-projects-marquee-track" style={{ animationDuration: `${dynamicProjectsDuration}s` }}>
+        {/* Gesture & Touch Controlled Infinite Marquee Projects Showcase */}
+        <div
+          onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+          onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+          onTouchEnd={handleEnd}
+          onTouchCancel={handleEnd}
+          onMouseDown={(e) => handleStart(e.clientX)}
+          onMouseMove={(e) => handleMove(e.clientX)}
+          onMouseUp={handleEnd}
+          onMouseLeave={handleEnd}
+          style={{
+            width: '100%',
+            maxWidth: '100vw',
+            overflow: 'hidden',
+            position: 'relative',
+            padding: '10px 0',
+            cursor: isGrabbing ? 'grabbing' : 'grab',
+            userSelect: 'none',
+            touchAction: 'pan-y'
+          }}
+        >
+          <div
+            ref={trackRef}
+            style={{
+              display: 'flex',
+              width: 'max-content',
+              willChange: 'transform'
+            }}
+          >
             {[...Array(4)].map((_, setIdx) => (
               <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingRight: '14px' }}>
                 {items.map((proj, idx) => {
@@ -127,6 +277,8 @@ export default function ProjectsMarqueeSection({
                     <a
                       key={idx}
                       href={href}
+                      onClick={handleCardClick}
+                      draggable="false"
                       style={{
                         width: '325px',
                         height: '325px',
@@ -135,10 +287,11 @@ export default function ProjectsMarqueeSection({
                         position: 'relative',
                         boxShadow: '0 10px 25px rgba(0,0,0,0.12)',
                         background: '#0f172a',
-                        cursor: 'pointer',
+                        cursor: isGrabbing ? 'grabbing' : 'pointer',
                         flexShrink: 0,
                         textDecoration: 'none',
-                        display: 'block'
+                        display: 'block',
+                        userSelect: 'none'
                       }}
                     >
                       <img
@@ -146,6 +299,7 @@ export default function ProjectsMarqueeSection({
                         alt={proj.name || proj.title || "Built Game Zone"}
                         loading="eager"
                         decoding="async"
+                        draggable="false"
                         onError={(e) => {
                           e.currentTarget.onerror = null;
                           e.currentTarget.src = projHulaboo;
@@ -156,7 +310,9 @@ export default function ProjectsMarqueeSection({
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          zIndex: 0
+                          zIndex: 0,
+                          pointerEvents: 'none',
+                          userSelect: 'none'
                         }}
                       />
                       <div style={{
@@ -167,7 +323,8 @@ export default function ProjectsMarqueeSection({
                         alignItems: 'flex-end',
                         justifyContent: 'space-between',
                         padding: '16px 20px',
-                        zIndex: 1
+                        zIndex: 1,
+                        pointerEvents: 'none'
                       }}>
                         <div style={{ textAlign: 'left' }}>
                           <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#ffffff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>

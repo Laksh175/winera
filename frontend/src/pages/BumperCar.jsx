@@ -24,6 +24,7 @@ import bumperCarIcon from '../assets/bumper-car-icon.webp';
 import bumperCarIconPng from '../assets/bumper-car-icon.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import downloadButtonImg from '../assets/download-button.png';
+import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
@@ -1023,113 +1024,22 @@ export default function BumperCar({ siteData }) {
               const bottomCards = cards.slice(topCount);
 
               return (
-                <div style={{ position: 'relative' }}>
-                  {/* TOP ROW */}
-                  <div className="winera-bumpercar-whyus-row winera-bumpercar-whyus-top-row" style={{
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
-                    gap: '0px',
-                    position: 'relative',
-                    zIndex: 2
-                  }}>
-                    {topCards.map((card, cIdx) => (
-                      <div
-                        key={cIdx}
-                        className="winera-bumpercar-whyus-card"
-                        style={{
-                          padding: '0 15px 30px',
-                          textAlign: 'center',
-                          position: 'relative',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center'
-                        }}
-                      >
-                        {/* Vertical Shade/Gradient Divider Line for Top Row */}
-                        {cIdx < topCards.length - 1 && (
-                          <div className="winera-bumpercar-whyus-divider" style={{
-                            position: 'absolute',
-                            right: 0,
-                            top: '20px',
-                            bottom: 0,
-                            width: '2px',
-                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
-                            zIndex: 3
-                          }}></div>
-                        )}
-
-                        {/* Cyan Icon Box */}
-                        <div style={{
-                          width: '48px',
-                          height: '48px',
-                          borderRadius: '14px',
-                          background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                          color: '#ffffff',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          marginBottom: '16px',
-                          boxShadow: 'none'
-                        }}>
-                          {card.iconUrl ? (
-                            <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
-                          ) : (
-                            whyChooseIcons[cIdx % whyChooseIcons.length]
-                          )}
-                        </div>
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
-                          {card.title && typeof card.title === 'string'
-                            ? card.title.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                              <React.Fragment key={lIdx}>
-                                {lIdx > 0 && <br />}
-                                {line}
-                              </React.Fragment>
-                            ))
-                            : card.title}
-                        </h4>
-                        <p style={{ fontSize: '15px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '340px' }}>
-                          {card.desc && typeof card.desc === 'string'
-                            ? card.desc.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                              <React.Fragment key={lIdx}>
-                                {lIdx > 0 && <br />}
-                                {line}
-                              </React.Fragment>
-                            ))
-                            : card.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Horizontal Center Cyan Divider Line with Shade Fading */}
-                  {bottomCards.length > 0 && (
-                    <div className="winera-bumpercar-whyus-divider" style={{
-                      width: '100%',
-                      height: '2px',
-                      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
-                      position: 'relative',
-                      zIndex: 3,
-                      margin: '0 0 30px'
-                    }}></div>
-                  )}
-
-                  {/* BOTTOM ROW (CENTERED ODD/EVEN REMAINDER) */}
-                  {bottomCards.length > 0 && (
-                    <div className="winera-bumpercar-whyus-row winera-bumpercar-whyus-bottom-row" style={{
+                <>
+                  <div className="winera-bumpercar-whyus-desktop-container" style={{ position: 'relative' }}>
+                    {/* TOP ROW */}
+                    <div className="winera-bumpercar-whyus-row winera-bumpercar-whyus-top-row" style={{
                       display: 'grid',
-                      gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
-                      maxWidth: bottomCards.length === 2 ? '780px' : '100%',
-                      margin: '0 auto',
+                      gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
                       gap: '0px',
                       position: 'relative',
                       zIndex: 2
                     }}>
-                      {bottomCards.map((card, bIdx) => (
+                      {topCards.map((card, cIdx) => (
                         <div
-                          key={bIdx}
+                          key={cIdx}
                           className="winera-bumpercar-whyus-card"
                           style={{
-                            padding: '0 15px',
+                            padding: '0 15px 30px',
                             textAlign: 'center',
                             position: 'relative',
                             display: 'flex',
@@ -1137,19 +1047,20 @@ export default function BumperCar({ siteData }) {
                             alignItems: 'center'
                           }}
                         >
-                          {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
-                          {bIdx < bottomCards.length - 1 && (
+                          {/* Vertical Shade/Gradient Divider Line for Top Row */}
+                          {cIdx < topCards.length - 1 && (
                             <div className="winera-bumpercar-whyus-divider" style={{
                               position: 'absolute',
                               right: 0,
-                              top: '-30px',
-                              bottom: '20px',
+                              top: '20px',
+                              bottom: 0,
                               width: '2px',
-                              background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                              background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
                               zIndex: 3
                             }}></div>
                           )}
 
+                          {/* Cyan Icon Box */}
                           <div style={{
                             width: '48px',
                             height: '48px',
@@ -1165,7 +1076,7 @@ export default function BumperCar({ siteData }) {
                             {card.iconUrl ? (
                               <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
                             ) : (
-                              whyChooseIcons[(topCards.length + bIdx) % whyChooseIcons.length]
+                              whyChooseIcons[cIdx % whyChooseIcons.length]
                             )}
                           </div>
                           <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
@@ -1191,8 +1102,112 @@ export default function BumperCar({ siteData }) {
                         </div>
                       ))}
                     </div>
-                  )}
-                </div>
+
+                    {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-bumpercar-whyus-divider" style={{
+                        width: '100%',
+                        height: '2px',
+                        background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                        position: 'relative',
+                        zIndex: 3,
+                        margin: '0 0 30px'
+                      }}></div>
+                    )}
+
+                    {/* BOTTOM ROW (CENTERED ODD/EVEN REMAINDER) */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-bumpercar-whyus-row winera-bumpercar-whyus-bottom-row" style={{
+                        display: 'grid',
+                        gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
+                        maxWidth: bottomCards.length === 2 ? '780px' : '100%',
+                        margin: '0 auto',
+                        gap: '0px',
+                        position: 'relative',
+                        zIndex: 2
+                      }}>
+                        {bottomCards.map((card, bIdx) => (
+                          <div
+                            key={bIdx}
+                            className="winera-bumpercar-whyus-card"
+                            style={{
+                              padding: '0 15px',
+                              textAlign: 'center',
+                              position: 'relative',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center'
+                            }}
+                          >
+                            {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
+                            {bIdx < bottomCards.length - 1 && (
+                              <div className="winera-bumpercar-whyus-divider" style={{
+                                position: 'absolute',
+                                right: 0,
+                                top: '-30px',
+                                bottom: '20px',
+                                width: '2px',
+                                background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                                zIndex: 3
+                              }}></div>
+                            )}
+
+                            <div style={{
+                              width: '48px',
+                              height: '48px',
+                              borderRadius: '14px',
+                              background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
+                              color: '#ffffff',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              marginBottom: '16px',
+                              boxShadow: 'none'
+                            }}>
+                              {card.iconUrl ? (
+                                <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+                              ) : (
+                                whyChooseIcons[(topCards.length + bIdx) % whyChooseIcons.length]
+                              )}
+                            </div>
+                            <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                              {card.title && typeof card.title === 'string'
+                                ? card.title.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                                  <React.Fragment key={lIdx}>
+                                    {lIdx > 0 && <br />}
+                                    {line}
+                                  </React.Fragment>
+                                ))
+                                : card.title}
+                            </h4>
+                            <p style={{ fontSize: '15px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '340px' }}>
+                              {card.desc && typeof card.desc === 'string'
+                                ? card.desc.split(/<br\s*\/?>/i).map((line, lIdx) => (
+                                  <React.Fragment key={lIdx}>
+                                    {lIdx > 0 && <br />}
+                                    {line}
+                                  </React.Fragment>
+                                ))
+                                : card.desc}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Mobile Slider View */}
+                  <WhyChooseUsMobileSlider
+                    items={cards}
+                    renderIcon={(item, idx) =>
+                      item.iconUrl ? (
+                        <img src={item.iconUrl} alt="" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+                      ) : (
+                        whyChooseIcons[idx % whyChooseIcons.length]
+                      )
+                    }
+                  />
+                </>
               );
             })()}
           </div>

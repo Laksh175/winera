@@ -7,6 +7,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
+import MobileExpandableText from '../components/MobileExpandableText';
 import arHeroBg from '../assets/argame-hero-bg.webp';
 import arSupplierCollage from '../assets/ar-supplier-collage.webp';
 import arAttractionsGraphic from '../assets/ar-attractions-graphic.webp';
@@ -25,6 +26,7 @@ import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.webp';
 import auroraAirHockeyImg from '../assets/aurora-air-hockey.webp';
 import ochaAirHockeyImg from '../assets/ocha-air-hockey.webp';
 import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.webp';
+import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 const airHockeyImageMap = {
   "Super Air Hockey": superAirHockeyImg,
@@ -609,21 +611,27 @@ export default function ArGames({ siteData }) {
               </h2>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '12px', maxWidth: '540px' }}>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {siteData?.arMatchedVenue?.p1 || (
-                  <>
-                    Winera International is a trusted <strong>AR games supplier</strong> in India sourcing and installing commercial sports simulators, interactive floor systems, AR experiences, and immersive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres for more than 15 Years. Every product is sourced from established global manufacturers and configured for sustained commercial use
-                  </>
-                )}
-              </p>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {siteData?.arMatchedVenue?.p2 || (
-                  <>
-                    As a direct <strong>AR entertainment setup partner</strong>, our own team manages everything from space planning and product selection to installation and after-sales support — one team, zero third-party contractors.
-                  </>
-                )}
-              </p>
+            <div style={{ marginBottom: '16px', maxWidth: '540px' }}>
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 8px 0' }}>
+                    {siteData?.arMatchedVenue?.p1 || (
+                      <>
+                        Winera International is a trusted AR games supplier in India sourcing and installing commercial sports simulators, interactive floor systems, AR experiences, and immersive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres for more than 15 Years. Every product is sourced from established global manufacturers and configured for sustained commercial use
+                      </>
+                    )}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '8px 0 0 0' }}>
+                    {siteData?.arMatchedVenue?.p2 || (
+                      <>
+                        As a direct AR entertainment setup partner, our own team manages everything from space planning and product selection to installation and after-sales support — one team, zero third-party contractors.
+                      </>
+                    )}
+                  </p>
+                }
+              />
             </div>
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
@@ -1151,13 +1159,19 @@ export default function ArGames({ siteData }) {
             width: '100%'
           }}>
             {/* Paragraphs */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', textAlign: 'center', maxWidth: '850px', margin: '0 auto' }}>
-              <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 auto', maxWidth: '100%' }}>
-                {siteData?.arEarn?.p1 || "Most AR games suppliers in India present a product catalogue and a price list the financial planning is left entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before recommending any product or configuration, our team prepares a complete ROI report for your specific venue covering equipment cost, projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline."}
-              </p>
-              <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 auto', maxWidth: '100%' }}>
-                {siteData?.arEarn?.p2 || "Every figure is calculated around your venue type, available floor space, and visitor demographic, not an industry benchmark that may have no relevance to your actual situation. Very few interactive gaming setup suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
-              </p>
+            <div style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto', width: '100%' }}>
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '0 auto 8px', maxWidth: '100%' }}>
+                    {siteData?.arEarn?.p1 || "Most AR games suppliers in India present a product catalogue and a price list the financial planning is left entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before recommending any product or configuration, our team prepares a complete ROI report for your specific venue covering equipment cost, projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline."}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', margin: '8px auto 0', maxWidth: '100%' }}>
+                    {siteData?.arEarn?.p2 || "Every figure is calculated around your venue type, available floor space, and visitor demographic, not an industry benchmark that may have no relevance to your actual situation. Very few interactive gaming setup suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
+                  </p>
+                }
+              />
             </div>
 
             {/* Right Side Gamers Graphic */}
@@ -1234,99 +1248,22 @@ export default function ArGames({ siteData }) {
               const bottomCards = cards.slice(topCount);
 
               return (
-                <div style={{ position: 'relative' }}>
-                  {/* TOP ROW */}
-                  <div className="winera-ar-whyus-row winera-ar-whyus-top-row" style={{
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
-                    gap: '0px',
-                    position: 'relative',
-                    zIndex: 2
-                  }}>
-                    {topCards.map((card, cIdx) => (
-                      <div
-                        key={cIdx}
-                        className="winera-ar-whyus-card"
-                        style={{
-                          padding: '0 35px 30px',
-                          textAlign: 'center',
-                          position: 'relative',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center'
-                        }}
-                      >
-                        {/* Vertical Shade/Gradient Divider Line for Top Row */}
-                        {cIdx < topCards.length - 1 && (
-                          <div className="winera-ar-whyus-vertical-divider" style={{
-                            position: 'absolute',
-                            right: 0,
-                            top: '20px',
-                            bottom: 0,
-                            width: '2px',
-                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
-                            zIndex: 3
-                          }}></div>
-                        )}
-
-                        {/* Cyan Icon Box */}
-                        <div style={{
-                          width: '48px',
-                          height: '48px',
-                          borderRadius: '14px',
-                          background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                          color: '#ffffff',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          marginBottom: '16px',
-                          boxShadow: 'none'
-                        }}>
-                          {card.iconUrl ? (
-                            <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
-                          ) : (
-                            iconsList[cIdx % iconsList.length]
-                          )}
-                        </div>
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
-                          {card.title}
-                        </h4>
-                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                          {card.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Horizontal Center Cyan Divider Line with Shade Fading */}
-                  {bottomCards.length > 0 && (
-                    <div className="winera-ar-whyus-horizontal-divider" style={{
-                      width: '100%',
-                      height: '2px',
-                      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
-                      position: 'relative',
-                      zIndex: 3,
-                      margin: '0 0 30px'
-                    }}></div>
-                  )}
-
-                  {/* BOTTOM ROW */}
-                  {bottomCards.length > 0 && (
-                    <div className="winera-ar-whyus-row winera-ar-whyus-bottom-row" style={{
+                <>
+                  <div className="winera-ar-whyus-desktop-container" style={{ position: 'relative' }}>
+                    {/* TOP ROW */}
+                    <div className="winera-ar-whyus-row winera-ar-whyus-top-row" style={{
                       display: 'grid',
-                      gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
-                      maxWidth: bottomCards.length <= 3 ? '780px' : '100%',
-                      margin: '0 auto',
+                      gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
                       gap: '0px',
                       position: 'relative',
                       zIndex: 2
                     }}>
-                      {bottomCards.map((card, bIdx) => (
+                      {topCards.map((card, cIdx) => (
                         <div
-                          key={bIdx}
+                          key={cIdx}
                           className="winera-ar-whyus-card"
                           style={{
-                            padding: '0 35px',
+                            padding: '0 35px 30px',
                             textAlign: 'center',
                             position: 'relative',
                             display: 'flex',
@@ -1334,15 +1271,15 @@ export default function ArGames({ siteData }) {
                             alignItems: 'center'
                           }}
                         >
-                          {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
-                          {bIdx < bottomCards.length - 1 && (
+                          {/* Vertical Shade/Gradient Divider Line for Top Row */}
+                          {cIdx < topCards.length - 1 && (
                             <div className="winera-ar-whyus-vertical-divider" style={{
                               position: 'absolute',
                               right: 0,
-                              top: '-30px',
-                              bottom: '20px',
+                              top: '20px',
+                              bottom: 0,
                               width: '2px',
-                              background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                              background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
                               zIndex: 3
                             }}></div>
                           )}
@@ -1363,7 +1300,7 @@ export default function ArGames({ siteData }) {
                             {card.iconUrl ? (
                               <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
                             ) : (
-                              iconsList[(topCards.length + bIdx) % iconsList.length]
+                              iconsList[cIdx % iconsList.length]
                             )}
                           </div>
                           <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
@@ -1375,8 +1312,99 @@ export default function ArGames({ siteData }) {
                         </div>
                       ))}
                     </div>
-                  )}
-                </div>
+
+                    {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-ar-whyus-horizontal-divider" style={{
+                        width: '100%',
+                        height: '2px',
+                        background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                        position: 'relative',
+                        zIndex: 3,
+                        margin: '0 0 30px'
+                      }}></div>
+                    )}
+
+                    {/* BOTTOM ROW */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-ar-whyus-row winera-ar-whyus-bottom-row" style={{
+                        display: 'grid',
+                        gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
+                        maxWidth: bottomCards.length <= 3 ? '780px' : '100%',
+                        margin: '0 auto',
+                        gap: '0px',
+                        position: 'relative',
+                        zIndex: 2
+                      }}>
+                        {bottomCards.map((card, bIdx) => (
+                          <div
+                            key={bIdx}
+                            className="winera-ar-whyus-card"
+                            style={{
+                              padding: '0 35px',
+                              textAlign: 'center',
+                              position: 'relative',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center'
+                            }}
+                          >
+                            {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
+                            {bIdx < bottomCards.length - 1 && (
+                              <div className="winera-ar-whyus-vertical-divider" style={{
+                                position: 'absolute',
+                                right: 0,
+                                top: '-30px',
+                                bottom: '20px',
+                                width: '2px',
+                                background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                                zIndex: 3
+                              }}></div>
+                            )}
+
+                            {/* Cyan Icon Box */}
+                            <div style={{
+                              width: '48px',
+                              height: '48px',
+                              borderRadius: '14px',
+                              background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
+                              color: '#ffffff',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              marginBottom: '16px',
+                              boxShadow: 'none'
+                            }}>
+                              {card.iconUrl ? (
+                                <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+                              ) : (
+                                iconsList[(topCards.length + bIdx) % iconsList.length]
+                              )}
+                            </div>
+                            <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
+                              {card.title}
+                            </h4>
+                            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                              {card.desc}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Mobile Slider View */}
+                  <WhyChooseUsMobileSlider
+                    items={cards}
+                    renderIcon={(item, idx) =>
+                      item.iconUrl ? (
+                        <img src={item.iconUrl} alt="" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+                      ) : (
+                        iconsList[idx % iconsList.length]
+                      )
+                    }
+                  />
+                </>
               );
             })()}
           </div>

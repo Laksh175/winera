@@ -1,25 +1,35 @@
 import React from 'react';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
-import clientsBg from '../assets/clients-bg.webp';
 
 export default function ClientsMarqueeSection({
   id = 'clients',
+  className = 'winera-clients-section winera-marquee-fullwidth',
   clientLogos = null,
   title = '*Our Clients* Section',
   subtitle = 'Our Complete Game Zone Equipment & Setup Solutions',
-  bg = clientsBg
+  bg = '#F5F5F9',
+  defaultList = [
+    { name: "Infinity", text: "∞", font: "bold" },
+    { name: "LOGO", text: "LOGO˚", font: "900" },
+    { name: "Logoipsum", text: "🌊 Logoipsum", font: "600" },
+    { name: "IPSUM", text: "IPSUM™", font: "800" },
+    { name: "Infinity2", text: "∞", font: "bold" },
+    { name: "LOGO2", text: "LOGO˚", font: "900" },
+    { name: "IPSUM2", text: "IPSUM™", font: "800" },
+    { name: "Logoipsum2", text: "🌊 Logoipsum", font: "600" }
+  ]
 }) {
   const listToDisplay = (clientLogos && clientLogos.length > 0) ? clientLogos : [];
   const dynamicDuration = Math.max(70, (listToDisplay.length > 0 ? Math.max(listToDisplay.length, 8) : 8) * 11);
 
   return (
-    <section id={id} className="winera-clients-section winera-marquee-fullwidth" style={{
+    <section id={id} className={className} style={{
       position: 'relative',
       width: '100%',
-      padding: '120px 0 65px',
-      background: `url(${bg}) center/100% 100% no-repeat`,
-      minHeight: '360px',
+      padding: '60px 0 45px',
+      background: bg,
+      minHeight: 'auto',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -29,7 +39,7 @@ export default function ClientsMarqueeSection({
     }}>
       <MotionFadeIn style={{ width: '100%' }}>
       <div style={{ maxWidth: '100%', width: '100%', margin: '0 auto' }}>
-        <SectionHeading marginBottom="8px" accentWidth="500px" accentMaxWidth="500px">
+        <SectionHeading marginBottom={subtitle ? "8px" : "30px"} accentWidth="400px" accentMaxWidth="400px">
           {(() => {
             const rawTitle = title || "*Our Clients* Section";
             const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
@@ -46,9 +56,11 @@ export default function ClientsMarqueeSection({
           })()}
         </SectionHeading>
 
-        <p style={{ color: '#334155', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
-          {subtitle}
-        </p>
+        {subtitle ? (
+          <p style={{ color: '#334155', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
+            {subtitle}
+          </p>
+        ) : null}
 
         <div style={{
           width: '100%',
@@ -79,7 +91,7 @@ export default function ClientsMarqueeSection({
                         }}
                       >
                         {client.logoUrl ? (
-                          <img src={client.logoUrl} alt={client.name || 'Client Logo'} loading="lazy" decoding="async" style={{ maxHeight: '110px', maxWidth: '271px', objectFit: 'contain' }} />
+                          <img src={client.logoUrl} alt={client.name || 'Logo'} loading="lazy" decoding="async" style={{ maxHeight: '110px', maxWidth: '271px', objectFit: 'contain' }} />
                         ) : (
                           <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px' }}>{client.name}</span>
                         )}
@@ -87,21 +99,12 @@ export default function ClientsMarqueeSection({
                     ));
                   })()
                 ) : (
-                  [
-                    { name: "Infinity", text: "∞", font: "bold" },
-                    { name: "LOGO", text: "LOGO˚", font: "900" },
-                    { name: "Logoipsum", text: "🌊 Logoipsum", font: "600" },
-                    { name: "IPSUM", text: "IPSUM™", font: "800" },
-                    { name: "Infinity2", text: "∞", font: "bold" },
-                    { name: "LOGO2", text: "LOGO˚", font: "900" },
-                    { name: "IPSUM2", text: "IPSUM™", font: "800" },
-                    { name: "Logoipsum2", text: "🌊 Logoipsum", font: "600" }
-                  ].map((client, idx) => (
+                  defaultList.map((client, idx) => (
                     <div
                       key={idx}
                       style={{
                         fontSize: '2.1rem',
-                        fontWeight: client.font,
+                        fontWeight: client.font || '900',
                         color: '#1e293b',
                         letterSpacing: '1px',
                         opacity: 0.85,
@@ -112,7 +115,7 @@ export default function ClientsMarqueeSection({
                         userSelect: 'none'
                       }}
                     >
-                      {client.text}
+                      {client.text || client.name}
                     </div>
                   ))
                 )}

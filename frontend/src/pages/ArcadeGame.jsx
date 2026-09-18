@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
+import MobileExpandableText from '../components/MobileExpandableText';
 import FaqSection from '../components/FaqSection';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import TestimonialsSection from '../components/TestimonialsSection';
@@ -39,6 +40,7 @@ import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
 import testiOwner from '../assets/testi-owner.webp';
 import { Gamepad2, Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight } from 'lucide-react';
+import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -470,7 +472,7 @@ export default function ArcadeGame({ siteData }) {
       <section id="categories" className="winera-categories-section" style={{ padding: '35px 4vw 75px', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading for Categories */}
-          <SectionHeading marginBottom="32px" accentWidth="200px" accentMaxWidth="240px">
+          <SectionHeading marginBottom="32px" accentWidth="400px" accentMaxWidth="400px">
             Discover our *Products*
           </SectionHeading>
 
@@ -585,7 +587,7 @@ export default function ArcadeGame({ siteData }) {
               gap: '12px',
               height: '100%'
             }}>
-              <h3 style={{ fontSize: '0.80rem', fontWeight: '800', color: '#0f172a', marginBottom: '6px', paddingLeft: '4px' }}>
+              <h3 style={{ fontSize: '17px', fontWeight: '800', color: '#0f172a', marginBottom: '6px', paddingLeft: '4px' }}>
                 Discover our Products
               </h3>
 
@@ -602,21 +604,23 @@ export default function ArcadeGame({ siteData }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '10px 14px',
-                    borderRadius: '10px',
+                    padding: (activeCategory === "Arcade Games") ? '10px 14px' : '10px 8px 10px 4px',
+                    borderRadius: (activeCategory === "Arcade Games") ? '10px' : '0px',
                     border: 'none',
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    fontSize: '13px',
-                    fontWeight: '700',
+                    borderBottom: (activeCategory === "Arcade Games") ? 'none' : '1px solid rgba(255, 255, 255, 0.85)',
+                    background: (activeCategory === "Arcade Games") ? '#38bdf8' : 'transparent',
+                    color: (activeCategory === "Arcade Games") ? '#ffffff' : 'rgb(55, 62, 65)',
+                    fontSize: '16px',
+                    fontWeight: (activeCategory === "Arcade Games") ? '700' : '400',
                     cursor: 'pointer',
                     textAlign: 'left',
                     marginBottom: '4px',
-                    boxShadow: 'none'
+                    boxShadow: 'none',
+                    transition: 'all 0.15s ease'
                   }}
                 >
                   <span>Arcade Games</span>
-                  <ChevronDown style={{ width: '14px', height: '14px', color: '#ffffff', transform: expandedCat === "Arcade Games" ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+                  <ChevronDown style={{ width: '14px', height: '14px', color: (activeCategory === "Arcade Games") ? '#ffffff' : '#94a3b8', transform: expandedCat === "Arcade Games" ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
                 </button>
 
                 {/* Subcategories List */}
@@ -649,9 +653,9 @@ export default function ArcadeGame({ siteData }) {
                         border: 'none',
                         borderBottom: isSelected ? 'none' : (isLast ? 'none' : '1px solid rgba(255, 255, 255, 0.85)'),
                         background: isSelected ? '#38bdf8' : 'transparent',
-                        color: isSelected ? '#ffffff' : '#475569',
-                        fontSize: '12.5px',
-                        fontWeight: isSelected ? '700' : '500',
+                        color: isSelected ? '#ffffff' : 'rgb(55, 62, 65)',
+                        fontSize: '16px',
+                        fontWeight: isSelected ? '700' : '400',
                         cursor: 'pointer',
                         textAlign: 'left',
                         transition: 'all 0.15s ease'
@@ -1099,7 +1103,22 @@ export default function ArcadeGame({ siteData }) {
                     {point.title}
                   </h4>
                 </div>
-                {Array.isArray(point.paragraphs) ? (
+                {Array.isArray(point.paragraphs) && point.paragraphs.length > 1 ? (
+                  <MobileExpandableText
+                    preview={
+                      <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '6px', maxWidth: '800px' }}>
+                        {point.paragraphs[0]}
+                      </p>
+                    }
+                    expandedContent={
+                      point.paragraphs.slice(1).map((para, paraIdx) => (
+                        <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '800px' }}>
+                          {para}
+                        </p>
+                      ))
+                    }
+                  />
+                ) : Array.isArray(point.paragraphs) ? (
                   point.paragraphs.map((para, paraIdx) => (
                     <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '800px' }}>
                       {para}
@@ -1314,105 +1333,38 @@ export default function ArcadeGame({ siteData }) {
             };
 
             return (
-              <div className="winera-arcade-why-container" style={{
-                maxWidth: '1200px',
-                margin: '0 auto',
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-                {/* Top Row */}
-                <div className="winera-arcade-why-row" style={{
-                  display: 'grid',
-                  gridTemplateColumns: `repeat(${topRow.length}, 1fr)`,
-                  position: 'relative',
-                  paddingBottom: bottomRow.length > 0 ? '36px' : '0px'
+              <>
+                <div className="winera-arcade-why-container winera-arcade-why-desktop-container" style={{
+                  maxWidth: '1200px',
+                  margin: '0 auto',
+                  display: 'flex',
+                  flexDirection: 'column'
                 }}>
-                  {topRow.map((item, idx) => (
-                    <div key={idx} className="winera-arcade-why-card" style={{
-                      padding: '0 20px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      position: 'relative'
-                    }}>
-                      {/* Vertical Divider Line (Gradient Shade: light at top, dark cyan at bottom meeting horizontal line) */}
-                      {idx < topRow.length - 1 && (
-                        <div className="winera-arcade-why-divider" style={{
-                          position: 'absolute',
-                          right: 0,
-                          top: '10px',
-                          bottom: '-36px',
-                          width: '2px',
-                          background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.1) 0%, #38bdf8 100%)',
-                          zIndex: 2
-                        }} />
-                      )}
-
-                      <div style={{
-                        width: '46px',
-                        height: '46px',
-                        borderRadius: '12px',
-                        background: '#38bdf8',
-                        color: '#ffffff',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginBottom: '16px',
-                        boxShadow: 'none'
-                      }}>
-                        {renderWhyIcon(item, idx)}
-                      </div>
-
-                      <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
-                        {item.title}
-                      </h3>
-                      <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '260px', margin: 0 }}>
-                        {item.desc}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                 {/* Central Horizontal Joining Partition Line with Dark-to-Light Fade */}
-                {bottomRow.length > 0 && (
-                  <div className="winera-arcade-why-divider" style={{
-                    width: '100%',
-                    height: '2px',
-                    background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.15) 0%, #38bdf8 20%, #38bdf8 80%, rgba(56, 189, 248, 0.15) 100%)',
-                    margin: '0 auto',
-                    position: 'relative',
-                    zIndex: 3
-                  }} />
-                )}
-
-                {/* Bottom Row */}
-                {bottomRow.length > 0 && (
+                  {/* Top Row */}
                   <div className="winera-arcade-why-row" style={{
                     display: 'grid',
-                    gridTemplateColumns: `repeat(${bottomRow.length}, 1fr)`,
-                    paddingTop: '36px',
-                    justifyContent: 'center',
-                    position: 'relative'
+                    gridTemplateColumns: `repeat(${topRow.length}, 1fr)`,
+                    position: 'relative',
+                    paddingBottom: bottomRow.length > 0 ? '36px' : '0px'
                   }}>
-                    {bottomRow.map((item, idx) => (
+                    {topRow.map((item, idx) => (
                       <div key={idx} className="winera-arcade-why-card" style={{
-                        padding: '0 24px',
+                        padding: '0 20px',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         textAlign: 'center',
                         position: 'relative'
                       }}>
-                        {/* Vertical Divider Line (Gradient Shade: dark cyan at top meeting horizontal line, fading light to bottom) */}
-                        {idx < bottomRow.length - 1 && (
+                        {/* Vertical Divider Line (Gradient Shade: light at top, dark cyan at bottom meeting horizontal line) */}
+                        {idx < topRow.length - 1 && (
                           <div className="winera-arcade-why-divider" style={{
                             position: 'absolute',
                             right: 0,
-                            top: '-36px',
-                            bottom: '10px',
+                            top: '10px',
+                            bottom: '-36px',
                             width: '2px',
-                            background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.1) 100%)',
+                            background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.1) 0%, #38bdf8 100%)',
                             zIndex: 2
                           }} />
                         )}
@@ -1429,20 +1381,92 @@ export default function ArcadeGame({ siteData }) {
                           marginBottom: '16px',
                           boxShadow: 'none'
                         }}>
-                          {renderWhyIcon(item, topRow.length + idx)}
+                          {renderWhyIcon(item, idx)}
                         </div>
 
                         <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
                           {item.title}
                         </h3>
-                        <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '280px', margin: 0 }}>
+                        <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '260px', margin: 0 }}>
                           {item.desc}
                         </p>
                       </div>
                     ))}
                   </div>
-                )}
-              </div>
+
+                   {/* Central Horizontal Joining Partition Line with Dark-to-Light Fade */}
+                  {bottomRow.length > 0 && (
+                    <div className="winera-arcade-why-divider" style={{
+                      width: '100%',
+                      height: '2px',
+                      background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.15) 0%, #38bdf8 20%, #38bdf8 80%, rgba(56, 189, 248, 0.15) 100%)',
+                      margin: '0 auto',
+                      position: 'relative',
+                      zIndex: 3
+                    }} />
+                  )}
+
+                  {/* Bottom Row */}
+                  {bottomRow.length > 0 && (
+                    <div className="winera-arcade-why-row" style={{
+                      display: 'grid',
+                      gridTemplateColumns: `repeat(${bottomRow.length}, 1fr)`,
+                      paddingTop: '36px',
+                      justifyContent: 'center',
+                      position: 'relative'
+                    }}>
+                      {bottomRow.map((item, idx) => (
+                        <div key={idx} className="winera-arcade-why-card" style={{
+                          padding: '0 24px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          textAlign: 'center',
+                          position: 'relative'
+                        }}>
+                          {/* Vertical Divider Line (Gradient Shade: dark cyan at top meeting horizontal line, fading light to bottom) */}
+                          {idx < bottomRow.length - 1 && (
+                            <div className="winera-arcade-why-divider" style={{
+                              position: 'absolute',
+                              right: 0,
+                              top: '-36px',
+                              bottom: '10px',
+                              width: '2px',
+                              background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.1) 100%)',
+                              zIndex: 2
+                            }} />
+                          )}
+
+                          <div style={{
+                            width: '46px',
+                            height: '46px',
+                            borderRadius: '12px',
+                            background: '#38bdf8',
+                            color: '#ffffff',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginBottom: '16px',
+                            boxShadow: 'none'
+                          }}>
+                            {renderWhyIcon(item, topRow.length + idx)}
+                          </div>
+
+                          <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
+                            {item.title}
+                          </h3>
+                          <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '280px', margin: 0 }}>
+                            {item.desc}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Mobile Slider View */}
+                <WhyChooseUsMobileSlider items={items} renderIcon={(item, idx) => renderWhyIcon(item, idx)} />
+              </>
             );
           })()}
         </div>

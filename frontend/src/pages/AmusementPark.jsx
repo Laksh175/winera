@@ -6,6 +6,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
+import MobileExpandableText from '../components/MobileExpandableText';
 import amusementHeroBg from '../assets/amusement-park-hero-bg.webp';
 import amusementSupplierCollage from '../assets/amusement-supplier-collage.webp';
 import amusementSetupsCollage from '../assets/amusement-setups-collage.webp';
@@ -19,6 +20,7 @@ import ctaMainBanner from '../assets/cta-main-banner.png';
 import amusementLeftImg from '../assets/amusement-park-left-img.webp';
 import amusementRightImg from '../assets/amusement-park-right-img.webp';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
+import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
@@ -316,15 +318,19 @@ export default function AmusementPark({ siteData }) {
               </h2>
             </div>
 
-            {/* Paragraph 1 */}
-            <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.7, fontWeight: '500', marginBottom: '20px' }}>
-              {siteData?.amusementBanner?.paragraph1 || "Winera International has been supplying and installing amusement park rides and attractions across India since 2014 \u2014 for theme parks, malls, resorts, and family entertainment centres in over 50 cities. We source every ride from established manufacturers, install it with our own team, and stay on for servicing after handover."}
-            </p>
-
-            {/* Paragraph 2 */}
-            <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.7, fontWeight: '500', margin: 0 }}>
-              {siteData?.amusementBanner?.paragraph2 || "From a few signature rides to a full park layout, we handle the whole project space planning, ride selection, installation, and after-sales support so you deal with one team from start to finish, not a chain of separate vendors."}
-            </p>
+            {/* Paragraphs with Mobile Expandable Text */}
+            <MobileExpandableText
+              preview={
+                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.7, fontWeight: '500', marginBottom: '20px' }}>
+                  {siteData?.amusementBanner?.paragraph1 || "Winera International has been supplying and installing amusement park rides and attractions across India since 2014 \u2014 for theme parks, malls, resorts, and family entertainment centres in over 50 cities. We source every ride from established manufacturers, install it with our own team, and stay on for servicing after handover."}
+                </p>
+              }
+              expandedContent={
+                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.7, fontWeight: '500', margin: 0 }}>
+                  {siteData?.amusementBanner?.paragraph2 || "From a few signature rides to a full park layout, we handle the whole project space planning, ride selection, installation, and after-sales support so you deal with one team from start to finish, not a chain of separate vendors."}
+                </p>
+              }
+            />
           </div>
 
           {/* Right Collage Graphic Column */}
@@ -377,24 +383,24 @@ export default function AmusementPark({ siteData }) {
                 </h2>
               </div>
 
-              <p style={{ fontSize: '17px', color: 'rgb(55, 62, 65)', fontWeight: '400', lineHeight: '28px', letterSpacing: '0px', marginBottom: '20px' }}>
+              <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, letterSpacing: '0px', marginBottom: '20px' }}>
                 {siteData?.amusementOptions?.subtitle || "We Supply Many Types Of Rides So You Can Build The Right Experience For Your Space And Visitors."}
               </p>
 
               {/* Bullet Points List */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
                 {rideItems.map((item, idx) => (
-                  <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '17px', lineHeight: '28px', color: 'rgb(55, 62, 65)', fontWeight: '400', letterSpacing: '0px' }}>
+                  <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '15px', lineHeight: 1.65, color: '#475569', fontWeight: '500', letterSpacing: '0px' }}>
                     <span style={{ color: '#38bdf8', fontWeight: '900', fontSize: '16px', marginTop: '2px' }}>&#10148;</span>
                     <div>
                       <strong style={{ color: '#0f172a', fontWeight: '700' }}>{item.boldText || item.title} :-</strong>{' '}
-                      <span style={{ fontWeight: '400', color: 'rgb(55, 62, 65)' }}>{item.desc || item.description}</span>
+                      <span style={{ fontWeight: '500', color: '#475569' }}>{item.desc || item.description}</span>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <p style={{ fontSize: '17px', color: 'rgb(55, 62, 65)', fontWeight: '400', lineHeight: '28px', letterSpacing: '0px', margin: 0 }}>
+              <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, letterSpacing: '0px', margin: 0 }}>
                 {siteData?.amusementOptions?.footerText || "Every Ride Comes With Strong Safety Belts, Automatic Sensors That Stop The Ride If Something Goes Wrong, And A Tough, Durable Build. We Test Each Ride On-Site Before Handing It Over To You."}
               </p>
             </div>
@@ -438,13 +444,19 @@ export default function AmusementPark({ siteData }) {
                 </h2>
               </div>
 
-              <p style={{ fontSize: '13px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '16px' }}>
-                {siteData?.amusementRoi?.paragraph1 || "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline."}
-              </p>
-
-              <p style={{ fontSize: '13px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '26px' }}>
-                {siteData?.amusementRoi?.paragraph2 || "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins."}
-              </p>
+              {/* Paragraphs with Mobile Expandable Text */}
+              <MobileExpandableText
+                preview={
+                  <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '16px' }}>
+                    {siteData?.amusementRoi?.paragraph1 || "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline."}
+                  </p>
+                }
+                expandedContent={
+                  <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '26px' }}>
+                    {siteData?.amusementRoi?.paragraph2 || "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins."}
+                  </p>
+                }
+              />
 
               {(() => {
                 const baseLink = siteData?.amusementRoi?.buttonLink || "https://wa.me/919428989488";
@@ -520,7 +532,7 @@ export default function AmusementPark({ siteData }) {
           </div>
 
           {/* Cards Grid Container */}
-          <div className="winera-amusement-whyus-container" style={{
+          <div className="winera-amusement-whyus-container winera-amusement-whyus-desktop-container" style={{
             position: 'relative',
             maxWidth: '1100px',
             margin: '0 auto'
@@ -665,6 +677,18 @@ export default function AmusementPark({ siteData }) {
               )}
             </div>
           </div>
+
+          {/* Mobile Slider View */}
+          <WhyChooseUsMobileSlider
+            items={whyUsCards}
+            renderIcon={(item, idx) =>
+              item.iconUrl ? (
+                <img src={item.iconUrl} alt="" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+              ) : (
+                whyUsIcons[idx % whyUsIcons.length]
+              )
+            }
+          />
         </div>
       </section>
 

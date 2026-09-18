@@ -1,14 +1,60 @@
 import React from 'react';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 
+const ACRONYMS = new Set(['VR', 'AR', 'ROI', 'FAQ', 'FAQS', 'USA', 'UK', '3D', '4D', '5D', '7D', '9D', 'HD', 'AI', 'B2B', 'B2C']);
+
+function formatWordToTitleCase(word) {
+  if (!word) return word;
+  const upper = word.toUpperCase();
+  if (ACRONYMS.has(upper)) {
+    return upper;
+  }
+  return word.replace(/([A-Za-z]+)/g, (match) => {
+    const mUpper = match.toUpperCase();
+    if (ACRONYMS.has(mUpper)) return mUpper;
+    return match.charAt(0).toUpperCase() + match.slice(1).toLowerCase();
+  });
+}
+
+export function toTitleCaseText(str) {
+  if (typeof str !== 'string') return str;
+  return str.split(/(\s+)/).map(part => {
+    if (/^\s+$/.test(part)) return part;
+    return formatWordToTitleCase(part);
+  }).join('');
+}
+
+export function formatNodeToTitleCase(node) {
+  if (typeof node === 'string') {
+    return toTitleCaseText(node);
+  }
+  if (Array.isArray(node)) {
+    return node.map((child, i) => (
+      React.isValidElement(child) ? React.cloneElement(child, { key: child.key ?? i }, formatNodeToTitleCase(child.props.children)) : formatNodeToTitleCase(child)
+    ));
+  }
+  if (React.isValidElement(node)) {
+    if (node.props && node.props.children) {
+      return React.cloneElement(node, {
+        ...node.props,
+        children: formatNodeToTitleCase(node.props.children)
+      });
+    }
+  }
+  return node;
+}
+
 function parseStarText(children) {
-  // If children is not a plain string, return as-is (e.g. already JSX)
-  if (typeof children !== 'string') return children;
+  // If children is not a plain string, format its children recursively
+  if (typeof children !== 'string') {
+    return formatNodeToTitleCase(children);
+  }
 
   const parts = children.split(/\*{1,2}(.*?)\*{1,2}/g);
-  if (parts.length === 1) return children;
+  if (parts.length === 1) return toTitleCaseText(children);
 
   return parts.map((part, index) => {
+    const formattedPart = toTitleCaseText(part);
     if (index % 2 === 1) {
       return (
         <span key={index} style={{
@@ -20,11 +66,11 @@ function parseStarText(children) {
           lineHeight: 'inherit',
           letterSpacing: 'inherit'
         }}>
-          {part}
+          {formattedPart}
         </span>
       );
     }
-    return part;
+    return formattedPart;
   });
 }
 

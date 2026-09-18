@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo.webp';
 import footerBg from '../assets/footer-bg.webp';
-import { Phone, Mail } from 'lucide-react';
+import { Phone, Mail, ChevronDown } from 'lucide-react';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -18,6 +18,30 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 export default function Footer({ footerData }) {
+  const [openSections, setOpenSections] = useState({
+    product: false,
+    quick: false,
+    resource: false
+  });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 850);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const toggleSection = (key) => {
+    if (!isMobile) return;
+    setOpenSections(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
   const defaultProductLinks = [
     { name: "Arcade Games", link: "/product/arcade-games" },
     { name: "Bowling Alley", link: "/product/bowling-alley" },
@@ -59,10 +83,10 @@ export default function Footer({ footerData }) {
     <footer className="winera-footer-section" style={{
       position: 'relative',
       width: '100%',
-      background: `url(${footerBg}) center/100% 100% no-repeat`,
-      padding: '70px 4vw 35px',
+      background: isMobile ? 'linear-gradient(180deg, #F5F5F9 0%, #e2e8f0 40%, #cbd5e1 100%)' : `url(${footerBg}) center/100% 100% no-repeat`,
+      padding: isMobile ? '20px 25px 15px' : '70px 4vw 35px',
       color: '#0f172a',
-      minHeight: '440px',
+      minHeight: isMobile ? 'auto' : '440px',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between'
@@ -71,27 +95,52 @@ export default function Footer({ footerData }) {
         {/* Main Footer Links Columns Grid */}
         <div className="winera-footer-grid" style={{
           display: 'grid',
-          gridTemplateColumns: '280px 2.2fr 1.2fr 1.2fr',
-          gap: '35px',
-          marginBottom: '40px',
+          gridTemplateColumns: isMobile ? '1fr' : '280px 2.2fr 1.2fr 1.2fr',
+          gap: isMobile ? '10px' : '35px',
+          marginBottom: isMobile ? '12px' : '40px',
           textAlign: 'left'
         }}>
           {/* Column 1: Logo & Tagline Description */}
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '18px' }}>
-              <img src={logoSrc} alt="Winera International" style={{ height: '62px', maxWidth: '240px', objectFit: 'contain' }} />
+          <div className="winera-footer-brand-col">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: isMobile ? '8px' : '18px' }}>
+              <img src={logoSrc} alt="Winera International" style={{ height: isMobile ? '48px' : '62px', maxWidth: '240px', objectFit: 'contain' }} />
             </div>
-            <p style={{ fontSize: '13px', color: '#334155', fontWeight: '500', lineHeight: 1.6, maxWidth: '310px', margin: '0 0 24px' }}>
+            <p style={{ fontSize: '13px', color: '#334155', fontWeight: '500', lineHeight: 1.5, maxWidth: '310px', margin: isMobile ? '0 0 8px' : '0 0 24px' }}>
               {tagline}
             </p>
           </div>
 
           {/* Column 2: Product Categories */}
-          <div>
-            <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '18px' }}>
-              Product
-            </h4>
-            <div className="winera-footer-menu-grid winera-footer-product-links" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 20px' }}>
+          <div className="winera-footer-col">
+            <div
+              className={`winera-footer-col-header ${openSections.product ? 'is-open' : 'is-closed'}`}
+              onClick={() => toggleSection('product')}
+            >
+              <h4 style={{ fontSize: isMobile ? '21px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+                Product
+              </h4>
+              {isMobile && (
+                <ChevronDown
+                  className="winera-footer-chevron"
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    transform: openSections.product ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.25s ease',
+                    color: '#0284c7'
+                  }}
+                />
+              )}
+            </div>
+            <div
+              className={`winera-footer-dropdown-content winera-footer-menu-grid winera-footer-product-links ${isMobile && !openSections.product ? 'is-closed' : 'is-open'}`}
+              style={{
+                display: isMobile && !openSections.product ? 'none' : 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: isMobile ? '8px 14px' : '10px 20px',
+                padding: isMobile ? '4px 0 10px' : '0'
+              }}
+            >
               {productLinks.map((prod, idx) => (
                 <a
                   key={idx}
@@ -111,11 +160,36 @@ export default function Footer({ footerData }) {
           </div>
 
           {/* Column 3: Quick Links */}
-          <div>
-            <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '18px' }}>
-              Quick Links
-            </h4>
-            <div className="winera-footer-menu-grid winera-footer-quick-links" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div className="winera-footer-col">
+            <div
+              className={`winera-footer-col-header ${openSections.quick ? 'is-open' : 'is-closed'}`}
+              onClick={() => toggleSection('quick')}
+            >
+              <h4 style={{ fontSize: isMobile ? '21px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+                Quick Links
+              </h4>
+              {isMobile && (
+                <ChevronDown
+                  className="winera-footer-chevron"
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    transform: openSections.quick ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.25s ease',
+                    color: '#0284c7'
+                  }}
+                />
+              )}
+            </div>
+            <div
+              className={`winera-footer-dropdown-content winera-footer-menu-grid winera-footer-quick-links ${isMobile && !openSections.quick ? 'is-closed' : 'is-open'}`}
+              style={{
+                display: isMobile && !openSections.quick ? 'none' : 'flex',
+                flexDirection: isMobile ? 'column' : 'column',
+                gap: isMobile ? '8px 14px' : '10px',
+                padding: isMobile ? '4px 0 10px' : '0'
+              }}
+            >
               {quickLinks.map((item, idx) => (
                 <a
                   key={idx}
@@ -135,11 +209,36 @@ export default function Footer({ footerData }) {
           </div>
 
           {/* Column 4: Resources */}
-          <div>
-            <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '18px' }}>
-              Resources
-            </h4>
-            <div className="winera-footer-menu-grid winera-footer-resource-links" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div className="winera-footer-col">
+            <div
+              className={`winera-footer-col-header ${openSections.resource ? 'is-open' : 'is-closed'}`}
+              onClick={() => toggleSection('resource')}
+            >
+              <h4 style={{ fontSize: isMobile ? '21px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+                Resources
+              </h4>
+              {isMobile && (
+                <ChevronDown
+                  className="winera-footer-chevron"
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    transform: openSections.resource ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.25s ease',
+                    color: '#0284c7'
+                  }}
+                />
+              )}
+            </div>
+            <div
+              className={`winera-footer-dropdown-content winera-footer-menu-grid winera-footer-resource-links ${isMobile && !openSections.resource ? 'is-closed' : 'is-open'}`}
+              style={{
+                display: isMobile && !openSections.resource ? 'none' : 'flex',
+                flexDirection: isMobile ? 'column' : 'column',
+                gap: isMobile ? '8px 14px' : '10px',
+                padding: isMobile ? '4px 0 10px' : '0'
+              }}
+            >
               {resourceLinks.map((item, idx) => (
                 <a
                   key={idx}
@@ -163,17 +262,18 @@ export default function Footer({ footerData }) {
         <div className="winera-footer-social-contact" style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: '30px',
+          justifyContent: isMobile ? 'center' : 'space-between',
+          flexDirection: isMobile ? 'column' : 'row',
+          marginBottom: isMobile ? '12px' : '30px',
           flexWrap: 'wrap',
-          gap: '20px'
+          gap: isMobile ? '14px' : '20px'
         }}>
           {/* Left Social Media Circular Buttons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '10px' : '14px' }}>
             {/* Facebook */}
             <a href="https://facebook.com" target="_blank" rel="noreferrer" style={{
-              width: '38px',
-              height: '38px',
+              width: isMobile ? '34px' : '38px',
+              height: isMobile ? '34px' : '38px',
               borderRadius: '50%',
               background: '#2563eb',
               color: '#ffffff',
@@ -181,7 +281,7 @@ export default function Footer({ footerData }) {
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: '900',
-              fontSize: '16px',
+              fontSize: isMobile ? '14px' : '16px',
               textDecoration: 'none'
             }}>
               f
@@ -189,8 +289,8 @@ export default function Footer({ footerData }) {
 
             {/* Instagram Gradient */}
             <a href="https://instagram.com" target="_blank" rel="noreferrer" style={{
-              width: '38px',
-              height: '38px',
+              width: isMobile ? '34px' : '38px',
+              height: isMobile ? '34px' : '38px',
               borderRadius: '50%',
               background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
               color: '#ffffff',
@@ -199,7 +299,7 @@ export default function Footer({ footerData }) {
               justifyContent: 'center',
               textDecoration: 'none'
             }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width={isMobile ? "18" : "20"} height={isMobile ? "18" : "20"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -208,8 +308,8 @@ export default function Footer({ footerData }) {
 
             {/* Youtube Red */}
             <a href="https://youtube.com" target="_blank" rel="noreferrer" style={{
-              width: '38px',
-              height: '38px',
+              width: isMobile ? '34px' : '38px',
+              height: isMobile ? '34px' : '38px',
               borderRadius: '50%',
               background: '#ef4444',
               color: '#ffffff',
@@ -218,15 +318,15 @@ export default function Footer({ footerData }) {
               justifyContent: 'center',
               textDecoration: 'none'
             }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <svg width={isMobile ? "18" : "20"} height={isMobile ? "18" : "20"} viewBox="0 0 24 24" fill="currentColor">
                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
               </svg>
             </a>
 
             {/* X / Twitter Black */}
             <a href="https://x.com" target="_blank" rel="noreferrer" style={{
-              width: '38px',
-              height: '38px',
+              width: isMobile ? '34px' : '38px',
+              height: isMobile ? '34px' : '38px',
               borderRadius: '50%',
               background: '#0f172a',
               color: '#ffffff',
@@ -234,7 +334,7 @@ export default function Footer({ footerData }) {
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: '900',
-              fontSize: '15px',
+              fontSize: isMobile ? '13px' : '15px',
               textDecoration: 'none'
             }}>
               𝕏
@@ -242,21 +342,42 @@ export default function Footer({ footerData }) {
           </div>
 
           {/* Right Get in Touch Contact Phone/Email Bar */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
-            <h5 style={{ fontSize: '1rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+          <div className="winera-footer-contact-block" style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: isMobile ? 'center' : 'flex-start',
+            textAlign: isMobile ? 'center' : 'left',
+            gap: '6px'
+          }}>
+            <h5 style={{ fontSize: isMobile ? '18px' : '1rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
               Get in Touch
             </h5>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
-              <a href={`tel:${phone1.replace(/\s+/g, '')}`} style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-                <Phone style={{ width: '16px', height: '16px', color: '#0f172a' }} />
-                <span>{phone1}</span>
-              </a>
-              <a href={`tel:${phone2.replace(/\s+/g, '')}`} style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-                <Phone style={{ width: '16px', height: '16px', color: '#0f172a' }} />
-                <span>{phone2}</span>
-              </a>
-              <a href={`mailto:${email}`} style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-                <Mail style={{ width: '16px', height: '16px', color: '#0f172a' }} />
+            <div className="winera-footer-contact-links" style={{
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              alignItems: 'center',
+              gap: isMobile ? '6px' : '24px',
+              flexWrap: 'wrap'
+            }}>
+              <div className="winera-footer-phones-row" style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '14px',
+                flexWrap: 'nowrap'
+              }}>
+                <a href={`tel:${phone1.replace(/\s+/g, '')}`} style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '5px', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+                  <Phone style={{ width: '15px', height: '15px', color: '#0f172a' }} />
+                  <span>{phone1}</span>
+                </a>
+                <a href={`tel:${phone2.replace(/\s+/g, '')}`} style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '5px', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+                  <Phone style={{ width: '15px', height: '15px', color: '#0f172a' }} />
+                  <span>{phone2}</span>
+                </a>
+              </div>
+              <a href={`mailto:${email}`} style={{ fontSize: '13px', color: '#334155', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '5px', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+                <Mail style={{ width: '15px', height: '15px', color: '#0f172a' }} />
                 <span>{email}</span>
               </a>
             </div>
@@ -265,10 +386,10 @@ export default function Footer({ footerData }) {
 
         {/* Bottom Copyright Divider & Text */}
         <div style={{
-          paddingTop: '20px',
+          paddingTop: isMobile ? '10px' : '20px',
           borderTop: '1px solid rgba(15, 23, 42, 0.12)',
           textAlign: 'center',
-          fontSize: '12px',
+          fontSize: '11.5px',
           color: '#475569',
           fontWeight: '500'
         }}>
