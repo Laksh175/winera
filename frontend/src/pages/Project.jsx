@@ -14,7 +14,7 @@ import projectImage01 from '../assets/project-image01.webp';
 import projectImage3 from '../assets/project-image-3.webp';
 import projectImage4 from '../assets/project-image-4.webp';
 import projectCtaBg from '../assets/project-cta-bg.webp';
-import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
+import { ArrowRight, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
 
 const resolveProjectImg = (proj) => {
   const slug = (proj?.slug || '').toLowerCase();
@@ -286,6 +286,29 @@ export default function Project({ siteData }) {
     ? projectList
     : projectList.filter(p => (p.category || "").toLowerCase().includes(activeCategory.toLowerCase()));
 
+  // Responsive initial load limit: 3 on mobile (<768px), 6 on desktop
+  const getInitialLimit = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      return 3;
+    }
+    return 6;
+  };
+
+  const [visibleCount, setVisibleCount] = useState(getInitialLimit);
+
+  // Reset visible projects count on category tab change
+  useEffect(() => {
+    setVisibleCount(getInitialLimit());
+  }, [activeCategory]);
+
+  const visibleProjects = filteredProjects.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredProjects.length;
+
+  const handleLoadMore = () => {
+    const step = typeof window !== 'undefined' && window.innerWidth < 768 ? 3 : 6;
+    setVisibleCount(prev => prev + step);
+  };
+
   const categoryTabsRef = useRef(null);
   const categoryBtnRefs = useRef({});
 
@@ -481,7 +504,7 @@ export default function Project({ siteData }) {
           }}
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((proj, idx) => {
+            {visibleProjects.map((proj, idx) => {
               const isLeft = idx % 3 === 0;
               const isRight = idx % 3 === 2;
               const startX = isLeft ? -70 : (isRight ? 70 : 0);
@@ -536,17 +559,17 @@ export default function Project({ siteData }) {
                     <div style={{
                       position: 'absolute',
                       inset: 0,
-                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.85) 100%)',
+                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 25%, rgba(0,0,0,0.55) 65%, rgba(0,0,0,0.92) 100%)',
                       display: 'flex',
                       alignItems: 'flex-end',
                       justifyContent: 'space-between',
                       padding: '24px 26px'
                     }}>
                       <div style={{ textAlign: 'left' }}>
-                        <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#ffffff', marginBottom: '4px', textShadow: '0 2px 6px rgba(0,0,0,0.6)' }}>
+                        <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#ffffff', marginBottom: '4px', textShadow: '0 2px 8px rgba(0,0,0,0.85)' }}>
                           {proj.name}
                         </h3>
-                        <p style={{ fontSize: '12.5px', color: '#cbd5e1', fontWeight: '600', margin: 0, textTransform: 'capitalize' }}>
+                        <p className="winera-project-card-location" style={{ fontSize: '13.5px', color: '#f8fafc', fontWeight: '700', margin: 0, textTransform: 'capitalize', textShadow: '0 2px 5px rgba(0,0,0,0.95)', letterSpacing: '0.2px' }}>
                           {proj.city}, {proj.state}
                         </p>
                       </div>
@@ -578,6 +601,37 @@ export default function Project({ siteData }) {
             })}
           </AnimatePresence>
         </motion.div>
+
+        {/* LOAD MORE BUTTON */}
+        {hasMore && (
+          <div style={{ textAlign: 'center', marginTop: '45px', marginBottom: '10px' }}>
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: '0 12px 28px rgba(0, 168, 255, 0.45)' }}
+              whileTap={{ scale: 0.96 }}
+              onClick={handleLoadMore}
+              className="winera-project-load-more-btn"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                padding: '13px 36px',
+                borderRadius: '50px',
+                background: 'linear-gradient(135deg, #00a8ff 0%, #0284c7 100%)',
+                color: '#ffffff',
+                fontSize: '15.5px',
+                fontWeight: '700',
+                border: 'none',
+                cursor: 'pointer',
+                boxShadow: '0 6px 20px rgba(0, 168, 255, 0.35)',
+                transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
+              }}
+            >
+              <span>Load More Projects</span>
+              <ChevronDown style={{ width: '18px', height: '18px', strokeWidth: 2.5 }} />
+            </motion.button>
+          </div>
+        )}
       </section>
 
       {/* 4. CTA BANNER SECTION */}

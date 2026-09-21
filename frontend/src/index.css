@@ -15919,3 +15919,29 @@ button[style*="background:transparent"]:hover,
     display: inline !important;
   }
 }
+
+/* Project Card Location & Load More Button Styles */
+.winera-project-card-location {
+  color: #f8fafc !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95) !important;
+  letter-spacing: 0.2px !important;
+  opacity: 1 !important;
+}
+
+.winera-project-load-more-btn {
+  background: linear-gradient(135deg, #00a8ff 0%, #0284c7 100%) !important;
+  box-shadow: 0 6px 20px rgba(0, 168, 255, 0.35) !important;
+  color: #ffffff !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.winera-project-load-more-btn:hover {
+  transform: translateY(-2px) scale(1.04) !important;
+  box-shadow: 0 12px 28px rgba(0, 168, 255, 0.45) !important;
+}
+
+.winera-project-load-more-btn:active {
+  transform: translateY(0) scale(0.96) !important;
+}
