@@ -6916,7 +6916,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
                 <input
                   type="text"
-                  value={formData.softplayTypes?.title || 'Types of Soft Play Zones *We<br />Design & Install*'}
+                  value={formData.softplayTypes?.title || 'Types of Soft Play Zones<br />*We Design & Install*'}
                   onChange={(e) => handleFieldChange('softplayTypes', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -15740,16 +15740,145 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
             </div>
           )}
-          {activeSection === 'founder' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '800px' }}>
-              <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Founder Profile Details</h3>
-                <p style={{ fontSize: '12.5px', color: '#64748b', margin: '3px 0 0' }}>Manage Founder details shown on the About Us page.</p>
-              </div>
+          {activeSection === 'founder' && (() => {
+            const defaultBio = "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.";
 
-              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '28px', display: 'flex', flexDirection: 'column', gap: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
-                {/* Founder Heading Title */}
-                <div>
+            const getFounderProfiles = () => {
+              if (Array.isArray(formData.founder?.items) && formData.founder.items.length > 0) {
+                return formData.founder.items;
+              }
+              return [
+                {
+                  name: formData.founder?.name || 'Mr. Unnit Jogani',
+                  image: formData.founder?.image || '',
+                  yearsOfExperience: formData.founder?.yearsOfExperience || '14+',
+                  linkedinUrl: formData.founder?.linkedinUrl || 'https://linkedin.com',
+                  aboutDetails: formData.founder?.aboutDetails !== undefined ? formData.founder.aboutDetails : defaultBio
+                },
+                {
+                  name: formData.founder?.name || 'Mr. Unnit Jogani',
+                  image: formData.founder?.image || '',
+                  yearsOfExperience: formData.founder?.yearsOfExperience || '14+',
+                  linkedinUrl: formData.founder?.linkedinUrl || 'https://linkedin.com',
+                  aboutDetails: formData.founder?.aboutDetails !== undefined ? formData.founder.aboutDetails : defaultBio
+                },
+                {
+                  name: formData.founder?.name || 'Mr. Unnit Jogani',
+                  image: formData.founder?.image || '',
+                  yearsOfExperience: formData.founder?.yearsOfExperience || '14+',
+                  linkedinUrl: formData.founder?.linkedinUrl || 'https://linkedin.com',
+                  aboutDetails: formData.founder?.aboutDetails !== undefined ? formData.founder.aboutDetails : defaultBio
+                }
+              ];
+            };
+
+            const founderProfiles = getFounderProfiles();
+
+            const handleAddProfile = () => {
+              const currentList = Array.isArray(formData.founder?.items) && formData.founder.items.length > 0
+                ? [...formData.founder.items]
+                : [...founderProfiles];
+              
+              const newProfile = {
+                name: '',
+                image: '',
+                yearsOfExperience: '10+',
+                linkedinUrl: 'https://linkedin.com',
+                aboutDetails: ''
+              };
+
+              const updated = [...currentList, newProfile];
+              setFormData(prev => ({
+                ...prev,
+                founder: {
+                  ...(prev.founder || {}),
+                  items: updated
+                }
+              }));
+              setStatusMsg(`Added new founder profile card #${updated.length}!`);
+              setTimeout(() => {
+                const el = document.getElementById(`founder-card-${updated.length - 1}`);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }, 100);
+            };
+
+            const handleRemoveProfile = (indexToRemove) => {
+              const currentList = Array.isArray(formData.founder?.items) && formData.founder.items.length > 0
+                ? [...formData.founder.items]
+                : [...founderProfiles];
+              const updated = currentList.filter((_, i) => i !== indexToRemove);
+              setFormData(prev => ({
+                ...prev,
+                founder: {
+                  ...(prev.founder || {}),
+                  items: updated
+                }
+              }));
+              setStatusMsg(`Removed profile #${indexToRemove + 1}.`);
+            };
+
+            const handleProfileFieldChange = (profileIdx, fieldName, value) => {
+              const currentList = Array.isArray(formData.founder?.items) && formData.founder.items.length > 0
+                ? [...formData.founder.items]
+                : [...founderProfiles];
+              const updated = [...currentList];
+              updated[profileIdx] = {
+                ...updated[profileIdx],
+                [fieldName]: value
+              };
+              setFormData(prev => ({
+                ...prev,
+                founder: {
+                  ...(prev.founder || {}),
+                  items: updated
+                }
+              }));
+            };
+
+            const handleSaveAll = async () => {
+              const payload = {
+                headingTitle: formData.founder?.headingTitle || 'OUR *FOUNDER*',
+                items: founderProfiles,
+                name: founderProfiles[0]?.name || 'Mr. Unnit Jogani',
+                image: founderProfiles[0]?.image || '',
+                yearsOfExperience: founderProfiles[0]?.yearsOfExperience || '14+',
+                linkedinUrl: founderProfiles[0]?.linkedinUrl || 'https://linkedin.com',
+                aboutDetails: founderProfiles[0]?.aboutDetails !== undefined ? founderProfiles[0].aboutDetails : defaultBio
+              };
+              await persistSectionToDatabase('founder', payload);
+            };
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '850px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+                  <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Founder & Leadership Profiles ({founderProfiles.length})</h3>
+                    <p style={{ fontSize: '12.5px', color: '#64748b', margin: '3px 0 0' }}>Manage Founder profiles shown in the slider on the About Us page.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddProfile}
+                    style={{
+                      background: '#0284c7',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '10px 20px',
+                      borderRadius: '12px',
+                      fontWeight: '800',
+                      fontSize: '13.5px',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '7px',
+                      boxShadow: '0 4px 14px rgba(2, 132, 199, 0.3)'
+                    }}
+                  >
+                    <Plus style={{ width: '17px', height: '17px' }} /> Add Founder Profile
+                  </button>
+                </div>
+
+                {/* Founder Section Heading Title */}
+                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 14px rgba(0,0,0,0.02)' }}>
                   <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                     Section Heading Title (Use *word* for Cyan Accent)
                   </label>
@@ -15761,100 +15890,138 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
 
-                {/* Founder Image Upload */}
-                <div>
-                  <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
-                    Founder Photo (Saved on Server) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
-                  </label>
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                    <label style={{
-                      background: '#38bdf8',
-                      color: '#fff',
-                      padding: '10px 18px',
+                {/* Profiles List */}
+                {founderProfiles.map((item, idx) => (
+                  <div id={`founder-card-${idx}`} key={idx} style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '18px', boxShadow: '0 8px 24px rgba(0,0,0,0.02)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f1f5f9', paddingBottom: '12px' }}>
+                      <span style={{ fontWeight: '800', fontSize: '15px', color: '#0f172a' }}>Profile #{idx + 1}: {item.name ? item.name : <em style={{ color: '#94a3b8', fontWeight: '500' }}>New Profile (Empty Name)</em>}</span>
+                      {founderProfiles.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveProfile(idx)}
+                          style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                        >
+                          Remove Profile
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Founder Photo Upload */}
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
+                        Founder Photo <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📐 600 × 500 px</span>
+                      </label>
+                      <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                        <label style={{
+                          background: '#38bdf8',
+                          color: '#fff',
+                          padding: '8px 16px',
+                          borderRadius: '10px',
+                          fontWeight: '700',
+                          fontSize: '12.5px',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}>
+                          <Upload style={{ width: '15px', height: '15px' }} /> Upload Photo
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={async (e) => {
+                              const file = e.target.files[0];
+                              if (!file) return;
+                              setStatusMsg(`Uploading photo for profile #${idx + 1}...`);
+                              try {
+                                const res = await uploadImageFile(file, admin.token);
+                                handleProfileFieldChange(idx, 'image', res.url);
+                                setStatusMsg(`Photo uploaded for profile #${idx + 1}!`);
+                              } catch (err) {
+                                setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                              }
+                            }}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                        <img src={item.image || founderUnnit} alt="Preview" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #38bdf8' }} />
+                      </div>
+                    </div>
+
+                    {/* Name & Experience */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Founder Name</label>
+                        <input
+                          type="text"
+                          value={item.name || ''}
+                          onChange={(e) => handleProfileFieldChange(idx, 'name', e.target.value)}
+                          placeholder="e.g. Mr. Unnit Jogani"
+                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '13.5px' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Years of Experience</label>
+                        <input
+                          type="text"
+                          value={item.yearsOfExperience || ''}
+                          onChange={(e) => handleProfileFieldChange(idx, 'yearsOfExperience', e.target.value)}
+                          placeholder="e.g. 14+"
+                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '13.5px' }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* LinkedIn Link */}
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>LinkedIn Profile Link</label>
+                      <input
+                        type="text"
+                        value={item.linkedinUrl || ''}
+                        onChange={(e) => handleProfileFieldChange(idx, 'linkedinUrl', e.target.value)}
+                        placeholder="https://linkedin.com/in/..."
+                        style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '13.5px' }}
+                      />
+                    </div>
+
+                    {/* Biography */}
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Biography / About Details</label>
+                      <textarea
+                        rows={4}
+                        value={item.aboutDetails !== undefined ? item.aboutDetails : defaultBio}
+                        onChange={(e) => handleProfileFieldChange(idx, 'aboutDetails', e.target.value)}
+                        placeholder="Enter founder biography & details..."
+                        style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.6 }}
+                      />
+                    </div>
+                  </div>
+                ))}
+
+                {/* Bottom Actions */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px', flexWrap: 'wrap', gap: '12px' }}>
+                  <button
+                    type="button"
+                    onClick={handleAddProfile}
+                    style={{
+                      background: '#f1f5f9',
+                      color: '#0284c7',
+                      border: '1.5px solid #cbd5e1',
+                      padding: '11px 20px',
                       borderRadius: '12px',
                       fontWeight: '800',
-                      fontSize: '13px',
+                      fontSize: '13.5px',
                       cursor: 'pointer',
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      <Upload style={{ width: '16px', height: '16px' }} /> Choose Founder Photo
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading founder photo...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updatedFounder = { ...(formData.founder || {}), image: res.url };
-                            setFormData(prev => ({ ...prev, founder: updatedFounder }));
-                            await persistSectionToDatabase('founder', updatedFounder);
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                    <img src={formData.founder?.image || founderUnnit} alt="Founder Preview" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #38bdf8' }} />
-                  </div>
-                </div>
-
-                {/* Founder Name & Experience */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Founder Name</label>
-                    <input
-                      type="text"
-                      value={formData.founder?.name || 'Mr. Unnit Jogani'}
-                      onChange={(e) => setFormData(prev => ({ ...prev, founder: { ...(prev.founder || {}), name: e.target.value } }))}
-                      placeholder="e.g. Mr. Unnit Jogani"
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Years of Experience</label>
-                    <input
-                      type="text"
-                      value={formData.founder?.yearsOfExperience || '14+'}
-                      onChange={(e) => setFormData(prev => ({ ...prev, founder: { ...(prev.founder || {}), yearsOfExperience: e.target.value } }))}
-                      placeholder="e.g. 14+"
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px' }}
-                    />
-                  </div>
-                </div>
-
-                {/* LinkedIn Profile Link */}
-                <div>
-                  <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>LinkedIn Profile Link</label>
-                  <input
-                    type="text"
-                    value={formData.founder?.linkedinUrl || 'https://linkedin.com'}
-                    onChange={(e) => setFormData(prev => ({ ...prev, founder: { ...(prev.founder || {}), linkedinUrl: e.target.value } }))}
-                    placeholder="https://linkedin.com/in/..."
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '14px' }}
-                  />
-                </div>
-
-                {/* Founder About Details */}
-                <div>
-                  <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Founder's About Details</label>
-                  <textarea
-                    rows={5}
-                    value={formData.founder?.aboutDetails !== undefined ? formData.founder.aboutDetails : "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd. One of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing WinEra in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader successfully delivering projects across India with an uncompromising focus on quality, safety, and client satisfaction."}
-                    onChange={(e) => setFormData(prev => ({ ...prev, founder: { ...(prev.founder || {}), aboutDetails: e.target.value } }))}
-                    placeholder="Enter founder biography & details..."
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                  />
-                </div>
-
-                {/* Save Button */}
-                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                      gap: '7px'
+                    }}
+                  >
+                    <Plus style={{ width: '17px', height: '17px' }} /> Add Another Founder Profile
+                  </button>
                   <button
-                    onClick={() => persistSectionToDatabase('founder', formData.founder || {})}
+                    type="button"
+                    onClick={handleSaveAll}
+                    disabled={loadingSection === 'founder'}
                     style={{
                       background: '#38bdf8',
                       color: '#ffffff',
@@ -15864,15 +16031,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       fontWeight: '900',
                       fontSize: '14px',
                       cursor: 'pointer',
-                      boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                      boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)',
+                      opacity: loadingSection === 'founder' ? 0.7 : 1
                     }}
                   >
-                    Save Founder Profile
+                    {loadingSection === 'founder' ? 'Saving to Database...' : 'Save Founder Profiles'}
                   </button>
                 </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* CONTACT INFO & FORM SECTION */}
           {activeSection === 'contactPage' && (

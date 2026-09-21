@@ -3,6 +3,17 @@ import homeLeftArrow from '../assets/home-page-left-arrow.png';
 import homeRightArrow from '../assets/home-page-right-arrow.png';
 import homeRightSign from '../assets/home-right-sign.webp';
 
+const renderTextWithBreaks = (text) => {
+  if (!text || typeof text !== 'string') return text;
+  const lines = text.split(/<br\s*\/?>/gi);
+  return lines.map((line, idx) => (
+    <React.Fragment key={idx}>
+      {idx > 0 && <br />}
+      {line}
+    </React.Fragment>
+  ));
+};
+
 export default function WhyChooseUsMobileSlider({ items = [], customIcon, renderIcon }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const touchStartRef = useRef(0);
@@ -119,12 +130,12 @@ export default function WhyChooseUsMobileSlider({ items = [], customIcon, render
           <div className="winera-why-us-card-header">
             {renderCardIcon()}
             <h4 className="winera-why-us-card-title">
-              {currentItem.title}
+              {renderTextWithBreaks(currentItem.title)}
             </h4>
           </div>
 
           <p className="winera-why-us-card-desc">
-            {currentItem.desc || currentItem.description || currentItem.text}
+            {renderTextWithBreaks(currentItem.desc || currentItem.description || currentItem.text)}
           </p>
         </div>
 

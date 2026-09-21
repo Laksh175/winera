@@ -83,6 +83,7 @@ import { useVideoModal } from '../context/VideoModalContext';
 export default function SoftPlay({ siteData }) {
   const { openVideoModal } = useVideoModal();
   const [visibleCount, setVisibleCount] = useState(1);
+  const [openMaterialIndex, setOpenMaterialIndex] = useState(0);
   const typesSectionRef = useRef(null);
   const softplaySeo = siteData?.softplaySeo || {
     pageTitle: "Top Soft Play Equipment Manufacturers in India | Winera International",
@@ -187,12 +188,10 @@ export default function SoftPlay({ siteData }) {
                 height={10}
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 className="winera-softplay-supplier-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 <span style={{ color: '#38bdf8' }}>Indoor Soft Play</span>
                 <br />
-                <span style={{ whiteSpace: 'nowrap' }}>Equipment Manufacturer</span>
-                <br />
-                <span>in India</span>
+                <span>Equipment Manufacturer in India</span>
               </h2>
             </div>
 
@@ -317,13 +316,13 @@ export default function SoftPlay({ siteData }) {
           justifyContent: 'space-between'
         }}>
           {/* Top Title: Technical Specifications */}
-          <div style={{ position: 'relative', display: 'inline-block', marginBottom: '35px' }}>
+          <div className="winera-softplay-specs-title-box" style={{ position: 'relative', display: 'inline-block', marginBottom: '35px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
               style={{ display: 'block', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
+            <h2 className="winera-softplay-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', lineHeight: 1.15, margin: '0 0 24px 0', whiteSpace: 'nowrap' }}>
               {renderTitleMarkup(siteData?.softplaySpecs?.title, "*Technical* Specifications", "#ffcd00")}
             </h2>
           </div>
@@ -420,25 +419,75 @@ export default function SoftPlay({ siteData }) {
               </div>
             </div>
 
-            {/* Right Column: Subpoints List Vertically Centered */}
-            <div className="winera-softplay-materials-points" style={{ display: 'flex', flexDirection: 'column', gap: '22px', justifyContent: 'center' }}>
-              {(Array.isArray(siteData?.softplayMaterials?.subpoints) && siteData.softplayMaterials.subpoints.length > 0
-                ? siteData.softplayMaterials.subpoints
-                : defaultMaterialsSubpoints
-              ).map((item, idx) => (
-                <div key={idx} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  {/* Home Page Icon */}
-                  <img src={homePageIcon} alt="" style={{ width: '16px', height: '16px', marginTop: '3px', objectFit: 'contain', flexShrink: 0 }} />
-                  <div>
-                    <h4 style={{ fontSize: '17px', fontWeight: '600', color: '#0f172a', margin: '0 0 4px 0' }}>
-                      {item.title}
-                    </h4>
-                    <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
-                      {item.desc}
-                    </p>
+            {/* Right Column: Subpoints List (Desktop) & Accordion (Mobile) */}
+            <div className="winera-softplay-materials-points-wrapper" style={{ width: '100%' }}>
+              {/* Desktop View List */}
+              <div className="winera-softplay-materials-points winera-softplay-materials-desktop-list" style={{ display: 'flex', flexDirection: 'column', gap: '22px', justifyContent: 'center' }}>
+                {(Array.isArray(siteData?.softplayMaterials?.subpoints) && siteData.softplayMaterials.subpoints.length > 0
+                  ? siteData.softplayMaterials.subpoints
+                  : defaultMaterialsSubpoints
+                ).map((item, idx) => (
+                  <div key={idx} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    {/* Home Page Icon */}
+                    <img src={homePageIcon} alt="" style={{ width: '16px', height: '16px', marginTop: '3px', objectFit: 'contain', flexShrink: 0 }} />
+                    <div>
+                      <h4 style={{ fontSize: '17px', fontWeight: '600', color: '#0f172a', margin: '0 0 4px 0' }}>
+                        {item.title}
+                      </h4>
+                      <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {/* Mobile View FAQ Dropdown Accordion */}
+              <div className="winera-softplay-materials-mobile-accordion">
+                {(Array.isArray(siteData?.softplayMaterials?.subpoints) && siteData.softplayMaterials.subpoints.length > 0
+                  ? siteData.softplayMaterials.subpoints
+                  : defaultMaterialsSubpoints
+                ).map((item, idx) => {
+                  const isOpen = openMaterialIndex === idx;
+                  return (
+                    <div
+                      key={idx}
+                      className={`winera-softplay-material-accordion-item ${isOpen ? 'is-open' : ''}`}
+                      onClick={() => setOpenMaterialIndex(isOpen ? -1 : idx)}
+                    >
+                      <div className="winera-softplay-material-accordion-header">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1, minWidth: 0 }}>
+                          <img src={homePageIcon} alt="" style={{ width: '15px', height: '15px', objectFit: 'contain', flexShrink: 0 }} />
+                          <h4 style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', margin: 0 }}>
+                            {item.title}
+                          </h4>
+                        </div>
+                        <span className="winera-softplay-accordion-chevron" style={{
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.25s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#0284c7',
+                          flexShrink: 0
+                        }}>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </span>
+                      </div>
+
+                      {isOpen && (
+                        <div className="winera-softplay-material-accordion-body">
+                          <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, margin: 0, fontWeight: '400' }}>
+                            {item.desc}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -460,8 +509,19 @@ export default function SoftPlay({ siteData }) {
               alt=""
               style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.softplayTypes?.title, "Types of Soft Play Zones *We<br />Design & Install*")}
+            <h2 className="winera-softplay-types-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.18, margin: 0 }}>
+              {(() => {
+                let raw = siteData?.softplayTypes?.title;
+                if (!raw || raw === "Types of Soft Play Zones *We<br />Design & Install*") {
+                  raw = "Types of Soft Play Zones<br />*We Design & Install*";
+                } else {
+                  raw = raw.replace(/We\s*<br\s*\/?>\s*Design/gi, 'We Design');
+                  if (!raw.includes('<br')) {
+                    raw = raw.replace(/Zones\s*\*/gi, 'Zones<br />*');
+                  }
+                }
+                return renderTitleMarkup(raw, "Types of Soft Play Zones<br />*We Design & Install*");
+              })()}
             </h2>
           </motion.div>
 
@@ -927,7 +987,8 @@ export default function SoftPlay({ siteData }) {
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+              className="winera-yellow-stroke"
+              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.softplayWhyUs?.title, "Why Choose *Winera International*")}
@@ -1163,7 +1224,7 @@ export default function SoftPlay({ siteData }) {
         align="center"
         buttonTheme="yellow_white"
         buttonBg={getValidImageUrl(siteData?.softplayCta?.btnBg, ctaBtn3)}
-        titleFontSize="35px"
+        titleFontSize="50px"
         titleFontWeight="900"
         subtitleFontSize="15px"
         subtitleFontWeight="500"
@@ -1178,7 +1239,7 @@ export default function SoftPlay({ siteData }) {
         subtitle={
           siteData?.softplayCta?.description !== undefined
             ? siteData.softplayCta.description
-            : "Talk to India's trusted soft play manufacturer<br/>and get a setup made<br/>for your space and budget."
+            : "Talk to India's trusted soft play manufacturer<br/>and get a setup made for your space and budget."
         }
         description={null}
         buttonText={

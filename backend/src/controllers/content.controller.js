@@ -256,11 +256,35 @@ export const defaultSiteData = {
     description: "Our team calculates a complete ROI Blueprint for your space, covering projected footfall, revenue potential, and break-even timeline."
   },
   founder: {
+    headingTitle: "OUR *FOUNDER*",
     name: "Mr. Unnit Jogani",
     image: "",
     aboutDetails: "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.",
     linkedinUrl: "https://linkedin.com",
-    yearsOfExperience: "14+"
+    yearsOfExperience: "14+",
+    items: [
+      {
+        name: "Mr. Unnit Jogani",
+        image: "",
+        aboutDetails: "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.",
+        linkedinUrl: "https://linkedin.com",
+        yearsOfExperience: "14+"
+      },
+      {
+        name: "Mr. Unnit Jogani",
+        image: "",
+        aboutDetails: "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.",
+        linkedinUrl: "https://linkedin.com",
+        yearsOfExperience: "14+"
+      },
+      {
+        name: "Mr. Unnit Jogani",
+        image: "",
+        aboutDetails: "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.",
+        linkedinUrl: "https://linkedin.com",
+        yearsOfExperience: "14+"
+      }
+    ]
   },
   footer: {
     copyrightText: "© 2026 Winera International Pvt. Ltd. All Rights Reserved.",

@@ -19,6 +19,8 @@ import welcomeWineraImg from '../assets/welcome-to-winera.webp';
 import aboutusCtaBg from '../assets/aboutus-cta-bg.webp';
 import arcadeBtn1 from '../assets/arcadegame-button-1.png';
 import arcadeBtn2 from '../assets/arcadegame-button-2.png';
+import homeLeftArrow from '../assets/home-page-left-arrow.png';
+import homeRightArrow from '../assets/home-page-right-arrow.png';
 import { Shield, Users, Target, Eye, TrendingUp, Maximize2, Clock, RefreshCw, Award, Headset, Settings } from 'lucide-react';
 
 const getValidImageUrl = (url, fallback) => {
@@ -72,6 +74,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => 
 };
 
 export default function AboutUs({ siteData }) {
+  const [currentFounderIndex, setCurrentFounderIndex] = React.useState(0);
   const aboutSeo = siteData?.aboutSeo || {
     pageTitle: "The Right Choice for Your Business | Winera International",
     metaDescription: "Winera delivers more than promises trusted expertise, customer care, and quality solutions that set us apart. Discover why clients choose us."
@@ -245,14 +248,41 @@ export default function AboutUs({ siteData }) {
 
             <div className="winera-about-welcome-box-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '28px' }}>
               <MotionCardFlip style={{ position: 'relative', background: '#ffffff', borderRadius: '18px', padding: '20px 22px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
-                <div style={{ color: '#00a8ff', marginBottom: '10px' }}><Shield style={{ width: '24px', height: '24px', fill: '#00a8ff', color: '#00a8ff' }} /></div>
-                <h4 style={{ fontSize: '15px', fontWeight: 600, color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box1Title || "Quality Assurance"}</h4>
-                <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5 }}>{siteData?.aboutWelcome?.box1Desc || "At Winera International, Quality Is Key. Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety. We Don't Just Build Equipment; We Build Experiences You Can Trust."}</p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '8px', marginBottom: '8px' }}>
+                  <h4 style={{ fontSize: '15px', fontWeight: 600, color: '#1e3a8a', margin: 0 }}>
+                    {siteData?.aboutWelcome?.box1Title || "Quality Assurance"}
+                  </h4>
+                  <div style={{ color: '#00a8ff', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+                    <Shield style={{ width: '20px', height: '20px', fill: '#00a8ff', color: '#00a8ff' }} />
+                  </div>
+                </div>
+                <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, margin: 0 }}>
+                  {(siteData?.aboutWelcome?.box1Desc
+                    ? siteData.aboutWelcome.box1Desc
+                        .replace(/Quality Is Key/g, 'quality is key')
+                        .replace(/Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety/g, 'Our lanes, trampolines, soft play, and arcade games are built to last and ensure safety')
+                        .replace(/We Don't Just Build Equipment; We Build Experiences You Can Trust/g, "We don't just build equipment; we build experiences you can trust")
+                    : "At Winera International, quality is key. Our lanes, trampolines, soft play, and arcade games are built to last and ensure safety. We don't just build equipment; we build experiences you can trust."
+                  )}
+                </p>
               </MotionCardFlip>
               <MotionCardFlip style={{ position: 'relative', background: '#ffffff', borderRadius: '18px', padding: '20px 22px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', borderLeft: '4px solid #00a8ff' }}>
-                <div style={{ color: '#00a8ff', marginBottom: '10px' }}><Users style={{ width: '24px', height: '24px', color: '#00a8ff' }} /></div>
-                <h4 style={{ fontSize: '15px', fontWeight: 600, color: '#1e3a8a', marginBottom: '6px' }}>{siteData?.aboutWelcome?.box2Title || "Your Success, Our Commitment"}</h4>
-                <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5 }}>{siteData?.aboutWelcome?.box2Desc || "At Winera International, We Prioritize Your Satisfaction. From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step."}</p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '8px', marginBottom: '8px' }}>
+                  <h4 style={{ fontSize: '15px', fontWeight: 600, color: '#1e3a8a', margin: 0 }}>
+                    {siteData?.aboutWelcome?.box2Title || "Your Success, Our Commitment"}
+                  </h4>
+                  <div style={{ color: '#00a8ff', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+                    <Users style={{ width: '20px', height: '20px', color: '#00a8ff' }} />
+                  </div>
+                </div>
+                <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, margin: 0 }}>
+                  {(siteData?.aboutWelcome?.box2Desc
+                    ? siteData.aboutWelcome.box2Desc
+                        .replace(/We Prioritize Your Satisfaction/g, 'we prioritize your satisfaction')
+                        .replace(/From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step/g, 'From product exploration to final installation and beyond, our dedicated team walks with you at every step')
+                    : "At Winera International, we prioritize your satisfaction. From product exploration to final installation and beyond, our dedicated team walks with you at every step."
+                  )}
+                </p>
               </MotionCardFlip>
             </div>
 
@@ -271,12 +301,12 @@ export default function AboutUs({ siteData }) {
       </section>
 
       {/* 4. STATS & OUR PURPOSE & PROMISE SECTION */}
-      <section className="winera-about-stats-section" style={{ padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center' }}>
-        <div className="winera-about-stats-banner" style={{ background: 'linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%)', padding: '40px 4vw 50px', marginBottom: '50px' }}>
+      <section className="winera-about-stats-section" style={{ padding: '0 0 50px', background: '#F5F5F9', textAlign: 'center', width: '100%', maxWidth: '100%' }}>
+        <div className="winera-about-stats-banner" style={{ width: '100%', maxWidth: '100%', background: 'linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%)', padding: '40px 4vw 50px', marginBottom: '50px' }}>
           <div className="winera-about-stats-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px' }}>
             {(() => {
               const defaultStats = [
-                { number: "14+", label: "YEARS<br/>EXPERIENCE" },
+                { number: "14+", label: "Years of Experience" },
                 { number: "200+", label: "Project Completed" },
                 { number: "98%", label: "Happy Clients" },
                 { number: "50+", label: "Cities Covered" }
@@ -293,20 +323,7 @@ export default function AboutUs({ siteData }) {
 
               const renderStatLabel = (labelStr) => {
                 if (!labelStr || typeof labelStr !== 'string') return labelStr;
-                let formatted = labelStr;
-                if (formatted.toUpperCase() === 'YEARS EXPERIENCE') {
-                  formatted = 'YEARS<br/>EXPERIENCE';
-                } else if (formatted.toUpperCase() === 'YEARS OF EXPERIENCE') {
-                  formatted = 'YEARS OF<br/>EXPERIENCE';
-                } else if (formatted.toUpperCase() === 'CUSTOMER SATISFACTION') {
-                  formatted = 'CUSTOMER<br/>SATISFACTION';
-                }
-                return formatted.split(/<br\s*\/?>|\n/i).map((line, lIdx) => (
-                  <React.Fragment key={lIdx}>
-                    {lIdx > 0 && <br />}
-                    {line}
-                  </React.Fragment>
-                ));
+                return labelStr.replace(/<br\s*\/?>/gi, ' ');
               };
 
               return stats.map((stat, idx) => (
@@ -321,7 +338,7 @@ export default function AboutUs({ siteData }) {
                   <h3 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0284c7', lineHeight: 1, marginBottom: '10px' }}>
                     <CountUpNumber value={stat.number} />
                   </h3>
-                  <p style={{ fontSize: '12.5px', fontWeight: '700', color: 'rgba(110, 120, 129, 1)', lineHeight: 1.3, margin: 0 }}>
+                  <p style={{ fontSize: '12.5px', fontWeight: '700', color: 'rgba(110, 120, 129, 1)', lineHeight: 1.3, margin: 0, whiteSpace: 'nowrap' }}>
                     {renderStatLabel(stat.label)}
                   </p>
                 </div>
@@ -330,22 +347,9 @@ export default function AboutUs({ siteData }) {
           </div>
         </div>
 
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 4vw' }}>
-          <SectionHeading marginBottom="40px" accentWidth="367px" accentMaxWidth="95%" accentHeight="11px" accentMarginBottom="8px" accentAlign="left-inline">
-            {(() => {
-              const rawTitle = siteData?.aboutMissionVision?.title || "*Our Purpose* & Promise";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#00a8ff' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
+        <div className="winera-about-purpose-wrapper" style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 4vw' }}>
+          <SectionHeading marginBottom="40px" accentWidth="367px" accentMaxWidth="95%" accentHeight="11px" accentMarginBottom="8px">
+            {siteData?.aboutMissionVision?.title || "*Our Purpose* & Promise"}
           </SectionHeading>
 
           <div className="winera-about-purpose-grid" style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '50px', alignItems: 'center' }}>
@@ -353,7 +357,8 @@ export default function AboutUs({ siteData }) {
 
             {/* Left Mission Card */}
             <div style={{ position: 'relative', textAlign: 'left' }}>
-              <div style={{ display: 'inline-block', background: '#38bdf8', color: '#ffffff', fontSize: '13px', fontWeight: '800', padding: '6px 28px', borderRadius: '10px 10px 0 0', marginLeft: '50px' }}>
+              {/* Desktop Top Tab */}
+              <div className="winera-about-purpose-tab winera-about-purpose-tab-mission" style={{ display: 'inline-block', background: '#38bdf8', color: '#ffffff', fontSize: '13px', fontWeight: '800', padding: '6px 28px', borderRadius: '10px 10px 0 0', marginLeft: '50px' }}>
                 {siteData?.aboutMissionVision?.missionLabel || "Mission"}
               </div>
               <div style={{
@@ -366,8 +371,18 @@ export default function AboutUs({ siteData }) {
                 color: '#334155',
                 zIndex: 5
               }}>
-                <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                {/* Desktop Icon Only */}
+                <div className="winera-about-purpose-desktop-header" style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
                   <Target style={{ width: '22px', height: '22px', color: '#0284c7' }} />
+                </div>
+                {/* Mobile Header: Icon + Title Side-by-Side */}
+                <div className="winera-about-purpose-mobile-header">
+                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.75)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Target style={{ width: '24px', height: '24px', color: '#0284c7' }} />
+                  </div>
+                  <h3 className="winera-about-purpose-card-title" style={{ fontSize: '24px', fontWeight: 500, color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
+                    {siteData?.aboutMissionVision?.missionLabel || "Mission"}
+                  </h3>
                 </div>
                 <p style={{ fontSize: '15px', fontWeight: '500', color: '#475569', lineHeight: 1.65, margin: 0 }}>
                   {siteData?.aboutMissionVision?.missionText || "We deliver premium-quality game zone and indoor playground solutions to B2B clients across India combining expert design, international equipment, and seamless project execution to create entertainment spaces that last."}
@@ -390,7 +405,8 @@ export default function AboutUs({ siteData }) {
 
             {/* Right Vision Card */}
             <div style={{ position: 'relative', textAlign: 'left' }}>
-              <div style={{ display: 'inline-block', background: '#ffcd00', color: '#0f172a', fontSize: '13px', fontWeight: '800', padding: '6px 28px', borderRadius: '10px 10px 0 0', marginLeft: '50px' }}>
+              {/* Desktop Top Tab */}
+              <div className="winera-about-purpose-tab winera-about-purpose-tab-vision" style={{ display: 'inline-block', background: '#ffcd00', color: '#0f172a', fontSize: '13px', fontWeight: '800', padding: '6px 28px', borderRadius: '10px 10px 0 0', marginLeft: '50px' }}>
                 {siteData?.aboutMissionVision?.visionLabel || "Vision"}
               </div>
               <div style={{
@@ -403,8 +419,18 @@ export default function AboutUs({ siteData }) {
                 color: '#334155',
                 zIndex: 5
               }}>
-                <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                {/* Desktop Icon Only */}
+                <div className="winera-about-purpose-desktop-header" style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
                   <Eye style={{ width: '22px', height: '22px', color: '#854d0e' }} />
+                </div>
+                {/* Mobile Header: Icon + Title Side-by-Side */}
+                <div className="winera-about-purpose-mobile-header">
+                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.75)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Eye style={{ width: '24px', height: '24px', color: '#854d0e' }} />
+                  </div>
+                  <h3 className="winera-about-purpose-card-title" style={{ fontSize: '24px', fontWeight: 500, color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
+                    {siteData?.aboutMissionVision?.visionLabel || "Vision"}
+                  </h3>
                 </div>
                 <p style={{ fontSize: '15px', fontWeight: '500', color: '#475569', lineHeight: 1.65, margin: 0 }}>
                   {siteData?.aboutMissionVision?.visionText || "To be India's most trusted partner in building world-class indoor entertainment destinations where every space we touch becomes a thriving hub of joy, play, and business success."}
@@ -596,11 +622,41 @@ export default function AboutUs({ siteData }) {
                 const styleObj = stylingIcons[idx % 3];
                 const IconComponent = styleObj.icon;
 
+                let previewText = c.desc;
+                let expandedText = '';
+
+                if (c.desc && typeof c.desc === 'string') {
+                  const firstPeriodIdx = c.desc.indexOf('. ');
+                  if (firstPeriodIdx !== -1) {
+                    previewText = c.desc.substring(0, firstPeriodIdx + 1);
+                    expandedText = c.desc.substring(firstPeriodIdx + 1).trim();
+                  }
+                }
+
                 return (
-                  <div key={idx} style={{ background: '#ffffff', borderRadius: '24px', padding: '36px 30px', boxShadow: '0 15px 40px rgba(0, 168, 255, 0.08)', border: '1px solid #f1f5f9' }}>
-                    <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: styleObj.bg, color: styleObj.color, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}><IconComponent style={{ width: '20px', height: '20px' }} /></div>
-                    <h3 style={{ fontSize: '1.4rem', fontWeight: '600', color: '#0f172a', marginBottom: '12px' }}>{c.title}</h3>
-                    <p style={{ fontSize: '12px', color: '#64748b', fontWeight: '500', lineHeight: 1.6 }}>{c.desc}</p>
+                  <div key={idx} className="winera-about-whyus-card" style={{ background: '#ffffff', borderRadius: '24px', padding: '36px 30px', boxShadow: '0 15px 40px rgba(0, 168, 255, 0.08)', border: '1px solid #f1f5f9' }}>
+                    <div className="winera-about-whyus-card-header" style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+                      <div className="winera-about-whyus-card-icon" style={{ width: '36px', height: '36px', borderRadius: '10px', background: styleObj.bg, color: styleObj.color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, margin: 0 }}>
+                        <IconComponent style={{ width: '20px', height: '20px' }} />
+                      </div>
+                      <h3 className="winera-about-whyus-card-title" style={{ fontSize: '1.4rem', fontWeight: '600', color: '#0f172a', margin: 0 }}>{c.title}</h3>
+                    </div>
+                    {expandedText ? (
+                      <MobileExpandableText
+                        preview={
+                          <span style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.6 }}>
+                            {previewText}
+                          </span>
+                        }
+                        expandedContent={
+                          <span style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.6 }}>
+                            {" " + expandedText}
+                          </span>
+                        }
+                      />
+                    ) : (
+                      <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.6, margin: 0 }}>{c.desc}</p>
+                    )}
                   </div>
                 );
               });
@@ -658,107 +714,212 @@ export default function AboutUs({ siteData }) {
         </div>
       </section>
 
-      {/* 6. OUR FOUNDER SECTION */}
-      <section id="founder" style={{ padding: '50px 4vw 50px', background: '#F5F5F9', position: 'relative' }}>
-        <div className="winera-about-founder-grid" style={{ maxWidth: '1180px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: '60px', alignItems: 'center' }}>
-          <div style={{ position: 'relative', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
-            <img
-              src={siteData?.founder?.image || founderUnnit}
-              alt={`${siteData?.founder?.name || 'Mr. Unnit Jogani'} - Founder & CEO`}
-              style={{
-                position: 'relative',
-                zIndex: 10,
-                maxHeight: '460px',
-                width: 'auto',
-                display: 'block',
-                filter: 'drop-shadow(0 15px 35px rgba(0,0,0,0.12))'
-              }}
-            />
-            {/* 14+ Years Experience Circular Badge Attached to Image */}
-            <div
-              className="winera-about-founder-badge"
-              style={{
-                position: 'absolute',
-                bottom: '10px',
-                right: '20px',
-                zIndex: 20,
-                width: '120px',
-                height: '120px',
-                borderRadius: '50%',
-                background: '#ffffff',
-                border: '4px solid #0f172a',
-                boxShadow: '0 12px 30px rgba(0,0,0,0.18)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                padding: '8px'
-              }}
-            >
-              <span style={{ fontSize: '1.9rem', fontWeight: '900', color: '#ec4899', lineHeight: 1 }}>
-                {siteData?.founder?.yearsOfExperience || '14+'}
-              </span>
-              <span style={{ fontSize: '11px', fontWeight: '800', color: '#ec4899', lineHeight: 1.15, marginTop: '2px' }}>
-                Years<br />Experience
-              </span>
-            </div>
-          </div>
-          <div style={{ textAlign: 'left' }}>
-            <SectionHeading align="left" marginBottom="24px" accentWidth="65%" accentMaxWidth="360px">
-              {(() => {
-                const rawTitle = siteData?.founder?.headingTitle || "OUR *FOUNDER*";
-                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-                return parts.map((part, index) => {
-                  if (index % 2 === 1) {
-                    return (
-                      <span key={index} style={{ color: '#00a8ff' }}>
-                        {part}
-                      </span>
-                    );
+      {/* 6. OUR FOUNDER SECTION (SLIDER) */}
+      <section id="founder" style={{ padding: '60px 4vw 70px', background: '#F5F5F9', position: 'relative' }}>
+        {(() => {
+          const defaultBio = "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.";
+
+          const founderData = siteData?.founder || {};
+          const founderHeadingTitle = founderData?.headingTitle || "OUR *FOUNDER*";
+
+          const rawFounderItems = Array.isArray(founderData?.items) && founderData.items.length > 0
+            ? founderData.items
+            : (Array.isArray(siteData?.founders) && siteData.founders.length > 0
+              ? siteData.founders
+              : [
+                  {
+                    name: founderData?.name || 'Mr. Unnit Jogani',
+                    image: founderData?.image || founderUnnit,
+                    yearsOfExperience: founderData?.yearsOfExperience || '14+',
+                    linkedinUrl: founderData?.linkedinUrl || 'https://linkedin.com',
+                    aboutDetails: founderData?.aboutDetails || defaultBio
+                  },
+                  {
+                    name: founderData?.name || 'Mr. Unnit Jogani',
+                    image: founderData?.image || founderUnnit,
+                    yearsOfExperience: founderData?.yearsOfExperience || '14+',
+                    linkedinUrl: founderData?.linkedinUrl || 'https://linkedin.com',
+                    aboutDetails: founderData?.aboutDetails || defaultBio
+                  },
+                  {
+                    name: founderData?.name || 'Mr. Unnit Jogani',
+                    image: founderData?.image || founderUnnit,
+                    yearsOfExperience: founderData?.yearsOfExperience || '14+',
+                    linkedinUrl: founderData?.linkedinUrl || 'https://linkedin.com',
+                    aboutDetails: founderData?.aboutDetails || defaultBio
                   }
-                  return part;
-                });
-              })()}
-            </SectionHeading>
-            <h3 style={{ fontSize: '24px', fontWeight: '700', color: '#0f172a', marginBottom: '14px', lineHeight: 1.3 }}>{siteData?.founder?.name || 'Mr. Unnit Jogani'}</h3>
+                ]);
 
-            <div style={{ color: '#475569', fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '15px' }}>
-              {(() => {
-                const defaultBio = "Mr. Unnit Jogani is the Founder & CEO of Winera International Pvt. Ltd., one of India's most trusted game zone equipment manufacturers and indoor amusement park solution providers.\n\nSince establishing Winera in Surat, Gujarat in 2014, Unnit has led the company's growth from a regional startup to a pan-India B2B leader with an uncompromising focus on quality, safety, and client satisfaction.";
-                let rawText = siteData?.founder?.aboutDetails || defaultBio;
-                const cleanText = rawText.replace(/\*/g, '');
-                const paragraphs = cleanText.split(/\n\s*\n/).filter(p => p.trim() !== '');
+          const safeIndex = currentFounderIndex % rawFounderItems.length;
+          const currentFounder = rawFounderItems[safeIndex] || rawFounderItems[0];
 
-                if (paragraphs.length > 1) {
-                  return (
-                    <MobileExpandableText
-                      preview={<p style={{ margin: '0 0 14px 0', fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500' }}>{paragraphs[0]}</p>}
-                      expandedContent={
-                        paragraphs.slice(1).map((para, pIdx) => (
-                          <p key={pIdx} style={{ margin: '0 0 14px 0', fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500' }}>{para}</p>
-                        ))
+          return (
+            <div className="winera-about-founder-container" style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', padding: '0 25px' }}>
+              {/* Left Side Arrow (Home Page Style) */}
+              {rawFounderItems.length > 1 && (
+                <button
+                  type="button"
+                  aria-label="Previous Founder"
+                  onClick={() => setCurrentFounderIndex((prev) => (prev === 0 ? rawFounderItems.length - 1 : prev - 1))}
+                  className="winera-founder-arrow-left"
+                >
+                  <img src={homeLeftArrow} alt="Previous" style={{ width: '45px', height: 'auto', display: 'block' }} />
+                </button>
+              )}
+
+              {/* Right Side Arrow (Home Page Style) */}
+              {rawFounderItems.length > 1 && (
+                <button
+                  type="button"
+                  aria-label="Next Founder"
+                  onClick={() => setCurrentFounderIndex((prev) => (prev === rawFounderItems.length - 1 ? 0 : prev + 1))}
+                  className="winera-founder-arrow-right"
+                >
+                  <img src={homeRightArrow} alt="Next" style={{ width: '45px', height: 'auto', display: 'block' }} />
+                </button>
+              )}
+
+              {/* Founder Profile Grid */}
+              <div className="winera-about-founder-grid" style={{ maxWidth: '1140px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: '60px', alignItems: 'center' }}>
+                <div style={{ position: 'relative', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
+                  <img
+                    key={safeIndex}
+                    src={getValidImageUrl(currentFounder?.image, founderUnnit)}
+                    alt={`${currentFounder?.name || 'Mr. Unnit Jogani'} - Founder & CEO`}
+                    style={{
+                      position: 'relative',
+                      zIndex: 10,
+                      maxHeight: '460px',
+                      width: 'auto',
+                      display: 'block',
+                      filter: 'drop-shadow(0 15px 35px rgba(0,0,0,0.12))',
+                      animation: 'wineraFadeSlideDown 0.3s ease'
+                    }}
+                  />
+                  {/* 14+ Years Experience Circular Badge Attached to Image */}
+                  <div
+                    className="winera-about-founder-badge"
+                    style={{
+                      position: 'absolute',
+                      bottom: '10px',
+                      right: '20px',
+                      zIndex: 20,
+                      width: '120px',
+                      height: '120px',
+                      borderRadius: '50%',
+                      background: '#ffffff',
+                      border: '4px solid #0f172a',
+                      boxShadow: '0 12px 30px rgba(0,0,0,0.18)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      padding: '8px'
+                    }}
+                  >
+                    <span style={{ fontSize: '1.9rem', fontWeight: '900', color: '#ec4899', lineHeight: 1 }}>
+                      {currentFounder?.yearsOfExperience || '14+'}
+                    </span>
+                    <span style={{ fontSize: '11px', fontWeight: '800', color: '#ec4899', lineHeight: 1.15, marginTop: '2px' }}>
+                      Years<br />Experience
+                    </span>
+                  </div>
+                </div>
+                <div style={{ textAlign: 'left' }}>
+                  <SectionHeading align="left" marginBottom="24px" accentWidth="65%" accentMaxWidth="360px">
+                    {(() => {
+                      const rawTitle = founderHeadingTitle;
+                      const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                      return parts.map((part, index) => {
+                        if (index % 2 === 1) {
+                          return (
+                            <span key={index} style={{ color: '#00a8ff' }}>
+                              {part}
+                            </span>
+                          );
+                        }
+                        return part;
+                      });
+                    })()}
+                  </SectionHeading>
+                  <h3 style={{ fontSize: '24px', fontWeight: '700', color: '#0f172a', marginBottom: '14px', lineHeight: 1.3 }}>
+                    {currentFounder?.name || 'Mr. Unnit Jogani'}
+                  </h3>
+
+                  <div style={{ color: '#475569', fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '24px' }}>
+                    {(() => {
+                      let rawText = currentFounder?.aboutDetails || defaultBio;
+                      const cleanText = rawText.replace(/\*/g, '');
+                      const paragraphs = cleanText.split(/\n\s*\n/).filter(p => p.trim() !== '');
+
+                      if (paragraphs.length > 1) {
+                        return (
+                          <MobileExpandableText
+                            key={safeIndex}
+                            preview={<p style={{ margin: '0 0 14px 0', fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500' }}>{paragraphs[0]}</p>}
+                            expandedContent={
+                              paragraphs.slice(1).map((para, pIdx) => (
+                                <p key={pIdx} style={{ margin: '0 0 14px 0', fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500' }}>{para}</p>
+                              ))
+                            }
+                          />
+                        );
                       }
+
+                      return <p style={{ margin: 0, fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500' }}>{cleanText}</p>;
+                    })()}
+                  </div>
+
+                  <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+                    <a
+                      href={currentFounder?.linkedinUrl || "https://linkedin.com"}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                    >
+                      <span>Linkedin Profile</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Blue Pagination Dots in Bottom Center */}
+              {rawFounderItems.length > 1 && (
+                <div
+                  className="winera-founder-dots"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    marginTop: '36px',
+                    width: '100%'
+                  }}
+                >
+                  {rawFounderItems.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      type="button"
+                      aria-label={`Go to founder slide ${dotIdx + 1}`}
+                      onClick={() => setCurrentFounderIndex(dotIdx)}
+                      style={{
+                        width: safeIndex === dotIdx ? '28px' : '9px',
+                        height: '9px',
+                        borderRadius: '5px',
+                        background: safeIndex === dotIdx ? '#00a8ff' : '#cbd5e1',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: 0,
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                      }}
                     />
-                  );
-                }
-
-                return <p style={{ margin: 0, fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500' }}>{cleanText}</p>;
-              })()}
+                  ))}
+                </div>
+              )}
             </div>
-
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <a
-                href={siteData?.founder?.linkedinUrl || "https://linkedin.com"}
-                target="_blank"
-                rel="noreferrer"
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-              >
-                <span>Linkedin Profile</span>
-              </a>
-            </div>
-          </div>
-        </div>
+          );
+        })()}
       </section>
 
       {/* 7. CTA BANNER SECTION */}
@@ -771,15 +932,11 @@ export default function AboutUs({ siteData }) {
         gradientTitle={true}
         bgUrl={siteData?.aboutCta?.bgUrl !== undefined ? siteData.aboutCta.bgUrl : null}
         bg={aboutusCtaBg}
-        tagline={
-          siteData?.aboutCta?.tagline !== undefined
-            ? siteData.aboutCta.tagline
-            : "Ready To Get Started?"
-        }
+        tagline=""
         title={
-          siteData?.aboutCta?.title !== undefined
+          siteData?.aboutCta?.title && siteData.aboutCta.title !== "Take The Next Step Towards<br />Your Perfect Game Zone" && siteData.aboutCta.title !== "Take The Next Step Towards Your Perfect Game Zone"
             ? siteData.aboutCta.title
-            : "Take The Next Step Towards<br />Your Perfect Game Zone"
+            : "Take The Next Step<br />Towards Your Perfect Game Zone"
         }
         subtitle=""
         description={
@@ -790,7 +947,7 @@ export default function AboutUs({ siteData }) {
         buttonText={
           siteData?.aboutCta?.buttonText !== undefined
             ? siteData.aboutCta.buttonText
-            : "Talk to an ROI Expert"
+            : "Book Consultation"
         }
         buttonLink={
           siteData?.aboutCta?.buttonLink !== undefined

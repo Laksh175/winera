@@ -1209,7 +1209,8 @@ export default function ArcadeGame({ siteData }) {
             <img
               src={yellowBrushAccent}
               alt=""
-              style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+              className="winera-yellow-stroke"
+              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 className="winera-arcade-why-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.arcadeWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}

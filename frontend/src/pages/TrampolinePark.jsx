@@ -377,10 +377,14 @@ export default function TrampolinePark({ siteData }) {
               />
               
               {/* H2 Title */}
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: '0 0 14px 0' }}>
-                <span>{siteData?.trampolineCustom?.title1 || "Custom Trampoline Parks "}</span>
-                <span style={{ color: '#38bdf8' }}>{siteData?.trampolineCustom?.title2 || "by Winera"}</span><br />
-                <span style={{ color: '#38bdf8' }}>{siteData?.trampolineCustom?.title3 || "International"}</span>
+              <h2 className="winera-trampoline-custom-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: '0 0 14px 0' }}>
+                <span>{siteData?.trampolineCustom?.title1?.trim() || "Custom Trampoline Parks"}</span>
+                <br className="winera-tp-title-br" />
+                <span style={{ color: '#38bdf8' }}>
+                  {siteData?.trampolineCustom?.title2 && siteData?.trampolineCustom?.title3
+                    ? `${siteData.trampolineCustom.title2} ${siteData.trampolineCustom.title3}`
+                    : "by Winera International"}
+                </span>
               </h2>
 
               {/* 4-Row Wide Paragraph Text */}
@@ -478,7 +482,8 @@ export default function TrampolinePark({ siteData }) {
           {/* Main Card Wrapper with trampoline-img-3.webp Background */}
           <div className="winera-trampoline-specs-card" style={{
             position: 'relative',
-            width: '91%',
+            width: '100%',
+            maxWidth: '1100px',
             margin: '0 auto',
             minHeight: '540px',
             background: `url(${siteData?.trampolineSpecs?.bgUrl || siteData?.trampolineSpecs?.imgUrl || trampolineImg3}) center center / 100% 100% no-repeat`,
@@ -496,11 +501,12 @@ export default function TrampolinePark({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
+                className="winera-yellow-stroke"
                 style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '8px', objectFit: 'fill', marginLeft: 0 }}
               />
 
-              {/* Title */}
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', margin: '0 0 24px 0', lineHeight: 1.15, width: '500%', maxWidth: '500%' }}>
+              {/* Title - Single Line */}
+              <h2 className="winera-trampoline-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', margin: '0 0 24px 0', lineHeight: 1.15, whiteSpace: 'nowrap' }}>
                 {(() => {
                   let raw = siteData?.trampolineSpecs?.title;
                   if (!raw || raw === "Technical *Specifications*") {
@@ -510,22 +516,24 @@ export default function TrampolinePark({ siteData }) {
                 })()}
               </h2>
 
-              {/* White Specifications Table Card */}
-              <div style={{
+              {/* White Specifications Table Card with Soft Play matching Yellow Border */}
+              <div className="winera-trampoline-specs-table-card" style={{
                 background: '#ffffff',
-                borderRadius: '24px',
-                padding: '24px 30px',
+                borderRadius: '26px',
+                border: '2.5px solid #ffcd00',
+                padding: '12px 26px',
                 boxShadow: '0 12px 35px rgba(0, 0, 0, 0.15)',
                 width: '100%',
-                marginBottom: '28px'
+                boxSizing: 'border-box',
+                marginBottom: '26px'
               }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                   <thead>
-                    <tr style={{ borderBottom: '2px solid #f1f5f9' }}>
-                      <th style={{ textAlign: 'left', padding: '0 0 14px 0', fontSize: '1.25rem', fontWeight: '700', color: '#0f172a', width: '52%' }}>
+                    <tr style={{ borderBottom: '1.5px solid #e2e8f0' }}>
+                      <th style={{ textAlign: 'left', padding: '10px 14px 10px 0', fontSize: '18px', fontWeight: '800', color: '#0f172a', width: '48%' }}>
                         Specification
                       </th>
-                      <th style={{ textAlign: 'left', padding: '0 0 14px 0', fontSize: '1.25rem', fontWeight: '700', color: '#0f172a', width: '48%' }}>
+                      <th style={{ textAlign: 'left', padding: '10px 0 10px 14px', fontSize: '18px', fontWeight: '800', color: '#0f172a', width: '52%' }}>
                         Details
                       </th>
                     </tr>
@@ -544,10 +552,10 @@ export default function TrampolinePark({ siteData }) {
                         ]
                     ).map((row, idx, arr) => (
                       <tr key={idx} style={{ borderBottom: idx === arr.length - 1 ? 'none' : '1px solid #f1f5f9' }}>
-                        <td style={{ padding: '11px 0', fontSize: '14.5px', color: '#475569', fontWeight: '400' }}>
+                        <td style={{ padding: '9px 14px 9px 0', fontSize: '14px', color: '#475569', fontWeight: '400', lineHeight: 1.35, wordBreak: 'break-word' }}>
                           {row.label || row.spec}
                         </td>
-                        <td style={{ padding: '11px 0', fontSize: '14.5px', color: '#0f172a', fontWeight: '400' }}>
+                        <td style={{ padding: '9px 0 9px 14px', fontSize: '14px', color: '#0f172a', fontWeight: '400', lineHeight: 1.35, wordBreak: 'break-word' }}>
                           {row.value || row.details}
                         </td>
                       </tr>
@@ -666,22 +674,7 @@ export default function TrampolinePark({ siteData }) {
               <button
                 onClick={handlePrevZone}
                 aria-label="Previous Zone"
-                style={{
-                  width: '34px',
-                  height: '34px',
-                  borderRadius: '50%',
-                  background: activeZoneIndex === 0 ? 'rgba(255, 255, 255, 0.7)' : '#ffffff',
-                  color: activeZoneIndex === 0 ? '#cbd5e1' : '#475569',
-                  border: '1px solid rgba(203, 213, 225, 0.5)',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '13px',
-                  flexShrink: 0,
-                  transition: 'all 0.2s ease'
-                }}
+                className="winera-trampoline-arrow-btn winera-trampoline-arrow-prev"
               >
                 &#10094;
               </button>
@@ -727,26 +720,11 @@ export default function TrampolinePark({ siteData }) {
                 </div>
               </div>
 
-              {/* Right Arrow Button matching Cyan Circle in Screenshot 1 */}
+              {/* Right Arrow Button */}
               <button
                 onClick={handleNextZone}
                 aria-label="Next Zone"
-                style={{
-                  width: '34px',
-                  height: '34px',
-                  borderRadius: '50%',
-                  background: '#38bdf8',
-                  color: '#ffffff',
-                  border: 'none',
-                  boxShadow: '0 4px 12px rgba(56, 189, 248, 0.4)',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '13px',
-                  flexShrink: 0,
-                  transition: 'all 0.2s ease'
-                }}
+                className="winera-trampoline-arrow-btn winera-trampoline-arrow-next"
               >
                 &#10095;
               </button>
@@ -831,20 +809,20 @@ export default function TrampolinePark({ siteData }) {
               alt=""
               style={{ display: 'inline-block', maxWidth: '95%', width: '480px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#091E2B', lineHeight: 1.18, margin: '0 0 14px 0' }}>
+            <h2 className="winera-trampoline-roi-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#091E2B', lineHeight: 1.18, margin: '0 0 14px 0' }}>
               {(() => {
                 const rawTitle = siteData?.trampolineRoi?.title;
                 if (!rawTitle || rawTitle.includes("Trampoline") || rawTitle.includes("Earn")) {
                   return (
                     <>
                       <span style={{ color: '#091E2B' }}>What Will Your </span>
-                      <span style={{ color: '#38bdf8' }}>Trampoline Park</span>
-                      <br />
-                      <span style={{ color: '#38bdf8' }}>Actually Earn?</span>
+                      <span style={{ color: '#38bdf8' }}>Trampoline</span>
+                      <br className="winera-tp-title-br" />
+                      <span style={{ color: '#38bdf8' }}>Park Actually Earn?</span>
                     </>
                   );
                 }
-                return renderTitleMarkup(rawTitle, "What Will Your *Trampoline Park<br />Actually Earn?*", '#38bdf8');
+                return renderTitleMarkup(rawTitle, "What Will Your *Trampoline<br />Park Actually Earn?*", '#38bdf8');
               })()}
             </h2>
             <p style={{ fontSize: '15px', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
@@ -960,7 +938,8 @@ export default function TrampolinePark({ siteData }) {
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+              className="winera-yellow-stroke"
+              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }} className="winera-why-h2">
               {renderTitleMarkup(siteData?.trampolineWhyChoose?.title, "Why Choose *Winera International*", '#38bdf8')}
@@ -1191,18 +1170,28 @@ export default function TrampolinePark({ siteData }) {
                 WebkitTextFillColor: 'transparent',
                 filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.85))',
                 display: 'inline-block'
-              }} className="winera-cta-h2">
-                <span>
+              }} className="winera-cta-h2 winera-trampoline-cta-h2">
+                <span className="winera-cta-line-1">
                   {(() => {
-                    const raw = siteData?.trampolineCta?.titleLine1 !== undefined ? siteData.trampolineCta.titleLine1 : "Plan Your Trampoline Park";
-                    return !/[a-z]/.test(raw) ? raw.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : raw;
+                    const l1 = siteData?.trampolineCta?.titleLine1 !== undefined ? siteData.trampolineCta.titleLine1 : "Plan Your Trampoline";
+                    const formatted = !/[a-z]/.test(l1) ? l1.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : l1;
+                    if (formatted.toLowerCase().endsWith(" park")) {
+                      return formatted.slice(0, -5).trim();
+                    }
+                    return formatted;
                   })()}
                 </span>
                 <br />
-                <span>
+                <span className="winera-cta-line-2">
                   {(() => {
-                    const raw = siteData?.trampolineCta?.titleLine2 !== undefined ? siteData.trampolineCta.titleLine2 : "With Winera";
-                    return !/[a-z]/.test(raw) ? raw.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : raw;
+                    const l1 = siteData?.trampolineCta?.titleLine1 !== undefined ? siteData.trampolineCta.titleLine1 : "Plan Your Trampoline";
+                    const l2 = siteData?.trampolineCta?.titleLine2 !== undefined ? siteData.trampolineCta.titleLine2 : "With Winera";
+                    const formattedL2 = !/[a-z]/.test(l2) ? l2.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : l2;
+                    if (l1.toLowerCase().endsWith(" park") && !formattedL2.toLowerCase().startsWith("park")) {
+                      const parkWord = l1.endsWith("Park") ? "Park" : (l1.endsWith("PARK") ? "Park" : "park");
+                      return `${parkWord} ${formattedL2}`;
+                    }
+                    return formattedL2;
                   })()}
                 </span>
               </h2>

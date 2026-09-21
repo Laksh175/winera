@@ -456,15 +456,16 @@ export default function BowlingAlley({ siteData }) {
                 <img
                   src={yellowStrokeLine}
                   alt=""
-                  style={{ display: 'block', width: '320px', height: '14px', marginBottom: '10px', objectFit: 'fill' }}
+                  className="winera-yellow-stroke"
+                  style={{ display: 'block', width: '200px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
                 />
                 <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {(() => {
                     let titleStr = siteData?.bowlingFreeFall?.title;
-                    if (!titleStr || !titleStr.includes('<br/>')) {
-                      titleStr = "*Free-Fall Bowling:* Give the<br/>Full Professional Experience";
+                    if (!titleStr || titleStr === "*Free-Fall Bowling:* Give the Full Professional Experience" || titleStr.includes("Full Professional Experience")) {
+                      titleStr = "*Free-Fall Bowling:*<br/>Give the Full<br/>Professional Experience";
                     }
-                    return renderTitleMarkup(titleStr, "*Free-Fall Bowling:* Give the<br/>Full Professional Experience", '#38bdf8');
+                    return renderTitleMarkup(titleStr, "*Free-Fall Bowling:*<br/>Give the Full<br/>Professional Experience", '#38bdf8');
                   })()}
                 </h2>
               </div>
@@ -907,15 +908,16 @@ export default function BowlingAlley({ siteData }) {
                 <img
                   src={yellowStrokeLine}
                   alt=""
-                  style={{ display: 'block', width: '320px', height: '14px', marginBottom: '10px', objectFit: 'fill' }}
+                  className="winera-yellow-stroke"
+                  style={{ display: 'block', width: '200px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
                 />
                 <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {(() => {
                     let titleStr = siteData?.bowlingString?.title;
-                    if (!titleStr || !titleStr.includes('<br/>')) {
-                      titleStr = "String Bowling<br/>Machines: *Affordable*<br/>*Bowling Setup for Every*<br/>*Venue*";
+                    if (!titleStr || titleStr.includes("String Bowling") || titleStr.includes("Every Venue")) {
+                      titleStr = "String Bowling Machines:<br/>*Affordable Bowling Setup*<br/>*for Every Venue*";
                     }
-                    return renderTitleMarkup(titleStr, "String Bowling<br/>Machines: *Affordable*<br/>*Bowling Setup for Every*<br/>*Venue*", '#38bdf8');
+                    return renderTitleMarkup(titleStr, "String Bowling Machines:<br/>*Affordable Bowling Setup*<br/>*for Every Venue*", '#38bdf8');
                   })()}
                 </h2>
               </div>
@@ -1171,7 +1173,8 @@ export default function BowlingAlley({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+                className="winera-yellow-stroke"
+                style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
               />
               {/* Single-line title */}
               <h2 style={{

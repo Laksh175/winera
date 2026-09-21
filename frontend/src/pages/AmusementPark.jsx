@@ -25,6 +25,20 @@ import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
   const text = rawText || defaultText;
+
+  if (text.toLowerCase().includes('complete amusement park')) {
+    return (
+      <>
+        <span className="winera-amusement-banner-line1">Complete Amusement Park</span>
+        <br className="winera-desktop-br" />
+        <span className="winera-amusement-banner-highlight" style={{ color: highlightColor }}>
+          <span className="winera-amusement-banner-line2">Setups, Built for </span>
+          <span className="winera-amusement-banner-line3">Indian Venues</span>
+        </span>
+      </>
+    );
+  }
+
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
 
   return parts.map((part, pIdx) => {
@@ -182,7 +196,7 @@ export default function AmusementPark({ siteData }) {
   ];
 
   return (
-    <div style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div className="winera-amusement-page" style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh', overflowX: 'hidden' }}>
       {/* 1. HEADER NAVBAR */}
       <Header headerData={header} />
 
@@ -388,11 +402,11 @@ export default function AmusementPark({ siteData }) {
               </p>
 
               {/* Bullet Points List */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
+              <div className="winera-amusement-points-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
                 {rideItems.map((item, idx) => (
-                  <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '15px', lineHeight: 1.65, color: '#475569', fontWeight: '500', letterSpacing: '0px' }}>
-                    <span style={{ color: '#38bdf8', fontWeight: '900', fontSize: '16px', marginTop: '2px' }}>&#10148;</span>
-                    <div>
+                  <div key={idx} className="winera-amusement-point-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '15px', lineHeight: 1.65, color: '#475569', fontWeight: '500', letterSpacing: '0px' }}>
+                    <span className="winera-amusement-point-icon" style={{ color: '#38bdf8', fontWeight: '900', fontSize: '16px', marginTop: '2px', flexShrink: 0 }}>&#10148;</span>
+                    <div className="winera-amusement-point-content">
                       <strong style={{ color: '#0f172a', fontWeight: '700' }}>{item.boldText || item.title} :-</strong>{' '}
                       <span style={{ fontWeight: '500', color: '#475569' }}>{item.desc || item.description}</span>
                     </div>
@@ -524,7 +538,8 @@ export default function AmusementPark({ siteData }) {
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+              className="winera-yellow-stroke"
+              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.amusementWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
@@ -703,37 +718,39 @@ export default function AmusementPark({ siteData }) {
       <FaqSection faqsList={(Array.isArray(siteData?.amusementFaqs) && siteData.amusementFaqs.length >= 7) ? siteData.amusementFaqs : defaultAmusementFaqs} highlightColor="#38bdf8" />
 
       {/* CTA BANNER SECTION WITH DYNAMIC CONTENT & EXACT TILTED CARDS MATCHING UI 1:1 */}
-      <CtaBanner
-        containerPadding="30px 32px"
-        blurBg={true}
-        showOverlay={true}
-        align="center"
-        gradientTitle={true}
-        buttonTheme="yellow"
-        titleFontSize="clamp(24px, 2.8vw, 38px)"
-        subtitleFontSize="clamp(20px, 2.4vw, 28px)"
-        subtitleFontWeight="900"
-        bgUrl={siteData?.amusementCta?.bgUrl ? getValidImageUrl(siteData.amusementCta.bgUrl, ctaMainBanner) : null}
-        bg={ctaMainBanner}
-        leftImgUrl={siteData?.amusementCta?.leftImgUrl}
-        leftImg={amusementLeftImg}
-        rightImgUrl={siteData?.amusementCta?.rightImgUrl}
-        rightImg={amusementRightImg}
-        tagline={null}
-        title={
-          siteData?.amusementCta?.title
-            ? siteData.amusementCta.title
-            : "Need Any Consultations?"
-        }
-        subtitle={
-          siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
-            ? siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
-            : "We're Ready To Give Answers To<br/>Your Questions."
-        }
-        description={null}
-        buttonText={siteData?.amusementCta?.buttonText || "Talk to an ROI Expert"}
-        buttonLink={siteData?.amusementCta?.buttonLink || "https://wa.me/919428989488"}
-      />
+      <div className="winera-amusement-cta-wrapper">
+        <CtaBanner
+          containerPadding="30px 32px"
+          blurBg={true}
+          showOverlay={true}
+          align="center"
+          gradientTitle={true}
+          buttonTheme="yellow"
+          titleFontSize="clamp(24px, 2.8vw, 38px)"
+          subtitleFontSize="clamp(20px, 2.4vw, 28px)"
+          subtitleFontWeight="900"
+          bgUrl={siteData?.amusementCta?.bgUrl ? getValidImageUrl(siteData.amusementCta.bgUrl, ctaMainBanner) : null}
+          bg={ctaMainBanner}
+          leftImgUrl={siteData?.amusementCta?.leftImgUrl}
+          leftImg={amusementLeftImg}
+          rightImgUrl={siteData?.amusementCta?.rightImgUrl}
+          rightImg={amusementRightImg}
+          tagline={null}
+          title={
+            siteData?.amusementCta?.title
+              ? siteData.amusementCta.title
+              : "Need Any Consultations?"
+          }
+          subtitle={
+            siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
+              ? siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
+              : "We're Ready To Give Answers To<br/>Your Questions."
+          }
+          description={null}
+          buttonText={siteData?.amusementCta?.buttonText || "Talk to an ROI Expert"}
+          buttonLink={siteData?.amusementCta?.buttonLink || "https://wa.me/919428989488"}
+        />
+      </div>
 
       {/* FOOTER */}
       <Footer footerData={footer} />
