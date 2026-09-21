@@ -313,7 +313,8 @@ export default function VrGames({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
+                className="winera-yellow-stroke"
+                style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.vrIntro?.title, "*VR Gaming Machine*<br/>supplier in India", '#38bdf8')}
@@ -365,7 +366,8 @@ export default function VrGames({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '300px', height: '10px', marginBottom: '7px', objectFit: 'fill' }}
+                className="winera-yellow-stroke"
+                style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
               />
               <h2 style={{
                 fontSize: '35px',
@@ -455,7 +457,8 @@ export default function VrGames({ siteData }) {
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
+              className="winera-yellow-stroke"
+              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: '0 0 12px 0' }}>
               {renderTitleMarkup(siteData?.vrRange?.title, "*Our VR Gaming* Machine Range", '#38bdf8')}
@@ -648,7 +651,8 @@ export default function VrGames({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '300px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
+                className="winera-yellow-stroke"
+                style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
               />
               <h2 style={{
                 fontSize: '35px',
@@ -752,7 +756,8 @@ export default function VrGames({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '240px', height: '9px', marginBottom: '6px', objectFit: 'fill' }}
+                className="winera-yellow-stroke"
+                style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
               />
               <h2 style={{
                 fontSize: '35px',
@@ -862,7 +867,8 @@ export default function VrGames({ siteData }) {
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', width: '510px', maxWidth: '100%', height: '11px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+              className="winera-yellow-stroke"
+              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 className="winera-vr-whyus-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.vrWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ShieldCheck, Settings, Database, Headset, Wrench, Box, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ShieldCheck, Settings, Database, Headset, Wrench, Box, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
@@ -27,6 +27,7 @@ import auroraAirHockeyImg from '../assets/aurora-air-hockey.webp';
 import ochaAirHockeyImg from '../assets/ocha-air-hockey.webp';
 import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.webp';
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
+import ArcadeSwipeCardDeck from '../components/ArcadeSwipeCardDeck';
 
 const airHockeyImageMap = {
   "Super Air Hockey": superAirHockeyImg,
@@ -112,6 +113,7 @@ export default function ArGames({ siteData }) {
 
   const [activeCategory, setActiveCategory] = useState('Sports Simulators');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isCatDropdownOpen, setIsCatDropdownOpen] = useState(false);
 
 
 
@@ -670,17 +672,16 @@ export default function ArGames({ siteData }) {
             </h2>
           </div>
 
-          {/* Mobile Category Dropdown */}
-          <div className="winera-ar-mobile-cat-dropdown" style={{ display: 'none', marginBottom: '24px' }}>
-            <label htmlFor="ar_category_select" style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px', textAlign: 'left' }}>
+          {/* Mobile Category Select Dropdown (Custom UI matching Arcade Game) */}
+          <div className="winera-ar-mobile-cat-dropdown" style={{ display: 'none', marginBottom: '24px', width: '100%', position: 'relative', zIndex: 50 }}>
+            <label style={{ display: 'block', fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px', textAlign: 'left' }}>
               Select Category:
             </label>
-            <select
-              id="ar_category_select"
-              name="arCategory"
-              aria-label="Select Category"
-              value={activeCategory}
-              onChange={(e) => { setActiveCategory(e.target.value); }}
+
+            {/* Category Toggle Button */}
+            <button
+              type="button"
+              onClick={() => setIsCatDropdownOpen(!isCatDropdownOpen)}
               style={{
                 width: '100%',
                 padding: '14px 18px',
@@ -688,17 +689,76 @@ export default function ArGames({ siteData }) {
                 border: '2px solid #38bdf8',
                 background: '#ffffff',
                 color: '#0f172a',
-                fontSize: '14px',
+                fontSize: '15px',
                 fontWeight: '800',
                 outline: 'none',
-                appearance: 'none',
-                cursor: 'pointer'
+                boxShadow: '0 4px 15px rgba(56, 189, 248, 0.12)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                textAlign: 'left'
               }}
             >
-              {categories.map((cat, idx) => (
-                <option key={idx} value={cat}>{cat}</option>
-              ))}
-            </select>
+              <span>{activeCategory}</span>
+              <ChevronDown style={{
+                width: '20px',
+                height: '20px',
+                color: '#0284c7',
+                transform: isCatDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.25s ease'
+              }} />
+            </button>
+
+            {/* Custom Dropdown Options Menu */}
+            {isCatDropdownOpen && (
+              <div style={{
+                position: 'absolute',
+                top: 'calc(100% + 6px)',
+                left: 0,
+                right: 0,
+                background: '#ffffff',
+                border: '2px solid #38bdf8',
+                borderRadius: '18px',
+                boxShadow: '0 12px 35px rgba(2, 132, 199, 0.18)',
+                overflow: 'hidden',
+                zIndex: 100,
+                maxHeight: '340px',
+                overflowY: 'auto',
+                padding: '6px'
+              }}>
+                {categories.map((cat, cIdx) => {
+                  const isSelected = (activeCategory || "Sports Simulators") === cat;
+                  return (
+                    <div
+                      key={cIdx}
+                      onClick={() => {
+                        setActiveCategory(cat);
+                        setCurrentPage(1);
+                        setIsCatDropdownOpen(false);
+                      }}
+                      style={{
+                        padding: '13px 16px',
+                        borderRadius: '12px',
+                        fontSize: '15px',
+                        fontWeight: isSelected ? '800' : '600',
+                        color: isSelected ? '#ffffff' : '#0f172a',
+                        background: isSelected ? '#38bdf8' : 'transparent',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '3px',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <span>{cat}</span>
+                      {isSelected && <span style={{ fontSize: '15px', fontWeight: '900' }}>✓</span>}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Main Categories Grid Layout: Left Sidebar + Right 3x2 Card Grid */}
@@ -770,9 +830,9 @@ export default function ArGames({ siteData }) {
               </div>
             </div>
 
-            {/* Right Product Grid (3 Columns x 2 Rows) */}
-            <div>
-              <div className="winera-ar-products-grid" style={{
+            {/* Right Product Grid (Desktop Grid + Mobile 3D Swipe Deck Animation) */}
+            <div className="winera-ar-products-display-area" style={{ width: '100%' }}>
+              <div className="winera-ar-desktop-products-grid winera-ar-products-grid" style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',
                 gap: '24px',
@@ -830,6 +890,25 @@ export default function ArGames({ siteData }) {
                   );
                 })}
               </div>
+
+              {/* Mobile Stacked 3D Swipe Card Deck Animation (Matching Arcade Game) */}
+              {(() => {
+                const swipeCards = currentProducts.map(p => {
+                  const fallbackImg = airHockeyImageMap[p.name] || superAirHockeyImg;
+                  const finalImgSrc = getValidImageUrl(p.img || p.imageUrl, fallbackImg);
+                  return {
+                    ...p,
+                    name: p.name || p.title || "",
+                    category: p.category || activeCategory || "AR Games",
+                    imageUrl: finalImgSrc,
+                    img: finalImgSrc,
+                    slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : 'ar-game')
+                  };
+                });
+                return swipeCards.length > 0 ? (
+                  <ArcadeSwipeCardDeck cards={swipeCards} isClickable={false} showCta={false} />
+                ) : null;
+              })()}
             </div>
           </div>
 

@@ -1814,8 +1814,8 @@ html {
   .winera-section-heading-container>div>img,
   .winera-section-heading-container>div>div {
     margin: 0 auto 10px !important;
-    width: 82% !important;
-    max-width: 320px !important;
+    width: 200px !important;
+    max-width: 200px !important;
     min-width: 120px !important;
     height: 9px !important;
     object-fit: fill !important;
@@ -1990,6 +1990,10 @@ html {
     order: -1;
   }
 
+  .winera-ar-attractions-img img {
+    margin-bottom: 10px !important;
+  }
+
   .winera-ar-attractions-text {
     text-align: center !important;
     display: flex !important;
@@ -2021,8 +2025,10 @@ html {
   }
 
   /* Categories Section */
+  section.winera-ar-categories-section,
   .winera-ar-categories-section {
-    padding: 30px 16px 25px !important;
+    padding: 15px 16px 8px !important;
+    padding-bottom: 8px !important;
   }
 
   .winera-ar-categories-section h2 {
@@ -2048,39 +2054,23 @@ html {
     gap: 16px !important;
   }
 
-  div.winera-ar-products-grid,
-  .winera-ar-products-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    margin-bottom: 20px !important;
-  }
-
-  .winera-ar-products-grid>div {
-    padding: 10px !important;
-    border-radius: 16px !important;
-  }
-
-  .winera-ar-products-grid>div>div {
-    height: 125px !important;
-    border-radius: 12px !important;
-    margin-bottom: 8px !important;
-  }
-
-  .winera-ar-products-grid h4 {
-    font-size: 0.85rem !important;
-    min-height: 34px !important;
-    margin: 2px 0 4px !important;
-  }
-
-  .winera-ar-pagination {
-    gap: 4px !important;
-    padding: 4px 8px !important;
+  .winera-ar-products-display-area {
+    width: 100% !important;
     max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  div.winera-ar-desktop-products-grid,
+  .winera-ar-desktop-products-grid,
+  .winera-ar-pagination {
+    display: none !important;
   }
 
   /* Features Section */
+  section.winera-ar-features-section,
   .winera-ar-features-section {
-    padding: 30px 16px 25px !important;
+    padding: 10px 16px 25px !important;
+    padding-top: 10px !important;
     background-image: none !important;
     background-color: #F5F5F9 !important;
   }
@@ -2186,8 +2176,10 @@ html {
   }
 
   /* Why Choose Winera Section */
+  section.winera-ar-whyus-section,
   .winera-ar-whyus-section {
-    padding: 30px 16px 25px !important;
+    padding: 25px 16px 25px !important;
+    padding-top: 25px !important;
   }
 
   .winera-ar-whyus-section div[style*="marginBottom: '60px'"],
@@ -6967,8 +6959,8 @@ img[src*="yellow-stroke-line"] {
   img[src*="yellow-stroke-line"],
   img[src*="yellow-stroke"],
   img[src*="stroke-line"] {
-    width: 82% !important;
-    max-width: 320px !important;
+    width: 200px !important;
+    max-width: 200px !important;
     min-width: 120px !important;
     height: 9px !important;
     object-fit: fill !important;
@@ -13757,8 +13749,8 @@ button[style*="background:transparent"]:hover,
   img[src*="yellow-stroke-line"],
   img[src*="yellow-stroke"],
   img[src*="stroke-line"] {
-    width: 75% !important;
-    max-width: 240px !important;
+    width: 200px !important;
+    max-width: 200px !important;
     min-width: 120px !important;
     height: 9px !important;
     object-fit: fill !important;
@@ -14322,7 +14314,7 @@ button[style*="background:transparent"]:hover,
     justify-content: center !important;
     width: 100% !important;
     gap: 8px !important;
-    margin-bottom: 15% !important;
+    margin-bottom: 8px !important;
   }
 
   .winera-why-us-mobile-card {
@@ -14467,7 +14459,7 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-why-us-mobile-slider {
-    margin-bottom: 15% !important;
+    margin-bottom: 25px !important;
   }
 
   .winera-projects-marquee-header {

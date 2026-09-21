@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import WineraImage from './WineraImage';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 
-export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug }) {
+export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickable = true, showCta = true }) {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -141,7 +141,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug }) {
           position: 'relative',
           width: '100%',
           maxWidth: '330px',
-          height: '370px',
+          height: showCta ? '370px' : '345px',
           perspective: '1000px',
           display: 'flex',
           justifyContent: 'center',
@@ -190,7 +190,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug }) {
             <div
               key={card.name || card.title || stackLevel}
               onClick={(e) => {
-                if (isTop && Math.abs(dragOffset.x) < 5 && Math.abs(dragOffset.y) < 5) {
+                if (isClickable && isTop && Math.abs(dragOffset.x) < 5 && Math.abs(dragOffset.y) < 5) {
                   navigate(`/product/${currentSlug}`);
                 }
               }}
@@ -199,7 +199,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug }) {
                 top: 0,
                 left: 0,
                 right: 0,
-                height: '352px',
+                height: showCta ? '352px' : '325px',
                 background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 80%, #ffffff 100%)',
                 borderRadius: '26px',
                 padding: '14px',
@@ -215,7 +215,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug }) {
                 opacity,
                 zIndex,
                 transition,
-                cursor: isTop ? 'grab' : 'default',
+                cursor: isTop ? (isClickable ? 'pointer' : 'grab') : 'default',
                 transformOrigin: '50% 100%',
                 willChange: 'transform, opacity'
               }}
@@ -262,7 +262,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug }) {
                 fontWeight: '800',
                 color: '#0f172a',
                 lineHeight: 1.25,
-                margin: '10px 0 6px',
+                margin: showCta ? '10px 0 6px' : '14px 0 4px',
                 minHeight: '38px',
                 display: 'flex',
                 alignItems: 'center',
@@ -274,24 +274,26 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug }) {
               </h4>
 
               {/* Bottom Quick Action CTA Pill */}
-              <div style={{
-                marginTop: 'auto',
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                padding: '8px 14px',
-                borderRadius: '14px',
-                background: isTop ? '#0284c7' : '#e0f2fe',
-                color: isTop ? '#ffffff' : '#0369a1',
-                fontSize: '12px',
-                fontWeight: '800',
-                transition: 'all 0.2s ease'
-              }}>
-                <span>View Details & Specs</span>
-                <ArrowRight style={{ width: '13px', height: '13px' }} />
-              </div>
+              {showCta && (
+                <div style={{
+                  marginTop: 'auto',
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  padding: '8px 14px',
+                  borderRadius: '14px',
+                  background: isTop ? '#0284c7' : '#e0f2fe',
+                  color: isTop ? '#ffffff' : '#0369a1',
+                  fontSize: '12px',
+                  fontWeight: '800',
+                  transition: 'all 0.2s ease'
+                }}>
+                  <span>View Details & Specs</span>
+                  <ArrowRight style={{ width: '13px', height: '13px' }} />
+                </div>
+              )}
             </div>
           );
         })}
