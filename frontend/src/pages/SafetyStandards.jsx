@@ -18,6 +18,7 @@ import rightTiltedCard from '../assets/Right Tilted Card.webp';
 import homeLeftArrow from '../assets/home-page-left-arrow.png';
 import homeRightArrow from '../assets/home-page-right-arrow.png';
 import SafetyMaterialStackedCardDeck from '../components/SafetyMaterialStackedCardDeck';
+import SafetyStructureInteractiveDeck from '../components/SafetyStructureInteractiveDeck';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -814,8 +815,8 @@ export default function SafetyStandards({ siteData }) {
             </p>
           </div>
 
-          {/* 2x2 Grid with Offset Colored Borders */}
-          <div className="winera-safety-structure-grid" style={{
+          {/* 2x2 Grid with Offset Colored Borders (Desktop) */}
+          <div className="winera-safety-structure-grid winera-safety-structure-desktop-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '32px 28px',
@@ -957,6 +958,42 @@ export default function SafetyStandards({ siteData }) {
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* Mobile Unique Interactive Coverflow Deck */}
+          <div className="winera-safety-structure-mobile-deck">
+            <SafetyStructureInteractiveDeck
+              cards={
+                Array.isArray(siteData?.safetyStructure?.cards) && siteData.safetyStructure.cards.length > 0
+                  ? siteData.safetyStructure.cards
+                  : [
+                    {
+                      num: "01",
+                      accent: "#00aeef",
+                      title: "Strong and Stable Setup (India)",
+                      desc: "In India, a game zone must pass a check for strong, stable structure before it can get a licence. We build and fix everything properly so your venue is ready to pass that check. This matters most for climbing walls, ninja courses, trampolines, and rides, where the structure has to hold real weight safely."
+                    },
+                    {
+                      num: "02",
+                      accent: "#ffd600",
+                      title: "Quality Checks (ISO 9001)",
+                      desc: "ISO 9001 is a worldwide standard for good quality work. It makes sure the design, sourcing, and installation are done to a consistent, high standard every time. We follow these quality practices in all our projects."
+                    },
+                    {
+                      num: "03",
+                      accent: "#00aeef",
+                      title: "Full Safety Check Before Handover",
+                      desc: "Good equipment alone is not enough. Once all the games and machines are installed, our trained team runs a full safety check on the complete setup. We hand it over only after everything passes."
+                    },
+                    {
+                      num: "04",
+                      accent: "#ffd600",
+                      title: "Safe Running & Maintenance (ISO 17842-2 / EN 13814-2)",
+                      desc: "These standards are about running and looking after the attractions safely after they are built. We set up your venue the right way and show your team how to run and maintain each attraction safely."
+                    }
+                  ]
+              }
+            />
           </div>
         </div>
       </section>

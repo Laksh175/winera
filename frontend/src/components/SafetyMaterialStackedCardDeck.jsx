@@ -17,7 +17,7 @@ export default function SafetyMaterialStackedCardDeck({ cards = [] }) {
     setActiveIndex((prev) => (prev > 0 ? prev - 1 : total - 1));
   };
 
-  // Touch handlers for swipe (supports both vertical flick and horizontal swipe)
+  // Touch handlers for swipe
   const handleTouchStart = (e) => {
     touchStartY.current = e.touches[0].clientY;
     touchStartX.current = e.touches[0].clientX;
@@ -27,12 +27,10 @@ export default function SafetyMaterialStackedCardDeck({ cards = [] }) {
     const deltaY = e.changedTouches[0].clientY - touchStartY.current;
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
 
-    if (Math.abs(deltaY) > 30 || Math.abs(deltaX) > 30) {
-      if (deltaY < -30 || deltaX < -30) {
-        // Swiped UP or LEFT -> Next
+    if (Math.abs(deltaY) > 35 || Math.abs(deltaX) > 35) {
+      if (deltaY < -35 || deltaX < -35) {
         handleNext();
-      } else if (deltaY > 30 || deltaX > 30) {
-        // Swiped DOWN or RIGHT -> Prev
+      } else if (deltaY > 35 || deltaX > 35) {
         handlePrev();
       }
     }
@@ -44,70 +42,44 @@ export default function SafetyMaterialStackedCardDeck({ cards = [] }) {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* CardStack Viewport */}
+      {/* Layered Card List */}
       <div className="winera-cardstack-viewport">
         {cards.map((card, idx) => {
           const isActive = idx === activeIndex;
-          const isBefore = idx < activeIndex;
-          const isAfter = idx > activeIndex;
-
-          let topPos = 'auto';
-          let bottomPos = 'auto';
-          let transform = 'translateY(0) scale(1)';
-          let zIndex = 1;
-          let opacity = 1;
-
-          if (isBefore) {
-            topPos = `${idx * 14}px`;
-            bottomPos = 'auto';
-            zIndex = idx + 1;
-            transform = `scale(${1 - (activeIndex - idx) * 0.04})`;
-            opacity = 0.7;
-          } else if (isActive) {
-            topPos = `${activeIndex * 14}px`;
-            bottomPos = 'auto';
-            zIndex = 10;
-            transform = 'translateY(0) scale(1)';
-            opacity = 1;
-          } else if (isAfter) {
-            topPos = 'auto';
-            bottomPos = `${(total - 1 - idx) * 44}px`;
-            zIndex = 10 + (total - idx);
-            transform = 'translateY(0) scale(1)';
-            opacity = 1;
-          }
+          const zIndex = isActive ? 20 : (total - idx);
 
           return (
             <div
               key={idx}
-              className={`winera-cardstack-card ${isActive ? 'is-active' : ''} ${isBefore ? 'is-before' : ''} ${isAfter ? 'is-after' : ''}`}
+              className={`winera-cardstack-card ${isActive ? 'is-active' : 'is-collapsed'}`}
               onClick={() => setActiveIndex(idx)}
-              style={{
-                top: topPos,
-                bottom: bottomPos,
-                transform,
-                zIndex,
-                opacity
-              }}
+              style={{ zIndex }}
             >
-              {/* Card Header */}
+              {/* Card Header Row */}
               <div className="winera-cardstack-header">
-                <div className="winera-cardstack-badge">
+                <div className={`winera-cardstack-badge ${isActive ? 'badge-active' : ''}`}>
                   {idx + 1}
                 </div>
                 <h3 className="winera-cardstack-title">
                   {card.title}
                 </h3>
+                <div className={`winera-cardstack-chevron ${isActive ? 'is-open' : ''}`}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
               </div>
 
-              {/* Card Body Description */}
+              {/* Card Body Description (Fully expands with no cut-off) */}
               <div
                 className="winera-cardstack-body"
                 style={{
-                  maxHeight: isActive ? '200px' : '0px',
+                  maxHeight: isActive ? '320px' : '0px',
                   opacity: isActive ? 1 : 0,
+                  marginTop: isActive ? '12px' : '0px',
+                  paddingTop: isActive ? '12px' : '0px',
                   overflow: 'hidden',
-                  transition: 'all 0.35s ease'
+                  transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
               >
                 <p className="winera-cardstack-desc">
@@ -127,13 +99,14 @@ export default function SafetyMaterialStackedCardDeck({ cards = [] }) {
             type="button"
             onClick={() => setActiveIndex(dotIdx)}
             className={`winera-cardstack-dot ${dotIdx === activeIndex ? 'is-active' : ''}`}
-            aria-label={`Go to card ${dotIdx + 1}`}
+            aria-label={`Go to standard ${dotIdx + 1}`}
           />
         ))}
       </div>
     </div>
   );
 }
+
 
 
 
