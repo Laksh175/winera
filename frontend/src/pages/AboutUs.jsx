@@ -224,7 +224,7 @@ export default function AboutUs({ siteData }) {
             />
           </div>
 
-          <div style={{ textAlign: 'left' }}>
+          <div className="winera-about-welcome-text" style={{ textAlign: 'left' }}>
             <SectionHeading align="left" marginBottom="16px" accentWidth="65%" accentMaxWidth="320px">
               {(() => {
                 const rawTitle = siteData?.aboutWelcome?.title || "Welcome to *Winera International*";

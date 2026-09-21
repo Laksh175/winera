@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
@@ -15,6 +15,9 @@ import hypergridWineraLastblock from '../assets/hypergrid-winera-lastblock.webp'
 import ctaMainBanner from '../assets/cta-main-banner.png';
 import leftTiltedCard from '../assets/Left Tilted Card.webp';
 import rightTiltedCard from '../assets/Right Tilted Card.webp';
+import homeLeftArrow from '../assets/home-page-left-arrow.png';
+import homeRightArrow from '../assets/home-page-right-arrow.png';
+import SafetyMaterialStackedCardDeck from '../components/SafetyMaterialStackedCardDeck';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -37,10 +40,82 @@ const getValidImageUrl = (url, fallback) => {
   return fallback;
 };
 
+const defaultSafetyCertCards = [
+  {
+    title: "EN 1176 — Play Structures & Ninja Courses (Europe)",
+    desc: "EN 1176 is the European Standard for Playground Equipment, published by CEN. It sets safety requirements for structural strength, heights, gaps, and entrapment protection so children play without hidden risks. Winera International supplies and installs soft play and ninja course equipment that complies with EN 1176 — helping your venue pass inspections."
+  },
+  {
+    title: "EN 1177 — Impact-Absorbing Surfaces (Europe)",
+    desc: "EN 1177 is the European Standard for playground impact-absorbing surfaces, published by CEN. It defines how flooring must cushion falls, setting critical fall heights for different materials to reduce injury. Winera International supplies installs safety flooring around play, ninja, and climbing areas that complies with EN 1177 — keeping falls safe."
+  },
+  {
+    title: "ASTM F1918 — Soft Contained Play (International)",
+    desc: "ASTM F1918 is the Standard Safety Performance Specification for Soft Contained Play Equipment, published by ASTM International. It sets safety rules for enclosed, padded play structures used in indoor kids zones, covering design, padding, and fall protection. Winera International supplies and installs soft play equipment that complies with ASTM F1918 — helping your venue pass inspections."
+  },
+  {
+    title: "ASTM F2970 — Trampoline Parks (International)",
+    desc: "ASTM F2970 is the international Standard Practice for Trampoline Courts, published by ASTM International. It sets safety requirements for net enclosures, frame padding, spacing, and impact zones to prevent falls and collisions. Winera International supplies and installs trampoline parks certified to ASTM F2970 — helping your venue stay safe and pass inspections."
+  },
+  {
+    title: "EN 12572 — Climbing Walls (Europe)",
+    desc: "EN 12572 is the European Standard for artificial climbing structures, published by CEN. It sets safety requirements for wall stability, holds, heights, anchor points, and fall zones so climbers stay protected. Winera International supplies and installs wall climbing setups that comply with EN 12572 — helping your venue meet safety standards and pass inspections."
+  },
+  {
+    title: "IS 15475 & IS 15492 — Amusement Rides (India / BIS)",
+    desc: "IS 15475 and IS 15492 are Indian Standards published by the Bureau of Indian Standards (BIS). They set safety rules for the design, construction, and operation of amusement rides and devices in India. Winera International supplies amusement park rides and bumper cars that follow these BIS standards — keeping your venue compliant."
+  },
+  {
+    title: "EN 13814 / ISO 17842 — Amusement Devices (International)",
+    desc: "EN 13814 and ISO 17842 are the international standards for amusement rides and devices, developed by CEN and ISO. They set safety requirements for the design, manufacturing, and operation of rides. Winera International supplies bumper cars and amusement park attractions that comply with these standards — ensuring safe, reliable operation in high-footfall venues."
+  }
+];
+
+const defaultSafetyMaterialCards = [
+  {
+    title: "Fire-Safe Materials (India)",
+    desc: "In India, game zone materials must not catch fire easily. The padding, nets, and finishes we use are fire-safe, so they slow down flames instead of feeding them. This keeps your visitors safer and helps your venue follow the law."
+  },
+  {
+    title: "NFPA 701 & UL 94 — Fire Safety (International)",
+    desc: "These two tests check how well materials resist fire. NFPA 701 tests cloth and nets, and UL 94 tests plastic parts, to make sure they don't burn quickly. The materials we use pass these fire-safety tests."
+  },
+  {
+    title: "EN 71 — Safe Play Materials (Europe)",
+    desc: "EN 71 is a European rule that makes sure play materials are safe for children. It checks that they don't catch fire easily and don't contain harmful chemicals. Our kids' equipment meets the EN 71 standard."
+  },
+  {
+    title: "EU REACH & CPSIA — Non-Toxic Materials",
+    desc: "These rules keep harmful chemicals, lead, and other unsafe substances out of children's products. The materials in our kids' equipment follow these rules, so they are safe for kids to touch and play on."
+  }
+];
+
 export default function SafetyStandards({ siteData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeCertIndex, setActiveCertIndex] = useState(0);
+  const [openElectricalIndex, setOpenElectricalIndex] = useState(0);
+  const certTouchStartRef = useRef(0);
+
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
+
+  const certCardsList = (Array.isArray(siteData?.safetyCertifications?.cards) && siteData.safetyCertifications.cards.length > 0
+    ? siteData.safetyCertifications.cards
+    : defaultSafetyCertCards
+  );
+
+  const materialsCardsList = (Array.isArray(siteData?.safetyMaterials?.cards) && siteData.safetyMaterials.cards.length > 0
+    ? siteData.safetyMaterials.cards
+    : defaultSafetyMaterialCards
+  );
+
+  const handlePrevCert = () => {
+    setActiveCertIndex((prev) => (prev > 0 ? prev - 1 : certCardsList.length - 1));
+  };
+
+  const handleNextCert = () => {
+    setActiveCertIndex((prev) => (prev < certCardsList.length - 1 ? prev + 1 : 0));
+  };
 
   const bgImage = getValidImageUrl(siteData?.safetyHero?.bgUrl, safetyBg);
   const introImg = getValidImageUrl(siteData?.safetyIntro?.mainImgUrl, safetyStandardImg1);
@@ -57,7 +132,7 @@ export default function SafetyStandards({ siteData }) {
   }, [siteData]);
 
   return (
-    <div style={{ background: 'rgb(241, 241, 246)', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflowX: 'hidden' }}>
+    <div style={{ background: 'rgb(241, 241, 246)', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflowX: 'clip' }}>
       {/* 1. HEADER */}
       <Header headerData={header} />
 
@@ -200,47 +275,15 @@ export default function SafetyStandards({ siteData }) {
             </p>
           </div>
 
-          {/* Cards Grid */}
-          <div className="winera-safety-standards-grid" style={{
+          {/* Desktop Cards Grid */}
+          <div className="winera-safety-standards-grid winera-safety-standards-desktop-grid" style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             gap: '24px',
             maxWidth: '1200px',
             margin: '0 auto'
           }}>
-            {(Array.isArray(siteData?.safetyCertifications?.cards) && siteData.safetyCertifications.cards.length > 0
-              ? siteData.safetyCertifications.cards
-              : [
-                {
-                  title: "EN 1176 — Play Structures & Ninja Courses (Europe)",
-                  desc: "EN 1176 is the European Standard for Playground Equipment, published by CEN. It sets safety requirements for structural strength, heights, gaps, and entrapment protection so children play without hidden risks. Winera International supplies and installs soft play and ninja course equipment that complies with EN 1176 — helping your venue pass inspections."
-                },
-                {
-                  title: "EN 1177 — Impact-Absorbing Surfaces (Europe)",
-                  desc: "EN 1177 is the European Standard for playground impact-absorbing surfaces, published by CEN. It defines how flooring must cushion falls, setting critical fall heights for different materials to reduce injury. Winera International supplies installs safety flooring around play, ninja, and climbing areas that complies with EN 1177 — keeping falls safe."
-                },
-                {
-                  title: "ASTM F1918 — Soft Contained Play (International)",
-                  desc: "ASTM F1918 is the Standard Safety Performance Specification for Soft Contained Play Equipment, published by ASTM International. It sets safety rules for enclosed, padded play structures used in indoor kids zones, covering design, padding, and fall protection. Winera International supplies and installs soft play equipment that complies with ASTM F1918 — helping your venue pass inspections."
-                },
-                {
-                  title: "ASTM F2970 — Trampoline Parks (International)",
-                  desc: "ASTM F2970 is the international Standard Practice for Trampoline Courts, published by ASTM International. It sets safety requirements for net enclosures, frame padding, spacing, and impact zones to prevent falls and collisions. Winera International supplies and installs trampoline parks certified to ASTM F2970 — helping your venue stay safe and pass inspections."
-                },
-                {
-                  title: "EN 12572 — Climbing Walls (Europe)",
-                  desc: "EN 12572 is the European Standard for artificial climbing structures, published by CEN. It sets safety requirements for wall stability, holds, heights, anchor points, and fall zones so climbers stay protected. Winera International supplies and installs wall climbing setups that comply with EN 12572 — helping your venue meet safety standards and pass inspections."
-                },
-                {
-                  title: "IS 15475 & IS 15492 — Amusement Rides (India / BIS)",
-                  desc: "IS 15475 and IS 15492 are Indian Standards published by the Bureau of Indian Standards (BIS). They set safety rules for the design, construction, and operation of amusement rides and devices in India. Winera International supplies amusement park rides and bumper cars that follow these BIS standards — keeping your venue compliant."
-                },
-                {
-                  title: "EN 13814 / ISO 17842 — Amusement Devices (International)",
-                  desc: "EN 13814 and ISO 17842 are the international standards for amusement rides and devices, developed by CEN and ISO. They set safety requirements for the design, manufacturing, and operation of rides. Winera International supplies bumper cars and amusement park attractions that comply with these standards — ensuring safe, reliable operation in high-footfall venues."
-                }
-              ]
-            ).map((card, idx, arr) => {
+            {certCardsList.map((card, idx, arr) => {
               const isLastOdd = (arr.length % 2 !== 0) && (idx === arr.length - 1);
               const isLeft = idx % 2 === 0;
               const startX = isLastOdd ? 0 : (isLeft ? -75 : 75);
@@ -294,6 +337,75 @@ export default function SafetyStandards({ siteData }) {
               );
             })}
           </div>
+
+          {/* Mobile Interactive Slider */}
+          <div className="winera-safety-standards-mobile-slider">
+            <div className="winera-safety-mobile-slider-wrapper">
+              <button
+                type="button"
+                onClick={handlePrevCert}
+                className="winera-safety-slider-btn"
+                aria-label="Previous Certificate"
+              >
+                <img src={homeLeftArrow} alt="Previous" style={{ width: '16px', height: '16px', objectFit: 'contain' }} />
+              </button>
+
+              <div
+                className="winera-safety-mobile-card-container"
+                onTouchStart={(e) => {
+                  certTouchStartRef.current = e.touches[0].clientX;
+                }}
+                onTouchEnd={(e) => {
+                  const diffX = e.changedTouches[0].clientX - certTouchStartRef.current;
+                  if (diffX > 40) {
+                    handlePrevCert();
+                  } else if (diffX < -40) {
+                    handleNextCert();
+                  }
+                }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeCertIndex}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.28, ease: "easeOut" }}
+                    className="winera-safety-mobile-card"
+                  >
+                    <h3 className="winera-safety-mobile-card-title">
+                      {certCardsList[activeCertIndex]?.title}
+                    </h3>
+                    <p className="winera-safety-mobile-card-desc">
+                      {certCardsList[activeCertIndex]?.desc}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleNextCert}
+                className="winera-safety-slider-btn"
+                aria-label="Next Certificate"
+              >
+                <img src={homeRightArrow} alt="Next" style={{ width: '16px', height: '16px', objectFit: 'contain' }} />
+              </button>
+            </div>
+
+            {/* Pagination Dots */}
+            <div className="winera-safety-slider-dots">
+              {certCardsList.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => setActiveCertIndex(dotIdx)}
+                  className={`winera-safety-slider-dot ${dotIdx === activeCertIndex ? 'is-active' : ''}`}
+                  aria-label={`Slide ${dotIdx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -303,10 +415,10 @@ export default function SafetyStandards({ siteData }) {
         width: '100%',
         padding: '75px 4vw 75px',
         background: `url(${safetyStandardBg2}) center center / 100% 100% no-repeat`,
-        overflow: 'hidden'
+        overflow: 'visible'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-          {/* Header (Left Aligned matching Image 2) */}
+          {/* Header */}
           <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 25px 0' }}>
             <img
               src={yellowStrokeLine}
@@ -339,29 +451,9 @@ export default function SafetyStandards({ siteData }) {
 
           {/* 2-Column Grid: Left 4 Wide Rectangle Cards, Right 3D Shield Graphic */}
           <div className="winera-safety-material-grid">
-            {/* Left 4 Wide Rectangle Cards Stack */}
-            <div className="winera-safety-material-cards">
-              {(Array.isArray(siteData?.safetyMaterials?.cards) && siteData.safetyMaterials.cards.length > 0
-                ? siteData.safetyMaterials.cards
-                : [
-                  {
-                    title: "Fire-Safe Materials (India)",
-                    desc: "In India, game zone materials must not catch fire easily. The padding, nets, and finishes we use are fire-safe, so they slow down flames instead of feeding them. This keeps your visitors safer and helps your venue follow the law."
-                  },
-                  {
-                    title: "NFPA 701 & UL 94 — Fire Safety (International)",
-                    desc: "These two tests check how well materials resist fire. NFPA 701 tests cloth and nets, and UL 94 tests plastic parts, to make sure they don't burn quickly. The materials we use pass these fire-safety tests."
-                  },
-                  {
-                    title: "EN 71 — Safe Play Materials (Europe)",
-                    desc: "EN 71 is a European rule that makes sure play materials are safe for children. It checks that they don't catch fire easily and don't contain harmful chemicals. Our kids' equipment meets the EN 71 standard."
-                  },
-                  {
-                    title: "EU REACH & CPSIA — Non-Toxic Materials",
-                    desc: "These rules keep harmful chemicals, lead, and other unsafe substances out of children's products. The materials in our kids' equipment follow these rules, so they are safe for kids to touch and play on."
-                  }
-                ]
-              ).map((card, idx) => (
+            {/* Desktop Left 4 Wide Rectangle Cards Stack */}
+            <div className="winera-safety-material-cards winera-safety-material-desktop-cards">
+              {materialsCardsList.map((card, idx) => (
                 <motion.div
                   key={idx}
                   data-framer-motion="true"
@@ -405,6 +497,11 @@ export default function SafetyStandards({ siteData }) {
                   </p>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Mobile Stacked Playing Card View */}
+            <div className="winera-safety-material-mobile-stacked">
+              <SafetyMaterialStackedCardDeck cards={materialsCardsList} />
             </div>
 
             {/* Right 3D Shield Collage Image */}
@@ -477,84 +574,172 @@ export default function SafetyStandards({ siteData }) {
             gap: '35px',
             alignItems: 'flex-start'
           }}>
-            {/* Left Numbered List Items */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              {(Array.isArray(siteData?.safetyElectrical?.items) && siteData.safetyElectrical.items.length > 0
-                ? siteData.safetyElectrical.items
-                : [
-                  {
-                    num: "1",
-                    title: "CE Marking — European Safety Mark",
-                    desc: "The CE mark means a machine has passed Europe's health and safety checks. It shows the product is safe to use. Our arcade games, VR systems, laser tag, hypergrid, and bumper cars all carry the CE mark."
-                  },
-                  {
-                    num: "2",
-                    title: "RoHS — Safe Electronics",
-                    desc: "RoHS makes sure machines are not made with harmful materials inside their electronics. This keeps them safer and cleaner to use. All our electronic machines are RoHS-safe."
-                  },
-                  {
-                    num: "3",
-                    title: "IS / IEC — Electrical Safety Rules (India & International)",
-                    desc: "These rules make sure the wiring and power setup of every machine is safe. Our equipment — bowling pinsetters, scoring screens, VR, arcade games, and LED hypergrid floors — follows both Indian and international electrical safety rules for safe wiring, earthing, and power."
-                  }
-                ]
-              ).map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  data-framer-motion="true"
-                  initial={{ opacity: 0, x: -75 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: false, amount: 0.15 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: idx * 0.12,
-                    ease: [0.16, 1, 0.3, 1]
-                  }}
-                  style={{ textAlign: 'left' }}
-                >
-                  {/* Badge + Title Row */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '22px', marginBottom: '10px' }}>
-                    <div style={{
-                      width: '32px',
-                      height: '32px',
-                      borderRadius: '8px',
-                      background: '#38bdf8',
-                      color: '#ffffff',
-                      fontWeight: '800',
-                      fontSize: '16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0
-                    }}>
-                      {item.num}
+            {/* Left Column: Desktop List & Mobile FAQ Accordion */}
+            <div className="winera-safety-electrical-points-wrapper" style={{ width: '100%' }}>
+              {/* Desktop View: Full List */}
+              <div className="winera-safety-electrical-desktop-list" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                {(Array.isArray(siteData?.safetyElectrical?.items) && siteData.safetyElectrical.items.length > 0
+                  ? siteData.safetyElectrical.items
+                  : [
+                    {
+                      num: "1",
+                      title: "CE Marking — European Safety Mark",
+                      desc: "The CE mark means a machine has passed Europe's health and safety checks. It shows the product is safe to use. Our arcade games, VR systems, laser tag, hypergrid, and bumper cars all carry the CE mark."
+                    },
+                    {
+                      num: "2",
+                      title: "RoHS — Safe Electronics",
+                      desc: "RoHS makes sure machines are not made with harmful materials inside their electronics. This keeps them safer and cleaner to use. All our electronic machines are RoHS-safe."
+                    },
+                    {
+                      num: "3",
+                      title: "IS / IEC — Electrical Safety Rules (India & International)",
+                      desc: "These rules make sure the wiring and power setup of every machine is safe. Our equipment — bowling pinsetters, scoring screens, VR, arcade games, and LED hypergrid floors — follows both Indian and international electrical safety rules for safe wiring, earthing, and power."
+                    }
+                  ]
+                ).map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    data-framer-motion="true"
+                    initial={{ opacity: 0, x: -75 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false, amount: 0.15 }}
+                    transition={{
+                      duration: 0.8,
+                      delay: idx * 0.12,
+                      ease: [0.16, 1, 0.3, 1]
+                    }}
+                    style={{ textAlign: 'left' }}
+                  >
+                    {/* Badge + Title Row */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '22px', marginBottom: '10px' }}>
+                      <div style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '8px',
+                        background: '#38bdf8',
+                        color: '#ffffff',
+                        fontWeight: '800',
+                        fontSize: '16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        {item.num}
+                      </div>
+                      <h3 style={{
+                        fontSize: '1.15rem',
+                        fontWeight: '800',
+                        color: '#0f172a',
+                        margin: 0,
+                        lineHeight: 1.3,
+                        textAlign: 'left'
+                      }}>
+                        {item.title}
+                      </h3>
                     </div>
-                    <h3 style={{
-                      fontSize: '1.15rem',
-                      fontWeight: '800',
-                      color: '#0f172a',
+                    {/* Description Paragraph */}
+                    <p style={{
+                      fontSize: '14.5px',
+                      color: '#475569',
+                      lineHeight: 1.6,
+                      fontWeight: '500',
                       margin: 0,
-                      lineHeight: 1.3,
-                      textAlign: 'left'
+                      paddingLeft: 0,
+                      textAlign: 'left',
+                      maxWidth: '750px'
                     }}>
-                      {item.title}
-                    </h3>
-                  </div>
-                  {/* Description Paragraph */}
-                  <p style={{
-                    fontSize: '14.5px',
-                    color: '#475569',
-                    lineHeight: 1.6,
-                    fontWeight: '500',
-                    margin: 0,
-                    paddingLeft: 0,
-                    textAlign: 'left',
-                    maxWidth: '750px'
-                  }}>
-                    {item.desc}
-                  </p>
-                </motion.div>
-              ))}
+                      {item.desc}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Mobile View: FAQ Style Dropdown Accordion */}
+              <div className="winera-safety-electrical-mobile-accordion" style={{ display: 'none', flexDirection: 'column', gap: '12px' }}>
+                {(Array.isArray(siteData?.safetyElectrical?.items) && siteData.safetyElectrical.items.length > 0
+                  ? siteData.safetyElectrical.items
+                  : [
+                    {
+                      num: "1",
+                      title: "CE Marking — European Safety Mark",
+                      desc: "The CE mark means a machine has passed Europe's health and safety checks. It shows the product is safe to use. Our arcade games, VR systems, laser tag, hypergrid, and bumper cars all carry the CE mark."
+                    },
+                    {
+                      num: "2",
+                      title: "RoHS — Safe Electronics",
+                      desc: "RoHS makes sure machines are not made with harmful materials inside their electronics. This keeps them safer and cleaner to use. All our electronic machines are RoHS-safe."
+                    },
+                    {
+                      num: "3",
+                      title: "IS / IEC — Electrical Safety Rules (India & International)",
+                      desc: "These rules make sure the wiring and power setup of every machine is safe. Our equipment — bowling pinsetters, scoring screens, VR, arcade games, and LED hypergrid floors — follows both Indian and international electrical safety rules for safe wiring, earthing, and power."
+                    }
+                  ]
+                ).map((item, idx) => {
+                  const isOpen = openElectricalIndex === idx;
+                  return (
+                    <div
+                      key={idx}
+                      className={`winera-safety-electrical-accordion-item ${isOpen ? 'is-open' : ''}`}
+                      onClick={() => setOpenElectricalIndex(isOpen ? -1 : idx)}
+                    >
+                      <div className="winera-safety-electrical-accordion-header">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
+                          <div style={{
+                            width: '28px',
+                            height: '28px',
+                            borderRadius: '7px',
+                            background: '#38bdf8',
+                            color: '#ffffff',
+                            fontWeight: '800',
+                            fontSize: '14px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0
+                          }}>
+                            {item.num}
+                          </div>
+                          <h4 style={{
+                            fontSize: '15px',
+                            fontWeight: '700',
+                            color: '#0f172a',
+                            margin: 0,
+                            lineHeight: 1.35,
+                            textAlign: 'left'
+                          }}>
+                            {item.title}
+                          </h4>
+                        </div>
+                        <span className="winera-safety-accordion-chevron" style={{
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.25s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#0284c7',
+                          flexShrink: 0,
+                          marginLeft: '8px'
+                        }}>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </span>
+                      </div>
+
+                      {isOpen && (
+                        <div className="winera-safety-electrical-accordion-body">
+                          <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, margin: 0, fontWeight: '500', textAlign: 'left' }}>
+                            {item.desc}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Right Graphic Image */}
@@ -889,7 +1074,7 @@ export default function SafetyStandards({ siteData }) {
             <div style={{
               position: 'relative',
               zIndex: 3,
-              maxWidth: '560px',
+              maxWidth: '580px',
               width: '100%',
               margin: '0 auto',
               padding: '0 15px',
@@ -899,10 +1084,10 @@ export default function SafetyStandards({ siteData }) {
               justifyContent: 'center',
               textAlign: 'center'
             }}>
-              <h2 style={{
-                fontSize: '35px',
+              <h2 className="winera-cta-title" style={{
+                fontSize: 'clamp(28px, 3.2vw, 38px)',
                 fontWeight: '900',
-                margin: '0 auto 20px',
+                margin: '0 auto 12px',
                 lineHeight: 1.15,
                 textTransform: 'none',
                 letterSpacing: '0.5px',
@@ -917,20 +1102,50 @@ export default function SafetyStandards({ siteData }) {
                 {(() => {
                   let combined = siteData?.safetyWhyMatters?.ctaTitle;
                   if (!combined) {
-                    const t1 = siteData?.safetyWhyMatters?.ctaTitle1 || "Build";
-                    const t2 = siteData?.safetyWhyMatters?.ctaTitle2 || "Yours Now";
-                    combined = `${t1.trim()} ${t2.trim()}`;
+                    const t1 = siteData?.safetyWhyMatters?.ctaTitle1;
+                    const t2 = siteData?.safetyWhyMatters?.ctaTitle2;
+                    if (t1 || t2) {
+                      combined = `${(t1 || '').trim()} ${(t2 || '').trim()}`.trim();
+                    } else {
+                      combined = "Need Any Consultations?";
+                    }
                   }
-                  combined = combined.replace(/\s+/g, ' ');
-                  if (combined.includes("BUILDYOURS") || combined.includes("BuildYours")) {
-                    combined = "Build Yours Now";
-                  }
-                  if (!/[a-z]/.test(combined)) {
-                    combined = combined.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+                  if (!combined || combined === "Build Yours Now" || combined.includes("BUILDYOURS") || combined.includes("BuildYours") || combined === "BUILD YOURS NOW") {
+                    combined = "Need Any Consultations?";
                   }
                   return combined;
                 })()}
               </h2>
+
+              {/* White Subtitle Text */}
+              <p className="winera-cta-subtitle" style={{
+                color: '#ffffff',
+                fontSize: 'clamp(15px, 1.9vw, 22px)',
+                fontWeight: '800',
+                lineHeight: 1.35,
+                margin: '0 auto 22px auto',
+                maxWidth: '520px',
+                textAlign: 'center',
+                textShadow: '0 2px 8px rgba(0,0,0,0.6)'
+              }}>
+                {(() => {
+                  const sub = siteData?.safetyWhyMatters?.ctaSubtitle || siteData?.safetyWhyMatters?.whiteText;
+                  if (sub) {
+                    const lines = sub.split(/<br\s*\/?>/i);
+                    return lines.map((line, idx) => (
+                      <React.Fragment key={idx}>
+                        {idx > 0 && <br className="winera-cta-br" />}
+                        {line}
+                      </React.Fragment>
+                    ));
+                  }
+                  return (
+                    <>
+                      We're Ready To Give Answers To<br className="winera-cta-br" />Your Questions.
+                    </>
+                  );
+                })()}
+              </p>
 
               <div className="winera-cta-banner-btn-wrapper" style={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '0 auto' }}>
                 <a
@@ -941,7 +1156,7 @@ export default function SafetyStandards({ siteData }) {
                   }}
                   className="winera-cta-banner-btn"
                 >
-                  <span>{siteData?.safetyWhyMatters?.buttonText || "Talk to an ROI Expert"}</span>
+                  <span>{siteData?.safetyWhyMatters?.buttonText || "Talk to an Expert"}</span>
                 </a>
               </div>
             </div>

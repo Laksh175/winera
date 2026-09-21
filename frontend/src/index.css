@@ -4414,10 +4414,18 @@ html {
   .winera-softplay-materials-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   .winera-softplay-materials-text {
     text-align: center !important;
+    order: 1 !important;
+  }
+
+  .winera-softplay-materials-points-wrapper {
+    order: 2 !important;
+    width: 100% !important;
   }
 
   .winera-softplay-materials-text img {
@@ -5010,12 +5018,21 @@ html {
 
   .winera-about-welcome-grid {
     grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 30px !important;
   }
 
+  .winera-about-welcome-text {
+    order: 1 !important;
+    width: 100% !important;
+  }
+
   .winera-about-welcome-collage {
+    order: 2 !important;
     height: auto !important;
     width: 100% !important;
+    margin-top: 10px !important;
   }
 
   .winera-about-welcome-collage img {
@@ -6604,12 +6621,16 @@ textarea::placeholder,
 
   .winera-safety-intro-grid {
     grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 36px !important;
     text-align: center !important;
   }
 
   .winera-safety-intro-text {
+    order: 1 !important;
     text-align: center !important;
+    width: 100% !important;
   }
 
   .winera-safety-intro-text p {
@@ -6620,9 +6641,11 @@ textarea::placeholder,
   }
 
   .winera-safety-intro-img {
+    order: 2 !important;
     width: 100% !important;
     display: flex !important;
     justify-content: center !important;
+    margin-top: 10px !important;
   }
 
   .winera-safety-intro-img img {
@@ -6656,11 +6679,13 @@ textarea::placeholder,
   .winera-safety-material-section {
     background: #e0f2fe !important;
     padding: 45px 4vw !important;
+    overflow: visible !important;
   }
 
   .winera-safety-material-grid {
     grid-template-columns: 1fr !important;
     gap: 36px !important;
+    overflow: visible !important;
   }
 
   .winera-safety-material-img {
@@ -6683,13 +6708,65 @@ textarea::placeholder,
 
   .winera-safety-electrical-grid {
     grid-template-columns: 1fr !important;
-    gap: 36px !important;
+    gap: 28px !important;
+  }
+
+  .winera-safety-electrical-points-wrapper {
+    order: 1 !important;
+    width: 100% !important;
+  }
+
+  .winera-safety-electrical-desktop-list {
+    display: none !important;
+  }
+
+  .winera-safety-electrical-mobile-accordion {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .winera-safety-electrical-accordion-item {
+    background: #ffffff !important;
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    padding: 14px 16px !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.03) !important;
+    user-select: none !important;
+  }
+
+  .winera-safety-electrical-accordion-item.is-open {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.12) !important;
+  }
+
+  .winera-safety-electrical-accordion-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .winera-safety-electrical-accordion-body {
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid #f1f5f9 !important;
+    animation: wineraFadeInAccordion 0.25s ease !important;
+  }
+
+  @keyframes wineraFadeInAccordion {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .winera-safety-electrical-img {
+    order: 2 !important;
     width: 100% !important;
     display: flex !important;
     justify-content: center !important;
+    margin-top: 5px !important;
   }
 
   .winera-safety-electrical-img img {
@@ -7192,15 +7269,19 @@ textarea::placeholder,
 @media (max-width: 992px) {
   .winera-safety-intro-grid {
     grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 32px !important;
   }
 
-  .winera-safety-intro-img {
-    margin: 0 auto !important;
+  .winera-safety-intro-text {
+    order: 1 !important;
+    text-align: center !important;
   }
 
-  .winera-safety-intro-text {
-    text-align: center !important;
+  .winera-safety-intro-img {
+    order: 2 !important;
+    margin: 0 auto !important;
   }
 
   .winera-safety-intro-text div[style*="position: relative"] {
@@ -9470,6 +9551,10 @@ h2 span,
   .winera-softplay-roi-text {
     order: 1 !important;
     text-align: center !important;
+  }
+
+  .winera-softplay-materials-points-wrapper {
+    order: 2 !important;
   }
 
   .winera-softplay-supplier-text p,
@@ -16890,5 +16975,265 @@ button[style*="background:transparent"]:hover,
   .winera-roi-get-step-text h4,
   .winera-roi-get-step-text p {
     text-align: left !important;
+  }
+}
+
+/* Safety Standards Play & Attraction Equipment Safety Mobile Slider */
+.winera-safety-standards-mobile-slider {
+  display: none !important;
+}
+
+.winera-safety-standards-desktop-grid {
+  display: grid !important;
+}
+
+@media (max-width: 850px) {
+  .winera-safety-standards-desktop-grid {
+    display: none !important;
+  }
+
+  .winera-safety-standards-mobile-slider {
+    display: block !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-safety-mobile-slider-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .winera-safety-slider-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1.5px solid #38bdf8 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2) !important;
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+    transition: transform 0.2s ease !important;
+  }
+
+  .winera-safety-slider-btn:active {
+    transform: scale(0.92) !important;
+  }
+
+  .winera-safety-mobile-card-container {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .winera-safety-mobile-card {
+    background: linear-gradient(180deg, #d3ebff 0%, #ffffff 100%) !important;
+    border: 1.5px solid #bae6fd !important;
+    border-radius: 18px !important;
+    padding: 20px 16px !important;
+    text-align: center !important;
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.1) !important;
+    min-height: 220px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-safety-mobile-card-title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    margin: 0 0 8px 0 !important;
+    line-height: 1.35 !important;
+  }
+
+  .winera-safety-mobile-card-desc {
+    font-size: 13px !important;
+    color: #475569 !important;
+    line-height: 1.55 !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+  }
+
+  .winera-safety-slider-dots {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 14px !important;
+  }
+
+  .winera-safety-slider-dot {
+    width: 7px !important;
+    height: 7px !important;
+    border-radius: 50% !important;
+    background: #cbd5e1 !important;
+    border: none !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+  }
+
+  .winera-safety-slider-dot.is-active {
+    width: 20px !important;
+    border-radius: 10px !important;
+    background: #38bdf8 !important;
+  }
+}
+
+/* Safety Material & Fire Safety Stacked Card Deck */
+.winera-safety-material-mobile-stacked {
+  display: none !important;
+}
+
+.winera-safety-material-desktop-cards {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+@media (max-width: 850px) {
+  .winera-safety-material-desktop-cards {
+    display: none !important;
+  }
+
+  .winera-safety-material-mobile-stacked {
+    display: block !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-cardstack-wrapper {
+    width: 100% !important;
+    max-width: 350px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    user-select: none !important;
+    touch-action: pan-y !important;
+    margin: 0 auto 15px auto !important;
+  }
+
+  .winera-cardstack-viewport {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 340px !important;
+    height: 355px !important;
+    margin: 0 auto !important;
+    perspective: 1000px !important;
+  }
+
+  .winera-cardstack-card {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: linear-gradient(180deg, #d8eeff 0%, #ffffff 70%) !important;
+    border: 1.5px solid #bae6fd !important;
+    border-radius: 20px !important;
+    padding: 16px 18px !important;
+    box-shadow: 0 -3px 12px rgba(15, 23, 42, 0.05), 0 10px 25px rgba(56, 189, 248, 0.16) !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.35, 1) !important;
+    transform-origin: center top !important;
+    overflow: hidden !important;
+  }
+
+  .winera-cardstack-card.is-active {
+    box-shadow: 0 12px 32px rgba(56, 189, 248, 0.22), 0 2px 8px rgba(0,0,0,0.04) !important;
+    border-color: #7dd3fc !important;
+  }
+
+  .winera-cardstack-card.is-after {
+    background: #e2f1fd !important;
+    border-color: #bae6fd !important;
+    box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.07) !important;
+  }
+
+  .winera-cardstack-card.is-before {
+    background: #c7e6fb !important;
+    border-color: #93c5fd !important;
+  }
+
+  .winera-cardstack-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  .winera-cardstack-badge {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 8px !important;
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  .winera-cardstack-title {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    margin: 0 !important;
+    line-height: 1.35 !important;
+    text-align: left !important;
+    flex: 1 !important;
+  }
+
+  .winera-cardstack-body {
+    padding-top: 12px !important;
+    margin-top: 10px !important;
+    border-top: 1px solid rgba(186, 230, 253, 0.7) !important;
+  }
+
+  .winera-cardstack-desc {
+    font-size: 13.5px !important;
+    color: #475569 !important;
+    line-height: 1.55 !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+
+  .winera-cardstack-dots {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    margin-top: 16px !important;
+    width: 100% !important;
+  }
+
+  .winera-cardstack-dot {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    background: #cbd5e1 !important;
+    border: none !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+  }
+
+  .winera-cardstack-dot.is-active {
+    width: 22px !important;
+    border-radius: 10px !important;
+    background: #0284c7 !important;
   }
 }
