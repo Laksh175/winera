@@ -12095,9 +12095,15 @@ button[style*="background:transparent"]:hover,
     border-radius: 20px !important;
   }
 
-  .winera-related-card h3 {
-    font-size: 1rem !important;
+  .winera-related-card h3,
+  .winera-related-card-title {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    color: rgb(255, 255, 255) !important;
+    text-align: left !important;
+    margin: 0px !important;
     line-height: 1.25 !important;
+    text-shadow: white 0px 4px 15px !important;
   }
 
   /* 3. Discover Our Products / Product Categories Sidebar & Grid 1024px Optimization */

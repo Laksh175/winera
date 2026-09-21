@@ -103,178 +103,189 @@ export default function RelatedProductsSection({
       style={{ padding: '25px 4vw 25px', background: '#F5F5F9', textAlign: 'center' }}
     >
       <MotionFadeIn>
-      <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-        <SectionHeading marginBottom="40px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign} accentStyle={accentStyle}>
-          {(() => {
-            const rawTitle = sectionData?.title || "*Related* Products";
-            const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-            return parts.map((part, index) => {
-              if (index % 2 === 1) {
-                return (
-                  <span key={index} style={{ color: accentColor }}>
-                    {part}
-                  </span>
-                );
-              }
-              return part;
-            });
-          })()}
-        </SectionHeading>
+        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+          <SectionHeading marginBottom="40px" accentWidth={accentWidth} accentMaxWidth={accentMaxWidth} accentHeight={accentHeight} accentMarginBottom={accentMarginBottom} accentAlign={accentAlign} accentStyle={accentStyle}>
+            {(() => {
+              const rawTitle = sectionData?.title || "*Related* Products";
+              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+              return parts.map((part, index) => {
+                if (index % 2 === 1) {
+                  return (
+                    <span key={index} style={{ color: accentColor }}>
+                      {part}
+                    </span>
+                  );
+                }
+                return part;
+              });
+            })()}
+          </SectionHeading>
 
-        <div style={{
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '16px'
-        }}>
-          {/* Previous Button */}
-          <button
-            aria-label="Previous Related Products"
-            onClick={() => {
-              setIsTransitioning(true);
-              setRelatedIndex((prev) => prev - 1);
-            }}
-            style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '50%',
-              background: accentColor,
-              border: 'none',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
-              flexShrink: 0,
-              transition: 'all 0.2s'
-            }}
-          >
-            <ChevronLeft style={{ width: '20px', height: '20px' }} />
-          </button>
-
-          {/* Sliding Track Container */}
           <div style={{
-            width: '100%',
-            maxWidth: '1160px',
-            overflow: 'hidden',
-            borderRadius: '24px'
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '16px'
           }}>
-            <div className="winera-related-track" style={{
-              display: 'flex',
-              gap: '24px',
-              transform: `translateX(calc(-${relatedIndex} * (100% / 4 + 6px)))`,
-              transition: isTransitioning ? 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)' : 'none',
+            {/* Previous Button */}
+            <button
+              aria-label="Previous Related Products"
+              onClick={() => {
+                setIsTransitioning(true);
+                setRelatedIndex((prev) => prev - 1);
+              }}
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                background: accentColor,
+                border: 'none',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
+                flexShrink: 0,
+                transition: 'all 0.2s'
+              }}
+            >
+              <ChevronLeft style={{ width: '20px', height: '20px' }} />
+            </button>
+
+            {/* Sliding Track Container */}
+            <div style={{
               width: '100%',
-              '--related-index': relatedIndex
+              maxWidth: '1160px',
+              overflow: 'hidden',
+              borderRadius: '24px'
             }}>
-              {relatedCategories.map((item, idx) => (
-                <a
-                  key={idx}
-                  href={item.link}
-                  className="winera-related-card"
-                  style={{
-                    textDecoration: 'none',
-                    display: 'block',
-                    flex: '0 0 calc(25% - 18px)',
-                    minWidth: '0'
-                  }}
-                >
-                  <div
+              <div className="winera-related-track" style={{
+                display: 'flex',
+                gap: '24px',
+                transform: `translateX(calc(-${relatedIndex} * (100% / 4 + 6px)))`,
+                transition: isTransitioning ? 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)' : 'none',
+                width: '100%',
+                '--related-index': relatedIndex
+              }}>
+                {relatedCategories.map((item, idx) => (
+                  <a
+                    key={idx}
+                    href={item.link}
+                    className="winera-related-card"
                     style={{
-                      height: '310px',
-                      borderRadius: '24px',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                      background: '#0f172a',
-                      cursor: 'pointer',
-                      transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), boxShadow 0.25s'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-6px)';
-                      e.currentTarget.style.boxShadow = '0 20px 45px rgba(56, 189, 248, 0.3)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.12)';
+                      textDecoration: 'none',
+                      display: 'block',
+                      flex: '0 0 calc(25% - 18px)',
+                      minWidth: '0'
                     }}
                   >
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      loading="eager"
-                      decoding="async"
+                    <div
                       style={{
+                        height: '310px',
+                        borderRadius: '24px',
+                        overflow: 'hidden',
+                        position: 'relative',
+                        boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
+                        background: '#0f172a',
+                        cursor: 'pointer',
+                        transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), boxShadow 0.25s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-6px)';
+                        e.currentTarget.style.boxShadow = '0 20px 45px rgba(56, 189, 248, 0.3)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.12)';
+                      }}
+                    >
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        loading="eager"
+                        decoding="async"
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          zIndex: 0
+                        }}
+                      />
+                      <div style={{
                         position: 'absolute',
                         inset: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        zIndex: 0
-                      }}
-                    />
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 45%)',
-                      padding: '20px 22px',
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      justifyContent: 'space-between'
-                    }}>
-                      <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#ffffff', textAlign: 'left', margin: 0, lineHeight: 1.25 }}>
+                        background: 'linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 45%)',
+                        padding: '20px 22px',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        justifyContent: 'space-between'
+                      }}>
+                        <h3
+                        className="winera-related-card-title"
+                        style={{
+                          fontSize: '20px',
+                          fontWeight: '800',
+                          color: 'rgb(255, 255, 255)',
+                          textAlign: 'left',
+                          margin: '0px',
+                          lineHeight: 1.25,
+                          textShadow: 'white 0px 4px 15px'
+                        }}
+                      >
                         {item.title}
                       </h3>
-                      <div style={{
-                        width: '34px',
-                        height: '34px',
-                        borderRadius: '50%',
-                        background: 'rgba(255, 255, 255, 0.3)',
-                        backdropFilter: 'blur(6px)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '#ffffff',
-                        flexShrink: 0
-                      }}>
-                        <ArrowUpRight style={{ width: '18px', height: '18px', strokeWidth: 2.5 }} />
+                        <div style={{
+                          width: '34px',
+                          height: '34px',
+                          borderRadius: '50%',
+                          background: 'rgba(255, 255, 255, 0.3)',
+                          backdropFilter: 'blur(6px)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#ffffff',
+                          flexShrink: 0
+                        }}>
+                          <ArrowUpRight style={{ width: '18px', height: '18px', strokeWidth: 2.5 }} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </a>
-              ))}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Next Button */}
-          <button
-            aria-label="Next Related Products"
-            onClick={() => {
-              setIsTransitioning(true);
-              setRelatedIndex((prev) => prev + 1);
-            }}
-            style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '50%',
-              background: accentColor,
-              border: 'none',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
-              flexShrink: 0,
-              transition: 'all 0.2s'
-            }}
-          >
-            <ChevronRight style={{ width: '20px', height: '20px' }} />
-          </button>
+            {/* Next Button */}
+            <button
+              aria-label="Next Related Products"
+              onClick={() => {
+                setIsTransitioning(true);
+                setRelatedIndex((prev) => prev + 1);
+              }}
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                background: accentColor,
+                border: 'none',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
+                flexShrink: 0,
+                transition: 'all 0.2s'
+              }}
+            >
+              <ChevronRight style={{ width: '20px', height: '20px' }} />
+            </button>
+          </div>
         </div>
-      </div>
       </MotionFadeIn>
     </section>
   );
