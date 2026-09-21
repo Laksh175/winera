@@ -61,7 +61,12 @@ const renderTextWithBreaks = (text, yellowHighlight = false) => {
     });
     return (
       <React.Fragment key={i}>
-        {i > 0 && <br className="winera-cta-br" />}
+        {i > 0 && (
+          <>
+            <br className="winera-cta-br" />
+            {" "}
+          </>
+        )}
         {content}
       </React.Fragment>
     );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
 
@@ -20,8 +20,123 @@ export default function ClientsMarqueeSection({
     { name: "Logoipsum2", text: "🌊 Logoipsum", font: "600" }
   ]
 }) {
-  const listToDisplay = (clientLogos && clientLogos.length > 0) ? clientLogos : [];
-  const dynamicDuration = Math.max(70, (listToDisplay.length > 0 ? Math.max(listToDisplay.length, 8) : 8) * 11);
+  const trackRef = useRef(null);
+  const currentXRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const isInteractingRef = useRef(false);
+  const startXRef = useRef(0);
+  const dragStartCurrentXRef = useRef(0);
+  const hasMovedRef = useRef(false);
+  const lastTouchTimeRef = useRef(0);
+  const lastTouchXRef = useRef(0);
+  const velocityRef = useRef(0);
+  const resumeTimeoutRef = useRef(null);
+  const animFrameIdRef = useRef(null);
+  const [isGrabbing, setIsGrabbing] = useState(false);
+
+  const rawList = (clientLogos && clientLogos.length > 0) ? clientLogos : defaultList;
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let lastTime = performance.now();
+    const baseSpeed = 38; // px per second
+
+    const loop = (now) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      const firstSet = track.children[0];
+      const setWidth = firstSet ? firstSet.offsetWidth : 1400;
+
+      if (!isInteractingRef.current) {
+        if (Math.abs(velocityRef.current) > 0.5) {
+          currentXRef.current += velocityRef.current * dt * 60;
+          velocityRef.current *= 0.93; // smooth friction deceleration
+        } else {
+          velocityRef.current = 0;
+          currentXRef.current -= baseSpeed * dt;
+        }
+      }
+
+      // Seamless infinite looping wrap
+      if (setWidth > 0) {
+        while (currentXRef.current <= -setWidth) {
+          currentXRef.current += setWidth;
+        }
+        while (currentXRef.current > 0) {
+          currentXRef.current -= setWidth;
+        }
+      }
+
+      track.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
+      animFrameIdRef.current = requestAnimationFrame(loop);
+    };
+
+    animFrameIdRef.current = requestAnimationFrame(loop);
+
+    return () => {
+      if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
+      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    };
+  }, [clientLogos, defaultList]);
+
+  // Touch & Pointer gesture handlers for manual scrolling
+  const handleStart = (clientX) => {
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    isInteractingRef.current = true;
+    isDraggingRef.current = true;
+    hasMovedRef.current = false;
+    velocityRef.current = 0;
+
+    startXRef.current = clientX;
+    lastTouchXRef.current = clientX;
+    lastTouchTimeRef.current = performance.now();
+    dragStartCurrentXRef.current = currentXRef.current;
+    setIsGrabbing(true);
+  };
+
+  const handleMove = (clientX) => {
+    if (!isDraggingRef.current) return;
+    const deltaX = clientX - startXRef.current;
+
+    if (Math.abs(deltaX) > 4) {
+      hasMovedRef.current = true;
+    }
+
+    const now = performance.now();
+    const timeDiff = now - lastTouchTimeRef.current;
+    if (timeDiff > 10) {
+      velocityRef.current = ((clientX - lastTouchXRef.current) / timeDiff) * 16;
+      lastTouchXRef.current = clientX;
+      lastTouchTimeRef.current = now;
+    }
+
+    currentXRef.current = dragStartCurrentXRef.current + deltaX;
+
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
+    }
+  };
+
+  const handleEnd = () => {
+    isDraggingRef.current = false;
+    setIsGrabbing(false);
+
+    // Limit max fling velocity
+    velocityRef.current = Math.max(-25, Math.min(25, velocityRef.current));
+
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    resumeTimeoutRef.current = setTimeout(() => {
+      isInteractingRef.current = false;
+      velocityRef.current = 0;
+    }, 800); // Resumes smooth auto-scroll 800ms after user releases
+
+    setTimeout(() => {
+      hasMovedRef.current = false;
+    }, 80);
+  };
 
   return (
     <section id={id} className={className} style={{
@@ -62,15 +177,36 @@ export default function ClientsMarqueeSection({
           </p>
         ) : null}
 
-        <div style={{
-          width: '100%',
-          maxWidth: '100vw',
-          margin: '0 auto',
-          padding: '20px 0',
-          overflow: 'hidden',
-          position: 'relative'
-        }}>
-          <div className="marquee-track winera-clients-marquee-track" style={{ animationDuration: `${dynamicDuration}s` }}>
+        {/* Gesture & Touch Controlled Infinite Marquee Showcase */}
+        <div
+          onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+          onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+          onTouchEnd={handleEnd}
+          onTouchCancel={handleEnd}
+          onMouseDown={(e) => handleStart(e.clientX)}
+          onMouseMove={(e) => handleMove(e.clientX)}
+          onMouseUp={handleEnd}
+          onMouseLeave={handleEnd}
+          style={{
+            width: '100%',
+            maxWidth: '100vw',
+            margin: '0 auto',
+            padding: '20px 0',
+            overflow: 'hidden',
+            position: 'relative',
+            cursor: isGrabbing ? 'grabbing' : 'grab',
+            userSelect: 'none',
+            touchAction: 'pan-y'
+          }}
+        >
+          <div
+            ref={trackRef}
+            style={{
+              display: 'flex',
+              width: 'max-content',
+              willChange: 'transform'
+            }}
+          >
             {[...Array(4)].map((_, setIdx) => (
               <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '60px', paddingRight: '60px' }}>
                 {(clientLogos && clientLogos.length > 0) ? (
@@ -87,13 +223,29 @@ export default function ClientsMarqueeSection({
                           alignItems: 'center',
                           justifyContent: 'center',
                           height: '115px',
-                          userSelect: 'none'
+                          userSelect: 'none',
+                          pointerEvents: 'none'
                         }}
                       >
                         {client.logoUrl ? (
-                          <img src={client.logoUrl} alt={client.name || 'Logo'} loading="lazy" decoding="async" style={{ maxHeight: '110px', maxWidth: '271px', objectFit: 'contain' }} />
+                          <img
+                            src={client.logoUrl}
+                            alt={client.name || 'Logo'}
+                            loading="lazy"
+                            decoding="async"
+                            draggable="false"
+                            style={{
+                              maxHeight: '110px',
+                              maxWidth: '271px',
+                              objectFit: 'contain',
+                              userSelect: 'none',
+                              pointerEvents: 'none'
+                            }}
+                          />
                         ) : (
-                          <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px' }}>{client.name}</span>
+                          <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px', userSelect: 'none' }}>
+                            {client.name}
+                          </span>
                         )}
                       </div>
                     ));
@@ -112,7 +264,8 @@ export default function ClientsMarqueeSection({
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '8px',
-                        userSelect: 'none'
+                        userSelect: 'none',
+                        pointerEvents: 'none'
                       }}
                     >
                       {client.text || client.name}
@@ -128,3 +281,4 @@ export default function ClientsMarqueeSection({
     </section>
   );
 }
+

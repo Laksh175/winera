@@ -420,31 +420,30 @@ export default function SafetyStandards({ siteData }) {
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Header */}
-          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 25px 0' }}>
+          <div className="winera-safety-material-header-wrapper winera-reveal winera-reveal-delay-1" style={{ maxWidth: '820px', margin: '0 0 25px 0' }}>
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill', marginLeft: 0 }}
+              className="winera-safety-material-stroke"
+              style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 className="winera-safety-material-h2" style={{
               fontSize: '35px',
               fontWeight: '900',
               color: '#0f172a',
               margin: '0 0 12px',
-              lineHeight: 1.2,
-              textAlign: 'left'
+              lineHeight: 1.2
             }}>
               <span style={{ color: '#38bdf8' }}>{siteData?.safetyMaterials?.title1 || "Material &"}</span>{' '}
               <span>{siteData?.safetyMaterials?.title2 || "Fire Safety"}</span>
             </h2>
-            <p style={{
+            <p className="winera-safety-material-desc" style={{
               fontSize: '14.5px',
               color: '#64748b',
               fontWeight: '500',
               margin: 0,
               lineHeight: 1.6,
-              maxWidth: '820px',
-              textAlign: 'left'
+              maxWidth: '820px'
             }}>
               {siteData?.safetyMaterials?.subtitle || "These standards make sure everything is made from safe materials that don't catch fire easily and are not harmful to touch which is also a legal rule for game zones in India."}
             </p>
@@ -1171,14 +1170,19 @@ export default function SafetyStandards({ siteData }) {
                     const lines = sub.split(/<br\s*\/?>/i);
                     return lines.map((line, idx) => (
                       <React.Fragment key={idx}>
-                        {idx > 0 && <br className="winera-cta-br" />}
+                        {idx > 0 && (
+                          <>
+                            <br className="winera-cta-br" />
+                            {" "}
+                          </>
+                        )}
                         {line}
                       </React.Fragment>
                     ));
                   }
                   return (
                     <>
-                      We're Ready To Give Answers To<br className="winera-cta-br" />Your Questions.
+                      We're Ready To Give Answers To <br className="winera-cta-br" />Your Questions.
                     </>
                   );
                 })()}

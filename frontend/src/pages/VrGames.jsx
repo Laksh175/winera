@@ -1157,7 +1157,7 @@ export default function VrGames({ siteData }) {
         subtitle={
           siteData?.vrCta?.subtitle || siteData?.vrCta?.whiteText
             ? siteData?.vrCta?.subtitle || siteData?.vrCta?.whiteText
-            : "We're Ready To Give Answers To<br/>Your Questions."
+            : "We're Ready To Give Answers To <br/>Your Questions."
         }
         description={null}
         buttonText={

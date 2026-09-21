@@ -1509,7 +1509,7 @@ export default function ArcadeGame({ siteData }) {
         subtitle={
           siteData?.arcadeCta?.whiteText !== undefined
             ? siteData.arcadeCta.whiteText
-            : "We're Ready To Give Answers To<br/>Your Question."
+            : "We're Ready To Give Answers To <br/>Your Question."
         }
         description={null}
         buttonText={

@@ -77,22 +77,28 @@ export default function ContactUs({ siteData }) {
         }}>
           {/* LEFT COLUMN: Section Title, Subtext & Stacked Contact Info Cards */}
           <div style={{ textAlign: 'left' }}>
-            <SectionHeading align="left" marginBottom="20px" accentWidth="240px" accentMaxWidth="400px">
-              {(() => {
-                const rawTitle = siteData?.contactPage?.title || "Get in Touch with *Winera International*";
-                const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-                return parts.map((part, index) => {
-                  if (index % 2 === 1) {
+            <div className="winera-contact-heading-wrap">
+              <SectionHeading align="left" marginBottom="20px" accentWidth="240px" accentMaxWidth="400px">
+                {(() => {
+                  const rawTitle = siteData?.contactPage?.title || "Get in Touch with *Winera International*";
+                  const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                  return parts.map((part, index) => {
+                    if (index % 2 === 1) {
+                      return (
+                        <span key={index} className="winera-contact-title-line2" style={{ color: '#0f172a', display: 'block' }}>
+                          {part}
+                        </span>
+                      );
+                    }
                     return (
-                      <span key={index} style={{ color: '#0f172a' }}>
-                        {part}
+                      <span key={index} className="winera-contact-title-line1" style={{ color: '#38bdf8', display: 'block' }}>
+                        {part.trim()}
                       </span>
                     );
-                  }
-                  return <span key={index} style={{ color: '#38bdf8' }}>{part} </span>;
-                });
-              })()}
-            </SectionHeading>
+                  });
+                })()}
+              </SectionHeading>
+            </div>
 
             <p style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '36px', maxWidth: '540px' }}>
               {siteData?.contactPage?.desc || "Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations."}

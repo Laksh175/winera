@@ -36,17 +36,7 @@ export default function ProjectsMarqueeSection({
 
   const trackRef = useRef(null);
   const currentXRef = useRef(0);
-  const isDraggingRef = useRef(false);
-  const isInteractingRef = useRef(false);
-  const startXRef = useRef(0);
-  const dragStartCurrentXRef = useRef(0);
-  const hasMovedRef = useRef(false);
-  const lastTouchTimeRef = useRef(0);
-  const lastTouchXRef = useRef(0);
-  const velocityRef = useRef(0);
-  const resumeTimeoutRef = useRef(null);
   const animFrameIdRef = useRef(null);
-  const [isGrabbing, setIsGrabbing] = useState(false);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -62,23 +52,12 @@ export default function ProjectsMarqueeSection({
       const firstSet = track.children[0];
       const setWidth = firstSet ? firstSet.offsetWidth : 1695;
 
-      if (!isInteractingRef.current) {
-        if (Math.abs(velocityRef.current) > 0.5) {
-          currentXRef.current += velocityRef.current * dt * 60;
-          velocityRef.current *= 0.93; // smooth deceleration friction
-        } else {
-          velocityRef.current = 0;
-          currentXRef.current -= baseSpeed * dt;
-        }
-      }
+      currentXRef.current -= baseSpeed * dt;
 
       // Seamless infinite looping wrap
       if (setWidth > 0) {
-        while (currentXRef.current <= -setWidth * 2) {
+        while (currentXRef.current <= -setWidth) {
           currentXRef.current += setWidth;
-        }
-        while (currentXRef.current >= -setWidth * 0.5) {
-          currentXRef.current -= setWidth;
         }
       }
 
@@ -90,73 +69,8 @@ export default function ProjectsMarqueeSection({
 
     return () => {
       if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
-      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     };
   }, [items]);
-
-  // Touch & Pointer gesture handlers
-  const handleStart = (clientX) => {
-    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
-    isInteractingRef.current = true;
-    isDraggingRef.current = true;
-    hasMovedRef.current = false;
-    velocityRef.current = 0;
-
-    startXRef.current = clientX;
-    lastTouchXRef.current = clientX;
-    lastTouchTimeRef.current = performance.now();
-    dragStartCurrentXRef.current = currentXRef.current;
-    setIsGrabbing(true);
-  };
-
-  const handleMove = (clientX) => {
-    if (!isDraggingRef.current) return;
-    const deltaX = clientX - startXRef.current;
-
-    if (Math.abs(deltaX) > 5) {
-      hasMovedRef.current = true;
-    }
-
-    const now = performance.now();
-    const timeDiff = now - lastTouchTimeRef.current;
-    if (timeDiff > 10) {
-      velocityRef.current = ((clientX - lastTouchXRef.current) / timeDiff) * 16;
-      lastTouchXRef.current = clientX;
-      lastTouchTimeRef.current = now;
-    }
-
-    currentXRef.current = dragStartCurrentXRef.current + deltaX;
-
-    if (trackRef.current) {
-      trackRef.current.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
-    }
-  };
-
-  const handleEnd = () => {
-    if (!isDraggingRef.current) return;
-    isDraggingRef.current = false;
-    setIsGrabbing(false);
-
-    // Limit max fling velocity
-    velocityRef.current = Math.max(-20, Math.min(20, velocityRef.current));
-
-    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
-    resumeTimeoutRef.current = setTimeout(() => {
-      isInteractingRef.current = false;
-      velocityRef.current = 0;
-    }, 1500);
-
-    setTimeout(() => {
-      hasMovedRef.current = false;
-    }, 80);
-  };
-
-  const handleCardClick = (e) => {
-    if (hasMovedRef.current) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  };
 
   return (
     <section id={id} className="winera-projects-marquee-section winera-marquee-fullwidth" style={{
@@ -233,25 +147,14 @@ export default function ProjectsMarqueeSection({
           </div>
         )}
 
-        {/* Gesture & Touch Controlled Infinite Marquee Projects Showcase */}
+        {/* Continuous Auto-Scroll Infinite Marquee Projects Showcase */}
         <div
-          onTouchStart={(e) => handleStart(e.touches[0].clientX)}
-          onTouchMove={(e) => handleMove(e.touches[0].clientX)}
-          onTouchEnd={handleEnd}
-          onTouchCancel={handleEnd}
-          onMouseDown={(e) => handleStart(e.clientX)}
-          onMouseMove={(e) => handleMove(e.clientX)}
-          onMouseUp={handleEnd}
-          onMouseLeave={handleEnd}
           style={{
             width: '100%',
             maxWidth: '100vw',
             overflow: 'hidden',
             position: 'relative',
-            padding: '10px 0',
-            cursor: isGrabbing ? 'grabbing' : 'grab',
-            userSelect: 'none',
-            touchAction: 'pan-y'
+            padding: '10px 0'
           }}
         >
           <div

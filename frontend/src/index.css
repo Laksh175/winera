@@ -17103,6 +17103,32 @@ button[style*="background:transparent"]:hover,
 }
 
 @media (max-width: 850px) {
+  .winera-safety-material-header-wrapper {
+    text-align: center !important;
+    margin: 0 auto 25px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .winera-safety-material-stroke {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+  }
+
+  .winera-safety-material-h2 {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .winera-safety-material-desc {
+    text-align: center !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+  }
+
   .winera-safety-material-desktop-cards {
     display: none !important;
   }
@@ -17461,5 +17487,43 @@ button[style*="background:transparent"]:hover,
   .winera-safety-structure-dot.is-active {
     width: 22px !important;
     border-radius: 10px !important;
+  }
+}
+
+/* ==========================================================================
+   CONTACT US PAGE TITLE 2-LINE MOBILE STYLING
+   ========================================================================== */
+.winera-contact-heading-wrap .winera-contact-title-line1 {
+  display: block;
+  color: #38bdf8;
+}
+
+.winera-contact-heading-wrap .winera-contact-title-line2 {
+  display: block;
+  color: #0f172a;
+}
+
+@media (max-width: 768px) {
+  .winera-contact-heading-wrap .winera-section-heading-h2 {
+    font-size: clamp(23px, 6.2vw, 32px) !important;
+    line-height: 1.25 !important;
+  }
+
+  .winera-contact-heading-wrap .winera-contact-title-line1 {
+    display: block !important;
+    white-space: normal !important;
+  }
+
+  .winera-contact-heading-wrap .winera-contact-title-line2 {
+    display: block !important;
+    white-space: normal !important;
+    text-wrap: balance !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .winera-contact-heading-wrap .winera-section-heading-h2 {
+    font-size: clamp(21px, 6vw, 26px) !important;
+    line-height: 1.25 !important;
   }
 }
