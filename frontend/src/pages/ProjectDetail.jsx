@@ -193,14 +193,16 @@ export default function ProjectDetail({ siteData }) {
     mainImg: getValidImageUrl(cmsItem.img || cmsItem.imageUrl, defaultProject.mainImg),
     clientImg: getValidImageUrl(cmsItem.clientImg || cmsItem.clientImageUrl, defaultProject.clientImg),
     solutionImg: getValidImageUrl(cmsItem.solutionImg || cmsItem.solutionImageUrl, defaultProject.solutionImg),
-    galleryImages: [
-      cmsItem.galleryImage1,
-      cmsItem.galleryImage2,
-      cmsItem.galleryImage3,
-      cmsItem.galleryImage4,
-      cmsItem.galleryImage5,
-      cmsItem.galleryImage6
-    ].filter(Boolean),
+    galleryImages: (Array.isArray(cmsItem.galleryImages) && cmsItem.galleryImages.length > 0)
+      ? cmsItem.galleryImages
+      : [
+          cmsItem.galleryImage1,
+          cmsItem.galleryImage2,
+          cmsItem.galleryImage3,
+          cmsItem.galleryImage4,
+          cmsItem.galleryImage5,
+          cmsItem.galleryImage6
+        ].filter(Boolean),
     videoImg: cmsItem.videoImg || cmsItem.videoCoverUrl || defaultProject.videoImg,
     videoUrl: cmsItem.videoUrl || cmsItem.videoLink || defaultProject.videoUrl,
     basicInfoBg: cmsItem.basicInfoBg || cmsItem.basicBg || '',
@@ -704,7 +706,8 @@ export default function ProjectDetail({ siteData }) {
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '24px',
             maxWidth: '1000px',
-            margin: '0 auto'
+            margin: '0 auto',
+            paddingBottom: '25px'
           }}>
             {galleryImages.map((imgSrc, idx) => (
               <motion.div
@@ -714,12 +717,12 @@ export default function ProjectDetail({ siteData }) {
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{
                   duration: 0.55,
-                  delay: idx * 0.1,
+                  delay: (idx % 6) * 0.08,
                   ease: [0.22, 1, 0.36, 1]
                 }}
                 whileHover={{
-                  y: -10,
-                  scale: 1.03,
+                  y: -8,
+                  scale: 1.025,
                   boxShadow: '0 20px 35px rgba(56, 189, 248, 0.25), 0 10px 20px rgba(0,0,0,0.12)'
                 }}
                 whileTap={{ scale: 0.98 }}
@@ -730,7 +733,8 @@ export default function ProjectDetail({ siteData }) {
                   cursor: 'pointer',
                   background: '#ffffff',
                   backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden'
+                  WebkitBackfaceVisibility: 'hidden',
+                  aspectRatio: '6 / 5'
                 }}
               >
                 <img
@@ -738,7 +742,7 @@ export default function ProjectDetail({ siteData }) {
                   alt={`Project Gallery ${idx + 1}`}
                   style={{
                     width: '100%',
-                    height: 'auto',
+                    height: '100%',
                     borderRadius: '24px',
                     display: 'block',
                     objectFit: 'cover'

@@ -5531,9 +5531,9 @@ textarea::placeholder,
 
   /* Project Gallery Section Mobile Background Fix */
   .winera-project-gallery-section {
-    background: #e0f2fe !important;
     padding: 45px 4vw !important;
     margin: 0 !important;
+    background-size: 100% 100% !important;
   }
 
   /* Safety Standards Page Responsiveness */

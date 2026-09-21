@@ -1994,6 +1994,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         solution1: currentItem.solution1 || knownProj.solution1 || 'Winera International delivered the complete setup from start to finish, optimizing flow and high-energy zones.',
         solution2: currentItem.solution2 || knownProj.solution2 || 'The result is a bright, safe, and profitable entertainment venue ready for opening day.',
         solutionImg: currentItem.solutionImg || currentItem.solutionImageUrl || knownProj.solutionImg || projectImage4,
+        galleryImages: Array.isArray(currentItem.galleryImages) && currentItem.galleryImages.length > 0
+          ? currentItem.galleryImages
+          : [
+              currentItem.galleryImage1 || projectBlock1,
+              currentItem.galleryImage2 || projectBlock2,
+              currentItem.galleryImage3 || projectBlock3,
+              currentItem.galleryImage4 || projectBlock1,
+              currentItem.galleryImage5 || projectBlock2,
+              currentItem.galleryImage6 || projectBlock3
+            ].filter(Boolean),
         galleryImage1: (currentItem.galleryImages && currentItem.galleryImages[0]) || currentItem.galleryImage1 || projectBlock1,
         galleryImage2: (currentItem.galleryImages && currentItem.galleryImages[1]) || currentItem.galleryImage2 || projectBlock2,
         galleryImage3: (currentItem.galleryImages && currentItem.galleryImages[2]) || currentItem.galleryImage3 || projectBlock3,
@@ -2040,6 +2050,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         solution1: 'Winera International delivered the complete setup from start to finish, optimizing flow and high-energy zones.',
         solution2: 'The result is a bright, safe, and profitable entertainment venue ready for opening day.',
         solutionImg: projectImage4,
+        galleryImages: [
+          projectBlock1,
+          projectBlock2,
+          projectBlock3,
+          projectBlock1,
+          projectBlock2,
+          projectBlock3
+        ],
         galleryImage1: projectBlock1,
         galleryImage2: projectBlock2,
         galleryImage3: projectBlock3,
