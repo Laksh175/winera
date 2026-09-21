@@ -942,7 +942,7 @@ export default function Hypergrid({ siteData }) {
         title={
           siteData?.hypergridCta?.title
             ? siteData.hypergridCta.title
-            : "READY TO ADD HYPERGRID<br/>TO YOUR VENUE?"
+            : "Ready To Add Hypergrid<br/>To Your Venue?"
         }
         subtitle={
           siteData?.hypergridCta?.subtitle || siteData?.hypergridCta?.whiteText

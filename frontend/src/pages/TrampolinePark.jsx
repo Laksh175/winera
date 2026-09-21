@@ -1183,7 +1183,7 @@ export default function TrampolinePark({ siteData }) {
                 fontSize: '42px',
                 fontWeight: '900',
                 margin: '0 0 10px 0',
-                textTransform: 'uppercase',
+                textTransform: 'none',
                 letterSpacing: '0.5px',
                 lineHeight: 1.25,
                 background: 'linear-gradient(90deg, rgba(255, 212, 0, 1) 0%, rgba(238, 229, 183, 1) 32%, rgba(255, 255, 255, 1) 68%, rgba(202, 244, 255, 1) 100%)',
@@ -1192,9 +1192,19 @@ export default function TrampolinePark({ siteData }) {
                 filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.85))',
                 display: 'inline-block'
               }} className="winera-cta-h2">
-                <span>{siteData?.trampolineCta?.titleLine1 !== undefined ? siteData.trampolineCta.titleLine1 : "PLAN YOUR TRAMPOLINE PARK"}</span>
+                <span>
+                  {(() => {
+                    const raw = siteData?.trampolineCta?.titleLine1 !== undefined ? siteData.trampolineCta.titleLine1 : "Plan Your Trampoline Park";
+                    return !/[a-z]/.test(raw) ? raw.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : raw;
+                  })()}
+                </span>
                 <br />
-                <span>{siteData?.trampolineCta?.titleLine2 !== undefined ? siteData.trampolineCta.titleLine2 : "WITH WINERA"}</span>
+                <span>
+                  {(() => {
+                    const raw = siteData?.trampolineCta?.titleLine2 !== undefined ? siteData.trampolineCta.titleLine2 : "With Winera";
+                    return !/[a-z]/.test(raw) ? raw.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : raw;
+                  })()}
+                </span>
               </h2>
               <p style={{
                 fontSize: '15.5px',

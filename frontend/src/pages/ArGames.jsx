@@ -1464,8 +1464,8 @@ export default function ArGames({ siteData }) {
         tagline={siteData?.arCta?.tagline || null}
         title={
           siteData?.arCta?.title
-            ? (siteData.arCta.title.toUpperCase())
-            : "READY TO SET UP<br/>YOUR GAMING ZONE?"
+            ? siteData.arCta.title
+            : "Ready To Set Up<br/>Your Gaming Zone?"
         }
         subtitle={
           siteData?.arCta?.subtitle || siteData?.arCta?.description || siteData?.arCta?.whiteText

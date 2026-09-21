@@ -1257,11 +1257,11 @@ export default function BumperCar({ siteData }) {
         leftImg={bumperCarCtaLeft}
         rightImgUrl={siteData?.bumpercarCta?.rightImgUrl}
         rightImg={bumperCarCtaRight}
-        tagline={siteData?.bumpercarCta?.tagline || "GET IN TOUCH"}
+        tagline={siteData?.bumpercarCta?.tagline || "Get In Touch"}
         title={
           siteData?.bumpercarCta?.title
             ? siteData.bumpercarCta.title
-            : "READY TO EXPLORE A BUMPER CAR<br/>ATTRACTION FOR YOUR VENUE?"
+            : "Ready To Explore A Bumper Car<br/>Attraction For Your Venue?"
         }
         subtitle={
           siteData?.bumpercarCta?.subtitle || siteData?.bumpercarCta?.whiteText

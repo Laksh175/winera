@@ -914,8 +914,8 @@ export default function SafetyStandards({ siteData }) {
                 fontWeight: '900',
                 margin: '0 auto 20px',
                 lineHeight: 1.15,
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
+                textTransform: 'none',
+                letterSpacing: '0.5px',
                 background: 'linear-gradient(90deg, rgba(255, 212, 0, 1) 0%, rgba(238, 229, 183, 1) 30%, rgba(0, 174, 239, 1) 68%, rgba(167, 229, 245, 1) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -927,13 +927,16 @@ export default function SafetyStandards({ siteData }) {
                 {(() => {
                   let combined = siteData?.safetyWhyMatters?.ctaTitle;
                   if (!combined) {
-                    const t1 = siteData?.safetyWhyMatters?.ctaTitle1 || "BUILD";
-                    const t2 = siteData?.safetyWhyMatters?.ctaTitle2 || "YOURS NOW";
+                    const t1 = siteData?.safetyWhyMatters?.ctaTitle1 || "Build";
+                    const t2 = siteData?.safetyWhyMatters?.ctaTitle2 || "Yours Now";
                     combined = `${t1.trim()} ${t2.trim()}`;
                   }
                   combined = combined.replace(/\s+/g, ' ');
-                  if (combined.includes("BUILDYOURS")) {
-                    combined = combined.replace(/BUILDYOURS/g, "BUILD YOURS");
+                  if (combined.includes("BUILDYOURS") || combined.includes("BuildYours")) {
+                    combined = "Build Yours Now";
+                  }
+                  if (!/[a-z]/.test(combined)) {
+                    combined = combined.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
                   }
                   return combined;
                 })()}

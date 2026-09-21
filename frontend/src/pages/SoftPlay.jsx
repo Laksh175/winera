@@ -1173,7 +1173,7 @@ export default function SoftPlay({ siteData }) {
         title={
           siteData?.softplayCta?.title !== undefined
             ? siteData.softplayCta.title
-            : "READY TO BUILD YOUR<br/>SOFT PLAY ZONE?"
+            : "Ready To Build Your<br/>Soft Play Zone?"
         }
         subtitle={
           siteData?.softplayCta?.description !== undefined

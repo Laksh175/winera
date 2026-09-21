@@ -793,8 +793,8 @@ export default function ArcadeGameDetail({ siteData }) {
           bgUrl={siteData?.arcadeCta?.bgUrl && !siteData.arcadeCta.bgUrl.includes('project-cta-bg') && !siteData.arcadeCta.bgUrl.includes('need-consultations-bg') ? siteData.arcadeCta.bgUrl : null}
           bg={arcadeCtaBg}
           tagline={null}
-          title="NEED ANY CONSULTATIONS ?"
-          subtitle={"WE'RE READY TO GIVE ANSWERS TO<br/>YOUR QUESTION."}
+          title="Need Any Consultations?"
+          subtitle={"We're Ready To Give Answers To<br/>Your Question."}
           description={null}
           buttonText="Get Quote Now"
           buttonLink={product.quoteUrl || "https://wa.me/919428989488"}

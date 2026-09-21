@@ -216,7 +216,7 @@ export default function ArcadeGame({ siteData }) {
       </section>
 
       {/* 3. ARCADE GAME MACHINES IN INDIA SECTION (1:1 FIGMA SCREENSHOT MATCH) */}
-      <section className="winera-arcade-intro-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
+      <section className="winera-arcade-intro-section" style={{ padding: '40px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -365,46 +365,41 @@ export default function ArcadeGame({ siteData }) {
                 desc: siteData?.arcadeIntro?.feature2Desc || "From sourcing to installation and after-sales support, our own team handles the entire arcade game zone setup process, not a third-party contractor."
               }
             ]).map((feature, fIdx) => (
-              <div key={fIdx} style={{
-                display: 'flex',
-                gap: '16px',
-                alignItems: 'flex-start',
-                marginBottom: fIdx === 0 ? '20px' : '32px',
-                background: '#F5F5F9',
+              <div key={fIdx} className="winera-arcade-feature-card" style={{
+                marginBottom: fIdx === 0 ? '16px' : '28px',
+                background: 'rgba(201, 198, 198, 0.17)',
                 borderRadius: '16px',
-                padding: '0px 20px',
-                boxShadow: '0 8px 25px rgba(0,0,0,0.03)',
-                border: '1px solid #f1f5f9'
+                padding: '16px 20px',
+                boxShadow: '0px 8px 25px rgb(215, 215, 215)',
+                border: '1px solid rgb(226, 232, 240)'
               }}>
-                <div style={{
-                  width: '36px',
-                  height: '36px',
+                <div className="winera-arcade-feature-icon" style={{
+                  width: '38px',
+                  height: '38px',
                   borderRadius: '10px',
-                  background: '#f1f5f9',
+                  background: 'rgb(228, 226, 231)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexShrink: 0
                 }}>
                   {fIdx === 0 ? (
-                    <Shield style={{ width: '18px', height: '18px', color: '#475569' }} />
+                    <Shield style={{ width: '19px', height: '19px', color: '#0f172a' }} />
                   ) : (
-                    <Wrench style={{ width: '18px', height: '18px', color: '#475569' }} />
+                    <Wrench style={{ width: '19px', height: '19px', color: '#0f172a' }} />
                   )}
                 </div>
-                <div>
-                  <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
-                    {feature.title}
-                  </h4>
-                  <p style={{ fontSize: '11.5px', color: '#64748b', fontWeight: '500', lineHeight: 1.5 }}>
-                    {feature.desc}
-                  </p>
-                </div>
+                <h4 className="winera-arcade-feature-title" style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: '0 0 4px' }}>
+                  {feature.title}
+                </h4>
+                <p className="winera-arcade-feature-desc" style={{ fontSize: '13px', color: '#64748b', fontWeight: '500', lineHeight: 1.55, margin: 0 }}>
+                  {feature.desc}
+                </p>
               </div>
             ))}
 
             {/* Action Buttons Row */}
-            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
+            <div className="winera-arcade-intro-actions" style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
               {/* Button 1: Watch Video with arcadegame-button-1.png BG */}
               <button
                 onClick={() => openVideoModal(siteData?.arcadeIntro?.videoLink || "https://youtube.com", "Arcade Game Showcase")}
@@ -469,7 +464,7 @@ export default function ArcadeGame({ siteData }) {
       </section>
 
       {/* 4. CATEGORIES: SIDEBAR & PRODUCT CARDS GRID SECTION (1:1 MATCHING USER DESIGN) */}
-      <section id="categories" className="winera-categories-section" style={{ padding: '35px 4vw 75px', background: '#F5F5F9' }}>
+      <section id="categories" className="winera-categories-section" style={{ padding: '20px 4vw 75px', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading for Categories */}
           <SectionHeading marginBottom="32px" accentWidth="400px" accentMaxWidth="400px">
@@ -1514,12 +1509,12 @@ export default function ArcadeGame({ siteData }) {
         title={
           siteData?.arcadeCta?.yellowText && siteData?.arcadeCta?.cyanText
             ? `${siteData.arcadeCta.yellowText} ${siteData.arcadeCta.cyanText}`
-            : "NEED ANY CONSULTATIONS ?"
+            : "Need Any Consultations?"
         }
         subtitle={
           siteData?.arcadeCta?.whiteText !== undefined
             ? siteData.arcadeCta.whiteText
-            : "WE'RE READY TO GIVE ANSWERS TO<br/>YOUR QUESTION."
+            : "We're Ready To Give Answers To<br/>Your Question."
         }
         description={null}
         buttonText={

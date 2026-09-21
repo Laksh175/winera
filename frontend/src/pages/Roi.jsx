@@ -185,9 +185,9 @@ export default function Roi({ siteData }) {
   };
 
   const roiCta = siteData?.roiCta || {
-    yellowText: "READY TO",
-    whiteText: "SEE YOUR",
-    cyanText: "NUMBERS?",
+    yellowText: "Ready To",
+    whiteText: "See Your",
+    cyanText: "Numbers?",
     subtitle: "Book A Free Consultation With Winera International. We'll Walk You Through The ROI Projection For Your Space, Your Budget, And Your City — Before You Spend Anything.",
     buttonText: "Book Your Free ROI Call",
     buttonLink: "https://wa.me/919428989488",
@@ -1397,11 +1397,19 @@ export default function Roi({ siteData }) {
             filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.85))',
             display: 'inline-block'
           }}>
-            {roiCta.title || (
-              <>
-                {roiCta.yellowText || "READY TO"} {roiCta.whiteText || "SEE YOUR"} {roiCta.cyanText || "NUMBERS?"}
-              </>
-            )}
+            {(() => {
+              if (roiCta.title) {
+                return !/[a-z]/.test(roiCta.title) ? roiCta.title.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : roiCta.title;
+              }
+              const yT = !/[a-z]/.test(roiCta.yellowText || '') ? (roiCta.yellowText || 'Ready To').toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : (roiCta.yellowText || 'Ready To');
+              const wT = !/[a-z]/.test(roiCta.whiteText || '') ? (roiCta.whiteText || 'See Your').toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : (roiCta.whiteText || 'See Your');
+              const cT = !/[a-z]/.test(roiCta.cyanText || '') ? (roiCta.cyanText || 'Numbers?').toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : (roiCta.cyanText || 'Numbers?');
+              return (
+                <>
+                  {yT} {wT} {cT}
+                </>
+              );
+            })()}
           </h2>
 
           {/* Description */}

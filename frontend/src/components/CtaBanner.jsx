@@ -20,9 +20,23 @@ const getValidImg = (url, fallback) => {
   return fallback;
 };
 
+const toTitleCase = (str) => {
+  if (!str || typeof str !== 'string') return str;
+  const hasLower = /[a-z]/.test(str);
+  if (!hasLower) {
+    return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())
+      .replace(/\bRoi\b/g, 'ROI')
+      .replace(/\bVr\b/g, 'VR')
+      .replace(/\bAr\b/g, 'AR')
+      .replace(/\bFec\b/g, 'FEC');
+  }
+  return str;
+};
+
 const renderTextWithBreaks = (text, yellowHighlight = false) => {
   if (!text || typeof text !== 'string') return text;
-  const lines = text.split(/<br\s*\/?>|\n/gi);
+  const convertedText = toTitleCase(text);
+  const lines = convertedText.split(/<br\s*\/?>|\n/gi);
   return lines.map((line, i) => {
     const parts = line.split(/\*{1,2}(.*?)\*{1,2}/g);
     const content = parts.map((part, index) => {
@@ -46,7 +60,7 @@ const renderTextWithBreaks = (text, yellowHighlight = false) => {
 
 export default function CtaBanner({
   pageSource = null,
-  tagline = "READY TO GET STARTED?",
+  tagline = "Ready To Get Started?",
   title = "Start Your Game Zone Journey",
   titleFontSize = null,
   titleFontWeight = null,
@@ -197,7 +211,7 @@ export default function CtaBanner({
                   fontWeight: '900',
                   letterSpacing: '0.5px',
                   marginBottom: '6px',
-                  textTransform: 'uppercase',
+                  textTransform: 'none',
                   lineHeight: 1.2,
                   textAlign: isCentered ? 'center' : 'left',
                   ...(gradientTagline ? {
@@ -211,7 +225,7 @@ export default function CtaBanner({
                     textShadow: '0 2px 10px rgba(0,0,0,0.6)'
                   })
                 }}>
-                  {tagline}
+                  {toTitleCase(tagline)}
                 </div>
               )}
 

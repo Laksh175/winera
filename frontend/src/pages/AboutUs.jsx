@@ -774,12 +774,12 @@ export default function AboutUs({ siteData }) {
         tagline={
           siteData?.aboutCta?.tagline !== undefined
             ? siteData.aboutCta.tagline
-            : "READY TO GET STARTED?"
+            : "Ready To Get Started?"
         }
         title={
           siteData?.aboutCta?.title !== undefined
             ? siteData.aboutCta.title
-            : "TAKE THE NEXT STEP TOWARDS<br />YOUR PERFECT GAME ZONE"
+            : "Take The Next Step Towards<br />Your Perfect Game Zone"
         }
         subtitle=""
         description={

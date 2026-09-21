@@ -379,13 +379,13 @@ button {
    GLOBAL STANDARDIZED SECTION & BLOCK SPACING
    Balanced 70px Top & 75px Bottom Default Spacing
    ========================================== */
-section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*="winera-partner-section"]):not([class*="winera-vr-hero-section"]):not([class*="winera-ar-hero-section"]):not([class*="winera-arcade-hero-section"]):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
+section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*="winera-partner-section"]):not([class*="winera-vr-hero-section"]):not([class*="winera-ar-hero-section"]):not([class*="winera-arcade-hero-section"]):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-arcade-intro-section):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
   padding-top: 70px;
   padding-bottom: 75px;
 }
 
 @media (max-width: 768px) {
-  section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*="winera-partner-section"]):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
+  section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*="winera-partner-section"]):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-arcade-intro-section):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
     padding-top: 25px !important;
     padding-bottom: 20px !important;
   }
@@ -576,6 +576,31 @@ section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*
   white-space: nowrap !important;
 }
 
+/* Arcade Intro Feature Cards (Desktop Layout) */
+.winera-arcade-feature-card {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  column-gap: 16px;
+  align-items: start;
+}
+
+.winera-arcade-feature-icon {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.winera-arcade-feature-title {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0 0 4px 0;
+}
+
+.winera-arcade-feature-desc {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -722,7 +747,7 @@ html {
     box-sizing: border-box !important;
   }
 
-  section:not([class*="hero"]):not(.winera-marquee-fullwidth):not(.marquee-track):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
+  section:not([class*="hero"]):not(.winera-marquee-fullwidth):not(.marquee-track):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-arcade-intro-section):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
     padding-top: 40px !important;
     padding-bottom: 35px !important;
     scroll-margin-top: 85px !important;
@@ -2249,7 +2274,7 @@ html {
   }
 
   .winera-arcade-intro-section {
-    padding: 25px 16px 20px !important;
+    padding: 10px 16px 20px !important;
   }
 
   .winera-arcade-intro-section>div {
@@ -2275,9 +2300,42 @@ html {
     max-width: 100% !important;
   }
 
+  /* Arcade Feature Cards (Mobile: Description starts below icon across full width) */
+  .winera-arcade-feature-card {
+    display: grid !important;
+    grid-template-columns: 38px 1fr !important;
+    column-gap: 12px !important;
+    row-gap: 8px !important;
+    align-items: center !important;
+    text-align: left !important;
+    padding: 14px 16px !important;
+  }
+
+  .winera-arcade-feature-icon {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .winera-arcade-feature-title {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+    text-align: left !important;
+    font-size: 1rem !important;
+  }
+
+  .winera-arcade-feature-desc {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    text-align: left !important;
+    margin: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+
   /* Arcade Action Buttons Row - Side by side on mobile with 70px button height */
-  .winera-arcade-intro-section div[style*="gap: 16px"],
-  .winera-arcade-intro-section div[style*="gap: 16px;"] {
+  .winera-arcade-intro-section .winera-arcade-intro-actions {
     display: flex !important;
     flex-direction: row !important;
     justify-content: center !important;
@@ -2452,7 +2510,21 @@ html {
 
   /* Discover Our Products Section Mobile Responsiveness */
   .winera-categories-section {
-    padding: 25px 16px 25px !important;
+    padding: 20px 16px 25px !important;
+  }
+
+  .winera-categories-section .winera-section-heading-container {
+    margin-left: -16px !important;
+  }
+
+  .winera-categories-section .winera-section-heading-h2 {
+    white-space: nowrap !important;
+    font-size: clamp(20px, 6vw, 26px) !important;
+  }
+
+  .winera-categories-section .winera-section-heading-accent {
+    width: 220px !important;
+    max-width: 80% !important;
   }
 
   .winera-mobile-category-dropdown-container {
@@ -13631,11 +13703,17 @@ button[style*="background:transparent"]:hover,
   .winera-why-choose-section,
   .winera-faq-section,
   .winera-testimonials-section,
-  section[class*="section"]:not(.winera-home-hero-section):not([class*="hero"]):not(footer):not(.winera-footer-container):not(.winera-footer) {
+  section[class*="section"]:not(.winera-home-hero-section):not([class*="hero"]):not(footer):not(.winera-footer-container):not(.winera-footer):not(.winera-arcade-intro-section) {
     padding-top: 35px !important;
   }
 
   /* Specific Sections Spacing on Mobile */
+  .winera-arcade-intro-section,
+  section.winera-arcade-intro-section {
+    padding-top: 10px !important;
+    padding-bottom: 20px !important;
+  }
+
   #process,
   section#process,
   .winera-process-section {

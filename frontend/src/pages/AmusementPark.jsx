@@ -723,12 +723,12 @@ export default function AmusementPark({ siteData }) {
         title={
           siteData?.amusementCta?.title
             ? siteData.amusementCta.title
-            : "NEED ANY CONSULTATIONS?"
+            : "Need Any Consultations?"
         }
         subtitle={
           siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
             ? siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
-            : "WE'RE READY TO GIVE ANSWERS TO<br/>YOUR QUESTIONS."
+            : "We're Ready To Give Answers To<br/>Your Questions."
         }
         description={null}
         buttonText={siteData?.amusementCta?.buttonText || "Talk to an ROI Expert"}

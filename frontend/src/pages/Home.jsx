@@ -20,6 +20,7 @@ import qualityBadge from '../assets/quality-badge.webp';
 import productsBg from '../assets/products-bg.webp';
 import homePageBanner from '../assets/home-page banner.webp';
 import partnerBg from '../assets/partner-bg.webp';
+import clientsBg from '../assets/clients-bg.webp';
 import whyChooseBg from '../assets/why-choose-bg.webp';
 import indMall from '../assets/ind-mall.webp';
 import indResort from '../assets/ind-resort.webp';
@@ -1686,6 +1687,7 @@ export default function Home({ siteData }) {
           projects={siteData?.builtProjects}
           title={siteData?.builtProjectsHeader?.title}
           subtext={siteData?.builtProjectsHeader?.subtext}
+          bg={clientsBg}
         />
 
         <section id="why-us" className="winera-why-us-section" style={{

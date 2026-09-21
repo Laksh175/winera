@@ -1131,12 +1131,12 @@ export default function VrGames({ siteData }) {
         title={
           siteData?.vrCta?.title
             ? siteData.vrCta.title
-            : "NEED ANY CONSULTATIONS?"
+            : "Need Any Consultations?"
         }
         subtitle={
           siteData?.vrCta?.subtitle || siteData?.vrCta?.whiteText
             ? siteData?.vrCta?.subtitle || siteData?.vrCta?.whiteText
-            : "WE'RE READY TO GIVE ANSWERS TO<br/>YOUR QUESTIONS."
+            : "We're Ready To Give Answers To<br/>Your Questions."
         }
         description={null}
         buttonText={

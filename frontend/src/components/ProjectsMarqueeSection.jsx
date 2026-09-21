@@ -22,7 +22,7 @@ export default function ProjectsMarqueeSection({
   showTopHeader = true,
   subtext = "Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers.",
   projects = defaultProjects,
-  bg = clientsBg,
+  bg = 'transparent',
   buttonText = "View All",
   showBottomButton = false,
   accentWidth = '75%',

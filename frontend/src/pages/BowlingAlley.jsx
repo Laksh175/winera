@@ -1261,7 +1261,7 @@ export default function BowlingAlley({ siteData }) {
         bgUrl={siteData?.bowlingCta?.bgUrl && !siteData.bowlingCta.bgUrl.includes('bowling-last-image-bg') ? siteData.bowlingCta.bgUrl : null}
         bg={trampolineParkCtaBg}
         tagline={null}
-        title={siteData?.bowlingCta?.title || "NEED ANY CONSULTATIONS?"}
+        title={siteData?.bowlingCta?.title || "Need Any Consultations?"}
         subtitle={null}
         description={
           siteData?.bowlingCta?.description !== undefined
