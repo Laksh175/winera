@@ -13,6 +13,7 @@ import WineraImage from '../components/WineraImage';
 import arcadeHeroBg from '../assets/arcadegame-hero-bg.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
+import arcadegamesImg from '../assets/arcadegames-img.webp';
 import arcadeBoy from '../assets/arcade-boy.webp';
 import arcadeHall from '../assets/arcade-hall.webp';
 import doodleArrow from '../assets/doodle-arrow.webp';
@@ -41,6 +42,7 @@ import projSoft1 from '../assets/proj-softplay1.webp';
 import testiOwner from '../assets/testi-owner.webp';
 import { Gamepad2, Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight } from 'lucide-react';
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
+import ArcadeSwipeCardDeck from '../components/ArcadeSwipeCardDeck';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -526,11 +528,14 @@ export default function ArcadeGame({ siteData }) {
                 overflowY: 'auto',
                 padding: '6px'
               }}>
-                {[
-                  "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
-                  "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
-                ].map((cat, cIdx) => {
-                  const isSelected = activeCategory === cat;
+                {((Array.isArray(siteData?.arcadeCategories?.categoriesList) && siteData.arcadeCategories.categoriesList.length > 0)
+                  ? siteData.arcadeCategories.categoriesList
+                  : [
+                    "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
+                    "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
+                  ]
+                ).map((cat, cIdx) => {
+                  const isSelected = (activeCategory || "Arcade Games") === cat;
                   return (
                     <div
                       key={cIdx}
@@ -587,85 +592,102 @@ export default function ArcadeGame({ siteData }) {
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                {/* Parent Category Button: Arcade Games */}
-                <button
-                  onClick={() => {
-                    setActiveCategory("Arcade Games");
-                    setExpandedCat(expandedCat === "Arcade Games" ? null : "Arcade Games");
-                    setCurrentPage(1);
-                  }}
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: (activeCategory === "Arcade Games") ? '10px 14px' : '10px 8px 10px 4px',
-                    borderRadius: (activeCategory === "Arcade Games") ? '10px' : '0px',
-                    border: 'none',
-                    borderBottom: (activeCategory === "Arcade Games") ? 'none' : '1px solid rgba(255, 255, 255, 0.85)',
-                    background: (activeCategory === "Arcade Games") ? '#38bdf8' : 'transparent',
-                    color: (activeCategory === "Arcade Games") ? '#ffffff' : 'rgb(55, 62, 65)',
-                    fontSize: '16px',
-                    fontWeight: (activeCategory === "Arcade Games") ? '700' : '400',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    marginBottom: '4px',
-                    boxShadow: 'none',
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  <span>Arcade Games</span>
-                  <ChevronDown style={{ width: '14px', height: '14px', color: (activeCategory === "Arcade Games") ? '#ffffff' : '#94a3b8', transform: expandedCat === "Arcade Games" ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
-                </button>
+                {(() => {
+                  const availableCats = (Array.isArray(siteData?.arcadeCategories?.categoriesList) && siteData.arcadeCategories.categoriesList.length > 0)
+                    ? siteData.arcadeCategories.categoriesList
+                    : [
+                      "Arcade Games",
+                      "Claw Machine",
+                      "Redemption Game",
+                      "Kiddy Ride",
+                      "Bike Racing Game",
+                      "Car Racing Game",
+                      "Shooting Games",
+                      "Strength Based Games"
+                    ];
 
-                {/* Subcategories List */}
-                {[
-                  "Claw Machine",
-                  "Redemption Game",
-                  "Kiddy Ride",
-                  "Bike Racing Game",
-                  "Car Racing Game",
-                  "Shooting Games",
-                  "Strength Based Games"
-                ].map((subName, subIdx, array) => {
-                  const isSelected = activeCategory === subName;
-                  const isLast = subIdx === array.length - 1;
+                  const topCategory = availableCats[0] || "Arcade Games";
+                  const subCategories = availableCats.slice(1);
+                  const isTopSelected = (activeCategory === topCategory || !activeCategory);
 
                   return (
-                    <button
-                      key={subIdx}
-                      onClick={() => {
-                        setActiveCategory(subName);
-                        setCurrentPage(1);
-                      }}
-                      style={{
-                        width: '100%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: isSelected ? '10px 14px' : '10px 8px 10px 4px',
-                        borderRadius: isSelected ? '10px' : '0px',
-                        border: 'none',
-                        borderBottom: isSelected ? 'none' : (isLast ? 'none' : '1px solid rgba(255, 255, 255, 0.85)'),
-                        background: isSelected ? '#38bdf8' : 'transparent',
-                        color: isSelected ? '#ffffff' : 'rgb(55, 62, 65)',
-                        fontSize: '16px',
-                        fontWeight: isSelected ? '700' : '400',
-                        cursor: 'pointer',
-                        textAlign: 'left',
-                        transition: 'all 0.15s ease'
-                      }}
-                    >
-                      <span>{subName}</span>
-                      <ChevronRight style={{
-                        width: '12px',
-                        height: '12px',
-                        color: isSelected ? '#ffffff' : '#94a3b8',
-                        opacity: isSelected ? 1 : 0.5
-                      }} />
-                    </button>
+                    <>
+                      {/* Parent Category Button: Arcade Games / Top Category */}
+                      <button
+                        onClick={() => {
+                          setActiveCategory(topCategory);
+                          setExpandedCat(expandedCat === topCategory ? null : topCategory);
+                          setCurrentPage(1);
+                          setMobileProdIndex(0);
+                        }}
+                        style={{
+                          width: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: isTopSelected ? '10px 14px' : '10px 8px 10px 4px',
+                          borderRadius: isTopSelected ? '10px' : '0px',
+                          border: 'none',
+                          borderBottom: isTopSelected ? 'none' : '1px solid rgba(255, 255, 255, 0.85)',
+                          background: isTopSelected ? '#38bdf8' : 'transparent',
+                          color: isTopSelected ? '#ffffff' : 'rgb(55, 62, 65)',
+                          fontSize: '16px',
+                          fontWeight: isTopSelected ? '700' : '400',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                          marginBottom: '4px',
+                          boxShadow: 'none',
+                          transition: 'all 0.15s ease'
+                        }}
+                      >
+                        <span>{topCategory}</span>
+                        <ChevronDown style={{ width: '14px', height: '14px', color: isTopSelected ? '#ffffff' : '#94a3b8', transform: expandedCat === topCategory ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+                      </button>
+
+                      {/* Subcategories List */}
+                      {subCategories.map((subName, subIdx, array) => {
+                        const isSelected = activeCategory === subName;
+                        const isLast = subIdx === array.length - 1;
+
+                        return (
+                          <button
+                            key={subIdx}
+                            onClick={() => {
+                              setActiveCategory(subName);
+                              setCurrentPage(1);
+                              setMobileProdIndex(0);
+                            }}
+                            style={{
+                              width: '100%',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: isSelected ? '10px 14px' : '10px 8px 10px 4px',
+                              borderRadius: isSelected ? '10px' : '0px',
+                              border: 'none',
+                              borderBottom: isSelected ? 'none' : (isLast ? 'none' : '1px solid rgba(255, 255, 255, 0.85)'),
+                              background: isSelected ? '#38bdf8' : 'transparent',
+                              color: isSelected ? '#ffffff' : 'rgb(55, 62, 65)',
+                              fontSize: '16px',
+                              fontWeight: isSelected ? '700' : '400',
+                              cursor: 'pointer',
+                              textAlign: 'left',
+                              transition: 'all 0.15s ease'
+                            }}
+                          >
+                            <span>{subName}</span>
+                            <ChevronRight style={{
+                              width: '12px',
+                              height: '12px',
+                              color: isSelected ? '#ffffff' : '#94a3b8',
+                              opacity: isSelected ? 1 : 0.5
+                            }} />
+                          </button>
+                        );
+                      })}
+                    </>
                   );
-                })}
+                })()}
               </div>
             </div>
 
@@ -674,18 +696,18 @@ export default function ArcadeGame({ siteData }) {
               {/* Product Cards Grid */}
               {(() => {
                 const defaultProdCards = [
-                  { name: "Parkour Motor II (DX)", title: "Parkour Motor II (DX)", slug: "parkour-motor-2-dx", img: bikeArcade },
-                  { name: "MANX TT 32\"", title: "MANX TT 32\"", slug: "manx-tt-32", img: bikeArcade },
-                  { name: "Super Air Hockey", title: "Super Air Hockey", slug: "super-air-hockey", img: superAirHockeyImg },
-                  { name: "Puck Carnival Air Hockey", title: "Puck Carnival Air Hockey", slug: "puck-carnival-air-hockey", img: puckCarnivalAirHockeyImg },
-                  { name: "Dazzling Air Hockey - Multi Puck", title: "Dazzling Air Hockey - Multi Puck", slug: "dazzling-air-hockey-multi-puck", img: dazzlingAirHockeyImg },
-                  { name: "Aurora Air Hockey", title: "Aurora Air Hockey", slug: "aurora-air-hockey", img: auroraAirHockeyImg },
-                  { name: "Ocha Air Hockey", title: "Ocha Air Hockey", slug: "ocha-air-hockey", img: ochaAirHockeyImg },
-                  { name: "Aero X Air Hockey", title: "Aero X Air Hockey", slug: "aero-x-air-hockey", img: aeroXAirHockeyImg }
+                  { name: "Parkour Motor II (DX)", title: "Parkour Motor II (DX)", category: "Bike Racing Game", slug: "parkour-motor-2-dx", img: arcadegamesImg },
+                  { name: "MANX TT 32\"", title: "MANX TT 32\"", category: "Bike Racing Game", slug: "manx-tt-32", img: bikeArcade },
+                  { name: "Super Air Hockey", title: "Super Air Hockey", category: "Arcade Games", slug: "super-air-hockey", img: superAirHockeyImg },
+                  { name: "Puck Carnival Air Hockey", title: "Puck Carnival Air Hockey", category: "Arcade Games", slug: "puck-carnival-air-hockey", img: puckCarnivalAirHockeyImg },
+                  { name: "Dazzling Air Hockey - Multi Puck", title: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games", slug: "dazzling-air-hockey-multi-puck", img: dazzlingAirHockeyImg },
+                  { name: "Aurora Air Hockey", title: "Aurora Air Hockey", category: "Arcade Games", slug: "aurora-air-hockey", img: auroraAirHockeyImg },
+                  { name: "Ocha Air Hockey", title: "Ocha Air Hockey", category: "Arcade Games", slug: "ocha-air-hockey", img: ochaAirHockeyImg },
+                  { name: "Aero X Air Hockey", title: "Aero X Air Hockey", category: "Arcade Games", slug: "aero-x-air-hockey", img: aeroXAirHockeyImg }
                 ];
 
                 const imageMap = {
-                  "Parkour Motor II (DX)": bikeArcade,
+                  "Parkour Motor II (DX)": arcadegamesImg,
                   "MANX TT 32\"": bikeArcade,
                   "Super Air Hockey": superAirHockeyImg,
                   "Puck Carnival Air Hockey": puckCarnivalAirHockeyImg,
@@ -697,22 +719,35 @@ export default function ArcadeGame({ siteData }) {
 
                 const rawCards = (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0)
                   ? siteData.arcadeCategories.cards
-                  : (Array.isArray(siteData?.arcadeCategories) && siteData.arcadeCategories.length > 0 ? siteData.arcadeCategories : null);
+                  : (Array.isArray(siteData?.arcadeCategories) && siteData.arcadeCategories.length > 0 ? siteData.arcadeCategories : defaultProdCards);
 
-                let prodCards = defaultProdCards;
-                if (rawCards) {
-                  prodCards = rawCards.map((c, i) => {
-                    const customImg = c.img || c.imageUrl;
-                    const isValidCustom = customImg && !customImg.includes('unsplash.com');
-                    const nameKey = c.name || c.title || "";
-                    const finalImg = isValidCustom ? customImg : (imageMap[nameKey] || customImg || defaultProdCards[i % defaultProdCards.length]?.img);
-                    return {
-                      ...c,
-                      img: finalImg,
-                      imageUrl: finalImg
-                    };
-                  });
-                }
+                const allCards = rawCards.map((c, i) => {
+                  const customImg = c.img || c.imageUrl;
+                  const isValidCustom = customImg && !customImg.includes('unsplash.com');
+                  const nameKey = c.name || c.title || "";
+                  const finalImg = isValidCustom ? customImg : (imageMap[nameKey] || customImg || defaultProdCards[i % defaultProdCards.length]?.img);
+                  const generatedSlug = (nameKey || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                  return {
+                    ...c,
+                    name: nameKey || "Arcade Machine",
+                    title: nameKey || "Arcade Machine",
+                    category: c.category || c.tag || "Arcade Games",
+                    slug: c.slug || generatedSlug || 'parkour-motor-2-dx',
+                    img: finalImg,
+                    imageUrl: finalImg
+                  };
+                });
+
+                // Filter cards by selected activeCategory
+                const isAllCategory = !activeCategory || activeCategory === "Arcade Games" || activeCategory === "All";
+                const prodCards = isAllCategory
+                  ? allCards
+                  : allCards.filter(c => {
+                      const cat = (c.category || c.tag || c.subCategory || "").toLowerCase().trim();
+                      const target = activeCategory.toLowerCase().trim();
+                      const title = (c.name || c.title || "").toLowerCase().trim();
+                      return cat === target || cat.includes(target) || target.includes(cat) || title.includes(target);
+                    });
 
                 const getCardSlug = (card) => {
                   if (card.slug) return card.slug;
@@ -729,184 +764,121 @@ export default function ArcadeGame({ siteData }) {
                 return (
                   <>
                     {/* Desktop Product Cards Grid */}
-                    <div className="winera-desktop-products-grid" style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(3, 1fr)',
-                      gap: '20px'
-                    }}>
-                      {visibleCards.map((card, idx) => {
-                        const cardSlug = getCardSlug(card);
-                        return (
-                          <Link
-                            key={idx}
-                            to={`/product/${cardSlug}`}
-                            style={{
-                              textDecoration: 'none',
-                              color: 'inherit',
-                              background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
-                              borderRadius: '24px',
-                              padding: '16px',
-                              boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
-                              border: '1.5px solid #e0f2fe',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              alignItems: 'center',
-                              textAlign: 'center',
-                              transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), boxShadow 0.25s',
-                              cursor: 'pointer'
-                            }}
-                            className="winera-cta-btn-hover"
-                          >
-                            <div style={{
-                              width: '100%',
-                              height: '180px',
-                              borderRadius: '18px',
-                              overflow: 'hidden',
-                              marginBottom: '16px',
-                              background: '#ffffff',
-                              boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
-                              border: '4px solid #ffffff'
-                            }}>
-                              <WineraImage
-                                src={card.imageUrl || card.img}
-                                alt={card.name}
-                                style={{
-                                  width: '100%',
-                                  height: '100%'
-                                }}
-                                imgStyle={{
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'cover'
-                                }}
-                              />
-                            </div>
-
-                            <h4 style={{
-                              fontSize: '1rem',
-                              fontWeight: '600',
-                              color: '#0f172a',
-                              lineHeight: 1.3,
-                              margin: '4px 0 8px',
-                              minHeight: '42px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center'
-                            }}>
-                              {card.name}
-                            </h4>
-                          </Link>
-                        );
-                      })}
-                    </div>
-
-                    {/* Mobile Single Active Product Card Display */}
-                    {prodCards[mobileProdIndex] && (
-                      <div className="winera-mobile-single-product-card" style={{ display: 'none' }}>
-                        <Link
-                          to={`/product/${getCardSlug(prodCards[mobileProdIndex])}`}
+                    {prodCards.length === 0 ? (
+                      <div style={{
+                        gridColumn: '1 / -1',
+                        background: 'linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%)',
+                        borderRadius: '24px',
+                        padding: '45px 24px',
+                        textAlign: 'center',
+                        border: '1.5px dashed #7dd3fc',
+                        width: '100%',
+                        boxSizing: 'border-box'
+                      }}>
+                        <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px' }}>
+                          Custom {activeCategory} Machines Available
+                        </h4>
+                        <p style={{ fontSize: '13.5px', color: '#64748b', maxWidth: '460px', margin: '0 auto 18px', lineHeight: 1.6 }}>
+                          We manufacture and supply commercial-grade {activeCategory} machines customized for your space, theme, and payment system.
+                        </p>
+                        <a
+                          href={`https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera International! I want to inquire about ${activeCategory} catalog and pricing.`)}`}
+                          target="_blank"
+                          rel="noreferrer"
                           style={{
-                            textDecoration: 'none',
-                            color: 'inherit',
-                            background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
-                            borderRadius: '24px',
-                            padding: '20px',
-                            boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
-                            border: '1.5px solid #e0f2fe',
-                            display: 'flex',
-                            flexDirection: 'column',
+                            display: 'inline-flex',
                             alignItems: 'center',
-                            textAlign: 'center',
-                            width: '100%'
+                            gap: '8px',
+                            background: '#38bdf8',
+                            color: '#ffffff',
+                            padding: '11px 22px',
+                            borderRadius: '12px',
+                            fontSize: '14px',
+                            fontWeight: '700',
+                            textDecoration: 'none',
+                            boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
                           }}
                         >
-                          <div style={{
-                            width: '100%',
-                            height: '210px',
-                            borderRadius: '16px',
-                            overflow: 'hidden',
-                            marginBottom: '16px',
-                            background: '#ffffff',
-                            boxShadow: '0 6px 18px rgba(0,0,0,0.08)'
-                          }}>
-                            <WineraImage
-                              src={prodCards[mobileProdIndex].imageUrl || prodCards[mobileProdIndex].img}
-                              alt={prodCards[mobileProdIndex].name}
+                          Request Catalog on WhatsApp
+                        </a>
+                      </div>
+                    ) : (
+                      <div className="winera-desktop-products-grid" style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(3, 1fr)',
+                        gap: '20px'
+                      }}>
+                        {visibleCards.map((card, idx) => {
+                          const cardSlug = getCardSlug(card);
+                          return (
+                            <Link
+                              key={idx}
+                              to={`/product/${cardSlug}`}
                               style={{
-                                width: '100%',
-                                height: '100%'
+                                textDecoration: 'none',
+                                color: 'inherit',
+                                background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
+                                borderRadius: '24px',
+                                padding: '16px',
+                                boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
+                                border: '1.5px solid #e0f2fe',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                textAlign: 'center',
+                                transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), boxShadow 0.25s',
+                                cursor: 'pointer'
                               }}
-                              imgStyle={{
+                              className="winera-cta-btn-hover"
+                            >
+                              <div style={{
                                 width: '100%',
-                                height: '100%',
-                                objectFit: 'cover'
-                              }}
-                            />
-                          </div>
+                                height: '180px',
+                                borderRadius: '18px',
+                                overflow: 'hidden',
+                                marginBottom: '16px',
+                                background: '#ffffff',
+                                boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
+                                border: '4px solid #ffffff'
+                              }}>
+                                <WineraImage
+                                  src={card.imageUrl || card.img}
+                                  alt={card.name}
+                                  style={{
+                                    width: '100%',
+                                    height: '100%'
+                                  }}
+                                  imgStyle={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover'
+                                  }}
+                                />
+                              </div>
 
-                          <h4 style={{
-                            fontSize: '1.1rem',
-                            fontWeight: '600',
-                            color: '#0f172a',
-                            lineHeight: 1.3,
-                            margin: '4px 0'
-                          }}>
-                            {prodCards[mobileProdIndex].name}
-                          </h4>
-                        </Link>
+                              <h4 style={{
+                                fontSize: '1rem',
+                                fontWeight: '600',
+                                color: '#0f172a',
+                                lineHeight: 1.3,
+                                margin: '4px 0 8px',
+                                minHeight: '42px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}>
+                                {card.name}
+                              </h4>
+                            </Link>
+                          );
+                        })}
                       </div>
                     )}
 
-                    {/* Mobile Carousel Left/Right Arrow Toolbar */}
-                    <div className="winera-mobile-products-carousel-toolbar" style={{ display: 'none', justifyContent: 'center', alignItems: 'center', gap: '16px', marginTop: '12px' }}>
-                      <button
-                        onClick={() => setMobileProdIndex((prev) => Math.max(0, prev - 1))}
-                        disabled={mobileProdIndex === 0}
-                        aria-label="Previous Product"
-                        style={{
-                          width: '40px',
-                          height: '40px',
-                          borderRadius: '50%',
-                          background: '#38bdf8',
-                          border: 'none',
-                          color: '#ffffff',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          opacity: mobileProdIndex === 0 ? 0.4 : 1,
-                          cursor: mobileProdIndex === 0 ? 'not-allowed' : 'pointer',
-                          boxShadow: 'none'
-                        }}
-                      >
-                        <ChevronLeft style={{ width: '22px', height: '22px' }} />
-                      </button>
-
-                      <span style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>
-                        {mobileProdIndex + 1} / {prodCards.length}
-                      </span>
-
-                      <button
-                        onClick={() => setMobileProdIndex((prev) => Math.min(prodCards.length - 1, prev + 1))}
-                        disabled={mobileProdIndex >= prodCards.length - 1}
-                        aria-label="Next Product"
-                        style={{
-                          width: '40px',
-                          height: '40px',
-                          borderRadius: '50%',
-                          background: '#38bdf8',
-                          border: 'none',
-                          color: '#ffffff',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          opacity: mobileProdIndex >= prodCards.length - 1 ? 0.4 : 1,
-                          cursor: mobileProdIndex >= prodCards.length - 1 ? 'not-allowed' : 'pointer',
-                          boxShadow: 'none'
-                        }}
-                      >
-                        <ChevronRight style={{ width: '22px', height: '22px' }} />
-                      </button>
-                    </div>
+                    {/* Mobile Stacked Swipe Cards Deck (Dribbble Style Interactive Animation) */}
+                    {prodCards.length > 0 && (
+                      <ArcadeSwipeCardDeck cards={prodCards} getCardSlug={getCardSlug} />
+                    )}
                   </>
                 );
               })()}
@@ -916,15 +888,37 @@ export default function ArcadeGame({ siteData }) {
           {/* Dynamic Pagination Toolbar (Centered across full section width) */}
           {(() => {
             const defaultProdCards = [
-              { name: "Parkour Motor II (DX)" }, { name: "MANX TT 32\"" }, { name: "Super Air Hockey" },
-              { name: "Puck Carnival Air Hockey" }, { name: "Dazzling Air Hockey - Multi Puck" },
-              { name: "Aurora Air Hockey" }, { name: "Ocha Air Hockey" }, { name: "Aero X Air Hockey" }
+              { name: "Parkour Motor II (DX)", category: "Bike Racing Game" },
+              { name: "MANX TT 32\"", category: "Bike Racing Game" },
+              { name: "Super Air Hockey", category: "Arcade Games" },
+              { name: "Puck Carnival Air Hockey", category: "Arcade Games" },
+              { name: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games" },
+              { name: "Aurora Air Hockey", category: "Arcade Games" },
+              { name: "Ocha Air Hockey", category: "Arcade Games" },
+              { name: "Aero X Air Hockey", category: "Arcade Games" }
             ];
             const rawCards = (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0)
               ? siteData.arcadeCategories.cards
               : (Array.isArray(siteData?.arcadeCategories) && siteData.arcadeCategories.length > 0 ? siteData.arcadeCategories : defaultProdCards);
+
+            const allCardsPagination = rawCards.map(c => ({
+              ...c,
+              name: c.name || c.title || "",
+              category: c.category || c.tag || "Arcade Games"
+            }));
+
+            const isAllCategory = !activeCategory || activeCategory === "Arcade Games" || activeCategory === "All";
+            const filteredCards = isAllCategory
+              ? allCardsPagination
+              : allCardsPagination.filter(c => {
+                  const cat = (c.category || c.tag || c.subCategory || "").toLowerCase().trim();
+                  const target = activeCategory.toLowerCase().trim();
+                  const title = (c.name || c.title || "").toLowerCase().trim();
+                  return cat === target || cat.includes(target) || target.includes(cat) || title.includes(target);
+                });
+
             const itemsPerPage = 6;
-            const totalPages = Math.max(1, Math.ceil(rawCards.length / itemsPerPage));
+            const totalPages = Math.max(1, Math.ceil(filteredCards.length / itemsPerPage));
             const validPage = Math.min(currentPage, totalPages);
 
             if (totalPages <= 1) return null;

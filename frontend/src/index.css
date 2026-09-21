@@ -51,6 +51,17 @@ div[class*="grid"] h2 {
   font-size: 35px !important;
 }
 
+/* Mobile Arcade Swipe Card Deck: Hidden strictly on Desktop (> 768px), Visible only on Mobile (<= 768px) */
+.winera-mobile-swipe-deck {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .winera-mobile-swipe-deck {
+    display: flex !important;
+  }
+}
+
 p,
 span,
 div,
@@ -2508,6 +2519,10 @@ html {
     max-width: 100% !important;
   }
 
+  .winera-mobile-swipe-deck {
+    display: none;
+  }
+
   /* Discover Our Products Section Mobile Responsiveness */
   .winera-categories-section {
     padding: 20px 16px 25px !important;
@@ -2547,26 +2562,11 @@ html {
 
   div.winera-desktop-products-grid,
   .winera-desktop-products-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
+    display: none !important;
   }
 
-  .winera-desktop-products-grid a {
-    padding: 10px !important;
-    border-radius: 18px !important;
-  }
-
-  .winera-desktop-products-grid a>div {
-    height: 130px !important;
-    border-radius: 14px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .winera-desktop-products-grid h4 {
-    font-size: 0.85rem !important;
-    min-height: 36px !important;
-    margin: 2px 0 4px !important;
+  .winera-mobile-swipe-deck {
+    display: flex !important;
   }
 
   .winera-mobile-single-product-card {
@@ -2578,12 +2578,7 @@ html {
   }
 
   .winera-desktop-pagination {
-    display: flex !important;
-    justify-content: center !important;
-    margin-top: 24px !important;
-    max-width: 100% !important;
-    overflow-x: auto !important;
-    padding: 4px 8px !important;
+    display: none !important;
   }
 
   /* Testimonials Section Responsive Fix (2-Column Side-by-Side Card Layout for 768px Tablet) */

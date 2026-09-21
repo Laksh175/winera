@@ -156,6 +156,8 @@ const getValidImageUrl = (url, fallback) => {
   return url;
 };
 import bikeArcade from '../assets/bike-arcade.webp';
+import arcadeBoy from '../assets/arcade-boy.webp';
+import arcadeHall from '../assets/arcade-hall.webp';
 import founderUnnit from '../assets/founder-unnit.webp';
 import welcomeWineraImg from '../assets/welcome-to-winera.webp';
 
@@ -5131,14 +5133,39 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             ];
 
             const defaultArcadeCards = [
+              // Bike Racing Games
               { title: "Parkour Motor II (DX)", name: "Parkour Motor II (DX)", nameBase: "Parkour Motor ", nameHighlight: "II (DX)", category: "Bike Racing Game", tag: "Popular", slug: "parkour-motor-2-dx", desc: "High-Performance Dual Player Commercial Motorbike Racing Simulator.", img: bikeArcade },
               { title: "MANX TT 32\"", name: "MANX TT 32\"", nameBase: "MANX TT ", nameHighlight: "32\"", category: "Bike Racing Game", tag: "Classic", slug: "manx-tt-32", desc: "Classic High-Velocity Arcade Motorcycle Simulator.", img: bikeArcade },
-              { title: "Super Air Hockey", name: "Super Air Hockey", category: "Arcade Games", tag: "Popular", desc: "Commercial grade heavy-duty air hockey table with digital score display.", img: superAirHockeyImg },
-              { title: "Puck Carnival Air Hockey", name: "Puck Carnival Air Hockey", category: "Arcade Games", tag: "Hot Seller", desc: "Multi-puck carnival style air hockey machine for high footfall game zones.", img: puckCarnivalAirHockeyImg },
-              { title: "Dazzling Air Hockey - Multi Puck", name: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games", tag: "High Revenue", desc: "LED illuminated stainless steel air hockey table with sound effects.", img: dazzlingAirHockeyImg },
-              { title: "Aurora Air Hockey", name: "Aurora Air Hockey", category: "Arcade Games", tag: "Classic", desc: "High-power air blower tournament air hockey table with durable aluminum rails.", img: auroraAirHockeyImg },
-              { title: "Ocha Air Hockey", name: "Ocha Air Hockey", category: "Arcade Games", tag: "Featured", desc: "Compact & stylish commercial air hockey machine for malls & FECs.", img: ochaAirHockeyImg },
-              { title: "Aero X Air Hockey", name: "Aero X Air Hockey", category: "Arcade Games", tag: "Interactive", desc: "Next-gen arcade air hockey table with multi-ticket dispenser system.", img: aeroXAirHockeyImg }
+
+              // Claw Machines
+              { title: "Toy Story Plush Claw Machine", name: "Toy Story Plush Claw Machine", category: "Claw Machine", tag: "Hot Seller", slug: "toy-story-plush-claw-machine", desc: "Commercial grade plush prize claw crane game.", img: arcadeHall },
+              { title: "Lucky Catcher Crane Machine", name: "Lucky Catcher Crane Machine", category: "Claw Machine", tag: "Popular", slug: "lucky-catcher-crane-machine", desc: "High earning LED claw machine for malls and gaming zones.", img: arcadeBoy },
+
+              // Redemption Games / Air Hockey
+              { title: "Super Air Hockey", name: "Super Air Hockey", category: "Redemption Game", tag: "Popular", slug: "super-air-hockey", desc: "Commercial grade heavy-duty air hockey table with digital score display.", img: superAirHockeyImg },
+              { title: "Puck Carnival Air Hockey", name: "Puck Carnival Air Hockey", category: "Redemption Game", tag: "Hot Seller", slug: "puck-carnival-air-hockey", desc: "Multi-puck carnival style air hockey machine for high footfall game zones.", img: puckCarnivalAirHockeyImg },
+              { title: "Dazzling Air Hockey - Multi Puck", name: "Dazzling Air Hockey - Multi Puck", category: "Redemption Game", tag: "High Revenue", slug: "dazzling-air-hockey-multi-puck", desc: "LED illuminated stainless steel air hockey table with sound effects.", img: dazzlingAirHockeyImg },
+              { title: "Aurora Air Hockey", name: "Aurora Air Hockey", category: "Redemption Game", tag: "Classic", slug: "aurora-air-hockey", desc: "High-power air blower tournament air hockey table with durable aluminum rails.", img: auroraAirHockeyImg },
+
+              // Kiddy Rides
+              { title: "Happy Carousel Kiddy Ride", name: "Happy Carousel Kiddy Ride", category: "Kiddy Ride", tag: "Family", slug: "happy-carousel-kiddy-ride", desc: "Interactive coin-operated carousel ride for kids and toddlers.", img: arcadeBoy },
+              { title: "Super Speed Mini Racer", name: "Super Speed Mini Racer", category: "Kiddy Ride", tag: "Featured", slug: "super-speed-mini-racer", desc: "Safe, colorful mini racing motion ride for children.", img: bikeArcade },
+
+              // Car Racing Games
+              { title: "Speed Driver 5 Twin Motion", name: "Speed Driver 5 Twin Motion", category: "Car Racing Game", tag: "Trending", slug: "speed-driver-5-twin-motion", desc: "Motion force-feedback twin car racing arcade machine with HD screen.", img: arcadeBoy },
+              { title: "OutRun 2 Supercar Simulator", name: "OutRun 2 Supercar Simulator", category: "Car Racing Game", tag: "Classic", slug: "outrun-2-supercar-simulator", desc: "Ultra-dynamic force feedback supercar racing simulator.", img: bikeArcade },
+
+              // Shooting Games
+              { title: "Scarlet Dawn Dual Gun Shooter", name: "Scarlet Dawn Dual Gun Shooter", category: "Shooting Games", tag: "Action", slug: "scarlet-dawn-dual-gun-shooter", desc: "Two-player recoil force arcade gun shooter with immersive sound.", img: arcadeHall },
+              { title: "Jurassic Motion Arcade Shooter", name: "Jurassic Motion Arcade Shooter", category: "Shooting Games", tag: "Top Rated", slug: "jurassic-motion-arcade-shooter", desc: "Full motion theater arcade shooting game machine.", img: arcadeBoy },
+
+              // Strength Based Games
+              { title: "Dragon Boxer Punching Machine", name: "Dragon Boxer Punching Machine", category: "Strength Based Games", tag: "Strength", slug: "dragon-boxer-punching-machine", desc: "Commercial boxing punch strength tester arcade game.", img: arcadeHall },
+              { title: "Ultimate Hammer King Pro", name: "Ultimate Hammer King Pro", category: "Strength Based Games", tag: "Popular", slug: "ultimate-hammer-king-pro", desc: "High power hammer strike carnival arcade machine.", img: arcadeBoy },
+
+              // General Arcade Games
+              { title: "Ocha Air Hockey", name: "Ocha Air Hockey", category: "Arcade Games", tag: "Featured", slug: "ocha-air-hockey", desc: "Compact & stylish commercial air hockey machine for malls & FECs.", img: ochaAirHockeyImg },
+              { title: "Aero X Air Hockey", name: "Aero X Air Hockey", category: "Arcade Games", tag: "Interactive", slug: "aero-x-air-hockey", desc: "Next-gen arcade air hockey table with multi-ticket dispenser system.", img: aeroXAirHockeyImg }
             ];
 
             let categoriesList = defaultArcadeCategories;

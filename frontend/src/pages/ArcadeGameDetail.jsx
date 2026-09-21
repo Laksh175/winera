@@ -24,17 +24,14 @@ import {
 } from 'lucide-react';
 
 const getValidImageUrl = (url, fallback) => {
-  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+  if (!url || typeof url !== 'string' || url.trim() === '') {
     return fallback;
-  }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
-    return url;
   }
   if (url.startsWith('/uploads')) {
     const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
     return `http://${hostname}:5001${url}`;
   }
-  return fallback;
+  return url;
 };
 
 // Arcade Products Database Mapping all dynamic game detail content
@@ -243,6 +240,18 @@ export default function ArcadeGameDetail({ siteData }) {
   // Helper to slugify text
   const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
+  // Image lookup map for preset products
+  const defaultImageMap = {
+    'parkour-motor-2-dx': arcadegamesImg,
+    'manx-tt-32': bikeArcade,
+    'super-air-hockey': superAirHockeyImg,
+    'puck-carnival-air-hockey': puckCarnivalAirHockeyImg,
+    'dazzling-air-hockey-multi-puck': dazzlingAirHockeyImg,
+    'aurora-air-hockey': auroraAirHockeyImg,
+    'ocha-air-hockey': ochaAirHockeyImg,
+    'aero-x-air-hockey': aeroXAirHockeyImg
+  };
+
   // Extract dynamic cards from CMS siteData.arcadeCategories
   const cmsArcadeData = siteData?.arcadeCategories;
   const cmsCards = Array.isArray(cmsArcadeData?.cards) ? cmsArcadeData.cards : (Array.isArray(cmsArcadeData) ? cmsArcadeData : []);
@@ -250,15 +259,23 @@ export default function ArcadeGameDetail({ siteData }) {
   // Find dynamic CMS product card matching slug
   const cmsFoundCard = cmsCards.find(c => {
     const cardSlug = c.slug || slugify(c.title || c.name);
-    return cardSlug === slug || c.slug === slug || c.title === slug;
+    return cardSlug === slug || c.slug === slug || slugify(c.title || c.name) === slug || (c.title && c.title.toLowerCase() === (slug || '').toLowerCase());
   });
 
-  // Default fallback static product
-  const defaultProduct = arcadeProductsData[slug] || arcadeProductsData['parkour-motor-2-dx'];
+  // Find preset product by slug or name
+  const targetSlug = cmsFoundCard?.slug || slug;
+  const presetKey = Object.keys(arcadeProductsData).find(k => 
+    k === targetSlug || 
+    k === slug || 
+    slugify(arcadeProductsData[k].name) === targetSlug || 
+    slugify(arcadeProductsData[k].name) === slug
+  );
+  const defaultProduct = presetKey ? arcadeProductsData[presetKey] : (arcadeProductsData[slug] || arcadeProductsData['parkour-motor-2-dx']);
   const defaultGallery = defaultProduct.gallery || [defaultProduct.img, bikeArcade, ctaArcade, arcadeHall];
 
   // Resolve main image and gallery images safely
-  const resolvedMainImg = getValidImageUrl(cmsFoundCard?.img || cmsFoundCard?.imageUrl, defaultProduct.img);
+  const rawMainImg = cmsFoundCard?.imageUrl || cmsFoundCard?.img || defaultProduct.img || defaultImageMap[targetSlug] || arcadegamesImg;
+  const resolvedMainImg = getValidImageUrl(rawMainImg, defaultProduct.img || arcadegamesImg);
 
   const galleryList = [
     getValidImageUrl(cmsFoundCard?.gallery1, resolvedMainImg || defaultGallery[0]),
@@ -276,11 +293,11 @@ export default function ArcadeGameDetail({ siteData }) {
     finalNameHighlight = cmsFoundCard.nameHighlight;
   } else if (cmsFoundCard?.title || cmsFoundCard?.name) {
     const fullTitle = cmsFoundCard.title || cmsFoundCard.name;
-    const highlight = cmsFoundCard?.nameHighlight || defaultProduct?.nameHighlight || '';
+    const highlight = cmsFoundCard?.nameHighlight || (presetKey ? defaultProduct?.nameHighlight : '');
     if (highlight && fullTitle.endsWith(highlight)) {
       finalNameBase = fullTitle.slice(0, fullTitle.length - highlight.length);
       finalNameHighlight = highlight;
-    } else if (defaultProduct?.nameBase && defaultProduct?.nameHighlight && fullTitle === defaultProduct.name) {
+    } else if (presetKey && defaultProduct?.nameBase && fullTitle === defaultProduct.name) {
       finalNameBase = defaultProduct.nameBase;
       finalNameHighlight = defaultProduct.nameHighlight;
     } else {
@@ -290,27 +307,28 @@ export default function ArcadeGameDetail({ siteData }) {
   }
 
   // Construct dynamic product object
+  const productName = cmsFoundCard?.name || cmsFoundCard?.title || defaultProduct.name;
   const product = {
-    name: cmsFoundCard?.name || cmsFoundCard?.title || defaultProduct.name,
+    name: productName,
     nameBase: finalNameBase,
     nameHighlight: finalNameHighlight,
     category: cmsFoundCard?.category || cmsFoundCard?.specsCategory || defaultProduct.category,
     tagline: cmsFoundCard?.tagline || cmsFoundCard?.desc || defaultProduct.tagline,
     img: resolvedMainImg,
-    heroBg: defaultProduct.heroBg,
+    heroBg: defaultProduct.heroBg || arcadegame1Bg,
     specs: {
-      power: cmsFoundCard?.power || defaultProduct.specs.power,
-      voltage: cmsFoundCard?.voltage || defaultProduct.specs.voltage,
-      category: cmsFoundCard?.specsCategory || cmsFoundCard?.category || defaultProduct.specs.category,
-      players: cmsFoundCard?.players || defaultProduct.specs.players,
-      material: cmsFoundCard?.material || defaultProduct.specs.material,
-      width: cmsFoundCard?.width || defaultProduct.specs.width,
-      depth: cmsFoundCard?.depth || defaultProduct.specs.depth,
-      height: cmsFoundCard?.height || defaultProduct.specs.height
+      power: cmsFoundCard?.power || defaultProduct.specs?.power || '750 W',
+      voltage: cmsFoundCard?.voltage || defaultProduct.specs?.voltage || '220v',
+      category: cmsFoundCard?.specsCategory || cmsFoundCard?.category || defaultProduct.specs?.category || defaultProduct.category,
+      players: cmsFoundCard?.players || defaultProduct.specs?.players || '1-2 Player',
+      material: cmsFoundCard?.material || defaultProduct.specs?.material || 'Imported Steel & Acrylic',
+      width: cmsFoundCard?.width || defaultProduct.specs?.width || '2100 mm',
+      depth: cmsFoundCard?.depth || defaultProduct.specs?.depth || '1200 mm',
+      height: cmsFoundCard?.height || defaultProduct.specs?.height || '1800 mm'
     },
     gallery: galleryList,
     videoUrl: cmsFoundCard?.videoUrl || defaultProduct.videoUrl,
-    quoteUrl: cmsFoundCard?.quoteUrl || defaultProduct.quoteUrl,
+    quoteUrl: cmsFoundCard?.quoteUrl || defaultProduct.quoteUrl || `https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera, I want a quote for ${productName}`)}`,
     features: [
       {
         num: "1.",
