@@ -22,15 +22,25 @@ const getValidImg = (url, fallback) => {
 
 const toTitleCase = (str) => {
   if (!str || typeof str !== 'string') return str;
-  const hasLower = /[a-z]/.test(str);
-  if (!hasLower) {
-    return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())
-      .replace(/\bRoi\b/g, 'ROI')
-      .replace(/\bVr\b/g, 'VR')
-      .replace(/\bAr\b/g, 'AR')
-      .replace(/\bFec\b/g, 'FEC');
-  }
-  return str;
+  // Cleanly convert all-caps or mixed text to CamelCase / Title Case
+  const cleanTokens = str.split(/(\s+|<br\s*\/?>|\n)/gi);
+  return cleanTokens
+    .map((token) => {
+      if (/^\s+$/.test(token) || /<br\s*\/?>/i.test(token) || token === '\n') {
+        return token;
+      }
+      return token.replace(/[a-zA-Z0-9']+/g, (word) => {
+        const lower = word.toLowerCase();
+        if (lower === "we're") return "We're";
+        if (lower === "roi") return "ROI";
+        if (lower === "vr") return "VR";
+        if (lower === "ar") return "AR";
+        if (lower === "fec") return "FEC";
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      });
+    })
+    .join('')
+    .replace(/\bWe'Re\b/g, "We're");
 };
 
 const renderTextWithBreaks = (text, yellowHighlight = false) => {

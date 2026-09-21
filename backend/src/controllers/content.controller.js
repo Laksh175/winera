@@ -893,7 +893,7 @@ export const defaultSiteData = {
   hypergridCta: {
     yellowText: "NEED ANY",
     cyanText: "HYPERGRID CONSULTATIONS?",
-    subtitle: "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS.",
+    subtitle: "We're Ready To Give Answers To Your Questions.",
     buttonText: "Talk to an ROI Expert",
     buttonLink: "https://wa.me/919428989488",
     bgUrl: ""
@@ -905,7 +905,7 @@ export const defaultSiteData = {
   amusementCta: {
     yellowText: "NEED ANY",
     cyanText: "CONSULTATIONS?",
-    subtitle: "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS.",
+    subtitle: "We're Ready To Give Answers To Your Questions.",
     buttonText: "Talk to an ROI Expert",
     buttonLink: "https://wa.me/919428989488",
     bgUrl: ""

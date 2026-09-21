@@ -6015,7 +6015,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.arcadeCta?.whiteText !== undefined ? formData.arcadeCta.whiteText : "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTION."}
+                  value={formData.arcadeCta?.whiteText !== undefined ? formData.arcadeCta.whiteText : "We're Ready To Give Answers To Your Question."}
                   onChange={(e) => handleFieldChange('arcadeCta', 'whiteText', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
