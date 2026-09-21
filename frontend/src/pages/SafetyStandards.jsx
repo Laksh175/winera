@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
+import MobileExpandableText from '../components/MobileExpandableText';
 import { ShieldCheck } from 'lucide-react';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import safetyBg from '../assets/safety-standard-hero-bg.webp';
@@ -110,9 +111,9 @@ export default function SafetyStandards({ siteData }) {
           {/* Left Collage Graphic Column */}
           <motion.div
             data-framer-motion="true"
-            initial={{ opacity: 0, x: -75 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="winera-safety-intro-img"
             style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}
@@ -132,9 +133,9 @@ export default function SafetyStandards({ siteData }) {
           {/* Right Text Content Column */}
           <motion.div
             data-framer-motion="true"
-            initial={{ opacity: 0, x: 75 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="winera-safety-intro-text"
           >
@@ -151,15 +152,18 @@ export default function SafetyStandards({ siteData }) {
               </h2>
             </div>
 
-            {/* Paragraph 1 */}
-            <p style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '20px' }}>
-              {siteData?.safetyIntro?.p1 || "When you invest in a game zone or family entertainment center, the safety of your equipment protects your visitors, your reputation, and your investment. At Winera International, product safety and quality is our highest priority. Every product we supply — from arcade games to trampoline parks and climbing walls is certified to international safety standards for commercial, high-footfall use, and every venue is installed by our own trained team and inspected on-site before handover."}
-            </p>
-
-            {/* Paragraph 2 */}
-            <p style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-              {siteData?.safetyIntro?.p2 || "As a complete game zone developer, our safety commitment covers four areas: the attractions themselves, the materials they're made of, the electrical systems that power them, and the structure and operation of the finished venue."}
-            </p>
+            <MobileExpandableText
+              preview={
+                <p style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}>
+                  {siteData?.safetyIntro?.p1 || "When you invest in a game zone or family entertainment center, the safety of your equipment protects your visitors, your reputation, and your investment. At Winera International, product safety and quality is our highest priority. Every product we supply — from arcade games to trampoline parks and climbing walls is certified to international safety standards for commercial, high-footfall use, and every venue is installed by our own trained team and inspected on-site before handover."}
+                </p>
+              }
+              expandedContent={
+                <p style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                  {siteData?.safetyIntro?.p2 || "As a complete game zone developer, our safety commitment covers four areas: the attractions themselves, the materials they're made of, the electrical systems that power them, and the structure and operation of the finished venue."}
+                </p>
+              }
+            />
           </motion.div>
         </div>
       </section>
@@ -180,13 +184,9 @@ export default function SafetyStandards({ siteData }) {
               color: '#0f172a',
               margin: '0 0 12px',
               lineHeight: 1.2,
-              whiteSpace: 'nowrap',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '12px'
+              textAlign: 'center'
             }}>
-              <span>Play &amp; Attraction</span>
+              <span>Play &amp; Attraction</span>{' '}
               <span style={{ color: '#38bdf8' }}>Equipment Safety</span>
             </h2>
             <p style={{
@@ -319,14 +319,9 @@ export default function SafetyStandards({ siteData }) {
               color: '#0f172a',
               margin: '0 0 12px',
               lineHeight: 1.2,
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: '8px 12px',
               textAlign: 'left'
             }}>
-              <span style={{ color: '#38bdf8' }}>{siteData?.safetyMaterials?.title1 || "Material &"}</span>
+              <span style={{ color: '#38bdf8' }}>{siteData?.safetyMaterials?.title1 || "Material &"}</span>{' '}
               <span>{siteData?.safetyMaterials?.title2 || "Fire Safety"}</span>
             </h2>
             <p style={{
@@ -457,14 +452,9 @@ export default function SafetyStandards({ siteData }) {
               color: '#0f172a',
               margin: '0 0 12px',
               lineHeight: 1.2,
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: '8px 12px',
               textAlign: 'left'
             }}>
-              <span>{siteData?.safetyElectrical?.title1 || "Electrical &"}</span>
+              <span>{siteData?.safetyElectrical?.title1 || "Electrical &"}</span>{' '}
               <span style={{ color: '#38bdf8' }}>{siteData?.safetyElectrical?.title2 || "Machine Safety"}</span>
             </h2>
             <p style={{

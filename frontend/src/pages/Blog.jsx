@@ -7,6 +7,7 @@ import blogHeroBg from '../assets/blog-hero-bg.webp';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import WineraImage from '../components/WineraImage';
+import { ChevronDown } from 'lucide-react';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 
 const getValidImageUrl = (url, fallback) => {
@@ -74,21 +75,13 @@ export default function Blog({ siteData }) {
     metaDescription: 'Read the Winera International blog for expert insights on game zone setup, ROI tips, soft play trends, VR gaming, trampoline parks, and indoor amusement equipment.',
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 12;
-  const totalPages = Math.ceil(blogPosts.length / ITEMS_PER_PAGE);
+  const INITIAL_POSTS_LIMIT = 6;
+  const [visibleCount, setVisibleCount] = useState(INITIAL_POSTS_LIMIT);
+  const visiblePosts = blogPosts.slice(0, visibleCount);
+  const hasMore = visibleCount < blogPosts.length;
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentPosts = blogPosts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-      const cardsGrid = document.querySelector('.winera-blog-cards-grid');
-      if (cardsGrid) {
-        cardsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 6);
   };
 
   useEffect(() => {
@@ -154,14 +147,16 @@ export default function Blog({ siteData }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="winera-blog-heading-container"
             style={{ textAlign: 'center', marginBottom: '30px' }}
           >
             <img
               src={yellowStrokeLine}
               alt=""
+              className="winera-blog-heading-stroke"
               style={{ display: 'block', width: '240px', height: '10px', margin: '0 auto 8px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
+            <h2 className="winera-blog-heading-title" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
               our <span style={{ color: '#38bdf8' }}>Blogs</span>
             </h2>
           </motion.div>
@@ -172,7 +167,7 @@ export default function Blog({ siteData }) {
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '32px',
           }}>
-            {currentPosts.map((post, index) => {
+            {visiblePosts.map((post, index) => {
               const isLeft = index % 3 === 0;
               const isRight = index % 3 === 2;
               const startX = isLeft ? -70 : (isRight ? 70 : 0);
@@ -226,43 +221,33 @@ export default function Blog({ siteData }) {
                     />
                   </div>
 
-                  {/* Category Tag Meta Row */}
-                  <div style={{
-                    fontSize: '12px',
-                    fontWeight: '700',
-                    color: '#0284c7',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px',
-                    marginBottom: '10px'
-                  }}>
-                    {post.category || 'INSIGHTS'}
-                  </div>
-
                   {/* Blog Title & Subtitle */}
-                  <h3 style={{
+                  <h3 className="winera-blog-card-title" style={{
                     fontSize: '18px',
-                    fontWeight: '800',
+                    fontWeight: '600',
                     color: '#0f172a',
                     lineHeight: 1.35,
                     margin: '0 0 10px 0',
+                    textAlign: 'left'
                   }}>
                     {getFullTitle(post)}
                   </h3>
 
                   {/* Excerpt Description */}
-                  <p style={{
+                  <p className="winera-blog-card-desc" style={{
                     fontSize: '14px',
                     fontWeight: '400',
                     color: '#64748b',
                     lineHeight: 1.6,
                     margin: '0 0 20px 0',
                     flexGrow: 1,
+                    textAlign: 'left'
                   }}>
                     {truncatedExcerpt}
                   </p>
 
-                  {/* Card Footer: Date & Read More link */}
-                  <div style={{
+                  {/* Card Footer: Date & Founder Name */}
+                  <div className="winera-blog-card-footer" style={{
                     paddingTop: '14px',
                     borderTop: '1px solid #f1f5f9',
                     fontSize: '13px',
@@ -280,10 +265,9 @@ export default function Blog({ siteData }) {
                       color: '#0284c7',
                       fontWeight: '700',
                       fontSize: '13px',
-                      textDecoration: 'underline',
                       letterSpacing: '0.2px'
                     }}>
-                      Read More...
+                      {post.author || post.founder || 'Divyang Mandani'}
                     </span>
                   </div>
                 </motion.div>
@@ -291,116 +275,17 @@ export default function Blog({ siteData }) {
             })}
           </div>
 
-          {/* ── PAGINATION BAR ───────────────────────────────────── */}
-          {totalPages > 1 && (
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '60px' }}>
-              <div
-                className="winera-blog-pagination-container"
-                style={{
-                  background: 'rgba(0, 174, 239, 0.06)',
-                  border: '1px solid rgba(0, 174, 239, 0.4)',
-                  borderRadius: '30px',
-                  padding: '8px 18px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px',
-                  boxShadow: 'none',
-                  maxWidth: '90vw',
-                  overflowX: 'auto',
-                  WebkitOverflowScrolling: 'touch',
-                }}
-              >
-                {/* Previous Button `<` */}
+          {/* ── LOAD MORE BUTTON ───────────────────────────────────── */}
+          {hasMore && (
+            <div style={{ textAlign: 'center', marginTop: '50px' }}>
+              <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm" style={{ display: 'inline-block' }}>
                 <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage <= 1}
-                  style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '50%',
-                    border: 'none',
-                    background: 'rgba(0, 174, 239, 0.22)',
-                    color: '#0284c7',
-                    fontWeight: '800',
-                    fontSize: '15px',
-                    cursor: currentPage <= 1 ? 'default' : 'pointer',
-                    opacity: currentPage <= 1 ? 0.5 : 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.2s ease',
-                    flexShrink: 0,
-                  }}
+                  onClick={handleLoadMore}
+                  className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                  style={{ cursor: 'pointer', border: 'none' }}
                 >
-                  &lsaquo;
-                </button>
-
-                {/* Dynamic Page Buttons */}
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
-                  const isActive = currentPage === pageNum;
-                  return (
-                    <button
-                      key={pageNum}
-                      onClick={() => handlePageChange(pageNum)}
-                      style={{
-                        width: '38px',
-                        height: '38px',
-                        borderRadius: '50%',
-                        border: 'none',
-                        background: isActive ? '#38bdf8' : '#ffffff',
-                        color: isActive ? '#ffffff' : '#475569',
-                        fontWeight: isActive ? '800' : '600',
-                        fontSize: '14px',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: 'none',
-                        transition: 'all 0.2s ease',
-                        flexShrink: 0,
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.background = '#e0f2fe';
-                          e.currentTarget.style.color = '#0284c7';
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.background = '#ffffff';
-                          e.currentTarget.style.color = '#475569';
-                        }
-                      }}
-                    >
-                      {pageNum}
-                    </button>
-                  );
-                })}
-
-                {/* Next Button `>` */}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage >= totalPages}
-                  style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '50%',
-                    border: 'none',
-                    background: 'rgba(0, 174, 239, 0.22)',
-                    color: '#0284c7',
-                    fontWeight: '800',
-                    fontSize: '15px',
-                    cursor: currentPage >= totalPages ? 'default' : 'pointer',
-                    opacity: currentPage >= totalPages ? 0.5 : 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.2s ease',
-                    flexShrink: 0,
-                  }}
-                >
-                  &rsaquo;
+                  <span>Load More Blogs</span>
+                  <ChevronDown style={{ width: '18px', height: '18px', strokeWidth: 2.5 }} />
                 </button>
               </div>
             </div>
@@ -408,15 +293,49 @@ export default function Blog({ siteData }) {
         </div>
       </section>
 
-      {/* 4. FOOTER */}
+      {/* ── FOOTER ─────────────────────────────────────────────────── */}
       <Footer footerData={footer} />
 
       {/* Responsive Breakpoints */}
       <style>{`
+        .winera-blog-single-card,
+        .winera-blog-single-card *,
+        .winera-blog-card-title,
+        .winera-blog-card-desc,
+        .winera-blog-single-card h3,
+        .winera-blog-single-card p {
+          text-align: left !important;
+        }
+        .winera-blog-card-footer {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          width: 100% !important;
+        }
         @media (max-width: 992px) {
           .winera-blog-cards-grid {
             grid-template-columns: repeat(2, 1fr) !important;
             gap: 24px !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .winera-blog-heading-container {
+            text-align: left !important;
+            align-items: flex-start !important;
+          }
+          .winera-blog-heading-stroke {
+            margin: 0 0 8px 0 !important;
+          }
+          .winera-blog-heading-title {
+            text-align: left !important;
+          }
+          .winera-blog-single-card,
+          .winera-blog-single-card *,
+          .winera-blog-card-title,
+          .winera-blog-card-desc,
+          .winera-blog-single-card h3,
+          .winera-blog-single-card p {
+            text-align: left !important;
           }
         }
         @media (max-width: 600px) {
@@ -426,6 +345,14 @@ export default function Blog({ siteData }) {
           .winera-blog-cards-grid {
             grid-template-columns: 1fr !important;
             gap: 20px !important;
+          }
+          .winera-blog-single-card,
+          .winera-blog-single-card *,
+          .winera-blog-card-title,
+          .winera-blog-card-desc,
+          .winera-blog-single-card h3,
+          .winera-blog-single-card p {
+            text-align: left !important;
           }
         }
       `}</style>

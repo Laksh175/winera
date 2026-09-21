@@ -385,7 +385,7 @@ export default function AmusementPark({ siteData }) {
             alignItems: 'center'
           }}>
             {/* Left Content Column */}
-            <div>
+            <div className="winera-amusement-options-text">
               <div className="winera-amusement-title-wrapper" style={{ position: 'relative', display: 'block', marginBottom: '14px' }}>
                 <img
                   src={yellowStrokeLine}
@@ -420,7 +420,7 @@ export default function AmusementPark({ siteData }) {
             </div>
 
             {/* Right Collage Image Column */}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="winera-amusement-options-img" style={{ display: 'flex', justifyContent: 'center' }}>
               <img
                 src={getValidImageUrl(siteData?.amusementOptions?.topImgUrl || siteData?.amusementOptions?.imgUrl, amusementOptionsTopCollage)}
                 alt="Rides and Attractions We Supply"
@@ -437,7 +437,7 @@ export default function AmusementPark({ siteData }) {
             alignItems: 'center'
           }}>
             {/* Left Image Column */}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="winera-amusement-roi-img" style={{ display: 'flex', justifyContent: 'center' }}>
               <img
                 src={getValidImageUrl(siteData?.amusementRoi?.bottomImgUrl || siteData?.amusementRoi?.imgUrl, amusementOptionsBottomImg)}
                 alt="Before You Build Know What It Will Earn"
@@ -446,7 +446,7 @@ export default function AmusementPark({ siteData }) {
             </div>
 
             {/* Right Text Content Column */}
-            <div>
+            <div className="winera-amusement-roi-text">
               <div className="winera-amusement-title-wrapper" style={{ position: 'relative', display: 'block', marginBottom: '14px' }}>
                 <img
                   src={yellowStrokeLine}

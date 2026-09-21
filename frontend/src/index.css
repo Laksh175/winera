@@ -301,7 +301,7 @@ p.winera-testi-quote,
 .winera-projects-marquee-section .winera-projects-marquee-header p,
 .winera-section-heading-container p,
 .winera-section-heading-container .winera-section-subtitle,
-section:not([class*="hero"]):not([class*="footer"]):not([class*="cta"]):not([class*="bowling-roi"]):not(.winera-bowling-roi-section):not(.admin-content) p:not(.winera-hero-h1):not(.winera-hero-h2):not(.winera-hero-p):not([class*="hero"]):not([class*="badge"]):not([class*="tag"]):not([class*="btn"]):not([class*="nav"]):not(.footer-bottom-text):not(.admin-content *):not(.winera-cta-description):not(.winera-cta-banner-container *):not([class*="cta"] *):not(.winera-bowling-roi-text *):not(.winera-bowling-roi-text p):not(.winera-roi-checklist-card *):not(.winera-roi-checklist-card p):not(.winera-blog-right-sidebar-sticky *):not(.winera-blog-right-sidebar-sticky p):not(.winera-roi-process-card *):not(.winera-roi-process-card p):not(.winera-project-marquee-city):not(.winera-projects-marquee-track *):not(.winera-projects-marquee-track p):not(.winera-stats-card *):not(.winera-stats-card p):not(.winera-company-stats-grid *):not(.winera-company-stats-grid p):not(.winera-stats-card-label),
+section:not([class*="hero"]):not([class*="footer"]):not([class*="cta"]):not([class*="bowling-roi"]):not(.winera-bowling-roi-section):not(.admin-content) p:not(.winera-hero-h1):not(.winera-hero-h2):not(.winera-hero-p):not([class*="hero"]):not([class*="badge"]):not([class*="tag"]):not([class*="btn"]):not([class*="nav"]):not(.footer-bottom-text):not(.admin-content *):not(.winera-cta-description):not(.winera-cta-banner-container *):not([class*="cta"] *):not(.winera-bowling-roi-text *):not(.winera-bowling-roi-text p):not(.winera-roi-checklist-card *):not(.winera-roi-checklist-card p):not(.winera-blog-right-sidebar-sticky *):not(.winera-blog-right-sidebar-sticky p):not(.winera-roi-process-card *):not(.winera-roi-process-card p):not(.winera-project-marquee-city):not(.winera-projects-marquee-track *):not(.winera-projects-marquee-track p):not(.winera-stats-card *):not(.winera-stats-card p):not(.winera-company-stats-grid *):not(.winera-company-stats-grid p):not(.winera-stats-card-label):not(.winera-project-card-location):not(.winera-project-card-location *),
 .winera-content-paragraph {
   font-family: 'Open Sans', sans-serif !important;
   font-weight: 400 !important;
@@ -1943,8 +1943,10 @@ html {
   }
 
   /* Supplier Section */
+  section.winera-ar-supplier-section,
   .winera-ar-supplier-section {
-    padding: 30px 16px 25px !important;
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
   }
 
   .winera-ar-supplier-grid {
@@ -1952,11 +1954,14 @@ html {
     gap: 16px !important;
   }
 
+  .winera-ar-supplier-img,
   .winera-ar-supplier-grid>div:last-child {
-    order: -1;
+    order: 2 !important;
+    margin-top: 16px !important;
   }
 
   .winera-ar-supplier-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -1988,8 +1993,10 @@ html {
   }
 
   /* Attractions Section */
+  section.winera-ar-attractions-section,
   .winera-ar-attractions-section {
-    padding: 30px 16px 25px !important;
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
   }
 
   .winera-ar-attractions-grid {
@@ -1998,7 +2005,8 @@ html {
   }
 
   .winera-ar-attractions-img {
-    order: -1;
+    order: 2 !important;
+    margin-top: 16px !important;
   }
 
   .winera-ar-attractions-img img {
@@ -2006,6 +2014,7 @@ html {
   }
 
   .winera-ar-attractions-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -2778,10 +2787,12 @@ html {
   }
 
   .winera-vr-attractions-img {
-    order: -1;
+    order: 2 !important;
+    margin-top: 16px !important;
   }
 
   .winera-vr-attractions-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -2791,7 +2802,8 @@ html {
   .winera-vr-attractions-text>div:first-child,
   .winera-vr-attractions-text div[style*="marginBottom: '22px'"],
   .winera-vr-attractions-text div[style*="margin-bottom: 22px"] {
-    margin-top: 15px !important;
+    margin-top: 0 !important;
+    margin-bottom: 14px !important;
   }
 
   .winera-vr-attractions-text img[src*="stroke"] {
@@ -2878,11 +2890,14 @@ html {
     gap: 16px !important;
   }
 
+  .winera-vr-reliability-img,
   .winera-vr-reliability-grid>div:last-child {
-    order: -1;
+    order: 2 !important;
+    margin-top: 16px !important;
   }
 
   .winera-vr-reliability-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -3303,28 +3318,32 @@ html {
   }
 
   .winera-bumpercar-thrill-header {
-    flex-direction: column !important;
+    display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
-    gap: 10px !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
     margin-bottom: 14px !important;
+    text-align: left !important;
   }
 
   .winera-bumpercar-thrill-icon {
-    width: 36px !important;
-    height: 36px !important;
-    margin: 0 auto !important;
+    width: 38px !important;
+    height: 38px !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
   }
 
   .winera-bumpercar-thrill-card h3,
   .winera-bumpercar-thrill-h3 {
-    font-size: clamp(17px, 4.8vw, 20px) !important;
+    font-size: clamp(15.5px, 4.2vw, 18px) !important;
     line-height: 1.3 !important;
-    text-align: center !important;
-    text-wrap: balance !important;
+    text-align: left !important;
     word-break: normal !important;
     hyphens: none !important;
     max-width: 100% !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
+    flex: 1 !important;
   }
 
   .winera-bumpercar-thrill-card p {
@@ -3332,6 +3351,7 @@ html {
     line-height: 1.6 !important;
     min-height: auto !important;
     margin-bottom: 20px !important;
+    text-align: left !important;
   }
 
   .winera-bumpercar-specs-section {
@@ -3602,22 +3622,26 @@ html {
     background: #0284c7;
   }
 
+  section.winera-bumpercar-investment-section,
   .winera-bumpercar-investment-section {
-    padding: 85px 5vw 55px !important;
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
   }
 
   .winera-bumpercar-investment-grid {
     grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    gap: 16px !important;
   }
 
   .winera-bumpercar-investment-img {
-    order: -1;
-    /* image above text */
-    margin: 0 auto !important;
+    order: 2 !important;
+    margin: 16px auto 0 !important;
+    width: 100% !important;
+    max-width: 440px !important;
   }
 
   .winera-bumpercar-investment-text {
+    order: 1 !important;
     text-align: left !important;
     display: flex !important;
     flex-direction: column !important;
@@ -3829,8 +3853,10 @@ html {
   }
 
   /* 1. Supplier Section */
+  section.winera-bowling-supplier-section,
   .winera-bowling-supplier-section {
-    padding: 25px 16px 20px !important;
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
   }
 
   .winera-bowling-supplier-grid {
@@ -3838,11 +3864,18 @@ html {
     gap: 16px !important;
   }
 
+  .winera-bowling-supplier-img,
   .winera-bowling-supplier-grid>div:last-child {
-    order: -1;
+    order: 2 !important;
+    height: auto !important;
+    max-height: 280px !important;
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 16px auto 0 !important;
   }
 
   .winera-bowling-supplier-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -3869,14 +3902,6 @@ html {
   }
 
   .winera-bowling-supplier-text a {
-    margin: 0 auto !important;
-  }
-
-  .winera-bowling-supplier-img {
-    height: auto !important;
-    max-height: 280px !important;
-    width: 100% !important;
-    max-width: 380px !important;
     margin: 0 auto !important;
   }
 
@@ -3964,12 +3989,13 @@ html {
   }
 
   .winera-bowling-types-pills-col {
+    order: 2 !important;
     display: flex !important;
     position: relative !important;
     width: 100% !important;
     height: auto !important;
     min-height: auto !important;
-    margin: 12px 0 !important;
+    margin: 16px 0 0 !important;
     justify-content: center !important;
     align-items: center !important;
   }
@@ -3992,6 +4018,7 @@ html {
   }
 
   .winera-bowling-types-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -4006,6 +4033,7 @@ html {
     margin: 0 auto 6px !important;
   }
 
+  .winera-bowling-types-text h2,
   .winera-bowling-types-text h3 {
     font-size: 1.35rem !important;
     line-height: 1.25 !important;
@@ -4020,17 +4048,6 @@ html {
     margin-bottom: 10px !important;
   }
 
-  .winera-bowling-types-btn-row {
-    justify-content: center !important;
-    width: 100% !important;
-    margin-bottom: 16px !important;
-  }
-
-  .winera-bowling-types-text div[style*="marginBottom: '45px'"],
-  .winera-bowling-types-text div[style*="margin-bottom: 45px"] {
-    margin-bottom: 16px !important;
-  }
-
   .winera-bowling-types-mobile-specs {
     display: flex !important;
     flex-direction: column !important;
@@ -4039,6 +4056,7 @@ html {
     box-sizing: border-box !important;
     gap: 10px !important;
     margin-top: 12px !important;
+    margin-bottom: 20px !important;
     padding: 16px 14px !important;
     border-radius: 16px !important;
   }
@@ -4055,6 +4073,16 @@ html {
     text-align: right !important;
     word-break: break-word !important;
     max-width: 65% !important;
+  }
+
+  .winera-bowling-types-btn-row,
+  .winera-bowling-types-text div[style*="marginBottom: '45px'"],
+  .winera-bowling-types-text div[style*="margin-bottom: 45px"] {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
   }
 
   /* 4. ROI Section */
@@ -4208,21 +4236,24 @@ html {
     font-size: 13px !important;
   }
 
+  section.winera-softplay-supplier-section,
   .winera-softplay-supplier-section {
-    padding: 50px 5vw 35px !important;
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
   }
 
   .winera-softplay-supplier-grid {
     grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    gap: 16px !important;
   }
 
-  .winera-softplay-supplier-grid>div:last-child {
-    order: -1;
-    /* image collage above text */
+  .winera-softplay-supplier-img {
+    order: 2 !important;
+    margin-top: 16px !important;
   }
 
   .winera-softplay-supplier-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -4287,21 +4318,24 @@ html {
     width: 50px !important;
   }
 
+  section.winera-softplay-intro-section,
   .winera-softplay-intro-section {
-    padding: 20px 5vw 55px !important;
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
   }
 
   .winera-softplay-intro-grid {
     grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    gap: 16px !important;
   }
 
   .winera-softplay-intro-img {
-    order: -1 !important;
-    /* image above text */
+    order: 2 !important;
+    margin-top: 16px !important;
   }
 
   .winera-softplay-intro-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -4513,18 +4547,21 @@ html {
     height: 200px !important;
   }
 
+  section.winera-softplay-roi-section,
   .winera-softplay-roi-section {
-    padding: 50px 5vw 55px !important;
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
     background: #F5F5F9 !important;
     /* remove bg image */
   }
 
   .winera-softplay-roi-grid {
     grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    gap: 16px !important;
   }
 
   .winera-softplay-roi-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -4549,10 +4586,10 @@ html {
   }
 
   .winera-softplay-roi-img {
-    order: -1 !important;
+    order: 2 !important;
     width: 100% !important;
     max-width: 440px !important;
-    margin: 0 auto !important;
+    margin: 16px auto 0 !important;
   }
 
   .winera-softplay-roi-img>div:nth-child(1) {
@@ -4636,6 +4673,293 @@ html {
   .winera-amusement-whyus-vertical-divider,
   .winera-amusement-whyus-horizontal-divider {
     display: none !important;
+  }
+
+  /* Hypergrid Supplier Section Mobile Sequence: Title -> Content -> Button -> Image */
+  section.winera-hypergrid-supplier-section,
+  .winera-hypergrid-supplier-section {
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .winera-hypergrid-supplier-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .winera-hypergrid-supplier-img {
+    order: 2 !important;
+    margin: 16px auto 0 !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .winera-hypergrid-supplier-img img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  .winera-hypergrid-supplier-text {
+    order: 1 !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .winera-hypergrid-supplier-text > div:first-child {
+    text-align: center !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-top: 0 !important;
+  }
+
+  .winera-hypergrid-supplier-text img[src*="stroke"],
+  .winera-hypergrid-supplier-text img {
+    margin: 0 auto 10px !important;
+    max-width: 260px !important;
+    display: block !important;
+  }
+
+  .winera-hypergrid-supplier-text h2 {
+    font-size: clamp(20px, 5.2vw, 28px) !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    margin: 0 auto 12px !important;
+    width: 100% !important;
+  }
+
+  .winera-hypergrid-supplier-text p {
+    text-align: center !important;
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    margin: 0 auto 16px !important;
+    max-width: 580px !important;
+  }
+
+  .winera-hypergrid-supplier-text a,
+  .winera-hypergrid-supplier-text .winera-cyan-cta-wrapper {
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  /* Amusement Park Supplier Section Mobile Sequence: Title -> Content -> Button -> Image */
+  section.winera-amusement-supplier-section,
+  .winera-amusement-supplier-section {
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .winera-amusement-supplier-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .winera-amusement-supplier-img {
+    order: 2 !important;
+    margin: 16px auto 0 !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .winera-amusement-supplier-img img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  .winera-amusement-supplier-text {
+    order: 1 !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .winera-amusement-supplier-text .winera-amusement-title-wrapper {
+    text-align: center !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 auto 12px !important;
+  }
+
+  .winera-amusement-supplier-text img[src*="stroke"],
+  .winera-amusement-supplier-text img {
+    margin: 0 auto 10px !important;
+    max-width: 260px !important;
+    display: block !important;
+  }
+
+  .winera-amusement-supplier-text h2 {
+    font-size: clamp(20px, 5.2vw, 28px) !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    margin: 0 auto 12px !important;
+    width: 100% !important;
+  }
+
+  .winera-amusement-supplier-text p {
+    text-align: center !important;
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    margin: 0 auto 16px !important;
+    max-width: 580px !important;
+  }
+
+  .winera-amusement-supplier-text a,
+  .winera-amusement-supplier-text .winera-cyan-cta-wrapper {
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  /* Amusement Park Before You Build ROI Mobile Sequence: Title -> Content -> Button -> Image */
+  .winera-amusement-roi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .winera-amusement-roi-img {
+    order: 2 !important;
+    margin: 20px auto 0 !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .winera-amusement-roi-img img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  .winera-amusement-roi-text {
+    order: 1 !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .winera-amusement-roi-text .winera-amusement-title-wrapper {
+    text-align: center !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 auto 12px !important;
+  }
+
+  .winera-amusement-roi-text img[src*="stroke"],
+  .winera-amusement-roi-text img {
+    margin: 0 auto 10px !important;
+    max-width: 260px !important;
+    display: block !important;
+  }
+
+  .winera-amusement-roi-text h2 {
+    font-size: clamp(20px, 5.2vw, 28px) !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    margin: 0 auto 12px !important;
+    width: 100% !important;
+  }
+
+  .winera-amusement-roi-text p {
+    text-align: center !important;
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    margin: 0 auto 14px !important;
+    max-width: 580px !important;
+  }
+
+  .winera-amusement-roi-text a[aria-label="Talk to an ROI Expert"] {
+    margin: 16px auto 0 !important;
+    display: inline-flex !important;
+  }
+
+  /* Amusement Park Options / Rides Supply Sub-block */
+  .winera-amusement-options-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .winera-amusement-options-img {
+    order: 2 !important;
+    margin: 20px auto 0 !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .winera-amusement-options-img img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  .winera-amusement-options-text {
+    order: 1 !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .winera-amusement-options-text .winera-amusement-title-wrapper {
+    text-align: center !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 auto 12px !important;
+  }
+
+  .winera-amusement-options-text img[src*="stroke"],
+  .winera-amusement-options-text img {
+    margin: 0 auto 10px !important;
+    max-width: 260px !important;
+    display: block !important;
+  }
+
+  .winera-amusement-options-text h2 {
+    font-size: clamp(20px, 5.2vw, 28px) !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    margin: 0 auto 12px !important;
+    width: 100% !important;
+  }
+
+  .winera-amusement-options-text p {
+    text-align: center !important;
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    margin: 0 auto 14px !important;
+    max-width: 580px !important;
   }
 
   /* Global Hero Banner Responsive Sizing overrides */
@@ -6071,7 +6395,44 @@ textarea::placeholder,
 @media (max-width: 767px) {
 
   /* Hypergrid Page Mobile Responsiveness */
-  .winera-hypergrid-supplier-grid,
+  .winera-hypergrid-supplier-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    text-align: center !important;
+  }
+
+  .winera-hypergrid-supplier-text {
+    order: 1 !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .winera-hypergrid-supplier-text p {
+    text-align: center !important;
+    max-width: 580px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .winera-hypergrid-supplier-img {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 16px auto 0 !important;
+  }
+
+  .winera-hypergrid-supplier-img img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
   .winera-hypergrid-banner-grid,
   .winera-hypergrid-whyus-grid,
   .winera-hypergrid-roi-grid {
@@ -6080,14 +6441,12 @@ textarea::placeholder,
     text-align: center !important;
   }
 
-  .winera-hypergrid-supplier-text,
   .winera-hypergrid-banner-text,
   .winera-hypergrid-roi-text {
     text-align: center !important;
     width: 100% !important;
   }
 
-  .winera-hypergrid-supplier-text p,
   .winera-hypergrid-banner-text p,
   .winera-hypergrid-roi-text p {
     text-align: center !important;
@@ -6096,7 +6455,6 @@ textarea::placeholder,
     margin-right: auto !important;
   }
 
-  .winera-hypergrid-supplier-img,
   .winera-hypergrid-banner-img,
   .winera-hypergrid-roi-img {
     width: 100% !important;
@@ -6105,7 +6463,6 @@ textarea::placeholder,
     margin-top: 0 !important;
   }
 
-  .winera-hypergrid-supplier-img img,
   .winera-hypergrid-banner-img img,
   .winera-hypergrid-roi-img img {
     width: 100% !important;
@@ -6227,9 +6584,15 @@ textarea::placeholder,
 
   /* Project Gallery Section Mobile Background Fix */
   .winera-project-gallery-section {
-    padding: 45px 4vw !important;
-    margin: 0 !important;
-    background-size: 100% 100% !important;
+    background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 50%, #ffffff 100%) !important;
+    background-image: none !important;
+    padding: 35px 16px 40px !important;
+    border-radius: 24px !important;
+    box-shadow: 0 8px 30px rgba(56, 189, 248, 0.15) !important;
+    margin: 25px auto 35px !important;
+    width: calc(100% - 32px) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   /* Safety Standards Page Responsiveness */
@@ -6356,26 +6719,83 @@ textarea::placeholder,
   }
 
   /* Amusement Park Page Responsiveness */
-  .winera-amusement-supplier-grid,
-  .winera-amusement-options-grid,
-  .winera-amusement-roi-grid {
+  .winera-amusement-supplier-grid {
     grid-template-columns: 1fr !important;
-    gap: 36px !important;
+    gap: 16px !important;
     text-align: center !important;
   }
 
-  .winera-amusement-supplier-text,
-  .winera-amusement-supplier-text h2,
-  .winera-amusement-options-section h2,
-  .winera-amusement-roi-grid h2 {
+  .winera-amusement-supplier-text {
+    order: 1 !important;
     text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .winera-amusement-supplier-img {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 16px auto 0 !important;
+  }
+
+  .winera-amusement-roi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    text-align: center !important;
+  }
+
+  .winera-amusement-roi-text {
+    order: 1 !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .winera-amusement-roi-img {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 20px auto 0 !important;
+  }
+
+  .winera-amusement-options-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    text-align: center !important;
+  }
+
+  .winera-amusement-options-text {
+    order: 1 !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .winera-amusement-options-img {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 20px auto 0 !important;
   }
 
   .winera-amusement-supplier-text p,
-  .winera-amusement-options-section p,
-  .winera-amusement-roi-grid p {
+  .winera-amusement-options-text p,
+  .winera-amusement-roi-text p {
     text-align: center !important;
-    max-width: 100% !important;
+    max-width: 580px !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
@@ -6387,9 +6807,8 @@ textarea::placeholder,
   }
 
   .winera-amusement-options-section {
-    padding: 50px 5vw 55px !important;
+    padding: 35px 5vw 40px !important;
     background: #f0f9ff !important;
-    /* solid fallback light blue on mobile */
   }
 
   .winera-amusement-title-wrapper {
@@ -6450,10 +6869,16 @@ textarea::placeholder,
 
   .winera-project-block-section,
   .winera-project-client-section,
-  .winera-project-solution-section,
-  .winera-project-basic-section,
-  .winera-project-gallery-section {
+  .winera-project-basic-section {
     padding: 30px 24px 45px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .winera-project-solution-section {
+    padding: 24px 20px 12px !important;
     box-sizing: border-box !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -6847,15 +7272,23 @@ textarea::placeholder,
   .winera-safety-why-h2 {
     font-size: 1.85rem !important;
     line-height: 1.25 !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
+    display: block !important;
+    text-align: center !important;
     white-space: normal !important;
-    gap: 6px 8px !important;
+    margin: 0 auto 12px auto !important;
+  }
+
+  .winera-safety-standards-h2 span,
+  .winera-safety-material-h2 span,
+  .winera-safety-electrical-h2 span,
+  .winera-safety-structure-h2 span,
+  .winera-safety-why-h2 span {
+    display: inline !important;
   }
 
   .winera-safety-material-h2,
   .winera-safety-electrical-h2 {
-    justify-content: flex-start !important;
+    text-align: left !important;
   }
 
   .winera-safety-standards-grid {
@@ -6899,15 +7332,25 @@ textarea::placeholder,
   .winera-safety-electrical-h2,
   .winera-safety-structure-h2,
   .winera-safety-why-h2 {
-    font-size: 1.55rem !important;
+    font-size: clamp(20px, 5.5vw, 24px) !important;
+    line-height: 1.25 !important;
+    display: block !important;
     text-align: center !important;
-    justify-content: center !important;
+    white-space: normal !important;
+    margin: 0 auto 12px auto !important;
+  }
+
+  .winera-safety-standards-h2 span,
+  .winera-safety-material-h2 span,
+  .winera-safety-electrical-h2 span,
+  .winera-safety-structure-h2 span,
+  .winera-safety-why-h2 span {
+    display: inline !important;
   }
 
   .winera-safety-material-h2,
   .winera-safety-electrical-h2 {
     text-align: left !important;
-    justify-content: flex-start !important;
   }
 
   .winera-safety-watermark-num {
@@ -6928,17 +7371,49 @@ textarea::placeholder,
    TRAMPOLINE PARK PAGE RESPONSIVE STYLES
    ========================================================================== */
 @media (max-width: 992px) {
+  section.winera-trampoline-intro-section,
+  .winera-trampoline-intro-section {
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
+  }
+
   .winera-trampoline-intro-grid {
     grid-template-columns: 1fr !important;
-    gap: 32px !important;
+    gap: 16px !important;
+  }
+
+  .winera-trampoline-intro-img-wrapper {
+    order: 2 !important;
+    margin-top: 16px !important;
   }
 
   .winera-trampoline-intro-text {
+    order: 1 !important;
     text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
   .winera-trampoline-intro-text img {
     margin: 0 auto 10px !important;
+  }
+
+  .winera-trampoline-intro-text h2 {
+    font-size: 1.45rem !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+  }
+
+  .winera-trampoline-intro-text p {
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    margin: 0 auto 14px !important;
+  }
+
+  .winera-trampoline-intro-text a {
+    margin: 0 auto !important;
   }
 
   .winera-trampoline-grid {
@@ -7643,6 +8118,46 @@ img[src*="yellow-stroke-line"] {
   }
 }
 
+.winera-roi-intro-line1 {
+  display: block;
+}
+.winera-roi-intro-line2 {
+  display: inline;
+}
+.winera-roi-intro-line3 {
+  display: inline;
+}
+
+.winera-roi-pain-row1 {
+  display: block;
+}
+.winera-roi-pain-row2 {
+  display: block;
+}
+.winera-roi-pain-row3 {
+  display: block;
+  color: #38bdf8;
+}
+
+.winera-roi-get-title-line1 {
+  display: block;
+}
+.winera-roi-get-title-line2 {
+  display: block;
+  color: #38bdf8;
+}
+
+.winera-roi-comparison-badge {
+  display: none !important;
+}
+
+.winera-roi-pill-text-desktop {
+  display: inline;
+}
+.winera-roi-pill-text-mobile {
+  display: none;
+}
+
 /* ==========================================================================
    ROI PAGE RESPONSIVE STYLES
    ========================================================================== */
@@ -7672,16 +8187,17 @@ img[src*="yellow-stroke-line"] {
   }
 
   .winera-roi-intro-h2,
+  .winera-roi-pain-h2,
   .winera-roi-pain-text h2 {
     text-align: center !important;
-    word-break: break-word !important;
   }
 
-  .winera-roi-intro-h2 span,
-  .winera-roi-intro-h2-span {
-    white-space: normal !important;
+  .winera-roi-pain-row1,
+  .winera-roi-pain-row2,
+  .winera-roi-pain-row3 {
     display: block !important;
-    word-break: break-word !important;
+    white-space: nowrap !important;
+    text-align: center !important;
   }
 
   .winera-roi-intro-text p,
@@ -7718,12 +8234,19 @@ img[src*="yellow-stroke-line"] {
 
   .winera-roi-comparison-section {
     background: #F5F5F9 !important;
-    padding: 50px 4vw 60px !important;
+    padding: 40px 25px 50px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
   }
 
   .winera-roi-comparison-grid {
     grid-template-columns: 1fr !important;
     gap: 36px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
   }
 
   .winera-roi-wrong-side,
@@ -7731,16 +8254,33 @@ img[src*="yellow-stroke-line"] {
     align-items: center !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    margin: 0 !important;
     width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  .winera-roi-wrong-side>div,
-  .winera-roi-right-side>div {
+  .winera-roi-comparison-badge {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    margin: 0 auto 16px auto !important;
+    width: fit-content !important;
+    max-width: fit-content !important;
+  }
+
+  .winera-roi-wrong-pills-stack,
+  .winera-roi-right-pills-stack,
+  .winera-roi-wrong-side>div:last-child,
+  .winera-roi-right-side>div:last-child {
     align-items: stretch !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     width: 100% !important;
-    max-width: 340px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .winera-roi-pill-red,
@@ -7750,6 +8290,28 @@ img[src*="yellow-stroke-line"] {
     max-width: 100% !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    padding: 10px 14px 10px 16px !important;
+    gap: 12px !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .winera-roi-pill-text-desktop {
+    display: none !important;
+  }
+
+  .winera-roi-pill-text-mobile {
+    display: inline-block !important;
+    font-size: 13.5px !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.35 !important;
+    font-weight: 500 !important;
+    flex: 1 !important;
+    text-align: left !important;
   }
 
   .winera-roi-center-circle-red,
@@ -7775,6 +8337,7 @@ img[src*="yellow-stroke-line"] {
 
   .winera-roi-get-content {
     padding-left: 0 !important;
+    padding-top: 32px !important;
     text-align: center !important;
   }
 
@@ -7866,8 +8429,47 @@ img[src*="yellow-stroke-line"] {
     padding: 35px 4vw !important;
   }
 
-  .winera-roi-intro-h2,
-  .winera-roi-pain-text h2,
+  .winera-roi-comparison-section {
+    padding: 35px 25px !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-roi-intro-section {
+    overflow: hidden !important;
+    padding: 35px 20px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .winera-roi-intro-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .winera-roi-intro-text {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    overflow: hidden !important;
+  }
+
+  .winera-roi-intro-text img,
+  .winera-roi-pain-text img,
+  .winera-roi-intro-stroke {
+    margin: 0 auto 12px !important;
+    max-width: 220px !important;
+    width: 70% !important;
+    height: 7px !important;
+  }
+
   .winera-roi-comparison-section h2,
   .winera-roi-process-section h2,
   .winera-roi-get-content h2,
@@ -7879,9 +8481,56 @@ img[src*="yellow-stroke-line"] {
     margin-right: auto !important;
   }
 
-  .winera-roi-intro-h2-span,
-  .winera-roi-intro-h2 span {
-    white-space: normal !important;
+  .winera-roi-intro-h2 {
+    font-size: clamp(19px, 5.2vw, 24px) !important;
+    line-height: 1.25 !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    margin: 0 auto 16px auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    letter-spacing: -0.3px !important;
+  }
+
+  .winera-roi-pain-h2 {
+    font-size: clamp(20px, 5.5vw, 26px) !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 100% !important;
+  }
+
+  .winera-roi-intro-line1,
+  .winera-roi-intro-line2,
+  .winera-roi-intro-line3 {
+    display: inline !important;
+  }
+
+  .winera-roi-pain-row1,
+  .winera-roi-pain-row2,
+  .winera-roi-pain-row3 {
+    white-space: nowrap !important;
+    display: block !important;
+    text-align: center !important;
+  }
+
+  .winera-roi-intro-text p {
+    font-size: 14.5px !important;
+    line-height: 1.6 !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto 14px auto !important;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .winera-roi-get-title-line1,
+  .winera-roi-get-title-line2 {
     display: block !important;
   }
 
@@ -7915,17 +8564,44 @@ img[src*="yellow-stroke-line"] {
     min-height: 200px !important;
   }
 
-  .winera-roi-intro-section,
+  .winera-roi-intro-section {
+    overflow: hidden !important;
+    padding: 30px 16px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .winera-roi-intro-grid {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .winera-roi-intro-text {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+
   .winera-roi-pain-section,
-  .winera-roi-comparison-section,
   .winera-roi-process-section,
   .winera-roi-get-section,
   .winera-roi-checklist-section {
     padding: 30px 4vw !important;
   }
 
-  .winera-roi-intro-h2,
-  .winera-roi-pain-text h2,
+  .winera-roi-comparison-section {
+    padding: 30px 25px !important;
+    box-sizing: border-box !important;
+  }
+
   .winera-roi-comparison-section h2,
   .winera-roi-process-section h2,
   .winera-roi-get-content h2,
@@ -7936,22 +8612,78 @@ img[src*="yellow-stroke-line"] {
     text-align: center !important;
   }
 
-  .winera-roi-intro-h2 span,
-  .winera-roi-intro-h2-span {
-    white-space: normal !important;
-    display: block !important;
-    word-break: break-word !important;
+  .winera-roi-intro-h2 {
+    font-size: clamp(17px, 4.8vw, 21px) !important;
+    line-height: 1.25 !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    margin: 0 auto 14px auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    letter-spacing: -0.3px !important;
   }
 
-  .winera-roi-intro-text p,
+  .winera-roi-pain-h2 {
+    font-size: clamp(17px, 5vw, 23px) !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 100% !important;
+  }
+
+  .winera-roi-intro-line1,
+  .winera-roi-intro-line2,
+  .winera-roi-intro-line3 {
+    display: inline !important;
+  }
+
+  .winera-roi-pain-row1,
+  .winera-roi-pain-row2,
+  .winera-roi-pain-row3 {
+    white-space: nowrap !important;
+    display: block !important;
+    text-align: center !important;
+  }
+
+  .winera-roi-get-title-line1,
+  .winera-roi-get-title-line2 {
+    display: block !important;
+  }
+
+  .winera-roi-intro-text p {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    text-align: center !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto 12px auto !important;
+    padding: 0 8px !important;
+    box-sizing: border-box !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
   .winera-roi-pain-text p {
-    font-size: 14px !important;
+    font-size: 13.5px !important;
     line-height: 1.55 !important;
     text-align: center !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 6px !important;
+    box-sizing: border-box !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
   }
 
   .winera-roi-intro-img img {
     max-width: 280px !important;
+    width: 85% !important;
+    height: auto !important;
+    margin: 0 auto !important;
   }
 
   .winera-roi-pain-card-inner {
@@ -7986,9 +8718,13 @@ img[src*="yellow-stroke-line"] {
 
   .winera-roi-pill-red,
   .winera-roi-pill-green {
-    padding: 8px 12px !important;
-    font-size: 11.5px !important;
-    border-radius: 25px !important;
+    padding: 10px 14px !important;
+    border-radius: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
   }
 
   .winera-roi-process-card {
@@ -8065,6 +8801,15 @@ img[src*="yellow-stroke-line"] {
 
   .winera-blog-single-card {
     padding: 14px !important;
+    text-align: left !important;
+  }
+
+  .winera-blog-single-card *,
+  .winera-blog-card-title,
+  .winera-blog-card-desc,
+  .winera-blog-single-card h3,
+  .winera-blog-single-card p {
+    text-align: left !important;
   }
 
   .winera-blog-pagination-container {
@@ -8542,12 +9287,18 @@ h2 span,
   .winera-trampoline-intro-grid,
   .winera-trampoline-roi-grid {
     grid-template-columns: 1fr !important;
-    gap: 32px !important;
+    gap: 20px !important;
     text-align: center !important;
+  }
+
+  .winera-trampoline-intro-img-wrapper {
+    order: 2 !important;
+    margin-top: 16px !important;
   }
 
   .winera-trampoline-intro-text,
   .winera-trampoline-roi-grid>div {
+    order: 1 !important;
     text-align: center !important;
   }
 
@@ -8626,7 +9377,12 @@ h2 span,
 
   .winera-bumpercar-investment-grid {
     grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    gap: 20px !important;
+  }
+
+  .winera-bumpercar-investment-img {
+    order: 2 !important;
+    margin: 16px auto 0 !important;
   }
 
   .winera-bumpercar-supplier-text,
@@ -8636,6 +9392,7 @@ h2 span,
   }
 
   .winera-bumpercar-investment-text {
+    order: 1 !important;
     text-align: left !important;
     display: flex !important;
     flex-direction: column !important;
@@ -8696,14 +9453,22 @@ h2 span,
   .winera-softplay-materials-grid,
   .winera-softplay-roi-grid {
     grid-template-columns: 1fr !important;
-    gap: 32px !important;
+    gap: 20px !important;
     text-align: center !important;
+  }
+
+  .winera-softplay-supplier-img,
+  .winera-softplay-intro-img,
+  .winera-softplay-roi-img {
+    order: 2 !important;
+    margin-top: 16px !important;
   }
 
   .winera-softplay-supplier-text,
   .winera-softplay-intro-text,
   .winera-softplay-materials-text,
   .winera-softplay-roi-text {
+    order: 1 !important;
     text-align: center !important;
   }
 
@@ -14514,6 +15279,24 @@ button[style*="background:transparent"]:hover,
   }
 }
 
+.winera-see-more-btn {
+  font-size: 9px !important;
+  padding: 1px 6px !important;
+  line-height: 12px !important;
+  border-radius: 10px !important;
+  gap: 2px !important;
+}
+
+.winera-see-more-btn span {
+  font-size: 9px !important;
+  line-height: 12px !important;
+}
+
+.winera-see-more-btn svg {
+  width: 8px !important;
+  height: 8px !important;
+}
+
 .winera-see-more-btn:hover,
 .winera-see-more-btn:active {
   background: rgba(0, 174, 239, 0.18) !important;
@@ -15922,12 +16705,145 @@ button[style*="background:transparent"]:hover,
 
 /* Project Card Location & Load More Button Styles */
 .winera-project-card-location {
-  color: #f8fafc !important;
+  color: #ffffff !important;
   font-size: 13.5px !important;
   font-weight: 700 !important;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95) !important;
   letter-spacing: 0.2px !important;
   opacity: 1 !important;
+}
+
+.winera-mobile-break {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .winera-mobile-break {
+    display: block !important;
+  }
+
+  .winera-project-heading-wrapper h2,
+  .winera-project-main-section h2 {
+    font-size: clamp(20px, 5.4vw, 25px) !important;
+    line-height: 1.25 !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    white-space: normal !important;
+  }
+
+  /* Project Gallery Section Mobile Compact Top Spacing */
+  .winera-project-gallery-section {
+    background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 50%, #ffffff 100%) !important;
+    background-image: none !important;
+    padding: 20px 14px 28px !important;
+    border-radius: 24px !important;
+    box-shadow: 0 8px 30px rgba(56, 189, 248, 0.15) !important;
+    margin: 8px auto 25px !important;
+    width: calc(100% - 32px) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-project-gallery-heading,
+  .winera-project-gallery-section > div > div:first-child {
+    margin-bottom: 16px !important;
+  }
+
+  .winera-project-gallery-heading img,
+  .winera-project-gallery-section img[src*="stroke"] {
+    margin-bottom: 6px !important;
+    width: 220px !important;
+    max-width: 80% !important;
+    display: inline-block !important;
+  }
+
+  .winera-project-gallery-grid {
+    padding-bottom: 0 !important;
+  }
+
+  /* Project Video Showcase Section Mobile Height Increase & Proper Presentation */
+  .winera-project-video-section {
+    padding: 15px 16px 40px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-project-video-btn {
+    width: 100% !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    display: block !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14) !important;
+  }
+
+  .winera-project-video-img,
+  .winera-project-video-section img {
+    width: 100% !important;
+    min-height: 230px !important;
+    height: clamp(230px, 60vw, 340px) !important;
+    object-fit: cover !important;
+    border-radius: 22px !important;
+    display: block !important;
+  }
+
+  .winera-blog-article-title {
+    font-size: 26px !important;
+    line-height: 1.25 !important;
+  }
+
+  .winera-blog-article-meta {
+    gap: 6px !important;
+    font-size: clamp(10.5px, 2.9vw, 12px) !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 12px !important;
+  }
+  .winera-blog-article-meta::-webkit-scrollbar {
+    display: none !important;
+  }
+  .winera-blog-article-meta span {
+    font-size: inherit !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+.winera-blog-article-title {
+  font-size: 38px;
+  font-weight: 600 !important;
+  line-height: 1.25;
+}
+
+.winera-blog-card-title,
+.winera-blog-single-card h3,
+.winera-blog-more-explore-card h5 {
+  font-weight: 600 !important;
+}
+
+.winera-blog-article-main-col,
+.winera-blog-article-main-col *,
+.winera-blog-article-title,
+.winera-blog-article-main-col p,
+.winera-blog-article-main-col h1,
+.winera-blog-article-main-col h2,
+.winera-blog-article-main-col h3,
+.winera-blog-article-main-col h4,
+.winera-blog-article-main-col h5,
+.winera-blog-article-main-col div,
+.winera-blog-article-main-col span,
+.winera-blog-article-main-col li {
+  text-align: left !important;
+}
+
+.winera-blog-article-main-col h2,
+.winera-blog-article-main-col h3,
+.winera-blog-article-main-col h4,
+.winera-blog-article-main-col h5 {
+  font-weight: 600 !important;
 }
 
 .winera-project-load-more-btn {
@@ -15944,4 +16860,35 @@ button[style*="background:transparent"]:hover,
 
 .winera-project-load-more-btn:active {
   transform: translateY(0) scale(0.96) !important;
+}
+
+.winera-blog-load-more-btn {
+  background: linear-gradient(135deg, #00a8ff 0%, #0284c7 100%) !important;
+  box-shadow: 0 6px 20px rgba(0, 168, 255, 0.35) !important;
+  color: #ffffff !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.winera-blog-load-more-btn:hover {
+  transform: translateY(-2px) scale(1.04) !important;
+  box-shadow: 0 12px 28px rgba(0, 168, 255, 0.45) !important;
+}
+
+.winera-blog-load-more-btn:active {
+  transform: translateY(0) scale(0.96) !important;
+}
+
+/* ROI Get Section Timeline Text Left Alignment */
+.winera-roi-get-step-text,
+.winera-roi-get-step-text h4,
+.winera-roi-get-step-text p {
+  text-align: left !important;
+}
+
+@media (max-width: 768px) {
+  .winera-roi-get-step-text,
+  .winera-roi-get-step-text h4,
+  .winera-roi-get-step-text p {
+    text-align: left !important;
+  }
 }

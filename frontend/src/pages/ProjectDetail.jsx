@@ -684,6 +684,7 @@ export default function ProjectDetail({ siteData }) {
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center' }}>
           <motion.div
+            className="winera-project-gallery-heading"
             initial={{ opacity: 0, y: -25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -755,8 +756,9 @@ export default function ProjectDetail({ siteData }) {
       </section>
 
       {/* 7. PROJECT VIDEO SHOWCASE SECTION */}
-      <section style={{ padding: '60px 4vw 90px', maxWidth: '1060px', margin: '0 auto', textAlign: 'center' }}>
+      <section className="winera-project-video-section" style={{ padding: '60px 4vw 90px', maxWidth: '1060px', margin: '0 auto', textAlign: 'center' }}>
         <motion.button
+          className="winera-project-video-btn"
           onClick={() => openVideoModal(videoLink, `${currentProject.name} Showcase`)}
           initial={{ opacity: 0, y: 40, scale: 0.96 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -780,6 +782,7 @@ export default function ProjectDetail({ siteData }) {
           }}
         >
           <img
+            className="winera-project-video-img"
             src={videoImg}
             alt="Project Showcase Video"
             style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '28px' }}

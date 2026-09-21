@@ -397,11 +397,16 @@ export default function Project({ siteData }) {
       </section>
 
       {/* 3. MAIN CATALOG & FILTER TABS SECTION */}
-      <section style={{ padding: '70px 4vw 35px', maxWidth: '1240px', margin: '0 auto' }}>
+      <section className="winera-project-main-section" style={{ padding: '70px 4vw 35px', maxWidth: '1240px', margin: '0 auto' }}>
         {/* Title: Crafting India's Best Play Destinations */}
-        <SectionHeading marginBottom="45px" accentWidth="220px" accentMaxWidth="260px">
-          {sectionTitle}
-        </SectionHeading>
+        <div className="winera-project-heading-wrapper">
+          <SectionHeading marginBottom="45px" accentWidth="220px" accentMaxWidth="260px">
+            {siteData?.projectHeader?.title && siteData.projectHeader.title !== "Crafting *India's Best Play Destinations*" && siteData.projectHeader.title !== "Crafting India's Best Play Destinations"
+              ? siteData.projectHeader.title
+              : <>Crafting <span style={{ color: '#00a8ff' }}>India's</span> <br className="winera-mobile-break" /><span style={{ color: '#00a8ff' }}>Best Play Destinations</span></>
+            }
+          </SectionHeading>
+        </div>
 
         {/* CATEGORY FILTER TABS PILL BAR (MATCHING IMAGE 1 1:1) */}
         <div style={{
@@ -602,34 +607,19 @@ export default function Project({ siteData }) {
           </AnimatePresence>
         </motion.div>
 
-        {/* LOAD MORE BUTTON */}
+        {/* Load More Button */}
         {hasMore && (
-          <div style={{ textAlign: 'center', marginTop: '45px', marginBottom: '10px' }}>
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 12px 28px rgba(0, 168, 255, 0.45)' }}
-              whileTap={{ scale: 0.96 }}
-              onClick={handleLoadMore}
-              className="winera-project-load-more-btn"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px',
-                padding: '13px 36px',
-                borderRadius: '50px',
-                background: 'linear-gradient(135deg, #00a8ff 0%, #0284c7 100%)',
-                color: '#ffffff',
-                fontSize: '15.5px',
-                fontWeight: '700',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0 6px 20px rgba(0, 168, 255, 0.35)',
-                transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
-              }}
-            >
-              <span>Load More Projects</span>
-              <ChevronDown style={{ width: '18px', height: '18px', strokeWidth: 2.5 }} />
-            </motion.button>
+          <div style={{ textAlign: 'center', marginTop: '45px' }}>
+            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm" style={{ display: 'inline-block' }}>
+              <button
+                onClick={handleLoadMore}
+                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                style={{ cursor: 'pointer', border: 'none' }}
+              >
+                <span>Load More Projects</span>
+                <ChevronDown style={{ width: '18px', height: '18px', strokeWidth: 2.5 }} />
+              </button>
+            </div>
           </div>
         )}
       </section>

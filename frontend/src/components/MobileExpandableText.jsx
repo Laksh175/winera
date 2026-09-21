@@ -38,29 +38,29 @@ const MobileExpandableText = ({
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: '3px',
-        padding: '2px 8px',
-        fontSize: '12px',
+        gap: '2px',
+        padding: '1px 6px',
+        fontSize: '9px',
         fontWeight: 600,
         fontFamily: "'Open Sans', sans-serif",
         color: 'rgba(0, 174, 239, 1)',
-        background: 'rgba(0, 174, 239, 0.1)',
-        border: '1px solid rgba(0, 174, 239, 0.25)',
-        borderRadius: '14px',
+        background: 'rgba(0, 174, 239, 0.08)',
+        border: '1px solid rgba(0, 174, 239, 0.22)',
+        borderRadius: '10px',
         cursor: 'pointer',
-        lineHeight: '16px',
-        marginLeft: '6px',
+        lineHeight: '12px',
+        marginLeft: '4px',
         verticalAlign: 'baseline',
         whiteSpace: 'nowrap',
         transition: 'all 0.2s ease',
         outline: 'none'
       }}
     >
-      <span>{expanded ? lessText : moreText}</span>
+      <span style={{ fontSize: '9px', lineHeight: '12px' }}>{expanded ? lessText : moreText}</span>
       {expanded ? (
-        <ChevronUp style={{ width: '11px', height: '11px', strokeWidth: 2.5 }} />
+        <ChevronUp style={{ width: '8px', height: '8px', strokeWidth: 2.5 }} />
       ) : (
-        <ChevronDown style={{ width: '11px', height: '11px', strokeWidth: 2.5 }} />
+        <ChevronDown style={{ width: '8px', height: '8px', strokeWidth: 2.5 }} />
       )}
     </button>
   );

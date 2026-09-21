@@ -483,6 +483,15 @@ export default function BowlingAlley({ siteData }) {
                 }
               />
 
+              {/* Mobile Specs List */}
+              <div className="winera-bowling-types-mobile-specs" style={{ display: 'none', flexDirection: 'column', gap: '8px', marginTop: '20px', background: '#ffffff', padding: '20px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05)', border: '1.5px solid #bae6fd' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Lane length:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specLaneLength || "89 feet per lane"}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Lane width:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specLaneWidth || "6 feet per lane"}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Pinsetter type:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specPinsetter || "Free-fall (gravity-based)"}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Experience:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specExperience || "Professional / competition-grade"}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Best for:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specBestFor || "Dedicated bowling centers"}</span></div>
+              </div>
+
               <div className="winera-bowling-types-btn-row" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
                 <button
                   onClick={() => openVideoModal(siteData?.bowlingFreeFall?.videoUrl, "Free Fall Bowling Showcase")}
@@ -505,15 +514,6 @@ export default function BowlingAlley({ siteData }) {
                 >
                   <span>{siteData?.bowlingFreeFall?.btnText || "Watch Video"}</span>
                 </button>
-              </div>
-
-              {/* Mobile Specs List */}
-              <div className="winera-bowling-types-mobile-specs" style={{ display: 'none', flexDirection: 'column', gap: '8px', marginTop: '20px', background: '#ffffff', padding: '20px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05)', border: '1.5px solid #bae6fd' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Lane length:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specLaneLength || "89 feet per lane"}</span></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Lane width:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specLaneWidth || "6 feet per lane"}</span></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Pinsetter type:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specPinsetter || "Free-fall (gravity-based)"}</span></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Experience:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specExperience || "Professional / competition-grade"}</span></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Best for:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specBestFor || "Dedicated bowling centers"}</span></div>
               </div>
             </div>
 
@@ -935,7 +935,16 @@ export default function BowlingAlley({ siteData }) {
                 }
               />
 
-              <div style={{ marginBottom: '45px' }}>
+              {/* Mobile Specs List */}
+              <div className="winera-bowling-types-mobile-specs" style={{ display: 'none', flexDirection: 'column', gap: '8px', marginTop: '20px', background: '#ffffff', padding: '20px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05)', border: '1.5px solid #fde047' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Pin reset:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specPinReset || "Overhead string mechanism"}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Lane footprint:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specFootprint || "Shorter than 89 ft lane"}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Lane width:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specLaneWidth || "6 feet per lane"}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Maintenance:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specMaintenance || "Low — fewer parts"}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Best for:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specBestFor || "FECs, malls, resorts"}</span></div>
+              </div>
+
+              <div className="winera-bowling-types-btn-row" style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '45px' }}>
                 <a
                   href={siteData?.bowlingString?.brochureUrl || "#"}
                   target="_blank"
@@ -963,15 +972,6 @@ export default function BowlingAlley({ siteData }) {
                 >
                   {siteData?.bowlingString?.brochureBtnText || "Download Our Brochure"}
                 </a>
-              </div>
-
-              {/* Mobile Specs List */}
-              <div className="winera-bowling-types-mobile-specs" style={{ display: 'none', flexDirection: 'column', gap: '8px', marginTop: '20px', background: '#ffffff', padding: '20px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05)', border: '1.5px solid #fde047' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Pin reset:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specPinReset || "Overhead string mechanism"}</span></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Lane footprint:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specFootprint || "Shorter than 89 ft lane"}</span></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Lane width:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specLaneWidth || "6 feet per lane"}</span></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Maintenance:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specMaintenance || "Low — fewer parts"}</span></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Best for:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingString?.specBestFor || "FECs, malls, resorts"}</span></div>
               </div>
             </div>
           </div>

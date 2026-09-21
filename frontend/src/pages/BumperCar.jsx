@@ -133,11 +133,8 @@ const BumperCarComparisonSlider = ({ features = [], electricPoints = [], battery
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Top Feature Name + Step Counter Header */}
+        {/* Top Feature Name Header */}
         <div className="winera-comparison-card-header">
-          <span className="winera-comparison-step-badge">
-            {String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-          </span>
           <h4 className="winera-comparison-feature-title">
             {currentFeature}
           </h4>

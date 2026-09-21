@@ -549,7 +549,7 @@ export default function ArGames({ siteData }) {
           </div>
 
           {/* Right Collage Graphic Container */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div className="winera-ar-supplier-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
               src={siteData?.arIntro?.mainImgUrl || arSupplierCollage}
               alt="AR Games Supplier in India"

@@ -59,13 +59,17 @@ const extractHeadings = (text) => {
   const headings = [];
   paragraphs.forEach((pText) => {
     const trimmed = pText.trim();
-    if (trimmed.startsWith('### ') || trimmed.startsWith('## ')) {
+    if (!trimmed || /^#+\s*$/.test(trimmed)) return;
+
+    if (trimmed.startsWith('#')) {
       const firstLine = trimmed.replace(/^#+\s*/, '').split('\n')[0].trim();
       const cleanTitle = firstLine.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
-      headings.push({
-        id: `blog-heading-${headings.length}`,
-        title: cleanTitle.length > 45 ? `${cleanTitle.substring(0, 45)}...` : cleanTitle,
-      });
+      if (cleanTitle) {
+        headings.push({
+          id: `blog-heading-${headings.length}`,
+          title: cleanTitle.length > 45 ? `${cleanTitle.substring(0, 45)}...` : cleanTitle,
+        });
+      }
     } else {
       const numMatch = trimmed.match(/^(\d+\.\s+[^.\n:]+)/);
       if (numMatch) {
@@ -126,32 +130,36 @@ const renderFormattedText = (text) => {
 
   paragraphs.forEach((pText, idx) => {
     const trimmed = pText.trim();
-    if (!trimmed) return;
+    if (!trimmed || /^#+\s*$/.test(trimmed)) return;
 
-    // Headings starting with ### or ## (FONT SIZE 22px, FONT WEIGHT 700)
-    if (trimmed.startsWith('### ') || trimmed.startsWith('## ')) {
+    // Headings starting with ### or ## (FONT SIZE 22px, FONT WEIGHT 600)
+    if (trimmed.startsWith('#')) {
       const lines = trimmed.split('\n');
-      const headingText = lines[0].replace(/^#+\s*/, '');
+      const headingText = lines[0].replace(/^#+\s*/, '').trim();
       const bodyLines = lines.slice(1).join('\n').trim();
-      const headingId = `blog-heading-${headingCounter}`;
-      headingCounter++;
 
-      elements.push(
-        <h3
-          key={`h-${idx}`}
-          id={headingId}
-          style={{
-            fontSize: '22px',
-            fontWeight: '700',
-            color: '#0f172a',
-            margin: '36px 0 14px',
-            lineHeight: 1.35,
-            scrollMarginTop: '110px'
-          }}
-        >
-          {renderTextWithLinks(headingText)}
-        </h3>
-      );
+      if (headingText) {
+        const headingId = `blog-heading-${headingCounter}`;
+        headingCounter++;
+
+        elements.push(
+          <h3
+            key={`h-${idx}`}
+            id={headingId}
+            style={{
+              fontSize: '22px',
+              fontWeight: '600',
+              color: '#0f172a',
+              margin: '36px 0 14px',
+              lineHeight: 1.35,
+              scrollMarginTop: '110px',
+              textAlign: 'left'
+            }}
+          >
+            {renderTextWithLinks(headingText)}
+          </h3>
+        );
+      }
 
       if (bodyLines) {
         elements.push(
@@ -160,7 +168,8 @@ const renderFormattedText = (text) => {
             color: '#334155',
             lineHeight: 1.85,
             fontWeight: '400',
-            marginBottom: '22px'
+            marginBottom: '22px',
+            textAlign: 'left'
           }}>
             {renderTextWithLinks(bodyLines)}
           </p>
@@ -169,49 +178,40 @@ const renderFormattedText = (text) => {
       return;
     }
 
-    // Numbered sections like "1. Target Audience" (FONT SIZE 22px, FONT WEIGHT 700)
-    const numHeadingMatch = trimmed.match(/^(\d+\.\s+[^.\n:]+[:.]?)([\s\S]*)$/);
-    if (numHeadingMatch && (trimmed.startsWith('1.') || trimmed.startsWith('2.') || trimmed.startsWith('3.') || trimmed.startsWith('4.'))) {
-      const titlePart = numHeadingMatch[1].trim();
-      const bodyPart = numHeadingMatch[2].trim();
+    // Numbered headings like "1. Something" or "Step 1: Something"
+    const numMatch = trimmed.match(/^(\d+\.\s+[^.\n:]+)(.*)$/s) || trimmed.match(/^(Step\s+\d+:?[^\n]+)(.*)$/s);
+    if (numMatch && trimmed.length < 120) {
       const headingId = `blog-heading-${headingCounter}`;
       headingCounter++;
-
       elements.push(
-        <div key={`num-${idx}`} id={headingId} style={{ marginBottom: '24px', scrollMarginTop: '110px' }}>
-          <h4 style={{
-            fontSize: '22px',
-            fontWeight: '700',
+        <h4
+          key={`num-h-${idx}`}
+          id={headingId}
+          style={{
+            fontSize: '19px',
+            fontWeight: '600',
             color: '#0f172a',
-            margin: '28px 0 10px 0',
-            lineHeight: 1.35
-          }}>
-            {titlePart}
-          </h4>
-          {bodyPart && (
-            <p style={{
-              fontSize: '17px',
-              color: '#334155',
-              lineHeight: 1.85,
-              fontWeight: '400',
-              margin: 0
-            }}>
-              {renderTextWithLinks(bodyPart)}
-            </p>
-          )}
-        </div>
+            margin: '28px 0 10px',
+            lineHeight: 1.4,
+            scrollMarginTop: '110px',
+            textAlign: 'left'
+          }}
+        >
+          {renderTextWithLinks(trimmed)}
+        </h4>
       );
       return;
     }
 
-    // Regular Paragraph (FONT SIZE 17px, FONT WEIGHT 400)
+    // Regular paragraph
     elements.push(
       <p key={`p-${idx}`} style={{
         fontSize: '17px',
         color: '#334155',
         lineHeight: 1.85,
         fontWeight: '400',
-        marginBottom: '22px'
+        marginBottom: '22px',
+        textAlign: 'left'
       }}>
         {renderTextWithLinks(trimmed)}
       </p>
@@ -395,30 +395,12 @@ export default function BlogDetail({ siteData }) {
             </div>
 
             {/* ── MIDDLE COLUMN: TITLE, META, FEATURED IMAGE & ARTICLE CONTENT ── */}
-            <div style={{ width: '100%' }}>
+            <div className="winera-blog-article-main-col" style={{ width: '100%', textAlign: 'left' }}>
               
-              {/* Category Tag */}
-              <div style={{ marginBottom: '12px' }}>
-                <span style={{
-                  display: 'inline-block',
-                  fontSize: '11px',
-                  fontWeight: '700',
-                  color: '#0284c7',
-                  background: 'rgba(224, 242, 254, 0.8)',
-                  border: '1px solid #93c5fd',
-                  borderRadius: '20px',
-                  padding: '4px 14px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.6px'
-                }}>
-                  {post.category || 'INSIGHTS'}
-                </span>
-              </div>
-
               {/* Main Article Title & Subtitle */}
-              <h1 style={{
-                fontSize: '42px',
-                fontWeight: '900',
+              <h1 className="winera-blog-article-title" style={{
+                fontSize: '38px',
+                fontWeight: '600',
                 color: '#0f172a',
                 lineHeight: 1.25,
                 margin: '0 0 16px',
@@ -428,7 +410,7 @@ export default function BlogDetail({ siteData }) {
               </h1>
 
               {/* Article Meta Bar */}
-              <div style={{
+              <div className="winera-blog-article-meta" style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '14px',
@@ -437,11 +419,15 @@ export default function BlogDetail({ siteData }) {
                 fontWeight: '600',
                 marginBottom: '26px',
                 paddingBottom: '16px',
-                borderBottom: '1.5px solid #cbd5e1'
+                borderBottom: '1.5px solid #cbd5e1',
+                flexWrap: 'nowrap',
+                whiteSpace: 'nowrap'
               }}>
-                <span>📅 {post.date || 'FEB 19, 2026'}</span>
-                <span>•</span>
-                <span>⏱️ {post.readTime || '5 min read'}</span>
+                <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>📅 {post.date || 'FEB 19, 2026'}</span>
+                <span style={{ flexShrink: 0 }}>•</span>
+                <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>⏱️ {post.readTime || '5 min read'}</span>
+                <span style={{ flexShrink: 0 }}>•</span>
+                <span style={{ color: '#0284c7', fontWeight: '700', whiteSpace: 'nowrap', flexShrink: 0 }}>✍️ {post.author || post.founder || 'Divyang Mandani'}</span>
               </div>
 
               {/* Featured Image Centered in Middle Column */}
@@ -641,22 +627,10 @@ export default function BlogDetail({ siteData }) {
                           />
                         </div>
 
-                        {/* Category Tag Meta Row */}
-                        <div className="winera-blog-card-category" style={{
-                          fontSize: '11px',
-                          fontWeight: '700',
-                          color: '#0284c7',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.5px',
-                          marginBottom: '8px'
-                        }}>
-                          {recPost.category || 'INSIGHTS'}
-                        </div>
-
                         {/* Blog Title & Subtitle */}
                         <h5 style={{
                           fontSize: '15px',
-                          fontWeight: '800',
+                          fontWeight: '600',
                           color: '#0f172a',
                           lineHeight: 1.35,
                           margin: '0 0 8px 0'
@@ -675,7 +649,7 @@ export default function BlogDetail({ siteData }) {
                           {truncatedExcerpt}
                         </p>
 
-                        {/* Card Footer: Date & Read More Link */}
+                        {/* Card Footer: Date & Founder Name */}
                         <div style={{
                           paddingTop: '12px',
                           borderTop: '1px solid #f1f5f9',
@@ -694,10 +668,9 @@ export default function BlogDetail({ siteData }) {
                             color: '#0284c7',
                             fontWeight: '700',
                             fontSize: '12px',
-                            textDecoration: 'underline',
                             letterSpacing: '0.2px'
                           }}>
-                            Read More...
+                            {recPost.author || recPost.founder || 'Divyang Mandani'}
                           </span>
                         </div>
                       </div>
@@ -723,6 +696,26 @@ export default function BlogDetail({ siteData }) {
 
       {/* CSS Responsive Styles */}
       <style>{`
+        .winera-blog-article-main-col,
+        .winera-blog-article-main-col *,
+        .winera-blog-article-title,
+        .winera-blog-article-main-col p,
+        .winera-blog-article-main-col h1,
+        .winera-blog-article-main-col h2,
+        .winera-blog-article-main-col h3,
+        .winera-blog-article-main-col h4,
+        .winera-blog-article-main-col h5,
+        .winera-blog-article-main-col div,
+        .winera-blog-article-main-col span,
+        .winera-blog-article-main-col li {
+          text-align: left !important;
+        }
+        .winera-blog-article-main-col h2,
+        .winera-blog-article-main-col h3,
+        .winera-blog-article-main-col h4,
+        .winera-blog-article-main-col h5 {
+          font-weight: 600 !important;
+        }
         @media (max-width: 1080px) {
           .winera-blog-3col-grid {
             grid-template-columns: 1fr 300px !important;
@@ -740,12 +733,71 @@ export default function BlogDetail({ siteData }) {
             grid-template-columns: 1fr !important;
             gap: 24px !important;
           }
+          .winera-blog-article-title {
+            font-size: 26px !important;
+            line-height: 1.25 !important;
+            margin-bottom: 12px !important;
+            text-align: left !important;
+          }
+          .winera-blog-article-meta {
+            gap: 6px !important;
+            font-size: clamp(10.5px, 2.9vw, 12px) !important;
+            flex-wrap: nowrap !important;
+            white-space: nowrap !important;
+            overflow-x: auto !important;
+            scrollbar-width: none !important;
+            margin-bottom: 20px !important;
+            padding-bottom: 12px !important;
+          }
+          .winera-blog-article-meta::-webkit-scrollbar {
+            display: none !important;
+          }
+          .winera-blog-article-meta span {
+            font-size: inherit !important;
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+          }
           .winera-blog-right-sidebar-sticky {
             position: static !important;
           }
           .winera-related-articles-full-grid {
             grid-template-columns: 1fr !important;
             gap: 20px !important;
+          }
+          .winera-blog-article-main-col,
+          .winera-blog-article-main-col *,
+          .winera-blog-article-title,
+          .winera-blog-article-main-col p,
+          .winera-blog-article-main-col h1,
+          .winera-blog-article-main-col h2,
+          .winera-blog-article-main-col h3,
+          .winera-blog-article-main-col h4,
+          .winera-blog-article-main-col h5,
+          .winera-blog-article-main-col div,
+          .winera-blog-article-main-col span,
+          .winera-blog-article-main-col li {
+            text-align: left !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .winera-blog-article-title {
+            font-size: 26px !important;
+            line-height: 1.25 !important;
+            text-align: left !important;
+          }
+          .winera-blog-article-main-col,
+          .winera-blog-article-main-col *,
+          .winera-blog-article-title,
+          .winera-blog-article-main-col p,
+          .winera-blog-article-main-col h1,
+          .winera-blog-article-main-col h2,
+          .winera-blog-article-main-col h3,
+          .winera-blog-article-main-col h4,
+          .winera-blog-article-main-col h5,
+          .winera-blog-article-main-col div,
+          .winera-blog-article-main-col span,
+          .winera-blog-article-main-col li {
+            text-align: left !important;
           }
         }
       `}</style>

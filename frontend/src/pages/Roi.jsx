@@ -264,7 +264,9 @@ export default function Roi({ siteData }) {
       {/* 2. RETURN ON INVESTMENT INTRO BLOCK */}
       <section className="winera-roi-intro-section" style={{
         padding: '40px 4vw 40px',
-        background: '#F5F5F9'
+        background: '#F5F5F9',
+        overflow: 'hidden',
+        position: 'relative'
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           <div className="winera-roi-intro-grid" style={{
@@ -276,27 +278,18 @@ export default function Roi({ siteData }) {
             {/* Left Content */}
             <motion.div
               data-framer-motion="true"
-              initial={{ opacity: 0, x: -75 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.15 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="winera-roi-intro-text"
             >
               <img
                 src={yellowStrokeLine}
                 alt=""
+                className="winera-roi-intro-stroke"
                 style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
-              <p style={{
-                fontSize: '13px',
-                fontWeight: '800',
-                color: '#38bdf8',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                marginBottom: '10px'
-              }}>
-                {roiIntro.tagline || 'RETURN ON INVESTMENT (ROI)'}
-              </p>
               <h2 className="winera-roi-intro-h2" style={{
                 fontSize: '35px',
                 fontWeight: '900',
@@ -305,11 +298,14 @@ export default function Roi({ siteData }) {
                 marginBottom: '22px',
                 letterSpacing: '-0.5px'
               }}>
-                <span className="winera-roi-intro-h2-span" style={{ display: 'block', whiteSpace: 'nowrap' }}>
-                  {roiIntro.titleLine1 || "You don't need a game zone…"}
+                <span className="winera-roi-intro-line1">
+                  {roiIntro.titleLine1 || "You don't need a game zone…"}{' '}
                 </span>
-                <span className="winera-roi-intro-h2-span" style={{ display: 'block', whiteSpace: 'nowrap' }}>
-                  {roiIntro.titleLine2 || "You need a"} <span style={{ color: '#38bdf8' }}>{roiIntro.titleLine2Blue || "profit machine."}</span>
+                <span className="winera-roi-intro-line2">
+                  {roiIntro.titleLine2 || "you need a"}{' '}
+                </span>
+                <span className="winera-roi-intro-line3" style={{ color: '#38bdf8' }}>
+                  {roiIntro.titleLine2Blue || "profit machine."}
                 </span>
               </h2>
 
@@ -348,9 +344,9 @@ export default function Roi({ siteData }) {
             {/* Right Image */}
             <motion.div
               data-framer-motion="true"
-              initial={{ opacity: 0, x: 75 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.15 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="winera-roi-intro-img"
               style={{
@@ -403,16 +399,21 @@ export default function Roi({ siteData }) {
                 alt=""
                 style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
-              <h2 style={{
+              <h2 className="winera-roi-pain-h2" style={{
                 fontSize: '35px',
                 fontWeight: '900',
                 color: '#0f172a',
-                lineHeight: 1.12,
-                marginBottom: '20px'
+                lineHeight: 1.15,
+                marginBottom: '20px',
+                letterSpacing: '-0.5px'
               }}>
-                Opening a game zone<br />
-                is easy. <span style={{ color: '#38bdf8' }}>Making it</span><br />
-                <span style={{ color: '#38bdf8' }}>profitable is a system.</span>
+                <span className="winera-roi-pain-row1">Opening a game zone</span>
+                <span className="winera-roi-pain-row2">
+                  is easy. <span style={{ color: '#38bdf8' }}>Making it</span>
+                </span>
+                <span className="winera-roi-pain-row3" style={{ color: '#38bdf8' }}>
+                  profitable is a system.
+                </span>
               </h2>
               <p style={{
                 fontSize: '15px',
@@ -555,9 +556,9 @@ export default function Roi({ siteData }) {
             {/* LEFT SIDE: The Wrong Way (Red Pills Arc) */}
             <motion.div
               data-framer-motion="true"
-              initial={{ opacity: 0, x: -80 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.15 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
               className="winera-roi-wrong-side"
               style={{
@@ -611,8 +612,54 @@ export default function Roi({ siteData }) {
                 </div>
               </div>
 
+              {/* Mobile Comparison Badge: Don'ts */}
+              <div className="winera-roi-comparison-badge winera-roi-comparison-badge-donts" style={{
+                zIndex: 10,
+                width: 'fit-content'
+              }}>
+                <div style={{
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '50%',
+                  background: '#ffffff',
+                  border: '3px solid #ef4444',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 14px rgba(239, 68, 68, 0.25)',
+                  zIndex: 2,
+                  flexShrink: 0
+                }}>
+                  <span style={{ color: '#ef4444', fontSize: '19px', fontWeight: '900', lineHeight: 1 }}>✕</span>
+                </div>
+                <div style={{
+                  background: 'linear-gradient(90deg, #ef4444 0%, #f87171 100%)',
+                  color: '#ffffff',
+                  padding: '0 24px 0 20px',
+                  borderRadius: '0 16px 16px 0',
+                  marginLeft: '-14px',
+                  height: '36px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  transform: 'skewX(-16deg)',
+                  zIndex: 1,
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 14px rgba(239, 68, 68, 0.2)'
+                }}>
+                  <span style={{
+                    transform: 'skewX(16deg)',
+                    fontSize: '13.5px',
+                    fontWeight: '800',
+                    fontFamily: "'Open Sans', sans-serif",
+                    letterSpacing: '0.3px'
+                  }}>
+                    Don'ts
+                  </span>
+                </div>
+              </div>
+
               {/* Red Pills Stacked in an Arc */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '9px', width: '100%', alignItems: 'flex-end', zIndex: 2, marginRight: '30px' }}>
+              <div className="winera-roi-wrong-pills-stack" style={{ display: 'flex', flexDirection: 'column', gap: '9px', width: '100%', alignItems: 'flex-end', zIndex: 2, marginRight: '30px' }}>
                 {wrongItems.map((item, idx) => (
                   <div
                     key={idx}
@@ -633,7 +680,12 @@ export default function Roi({ siteData }) {
                       width: '235px'
                     }}
                   >
-                    <span style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400', fontSize: '13px' }}>{formatPillText(item.text)}</span>
+                    <span className="winera-roi-pill-text-desktop" style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400', fontSize: '13px' }}>
+                      {formatPillText(item.text)}
+                    </span>
+                    <span className="winera-roi-pill-text-mobile" style={{ textAlign: 'left', lineHeight: 1.25, fontWeight: '500', fontSize: '15px' }}>
+                      {item.text.replace(/\n/g, ' ')}
+                    </span>
                     <span style={{
                       width: '28px',
                       height: '28px',
@@ -646,7 +698,8 @@ export default function Roi({ siteData }) {
                       justifyContent: 'center',
                       fontWeight: '600',
                       fontSize: '12px',
-                      boxShadow: 'none'
+                      boxShadow: 'none',
+                      flexShrink: 0
                     }}>
                       {item.num}
                     </span>
@@ -658,9 +711,9 @@ export default function Roi({ siteData }) {
             {/* RIGHT SIDE: The Right Way (Green Pills Arc) */}
             <motion.div
               data-framer-motion="true"
-              initial={{ opacity: 0, x: 80 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.15 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="winera-roi-right-side"
               style={{
@@ -714,8 +767,54 @@ export default function Roi({ siteData }) {
                 </div>
               </div>
 
+              {/* Mobile Comparison Badge: Do's */}
+              <div className="winera-roi-comparison-badge winera-roi-comparison-badge-dos" style={{
+                zIndex: 10,
+                width: 'fit-content'
+              }}>
+                <div style={{
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '50%',
+                  background: '#ffffff',
+                  border: '3px solid #22c55e',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 14px rgba(34, 197, 94, 0.25)',
+                  zIndex: 2,
+                  flexShrink: 0
+                }}>
+                  <span style={{ color: '#22c55e', fontSize: '19px', fontWeight: '900', lineHeight: 1 }}>✓</span>
+                </div>
+                <div style={{
+                  background: 'linear-gradient(90deg, #22c55e 0%, #4ade80 100%)',
+                  color: '#ffffff',
+                  padding: '0 24px 0 20px',
+                  borderRadius: '0 16px 16px 0',
+                  marginLeft: '-14px',
+                  height: '36px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  transform: 'skewX(-16deg)',
+                  zIndex: 1,
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 14px rgba(34, 197, 94, 0.2)'
+                }}>
+                  <span style={{
+                    transform: 'skewX(16deg)',
+                    fontSize: '13.5px',
+                    fontWeight: '800',
+                    fontFamily: "'Open Sans', sans-serif",
+                    letterSpacing: '0.3px'
+                  }}>
+                    Do's
+                  </span>
+                </div>
+              </div>
+
               {/* Green Pills Stacked in an Arc */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '9px', width: '100%', alignItems: 'flex-start', zIndex: 2, marginLeft: '30px' }}>
+              <div className="winera-roi-right-pills-stack" style={{ display: 'flex', flexDirection: 'column', gap: '9px', width: '100%', alignItems: 'flex-start', zIndex: 2, marginLeft: '30px' }}>
                 {rightItems.map((item, idx) => (
                   <div
                     key={idx}
@@ -748,11 +847,17 @@ export default function Roi({ siteData }) {
                       justifyContent: 'center',
                       fontWeight: '600',
                       fontSize: '12px',
-                      boxShadow: 'none'
+                      boxShadow: 'none',
+                      flexShrink: 0
                     }}>
                       {item.num}
                     </span>
-                    <span style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400', fontSize: '13px' }}>{formatPillText(item.text)}</span>
+                    <span className="winera-roi-pill-text-desktop" style={{ textAlign: 'left', lineHeight: 1.25, whiteSpace: 'pre-line', fontWeight: '400', fontSize: '13px' }}>
+                      {formatPillText(item.text)}
+                    </span>
+                    <span className="winera-roi-pill-text-mobile" style={{ textAlign: 'left', lineHeight: 1.25, fontWeight: '500', fontSize: '15px' }}>
+                      {item.text.replace(/\n/g, ' ')}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -1006,11 +1111,11 @@ export default function Roi({ siteData }) {
                       }}>
                         {stepIcon}
                       </div>
-                      <div>
-                        <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', margin: '0 0 3px 0', fontFamily: "'Open Sans', sans-serif" }}>
+                      <div className="winera-roi-get-step-text" style={{ textAlign: 'left', flex: 1 }}>
+                        <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', margin: '0 0 3px 0', fontFamily: "'Open Sans', sans-serif", textAlign: 'left' }}>
                           {step.title}
                         </h4>
-                        <p style={{ fontSize: '12.5px', color: '#475569', margin: 0, fontFamily: "'Open Sans', sans-serif" }}>
+                        <p style={{ fontSize: '12.5px', color: '#475569', margin: 0, fontFamily: "'Open Sans', sans-serif", textAlign: 'left' }}>
                           {step.desc}
                         </p>
                       </div>
@@ -1035,7 +1140,7 @@ export default function Roi({ siteData }) {
                 alt=""
                 style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
-              <h2 style={{
+              <h2 className="winera-roi-get-h2" style={{
                 fontSize: '35px',
                 fontWeight: '900',
                 color: '#0f172a',
@@ -1044,14 +1149,13 @@ export default function Roi({ siteData }) {
                 letterSpacing: '-0.8px'
               }}>
                 {(() => {
-                  if (roiGet.title.includes("Winera")) {
-                    const mainBefore = roiGet.title.split("Winera")[0].replace(/\s*with\s*$/i, "").trim();
+                  if (roiGet.title && roiGet.title.includes("Winera")) {
+                    const mainBefore = roiGet.title.split("Winera")[0].trim();
                     const afterWinera = roiGet.title.split("Winera")[1] ? roiGet.title.split("Winera")[1].trim() : "International";
                     return (
                       <>
-                        {mainBefore}<br />
-                        with <span style={{ color: '#00aeef' }}>Winera</span><br />
-                        <span style={{ color: '#00aeef' }}>{afterWinera}</span>
+                        <span className="winera-roi-get-title-line1" style={{ display: 'block' }}>{mainBefore}{' '}</span>
+                        <span className="winera-roi-get-title-line2" style={{ color: '#38bdf8', display: 'block' }}>Winera {afterWinera}</span>
                       </>
                     );
                   }
