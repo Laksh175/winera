@@ -1205,7 +1205,7 @@ export default function ArcadeGame({ siteData }) {
       <section className="winera-arcade-why-section" style={{ padding: '70px 4vw 75px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
-          <div style={{ textAlign: 'center', marginBottom: '60px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="winera-arcade-why-heading-container winera-section-heading-container" style={{ textAlign: 'center', marginBottom: '60px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowBrushAccent}
               alt=""

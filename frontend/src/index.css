@@ -396,8 +396,8 @@ section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*
 }
 
 @media (max-width: 768px) {
-  section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*="winera-partner-section"]):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-arcade-intro-section):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
-    padding-top: 25px !important;
+  section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*="winera-partner-section"]):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-arcade-intro-section):not(.winera-arcade-why-section):not(.winera-projects-marquee-section):not(#projects):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
+    padding-top: 15px !important;
     padding-bottom: 20px !important;
   }
 }
@@ -758,7 +758,7 @@ html {
     box-sizing: border-box !important;
   }
 
-  section:not([class*="hero"]):not(.winera-marquee-fullwidth):not(.marquee-track):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-arcade-intro-section):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
+  section:not([class*="hero"]):not(.winera-marquee-fullwidth):not(.marquee-track):not(.winera-arcade-why-section):not(.winera-projects-marquee-section):not(#projects):not(.winera-vr-attractions-section):not(.winera-ar-attractions-section):not(.winera-arcade-intro-section):not(.winera-bowling-supplier-section):not(.winera-bowling-premium-section):not(.winera-trampoline-inside-section):not(.winera-trampoline-intro-section):not(.winera-trampoline-custom-section):not(.winera-trampoline-specs-section):not(.winera-softplay-supplier-section):not(.winera-softplay-intro-section):not(.winera-softplay-specs-section):not(.winera-softplay-materials-section):not(.winera-softplay-timeline-section):not(.winera-softplay-roi-section):not(.winera-softplay-whyus-section):not(.winera-bumpercar-supplier-section):not(.winera-bumpercar-intro-section):not(.winera-bumpercar-thrill-section):not(.winera-bumpercar-specs-section):not(.winera-bumpercar-options-section):not(.winera-bumpercar-comparison-section):not(.winera-bumpercar-investment-section):not(.winera-bumpercar-timeline-section):not(.winera-bumpercar-whyus-section):not(.winera-hypergrid-supplier-section):not(.winera-hypergrid-banner-section):not(.winera-hypergrid-specs-section):not(.winera-hypergrid-whyus-section):not(.winera-hypergrid-roi-section):not(.winera-hypergrid-whywinera-section):not(.winera-amusement-supplier-section):not(.winera-amusement-banner-section):not(.winera-amusement-options-section):not(.winera-amusement-whyus-section) {
     padding-top: 40px !important;
     padding-bottom: 35px !important;
     scroll-margin-top: 85px !important;
@@ -1879,7 +1879,7 @@ html {
   }
 
   /* Universal Section Padding reduction for mobile screens */
-  section {
+  section:not(.winera-arcade-why-section):not(.winera-projects-marquee-section):not(#projects) {
     padding-top: 45px !important;
     padding-bottom: 55px !important;
   }
@@ -2464,12 +2464,35 @@ html {
   }
 
   /* Why Choose Winera Section Mobile Card Format - Compact Spacing */
+  section.winera-arcade-why-section,
   .winera-arcade-why-section {
-    padding: 25px 16px 20px !important;
+    padding: 20px 16px 0px !important;
+    padding-top: 20px !important;
+    padding-bottom: 0px !important;
   }
 
-  .winera-arcade-why-section .winera-section-heading-container {
-    margin-bottom: 16px !important;
+  .winera-arcade-why-section .winera-section-heading-container,
+  .winera-arcade-why-section .winera-arcade-why-heading-container,
+  .winera-arcade-why-heading-container {
+    margin-bottom: 12px !important;
+  }
+
+  .winera-arcade-why-section .winera-arcade-why-h2 {
+    font-size: clamp(22px, 5.5vw, 26px) !important;
+    line-height: 1.2 !important;
+  }
+
+  .winera-arcade-why-section img[src*="yellow-brush"],
+  .winera-arcade-why-heading-container img,
+  .winera-arcade-why-section img[src*="yellow-stroke"] {
+    width: 65% !important;
+    max-width: 65% !important;
+    margin: 0 auto 6px !important;
+  }
+
+  .winera-arcade-why-section .winera-why-us-mobile-slider-container {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   .winera-arcade-why-section .winera-section-heading-container h2 span {
@@ -9014,9 +9037,12 @@ h2 span,
 
   /* Projects Marquee Section Mobile Adjustments (full-bleed scroll right-to-left) */
   #projects,
-  .winera-projects-marquee-section {
+  section#projects,
+  .winera-projects-marquee-section,
+  section.winera-projects-marquee-section {
     min-height: auto !important;
-    padding: 25px 0 25px !important;
+    padding: 20px 0 25px !important;
+    padding-top: 20px !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
     margin-top: 0px !important;
@@ -13728,7 +13754,7 @@ button[style*="background:transparent"]:hover,
   #clients,
   section#clients,
   .winera-clients-section,
-  .winera-marquee-fullwidth {
+  .winera-marquee-fullwidth:not(#projects):not(.winera-projects-marquee-section) {
     padding-top: 35px !important;
     padding-bottom: 30px !important;
   }
@@ -14060,8 +14086,9 @@ button[style*="background:transparent"]:hover,
   #projects .winera-section-heading-inner,
   .winera-projects-marquee-section .winera-section-heading-inner,
   .winera-projects-marquee-header .winera-section-heading-inner {
-    margin-top: 25% !important;
-    margin-left: -17px !important;
+    margin-top: 0px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .winera-projects-marquee-header-right {
@@ -14100,6 +14127,7 @@ button[style*="background:transparent"]:hover,
     justify-content: center !important;
     width: 100% !important;
     gap: 8px !important;
+    margin-bottom: 15% !important;
   }
 
   .winera-why-us-mobile-card {
@@ -14225,4 +14253,44 @@ button[style*="background:transparent"]:hover,
   display: none !important;
   width: 0 !important;
   height: 0 !important;
+}
+
+@media (max-width: 991px) {
+  /* Compact gap between Why Choose section and Game Zones section */
+  section.winera-arcade-why-section,
+  .winera-arcade-why-section {
+    padding-top: 15px !important;
+    padding-bottom: 0px !important;
+  }
+
+  section#projects,
+  section.winera-projects-marquee-section,
+  section.winera-marquee-fullwidth#projects,
+  .winera-projects-marquee-section,
+  #projects {
+    padding-top: 0px !important;
+  }
+
+  .winera-why-us-mobile-slider {
+    margin-bottom: 15% !important;
+  }
+
+  .winera-projects-marquee-header {
+    margin-top: 0px !important;
+    margin-bottom: 8px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .winera-projects-marquee-header .winera-section-heading-container {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding: 0px !important;
+  }
+
+  .winera-arcade-why-heading-container img,
+  .winera-arcade-why-section img[src*="yellow"] {
+    width: 65% !important;
+    max-width: 65% !important;
+  }
 }
