@@ -89,8 +89,8 @@ export default function FaqSection({
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', textAlign: 'left' }}>
+                    <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px', textAlign: 'left' }}>
                       {item.q || item.question}
                     </h3>
                     <div style={{
@@ -124,7 +124,8 @@ export default function FaqSection({
                       color: 'rgb(55, 62, 65)',
                       marginTop: '14px',
                       paddingTop: '0px',
-                      borderTop: 'none'
+                      borderTop: 'none',
+                      textAlign: 'left'
                     }}>
                       {item.a || item.answer}
                     </p>
@@ -164,8 +165,8 @@ export default function FaqSection({
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', textAlign: 'left' }}>
+                    <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', lineHeight: 1.4, margin: 0, letterSpacing: '-0.2px', textAlign: 'left' }}>
                       {item.q || item.question}
                     </h3>
                     <div style={{
@@ -199,7 +200,8 @@ export default function FaqSection({
                       color: 'rgb(55, 62, 65)',
                       marginTop: '14px',
                       paddingTop: '0px',
-                      borderTop: 'none'
+                      borderTop: 'none',
+                      textAlign: 'left'
                     }}>
                       {item.a || item.answer}
                     </p>

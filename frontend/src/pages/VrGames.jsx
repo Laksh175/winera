@@ -7,7 +7,7 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
-import { ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity } from 'lucide-react';
+import { ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity, Plus, Minus } from 'lucide-react';
 
 import vrHeroBg from '../assets/vrgame-hero-bg.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
@@ -130,6 +130,7 @@ const getValidImageUrl = (url, fallback) => {
 export default function VrGames({ siteData }) {
   const [activeRangeIndex, setActiveRangeIndex] = React.useState(0);
   const [showAllRangeItems, setShowAllRangeItems] = React.useState(false);
+  const [openReliabilityIndex, setOpenReliabilityIndex] = React.useState(-1);
 
   React.useEffect(() => {
     if (!siteData) return;
@@ -447,7 +448,7 @@ export default function VrGames({ siteData }) {
       </section>
 
       {/* 5. OUR VR GAMING MACHINE RANGE SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section style={{ padding: '35px 4vw 35px', background: '#F5F5F9', textAlign: 'center' }}>
+      <section className="winera-vr-range-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', textAlign: 'center' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
           <div style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -667,30 +668,44 @@ export default function VrGames({ siteData }) {
               {siteData?.vrReliability?.mainP || "Most VR machines look impressive in a showroom. What matters for your venue is how they perform after six months of daily public use. Every unit we supply is built specifically for commercial cycling not consumer hardware repackaged for public environments. The difference shows up in your maintenance bills, not the spec sheet."}
             </p>
 
-            {/* Checkmark Feature Block 1: Right Machine for Every Venue Type */}
-            <div style={{ marginBottom: '24px', width: '100%', maxWidth: '100%' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <span style={{ color: '#38bdf8', fontSize: '18px', fontWeight: '900' }}>✓</span>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
-                  {siteData?.vrReliability?.f1Title || "Right Machine for Every Venue Type"}
-                </h3>
-              </div>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {siteData?.vrReliability?.f1Desc || "A 5-player group ride suits a high-footfall mall. A solo seated simulator suits a hotel lobby. Getting this match wrong is the most common reason VR zones underperform. We assess your space, footfall, and visitors before recommending anything — not from a catalogue."}
-              </p>
-            </div>
-
-            {/* Checkmark Feature Block 2: End-to-End Support and Service */}
-            <div style={{ width: '100%', maxWidth: '100%' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <span style={{ color: '#38bdf8', fontSize: '18px', fontWeight: '900' }}>✓</span>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
-                  {siteData?.vrReliability?.f2Title || "End-to-End Support and Service"}
-                </h3>
-              </div>
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {siteData?.vrReliability?.f2Desc || "The same team that recommends your machine mix sources it, installs it, and supports it after handover. No separate vendors, no subcontractors, no waiting on overseas manufacturers. When something needs attention, one call reaches the right person."}
-              </p>
+            {/* Checkmark Feature Blocks as FAQ Accordion on Mobile */}
+            <div className="winera-vr-reliability-features-list" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {[
+                {
+                  title: siteData?.vrReliability?.f1Title || "Right Machine for Every Venue Type",
+                  desc: siteData?.vrReliability?.f1Desc || "A 5-player group ride suits a high-footfall mall. A solo seated simulator suits a hotel lobby. Getting this match wrong is the most common reason VR zones underperform. We assess your space, footfall, and visitors before recommending anything — not from a catalogue."
+                },
+                {
+                  title: siteData?.vrReliability?.f2Title || "End-to-End Support and Service",
+                  desc: siteData?.vrReliability?.f2Desc || "The same team that recommends your machine mix sources it, installs it, and supports it after handover. No separate vendors, no subcontractors, no waiting on overseas manufacturers. When something needs attention, one call reaches the right person."
+                }
+              ].map((feat, fIdx) => {
+                const isOpen = openReliabilityIndex === fIdx;
+                return (
+                  <div
+                    key={fIdx}
+                    className={`winera-vr-reliability-faq-item ${isOpen ? 'is-open' : ''}`}
+                    onClick={() => setOpenReliabilityIndex(prev => prev === fIdx ? -1 : fIdx)}
+                  >
+                    <div className="winera-vr-reliability-faq-header">
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ color: '#38bdf8', fontSize: '18px', fontWeight: '900' }}>✓</span>
+                        <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                          {feat.title}
+                        </h3>
+                      </div>
+                      <div className="winera-vr-reliability-faq-toggle">
+                        {isOpen ? <Minus style={{ width: '15px', height: '15px' }} /> : <Plus style={{ width: '15px', height: '15px' }} />}
+                      </div>
+                    </div>
+                    <div className={`winera-vr-reliability-faq-body ${isOpen ? 'is-open' : ''}`}>
+                      <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
+                        {feat.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

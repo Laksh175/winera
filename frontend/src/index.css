@@ -257,6 +257,33 @@ p.winera-testi-quote,
 .winera-partner-box-cyan p,
 .winera-vr-reliability p,
 .winera-about-content-wrapper p,
+
+/* VR Reliability Features Desktop & Base Styles */
+.winera-vr-reliability-features-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.winera-vr-reliability-faq-item {
+  width: 100%;
+}
+
+.winera-vr-reliability-faq-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.winera-vr-reliability-faq-toggle {
+  display: none;
+}
+
+.winera-vr-reliability-faq-body {
+  display: block;
+  margin-top: 8px;
+}
 .winera-project-block-text p,
 .winera-section-subtitle,
 .winera-testi-subtitle,
@@ -1881,7 +1908,7 @@ html {
   /* Universal Section Padding reduction for mobile screens */
   section:not(.winera-arcade-why-section):not(.winera-projects-marquee-section):not(#projects) {
     padding-top: 45px !important;
-    padding-bottom: 55px !important;
+    padding-bottom: 10px !important;
   }
 
   /* ─── AR Games Page Mobile Responsive Spacing ─── */
@@ -2689,8 +2716,9 @@ html {
   }
 
   /* 1. Supplier Section */
+  section.winera-vr-supplier-section,
   .winera-vr-supplier-section {
-    padding: 25px 16px 20px !important;
+    padding: 15px 16px 15px !important;
   }
 
   .winera-vr-supplier-grid {
@@ -2699,10 +2727,12 @@ html {
   }
 
   .winera-vr-supplier-grid>div:first-child {
-    order: -1;
+    order: 2 !important;
+    margin-top: 10px !important;
   }
 
   .winera-vr-supplier-text {
+    order: 1 !important;
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -2733,9 +2763,10 @@ html {
   }
 
   /* 2. Attractions Section */
+  section.winera-vr-attractions-section,
   .winera-vr-attractions-section {
-    padding: 5px 16px 20px !important;
-    padding-top: 5px !important;
+    padding: 15px 16px 10px !important;
+    padding-bottom: 10px !important;
   }
 
   .winera-vr-attractions-grid {
@@ -2754,6 +2785,12 @@ html {
     align-items: center !important;
   }
 
+  .winera-vr-attractions-text>div:first-child,
+  .winera-vr-attractions-text div[style*="marginBottom: '22px'"],
+  .winera-vr-attractions-text div[style*="margin-bottom: 22px"] {
+    margin-top: 15px !important;
+  }
+
   .winera-vr-attractions-text img[src*="stroke"] {
     width: 200px !important;
     height: 8px !important;
@@ -2766,11 +2803,25 @@ html {
     text-align: center !important;
   }
 
-  .winera-vr-attractions-text p {
+  .winera-vr-attractions-text p,
+  .winera-vr-attractions-grid .winera-vr-attractions-text p {
     font-size: 13.5px !important;
     line-height: 1.55 !important;
     text-align: center !important;
-    margin: 0 auto 10px !important;
+    margin: 0 auto 4px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .winera-vr-attractions-text div[style*="marginBottom: '14px'"],
+  .winera-vr-attractions-text div[style*="margin-bottom: 14px"],
+  .winera-vr-attractions-text .winera-mobile-expandable-wrapper,
+  .winera-vr-attractions-text .winera-mobile-expandable-wrapper:has(+ .winera-cyan-cta-wrapper),
+  .winera-vr-attractions-text .winera-mobile-expandable-wrapper:has(+ div > .winera-cyan-cta-wrapper) {
+    margin-bottom: 4px !important;
+  }
+
+  .winera-vr-attractions-text .winera-cyan-cta-wrapper {
+    margin-top: 0 !important;
   }
 
   .winera-vr-attractions-text a {
@@ -2778,8 +2829,22 @@ html {
   }
 
   /* 3. Range Section */
+  section.winera-vr-range-section,
   .winera-vr-range-section {
-    padding: 25px 16px 20px !important;
+    padding: 10px 16px 15px !important;
+    padding-top: 10px !important;
+  }
+
+  .winera-vr-range-section div[style*="marginBottom: '40px'"],
+  .winera-vr-range-section div[style*="margin-bottom: 40px"],
+  .winera-vr-range-section div[style*="marginBottom: 40px"] {
+    margin-bottom: 18px !important;
+  }
+
+  .winera-vr-range-section img[src*="stroke"] {
+    width: 200px !important;
+    height: 8px !important;
+    margin: 0 auto 6px !important;
   }
 
   .winera-vr-range-section h2 {
@@ -2800,8 +2865,9 @@ html {
   }
 
   /* 4. Reliability Section */
+  section.winera-vr-reliability-section,
   .winera-vr-reliability-section {
-    padding: 25px 16px 20px !important;
+    padding: 15px 16px 15px !important;
   }
 
   .winera-vr-reliability-grid {
@@ -2832,11 +2898,6 @@ html {
     text-align: center !important;
   }
 
-  .winera-vr-reliability-text h3 {
-    font-size: 1.1rem !important;
-    text-align: center !important;
-  }
-
   .winera-vr-reliability-text p {
     font-size: 13.5px !important;
     line-height: 1.55 !important;
@@ -2844,13 +2905,95 @@ html {
     margin: 0 auto 12px !important;
   }
 
-  .winera-vr-reliability-text div[style*="display: flex"] {
+  .winera-vr-reliability-features-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin-top: 4px !important;
+  }
+
+  .winera-vr-reliability-faq-item {
+    background: #ffffff !important;
+    border-radius: 14px !important;
+    padding: 14px 16px !important;
+    border: 1.5px solid #e2e8f0 !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .winera-vr-reliability-faq-item.is-open {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.12) !important;
+  }
+
+  .winera-vr-reliability-faq-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    width: 100% !important;
+    user-select: none !important;
+  }
+
+  .winera-vr-reliability-faq-header h3 {
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    color: #0f172a !important;
+    text-align: left !important;
+    margin: 0 !important;
+  }
+
+  .winera-vr-reliability-faq-toggle {
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    border-radius: 50% !important;
+    background: #f1f5f9 !important;
+    color: #64748b !important;
+    flex-shrink: 0 !important;
+    transition: all 0.25s ease !important;
+  }
+
+  .winera-vr-reliability-faq-item.is-open .winera-vr-reliability-faq-toggle {
+    background: #38bdf8 !important;
+    color: #ffffff !important;
+  }
+
+  .winera-vr-reliability-faq-body {
+    display: none !important;
+    padding-top: 10px !important;
+    border-top: 1px solid #f1f5f9 !important;
+    margin-top: 10px !important;
+    text-align: left !important;
+  }
+
+  .winera-vr-reliability-faq-body p,
+  .winera-vr-reliability-text .winera-vr-reliability-faq-body p {
+    text-align: left !important;
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    color: #475569 !important;
+    margin: 0 !important;
+  }
+
+  .winera-vr-reliability-faq-body.is-open {
+    display: block !important;
+    animation: wineraFaqFade 0.25s ease forwards !important;
   }
 
   /* 5. ROI / Earn Section */
+  section.winera-vr-earn-section,
   .winera-vr-earn-section {
-    padding: 25px 16px 20px !important;
+    padding: 15px 16px 15px !important;
     text-align: center !important;
     background: #F5F5F9 !important;
     background-image: none !important;
@@ -2884,11 +3027,25 @@ html {
     line-height: 1.25 !important;
   }
 
-  .winera-vr-earn-text p {
+  .winera-vr-earn-text p,
+  .winera-vr-earn-card .winera-vr-earn-text p {
     font-size: 13.5px !important;
     line-height: 1.55 !important;
     text-align: center !important;
-    margin: 0 auto 10px !important;
+    margin: 0 auto 4px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .winera-vr-earn-text div[style*="marginBottom: '16px'"],
+  .winera-vr-earn-text div[style*="margin-bottom: 16px"],
+  .winera-vr-earn-text .winera-mobile-expandable-wrapper,
+  .winera-vr-earn-text .winera-mobile-expandable-wrapper:has(+ .winera-cyan-cta-wrapper),
+  .winera-vr-earn-text .winera-mobile-expandable-wrapper:has(+ div > .winera-cyan-cta-wrapper) {
+    margin-bottom: 4px !important;
+  }
+
+  .winera-vr-earn-text .winera-cyan-cta-wrapper {
+    margin-top: 0 !important;
   }
 
   .winera-vr-earn-text a {
@@ -2922,17 +3079,18 @@ html {
   .winera-vr-earn-img-container img:last-child {
     display: block !important;
     position: absolute !important;
-    left: -6px !important;
-    top: -5 !important;
-    height: 104% !important;
+    left: -8px !important;
+    top: -17px !important;
+    height: 114% !important;
     width: auto !important;
     z-index: 2 !important;
     pointer-events: none !important;
   }
 
   /* 6. Why Choose Winera Section */
+  section.winera-vr-whyus-section,
   .winera-vr-whyus-section {
-    padding: 25px 16px 20px !important;
+    padding: 15px 16px 15px !important;
   }
 
   .winera-vr-whyus-section div[style*="marginBottom: '60px'"],
@@ -3011,6 +3169,25 @@ html {
     max-width: 100% !important;
     color: #64748b !important;
     margin: 0 !important;
+  }
+
+  .winera-vr-whyus-section .winera-why-us-mobile-slider {
+    margin-bottom: 6px !important;
+  }
+
+  .winera-vr-whyus-section div[style*="marginTop: '45px'"],
+  .winera-vr-whyus-section div[style*="margin-top: 45px"],
+  .winera-vr-whyus-section div[style*="marginTop: 45px"],
+  .winera-vr-whyus-section div[style*="margin-top: 45px"] {
+    margin-top: 2px !important;
+  }
+
+  .winera-vr-whyus-section .winera-why-us-mobile-slider-container {
+    margin-bottom: 0 !important;
+  }
+
+  .winera-vr-whyus-section .winera-cyan-cta-wrapper {
+    margin-top: 0 !important;
   }
 
   /* Bumper Car Page Mobile Adjustments */
@@ -10062,9 +10239,9 @@ button[style*="background:transparent"]:hover,
     .winera-vr-earn-img-container img:last-child {
       display: block !important;
       position: absolute !important;
-      left: -7px !important;
-      top: -2px !important;
-      height: 104% !important;
+      left: -8px !important;
+      top: -17px !important;
+      height: 114% !important;
       width: auto !important;
       z-index: 2 !important;
       pointer-events: none !important;
@@ -13551,6 +13728,17 @@ button[style*="background:transparent"]:hover,
     margin-bottom: 12px !important;
   }
 
+  .winera-vr-attractions-text .winera-mobile-expandable-wrapper:has(+ .winera-cyan-cta-wrapper),
+  .winera-vr-attractions-text .winera-mobile-expandable-wrapper:has(+ div > .winera-cyan-cta-wrapper),
+  .winera-vr-attractions-text div[style*="marginBottom: '14px'"],
+  .winera-vr-attractions-text div[style*="margin-bottom: 14px"],
+  .winera-vr-earn-text .winera-mobile-expandable-wrapper:has(+ .winera-cyan-cta-wrapper),
+  .winera-vr-earn-text .winera-mobile-expandable-wrapper:has(+ div > .winera-cyan-cta-wrapper),
+  .winera-vr-earn-text div[style*="marginBottom: '16px'"],
+  .winera-vr-earn-text div[style*="margin-bottom: 16px"] {
+    margin-bottom: 4px !important;
+  }
+
   .winera-cyan-cta-wrapper,
   .winera-yellow-cyan-cta-wrapper,
   .winera-yellow-white-cta-wrapper,
@@ -14298,5 +14486,30 @@ button[style*="background:transparent"]:hover,
   .winera-arcade-why-section img[src*="yellow"] {
     width: 65% !important;
     max-width: 65% !important;
+  }
+
+  .winera-vr-whyus-section .winera-why-us-mobile-slider {
+    margin-bottom: 6px !important;
+  }
+
+  .winera-vr-whyus-section div[style*="marginTop: '45px'"],
+  .winera-vr-whyus-section div[style*="margin-top: 45px"] {
+    margin-top: 2px !important;
+  }
+
+  /* FAQ Question & Answer Left Alignment on Mobile */
+  .winera-faq-section .winera-faq-grid,
+  .winera-faq-section .winera-faq-grid > div,
+  .winera-faq-section .winera-faq-grid h3,
+  .winera-faq-grid h3,
+  .winera-faq-section h3,
+  .winera-faq-section h3 *,
+  .winera-faq-section [role="button"] h3,
+  .winera-faq-section [role="button"] > div:first-child h3,
+  .winera-faq-answer,
+  .winera-faq-section .winera-faq-answer,
+  .winera-faq-section p.winera-faq-answer,
+  p.winera-faq-answer {
+    text-align: left !important;
   }
 }
