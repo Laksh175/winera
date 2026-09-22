@@ -180,7 +180,6 @@ export default function ProjectsMarqueeSection({
                     <a
                       key={idx}
                       href={href}
-                      onClick={handleCardClick}
                       draggable="false"
                       style={{
                         width: '325px',
@@ -190,7 +189,7 @@ export default function ProjectsMarqueeSection({
                         position: 'relative',
                         boxShadow: '0 10px 25px rgba(0,0,0,0.12)',
                         background: '#0f172a',
-                        cursor: isGrabbing ? 'grabbing' : 'pointer',
+                        cursor: 'pointer',
                         flexShrink: 0,
                         textDecoration: 'none',
                         display: 'block',

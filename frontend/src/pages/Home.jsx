@@ -283,7 +283,7 @@ export default function Home({ siteData }) {
             src={heroBg}
             alt=""
             className="winera-home-hero-bg-desktop"
-            fetchpriority="high"
+            fetchPriority="high"
             loading="eager"
             decoding="async"
             style={{
@@ -301,7 +301,7 @@ export default function Home({ siteData }) {
             src={gameZoneBgTransparent}
             alt=""
             className="winera-home-hero-bg-mobile"
-            fetchpriority="high"
+            fetchPriority="high"
             loading="eager"
             decoding="async"
             style={{

@@ -357,7 +357,7 @@ export default function BumperCar({ siteData }) {
             <img
               src={siteData?.bumpercarIntro?.mainImgUrl || bumpercarCollageFrame}
               alt="Bumper Car Manufacturer in India"
-              fetchpriority="high"
+              fetchPriority="high"
               decoding="async"
               width={560}
               height={380}

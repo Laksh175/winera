@@ -31,8 +31,11 @@ class ErrorBoundary extends React.Component {
   }
 
   handleReload = () => {
-    sessionStorage.removeItem('winera_chunk_reload');
-    window.location.reload();
+    try {
+      sessionStorage.clear();
+      localStorage.removeItem('winera_chunk_reload');
+    } catch (_) {}
+    window.location.href = window.location.pathname + '?t=' + Date.now();
   };
 
   render() {
@@ -77,6 +80,21 @@ class ErrorBoundary extends React.Component {
           >
             Refresh Page
           </button>
+          {process.env.NODE_ENV !== 'production' && this.state.error && (
+            <pre style={{
+              marginTop: '20px',
+              padding: '10px 14px',
+              background: '#fee2e2',
+              color: '#991b1b',
+              borderRadius: '8px',
+              fontSize: '12px',
+              maxWidth: '80vw',
+              overflowX: 'auto',
+              textAlign: 'left'
+            }}>
+              {this.state.error?.toString()}
+            </pre>
+          )}
         </div>
       );
     }

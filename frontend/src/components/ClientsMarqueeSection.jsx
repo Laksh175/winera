@@ -80,7 +80,7 @@ export default function ClientsMarqueeSection({
       if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
       if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     };
-  }, [clientLogos, defaultList]);
+  }, [clientLogos]);
 
   // Touch & Pointer gesture handlers for manual scrolling
   const handleStart = (clientX) => {
