@@ -55,7 +55,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
       return (
         <React.Fragment key={lIdx}>
           {lIdx > 0 && <br />}
-          {needsNowrap ? <span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>{line}</span> : line}
+          {needsNowrap ? <span style={{ whiteSpace: 'normal', display: 'inline' }}>{line}</span> : line}
         </React.Fragment>
       );
     });

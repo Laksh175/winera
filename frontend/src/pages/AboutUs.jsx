@@ -259,9 +259,9 @@ export default function AboutUs({ siteData }) {
                 <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, margin: 0 }}>
                   {(siteData?.aboutWelcome?.box1Desc
                     ? siteData.aboutWelcome.box1Desc
-                        .replace(/Quality Is Key/g, 'quality is key')
-                        .replace(/Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety/g, 'Our lanes, trampolines, soft play, and arcade games are built to last and ensure safety')
-                        .replace(/We Don't Just Build Equipment; We Build Experiences You Can Trust/g, "We don't just build equipment; we build experiences you can trust")
+                      .replace(/Quality Is Key/g, 'quality is key')
+                      .replace(/Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety/g, 'Our lanes, trampolines, soft play, and arcade games are built to last and ensure safety')
+                      .replace(/We Don't Just Build Equipment; We Build Experiences You Can Trust/g, "We don't just build equipment; we build experiences you can trust")
                     : "At Winera International, quality is key. Our lanes, trampolines, soft play, and arcade games are built to last and ensure safety. We don't just build equipment; we build experiences you can trust."
                   )}
                 </p>
@@ -278,8 +278,8 @@ export default function AboutUs({ siteData }) {
                 <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, margin: 0 }}>
                   {(siteData?.aboutWelcome?.box2Desc
                     ? siteData.aboutWelcome.box2Desc
-                        .replace(/We Prioritize Your Satisfaction/g, 'we prioritize your satisfaction')
-                        .replace(/From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step/g, 'From product exploration to final installation and beyond, our dedicated team walks with you at every step')
+                      .replace(/We Prioritize Your Satisfaction/g, 'we prioritize your satisfaction')
+                      .replace(/From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step/g, 'From product exploration to final installation and beyond, our dedicated team walks with you at every step')
                     : "At Winera International, we prioritize your satisfaction. From product exploration to final installation and beyond, our dedicated team walks with you at every step."
                   )}
                 </p>
@@ -752,28 +752,28 @@ export default function AboutUs({ siteData }) {
             : (Array.isArray(siteData?.founders) && siteData.founders.length > 0
               ? siteData.founders
               : [
-                  {
-                    name: founderData?.name || 'Mr. Unnit Jogani',
-                    image: founderData?.image || founderUnnit,
-                    yearsOfExperience: founderData?.yearsOfExperience || '14+',
-                    linkedinUrl: founderData?.linkedinUrl || 'https://linkedin.com',
-                    aboutDetails: founderData?.aboutDetails || defaultBio
-                  },
-                  {
-                    name: founderData?.name || 'Mr. Unnit Jogani',
-                    image: founderData?.image || founderUnnit,
-                    yearsOfExperience: founderData?.yearsOfExperience || '14+',
-                    linkedinUrl: founderData?.linkedinUrl || 'https://linkedin.com',
-                    aboutDetails: founderData?.aboutDetails || defaultBio
-                  },
-                  {
-                    name: founderData?.name || 'Mr. Unnit Jogani',
-                    image: founderData?.image || founderUnnit,
-                    yearsOfExperience: founderData?.yearsOfExperience || '14+',
-                    linkedinUrl: founderData?.linkedinUrl || 'https://linkedin.com',
-                    aboutDetails: founderData?.aboutDetails || defaultBio
-                  }
-                ]);
+                {
+                  name: founderData?.name || 'Mr. Unnit Jogani',
+                  image: founderData?.image || founderUnnit,
+                  yearsOfExperience: founderData?.yearsOfExperience || '14+',
+                  linkedinUrl: founderData?.linkedinUrl || 'https://linkedin.com',
+                  aboutDetails: founderData?.aboutDetails || defaultBio
+                },
+                {
+                  name: founderData?.name || 'Mr. Unnit Jogani',
+                  image: founderData?.image || founderUnnit,
+                  yearsOfExperience: founderData?.yearsOfExperience || '14+',
+                  linkedinUrl: founderData?.linkedinUrl || 'https://linkedin.com',
+                  aboutDetails: founderData?.aboutDetails || defaultBio
+                },
+                {
+                  name: founderData?.name || 'Mr. Unnit Jogani',
+                  image: founderData?.image || founderUnnit,
+                  yearsOfExperience: founderData?.yearsOfExperience || '14+',
+                  linkedinUrl: founderData?.linkedinUrl || 'https://linkedin.com',
+                  aboutDetails: founderData?.aboutDetails || defaultBio
+                }
+              ]);
 
           const safeIndex = currentFounderIndex % rawFounderItems.length;
           const currentFounder = rawFounderItems[safeIndex] || rawFounderItems[0];

@@ -196,13 +196,13 @@ export default function ProjectDetail({ siteData }) {
     galleryImages: (Array.isArray(cmsItem.galleryImages) && cmsItem.galleryImages.length > 0)
       ? cmsItem.galleryImages
       : [
-          cmsItem.galleryImage1,
-          cmsItem.galleryImage2,
-          cmsItem.galleryImage3,
-          cmsItem.galleryImage4,
-          cmsItem.galleryImage5,
-          cmsItem.galleryImage6
-        ].filter(Boolean),
+        cmsItem.galleryImage1,
+        cmsItem.galleryImage2,
+        cmsItem.galleryImage3,
+        cmsItem.galleryImage4,
+        cmsItem.galleryImage5,
+        cmsItem.galleryImage6
+      ].filter(Boolean),
     videoImg: cmsItem.videoImg || cmsItem.videoCoverUrl || defaultProject.videoImg,
     videoUrl: cmsItem.videoUrl || cmsItem.videoLink || defaultProject.videoUrl,
     basicInfoBg: cmsItem.basicInfoBg || cmsItem.basicBg || '',
@@ -498,8 +498,8 @@ export default function ProjectDetail({ siteData }) {
             boxShadow: '0 20px 45px rgba(0,0,0,0.25)',
             overflow: 'hidden',
             paddingBottom: '0px',
-            marginTop:'15px',
-            marginBottom:'15px'
+            marginTop: '15px',
+            marginBottom: '15px'
           }}>
             {basicRows.map((row, rIdx) => (
               <div

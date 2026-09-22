@@ -104,7 +104,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
   } else if (text.toLowerCase().includes('is hypergrid a smart') || text.toLowerCase().includes('investment for your venue')) {
     text = "Is Hypergrid a Smart <br/>*Investment for Your Venue?*";
   } else if (text.toLowerCase().includes('hypergrid game') && text.toLowerCase().includes('supplier')) {
-    text = "*Hypergrid Game* <br className=\"winera-title-br\" />Supplier in India";
+    text = "*Hypergrid Game* <br/>Supplier in India";
   }
 
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
@@ -117,12 +117,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
       const content = subParts.map((subPart, sIdx) => (
         <React.Fragment key={sIdx}>
           {subPart}
-          {sIdx < subParts.length - 1 && (
-            <>
-              <br className="winera-title-br" />
-              {' '}
-            </>
-          )}
+          {sIdx < subParts.length - 1 && <br />}
         </React.Fragment>
       ));
       return isHighlight ? (

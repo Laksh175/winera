@@ -174,8 +174,8 @@ export default function CtaBanner({
                 background: isCustomBgUploaded
                   ? 'transparent'
                   : ((blurBg && !isCustomBgUploaded)
-                      ? 'rgba(8, 12, 22, 0.82)'
-                      : 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)'),
+                    ? 'rgba(8, 12, 22, 0.82)'
+                    : 'linear-gradient(180deg, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0.55) 100%)'),
                 borderRadius: '24px',
                 zIndex: 1
               }} />
@@ -301,7 +301,8 @@ export default function CtaBanner({
                   color: '#e2e8f0',
                   lineHeight: 1.6,
                   marginBottom: '24px',
-                  maxWidth: hasSideImages ? '560px' : '620px'
+                  maxWidth: hasSideImages ? '560px' : '620px',
+                  textAlign: isCentered ? 'center' : 'left'
                 }}>
                   {description}
                 </p>
