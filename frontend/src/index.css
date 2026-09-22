@@ -6758,6 +6758,31 @@ textarea::placeholder,
     background: rgb(241, 241, 246) !important;
   }
 
+  .winera-safety-electrical-header-wrapper {
+    text-align: center !important;
+    margin: 0 auto 25px auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .winera-safety-electrical-stroke {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+  }
+
+  .winera-safety-electrical-h2 {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto 12px !important;
+  }
+
+  .winera-safety-electrical-desc {
+    text-align: center !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+  }
+
   .winera-safety-electrical-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
@@ -12284,6 +12309,7 @@ button[style*="background:transparent"]:hover,
   .winera-softplay-whyus-section h2,
   .winera-safety-standards-h2,
   .winera-safety-material-h2,
+  .winera-safety-electrical-h2,
   .winera-safety-structure-h2,
   .winera-amusement-supplier-text h2,
   .winera-amusement-banner-text h2,
@@ -17244,6 +17270,34 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-safety-material-desc {
+    text-align: center !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+  }
+
+  .winera-safety-electrical-header-wrapper {
+    text-align: center !important;
+    margin: 0 auto 25px auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .winera-safety-electrical-stroke {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+  }
+
+  .winera-safety-electrical-h2 {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto 12px !important;
+  }
+
+  .winera-safety-electrical-desc {
     text-align: center !important;
     margin: 0 auto !important;
     width: 100% !important;

@@ -537,31 +537,30 @@ export default function SafetyStandards({ siteData }) {
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           {/* Left Aligned Header */}
-          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'left', maxWidth: '820px', margin: '0 0 25px 0' }}>
+          <div className="winera-safety-electrical-header-wrapper winera-reveal winera-reveal-delay-1" style={{ maxWidth: '820px', margin: '0 0 25px 0' }}>
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill', marginLeft: 0 }}
+              className="winera-safety-electrical-stroke"
+              style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 className="winera-safety-electrical-h2" style={{
               fontSize: '35px',
               fontWeight: '900',
               color: '#0f172a',
               margin: '0 0 12px',
-              lineHeight: 1.2,
-              textAlign: 'left'
+              lineHeight: 1.2
             }}>
               <span>{siteData?.safetyElectrical?.title1 || "Electrical &"}</span>{' '}
               <span style={{ color: '#38bdf8' }}>{siteData?.safetyElectrical?.title2 || "Machine Safety"}</span>
             </h2>
-            <p style={{
+            <p className="winera-safety-electrical-desc" style={{
               fontSize: '14.5px',
               color: '#64748b',
               fontWeight: '500',
               margin: 0,
               lineHeight: 1.6,
-              maxWidth: '720px',
-              textAlign: 'left'
+              maxWidth: '720px'
             }}>
               {siteData?.safetyElectrical?.subtitle || "These rules make sure all machines that run on electricity are safe to use — like arcade games, VR, laser tag, bumper cars, hypergrid, bowling, and rides."}
             </p>
