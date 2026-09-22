@@ -16329,7 +16329,10 @@ button[style*="background:transparent"]:hover,
 
   .winera-project-page .winera-cta-description,
   .winera-project-page .winera-cta-subtitle,
-  .winera-project-page .winera-cta-banner-container p {
+  .winera-project-page .winera-cta-banner-container p,
+  .winera-roi-page .winera-roi-cta-sub,
+  .winera-roi-cta-sub,
+  .winera-roi-page .winera-cta-banner-container p {
     font-size: 19px !important;
     line-height: 1.5 !important;
   }

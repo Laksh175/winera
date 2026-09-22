@@ -223,7 +223,7 @@ export default function Roi({ siteData }) {
   const rightItems = Array.isArray(roiComparison.rightItems) ? roiComparison.rightItems : [];
 
   return (
-    <div style={{ fontFamily: "'Open Sans', sans-serif", color: '#0f172a', background: '#F5F5F9', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div className="winera-roi-page" style={{ fontFamily: "'Open Sans', sans-serif", color: '#0f172a', background: '#F5F5F9', minHeight: '100vh', overflowX: 'hidden' }}>
       {/* HEADER */}
       <Header headerData={header} />
 
@@ -1517,8 +1517,8 @@ export default function Roi({ siteData }) {
           </h2>
 
           {/* Description */}
-          <p style={{
-            fontSize: 'clamp(12px, 2.5vw, 14.5px)',
+          <p className="winera-cta-subtitle winera-roi-cta-sub" style={{
+            fontSize: '19px',
             fontWeight: '400',
             color: '#e2e8f0',
             lineHeight: 1.5,
