@@ -106,7 +106,9 @@ export default function CtaBanner({
   containerPadding = null,
   contentBoxPadding = null,
   showTextShadow = true,
-  blurBg = false
+  blurBg = false,
+  titleMaxWidth = null,
+  subtitleMaxWidth = null
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -217,7 +219,7 @@ export default function CtaBanner({
               textAlign: isCentered ? 'center' : 'left',
               margin: isCentered ? '0 auto' : '0',
               width: '100%',
-              maxWidth: isCentered ? (hasSideImages ? '760px' : '860px') : '650px',
+              maxWidth: isCentered ? (hasSideImages ? '620px' : '860px') : '650px',
               justifyContent: isCustomBgUploaded ? 'flex-end' : 'center',
               padding: contentBoxPadding || (isCustomBgUploaded ? '120px 0 24px' : '24px 0')
             }}>
@@ -252,7 +254,7 @@ export default function CtaBanner({
                   lineHeight: 1.22,
                   marginBottom: '10px',
                   letterSpacing: '0.2px',
-                  maxWidth: hasSideImages ? '760px' : '100%',
+                  maxWidth: titleMaxWidth || (hasSideImages ? '600px' : '100%'),
                   textAlign: isCentered ? 'center' : 'left',
                   ...(gradientTitle ? {
                     background: 'linear-gradient(90deg, rgba(255, 212, 0, 1) 0%, rgba(238, 229, 183, 1) 35%, rgba(0, 174, 239, 1) 70%, rgba(125, 211, 252, 1) 100%)',
@@ -280,7 +282,7 @@ export default function CtaBanner({
                   color: '#ffffff',
                   lineHeight: 1.3,
                   marginBottom: '14px',
-                  maxWidth: hasSideImages ? '760px' : '840px',
+                  maxWidth: subtitleMaxWidth || (hasSideImages ? '530px' : '840px'),
                   textAlign: isCentered ? 'center' : 'left',
                   textShadow: showTextShadow ? '0 2px 10px rgba(0,0,0,0.85)' : 'none'
                 }}>

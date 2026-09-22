@@ -704,9 +704,9 @@ const defaultSafetyWhyMatters = {
   title1: "Why This Matters",
   title2: "for Your Business",
   subtitle: "Good, certified equipment is a smart investment. It keeps visitors safe, protects your money, and helps you get your licence easier. In India, every game zone must pass checks for strong structure, fire safety, and electrical safety before it can open. Because we supply you certified equipment, fire-safe materials, and proper installation, your game zone is ready to pass these checks. The result: you open on time, stay within the rules, and win the trust of every family.",
-  ctaTitle1: "BUILD",
-  ctaTitle2: "YOURS NOW",
-  buttonText: "Talk to an ROI Expert",
+  ctaTitle: "Need Any Consultations?",
+  ctaSubtitle: "We're Ready To Give Answers To Your Questions.",
+  buttonText: "Talk to an Expert",
   buttonLink: "https://wa.me/919428989488"
 };
 
@@ -7513,7 +7513,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Main Title Heading Text</label>
                 <input
                   type="text"
-                  value={formData.softplayCta?.title !== undefined ? formData.softplayCta.title : (formData.softplayCta?.mainTitle !== undefined ? formData.softplayCta.mainTitle : "Ready to Build Your Soft Play Zone?")}
+                  value={
+                    formData.softplayCta?.title !== undefined
+                      ? String(formData.softplayCta.title).replace(/<br\s*\/?>/gi, ' ')
+                      : (formData.softplayCta?.mainTitle !== undefined ? String(formData.softplayCta.mainTitle).replace(/<br\s*\/?>/gi, ' ') : "READY TO BUILD YOUR SOFT PLAY ZONE?")
+                  }
                   onChange={(e) => {
                     handleFieldChange('softplayCta', 'title', e.target.value);
                     handleFieldChange('softplayCta', 'mainTitle', e.target.value);
@@ -7526,7 +7530,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
                 <textarea
                   rows={2}
-                  value={formData.softplayCta?.description !== undefined ? formData.softplayCta.description : (formData.softplayCta?.subtitle !== undefined ? formData.softplayCta.subtitle : "Talk to India's trusted soft play manufacturer and get a setup made for your space and budget.")}
+                  value={
+                    formData.softplayCta?.description !== undefined
+                      ? String(formData.softplayCta.description).replace(/<br\s*\/?>/gi, ' ')
+                      : (formData.softplayCta?.subtitle !== undefined ? String(formData.softplayCta.subtitle).replace(/<br\s*\/?>/gi, ' ') : "Talk to India's trusted soft play manufacturer and get a setup made for your space and budget.")
+                  }
                   onChange={(e) => {
                     handleFieldChange('softplayCta', 'description', e.target.value);
                     handleFieldChange('softplayCta', 'subtitle', e.target.value);
@@ -10770,16 +10778,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Top Tagline Text</label>
-                <input
-                  type="text"
-                  value={formData.bumpercarCta?.tagline || 'GET IN TOUCH'}
-                  onChange={(e) => handleFieldChange('bumpercarCta', 'tagline', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
-
-              <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Main Title Heading</label>
                 <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Yellow.</p>
                 <input
@@ -10794,7 +10792,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Description Text</label>
                 <textarea
                   rows={3}
-                  value={formData.bumpercarCta?.subtitle || formData.bumpercarCta?.whiteText || "We'll assess your space and send a free<br/>ROI report before you spend anything."}
+                  value={formData.bumpercarCta?.subtitle || formData.bumpercarCta?.whiteText || "Our team will assess your space, prepare a free ROI report,<br/>and recommend the right setup before you spend anything."}
                   onChange={(e) => {
                     handleFieldChange('bumpercarCta', 'subtitle', e.target.value);
                     handleFieldChange('bumpercarCta', 'whiteText', e.target.value);
@@ -14962,19 +14960,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>About Us CTA Banner Settings</h3>
-                <p style={{ fontSize: '12.5px', color: '#64748b', margin: '3px 0 0' }}>Manage top tagline, title heading, description text, CTA button, and background banner image for About Us page.</p>
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Top Tagline (e.g. READY TO GET STARTED?)
-                </label>
-                <input
-                  type="text"
-                  value={formData.aboutCta?.tagline !== undefined ? formData.aboutCta.tagline : "READY TO GET STARTED?"}
-                  onChange={(e) => handleFieldChange('aboutCta', 'tagline', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
+                <p style={{ fontSize: '12.5px', color: '#64748b', margin: '3px 0 0' }}>Manage title heading, description text, CTA button, and background banner image for About Us page.</p>
               </div>
 
               <div>
@@ -15009,7 +14995,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.aboutCta?.buttonText !== undefined ? formData.aboutCta.buttonText : "Talk to an ROI Expert"}
+                    value={formData.aboutCta?.buttonText !== undefined ? formData.aboutCta.buttonText : "Book Consultation"}
                     onChange={(e) => handleFieldChange('aboutCta', 'buttonText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -17990,11 +17976,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <input
                       type="text"
                       value={
-                        currentSec.ctaTitle !== undefined
+                        currentSec.ctaTitle !== undefined && currentSec.ctaTitle !== "BUILD YOURS NOW" && !currentSec.ctaTitle.includes("BUILD")
                           ? currentSec.ctaTitle
                           : currentSec.ctaTitle1 || currentSec.ctaTitle2
                           ? `${(currentSec.ctaTitle1 || '').trim()} ${(currentSec.ctaTitle2 || '').trim()}`.replace(/\s+/g, ' ')
-                          : "BUILD YOURS NOW"
+                          : "Need Any Consultations?"
                       }
                       onChange={(e) => {
                         const val = e.target.value;
@@ -18005,6 +17991,30 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             ctaTitle: val,
                             ctaTitle1: val,
                             ctaTitle2: ''
+                          }
+                        }));
+                      }}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Subtitle Text</label>
+                    <input
+                      type="text"
+                      value={
+                        currentSec.ctaSubtitle !== undefined
+                          ? currentSec.ctaSubtitle
+                          : (currentSec.whiteText !== undefined ? currentSec.whiteText : "We're Ready To Give Answers To Your Questions.")
+                      }
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setFormData(prev => ({
+                          ...prev,
+                          safetyWhyMatters: {
+                            ...(prev.safetyWhyMatters || defaultSafetyWhyMatters),
+                            ctaSubtitle: val,
+                            whiteText: val
                           }
                         }));
                       }}

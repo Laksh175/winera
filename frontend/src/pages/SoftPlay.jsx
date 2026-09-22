@@ -1218,41 +1218,45 @@ export default function SoftPlay({ siteData }) {
       />
 
       {/* 14. READY TO BUILD YOUR SOFT PLAY ZONE CTA BANNER SECTION */}
-      <CtaBanner
-        containerPadding="35px 40px"
-        showOverlay={false}
-        align="center"
-        buttonTheme="yellow_white"
-        buttonBg={getValidImageUrl(siteData?.softplayCta?.btnBg, ctaBtn3)}
-        titleFontSize="50px"
-        titleFontWeight="900"
-        subtitleFontSize="17px"
-        subtitleFontWeight="400"
-        bgUrl={siteData?.softplayCta?.bgUrl && !siteData.softplayCta.bgUrl.includes('cta-softplay-bg') ? siteData.softplayCta.bgUrl : null}
-        bg={softplayCtaBg}
-        tagline={null}
-        title={
-          siteData?.softplayCta?.title !== undefined
-            ? siteData.softplayCta.title
-            : "Ready To Build Your<br/>Soft Play Zone?"
-        }
-        subtitle={
-          siteData?.softplayCta?.description !== undefined
-            ? siteData.softplayCta.description
-            : "Talk to India's trusted soft play manufacturer<br/>and get a setup made for your space and budget."
-        }
-        description={null}
-        buttonText={
-          siteData?.softplayCta?.buttonText !== undefined
-            ? siteData.softplayCta.buttonText
-            : "Get a Quote"
-        }
-        buttonLink={
-          siteData?.softplayCta?.buttonLink !== undefined
-            ? siteData.softplayCta.buttonLink
-            : "https://wa.me/919428989488"
-        }
-      />
+      <div className="winera-softplay-cta-wrapper">
+        <CtaBanner
+          containerPadding="35px 40px"
+          showOverlay={false}
+          align="center"
+          buttonTheme="yellow_white"
+          buttonBg={getValidImageUrl(siteData?.softplayCta?.btnBg, ctaBtn3)}
+          titleFontSize="47px"
+          titleFontWeight="900"
+          titleMaxWidth="680px"
+          subtitleFontSize="17px"
+          subtitleFontWeight="400"
+          subtitleMaxWidth="490px"
+          bgUrl={siteData?.softplayCta?.bgUrl && !siteData.softplayCta.bgUrl.includes('cta-softplay-bg') ? siteData.softplayCta.bgUrl : null}
+          bg={softplayCtaBg}
+          tagline={null}
+          title={
+            siteData?.softplayCta?.title !== undefined
+              ? siteData.softplayCta.title
+              : "READY TO BUILD YOUR SOFT PLAY ZONE?"
+          }
+          subtitle={
+            siteData?.softplayCta?.description !== undefined
+              ? siteData.softplayCta.description
+              : "Talk to India's trusted soft play manufacturer and get a setup made for your space and budget."
+          }
+          description={null}
+          buttonText={
+            siteData?.softplayCta?.buttonText !== undefined
+              ? siteData.softplayCta.buttonText
+              : "Get a Quote"
+          }
+          buttonLink={
+            siteData?.softplayCta?.buttonLink !== undefined
+              ? siteData.softplayCta.buttonLink
+              : "https://wa.me/919428989488"
+          }
+        />
+      </div>
 
       {/* 15. FOOTER */}
       <Footer footerData={footer} />
