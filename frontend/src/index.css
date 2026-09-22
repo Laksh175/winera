@@ -1709,7 +1709,10 @@ html {
   }
 
   .winera-footer-dropdown-content.is-open,
-  div.winera-footer-dropdown-content.is-open {
+  div.winera-footer-dropdown-content.is-open,
+  .winera-footer-product-links.is-open,
+  .winera-footer-quick-links.is-open,
+  .winera-footer-resource-links.is-open {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 8px 14px !important;
@@ -17677,7 +17680,83 @@ button[style*="background:transparent"]:hover,
   color: #0f172a;
 }
 
-@media (max-width: 768px) {
+.winera-contact-main-section {
+  padding: 80px 4vw 100px;
+  background: #F5F5F9;
+}
+
+@media (max-width: 850px) {
+  .winera-contact-main-section,
+  section.winera-contact-main-section {
+    padding: 35px 25px 50px !important;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .winera-contact-page-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-contact-left-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-contact-desc {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 auto 30px auto !important;
+    text-align: left !important;
+    padding: 0 !important;
+  }
+
+  .winera-contact-info-cards-stack {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    gap: 28px !important;
+  }
+
+  .winera-contact-info-card,
+  .winera-contact-form-card,
+  .winera-contact-location-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .winera-contact-locations-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
   .winera-contact-heading-wrap .winera-section-heading-h2 {
     font-size: clamp(17px, 4.6vw, 24px) !important;
     line-height: 1.25 !important;
@@ -17699,5 +17778,65 @@ button[style*="background:transparent"]:hover,
   .winera-contact-heading-wrap .winera-section-heading-h2 {
     font-size: clamp(15px, 4.3vw, 20px) !important;
     line-height: 1.25 !important;
+  }
+}
+
+/* ==========================================================================
+   MOBILE FOOTER 2-COLUMN GRID (1 LEFT, 1 RIGHT) FOR ALL ACCORDION LINKS
+   ========================================================================== */
+@media (max-width: 850px) {
+  .winera-footer-dropdown-content,
+  div.winera-footer-dropdown-content,
+  .winera-footer-menu-grid,
+  div.winera-footer-menu-grid,
+  .winera-footer-product-links,
+  .winera-footer-quick-links,
+  .winera-footer-resource-links {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-footer-dropdown-content.is-closed,
+  div.winera-footer-dropdown-content.is-closed,
+  .winera-footer-menu-grid.is-closed,
+  div.winera-footer-menu-grid.is-closed,
+  .winera-footer-product-links.is-closed,
+  .winera-footer-quick-links.is-closed,
+  .winera-footer-resource-links.is-closed {
+    display: none !important;
+  }
+
+  .winera-footer-dropdown-content.is-open,
+  div.winera-footer-dropdown-content.is-open,
+  .winera-footer-menu-grid.is-open,
+  div.winera-footer-menu-grid.is-open,
+  .winera-footer-product-links.is-open,
+  .winera-footer-quick-links.is-open,
+  .winera-footer-resource-links.is-open {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-footer-dropdown-content a,
+  .winera-footer-menu-grid a,
+  .winera-footer-product-links a,
+  .winera-footer-quick-links a,
+  .winera-footer-resource-links a {
+    display: block !important;
+    width: 100% !important;
+    font-size: 13px !important;
+    color: #475569 !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
   }
 }

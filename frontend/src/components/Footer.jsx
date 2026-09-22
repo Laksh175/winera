@@ -23,7 +23,7 @@ export default function Footer({ footerData }) {
     quick: false,
     resource: false
   });
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 850 : false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -135,10 +135,12 @@ export default function Footer({ footerData }) {
             <div
               className={`winera-footer-dropdown-content winera-footer-menu-grid winera-footer-product-links ${isMobile && !openSections.product ? 'is-closed' : 'is-open'}`}
               style={{
-                display: isMobile && !openSections.product ? 'none' : 'grid',
-                gridTemplateColumns: '1fr 1fr',
+                display: isMobile ? (openSections.product ? 'grid' : 'none') : 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
                 gap: isMobile ? '8px 14px' : '10px 20px',
-                padding: isMobile ? '4px 0 10px' : '0'
+                padding: isMobile ? '4px 0 10px' : '0',
+                width: '100%',
+                boxSizing: 'border-box'
               }}
             >
               {productLinks.map((prod, idx) => (
@@ -146,11 +148,12 @@ export default function Footer({ footerData }) {
                   key={idx}
                   href={prod.link}
                   style={{
-                    fontSize: '12px',
+                    fontSize: '13px',
                     color: '#475569',
                     fontWeight: '500',
                     textDecoration: 'none',
-                    transition: 'color 0.2s'
+                    transition: 'color 0.2s',
+                    wordBreak: 'break-word'
                   }}
                 >
                   {prod.name}
@@ -184,10 +187,13 @@ export default function Footer({ footerData }) {
             <div
               className={`winera-footer-dropdown-content winera-footer-menu-grid winera-footer-quick-links ${isMobile && !openSections.quick ? 'is-closed' : 'is-open'}`}
               style={{
-                display: isMobile && !openSections.quick ? 'none' : 'flex',
-                flexDirection: isMobile ? 'column' : 'column',
+                display: isMobile ? (openSections.quick ? 'grid' : 'none') : 'flex',
+                gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : undefined,
+                flexDirection: isMobile ? undefined : 'column',
                 gap: isMobile ? '8px 14px' : '10px',
-                padding: isMobile ? '4px 0 10px' : '0'
+                padding: isMobile ? '4px 0 10px' : '0',
+                width: '100%',
+                boxSizing: 'border-box'
               }}
             >
               {quickLinks.map((item, idx) => (
@@ -195,11 +201,12 @@ export default function Footer({ footerData }) {
                   key={idx}
                   href={item.link}
                   style={{
-                    fontSize: '12px',
+                    fontSize: '13px',
                     color: '#475569',
                     fontWeight: '500',
                     textDecoration: 'none',
-                    transition: 'color 0.2s'
+                    transition: 'color 0.2s',
+                    wordBreak: 'break-word'
                   }}
                 >
                   {item.name}
@@ -233,10 +240,13 @@ export default function Footer({ footerData }) {
             <div
               className={`winera-footer-dropdown-content winera-footer-menu-grid winera-footer-resource-links ${isMobile && !openSections.resource ? 'is-closed' : 'is-open'}`}
               style={{
-                display: isMobile && !openSections.resource ? 'none' : 'flex',
-                flexDirection: isMobile ? 'column' : 'column',
+                display: isMobile ? (openSections.resource ? 'grid' : 'none') : 'flex',
+                gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : undefined,
+                flexDirection: isMobile ? undefined : 'column',
                 gap: isMobile ? '8px 14px' : '10px',
-                padding: isMobile ? '4px 0 10px' : '0'
+                padding: isMobile ? '4px 0 10px' : '0',
+                width: '100%',
+                boxSizing: 'border-box'
               }}
             >
               {resourceLinks.map((item, idx) => (
@@ -244,11 +254,12 @@ export default function Footer({ footerData }) {
                   key={idx}
                   href={item.link}
                   style={{
-                    fontSize: '12px',
+                    fontSize: '13px',
                     color: '#475569',
                     fontWeight: '500',
                     textDecoration: 'none',
-                    transition: 'color 0.2s'
+                    transition: 'color 0.2s',
+                    wordBreak: 'break-word'
                   }}
                 >
                   {item.name}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -18,6 +18,16 @@ export default function ContactUs({ siteData }) {
     inquiry: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 850 : false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 850);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,19 +45,22 @@ export default function ContactUs({ siteData }) {
       <section className="winera-contact-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '100px',
+        paddingTop: isMobile ? '120px' : '165px',
+        paddingBottom: isMobile ? '60px' : '100px',
         background: `url(${contactUsHeroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#ffffff'
+        color: '#ffffff',
+        paddingLeft: isMobile ? '25px' : '20px',
+        paddingRight: isMobile ? '25px' : '20px',
+        boxSizing: 'border-box'
       }}>
-        <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
+        <div style={{ maxWidth: '850px', margin: '0 auto', padding: 0, zIndex: 2 }}>
           <h1 className="winera-contact-hero-h1" style={{
-            fontSize: '1.45rem',
+            fontSize: isMobile ? '1.25rem' : '1.45rem',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
@@ -66,17 +79,25 @@ export default function ContactUs({ siteData }) {
       </section>
 
       {/* 3. MAIN CONTACT US 2-COLUMN SIDE-BY-SIDE SECTION */}
-      <section style={{ padding: '80px 4vw 100px', background: '#F5F5F9' }}>
+      <section className="winera-contact-main-section" style={{
+        background: '#F5F5F9',
+        boxSizing: 'border-box',
+        width: '100%',
+        padding: isMobile ? '35px 25px 50px' : '80px 4vw 100px',
+        overflowX: 'hidden'
+      }}>
         <div className="winera-contact-page-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: '1.05fr 1fr',
-          gap: '60px',
-          alignItems: 'flex-start'
+          gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr',
+          gap: isMobile ? '30px' : '60px',
+          alignItems: 'flex-start',
+          boxSizing: 'border-box',
+          width: '100%'
         }}>
           {/* LEFT COLUMN: Section Title, Subtext & Stacked Contact Info Cards */}
-          <div style={{ textAlign: 'left' }}>
+          <div className="winera-contact-left-col" style={{ textAlign: 'left', width: '100%', boxSizing: 'border-box' }}>
             <div className="winera-contact-heading-wrap">
               <SectionHeading align="left" marginBottom="20px" accentWidth="240px" accentMaxWidth="400px">
                 {(() => {
@@ -100,7 +121,7 @@ export default function ContactUs({ siteData }) {
               </SectionHeading>
             </div>
 
-            <p style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '36px', maxWidth: '540px' }}>
+            <p className="winera-contact-desc" style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '36px', maxWidth: '540px' }}>
               {siteData?.contactPage?.desc || "Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations."}
             </p>
 
@@ -391,13 +412,19 @@ export default function ContactUs({ siteData }) {
         </div>
 
         {/* 4. OUR 2 GLOBAL LOCATIONS & MAP SECTION */}
-        <div style={{ maxWidth: '1240px', margin: '80px auto 0' }}>
-          <div style={{ marginBottom: '80px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '1240px', margin: isMobile ? '45px auto 0' : '80px auto 0', width: '100%', boxSizing: 'border-box' }}>
+          <div style={{ marginBottom: isMobile ? '40px' : '80px', textAlign: 'center' }}>
             <SectionHeading align="center" marginBottom="28px" accentWidth="240px" accentMaxWidth="400px">
               <span style={{ color: '#0f172a' }}>Where We’re </span>
               <span style={{ color: '#38bdf8' }}>Globally Present</span>
             </SectionHeading>
-            <div className="winera-contact-locations-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+            <div className="winera-contact-locations-grid" style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: isMobile ? '24px' : '30px',
+              width: '100%',
+              boxSizing: 'border-box'
+            }}>
 
               {/* Surat HQ — light cyan background fill with top-left cyan accent wing */}
               <motion.div
@@ -437,7 +464,7 @@ export default function ContactUs({ siteData }) {
                   background: '#e0f2fe',
                   border: '1.5px solid #38bdf8',
                   borderRadius: '10px',
-                  padding: '32px',
+                  padding: isMobile ? '24px 20px' : '32px',
                   boxShadow: 'none',
                   textAlign: 'left',
                   height: '100%',
@@ -504,7 +531,7 @@ export default function ContactUs({ siteData }) {
                   background: '#fefce8',
                   border: '1.5px solid #facc15',
                   borderRadius: '10px',
-                  padding: '32px',
+                  padding: isMobile ? '24px 20px' : '32px',
                   boxShadow: 'none',
                   textAlign: 'left',
                   height: '100%',
@@ -535,7 +562,7 @@ export default function ContactUs({ siteData }) {
           </div>
 
           {/* Location Map */}
-          <div style={{ textAlign: 'center', marginTop: '80px' }}>
+          <div style={{ textAlign: 'center', marginTop: isMobile ? '40px' : '80px' }}>
             <SectionHeading align="center" marginBottom="28px" accentWidth="220px" accentMaxWidth="360px">
               <span style={{ color: '#38bdf8' }}>Discover Our </span>
               <span style={{ color: '#0f172a' }}>Locations</span>
@@ -543,8 +570,8 @@ export default function ContactUs({ siteData }) {
 
             <div style={{
               width: '100%',
-              height: '420px',
-              borderRadius: '28px',
+              height: isMobile ? '300px' : '420px',
+              borderRadius: isMobile ? '18px' : '28px',
               overflow: 'hidden',
               boxShadow: 'none',
               border: '4px solid #ffffff'
