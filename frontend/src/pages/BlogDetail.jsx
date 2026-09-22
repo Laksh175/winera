@@ -9,18 +9,29 @@ import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import WineraImage from '../components/WineraImage';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 
-const getValidImageUrl = (url, fallback) => {
-  if (!url || typeof url !== 'string' || url.trim() === '') {
-    return fallback;
-  }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:') || url.startsWith('/')) {
+const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
+  if (url && typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:'))) {
     return url;
   }
-  if (url.startsWith('uploads/')) {
+  if (url && typeof url === 'string' && (url.startsWith('/uploads/') || url.startsWith('uploads/'))) {
+    const cleanUrl = url.startsWith('/') ? url : `/${url}`;
     const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001/${url}`;
+    return `http://${hostname}:5001${cleanUrl}`;
   }
-  return url || fallback;
+  if (url && typeof url === 'string' && !url.includes('/src/assets/') && (url.startsWith('/assets/') || url.startsWith('/@fs/'))) {
+    return url;
+  }
+  if (url && typeof url === 'object' && url.src) {
+    return url.src;
+  }
+  if (postId !== null && postId !== undefined) {
+    const match = DEFAULT_BLOG_POSTS.find(p => String(p.id) === String(postId) || (p.slug && p.slug === String(postId)));
+    if (match?.image) return match.image;
+  }
+  if (typeof postIdx === 'number' && DEFAULT_BLOG_POSTS[postIdx]?.image) {
+    return DEFAULT_BLOG_POSTS[postIdx].image;
+  }
+  return fallback;
 };
 
 // Helper for title & subtitle concatenation with proper spacing
@@ -84,47 +95,55 @@ const extractHeadings = (text) => {
   return headings;
 };
 
-const renderTextWithLinks = (textStr) => {
-  if (!textStr) return null;
-  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-  const parts = [];
-  let lastIndex = 0;
-  let match;
+export const sanitizeAndFormatHtml = (input) => {
+  if (!input || typeof input !== 'string') return '';
+  let html = input;
 
-  while ((match = linkRegex.exec(textStr)) !== null) {
-    if (match.index > lastIndex) {
-      parts.push(textStr.substring(lastIndex, match.index));
-    }
-    const linkText = match[1];
-    const linkUrl = match[2];
+  // 1. Remove editor cursor artifacts
+  html = html.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
 
-    // Omit any winera.in or external link tags, render as clean plain text
-    if (linkUrl.includes('winera.in') || linkUrl.startsWith('http')) {
-      parts.push(linkText);
-    } else {
-      parts.push(
-        <a
-          key={match.index}
-          href={linkUrl}
-          target="_blank"
-          rel="noreferrer"
-          style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}
-        >
-          {linkText}
-        </a>
-      );
-    }
-    lastIndex = match.index + match[0].length;
-  }
-  if (lastIndex < textStr.length) {
-    parts.push(textStr.substring(lastIndex));
-  }
-  return parts.length > 0 ? parts : textStr;
+  // 2. Convert markdown to HTML tags if markdown syntax exists
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/(^|[^\*])\*(?!\*)(.+?)\*(?!\*)/g, '$1<em>$2</em>');
+  html = html.replace(/~~(.+?)~~/g, '<del>$1</del>');
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+  // 3. Ensure links have proper color, font-weight and security attributes
+  html = html.replace(/<a\s+(?:[^>]*?\s+)?href="([^"]*)"([^>]*)>/gi, (match, href, rest) => {
+    const isWineraOrRelative = href.startsWith('/') || href.startsWith('#');
+    const targetAttr = isWineraOrRelative ? '' : ' target="_blank" rel="noopener noreferrer"';
+    return `<a href="${href}" style="color: #0284c7; font-weight: 700; text-decoration: underline;"${targetAttr}>`;
+  });
+
+  return html;
+};
+
+const normalizeRawContent = (raw) => {
+  if (!raw) return '';
+  let str = raw;
+  // Strip ql-cursor or unwanted meta spans
+  str = str.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
+  // Convert lists
+  str = str.replace(/<ul>([\s\S]*?)<\/ul>/gi, (match, listContent) => {
+    return '\n' + listContent.replace(/<li>(.*?)<\/li>/gi, '- $1\n').trim() + '\n\n';
+  });
+  str = str.replace(/<ol>([\s\S]*?)<\/ol>/gi, (match, listContent) => {
+    let idx = 1;
+    return '\n' + listContent.replace(/<li>(.*?)<\/li>/gi, () => `${idx++}. $1\n`).trim() + '\n\n';
+  });
+  // Replace <p>...</p> blocks with double newlines
+  str = str.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '\n\n');
+  // Replace <br\s*/?> with single newline
+  str = str.replace(/<br\s*\/?>/gi, '\n');
+  // Clean multiple newlines
+  str = str.replace(/\n{3,}/g, '\n\n');
+  return str.trim();
 };
 
 const renderFormattedText = (text) => {
   if (!text) return null;
-  const paragraphs = text.split('\n\n');
+  const normalized = normalizeRawContent(text);
+  const paragraphs = normalized.split('\n\n');
   let headingCounter = 0;
   const elements = [];
 
@@ -155,24 +174,25 @@ const renderFormattedText = (text) => {
               scrollMarginTop: '110px',
               textAlign: 'left'
             }}
-          >
-            {renderTextWithLinks(headingText)}
-          </h3>
+            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(headingText) }}
+          />
         );
       }
 
       if (bodyLines) {
         elements.push(
-          <p key={`h-body-${idx}`} style={{
-            fontSize: '17px',
-            color: '#334155',
-            lineHeight: 1.85,
-            fontWeight: '400',
-            marginBottom: '22px',
-            textAlign: 'left'
-          }}>
-            {renderTextWithLinks(bodyLines)}
-          </p>
+          <p
+            key={`h-body-${idx}`}
+            style={{
+              fontSize: '17px',
+              color: '#334155',
+              lineHeight: 1.85,
+              fontWeight: '400',
+              marginBottom: '22px',
+              textAlign: 'left'
+            }}
+            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(bodyLines.replace(/\n/g, '<br>')) }}
+          />
         );
       }
       return;
@@ -196,25 +216,43 @@ const renderFormattedText = (text) => {
             scrollMarginTop: '110px',
             textAlign: 'left'
           }}
-        >
-          {renderTextWithLinks(trimmed)}
-        </h4>
+          dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(trimmed) }}
+        />
+      );
+      return;
+    }
+
+    // Bullet list block
+    if (trimmed.includes('\n- ') || trimmed.startsWith('- ') || trimmed.includes('\n* ') || trimmed.startsWith('* ')) {
+      const listItems = trimmed.split(/\n(?=[-*]\s+)/).map(l => l.replace(/^[-*]\s+/, '').trim()).filter(Boolean);
+      elements.push(
+        <ul key={`ul-${idx}`} style={{ margin: '14px 0 22px 24px', paddingLeft: '8px', textAlign: 'left' }}>
+          {listItems.map((item, lIdx) => (
+            <li
+              key={lIdx}
+              style={{ fontSize: '17px', color: '#334155', lineHeight: 1.8, marginBottom: '8px' }}
+              dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(item) }}
+            />
+          ))}
+        </ul>
       );
       return;
     }
 
     // Regular paragraph
     elements.push(
-      <p key={`p-${idx}`} style={{
-        fontSize: '17px',
-        color: '#334155',
-        lineHeight: 1.85,
-        fontWeight: '400',
-        marginBottom: '22px',
-        textAlign: 'left'
-      }}>
-        {renderTextWithLinks(trimmed)}
-      </p>
+      <p
+        key={`p-${idx}`}
+        style={{
+          fontSize: '17px',
+          color: '#334155',
+          lineHeight: 1.85,
+          fontWeight: '400',
+          marginBottom: '22px',
+          textAlign: 'left'
+        }}
+        dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(trimmed.replace(/\n/g, '<br>')) }}
+      />
     );
   });
 
@@ -237,14 +275,29 @@ export default function BlogDetail({ siteData }) {
     ? getValidImageUrl(blogHero.bgUrl, blogHeroBg)
     : blogHeroBg;
 
-  const blogPosts = (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length >= 12 && siteData.blogPosts[0]?.fullContent?.length > 300 && siteData.blogPosts[1]?.title !== siteData.blogPosts[0]?.title)
+  const isDummyPosts = Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && (
+    siteData.blogPosts[0]?.title === 'Blog 1' ||
+    (siteData.blogPosts[0]?.title?.includes('Soft Play vs Trampoline Park: Which') && siteData.blogPosts.length < 15) ||
+    siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
+  );
+
+  const rawPosts = (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
     ? siteData.blogPosts
     : DEFAULT_BLOG_POSTS;
+
+  const blogPosts = rawPosts.map((p, idx) => {
+    const defaultP = DEFAULT_BLOG_POSTS[idx] || DEFAULT_BLOG_POSTS.find(d => String(d.id) === String(p.id) || d.slug === p.slug) || {};
+    return {
+      ...defaultP,
+      ...p,
+      image: getValidImageUrl(p.image || p.imgUrl, defaultP.image || blogCardImg, p.id, idx)
+    };
+  });
 
   // Find post by ID or slug with fallback
   const defaultMatch = DEFAULT_BLOG_POSTS.find(p => String(p.id) === String(id) || String(p.slug) === String(id));
   const post = blogPosts.find(p => String(p.id) === String(id) || String(p.slug) === String(id)) || defaultMatch || blogPosts[0];
-  const postImg = getValidImageUrl(post?.image || post?.imgUrl, blogCardImg);
+  const postImg = getValidImageUrl(post?.image || post?.imgUrl, defaultMatch?.image || blogCardImg, post?.id);
 
   // Recent/Related posts: Pick the NEXT 3 consecutive blogs after current blog (e.g. blog 5 -> blogs 6, 7, 8)
   const currentIndex = blogPosts.findIndex(p => String(p.id) === String(post?.id) || String(p.slug) === String(post?.slug));
@@ -260,10 +313,27 @@ export default function BlogDetail({ siteData }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [post]);
 
-  // Always use rich full content so ALL blog detail pages show complete detailed article content
-  const rawArticleContent = (post.fullContent && post.fullContent.length > 400)
-    ? post.fullContent
-    : DEFAULT_BLOG_POSTS[0].fullContent;
+  // Resolve rich article content from fullContent or structured description & sections
+  let rawArticleContent = post.fullContent || '';
+  if (!rawArticleContent && (post.description || Array.isArray(post.sections))) {
+    const parts = [];
+    if (post.description && post.description.trim()) {
+      parts.push(post.description.trim());
+    }
+    if (Array.isArray(post.sections)) {
+      post.sections.forEach(sec => {
+        const t = (sec.title || '').trim();
+        const p = (sec.paragraph || sec.content || '').trim();
+        if (t && p) parts.push(`### ${t}\n\n${p}`);
+        else if (t) parts.push(`### ${t}`);
+        else if (p) parts.push(p);
+      });
+    }
+    rawArticleContent = parts.join('\n\n');
+  }
+  if (!rawArticleContent) {
+    rawArticleContent = DEFAULT_BLOG_POSTS[0]?.fullContent || '';
+  }
 
   const headings = extractHeadings(rawArticleContent);
 
@@ -586,7 +656,7 @@ export default function BlogDetail({ siteData }) {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                   {recentPosts.slice(0, 3).map((recPost) => {
-                    const recImage = getValidImageUrl(recPost.image || recPost.imgUrl, blogCardImg);
+                    const recImage = recPost.image || getValidImageUrl(recPost.imgUrl, blogCardImg, recPost.id);
                     const recExcerpt = recPost.excerpt || recPost.line1 || 'Soft play or trampoline park? Discover the key differences in investment...';
                     const truncatedExcerpt = formatExcerpt(recExcerpt, 75);
 

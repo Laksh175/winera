@@ -1853,6 +1853,16 @@ export const getContent = async (req, res) => {
       );
     }
 
+    // Auto-clean stale dummy blogPosts from MongoDB so 28 rich blogs with local assets load cleanly
+    if (Array.isArray(siteData.blogPosts) && siteData.blogPosts.length > 0 && (
+      siteData.blogPosts[0]?.title === 'Blog 1' ||
+      (siteData.blogPosts[0]?.title?.includes('Soft Play vs Trampoline Park: Which') && siteData.blogPosts.length < 15) ||
+      siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
+    )) {
+      await Content.deleteOne({ sectionKey: 'blogPosts' });
+      delete siteData.blogPosts;
+    }
+
     res.json(siteData);
   } catch (error) {
     res.status(500).json({ message: error.message });

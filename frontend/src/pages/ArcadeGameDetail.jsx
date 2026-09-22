@@ -408,7 +408,7 @@ export default function ArcadeGameDetail({ siteData }) {
         </section>
 
         {/* 3. PRODUCT SPECIFICATION BLOCK IN HERO SECTION BOTTOM (MATCHING FIGMA/DESIGN SCREENSHOT 1:1) */}
-        <section style={{ padding: '70px 4vw 90px', background: '#F5F5F9' }}>
+        <section className="winera-arcade-specs-section" style={{ padding: '70px 4vw 90px', background: '#F5F5F9' }}>
           <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
             <div style={{
               display: 'grid',
@@ -746,7 +746,7 @@ export default function ArcadeGameDetail({ siteData }) {
         </section>
 
         {/* 4. SPECIFICATION DETAIL SECTION (MATCHING DESIGN SCREENSHOT 1:1) */}
-        <section style={{ padding: '40px 4vw 90px', background: '#F5F5F9' }}>
+        <section className="winera-arcade-detail-section" style={{ padding: '40px 4vw 90px', background: '#F5F5F9' }}>
           <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
             {/* Section Header with Yellow Brush Accent Line */}
             <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

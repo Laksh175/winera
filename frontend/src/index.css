@@ -82,8 +82,8 @@ select {
    Line-height: 26px
    Letter-spacing: 0px
    ========================================================================== */
-p:not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-sticky-register-card p):not(.winera-blog-sticky-register-card *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p),
-p:not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p) *,
+p:not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-sticky-register-card p):not(.winera-blog-sticky-register-card *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *),
+p:not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *) *:not(strong):not(b):not(em):not(i):not(u):not(a):not(del):not(s):not(strike):not(code),
 .lead,
 .winera-section-desc,
 .winera-card-desc,
@@ -108,6 +108,42 @@ p:not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.
   line-height: 25px !important;
   letter-spacing: 0px !important;
   color: rgba(55, 62, 65, 1);
+}
+
+/* Explicit Global Styling for Bold and Italic elements */
+strong, b,
+p strong, p b,
+div strong, div b,
+span strong, span b,
+li strong, li b,
+.ql-editor strong, .ql-editor b,
+.ql-editor * strong, .ql-editor * b,
+.winera-blog-article-main-col strong, .winera-blog-article-main-col b,
+.winera-blog-article-main-col * strong, .winera-blog-article-main-col * b,
+.winera-admin-blog-preview strong, .winera-admin-blog-preview b,
+.winera-admin-blog-preview * strong, .winera-admin-blog-preview * b {
+  font-weight: 800 !important;
+  color: #0f172a !important;
+}
+
+em, i,
+p em, p i,
+div em, div i,
+span em, span i,
+li em, li i,
+.ql-editor em, .ql-editor i,
+.ql-editor * em, .ql-editor * i,
+.winera-blog-article-main-col em, .winera-blog-article-main-col i,
+.winera-blog-article-main-col * em, .winera-blog-article-main-col * i,
+.winera-admin-blog-preview em, .winera-admin-blog-preview i,
+.winera-admin-blog-preview * em, .winera-admin-blog-preview * i {
+  font-style: italic !important;
+}
+
+u,
+p u, div u, span u, li u,
+.ql-editor u, .winera-blog-article-main-col u, .winera-admin-blog-preview u {
+  text-decoration: underline !important;
 }
 
 /* Home Hero Subtitle Paragraph 16px Typography */
@@ -9047,20 +9083,30 @@ img[src*="yellow-stroke-line"] {
     font-size: 1.15rem !important;
   }
 
+  .winera-arcade-specs-section,
+  section.winera-arcade-specs-section {
+    padding: 20px 4vw 16px !important;
+  }
+
+  .winera-arcade-detail-section,
+  section.winera-arcade-detail-section {
+    padding: 16px 4vw 40px !important;
+  }
+
   .winera-arcade-specs-grid {
     display: flex !important;
     flex-direction: column !important;
-    gap: 24px !important;
+    gap: 18px !important;
   }
 
   .winera-arcade-left-group {
     flex-direction: column !important;
-    gap: 16px !important;
+    gap: 14px !important;
   }
 
   .winera-arcade-main-card {
     order: 1 !important;
-    height: 270px !important;
+    height: 250px !important;
     width: 100% !important;
   }
 
@@ -9072,7 +9118,7 @@ img[src*="yellow-stroke-line"] {
     justify-content: center !important;
     align-items: center !important;
     gap: 8px !important;
-    padding: 8px 0 !important;
+    padding: 4px 0 !important;
   }
 
   .winera-arcade-thumb-inner {
@@ -9083,9 +9129,9 @@ img[src*="yellow-stroke-line"] {
   }
 
   .winera-arcade-thumb-box {
-    width: 52px !important;
-    height: 52px !important;
-    border-radius: 14px !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
     flex-shrink: 0 !important;
   }
 
@@ -9094,49 +9140,78 @@ img[src*="yellow-stroke-line"] {
     padding-left: 0 !important;
     align-items: center !important;
     text-align: center !important;
+    gap: 12px !important;
   }
 
   .winera-arcade-details-col h2 {
-    font-size: 1.9rem !important;
+    font-size: 1.75rem !important;
     text-align: center !important;
   }
 
   .winera-arcade-details-col img {
-    margin: 0 auto 4px !important;
+    margin: 0 auto 2px !important;
   }
 
   .winera-arcade-banner-pill {
     width: 100% !important;
     max-width: 100% !important;
     text-align: center !important;
+    margin-top: 2px !important;
+    padding: 5px 12px !important;
   }
 
   .winera-arcade-specs-list {
     align-items: center !important;
     text-align: center !important;
+    gap: 6px !important;
   }
 
   .winera-arcade-dim-container {
     justify-content: center !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    margin-top: 4px !important;
   }
 
   .winera-arcade-dim-card {
-    width: 95px !important;
+    width: 88px !important;
+    padding: 10px 4px !important;
   }
 
   .winera-arcade-cta-row {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
     justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
     width: 100% !important;
+    max-width: 340px !important;
+    margin: 10px auto 0 auto !important;
+  }
+
+  .winera-arcade-cta-row button,
+  .winera-arcade-cta-row a {
+    flex: 1 1 0 !important;
+    width: 140px !important;
+    max-width: 160px !important;
+    height: 50px !important;
+    font-size: 13.5px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-size: 100% 100% !important;
+    box-sizing: border-box !important;
   }
 
   .winera-spec-details-grid {
     grid-template-columns: 1fr !important;
+    gap: 16px !important;
   }
 
   .winera-spec-detail-card-hover {
-    padding: 22px 18px !important;
+    padding: 20px 16px !important;
   }
 }
 

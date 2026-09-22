@@ -10,18 +10,30 @@ import WineraImage from '../components/WineraImage';
 import { ChevronDown } from 'lucide-react';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 
-const getValidImageUrl = (url, fallback) => {
-  if (!url || typeof url !== 'string' || url.trim() === '') {
-    return fallback;
-  }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:') || url.startsWith('/')) {
+const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
+  if (url && typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:'))) {
     return url;
   }
-  if (url.startsWith('uploads/')) {
+  if (url && typeof url === 'string' && (url.startsWith('/uploads/') || url.startsWith('uploads/'))) {
+    const cleanUrl = url.startsWith('/') ? url : `/${url}`;
     const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001/${url}`;
+    return `http://${hostname}:5001${cleanUrl}`;
   }
-  return url || fallback;
+  if (url && typeof url === 'string' && !url.includes('/src/assets/') && (url.startsWith('/assets/') || url.startsWith('/@fs/'))) {
+    return url;
+  }
+  if (url && typeof url === 'object' && url.src) {
+    return url.src;
+  }
+  // Check default post image by matching ID or index
+  if (postId !== null && postId !== undefined) {
+    const match = DEFAULT_BLOG_POSTS.find(p => String(p.id) === String(postId) || (p.slug && p.slug === String(postId)));
+    if (match?.image) return match.image;
+  }
+  if (typeof postIdx === 'number' && DEFAULT_BLOG_POSTS[postIdx]?.image) {
+    return DEFAULT_BLOG_POSTS[postIdx].image;
+  }
+  return fallback;
 };
 
 // Helper for title & subtitle concatenation with proper spacing
@@ -66,9 +78,24 @@ export default function Blog({ siteData }) {
     ? getValidImageUrl(blogHero.bgUrl, blogHeroBg)
     : blogHeroBg;
 
-  const blogPosts = (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length >= 12 && siteData.blogPosts[0]?.fullContent?.length > 300 && siteData.blogPosts[1]?.title !== siteData.blogPosts[0]?.title)
+  const isDummyPosts = Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && (
+    siteData.blogPosts[0]?.title === 'Blog 1' ||
+    (siteData.blogPosts[0]?.title?.includes('Soft Play vs Trampoline Park: Which') && siteData.blogPosts.length < 15) ||
+    siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
+  );
+
+  const rawPosts = (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
     ? siteData.blogPosts
     : DEFAULT_BLOG_POSTS;
+
+  const blogPosts = rawPosts.map((post, idx) => {
+    const defaultPost = DEFAULT_BLOG_POSTS[idx] || DEFAULT_BLOG_POSTS.find(d => String(d.id) === String(post.id) || d.slug === post.slug) || {};
+    return {
+      ...defaultPost,
+      ...post,
+      image: getValidImageUrl(post.image || post.imgUrl, defaultPost.image || blogCardImg, post.id, idx)
+    };
+  });
 
   const blogSeo = siteData?.blogSeo || {
     pageTitle: 'Blog | Winera International – Game Zone Insights & Tips',
@@ -214,7 +241,7 @@ export default function Blog({ siteData }) {
                   {/* Card Top Image */}
                   <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '16px', overflow: 'hidden', height: '210px', flexShrink: 0, marginBottom: '16px', background: '#e0f2fe' }}>
                     <WineraImage
-                      src={getValidImageUrl(post.image || post.imgUrl, blogCardImg)}
+                      src={getValidImageUrl(post.image || post.imgUrl, blogCardImg, post.id, index)}
                       alt={getFullTitle(post)}
                       style={{ width: '100%', height: '100%' }}
                       imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
