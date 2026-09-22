@@ -139,13 +139,13 @@ export default function Home({ siteData }) {
     typeof window !== 'undefined' ? window.innerWidth <= 850 : false
   );
   const [isPhone, setIsPhone] = React.useState(
-    typeof window !== 'undefined' ? window.innerWidth < 576 : false
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
   );
 
   React.useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 850);
-      setIsPhone(window.innerWidth < 576);
+      setIsPhone(window.innerWidth < 768);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -301,14 +301,14 @@ export default function Home({ siteData }) {
           position: 'relative',
           width: '100%',
           minHeight: 'auto',
-          aspectRatio: isMobile ? '1080 / 1685' : '1920 / 840',
-          paddingTop: isMobile ? '0px' : '65px',
-          paddingBottom: isMobile ? '0px' : '70px',
-          background: isMobile ? 'none' : `url(${heroBg}) center/100% 100% no-repeat`,
+          aspectRatio: isPhone ? '1080 / 1685' : '1920 / 840',
+          paddingTop: isPhone ? '0px' : '65px',
+          paddingBottom: isPhone ? '0px' : '70px',
+          background: isPhone ? 'none' : `url(${heroBg}) center/100% 100% no-repeat`,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: isMobile ? 'flex-start' : 'center',
+          justifyContent: isPhone ? 'flex-start' : 'center',
           textAlign: 'center',
           color: '#ffffff',
           overflow: 'hidden'
@@ -353,8 +353,8 @@ export default function Home({ siteData }) {
             width: '100%',
             maxWidth: '951px',
             margin: '0 auto',
-            padding: isMobile ? '0' : '0 20px',
-            paddingTop: isMobile ? '27%' : '0',
+            padding: isPhone ? '0' : '0 20px',
+            paddingTop: isPhone ? '27%' : '0',
             zIndex: 2
           }}>
             {/* Badge */}
