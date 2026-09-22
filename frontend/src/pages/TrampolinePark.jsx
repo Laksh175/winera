@@ -803,7 +803,7 @@ export default function TrampolinePark({ siteData }) {
       }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Header */}
-          <div style={{ textAlign: 'center', maxWidth: '880px', margin: '0 auto 45px' }}>
+          <div className="winera-trampoline-roi-header" style={{ textAlign: 'center', maxWidth: '880px', margin: '0 auto 45px' }}>
             <img
               src={yellowStrokeLine}
               alt=""

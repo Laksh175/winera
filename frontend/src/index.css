@@ -9484,10 +9484,14 @@ h2 span,
   }
 
   /* --- Trampoline Park Page --- */
+  .winera-trampoline-roi-header {
+    margin: 0 auto 10px !important;
+  }
+
   .winera-trampoline-intro-grid,
   .winera-trampoline-roi-grid {
     grid-template-columns: 1fr !important;
-    gap: 20px !important;
+    gap: 14px !important;
     text-align: center !important;
   }
 
@@ -10518,19 +10522,33 @@ h2 span,
   .winera-process-mobile-snap-track .winera-process-card-wrapper-yellow,
   .winera-process-mobile-snap-track .winera-process-card-wrapper-yellow-left,
   .winera-process-mobile-snap-track .winera-process-card-wrapper-cyan-right {
-    flex: 0 0 76vw !important;
-    width: 76vw !important;
+    flex: 0 0 calc(50% - 12px) !important;
+    width: calc(50% - 12px) !important;
     flex-shrink: 0 !important;
-    max-width: 275px !important;
-    min-width: 240px !important;
+    max-width: 340px !important;
+    min-width: 280px !important;
     scroll-snap-align: start !important;
     scroll-snap-stop: always !important;
     position: relative !important;
     box-sizing: border-box !important;
-    margin: 12px 4px 12px 4px !important;
+    margin: 12px 6px !important;
     height: auto !important;
     display: flex !important;
     flex-direction: column !important;
+  }
+
+  @media (max-width: 575px) {
+    .winera-process-mobile-snap-track > div,
+    .winera-process-mobile-snap-track .winera-process-card-wrapper-cyan,
+    .winera-process-mobile-snap-track .winera-process-card-wrapper-yellow,
+    .winera-process-mobile-snap-track .winera-process-card-wrapper-yellow-left,
+    .winera-process-mobile-snap-track .winera-process-card-wrapper-cyan-right {
+      flex: 0 0 82vw !important;
+      width: 82vw !important;
+      max-width: 300px !important;
+      min-width: 240px !important;
+      margin: 12px 4px !important;
+    }
   }
 
   /* Desktop-style prominent colored corner borders on mobile */
