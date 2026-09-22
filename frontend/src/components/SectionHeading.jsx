@@ -9,9 +9,12 @@ function formatWordToTitleCase(word) {
   if (ACRONYMS.has(upper)) {
     return upper;
   }
-  return word.replace(/([A-Za-z]+)/g, (match) => {
+  return word.replace(/\b([a-zA-Z]+)\b/g, (match, p1, offset, string) => {
     const mUpper = match.toUpperCase();
     if (ACRONYMS.has(mUpper)) return mUpper;
+    if (offset > 0 && (string[offset - 1] === "'" || string[offset - 1] === "’")) {
+      return match.toLowerCase();
+    }
     return match.charAt(0).toUpperCase() + match.slice(1).toLowerCase();
   });
 }

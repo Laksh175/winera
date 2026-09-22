@@ -401,10 +401,8 @@ export default function Project({ siteData }) {
         {/* Title: Crafting India's Best Play Destinations */}
         <div className="winera-project-heading-wrapper">
           <SectionHeading marginBottom="45px" accentWidth="220px" accentMaxWidth="260px">
-            {siteData?.projectHeader?.title && siteData.projectHeader.title !== "Crafting *India's Best Play Destinations*" && siteData.projectHeader.title !== "Crafting India's Best Play Destinations"
-              ? siteData.projectHeader.title
-              : <>Crafting <span style={{ color: '#00a8ff' }}>India's</span> <br className="winera-mobile-break" /><span style={{ color: '#00a8ff' }}>Best Play Destinations</span></>
-            }
+            <span className="winera-project-heading-line1">Crafting <span style={{ color: '#00a8ff' }}>India's Best</span></span>{' '}
+            <span className="winera-project-heading-line2" style={{ color: '#00a8ff' }}>Play Destinations</span>
           </SectionHeading>
         </div>
 

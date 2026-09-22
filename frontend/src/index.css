@@ -3424,15 +3424,16 @@ html {
     padding-top: 0px !important;
   }
 
+  section.winera-bumpercar-options-section,
   .winera-bumpercar-options-section {
-    padding: 50px 5vw 55px !important;
+    padding: 30px 5vw 15px !important;
     background: #F5F5F9 !important;
     /* remove bg image */
   }
 
   .winera-bumpercar-options-grid {
     grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    gap: 15px !important;
   }
 
   .winera-bumpercar-options-img {
@@ -3442,6 +3443,10 @@ html {
 
   .winera-bumpercar-options-text {
     text-align: center !important;
+  }
+
+  .winera-bumpercar-options-text>div:last-child {
+    margin-bottom: 10px !important;
   }
 
   .winera-bumpercar-options-text img {
@@ -3461,8 +3466,10 @@ html {
     text-align: left !important;
   }
 
+  section.winera-bumpercar-comparison-section,
   .winera-bumpercar-comparison-section {
-    padding: 50px 5vw 55px !important;
+    padding: 15px 5vw 30px !important;
+    padding-top: 15px !important;
   }
 
   .winera-bumpercar-comparison-section h2 {
@@ -4799,30 +4806,33 @@ html {
   /* Amusement Park Supplier Section Mobile Sequence: Title -> Content -> Button -> Image */
   section.winera-amusement-supplier-section,
   .winera-amusement-supplier-section {
-    padding: 15px 16px 10px !important;
+    padding: 5px 16px 10px !important;
+    padding-top: 10px !important;
     padding-bottom: 10px !important;
   }
 
   .winera-amusement-supplier-grid {
     grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    gap: 10px !important;
   }
 
   .winera-amusement-supplier-img {
     order: 2 !important;
-    margin: 16px auto 0 !important;
+    margin: 6px auto 0 !important;
     width: 100% !important;
-    max-width: 440px !important;
+    max-width: 480px !important;
     display: flex !important;
     justify-content: center !important;
+    align-items: center !important;
   }
 
   .winera-amusement-supplier-img img {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 116% !important;
+    max-width: 460px !important;
     height: auto !important;
     margin: 0 auto !important;
     display: block !important;
+    transform: scale(1.08) !important;
   }
 
   .winera-amusement-supplier-text {
@@ -4840,12 +4850,12 @@ html {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    margin: 0 auto 12px !important;
+    margin: 0 auto 8px !important;
   }
 
   .winera-amusement-supplier-text img[src*="stroke"],
   .winera-amusement-supplier-text img {
-    margin: 0 auto 10px !important;
+    margin: 0 auto 6px !important;
     max-width: 260px !important;
     display: block !important;
   }
@@ -4854,7 +4864,7 @@ html {
     font-size: clamp(20px, 5.2vw, 28px) !important;
     line-height: 1.25 !important;
     text-align: center !important;
-    margin: 0 auto 12px !important;
+    margin: 0 auto 8px !important;
     width: 100% !important;
   }
 
@@ -4862,7 +4872,7 @@ html {
     text-align: center !important;
     font-size: 13.5px !important;
     line-height: 1.55 !important;
-    margin: 0 auto 16px !important;
+    margin: 0 auto 10px !important;
     max-width: 580px !important;
   }
 
@@ -4871,6 +4881,12 @@ html {
     margin: 0 auto !important;
     display: flex !important;
     justify-content: center !important;
+  }
+
+  section.winera-amusement-banner-section,
+  .winera-amusement-banner-section {
+    padding: 25px 16px 20px !important;
+    padding-top: 25px !important;
   }
 
   /* Amusement Park Before You Build ROI Mobile Sequence: Title -> Content -> Button -> Image */
@@ -16873,23 +16889,52 @@ button[style*="background:transparent"]:hover,
   opacity: 1 !important;
 }
 
-.winera-mobile-break {
-  display: none;
+.winera-project-heading-wrapper .winera-project-heading-line1,
+.winera-project-heading-wrapper .winera-project-heading-line2 {
+  display: inline;
 }
 
 @media (max-width: 768px) {
-  .winera-mobile-break {
+  .winera-project-heading-wrapper .winera-section-heading-inner {
     display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: center !important;
   }
 
   .winera-project-heading-wrapper h2,
+  .winera-project-heading-wrapper .winera-section-heading-h2,
   .winera-project-main-section h2 {
-    font-size: clamp(20px, 5.4vw, 25px) !important;
-    line-height: 1.25 !important;
-    max-width: 360px !important;
+    font-size: clamp(16px, 4.4vw, 22px) !important;
+    line-height: 1.35 !important;
+    max-width: 100% !important;
     margin: 0 auto !important;
     text-align: center !important;
-    white-space: normal !important;
+    display: block !important;
+  }
+
+  .winera-project-heading-wrapper .winera-section-heading-h2 span.winera-project-heading-line1,
+  .winera-project-heading-wrapper span.winera-project-heading-line1,
+  .winera-project-heading-line1 {
+    display: block !important;
+    margin: 0 auto 3px !important;
+    text-align: center !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+  }
+
+  .winera-project-heading-wrapper .winera-section-heading-h2 span.winera-project-heading-line2,
+  .winera-project-heading-wrapper span.winera-project-heading-line2,
+  .winera-project-heading-line2 {
+    display: block !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+  }
+
+  .winera-project-heading-line1::after {
+    content: none !important;
   }
 
   /* Project Gallery Section Mobile Compact Top Spacing */
