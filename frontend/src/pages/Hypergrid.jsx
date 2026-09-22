@@ -352,8 +352,8 @@ export default function Hypergrid({ siteData }) {
               src={getValidImageUrl(siteData?.hypergridBanner?.imgUrl, hypergridBannerImg)}
               alt="Interactive LED Floor Games for High-Footfall Venues"
               style={{
-                width: '100%',
-                maxWidth: '702px',
+                width: '150%',
+                maxWidth: '706px',
                 height: 'auto',
                 display: 'block'
               }}

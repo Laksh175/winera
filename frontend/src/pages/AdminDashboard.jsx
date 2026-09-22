@@ -4647,19 +4647,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>CTA Consultation Banner</h3>
-                <p style={{ fontSize: '12.5px', color: '#64748b', margin: '3px 0 0' }}>Manage top subtitle tag, main heading title, CTA button label, link, and background banner image.</p>
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Top Tagline (e.g. READY TO GET STARTED?)
-                </label>
-                <input
-                  type="text"
-                  value={formData.ctaBanner?.tagline !== undefined ? formData.ctaBanner.tagline : "READY TO GET STARTED?"}
-                  onChange={(e) => handleFieldChange('ctaBanner', 'tagline', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
+                <p style={{ fontSize: '12.5px', color: '#64748b', margin: '3px 0 0' }}>Manage main heading title, description paragraph, CTA button label, link, and background banner image.</p>
               </div>
 
               <div>
@@ -4668,21 +4656,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.ctaBanner?.title !== undefined ? formData.ctaBanner.title : "Start Your Game Zone Journey"}
+                  value={formData.ctaBanner?.title !== undefined && formData.ctaBanner?.title !== "Start Your Game Zone Journey" ? formData.ctaBanner.title : (formData.ctaBanner?.subtitle !== undefined ? formData.ctaBanner.subtitle : "Game Zones Are India's Fastest Growing Business Are You In?")}
                   onChange={(e) => handleFieldChange('ctaBanner', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '700' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Yellow Highlight Subtitle
-                </label>
-                <input
-                  type="text"
-                  value={formData.ctaBanner?.subtitle !== undefined ? formData.ctaBanner.subtitle : "Game Zones Are India's Fastest Growing Business Are You In?"}
-                  onChange={(e) => handleFieldChange('ctaBanner', 'subtitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
 

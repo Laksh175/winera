@@ -16347,6 +16347,25 @@ button[style*="background:transparent"]:hover,
   }
 }
 
+/* Bumper Car Quick Comparison Desktop vs Mobile Visibility */
+.winera-bumpercar-comparison-desktop {
+  display: flex !important;
+}
+
+.winera-bumpercar-comparison-mobile {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .winera-bumpercar-comparison-desktop {
+    display: none !important;
+  }
+
+  .winera-bumpercar-comparison-mobile {
+    display: flex !important;
+  }
+}
+
 /* Hypergrid "What Makes Hypergrid" Accordion Styles */
 .winera-hypergrid-whyus-item {
   display: flex;
