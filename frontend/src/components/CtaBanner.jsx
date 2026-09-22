@@ -84,6 +84,7 @@ export default function CtaBanner({
   subtitleFontWeight = null,
   description = "Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company",
   descriptionFontSize = null,
+  descriptionFontWeight = null,
   buttonText = "Talk to an Expert",
   buttonLink = "https://wa.me/919428989488",
   buttonTheme = "cyan",
@@ -275,7 +276,7 @@ export default function CtaBanner({
               {!isCustomBgUploaded && subtitle && (
                 <div className="winera-cta-subtitle" style={{
                   fontSize: subtitleFontSize || 'clamp(15px, 1.8vw, 22px)',
-                  fontWeight: subtitleFontWeight || '800',
+                  fontWeight: subtitleFontWeight || '400',
                   color: '#ffffff',
                   lineHeight: 1.3,
                   marginBottom: '14px',
@@ -294,7 +295,7 @@ export default function CtaBanner({
               {!isCustomBgUploaded && description && (
                 <p className="winera-cta-description" style={{
                   fontSize: descriptionFontSize || '13px',
-                  fontWeight: '500',
+                  fontWeight: descriptionFontWeight || '400',
                   color: '#e2e8f0',
                   lineHeight: 1.6,
                   marginBottom: '24px',

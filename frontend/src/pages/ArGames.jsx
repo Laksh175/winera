@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ShieldCheck, Settings, Database, Headset, Wrench, Box, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { ShieldCheck, Settings, Database, Headset, Wrench, Box, ChevronLeft, ChevronRight, ChevronDown, Search, X } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
@@ -39,7 +39,7 @@ const airHockeyImageMap = {
 };
 
 const getValidImageUrl = (url, fallback) => {
-  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/') || url.includes('unsplash.com')) {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
@@ -52,46 +52,32 @@ const getValidImageUrl = (url, fallback) => {
   return fallback;
 };
 
-// Helper function to render text with *highlighted* words in specific colors and <br/> linebreaks
-function renderTitleMarkup(rawText, defaultText, highlightColor = '#ffcd00') {
-  const textToParse = rawText || defaultText;
-  const lines = textToParse.split(/<br\s*\/?>/i);
+// Helper function to render title with *word* highlights and <br/> linebreaks
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
+  const text = rawText || defaultText;
+  const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
 
-  return lines.map((line, lineIdx) => {
-    const parts = line.split(/\*{1,2}(.*?)\*{1,2}/g);
-    const needsNowrap = line.includes("Interactive AR Attractions") || line.includes("Commercial-Grade Quality") || line.includes("Commercial VR Machines");
-    return (
-      <React.Fragment key={lineIdx}>
-        {lineIdx > 0 && <br />}
-        {needsNowrap ? (
-          <span className="winera-nowrap-text" style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
-            {parts.map((part, index) => {
-              if (index % 2 === 1) {
-                return (
-                  <span key={index} style={{ color: highlightColor }}>
-                    {part}
-                  </span>
-                );
-              }
-              return part;
-            })}
-          </span>
-        ) : (
-          parts.map((part, index) => {
-            if (index % 2 === 1) {
-              return (
-                <span key={index} style={{ color: highlightColor }}>
-                  {part}
-                </span>
-              );
-            }
-            return part;
-          })
-        )}
+  return parts.map((part, pIdx) => {
+    const isHighlighted = pIdx % 2 === 1;
+    const lines = part.split(/<br\s*\/?>/i);
+    const renderedContent = lines.map((line, lIdx) => (
+      <React.Fragment key={lIdx}>
+        {lIdx > 0 && <br />}
+        {line}
       </React.Fragment>
-    );
+    ));
+
+    if (isHighlighted) {
+      const hasBr = part.toLowerCase().includes('<br');
+      return (
+        <span key={pIdx} style={{ color: highlightColor, whiteSpace: hasBr ? 'normal' : 'nowrap' }}>
+          {renderedContent}
+        </span>
+      );
+    }
+    return <React.Fragment key={pIdx}>{renderedContent}</React.Fragment>;
   });
-}
+};
 
 export default function ArGames({ siteData }) {
   const arSeo = siteData?.arSeo || {
@@ -100,7 +86,6 @@ export default function ArGames({ siteData }) {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     document.title = arSeo.pageTitle || arSeo.title || "AR Games Supplier in India | Winera International";
     let metaTag = document.querySelector('meta[name="description"]');
     if (!metaTag) {
@@ -114,6 +99,7 @@ export default function ArGames({ siteData }) {
   const [activeCategory, setActiveCategory] = useState('Sports Simulators');
   const [currentPage, setCurrentPage] = useState(1);
   const [isCatDropdownOpen, setIsCatDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
 
 
@@ -446,7 +432,15 @@ export default function ArGames({ siteData }) {
     { question: "How long does AR gaming equipment installation take?", answer: "Installation timelines depend on the number of products, venue readiness, and configuration complexity. A single interactive floor system can be operational within days, while a complete multi-category AR gaming zone takes longer for full setup and software configuration." }
   ];
 
-  const currentProducts = categoriesData[activeCategory] || categoriesData[categories[0]] || [];
+  const categoryProducts = categoriesData[activeCategory] || categoriesData[categories[0]] || [];
+  const currentProducts = searchQuery.trim()
+    ? categoryProducts.filter(p => {
+        const q = searchQuery.toLowerCase().trim();
+        const name = (p.name || p.title || "").toLowerCase();
+        const cat = (p.category || activeCategory || "").toLowerCase();
+        return name.includes(q) || cat.includes(q);
+      })
+    : categoryProducts;
   const itemsPerPage = 6;
   const totalPages = Math.ceil(currentProducts.length / itemsPerPage) || 1;
   const paginatedProducts = currentProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
@@ -831,84 +825,238 @@ export default function ArGames({ siteData }) {
             </div>
 
             {/* Right Product Grid (Desktop Grid + Mobile 3D Swipe Deck Animation) */}
-            <div className="winera-ar-products-display-area" style={{ width: '100%' }}>
-              <div className="winera-ar-desktop-products-grid winera-ar-products-grid" style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '24px',
-                marginBottom: '40px'
+            <div className="winera-ar-products-display-area" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              {/* Top Search Bar & Counter Pill Header */}
+              <div className="winera-products-search-bar-wrap" style={{
+                background: '#ffffff',
+                border: '1.5px solid rgba(56, 189, 248, 0.4)',
+                borderRadius: '18px',
+                padding: '10px 16px',
+                boxShadow: '0 4px 18px rgba(56, 189, 248, 0.08)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '12px',
+                flexWrap: 'wrap'
               }}>
-                {paginatedProducts.map((prod, pIdx) => {
-                  const fallbackImg = airHockeyImageMap[prod.name] || superAirHockeyImg;
-                  const finalImgSrc = getValidImageUrl(prod.img, fallbackImg);
-
-                  return (
-                    <div
-                      key={pIdx}
+                {/* Search Input Field with Lucide Icon */}
+                <div style={{
+                  position: 'relative',
+                  flex: '1 1 240px',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  <Search style={{
+                    position: 'absolute',
+                    left: '12px',
+                    width: '18px',
+                    height: '18px',
+                    color: '#0284c7',
+                    pointerEvents: 'none'
+                  }} />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setCurrentPage(1);
+                    }}
+                    placeholder={`Search in ${activeCategory || 'games'} (e.g. Simulator, Hockey)...`}
+                    style={{
+                      width: '100%',
+                      padding: '10px 36px 10px 38px',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(148, 163, 184, 0.3)',
+                      background: '#f8fafc',
+                      fontSize: '13.5px',
+                      fontWeight: '500',
+                      color: '#0f172a',
+                      outline: 'none',
+                      transition: 'all 0.2s ease',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchQuery('');
+                        setCurrentPage(1);
+                      }}
                       style={{
-                        background: 'linear-gradient(180deg, #d8f3fe 0%, #eaf8fe 100%)',
-                        borderRadius: '24px',
-                        padding: '18px 16px 16px',
-                        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.03)',
-                        textAlign: 'center',
-                        transition: 'transform 0.3s ease, boxShadow 0.3s ease'
-                      }} >
-                      {/* Inner Image Container with White Card Frame */}
-                      <div style={{
-                        borderRadius: '16px',
-                        overflow: 'hidden',
-                        height: '200px',
-                        marginBottom: '16px',
-                        background: '#ffffff',
-                        padding: '6px',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)'
-                      }}>
-                        <img
-                          src={finalImgSrc}
-                          alt={prod.name}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            borderRadius: '12px',
-                            display: 'block'
-                          }}
-                        />
-                      </div>
+                        position: 'absolute',
+                        right: '10px',
+                        background: '#e2e8f0',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '20px',
+                        height: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        color: '#475569',
+                        padding: 0
+                      }}
+                      title="Clear search"
+                    >
+                      <X style={{ width: '12px', height: '12px' }} />
+                    </button>
+                  )}
+                </div>
 
-                      <h4 style={{
-                        fontSize: '1.05rem',
-                        fontWeight: '800',
-                        color: '#0f172a',
-                        margin: '4px 0 6px 0',
-                        lineHeight: 1.35,
-                        padding: '0 4px'
-                      }}>
-                        {prod.name}
-                      </h4>
-                    </div>
-                  );
-                })}
+                {/* Filter Count Indicator */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '13px',
+                  color: '#64748b',
+                  fontWeight: '600'
+                }}>
+                  <span>Showing <strong style={{ color: '#0284c7' }}>{currentProducts.length}</strong> {currentProducts.length === 1 ? 'game' : 'games'}</span>
+                </div>
               </div>
 
-              {/* Mobile Stacked 3D Swipe Card Deck Animation (Matching Arcade Game) */}
-              {(() => {
-                const swipeCards = currentProducts.map(p => {
-                  const fallbackImg = airHockeyImageMap[p.name] || superAirHockeyImg;
-                  const finalImgSrc = getValidImageUrl(p.img || p.imageUrl, fallbackImg);
-                  return {
-                    ...p,
-                    name: p.name || p.title || "",
-                    category: p.category || activeCategory || "AR Games",
-                    imageUrl: finalImgSrc,
-                    img: finalImgSrc,
-                    slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : 'ar-game')
-                  };
-                });
-                return swipeCards.length > 0 ? (
-                  <ArcadeSwipeCardDeck cards={swipeCards} isClickable={false} showCta={false} />
-                ) : null;
-              })()}
+              {/* Empty State when no games match search */}
+              {currentProducts.length === 0 ? (
+                <div style={{
+                  background: 'linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%)',
+                  borderRadius: '24px',
+                  padding: '45px 24px',
+                  textAlign: 'center',
+                  border: '1.5px dashed #7dd3fc',
+                  width: '100%',
+                  boxSizing: 'border-box',
+                  marginBottom: '30px'
+                }}>
+                  <Search style={{ width: '36px', height: '36px', color: '#38bdf8', margin: '0 auto 12px' }} />
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px' }}>
+                    {searchQuery ? `No games found matching "${searchQuery}"` : `No attractions found in ${activeCategory}`}
+                  </h4>
+                  <p style={{ fontSize: '13.5px', color: '#64748b', maxWidth: '460px', margin: '0 auto 18px', lineHeight: 1.6 }}>
+                    {searchQuery ? `Try searching with another keyword or reset the search filter to view all attractions.` : `We supply and build custom interactive attractions tailored to your requirements.`}
+                  </p>
+                  {searchQuery ? (
+                    <button
+                      onClick={() => { setSearchQuery(''); setCurrentPage(1); }}
+                      style={{
+                        background: '#38bdf8',
+                        color: '#ffffff',
+                        border: 'none',
+                        padding: '10px 22px',
+                        borderRadius: '12px',
+                        fontWeight: '800',
+                        cursor: 'pointer',
+                        fontSize: '14px'
+                      }}
+                    >
+                      Clear Search
+                    </button>
+                  ) : (
+                    <a
+                      href={`https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera International! I want to inquire about ${activeCategory} catalog and pricing.`)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        background: '#38bdf8',
+                        color: '#ffffff',
+                        padding: '11px 22px',
+                        borderRadius: '12px',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                      }}
+                    >
+                      Request Catalog on WhatsApp
+                    </a>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <div className="winera-ar-desktop-products-grid winera-ar-products-grid" style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '24px',
+                    marginBottom: '40px'
+                  }}>
+                    {paginatedProducts.map((prod, pIdx) => {
+                      const fallbackImg = airHockeyImageMap[prod.name] || superAirHockeyImg;
+                      const finalImgSrc = getValidImageUrl(prod.img, fallbackImg);
+
+                      return (
+                        <div
+                          key={pIdx}
+                          style={{
+                            background: 'linear-gradient(180deg, #d8f3fe 0%, #eaf8fe 100%)',
+                            borderRadius: '24px',
+                            padding: '18px 16px 16px',
+                            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.03)',
+                            textAlign: 'center',
+                            transition: 'transform 0.3s ease, boxShadow 0.3s ease'
+                          }} >
+                          {/* Inner Image Container with White Card Frame */}
+                          <div style={{
+                            borderRadius: '16px',
+                            overflow: 'hidden',
+                            height: '200px',
+                            marginBottom: '16px',
+                            background: '#ffffff',
+                            padding: '6px',
+                            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)'
+                          }}>
+                            <img
+                              src={finalImgSrc}
+                              alt={prod.name}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                borderRadius: '12px',
+                                display: 'block'
+                              }}
+                            />
+                          </div>
+
+                          <h4 style={{
+                            fontSize: '1.05rem',
+                            fontWeight: '800',
+                            color: '#0f172a',
+                            margin: '4px 0 6px 0',
+                            lineHeight: 1.35,
+                            padding: '0 4px'
+                          }}>
+                            {prod.name}
+                          </h4>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Mobile Stacked 3D Swipe Card Deck Animation (Matching Arcade Game) */}
+                  {(() => {
+                    const swipeCards = currentProducts.map(p => {
+                      const fallbackImg = airHockeyImageMap[p.name] || superAirHockeyImg;
+                      const finalImgSrc = getValidImageUrl(p.img || p.imageUrl, fallbackImg);
+                      return {
+                        ...p,
+                        name: p.name || p.title || "",
+                        category: p.category || activeCategory || "AR Games",
+                        imageUrl: finalImgSrc,
+                        img: finalImgSrc,
+                        slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : 'ar-game')
+                      };
+                    });
+                    return swipeCards.length > 0 ? (
+                      <ArcadeSwipeCardDeck cards={swipeCards} isClickable={false} showCta={false} />
+                    ) : null;
+                  })()}
+                </>
+              )}
             </div>
           </div>
 
@@ -1519,7 +1667,7 @@ export default function ArGames({ siteData }) {
         buttonTheme="yellow"
         titleFontSize="clamp(24px, 2.6vw, 32px)"
         subtitleFontSize="16px"
-        subtitleFontWeight="600"
+        subtitleFontWeight="400"
         bgUrl={
           siteData?.arCta?.bgUrl &&
             !siteData.arCta.bgUrl.includes('cta-consultations') &&

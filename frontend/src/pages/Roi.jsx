@@ -1519,7 +1519,7 @@ export default function Roi({ siteData }) {
           {/* Description */}
           <p style={{
             fontSize: 'clamp(12px, 2.5vw, 14.5px)',
-            fontWeight: '600',
+            fontWeight: '400',
             color: '#e2e8f0',
             lineHeight: 1.5,
             marginBottom: '26px',

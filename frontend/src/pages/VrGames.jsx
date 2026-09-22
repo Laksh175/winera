@@ -1126,8 +1126,8 @@ export default function VrGames({ siteData }) {
         gradientTitle={true}
         buttonTheme="yellow"
         titleFontSize="clamp(24px, 2.8vw, 38px)"
-        subtitleFontSize="clamp(20px, 2.4vw, 28px)"
-        subtitleFontWeight="900"
+        subtitleFontSize="20px"
+        subtitleFontWeight="400"
         bgUrl={
           siteData?.vrCta?.bgUrl &&
             !siteData.vrCta.bgUrl.includes('cta-consultations') &&

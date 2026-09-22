@@ -40,7 +40,7 @@ import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
 import testiOwner from '../assets/testi-owner.webp';
-import { Gamepad2, Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Gamepad2, Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight, Search, X } from 'lucide-react';
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 import ArcadeSwipeCardDeck from '../components/ArcadeSwipeCardDeck';
 
@@ -96,6 +96,7 @@ export default function ArcadeGame({ siteData }) {
   const [relatedIndex, setRelatedIndex] = useState(0);
   const [mobileProdIndex, setMobileProdIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const arcadeSeo = siteData?.arcadeSeo || {
     pageTitle: "Arcade Games Manufacturer in India | Winera International",
@@ -692,8 +693,8 @@ export default function ArcadeGame({ siteData }) {
             </div>
 
             {/* RIGHT DISPLAY AREA: PRODUCT CARDS GRID + PAGINATION */}
-            <div className="winera-products-display-area" style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-              {/* Product Cards Grid */}
+            {/* RIGHT DISPLAY AREA: PRODUCT SEARCH BAR + CARDS GRID + PAGINATION */}
+            <div className="winera-products-display-area" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               {(() => {
                 const defaultProdCards = [
                   { name: "Parkour Motor II (DX)", title: "Parkour Motor II (DX)", category: "Bike Racing Game", slug: "parkour-motor-2-dx", img: arcadegamesImg },
@@ -740,7 +741,7 @@ export default function ArcadeGame({ siteData }) {
 
                 // Filter cards by selected activeCategory
                 const isAllCategory = !activeCategory || activeCategory === "Arcade Games" || activeCategory === "All";
-                const prodCards = isAllCategory
+                const categoryMatched = isAllCategory
                   ? allCards
                   : allCards.filter(c => {
                       const cat = (c.category || c.tag || c.subCategory || "").toLowerCase().trim();
@@ -748,6 +749,16 @@ export default function ArcadeGame({ siteData }) {
                       const title = (c.name || c.title || "").toLowerCase().trim();
                       return cat === target || cat.includes(target) || target.includes(cat) || title.includes(target);
                     });
+
+                // Further filter cards by live search query
+                const prodCards = searchQuery.trim()
+                  ? categoryMatched.filter(c => {
+                      const q = searchQuery.toLowerCase().trim();
+                      const name = (c.name || c.title || "").toLowerCase();
+                      const cat = (c.category || c.tag || c.subCategory || "").toLowerCase();
+                      return name.includes(q) || cat.includes(q);
+                    })
+                  : categoryMatched;
 
                 const getCardSlug = (card) => {
                   if (card.slug) return card.slug;
@@ -763,6 +774,100 @@ export default function ArcadeGame({ siteData }) {
 
                 return (
                   <>
+                    {/* Top Search Bar & Counter Pill Header */}
+                    <div className="winera-products-search-bar-wrap" style={{
+                      background: '#ffffff',
+                      border: '1.5px solid rgba(56, 189, 248, 0.4)',
+                      borderRadius: '18px',
+                      padding: '10px 16px',
+                      boxShadow: '0 4px 18px rgba(56, 189, 248, 0.08)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '12px',
+                      flexWrap: 'wrap'
+                    }}>
+                      {/* Search Input Field with Lucide Icon */}
+                      <div style={{
+                        position: 'relative',
+                        flex: '1 1 240px',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}>
+                        <Search style={{
+                          position: 'absolute',
+                          left: '12px',
+                          width: '18px',
+                          height: '18px',
+                          color: '#0284c7',
+                          pointerEvents: 'none'
+                        }} />
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            setCurrentPage(1);
+                            setMobileProdIndex(0);
+                          }}
+                          placeholder={`Search ${activeCategory || 'games'} (e.g. Air Hockey, Motor)...`}
+                          style={{
+                            width: '100%',
+                            padding: '10px 36px 10px 38px',
+                            borderRadius: '12px',
+                            border: '1px solid rgba(148, 163, 184, 0.3)',
+                            background: '#f8fafc',
+                            fontSize: '13.5px',
+                            fontWeight: '500',
+                            color: '#0f172a',
+                            outline: 'none',
+                            transition: 'all 0.2s ease',
+                            boxSizing: 'border-box'
+                          }}
+                        />
+                        {searchQuery && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSearchQuery('');
+                              setCurrentPage(1);
+                              setMobileProdIndex(0);
+                            }}
+                            style={{
+                              position: 'absolute',
+                              right: '10px',
+                              background: '#e2e8f0',
+                              border: 'none',
+                              borderRadius: '50%',
+                              width: '20px',
+                              height: '20px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer',
+                              color: '#475569',
+                              padding: 0
+                            }}
+                            title="Clear search"
+                          >
+                            <X style={{ width: '12px', height: '12px' }} />
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Filter Count Indicator */}
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontSize: '13px',
+                        color: '#64748b',
+                        fontWeight: '600'
+                      }}>
+                        <span>Showing <strong style={{ color: '#0284c7' }}>{prodCards.length}</strong> {prodCards.length === 1 ? 'game' : 'games'}</span>
+                      </div>
+                    </div>
+
                     {/* Desktop Product Cards Grid */}
                     {prodCards.length === 0 ? (
                       <div style={{
@@ -775,32 +880,51 @@ export default function ArcadeGame({ siteData }) {
                         width: '100%',
                         boxSizing: 'border-box'
                       }}>
+                        <Search style={{ width: '36px', height: '36px', color: '#38bdf8', margin: '0 auto 12px' }} />
                         <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px' }}>
-                          Custom {activeCategory} Machines Available
+                          {searchQuery ? `No games found matching "${searchQuery}"` : `Custom ${activeCategory} Machines Available`}
                         </h4>
                         <p style={{ fontSize: '13.5px', color: '#64748b', maxWidth: '460px', margin: '0 auto 18px', lineHeight: 1.6 }}>
-                          We manufacture and supply commercial-grade {activeCategory} machines customized for your space, theme, and payment system.
+                          {searchQuery ? `Try searching with another keyword or clear the search filter.` : `We manufacture and supply commercial-grade ${activeCategory} machines customized for your space, theme, and payment system.`}
                         </p>
-                        <a
-                          href={`https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera International! I want to inquire about ${activeCategory} catalog and pricing.`)}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            background: '#38bdf8',
-                            color: '#ffffff',
-                            padding: '11px 22px',
-                            borderRadius: '12px',
-                            fontSize: '14px',
-                            fontWeight: '700',
-                            textDecoration: 'none',
-                            boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
-                          }}
-                        >
-                          Request Catalog on WhatsApp
-                        </a>
+                        {searchQuery ? (
+                          <button
+                            onClick={() => { setSearchQuery(''); setCurrentPage(1); }}
+                            style={{
+                              background: '#38bdf8',
+                              color: '#ffffff',
+                              border: 'none',
+                              padding: '10px 22px',
+                              borderRadius: '12px',
+                              fontWeight: '800',
+                              cursor: 'pointer',
+                              fontSize: '14px'
+                            }}
+                          >
+                            Clear Search
+                          </button>
+                        ) : (
+                          <a
+                            href={`https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera International! I want to inquire about ${activeCategory} catalog and pricing.`)}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                              background: '#38bdf8',
+                              color: '#ffffff',
+                              padding: '11px 22px',
+                              borderRadius: '12px',
+                              fontSize: '14px',
+                              fontWeight: '700',
+                              textDecoration: 'none',
+                              boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                            }}
+                          >
+                            Request Catalog on WhatsApp
+                          </a>
+                        )}
                       </div>
                     ) : (
                       <div className="winera-desktop-products-grid" style={{
@@ -1496,8 +1620,8 @@ export default function ArcadeGame({ siteData }) {
         gradientTitle={true}
         buttonTheme="yellow"
         titleFontSize="35px"
-        subtitleFontSize="24px"
-        subtitleFontWeight="900"
+        subtitleFontSize="20px"
+        subtitleFontWeight="400"
         bgUrl={siteData?.arcadeCta?.bgUrl && !siteData.arcadeCta.bgUrl.includes('need-consultations-bg') ? siteData.arcadeCta.bgUrl : null}
         bg={arcadeCtaBg}
         tagline={null}

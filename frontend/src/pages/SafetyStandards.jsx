@@ -1156,7 +1156,7 @@ export default function SafetyStandards({ siteData }) {
               <p className="winera-cta-subtitle" style={{
                 color: '#ffffff',
                 fontSize: 'clamp(15px, 1.9vw, 22px)',
-                fontWeight: '800',
+                fontWeight: '400',
                 lineHeight: 1.35,
                 margin: '0 auto 22px auto',
                 maxWidth: '520px',

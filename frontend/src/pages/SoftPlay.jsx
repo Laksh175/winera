@@ -1226,8 +1226,8 @@ export default function SoftPlay({ siteData }) {
         buttonBg={getValidImageUrl(siteData?.softplayCta?.btnBg, ctaBtn3)}
         titleFontSize="50px"
         titleFontWeight="900"
-        subtitleFontSize="15px"
-        subtitleFontWeight="500"
+        subtitleFontSize="17px"
+        subtitleFontWeight="400"
         bgUrl={siteData?.softplayCta?.bgUrl && !siteData.softplayCta.bgUrl.includes('cta-softplay-bg') ? siteData.softplayCta.bgUrl : null}
         bg={softplayCtaBg}
         tagline={null}

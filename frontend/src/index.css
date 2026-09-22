@@ -16298,6 +16298,17 @@ button[style*="background:transparent"]:hover,
   display: none;
 }
 
+/* Universal CTA Banner Sub-Content / Subtitle / Description Normal Font-Weight */
+.winera-cta-subtitle,
+.winera-cta-content-box .winera-cta-subtitle,
+.winera-cta-banner-container .winera-cta-subtitle,
+.winera-cta-description,
+.winera-cta-content-box .winera-cta-description,
+.winera-cta-banner-container .winera-cta-description,
+.winera-cta-banner-container p,
+.winera-cta-banner-section p,
+.winera-cta-p,
+.winera-trampoline-cta-card p,
 .winera-bumpercar-cta-wrapper .winera-cta-subtitle,
 .winera-bumpercar-page .winera-cta-subtitle {
   font-weight: 400 !important;
@@ -16324,6 +16335,9 @@ button[style*="background:transparent"]:hover,
     text-align: center !important;
   }
 
+  .winera-cta-subtitle,
+  .winera-cta-content-box .winera-cta-subtitle,
+  .winera-cta-banner-container .winera-cta-subtitle,
   .winera-bumpercar-cta-wrapper .winera-cta-subtitle,
   .winera-bumpercar-page .winera-cta-subtitle {
     font-weight: 400 !important;
@@ -17862,4 +17876,24 @@ button[style*="background:transparent"]:hover,
     width: 27px !important;
     height: 27px !important;
   }
+
+  /* Product Search Bar Mobile Tweaks */
+  .winera-products-search-bar-wrap {
+    padding: 8px 12px !important;
+    gap: 10px !important;
+  }
+
+  .winera-products-search-bar-wrap input {
+    font-size: 13px !important;
+    padding: 8px 32px 8px 34px !important;
+  }
+}
+
+/* ==========================================================================
+   WINERA PRODUCTS SEARCH BAR GLOBAL STYLING
+   ========================================================================== */
+.winera-products-search-bar-wrap input:focus {
+  border-color: #38bdf8 !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2) !important;
 }

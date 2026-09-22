@@ -1202,7 +1202,7 @@ export default function TrampolinePark({ siteData }) {
                 maxWidth: '740px',
                 margin: '0 auto 16px auto',
                 lineHeight: 1.6,
-                fontWeight: '500',
+                fontWeight: '400',
                 textShadow: '0 2px 10px rgba(0,0,0,0.85)'
               }} className="winera-cta-p">
                 <span style={{ color: '#ffffff', opacity: 1 }}>{siteData?.trampolineCta?.descLine1 || "Our team will assess your venue, prepare a free ROI report, and"}</span>
