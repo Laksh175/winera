@@ -958,7 +958,7 @@ export default function Hypergrid({ siteData }) {
           subtitle={
             siteData?.hypergridCta?.subtitle || siteData?.hypergridCta?.whiteText
               ? siteData?.hypergridCta?.subtitle || siteData?.hypergridCta?.whiteText
-              : "Get In Touch With India's Trusted Hypergrid Game Supplier For A Free ROI Report, Space Assessment, And Project Quote."
+              : "Get In Touch With India's Trusted Hypergrid Game Supplier For A Free ROI Report,<br/>Space Assessment, And Project Quote."
           }
           description={null}
           buttonText={siteData?.hypergridCta?.buttonText || "Talk to an ROI Expert"}

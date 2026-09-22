@@ -208,7 +208,7 @@ export default function BowlingAlley({ siteData }) {
   ];
 
   return (
-    <div style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div className="winera-bowling-page" style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh', overflowX: 'hidden' }}>
       {/* 1. HEADER NAVBAR */}
       <Header headerData={header} />
 
@@ -250,7 +250,7 @@ export default function BowlingAlley({ siteData }) {
       </section>
 
       {/* 3. BOWLING ALLEY MANUFACTURERS IN INDIA SECTION (MATCHING FIGMA 1:1) */}
-      <section className="winera-bowling-supplier-section" style={{ padding: '35px 4vw 15px', background: '#F5F5F9' }}>
+      <section className="winera-bowling-supplier-section" style={{ padding: '60px 4vw 45px', background: '#F5F5F9' }}>
         <div className="winera-bowling-supplier-grid" style={{
           maxWidth: '1240px',
           margin: '0 auto',
@@ -360,7 +360,7 @@ export default function BowlingAlley({ siteData }) {
       </section>
 
       {/* 3.5 PREMIUM BOWLING ALLEY MANUFACTURER IN INDIA SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-bowling-premium-section" style={{ padding: '10px 4vw 35px', background: '#F5F5F9', position: 'relative', overflow: 'hidden' }}>
+      <section className="winera-bowling-premium-section" style={{ padding: '45px 4vw 50px', background: '#F5F5F9', position: 'relative', overflow: 'hidden' }}>
         <div className="winera-bowling-premium-container" style={{ maxWidth: '1280px', margin: '0 auto' }}>
           {/* Section Title with Yellow Brush Accent Line in 1 Single Line */}
           <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px', textAlign: 'center', width: '100%' }}>
@@ -1260,7 +1260,7 @@ export default function BowlingAlley({ siteData }) {
         buttonBg={getValidImageUrl(siteData?.bowlingCta?.btnBg, ctaBtn3)}
         gradientTitle={true}
         titleFontSize="35px"
-        descriptionFontSize="18px"
+        descriptionFontSize="17px"
         bgUrl={siteData?.bowlingCta?.bgUrl && !siteData.bowlingCta.bgUrl.includes('bowling-last-image-bg') ? siteData.bowlingCta.bgUrl : null}
         bg={trampolineParkCtaBg}
         tagline={null}

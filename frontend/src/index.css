@@ -82,8 +82,8 @@ select {
    Line-height: 26px
    Letter-spacing: 0px
    ========================================================================== */
-p:not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-sticky-register-card p):not(.winera-blog-sticky-register-card *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *),
-p:not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *) *:not(strong):not(b):not(em):not(i):not(u):not(a):not(del):not(s):not(strike):not(code),
+p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-sticky-register-card p):not(.winera-blog-sticky-register-card *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *),
+p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *) *:not(strong):not(b):not(em):not(i):not(u):not(a):not(del):not(s):not(strike):not(code),
 .lead,
 .winera-section-desc,
 .winera-card-desc,
@@ -16314,6 +16314,42 @@ button[style*="background:transparent"]:hover,
   font-weight: 400 !important;
   color: #f8fafc !important;
   opacity: 0.95 !important;
+}
+
+/* Safety Standards, About Us CTA Banner Sub-Content 20px on Large Screens */
+@media (min-width: 769px) {
+  .winera-safety-page .winera-cta-subtitle,
+  .winera-safety-why-matters-section .winera-cta-subtitle,
+  .winera-about-page .winera-cta-description,
+  .winera-about-page .winera-cta-subtitle,
+  .winera-about-page .winera-cta-banner-container p {
+    font-size: 20px !important;
+    line-height: 1.4 !important;
+  }
+
+  .winera-project-page .winera-cta-description,
+  .winera-project-page .winera-cta-subtitle,
+  .winera-project-page .winera-cta-banner-container p {
+    font-size: 19px !important;
+    line-height: 1.5 !important;
+  }
+
+  .winera-hypergrid-page .winera-cta-subtitle,
+  .winera-hypergrid-page .winera-cta-description,
+  .winera-hypergrid-cta-wrapper .winera-cta-subtitle,
+  .winera-hypergrid-cta-wrapper .winera-cta-description {
+    font-size: 16px !important;
+    line-height: 1.45 !important;
+    max-width: 820px !important;
+    width: 100% !important;
+  }
+
+  .winera-bowling-page .winera-cta-description,
+  .winera-bowling-page .winera-cta-subtitle,
+  .winera-bowling-page .winera-cta-banner-container p {
+    font-size: 17px !important;
+    line-height: 1.6 !important;
+  }
 }
 
 @media (max-width: 768px) {

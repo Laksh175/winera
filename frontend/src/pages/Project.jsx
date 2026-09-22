@@ -658,7 +658,7 @@ export default function Project({ siteData }) {
             ? siteData.projectCta.description
             : "Give us the space, and we'll deliver a complete game zone — planned, built, and ready to play. Your only job is to open the doors."
         }
-        descriptionFontSize="20px"
+        descriptionFontSize="19px"
         buttonText={
           siteData?.projectCta?.buttonText !== undefined
             ? siteData.projectCta.buttonText
