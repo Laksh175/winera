@@ -1697,7 +1697,7 @@ html {
 
   .winera-footer-col-header h4,
   .winera-footer-grid h4 {
-    font-size: 21px !important;
+    font-size: 18px !important;
     font-weight: 800 !important;
     color: #0f172a !important;
     margin: 0 !important;
@@ -17838,5 +17838,28 @@ button[style*="background:transparent"]:hover,
     word-break: break-word !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
+  }
+
+  /* WhatsApp Float Button Mobile Size */
+  .winera-wa-float-container {
+    bottom: 18px !important;
+    right: 18px !important;
+  }
+
+  .winera-wa-float-tooltip {
+    display: none !important;
+  }
+
+  .winera-wa-float-btn,
+  a.winera-wa-float-btn {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+  }
+
+  .winera-wa-float-btn svg {
+    width: 27px !important;
+    height: 27px !important;
   }
 }

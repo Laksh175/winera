@@ -116,7 +116,7 @@ export default function Footer({ footerData }) {
               className={`winera-footer-col-header ${openSections.product ? 'is-open' : 'is-closed'}`}
               onClick={() => toggleSection('product')}
             >
-              <h4 style={{ fontSize: isMobile ? '21px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+              <h4 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
                 Product
               </h4>
               {isMobile && (
@@ -168,7 +168,7 @@ export default function Footer({ footerData }) {
               className={`winera-footer-col-header ${openSections.quick ? 'is-open' : 'is-closed'}`}
               onClick={() => toggleSection('quick')}
             >
-              <h4 style={{ fontSize: isMobile ? '21px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+              <h4 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
                 Quick Links
               </h4>
               {isMobile && (
@@ -221,7 +221,7 @@ export default function Footer({ footerData }) {
               className={`winera-footer-col-header ${openSections.resource ? 'is-open' : 'is-closed'}`}
               onClick={() => toggleSection('resource')}
             >
-              <h4 style={{ fontSize: isMobile ? '21px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+              <h4 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
                 Resources
               </h4>
               {isMobile && (

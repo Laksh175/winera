@@ -6,10 +6,11 @@ export default function WhatsAppFloat({ whatsAppUrl }) {
 
   return (
     <div
+      className="winera-wa-float-container"
       style={{
         position: 'fixed',
-        bottom: '28px',
-        right: '28px',
+        bottom: '24px',
+        right: '24px',
         zIndex: 99999,
         display: 'flex',
         alignItems: 'center',
@@ -38,13 +39,24 @@ export default function WhatsAppFloat({ whatsAppUrl }) {
           transform: scale(1.1) rotate(5deg);
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 850px) {
           .winera-wa-float-container {
-            bottom: 20px !important;
-            right: 20px !important;
+            bottom: 18px !important;
+            right: 18px !important;
           }
           .winera-wa-float-tooltip {
             display: none !important;
+          }
+          .winera-wa-float-btn,
+          a.winera-wa-float-btn {
+            width: 50px !important;
+            height: 50px !important;
+            min-width: 50px !important;
+            min-height: 50px !important;
+          }
+          .winera-wa-float-btn svg {
+            width: 27px !important;
+            height: 27px !important;
           }
         }
       `}</style>
