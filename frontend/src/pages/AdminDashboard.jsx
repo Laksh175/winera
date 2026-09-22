@@ -205,7 +205,7 @@ const defaultHypergridHero = {
 };
 
 const defaultHypergridIntro = {
-  title: '*Hypergrid Game*<br/>Supplier in India',
+  title: '*Hypergrid Game* <br/>Supplier in India',
   desc: "India's trusted Hypergrid game supplier commercial-grade interactive LED floor systems, installed and serviced by our own team across 50+ cities.",
   buttonText: 'Get A Quote',
   buttonLink: 'https://wa.me/919428989488',

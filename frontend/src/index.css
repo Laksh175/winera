@@ -9440,12 +9440,16 @@ h2 span,
 @media (max-width: 992px) {
 
   /* --- Hypergrid Page --- */
+  .winera-hypergrid-roi-header {
+    margin: 0 auto 10px !important;
+  }
+
   .winera-hypergrid-supplier-grid,
   .winera-hypergrid-banner-grid,
   .winera-hypergrid-whyus-grid,
   .winera-hypergrid-roi-grid {
     grid-template-columns: 1fr !important;
-    gap: 32px !important;
+    gap: 16px !important;
     text-align: center !important;
   }
 
@@ -13049,43 +13053,41 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-industry-card {
-    width: 230px !important;
+    width: 240px !important;
     height: 330px !important;
   }
 
   .winera-industry-card.industry-offset--2 {
-    transform: translate3d(-340px, 20px, 0) scale(0.72) !important;
-    opacity: 0.45 !important;
-    z-index: 5 !important;
-    display: block !important;
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 
   .winera-industry-card.industry-offset--1 {
-    transform: translate3d(-190px, 10px, 0) scale(0.88) !important;
-    opacity: 0.88 !important;
+    transform: translate3d(-175px, 12px, 0) scale(0.86) !important;
+    opacity: 0.85 !important;
     z-index: 15 !important;
     display: block !important;
   }
 
   .winera-industry-card.industry-offset-0 {
-    transform: translate3d(0px, 0px, 0) scale(1.08) !important;
+    transform: translate3d(0px, 0px, 0) scale(1.06) !important;
     opacity: 1 !important;
     z-index: 35 !important;
     display: block !important;
   }
 
   .winera-industry-card.industry-offset-1 {
-    transform: translate3d(190px, 10px, 0) scale(0.88) !important;
-    opacity: 0.88 !important;
+    transform: translate3d(175px, 12px, 0) scale(0.86) !important;
+    opacity: 0.85 !important;
     z-index: 15 !important;
     display: block !important;
   }
 
   .winera-industry-card.industry-offset-2 {
-    transform: translate3d(340px, 20px, 0) scale(0.72) !important;
-    opacity: 0.45 !important;
-    z-index: 5 !important;
-    display: block !important;
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 
   /* Soft Play Materials Quality Section 1024px Laptop Screen Fit */
@@ -14236,7 +14238,7 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-hypergrid-banner-section {
-    padding: 24px 4vw 20px !important;
+    padding: 24px 4vw 0px !important;
   }
 
   .winera-hypergrid-banner-grid {
@@ -14279,6 +14281,7 @@ button[style*="background:transparent"]:hover,
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+    margin-bottom: 0 !important;
   }
 
   .winera-hypergrid-banner-img img {
@@ -14290,7 +14293,7 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-hypergrid-specs-section {
-    padding: 15px 4vw 20px !important;
+    padding: 5px 4vw 20px !important;
   }
 
   .winera-hypergrid-specs-container {
@@ -14825,7 +14828,7 @@ button[style*="background:transparent"]:hover,
   section.winera-hypergrid-banner-section,
   .winera-hypergrid-banner-section {
     padding-top: 30px !important;
-    padding-bottom: 20px !important;
+    padding-bottom: 0px !important;
   }
 
   .winera-hypergrid-banner-grid {
@@ -14834,7 +14837,7 @@ button[style*="background:transparent"]:hover,
 
   section.winera-hypergrid-specs-section,
   .winera-hypergrid-specs-section {
-    padding-top: 15px !important;
+    padding-top: 5px !important;
     padding-bottom: 20px !important;
   }
 
@@ -16629,7 +16632,7 @@ button[style*="background:transparent"]:hover,
 @media (max-width: 850px) {
   section.winera-hypergrid-specs-section,
   .winera-hypergrid-specs-section {
-    padding-top: 15px !important;
+    padding-top: 5px !important;
     padding-bottom: 20px !important;
     padding-left: 4vw !important;
     padding-right: 4vw !important;

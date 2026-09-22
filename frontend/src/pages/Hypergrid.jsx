@@ -103,6 +103,8 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
     text = "*What Makes Hypergrid* <br/>the Right Choice for Your Venue";
   } else if (text.toLowerCase().includes('is hypergrid a smart') || text.toLowerCase().includes('investment for your venue')) {
     text = "Is Hypergrid a Smart <br/>*Investment for Your Venue?*";
+  } else if (text.toLowerCase().includes('hypergrid game') && text.toLowerCase().includes('supplier')) {
+    text = "*Hypergrid Game* <br className=\"winera-title-br\" />Supplier in India";
   }
 
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
@@ -115,12 +117,17 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
       const content = subParts.map((subPart, sIdx) => (
         <React.Fragment key={sIdx}>
           {subPart}
-          {sIdx < subParts.length - 1 && <br className="winera-title-br" />}
+          {sIdx < subParts.length - 1 && (
+            <>
+              <br className="winera-title-br" />
+              {' '}
+            </>
+          )}
         </React.Fragment>
       ));
       return isHighlight ? (
         <span key={index} style={{ color: highlightColor }}>
-          {content}
+          {content}{' '}
         </span>
       ) : (
         <React.Fragment key={index}>{content}</React.Fragment>
@@ -129,7 +136,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 
     return isHighlight ? (
       <span key={index} style={{ color: highlightColor }}>
-        {part}
+        {part}{' '}
       </span>
     ) : (
       <React.Fragment key={index}>{part}</React.Fragment>
@@ -248,7 +255,7 @@ export default function Hypergrid({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '320px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game*<br/>Supplier in India", '#38bdf8')}
+                {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game* <br/>Supplier in India", '#38bdf8')}
               </h2>
             </div>
 
@@ -570,7 +577,7 @@ export default function Hypergrid({ siteData }) {
       <section className="winera-hypergrid-roi-section" style={{ paddingTop: '35px', paddingBottom: '35px', paddingLeft: '4vw', paddingRight: '4vw', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Centered Section Header */}
-          <div style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 45px' }}>
+          <div className="winera-hypergrid-roi-header" style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 45px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
