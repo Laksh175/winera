@@ -16351,7 +16351,10 @@ button[style*="background:transparent"]:hover,
 
   .winera-bowling-page .winera-cta-description,
   .winera-bowling-page .winera-cta-subtitle,
-  .winera-bowling-page .winera-cta-banner-container p {
+  .winera-bowling-page .winera-cta-banner-container p,
+  .winera-home-page .winera-cta-description,
+  .winera-home-page .winera-cta-subtitle,
+  .winera-home-page .winera-cta-banner-container p {
     font-size: 17px !important;
     line-height: 1.6 !important;
   }

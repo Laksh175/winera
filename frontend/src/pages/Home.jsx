@@ -1838,6 +1838,7 @@ export default function Home({ siteData }) {
           gradientTagline={false}
           gradientTitle={false}
           titleFontSize="33px"
+          descriptionFontSize="17px"
           bgUrl={siteData?.ctaBanner?.bgUrl !== undefined ? siteData.ctaBanner.bgUrl : null}
           bg={ctaMainBanner}
           leftImgUrl={siteData?.ctaBanner?.leftImgUrl !== undefined ? siteData.ctaBanner.leftImgUrl : null}
