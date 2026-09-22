@@ -17679,25 +17679,25 @@ button[style*="background:transparent"]:hover,
 
 @media (max-width: 768px) {
   .winera-contact-heading-wrap .winera-section-heading-h2 {
-    font-size: clamp(23px, 6.2vw, 32px) !important;
+    font-size: clamp(17px, 4.6vw, 24px) !important;
     line-height: 1.25 !important;
   }
 
   .winera-contact-heading-wrap .winera-contact-title-line1 {
     display: block !important;
-    white-space: normal !important;
+    white-space: nowrap !important;
+    margin-bottom: 2px !important;
   }
 
   .winera-contact-heading-wrap .winera-contact-title-line2 {
     display: block !important;
-    white-space: normal !important;
-    text-wrap: balance !important;
+    white-space: nowrap !important;
   }
 }
 
 @media (max-width: 480px) {
   .winera-contact-heading-wrap .winera-section-heading-h2 {
-    font-size: clamp(21px, 6vw, 26px) !important;
+    font-size: clamp(15px, 4.3vw, 20px) !important;
     line-height: 1.25 !important;
   }
 }
