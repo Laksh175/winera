@@ -148,20 +148,51 @@ export default function Home({ siteData }) {
   }, []);
 
   const resolveProductLink = (prod) => {
+    if (!prod) return '/products/trampoline-park';
+    const id = (prod.id || '').toLowerCase();
     const title = (prod.title || '').toLowerCase();
     const rawLink = (prod.link || '').toLowerCase();
-    if (title.includes('bumper') || rawLink.includes('bumper')) return '/products/bumper-car';
-    if (title.includes('arcade') || rawLink.includes('arcade')) return '/products/arcade-games';
-    if (title.includes('vr') || rawLink.includes('vr')) return '/products/vr-games';
-    if (title.includes('ar') || rawLink.includes('ar')) return '/products/ar-games';
-    if (title.includes('bowling') || rawLink.includes('bowling')) return '/products/bowling-alley';
-    if (title.includes('soft') || rawLink.includes('soft')) return '/products/soft-play';
-    if (title.includes('trampoline') || rawLink.includes('trampoline')) return '/products/trampoline-park';
-    if (title.includes('hyper') || rawLink.includes('hyper')) return '/products/hypergrid';
-    if (title.includes('laser') || rawLink.includes('laser')) return '/products/laser-tag';
-    if (title.includes('amusement') || rawLink.includes('amusement')) return '/products/amusement-park';
-    if (title.includes('decorative') || title.includes('light') || rawLink.includes('light')) return '/products/lights';
-    return prod.link || '/products/bumper-car';
+
+    // Specific product checks (checked before general 2-letter tokens like 'ar' or 'vr')
+    if (id.includes('trampoline') || title.includes('trampoline') || rawLink.includes('trampoline')) {
+      return '/products/trampoline-park';
+    }
+    if (id.includes('amusement') || title.includes('amusement') || rawLink.includes('amusement')) {
+      return '/products/amusement-park';
+    }
+    if (id.includes('bumper') || title.includes('bumper') || rawLink.includes('bumper')) {
+      return '/products/bumper-car';
+    }
+    if (id.includes('arcade') || title.includes('arcade') || rawLink.includes('arcade')) {
+      return '/products/arcade-games';
+    }
+    if (id.includes('bowling') || title.includes('bowling') || rawLink.includes('bowling')) {
+      return '/products/bowling-alley';
+    }
+    if (id.includes('soft') || title.includes('soft') || rawLink.includes('soft')) {
+      return '/products/soft-play';
+    }
+    if (id.includes('hyper') || title.includes('hyper') || rawLink.includes('hyper')) {
+      return '/products/hypergrid';
+    }
+    if (id.includes('laser') || title.includes('laser') || rawLink.includes('laser')) {
+      return '/products/laser-tag';
+    }
+    if (id === 'vr' || id.includes('vr-') || id.includes('vrgame') || title === 'vr game' || title.includes('vr game') || title.includes('virtual reality') || rawLink.includes('vr-game')) {
+      return '/products/vr-games';
+    }
+    if (id === 'ar' || id.includes('ar-') || id.includes('argame') || title === 'ar game' || title.includes('ar game') || title.includes('augmented') || rawLink.includes('ar-game')) {
+      return '/products/ar-games';
+    }
+    if (title.includes('decorative') || title.includes('light') || rawLink.includes('light')) {
+      return '/products/lights';
+    }
+
+    if (prod.link && prod.link.startsWith('/')) {
+      return prod.link;
+    }
+
+    return '/products/trampoline-park';
   };
 
   const homeSeo = siteData?.homeSeo || {
