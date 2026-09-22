@@ -16366,6 +16366,22 @@ button[style*="background:transparent"]:hover,
   }
 }
 
+/* Bumper Car Indoor Bumper Car Options Section Typography */
+.winera-bumpercar-options-section p,
+.winera-bumpercar-options-text p,
+.winera-bumpercar-options-intro-desc,
+.winera-bumpercar-options-text .winera-bumpercar-option-desc,
+.winera-bumpercar-options-text .winera-bumpercar-option-desc *,
+.winera-bumpercar-options-text .winera-bumpercar-option-desc span {
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  font-size: 17px !important;
+  line-height: 28px !important;
+  letter-spacing: 0px !important;
+  color: rgb(55, 62, 65) !important;
+}
+
 /* Hypergrid "What Makes Hypergrid" Accordion Styles */
 .winera-hypergrid-whyus-item {
   display: flex;
@@ -16939,6 +16955,33 @@ button[style*="background:transparent"]:hover,
   .winera-about-whyus-card .winera-expandable-content {
     display: inline !important;
   }
+}
+
+/* About Us 3S Why Choose Us (Sales, Service, Satisfaction) Cards Typography */
+.winera-about-whyus-card p,
+.winera-about-whyus-card .winera-expandable-preview,
+.winera-about-whyus-card .winera-expandable-preview span,
+.winera-about-whyus-card .winera-expandable-content,
+.winera-about-whyus-card .winera-expandable-content span {
+  letter-spacing: 0 !important;
+  color: #373e41 !important;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 17px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 28px !important;
+}
+
+/* About Us See More / See Less Button Small Styling */
+.winera-about-whyus-card .winera-see-more-btn,
+.winera-about-whyus-card .winera-see-more-btn span,
+.winera-see-more-btn,
+.winera-see-more-btn span {
+  font-size: 11.5px !important;
+  line-height: 16px !important;
+  font-weight: 600 !important;
+  letter-spacing: normal !important;
+  color: #0284c7 !important;
 }
 
 /* Project Card Location & Load More Button Styles */

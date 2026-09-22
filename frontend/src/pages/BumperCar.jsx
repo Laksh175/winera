@@ -646,7 +646,18 @@ export default function BumperCar({ siteData }) {
             </div>
 
             {/* Intro Description */}
-            <p className="winera-bumpercar-options-intro-desc" style={{ fontSize: '14px', color: '#475569', lineHeight: 1.55, fontWeight: '500', marginBottom: '35px', width: '84%', textAlign: 'justify' }}>
+            <p className="winera-bumpercar-options-intro-desc" style={{
+              fontFamily: "'Open Sans', sans-serif",
+              fontWeight: '400',
+              fontStyle: 'normal',
+              fontSize: '17px',
+              lineHeight: '28px',
+              letterSpacing: '0px',
+              color: 'rgb(55, 62, 65)',
+              marginBottom: '35px',
+              width: '84%',
+              textAlign: 'justify'
+            }}>
               {siteData?.bumpercarOptions?.desc || "We supply two drive types for indoor bumper car attractions. The right choice depends on your floor infrastructure, venue flexibility, and operational model."}
             </p>
 
@@ -681,7 +692,16 @@ export default function BumperCar({ siteData }) {
                   const fullText = siteData?.bumpercarOptions?.option1Desc || "Powered through a conductive floor grid and ceiling contact system. Delivers consistent, uninterrupted power throughout operating hours with zero battery management. Best suited for permanent, fixed installations in amusement parks, large FECs, and dedicated entertainment venues where the infrastructure investment is justified by high daily footfall.";
                   const { preview, expanded } = splitTextForMobilePreview(fullText, 140);
                   return (
-                    <div style={{ fontSize: '13.5px', color: '#334155', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+                    <div className="winera-bumpercar-option-desc" style={{
+                      fontFamily: "'Open Sans', sans-serif",
+                      fontWeight: '400',
+                      fontStyle: 'normal',
+                      fontSize: '17px',
+                      lineHeight: '28px',
+                      letterSpacing: '0px',
+                      color: 'rgb(55, 62, 65)',
+                      margin: 0
+                    }}>
                       <MobileExpandableText
                         preview={<span>{preview}</span>}
                         expandedContent={expanded ? <span>{expanded}</span> : null}
@@ -724,7 +744,16 @@ export default function BumperCar({ siteData }) {
                   const fullText = siteData?.bumpercarOptions?.option2Desc || "Self-contained rides running on rechargeable batteries — no floor grid or ceiling rig required. Ideal for malls, gaming zones, and temporary event setups where floor modification is not possible or where the operator wants the flexibility to relocate the attraction.";
                   const { preview, expanded } = splitTextForMobilePreview(fullText, 110);
                   return (
-                    <div style={{ fontSize: '13.5px', color: '#334155', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
+                    <div className="winera-bumpercar-option-desc" style={{
+                      fontFamily: "'Open Sans', sans-serif",
+                      fontWeight: '400',
+                      fontStyle: 'normal',
+                      fontSize: '17px',
+                      lineHeight: '28px',
+                      letterSpacing: '0px',
+                      color: 'rgb(55, 62, 65)',
+                      margin: 0
+                    }}>
                       <MobileExpandableText
                         preview={<span>{preview}</span>}
                         expandedContent={expanded ? <span>{expanded}</span> : null}

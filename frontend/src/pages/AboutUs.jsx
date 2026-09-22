@@ -644,18 +644,43 @@ export default function AboutUs({ siteData }) {
                     {expandedText ? (
                       <MobileExpandableText
                         preview={
-                          <span style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.6 }}>
+                          <span style={{
+                            fontFamily: "'Open Sans', sans-serif",
+                            fontWeight: 400,
+                            fontStyle: 'normal',
+                            fontSize: '17px',
+                            lineHeight: '28px',
+                            letterSpacing: '0px',
+                            color: '#373e41'
+                          }}>
                             {previewText}
                           </span>
                         }
                         expandedContent={
-                          <span style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.6 }}>
+                          <span style={{
+                            fontFamily: "'Open Sans', sans-serif",
+                            fontWeight: 400,
+                            fontStyle: 'normal',
+                            fontSize: '17px',
+                            lineHeight: '28px',
+                            letterSpacing: '0px',
+                            color: '#373e41'
+                          }}>
                             {" " + expandedText}
                           </span>
                         }
                       />
                     ) : (
-                      <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.6, margin: 0 }}>{c.desc}</p>
+                      <p style={{
+                        fontFamily: "'Open Sans', sans-serif",
+                        fontWeight: 400,
+                        fontStyle: 'normal',
+                        fontSize: '17px',
+                        lineHeight: '28px',
+                        letterSpacing: '0px',
+                        color: '#373e41',
+                        margin: 0
+                      }}>{c.desc}</p>
                     )}
                   </div>
                 );
@@ -944,6 +969,7 @@ export default function AboutUs({ siteData }) {
             ? siteData.aboutCta.description
             : "Whether you're starting from scratch or upgrading an existing space our team is ready to help you plan, build, and launch a game zone that drives real revenue."
         }
+        descriptionFontSize="20px"
         buttonText={
           siteData?.aboutCta?.buttonText !== undefined
             ? siteData.aboutCta.buttonText
