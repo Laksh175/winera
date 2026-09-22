@@ -138,10 +138,14 @@ export default function Home({ siteData }) {
   const [isMobile, setIsMobile] = React.useState(
     typeof window !== 'undefined' ? window.innerWidth <= 850 : false
   );
+  const [isPhone, setIsPhone] = React.useState(
+    typeof window !== 'undefined' ? window.innerWidth < 576 : false
+  );
 
   React.useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 850);
+      setIsPhone(window.innerWidth < 576);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -1538,12 +1542,12 @@ export default function Home({ siteData }) {
 
                 const renderCard = (step, idx, actualIndex) => {
                   const isYellow = actualIndex % 2 === 1;
-                  const dirClass = isMobile ? '' : (actualIndex % 2 === 0 ? 'winera-reveal-left' : 'winera-reveal-right');
+                  const dirClass = isPhone ? '' : (actualIndex % 2 === 0 ? 'winera-reveal-left' : 'winera-reveal-right');
                   let wrapperClass = isYellow
                     ? `winera-process-card-wrapper-yellow ${dirClass} winera-reveal-delay-${(actualIndex % 3) + 1}`
                     : `winera-process-card-wrapper-cyan ${dirClass} winera-reveal-delay-${(actualIndex % 3) + 1}`;
 
-                  if (!isMobile) {
+                  if (typeof window !== 'undefined' && window.innerWidth > 1280) {
                     if (actualIndex === 3) {
                       wrapperClass = `winera-process-card-wrapper-yellow-left ${dirClass} winera-reveal-delay-${(actualIndex % 3) + 1}`;
                     } else if (actualIndex === 4) {
@@ -1633,7 +1637,7 @@ export default function Home({ siteData }) {
 
                 const totalCards = cardList.length;
 
-                if (isMobile) {
+                if (isPhone) {
                   return (
                     <div style={{ width: '100%', position: 'relative' }}>
                       <div

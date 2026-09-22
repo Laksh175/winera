@@ -12268,6 +12268,13 @@ button[style*="background:transparent"]:hover,
   .winera-process-row {
     display: contents !important;
   }
+
+  .winera-process-cards-container #winera-process-card-4 {
+    grid-column: 1 / -1 !important;
+    max-width: 580px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+  }
 }
 
 /* Custom Banner Image 1920x600 Aspect Ratio Support for CTA Banners */
