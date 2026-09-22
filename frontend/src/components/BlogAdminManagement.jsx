@@ -21,11 +21,15 @@ import { sanitizeAndFormatHtml } from '../pages/BlogDetail';
 import blogCardImg from '../assets/blog-images.webp';
 
 const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
-  if (url && typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:'))) {
+  if (url && typeof url === 'string' && !url.includes('/src/assets/') && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:'))) {
     return url;
   }
   if (url && typeof url === 'string' && (url.startsWith('/uploads/') || url.startsWith('uploads/'))) {
     const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+    const apiUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '').replace(/\/$/, '') : '';
+    if (apiUrl) {
+      return `${apiUrl}${cleanUrl}`;
+    }
     const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
     return `http://${hostname}:5001${cleanUrl}`;
   }
@@ -42,7 +46,7 @@ const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
   if (typeof postIdx === 'number' && DEFAULT_BLOG_POSTS[postIdx]?.image) {
     return DEFAULT_BLOG_POSTS[postIdx].image;
   }
-  return fallback;
+  return fallback || blogCardImg;
 };
 
 // Helper to parse blog post into structured fields
@@ -123,7 +127,13 @@ export default function BlogAdminManagement({
   uploadImageFile,
   adminToken
 }) {
-  const rawList = Array.isArray(formData.blogPosts) && formData.blogPosts.length > 0
+  const isDummyPosts = Array.isArray(formData.blogPosts) && formData.blogPosts.length > 0 && (
+    formData.blogPosts[0]?.title === 'Blog 1' ||
+    (formData.blogPosts[0]?.title?.includes('Soft Play vs Trampoline Park: Which') && formData.blogPosts.length < 15) ||
+    formData.blogPosts[0]?.image === '/src/assets/blog-images.png'
+  );
+
+  const rawList = (Array.isArray(formData.blogPosts) && formData.blogPosts.length > 0 && !isDummyPosts)
     ? formData.blogPosts
     : DEFAULT_BLOG_POSTS;
 
@@ -134,15 +144,15 @@ export default function BlogAdminManagement({
   const [isUploading, setIsUploading] = useState(false);
   const [activeTabPreview, setActiveTabPreview] = useState(false);
 
-  // Initialize or synchronize posts in formData if empty
+  // Initialize or synchronize posts in formData if empty or dummy
   useEffect(() => {
-    if (!Array.isArray(formData.blogPosts) || formData.blogPosts.length === 0) {
+    if (!Array.isArray(formData.blogPosts) || formData.blogPosts.length === 0 || isDummyPosts) {
       setFormData(prev => ({
         ...prev,
         blogPosts: DEFAULT_BLOG_POSTS
       }));
     }
-  }, []);
+  }, [formData.blogPosts]);
 
   const handleStartCreate = () => {
     const newBlog = parseBlogToForm(null);
