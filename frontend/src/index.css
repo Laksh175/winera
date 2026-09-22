@@ -15365,21 +15365,21 @@ button[style*="background:transparent"]:hover,
 }
 
 .winera-see-more-btn {
-  font-size: 9px !important;
-  padding: 1px 6px !important;
-  line-height: 12px !important;
-  border-radius: 10px !important;
-  gap: 2px !important;
+  font-size: 14px !important;
+  padding: 2px 8px !important;
+  line-height: 18px !important;
+  border-radius: 12px !important;
+  gap: 4px !important;
 }
 
 .winera-see-more-btn span {
-  font-size: 9px !important;
-  line-height: 12px !important;
+  font-size: 14px !important;
+  line-height: 18px !important;
 }
 
 .winera-see-more-btn svg {
-  width: 8px !important;
-  height: 8px !important;
+  width: 12px !important;
+  height: 12px !important;
 }
 
 .winera-see-more-btn:hover,

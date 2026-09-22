@@ -38,29 +38,29 @@ const MobileExpandableText = ({
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: '2px',
-        padding: '1px 6px',
-        fontSize: '9px',
+        gap: '4px',
+        padding: '2px 8px',
+        fontSize: '14px',
         fontWeight: 600,
         fontFamily: "'Open Sans', sans-serif",
         color: 'rgba(0, 174, 239, 1)',
         background: 'rgba(0, 174, 239, 0.08)',
         border: '1px solid rgba(0, 174, 239, 0.22)',
-        borderRadius: '10px',
+        borderRadius: '12px',
         cursor: 'pointer',
-        lineHeight: '12px',
-        marginLeft: '4px',
+        lineHeight: '18px',
+        marginLeft: '6px',
         verticalAlign: 'baseline',
         whiteSpace: 'nowrap',
         transition: 'all 0.2s ease',
         outline: 'none'
       }}
     >
-      <span style={{ fontSize: '9px', lineHeight: '12px' }}>{expanded ? lessText : moreText}</span>
+      <span style={{ fontSize: '14px', lineHeight: '18px' }}>{expanded ? lessText : moreText}</span>
       {expanded ? (
-        <ChevronUp style={{ width: '8px', height: '8px', strokeWidth: 2.5 }} />
+        <ChevronUp style={{ width: '12px', height: '12px', strokeWidth: 2.5 }} />
       ) : (
-        <ChevronDown style={{ width: '8px', height: '8px', strokeWidth: 2.5 }} />
+        <ChevronDown style={{ width: '12px', height: '12px', strokeWidth: 2.5 }} />
       )}
     </button>
   );
