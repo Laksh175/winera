@@ -24,6 +24,7 @@ import bumperCarIcon from '../assets/bumper-car-icon.webp';
 import bumperCarIconPng from '../assets/bumper-car-icon.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import downloadButtonImg from '../assets/download-button.png';
+import bumpercarMobileHeroBg from '../assets/Bumper-car-phone-banner.png';
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 import MobileExpandableText from '../components/MobileExpandableText';
 
@@ -268,6 +269,7 @@ export default function BumperCar({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
+        '--winera-bumpercar-mobile-bg': `url("${bumpercarMobileHeroBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -278,7 +280,7 @@ export default function BumperCar({ siteData }) {
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Bumper Car */}
           <h1 className="winera-bumpercar-hero-h1" style={{
-            fontSize: '1.45rem',
+            fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',

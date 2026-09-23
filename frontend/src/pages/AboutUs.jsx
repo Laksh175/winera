@@ -183,7 +183,7 @@ export default function AboutUs({ siteData }) {
           </h1>
 
           <div className="winera-about-hero-breadcrumb" style={{
-            fontSize: '14px',
+            fontSize: '21px',
             fontWeight: '600',
             color: '#ffffff',
             display: 'flex',

@@ -11,6 +11,7 @@ import CtaBanner from '../components/CtaBanner';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import WineraImage from '../components/WineraImage';
 import arcadeHeroBg from '../assets/arcadegame-hero-bg.webp';
+import arcadeMobileHeroBg from '../assets/arcade-mobile-image.png';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadegamesImg from '../assets/arcadegames-img.webp';
@@ -97,6 +98,15 @@ export default function ArcadeGame({ siteData }) {
   const [mobileProdIndex, setMobileProdIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const arcadeSeo = siteData?.arcadeSeo || {
     pageTitle: "Arcade Games Manufacturer in India | Winera International",
@@ -187,7 +197,9 @@ export default function ArcadeGame({ siteData }) {
         width: '100%',
         paddingTop: '175px',
         paddingBottom: '95px',
-        background: `url(${getValidImageUrl(siteData?.arcadeHero?.bgUrl, arcadeHeroBg)}) center top / 100% 100% no-repeat`,
+        background: isMobile
+          ? `linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), url(${arcadeMobileHeroBg}) center top / 100% 100% no-repeat`
+          : `url(${getValidImageUrl(siteData?.arcadeHero?.bgUrl, arcadeHeroBg)}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -198,7 +210,7 @@ export default function ArcadeGame({ siteData }) {
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Title / Breadcrumb: Home › Arcade Game */}
           <h1 className="winera-arcade-hero-h1" style={{
-            fontSize: '1.45rem',
+            fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',

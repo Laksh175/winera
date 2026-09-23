@@ -145,8 +145,8 @@ export default function Blog({ siteData }) {
         color: '#ffffff'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          <h1 className="winera-vr-hero-h1" style={{
-            fontSize: '1.45rem',
+          <h1 className="winera-blog-hero-h1" style={{
+            fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',

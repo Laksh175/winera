@@ -217,7 +217,7 @@ export default function AmusementPark({ siteData }) {
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Amusement Park */}
           <h1 className="winera-amusement-hero-title" style={{
-            fontSize: '1.45rem',
+            fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',

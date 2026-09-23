@@ -9,6 +9,7 @@ import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
 import arHeroBg from '../assets/argame-hero-bg.webp';
+import arHeroMobileBg from '../assets/Ar game phone banner.png';
 import arSupplierCollage from '../assets/ar-supplier-collage.webp';
 import arAttractionsGraphic from '../assets/ar-attractions-graphic.webp';
 import arFeaturesBg from '../assets/ar-features-bg.webp';
@@ -462,6 +463,7 @@ export default function ArGames({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
+        '--winera-ar-mobile-bg': `url("${arHeroMobileBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -472,7 +474,7 @@ export default function ArGames({ siteData }) {
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › AR Games */}
           <h1 className="winera-ar-hero-h1" style={{
-            fontSize: '1.45rem',
+            fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',

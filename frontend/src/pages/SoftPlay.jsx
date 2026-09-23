@@ -12,6 +12,7 @@ import MobileExpandableText from '../components/MobileExpandableText';
 import needConsultationsBg from '../assets/cta-consultations-banner.webp';
 import softplayCtaBg from '../assets/softplay-cta-bg.webp';
 import softplayHeroBg from '../assets/softplay-hero-bg.webp';
+import softplayMobileHeroBg from '../assets/Softplay-game-phone-banner.png';
 import logoImg from '../assets/logo.webp';
 import about1 from '../assets/about-01.webp';
 import about2 from '../assets/about-2.webp';
@@ -118,6 +119,7 @@ export default function SoftPlay({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
+        '--winera-softplay-mobile-bg': `url("${softplayMobileHeroBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -128,7 +130,7 @@ export default function SoftPlay({ siteData }) {
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Main Title / Breadcrumb: Home › Soft Play */}
           <h1 className="winera-softplay-hero-h1" style={{
-            fontSize: '1.45rem',
+            fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',

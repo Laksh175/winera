@@ -1994,17 +1994,28 @@ html {
 
   /* ─── AR Games Page Mobile Responsive Spacing ─── */
 
-  /* Hero */
   .winera-ar-hero-section {
-    padding-top: 105px !important;
-    padding-bottom: 25px !important;
-    background-size: cover !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-ar-mobile-bg, url('./assets/ar-mobile-image.png')) !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    aspect-ratio: 941 / 550 !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
   }
 
   .winera-ar-hero-h1 {
-    font-size: 1.25rem !important;
+    font-size: 1.15rem !important;
     letter-spacing: -0.2px !important;
     gap: 6px !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
   }
 
   .winera-ar-hero-breadcrumb {
@@ -2371,10 +2382,12 @@ html {
 
   /* Arcade Game Hero Section – mobile adjustments */
   .winera-arcade-hero-section {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), url('./assets/arcade-mobile-image.png') !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
     padding-top: 105px !important;
     padding-bottom: 25px !important;
-    background-size: cover !important;
-    background-position: center !important;
   }
 
   .winera-arcade-hero-h1 {
@@ -3281,13 +3294,27 @@ html {
 
   /* Bumper Car Page Mobile Adjustments */
   .winera-bumpercar-hero-section {
-    padding-top: 140px !important;
-    padding-bottom: 50px !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-bumpercar-mobile-bg, url('./assets/Bumper-car-phone-banner.png')) !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    aspect-ratio: 941 / 550 !important;
+    height: auto !important;
     min-height: auto !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justifyContent: center !important;
+    box-sizing: border-box !important;
   }
 
   .winera-bumpercar-hero-h1 {
-    font-size: 22px !important;
+    font-size: 1.15rem !important;
+    letter-spacing: -0.2px !important;
+    gap: 6px !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
   }
 
   .winera-bumpercar-hero-breadcrumb {
@@ -3913,20 +3940,32 @@ html {
 
   /* Hero */
   .winera-bowling-hero-section {
-    padding-top: 105px !important;
-    padding-bottom: 25px !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-bowling-mobile-bg, url('./assets/bowling-mobile-image.png')) !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    aspect-ratio: 941 / 550 !important;
+    height: auto !important;
     min-height: auto !important;
-    background-size: cover !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justifyContent: center !important;
+    box-sizing: border-box !important;
   }
 
   .winera-bowling-hero-h1 {
-    font-size: 1.25rem !important;
+    font-size: 1.15rem !important;
     letter-spacing: -0.2px !important;
     gap: 6px !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
   }
 
   .winera-bowling-hero-breadcrumb {
     font-size: 13px !important;
+    gap: 6px !important;
   }
 
   /* 1. Supplier Section */
@@ -4300,13 +4339,27 @@ html {
 
   /* Soft Play Page Mobile Adjustments */
   .winera-softplay-hero-section {
-    padding-top: 140px !important;
-    padding-bottom: 50px !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-softplay-mobile-bg, url('./assets/Softplay-game-phone-banner.png')) !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    aspect-ratio: 941 / 550 !important;
+    height: auto !important;
     min-height: auto !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justifyContent: center !important;
+    box-sizing: border-box !important;
   }
 
   .winera-softplay-hero-h1 {
-    font-size: 2.2rem !important;
+    font-size: 1.15rem !important;
+    letter-spacing: -0.2px !important;
+    gap: 6px !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
   }
 
   .winera-softplay-hero-breadcrumb {
@@ -5069,11 +5122,7 @@ html {
   .winera-about-hero-section,
   .winera-contact-hero-section,
   .winera-vr-hero-section,
-  .winera-ar-hero-section,
-  .winera-arcade-hero-section,
-  .winera-bowling-hero-section,
-  .winera-bumpercar-hero-section,
-  .winera-softplay-hero-section {
+  .winera-arcade-hero-section {
     background-size: cover !important;
     background-position: center !important;
     aspect-ratio: auto !important;
@@ -6440,14 +6489,10 @@ textarea::placeholder,
   /* Hero Sections Padding Fix across all sub-hero pages */
   .winera-project-hero-section,
   .winera-hypergrid-hero-section,
-  .winera-ar-hero-section,
   .winera-vr-hero-section,
-  .winera-bumpercar-hero-section,
-  .winera-softplay-hero-section,
   .winera-arcade-hero-section,
   .winera-amusement-hero-section,
-  .winera-bowling-hero-section,
-  section[class*="hero"]:not(.winera-home-hero-section) {
+  section[class*="hero"]:not(.winera-home-hero-section):not(.winera-bumpercar-hero-section):not(.winera-softplay-hero-section):not(.winera-trampoline-hero-section):not(.winera-ar-hero-section):not(.winera-bowling-hero-section) {
     padding-top: 110px !important;
     padding-bottom: 60px !important;
     min-height: 260px !important;
@@ -7248,14 +7293,10 @@ textarea::placeholder,
 
   .winera-project-hero-section,
   .winera-hypergrid-hero-section,
-  .winera-ar-hero-section,
   .winera-vr-hero-section,
-  .winera-bumpercar-hero-section,
-  .winera-softplay-hero-section,
   .winera-arcade-hero-section,
   .winera-amusement-hero-section,
-  .winera-bowling-hero-section,
-  section[class*="hero"]:not(.winera-home-hero-section) {
+  section[class*="hero"]:not(.winera-home-hero-section):not(.winera-bumpercar-hero-section):not(.winera-softplay-hero-section):not(.winera-trampoline-hero-section):not(.winera-ar-hero-section):not(.winera-bowling-hero-section) {
     padding-top: 110px !important;
     padding-bottom: 70px !important;
     min-height: 320px !important;
@@ -7297,14 +7338,10 @@ textarea::placeholder,
   .winera-project-hero-section,
   .winera-hypergrid-hero-section,
   .winera-safety-hero-section,
-  .winera-ar-hero-section,
   .winera-vr-hero-section,
-  .winera-bumpercar-hero-section,
-  .winera-softplay-hero-section,
   .winera-arcade-hero-section,
   .winera-amusement-hero-section,
-  .winera-bowling-hero-section,
-  section[class*="hero"]:not(.winera-home-hero-section) {
+  section[class*="hero"]:not(.winera-home-hero-section):not(.winera-bumpercar-hero-section):not(.winera-softplay-hero-section):not(.winera-trampoline-hero-section):not(.winera-ar-hero-section):not(.winera-bowling-hero-section) {
     padding-top: 110px !important;
     padding-bottom: 60px !important;
     min-height: 300px !important;
@@ -7675,9 +7712,20 @@ textarea::placeholder,
   }
 
   .winera-trampoline-hero-section {
-    padding-top: 140px !important;
-    padding-bottom: 50px !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-trampoline-mobile-bg, url('./assets/Trampoline-park-phone-banner.png')) !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    aspect-ratio: 941 / 550 !important;
+    height: auto !important;
     min-height: auto !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
   }
 
   .winera-trampoline-hero-h1 {
@@ -7685,6 +7733,7 @@ textarea::placeholder,
     white-space: nowrap !important;
     line-height: 1.2 !important;
     gap: 6px !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
   }
 
   @media (max-width: 480px) {
@@ -9032,22 +9081,24 @@ img[src*="yellow-stroke-line"] {
   }
 }
 
-/* Hero Section Padding so Breadcrumb is always 100% visible */
-.winera-arcade-hero-section,
-.winera-bowling-hero-section,
-.winera-softplay-hero-section,
-.winera-bumpercar-hero-section,
-.winera-vr-hero-section,
-.winera-ar-hero-section,
-.winera-amusement-hero-section,
-.winera-hypergrid-hero-section,
-.winera-project-hero-section,
-.winera-safety-hero-section,
-.winera-trampoline-hero-section,
-.winera-roi-hero-section,
-.winera-blog-hero-section {
-  padding-top: 175px !important;
-  padding-bottom: 95px !important;
+/* Hero Section Padding so Breadcrumb is always 100% visible on Desktop */
+@media (min-width: 769px) {
+  .winera-arcade-hero-section,
+  .winera-bowling-hero-section,
+  .winera-softplay-hero-section,
+  .winera-bumpercar-hero-section,
+  .winera-vr-hero-section,
+  .winera-ar-hero-section,
+  .winera-amusement-hero-section,
+  .winera-hypergrid-hero-section,
+  .winera-project-hero-section,
+  .winera-safety-hero-section,
+  .winera-trampoline-hero-section,
+  .winera-roi-hero-section,
+  .winera-blog-hero-section {
+    padding-top: 175px !important;
+    padding-bottom: 95px !important;
+  }
 }
 
 /* Arrow Icon Visibility: Up/Down on Desktop, Left/Right on Mobile */
@@ -9164,6 +9215,10 @@ img[src*="yellow-stroke-line"] {
   }
 
   .winera-arcade-hero-section {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), url('./assets/arcade-mobile-image.png') !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
     padding-top: 140px !important;
     padding-bottom: 35px !important;
   }
@@ -9326,7 +9381,14 @@ img[src*="yellow-stroke-line"] {
 .winera-lasertag-hero-h1,
 .winera-contact-hero-h1,
 .winera-about-hero-breadcrumb,
-.winera-breadcrumb-hero {
+.winera-breadcrumb-hero,
+.winera-arcade-hero-breadcrumb,
+.winera-vr-hero-breadcrumb,
+.winera-bowling-hero-breadcrumb,
+.winera-softplay-hero-breadcrumb,
+.winera-bumpercar-hero-breadcrumb,
+.winera-ar-hero-breadcrumb {
+  font-size: 21px !important;
   animation: wineraBreadcrumbPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
@@ -9349,6 +9411,7 @@ img[src*="yellow-stroke-line"] {
 .winera-contact-hero-h1>a,
 .winera-about-hero-breadcrumb>a,
 .winera-breadcrumb-hero>a {
+  font-size: 21px !important;
   position: relative;
   transition: all 0.25s ease;
   padding: 2px 6px;
@@ -9399,6 +9462,7 @@ img[src*="yellow-stroke-line"] {
 .winera-contact-hero-h1>span:nth-of-type(1),
 .winera-about-hero-breadcrumb>span:nth-of-type(1),
 .winera-breadcrumb-hero>span:nth-of-type(1) {
+  font-size: 21px !important;
   display: inline-block;
   margin: 0 6px;
   color: rgba(255, 255, 255, 0.85);
@@ -9422,7 +9486,9 @@ img[src*="yellow-stroke-line"] {
 .winera-blog-hero-h1>span:nth-of-type(2),
 .winera-lasertag-hero-h1>span:nth-of-type(2),
 .winera-contact-hero-h1>span:nth-of-type(2),
+.winera-about-hero-breadcrumb>span:nth-of-type(2),
 .winera-breadcrumb-hero>span:nth-of-type(2) {
+  font-size: 21px !important;
   display: inline-block;
   animation: wineraGoldPulse 2.8s ease-in-out infinite;
   letter-spacing: -0.2px;
@@ -10207,7 +10273,7 @@ h2 span,
     flex-wrap: wrap !important;
     white-space: normal !important;
     text-align: center !important;
-    font-size: clamp(16px, 4.4vw, 20px) !important;
+    font-size: 21px !important;
     line-height: 1.25 !important;
     row-gap: 4px !important;
     column-gap: 6px !important;
@@ -12630,7 +12696,7 @@ button[style*="background:transparent"]:hover,
   .winera-breadcrumb-hero,
   h1[class*="-hero-h1"],
   h1[class*="hero"] {
-    font-size: 1.95rem !important;
+    font-size: 21px !important;
   }
 }
 
@@ -12919,7 +12985,7 @@ button[style*="background:transparent"]:hover,
   .winera-contact-hero-h1 *,
   .winera-about-hero-breadcrumb *,
   .winera-breadcrumb-hero * {
-    font-size: 22px !important;
+    font-size: 21px !important;
   }
 
   /* Hero CTA Button Styles for 1024px Screen Size */
@@ -18178,4 +18244,64 @@ button[style*="background:transparent"]:hover,
   border-color: #38bdf8 !important;
   background: #ffffff !important;
   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2) !important;
+}
+
+/* ==========================================================================
+   GLOBAL HERO BREADCRUMB 21PX FOR ALL PAGES ACROSS ALL SCREENS
+   ========================================================================== */
+.winera-arcade-hero-h1,
+.winera-bowling-hero-h1,
+.winera-softplay-hero-h1,
+.winera-vr-hero-h1,
+.winera-ar-hero-h1,
+.winera-bumpercar-hero-h1,
+.winera-amusement-hero-h1,
+.winera-amusement-hero-title,
+.winera-trampoline-hero-h1,
+.winera-hypergrid-hero-h1,
+.winera-hypergrid-hero-title,
+.winera-safety-hero-h1,
+.winera-project-hero-h1,
+.winera-roi-hero-h1,
+.winera-blog-hero-h1,
+.winera-lasertag-hero-h1,
+.winera-contact-hero-h1,
+.winera-about-hero-breadcrumb,
+.winera-breadcrumb-hero,
+.winera-arcade-hero-breadcrumb,
+.winera-vr-hero-breadcrumb,
+.winera-bowling-hero-breadcrumb,
+.winera-softplay-hero-breadcrumb,
+.winera-bumpercar-hero-breadcrumb,
+.winera-ar-hero-breadcrumb,
+div[class*="hero-breadcrumb"],
+h1[class*="-hero-h1"],
+.winera-arcade-hero-h1 *,
+.winera-bowling-hero-h1 *,
+.winera-softplay-hero-h1 *,
+.winera-vr-hero-h1 *,
+.winera-ar-hero-h1 *,
+.winera-bumpercar-hero-h1 *,
+.winera-amusement-hero-h1 *,
+.winera-amusement-hero-title *,
+.winera-trampoline-hero-h1 *,
+.winera-hypergrid-hero-h1 *,
+.winera-hypergrid-hero-title *,
+.winera-safety-hero-h1 *,
+.winera-project-hero-h1 *,
+.winera-roi-hero-h1 *,
+.winera-blog-hero-h1 *,
+.winera-lasertag-hero-h1 *,
+.winera-contact-hero-h1 *,
+.winera-about-hero-breadcrumb *,
+.winera-breadcrumb-hero *,
+.winera-arcade-hero-breadcrumb *,
+.winera-vr-hero-breadcrumb *,
+.winera-bowling-hero-breadcrumb *,
+.winera-softplay-hero-breadcrumb *,
+.winera-bumpercar-hero-breadcrumb *,
+.winera-ar-hero-breadcrumb *,
+div[class*="hero-breadcrumb"] *,
+h1[class*="-hero-h1"] * {
+  font-size: 21px !important;
 }

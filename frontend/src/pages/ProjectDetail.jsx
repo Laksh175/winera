@@ -335,7 +335,7 @@ export default function ProjectDetail({ siteData }) {
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Breadcrumb: Home › Project › Name */}
           <h1 className="winera-project-hero-h1" style={{
-            fontSize: '1.45rem',
+            fontSize: '21px',
             fontWeight: '900',
             color: '#ffffff',
             display: 'flex',

@@ -23,6 +23,7 @@ import trampolineParkCtaBg from '../assets/trampoline-park-cta-bg.webp';
 import downloadButtonImg from '../assets/download-button.png';
 import talkToRoiButtonImg from '../assets/talk-to-roi-button.png';
 import ctaBtn3 from '../assets/cta-button-3.png';
+import trampolineMobileHeroBg from '../assets/Trampoline-park-phone-banner.png';
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 
@@ -256,6 +257,7 @@ export default function TrampolinePark({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${bgImage}) center top / 100% 100% no-repeat`,
+        '--winera-trampoline-mobile-bg': `url("${trampolineMobileHeroBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -266,7 +268,7 @@ export default function TrampolinePark({ siteData }) {
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Breadcrumb Heading: Home > Trampoline Park */}
           <h1 className="winera-trampoline-hero-h1" style={{
-            fontSize: '1.5rem',
+            fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',

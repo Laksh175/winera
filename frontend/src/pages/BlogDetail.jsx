@@ -358,7 +358,7 @@ export default function BlogDetail({ siteData }) {
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <div className="winera-blog-hero-h1" style={{
-            fontSize: '1.2rem',
+            fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',

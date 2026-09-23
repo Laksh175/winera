@@ -12,6 +12,7 @@ import MobileExpandableText from '../components/MobileExpandableText';
 import wineraLogo from '../assets/logo.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 import bowlingHeroBg from '../assets/bowlling-hero-bg.webp';
+import bowlingMobileHeroBg from '../assets/bowling-mobile-image.png';
 import bowlingImg from '../assets/bowling.webp';
 import maskGroupImg from '../assets/Mask-group.webp';
 import maskGroup01Img from '../assets/Mask-group-01.webp';
@@ -114,6 +115,15 @@ export default function BowlingAlley({ siteData }) {
   const [relatedIndex, setRelatedIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Dynamic SEO Page Title & Meta Description
   useEffect(() => {
@@ -128,7 +138,7 @@ export default function BowlingAlley({ siteData }) {
   }, [siteData]);
 
   // Hero background asset constant
-  const heroBgImage = getValidImageUrl(siteData?.bowlingHero?.bgUrl, bowlingHeroBg);
+  const heroBgImage = isMobile ? bowlingMobileHeroBg : getValidImageUrl(siteData?.bowlingHero?.bgUrl, bowlingHeroBg);
 
   // Bowling Machine categories/cards fallback
   const defaultBowlingCategories = [
@@ -219,6 +229,7 @@ export default function BowlingAlley({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
+        '--winera-bowling-mobile-bg': `url("${bowlingMobileHeroBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -229,7 +240,7 @@ export default function BowlingAlley({ siteData }) {
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Bowling Alley */}
           <h1 className="winera-bowling-hero-h1" style={{
-            fontSize: '1.45rem',
+            fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
