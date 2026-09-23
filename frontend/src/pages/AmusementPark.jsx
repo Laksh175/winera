@@ -24,7 +24,11 @@ import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
-  const text = rawText || defaultText;
+  let text = rawText || defaultText;
+  if (!text) return null;
+
+  // Ensure spacing around <br/> tags so words never stick together if line breaks are hidden on mobile
+  text = text.replace(/([^\s>])(<br\s*\/?>)/gi, '$1 $2').replace(/(<br\s*\/?>)([^\s<])/gi, '$1 $2');
 
   if (text.toLowerCase().includes('complete amusement park')) {
     return (

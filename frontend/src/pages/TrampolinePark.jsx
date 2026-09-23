@@ -43,7 +43,12 @@ const getValidImageUrl = (url, fallback) => {
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
-  const text = rawText || defaultText;
+  let text = rawText || defaultText;
+  if (!text) return null;
+
+  // Ensure spacing around <br/> tags so words never stick together if line breaks are hidden on mobile
+  text = text.replace(/([^\s>])(<br\s*\/?>)/gi, '$1 $2').replace(/(<br\s*\/?>)([^\s<])/gi, '$1 $2');
+
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
 
   return parts.map((part, pIdx) => {
@@ -507,8 +512,8 @@ export default function TrampolinePark({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '240px', height: '8px', marginBottom: '8px', objectFit: 'fill', marginLeft: 0 }}
               />
 
-              {/* Title - Single Line */}
-              <h2 className="winera-trampoline-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', margin: '0 0 24px 0', lineHeight: 1.15, whiteSpace: 'nowrap' }}>
+              {/* Title */}
+              <h2 className="winera-trampoline-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', margin: '0 0 24px 0', lineHeight: 1.15 }}>
                 {(() => {
                   let raw = siteData?.trampolineSpecs?.title;
                   if (!raw || raw === "Technical *Specifications*") {

@@ -39,7 +39,12 @@ import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
-  const text = rawText || defaultText;
+  let text = rawText || defaultText;
+  if (!text) return null;
+
+  // Ensure spacing around <br/> tags so words never stick together if line breaks are hidden on mobile
+  text = text.replace(/([^\s>])(<br\s*\/?>)/gi, '$1 $2').replace(/(<br\s*\/?>)([^\s<])/gi, '$1 $2');
+
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
 
   return parts.map((part, pIdx) => {
@@ -324,7 +329,7 @@ export default function SoftPlay({ siteData }) {
               alt=""
               style={{ display: 'block', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 className="winera-softplay-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', lineHeight: 1.15, margin: '0 0 24px 0', whiteSpace: 'nowrap' }}>
+            <h2 className="winera-softplay-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', lineHeight: 1.15, margin: '0 0 24px 0' }}>
               {renderTitleMarkup(siteData?.softplaySpecs?.title, "*Technical* Specifications", "#ffcd00")}
             </h2>
           </div>

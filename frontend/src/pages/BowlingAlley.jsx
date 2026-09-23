@@ -68,7 +68,12 @@ const getValidImageUrl = (url, fallback) => {
 
 // Helper function to render title with *word* highlights, <cyan>cyan words</cyan> and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
-  const text = rawText || defaultText;
+  let text = rawText || defaultText;
+  if (!text) return null;
+
+  // Ensure spacing around <br/> tags so words never stick together if line breaks are hidden on mobile
+  text = text.replace(/([^\s>])(<br\s*\/?>)/gi, '$1 $2').replace(/(<br\s*\/?>)([^\s<])/gi, '$1 $2');
+
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
 
   return parts.map((part, pIdx) => {

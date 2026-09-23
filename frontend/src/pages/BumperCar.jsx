@@ -48,7 +48,16 @@ const splitTextForMobilePreview = (text, charLimit = 130) => {
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
-  const text = rawText || defaultText;
+  let text = rawText || defaultText;
+  if (!text) return null;
+
+  if (text.includes("QUICK COMPARISON")) {
+    text = text.replace(/QUICK COMPARISON/g, "Quick Comparison").replace(/TABLE/g, "Table");
+  }
+
+  // Ensure spacing around <br/> tags so words never stick together if line breaks are hidden on mobile
+  text = text.replace(/([^\s>])(<br\s*\/?>)/gi, '$1 $2').replace(/(<br\s*\/?>)([^\s<])/gi, '$1 $2');
+
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
 
   return parts.map((part, pIdx) => {
@@ -546,7 +555,7 @@ export default function BumperCar({ siteData }) {
               alt=""
               style={{ display: 'block', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 className="winera-bumpercar-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', lineHeight: 1.15, margin: '0 0 24px 0', whiteSpace: 'nowrap' }}>
+            <h2 className="winera-bumpercar-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', lineHeight: 1.15, margin: '0 0 24px 0' }}>
               {renderTitleMarkup(siteData?.bumpercarSpecs?.title, "*Technical* Specifications", "#ffcd00")}
             </h2>
           </div>
@@ -800,7 +809,7 @@ export default function BumperCar({ siteData }) {
               style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.bumpercarComparison?.title, "*QUICK COMPARISON* TABLE", '#38bdf8')}
+              {renderTitleMarkup(siteData?.bumpercarComparison?.title, "*Quick Comparison* Table", '#38bdf8')}
             </h2>
           </div>
 
@@ -1066,7 +1075,7 @@ export default function BumperCar({ siteData }) {
                 style={{ display: 'block', width: '80%', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.bumpercarInvestment?.title, "Is a Bumper Car Ride a<br/>Smart *Investment for<br/>Your Venue?*", '#38bdf8')}
+                {renderTitleMarkup(siteData?.bumpercarInvestment?.title, "Is a Bumper Car Ride a <br/>Smart *Investment for <br/>Your Venue?*", '#38bdf8')}
               </h2>
             </div>
 
