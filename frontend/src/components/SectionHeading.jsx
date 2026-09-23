@@ -80,8 +80,8 @@ function parseStarText(children) {
 export default function SectionHeading({
   children,
   subtitle,
-  accentWidth = '220px',
-  accentMaxWidth = '260px',
+  accentWidth = '350px',
+  accentMaxWidth = '380px',
   accentHeight = '10px',
   accentMarginBottom = '10px',
   accentAlign = 'center',

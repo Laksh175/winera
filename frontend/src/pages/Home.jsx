@@ -412,7 +412,14 @@ export default function Home({ siteData }) {
                   <>
                     <div className="winera-hero-line1">{l1}</div>
                     <div className="winera-hero-line2">
-                      {l2Highlight ? <span className="winera-hero-highlight">{l2Highlight}</span> : null}
+                      {l2Highlight ? (
+                        <span
+                          className="winera-hero-highlight"
+                          style={{ color: '#ffcd00', fontSize: 'inherit', lineHeight: 'inherit', display: 'inline' }}
+                        >
+                          {l2Highlight}
+                        </span>
+                      ) : null}
                       {l2Rest}
                     </div>
                   </>

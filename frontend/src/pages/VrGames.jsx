@@ -313,8 +313,8 @@ export default function VrGames({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                className="winera-yellow-stroke"
-                style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+                className="winera-yellow-stroke winera-vr-intro-stroke"
+                style={{ display: 'block', width: '260px', maxWidth: '100%', height: '10px', marginBottom: '10px', objectFit: 'fill', margin: '0 0 10px 0' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.vrIntro?.title, "*VR Gaming Machine*<br/>supplier in India", '#38bdf8')}
@@ -366,8 +366,8 @@ export default function VrGames({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                className="winera-yellow-stroke"
-                style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+                className="winera-yellow-stroke winera-vr-attractions-stroke"
+                style={{ display: 'block', width: '300px', maxWidth: '100%', height: '10px', marginBottom: '10px', objectFit: 'fill', margin: '0 0 10px 0' }}
               />
               <h2 style={{
                 fontSize: '35px',

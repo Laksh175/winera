@@ -247,7 +247,7 @@ export default function Hypergrid({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', maxWidth: '100%', width: '320px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
+                style={{ display: 'block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game* <br/>Supplier in India", '#38bdf8')}
@@ -304,7 +304,7 @@ export default function Hypergrid({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', maxWidth: '100%', width: '380px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
+                style={{ display: 'block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, width: '1000px', maxWidth: '100%' }}>
                 {renderTitleMarkup(siteData?.hypergridBanner?.title, "Interactive LED Floor Games<br/>*for High-Footfall Venues*", '#38bdf8')}
@@ -386,7 +386,7 @@ export default function Hypergrid({ siteData }) {
               src={yellowStrokeLine}
               alt=""
               className="winera-yellow-stroke"
-              style={{ display: 'block', maxWidth: '100%', width: '300px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
+              style={{ display: 'block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 className="winera-hypergrid-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', lineHeight: 1.1, margin: 0 }}>
               {renderTitleMarkup(siteData?.hypergridSpecs?.title, "*Technical* Specifications", '#ffcd00')}
@@ -482,7 +482,7 @@ export default function Hypergrid({ siteData }) {
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'inline-block', maxWidth: '100%', width: '240px', height: '9px', marginBottom: '10px', objectFit: 'fill' }}
+              style={{ display: 'inline-block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: '0 0 14px' }}>
               {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid*<br/>*the Right Choice for Your Venue*", '#38bdf8')}
@@ -576,7 +576,7 @@ export default function Hypergrid({ siteData }) {
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'inline-block', width: '280px', height: '9px', marginBottom: '12px', objectFit: 'fill' }}
+              style={{ display: 'inline-block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
               {renderTitleMarkup(siteData?.hypergridRoi?.title, "Is Hypergrid a Smart <br/>*Investment for Your Venue?*", '#38bdf8')}
@@ -688,7 +688,7 @@ export default function Hypergrid({ siteData }) {
               src={yellowStrokeLine}
               alt=""
               className="winera-yellow-stroke"
-              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+              style={{ display: 'block', width: '350px', maxWidth: '100%', height: '10px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
               {renderTitleMarkup(siteData?.hypergridWhyWinera?.title, "Why Choose *Winera International*", '#38bdf8')}

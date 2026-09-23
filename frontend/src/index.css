@@ -8109,9 +8109,54 @@ textarea::placeholder,
 }
 
 /* Responsive utility for all yellow stroke line images across the entire app */
-img[src*="yellow-stroke-line"] {
-  max-width: 100% !important;
-  height: auto !important;
+img[src*="yellow-stroke-line"],
+img[src*="yellow-stroke"],
+img[src*="yellow-brush"],
+img.winera-yellow-stroke,
+.winera-yellow-stroke,
+.winera-section-heading-accent {
+  max-width: 100%;
+  height: 10px;
+  object-fit: fill;
+}
+
+@media (min-width: 769px) {
+  img[src*="yellow-stroke-line"]:not(.winera-admin-login-stroke):not(.winera-vr-intro-stroke):not(.winera-vr-attractions-stroke),
+  img[src*="yellow-stroke"]:not(.winera-admin-login-stroke):not(.winera-vr-intro-stroke):not(.winera-vr-attractions-stroke),
+  img[src*="yellow-brush"]:not(.winera-admin-login-stroke):not(.winera-vr-intro-stroke):not(.winera-vr-attractions-stroke),
+  img.winera-yellow-stroke:not(.winera-vr-intro-stroke):not(.winera-vr-attractions-stroke),
+  .winera-yellow-stroke:not(.winera-vr-intro-stroke):not(.winera-vr-attractions-stroke),
+  .winera-section-heading-accent {
+    width: 350px !important;
+    max-width: 100% !important;
+    height: 10px !important;
+    min-height: 10px !important;
+    object-fit: fill !important;
+  }
+
+  .winera-vr-intro-stroke,
+  .winera-vr-supplier-text img.winera-yellow-stroke,
+  .winera-vr-supplier-text img[src*="yellow-stroke"] {
+    width: 260px !important;
+    max-width: 100% !important;
+    height: 10px !important;
+    min-height: 10px !important;
+    object-fit: fill !important;
+    margin: 0 0 10px 0 !important;
+    display: block !important;
+  }
+
+  .winera-vr-attractions-stroke,
+  .winera-vr-attractions-text img.winera-yellow-stroke,
+  .winera-vr-attractions-text img[src*="yellow-stroke"] {
+    width: 300px !important;
+    max-width: 100% !important;
+    height: 10px !important;
+    min-height: 10px !important;
+    object-fit: fill !important;
+    margin: 0 0 10px 0 !important;
+    display: block !important;
+  }
 }
 
 /* Home Page & Global Mobile Responsive Adjustments */
@@ -10065,19 +10110,24 @@ h2 span,
   font-family: 'Black Han Sans', sans-serif !important;
   font-weight: 400 !important;
   color: #ffffff !important;
-  font-size: clamp(26px, 4.2vw, 56px) !important;
+  font-size: clamp(26px, 4.2vw, 60px) !important;
   line-height: 1.22 !important;
   letter-spacing: 0px !important;
 }
 
-.winera-hero-highlight {
+.winera-hero-highlight,
+.winera-home-hero-h1 span.winera-hero-highlight,
+.winera-hero-line2 span.winera-hero-highlight,
+span.winera-hero-highlight {
   color: #ffcd00 !important;
   display: inline !important;
   font-family: 'Black Han Sans', sans-serif !important;
   font-weight: 400 !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
 }
 
-@media (min-width: 1281px) {
+@media (min-width: 1024px) {
   .winera-home-hero-h1 {
     max-width: 1100px !important;
   }
@@ -10096,6 +10146,15 @@ h2 span,
     line-height: 1.18 !important;
     white-space: nowrap !important;
     display: block !important;
+  }
+
+  .winera-hero-highlight,
+  .winera-home-hero-h1 .winera-hero-highlight,
+  .winera-hero-line2 .winera-hero-highlight,
+  span.winera-hero-highlight {
+    font-size: 60px !important;
+    line-height: 1.18 !important;
+    color: #ffcd00 !important;
   }
 }
 

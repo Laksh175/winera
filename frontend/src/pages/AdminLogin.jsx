@@ -97,6 +97,7 @@ export default function AdminLogin() {
             <img
               src={yellowBrushAccent}
               alt=""
+              className="winera-admin-login-stroke"
               style={{
                 display: 'block',
                 width: '70%',
