@@ -317,13 +317,13 @@ export default function AboutUs({ siteData }) {
                 { number: "50+", label: "Cities Covered" }
               ];
 
-              const dbStats = Array.isArray(siteData?.aboutStats?.items) && siteData.aboutStats.items.length > 0
+              const dbStats = Array.isArray(siteData?.aboutStats?.items)
                 ? siteData.aboutStats.items
-                : (Array.isArray(siteData?.stats) && siteData.stats.length > 0 ? siteData.stats : defaultStats);
+                : (Array.isArray(siteData?.stats) ? siteData.stats : defaultStats);
 
               const stats = dbStats.map((item, idx) => ({
-                number: item.num || item.number || (defaultStats[idx] ? defaultStats[idx].number : '100+'),
-                label: item.title || item.label || (defaultStats[idx] ? defaultStats[idx].label : 'Stat Label')
+                number: item.num || item.number || '',
+                label: item.title || item.label || ''
               }));
 
               const renderStatLabel = (labelStr) => {

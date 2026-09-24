@@ -91,6 +91,51 @@ const defaultSafetyMaterialCards = [
   }
 ];
 
+const defaultSafetyElectricalItems = [
+  {
+    num: "1",
+    title: "CE Marking — European Safety Mark",
+    desc: "The CE mark means a machine has passed Europe's health and safety checks. It shows the product is safe to use. Our arcade games, VR systems, laser tag, hypergrid, and bumper cars all carry the CE mark."
+  },
+  {
+    num: "2",
+    title: "RoHS — Safe Electronics",
+    desc: "RoHS makes sure machines are not made with harmful materials inside their electronics. This keeps them safer and cleaner to use. All our electronic machines are RoHS-safe."
+  },
+  {
+    num: "3",
+    title: "IS / IEC — Electrical Safety Rules (India & International)",
+    desc: "These rules make sure the wiring and power setup of every machine is safe. Our equipment — bowling pinsetters, scoring screens, VR, arcade games, and LED hypergrid floors — follows both Indian and international electrical safety rules for safe wiring, earthing, and power."
+  }
+];
+
+const defaultSafetyStructureCards = [
+  {
+    num: "01",
+    accent: "#00aeef",
+    title: "Strong and Stable Setup (India)",
+    desc: "In India, a game zone must pass a check for strong, stable structure before it can get a licence. We build and fix everything properly so your venue is ready to pass that check. This matters most for climbing walls, ninja courses, trampolines, and rides, where the structure has to hold real weight safely."
+  },
+  {
+    num: "02",
+    accent: "#ffd600",
+    title: "Quality Checks (ISO 9001)",
+    desc: "ISO 9001 is a worldwide standard for good quality work. It makes sure the design, sourcing, and installation are done to a consistent, high standard every time. We follow these quality practices in all our projects."
+  },
+  {
+    num: "03",
+    accent: "#00aeef",
+    title: "Full Safety Check Before Handover",
+    desc: "Good equipment alone is not enough. Once all the games and machines are installed, our trained team runs a full safety check on the complete setup. We hand it over only after everything passes."
+  },
+  {
+    num: "04",
+    accent: "#ffd600",
+    title: "Safe Running & Maintenance (ISO 17842-2 / EN 13814-2)",
+    desc: "These standards are about running and looking after the attractions safely after they are built. We set up your venue the right way and show your team how to run and maintain each attraction safely."
+  }
+];
+
 export default function SafetyStandards({ siteData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeCertIndex, setActiveCertIndex] = useState(0);
@@ -100,14 +145,24 @@ export default function SafetyStandards({ siteData }) {
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
 
-  const certCardsList = (Array.isArray(siteData?.safetyCertifications?.cards) && siteData.safetyCertifications.cards.length > 0
+  const certCardsList = (Array.isArray(siteData?.safetyCertifications?.cards)
     ? siteData.safetyCertifications.cards
     : defaultSafetyCertCards
   );
 
-  const materialsCardsList = (Array.isArray(siteData?.safetyMaterials?.cards) && siteData.safetyMaterials.cards.length > 0
+  const materialsCardsList = (Array.isArray(siteData?.safetyMaterials?.cards)
     ? siteData.safetyMaterials.cards
     : defaultSafetyMaterialCards
+  );
+
+  const electricalItemsList = (Array.isArray(siteData?.safetyElectrical?.items)
+    ? siteData.safetyElectrical.items
+    : defaultSafetyElectricalItems
+  );
+
+  const structureCardsList = (Array.isArray(siteData?.safetyStructure?.cards)
+    ? siteData.safetyStructure.cards
+    : defaultSafetyStructureCards
   );
 
   const handlePrevCert = () => {
@@ -577,26 +632,7 @@ export default function SafetyStandards({ siteData }) {
             <div className="winera-safety-electrical-points-wrapper" style={{ width: '100%' }}>
               {/* Desktop View: Full List */}
               <div className="winera-safety-electrical-desktop-list" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                {(Array.isArray(siteData?.safetyElectrical?.items) && siteData.safetyElectrical.items.length > 0
-                  ? siteData.safetyElectrical.items
-                  : [
-                    {
-                      num: "1",
-                      title: "CE Marking — European Safety Mark",
-                      desc: "The CE mark means a machine has passed Europe's health and safety checks. It shows the product is safe to use. Our arcade games, VR systems, laser tag, hypergrid, and bumper cars all carry the CE mark."
-                    },
-                    {
-                      num: "2",
-                      title: "RoHS — Safe Electronics",
-                      desc: "RoHS makes sure machines are not made with harmful materials inside their electronics. This keeps them safer and cleaner to use. All our electronic machines are RoHS-safe."
-                    },
-                    {
-                      num: "3",
-                      title: "IS / IEC — Electrical Safety Rules (India & International)",
-                      desc: "These rules make sure the wiring and power setup of every machine is safe. Our equipment — bowling pinsetters, scoring screens, VR, arcade games, and LED hypergrid floors — follows both Indian and international electrical safety rules for safe wiring, earthing, and power."
-                    }
-                  ]
-                ).map((item, idx) => (
+                {electricalItemsList.map((item, idx) => (
                   <motion.div
                     key={idx}
                     data-framer-motion="true"
@@ -657,26 +693,7 @@ export default function SafetyStandards({ siteData }) {
 
               {/* Mobile View: FAQ Style Dropdown Accordion */}
               <div className="winera-safety-electrical-mobile-accordion" style={{ display: 'none', flexDirection: 'column', gap: '12px' }}>
-                {(Array.isArray(siteData?.safetyElectrical?.items) && siteData.safetyElectrical.items.length > 0
-                  ? siteData.safetyElectrical.items
-                  : [
-                    {
-                      num: "1",
-                      title: "CE Marking — European Safety Mark",
-                      desc: "The CE mark means a machine has passed Europe's health and safety checks. It shows the product is safe to use. Our arcade games, VR systems, laser tag, hypergrid, and bumper cars all carry the CE mark."
-                    },
-                    {
-                      num: "2",
-                      title: "RoHS — Safe Electronics",
-                      desc: "RoHS makes sure machines are not made with harmful materials inside their electronics. This keeps them safer and cleaner to use. All our electronic machines are RoHS-safe."
-                    },
-                    {
-                      num: "3",
-                      title: "IS / IEC — Electrical Safety Rules (India & International)",
-                      desc: "These rules make sure the wiring and power setup of every machine is safe. Our equipment — bowling pinsetters, scoring screens, VR, arcade games, and LED hypergrid floors — follows both Indian and international electrical safety rules for safe wiring, earthing, and power."
-                    }
-                  ]
-                ).map((item, idx) => {
+                {electricalItemsList.map((item, idx) => {
                   const isOpen = openElectricalIndex === idx;
                   return (
                     <div
@@ -822,35 +839,7 @@ export default function SafetyStandards({ siteData }) {
             maxWidth: '1240px',
             margin: '0 auto'
           }}>
-            {(Array.isArray(siteData?.safetyStructure?.cards) && siteData.safetyStructure.cards.length > 0
-              ? siteData.safetyStructure.cards
-              : [
-                {
-                  num: "01",
-                  accent: "#00aeef",
-                  title: "Strong and Stable Setup (India)",
-                  desc: "In India, a game zone must pass a check for strong, stable structure before it can get a licence. We build and fix everything properly so your venue is ready to pass that check. This matters most for climbing walls, ninja courses, trampolines, and rides, where the structure has to hold real weight safely."
-                },
-                {
-                  num: "02",
-                  accent: "#ffd600",
-                  title: "Quality Checks (ISO 9001)",
-                  desc: "ISO 9001 is a worldwide standard for good quality work. It makes sure the design, sourcing, and installation are done to a consistent, high standard every time. We follow these quality practices in all our projects."
-                },
-                {
-                  num: "03",
-                  accent: "#00aeef",
-                  title: "Full Safety Check Before Handover",
-                  desc: "Good equipment alone is not enough. Once all the games and machines are installed, our trained team runs a full safety check on the complete setup. We hand it over only after everything passes."
-                },
-                {
-                  num: "04",
-                  accent: "#ffd600",
-                  title: "Safe Running & Maintenance (ISO 17842-2 / EN 13814-2)",
-                  desc: "These standards are about running and looking after the attractions safely after they are built. We set up your venue the right way and show your team how to run and maintain each attraction safely."
-                }
-              ]
-            ).map((card, idx) => {
+            {structureCardsList.map((card, idx) => {
               const isLeft = idx % 2 === 0;
               const startX = isLeft ? -75 : 75;
               return (

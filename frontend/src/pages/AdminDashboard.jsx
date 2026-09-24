@@ -15542,15 +15542,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '18px', border: '1px solid #e2e8f0' }}>
                 {(() => {
                   const defaultStatsList = [
-                    { num: "14+", title: "YEARS EXPERIENCE" },
+                    { num: "14+", title: "YEARS OF EXPERIENCE" },
                     { num: "200+", title: "Project Completed" },
                     { num: "98%", title: "Happy Clients" },
                     { num: "50+", title: "Cities Covered" }
                   ];
 
-                  const statsList = Array.isArray(formData.aboutStats?.items) && formData.aboutStats.items.length > 0
+                  const statsList = Array.isArray(formData.aboutStats?.items)
                     ? formData.aboutStats.items
-                    : (Array.isArray(formData.stats) && formData.stats.length > 0 ? formData.stats : defaultStatsList);
+                    : (Array.isArray(formData.stats) ? formData.stats : defaultStatsList);
 
                   return (
                     <>
@@ -15558,12 +15558,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Achievement Counter Stats (Total {statsList.length})</h4>
                         <button
                           type="button"
-                          onClick={() => {
+                          onClick={async () => {
                             const newStats = [...statsList, { num: "100+", title: "New Stat Title" }];
+                            const updatedObj = { ...(formData.aboutStats || {}), items: newStats };
                             setFormData(prev => ({
                               ...prev,
-                              aboutStats: { ...(prev.aboutStats || {}), items: newStats }
+                              aboutStats: updatedObj,
+                              stats: newStats
                             }));
+                            await persistSectionToDatabase('aboutStats', updatedObj);
+                            await persistSectionToDatabase('stats', newStats);
                           }}
                           style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                         >
@@ -15578,12 +15582,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               <span style={{ fontWeight: '800', fontSize: '12px', color: '#38bdf8' }}>Stat Box #{sIdx + 1}</span>
                               <button
                                 type="button"
-                                onClick={() => {
+                                onClick={async () => {
                                   const newStats = statsList.filter((_, i) => i !== sIdx);
+                                  const updatedObj = { ...(formData.aboutStats || {}), items: newStats };
                                   setFormData(prev => ({
                                     ...prev,
-                                    aboutStats: { ...(prev.aboutStats || {}), items: newStats }
+                                    aboutStats: updatedObj,
+                                    stats: newStats
                                   }));
+                                  await persistSectionToDatabase('aboutStats', updatedObj);
+                                  await persistSectionToDatabase('stats', newStats);
                                 }}
                                 style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '800', display: 'inline-flex', alignItems: 'center', gap: '3px' }}
                               >
@@ -15599,7 +15607,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 newStats[sIdx] = { ...newStats[sIdx], num: e.target.value, number: e.target.value };
                                 setFormData(prev => ({
                                   ...prev,
-                                  aboutStats: { ...(prev.aboutStats || {}), items: newStats }
+                                  aboutStats: { ...(prev.aboutStats || {}), items: newStats },
+                                  stats: newStats
                                 }));
                               }}
                               style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
@@ -15613,7 +15622,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 newStats[sIdx] = { ...newStats[sIdx], title: e.target.value, label: e.target.value };
                                 setFormData(prev => ({
                                   ...prev,
-                                  aboutStats: { ...(prev.aboutStats || {}), items: newStats }
+                                  aboutStats: { ...(prev.aboutStats || {}), items: newStats },
+                                  stats: newStats
                                 }));
                               }}
                               style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontWeight: '600' }}
@@ -15624,10 +15634,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                       <div style={{ textAlign: 'right', marginTop: '20px' }}>
                         <button
-                          onClick={() => {
+                          onClick={async () => {
                             const updatedObj = { ...(formData.aboutStats || {}), items: statsList };
-                            setFormData(prev => ({ ...prev, aboutStats: updatedObj }));
-                            persistSectionToDatabase('aboutStats', updatedObj);
+                            setFormData(prev => ({ ...prev, aboutStats: updatedObj, stats: statsList }));
+                            await persistSectionToDatabase('aboutStats', updatedObj);
+                            await persistSectionToDatabase('stats', statsList);
                           }}
                           style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                         >
@@ -15942,8 +15953,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
             const founderProfiles = getFounderProfiles();
 
-            const handleAddProfile = () => {
-              const currentList = Array.isArray(formData.founder?.items) && formData.founder.items.length > 0
+            const handleAddProfile = async () => {
+              const currentList = Array.isArray(formData.founder?.items)
                 ? [...formData.founder.items]
                 : [...founderProfiles];
               
@@ -15956,13 +15967,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               };
 
               const updated = [...currentList, newProfile];
+              const payload = {
+                ...(formData.founder || {}),
+                items: updated,
+                name: updated[0]?.name || 'Mr. Unnit Jogani',
+                image: updated[0]?.image || '',
+                yearsOfExperience: updated[0]?.yearsOfExperience || '14+',
+                linkedinUrl: updated[0]?.linkedinUrl || 'https://linkedin.com',
+                aboutDetails: updated[0]?.aboutDetails !== undefined ? updated[0].aboutDetails : defaultBio
+              };
               setFormData(prev => ({
                 ...prev,
-                founder: {
-                  ...(prev.founder || {}),
-                  items: updated
-                }
+                founder: payload
               }));
+              await persistSectionToDatabase('founder', payload);
               setStatusMsg(`Added new founder profile card #${updated.length}!`);
               setTimeout(() => {
                 const el = document.getElementById(`founder-card-${updated.length - 1}`);
@@ -15970,18 +15988,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               }, 100);
             };
 
-            const handleRemoveProfile = (indexToRemove) => {
-              const currentList = Array.isArray(formData.founder?.items) && formData.founder.items.length > 0
+            const handleRemoveProfile = async (indexToRemove) => {
+              const currentList = Array.isArray(formData.founder?.items)
                 ? [...formData.founder.items]
                 : [...founderProfiles];
               const updated = currentList.filter((_, i) => i !== indexToRemove);
+              const payload = {
+                ...(formData.founder || {}),
+                items: updated,
+                name: updated[0]?.name || 'Mr. Unnit Jogani',
+                image: updated[0]?.image || '',
+                yearsOfExperience: updated[0]?.yearsOfExperience || '14+',
+                linkedinUrl: updated[0]?.linkedinUrl || 'https://linkedin.com',
+                aboutDetails: updated[0]?.aboutDetails !== undefined ? updated[0].aboutDetails : defaultBio
+              };
               setFormData(prev => ({
                 ...prev,
-                founder: {
-                  ...(prev.founder || {}),
-                  items: updated
-                }
+                founder: payload
               }));
+              await persistSectionToDatabase('founder', payload);
               setStatusMsg(`Removed profile #${indexToRemove + 1}.`);
             };
 
@@ -17610,19 +17635,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* SAFETY CERTIFICATIONS FORM */}
           {activeSection === 'safetyCertifications' && (() => {
             const currentSec = formData.safetyCertifications || defaultSafetyCertifications;
-            const cardsList = Array.isArray(currentSec.cards) && currentSec.cards.length > 0 ? currentSec.cards : defaultSafetyCertificationsCards;
+            const cardsList = Array.isArray(currentSec.cards) ? currentSec.cards : defaultSafetyCertificationsCards;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Certified Safety Standards (7 Cards)</h3>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Certified Safety Standards (Total {cardsList.length} Cards)</h3>
                   <button
-                    onClick={() => {
+                    type="button"
+                    onClick={async () => {
                       const updated = [...cardsList, { title: "New Certified Standard", desc: "Standard description..." }];
-                      setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), cards: updated } }));
+                      const updatedSec = { ...(formData.safetyCertifications || defaultSafetyCertifications), cards: updated };
+                      setFormData(prev => ({ ...prev, safetyCertifications: updatedSec }));
+                      await persistSectionToDatabase('safetyCertifications', updatedSec);
                     }}
-                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer' }}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    + Add Card
+                    <Plus style={{ width: '14px', height: '14px' }} /> Add Card
                   </button>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -17662,13 +17690,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                           <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>Card #{idx + 1}</span>
                           <button
-                            onClick={() => {
+                            type="button"
+                            onClick={async () => {
                               const updated = cardsList.filter((_, i) => i !== idx);
-                              setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), cards: updated } }));
+                              const updatedSec = { ...(formData.safetyCertifications || defaultSafetyCertifications), cards: updated };
+                              setFormData(prev => ({ ...prev, safetyCertifications: updatedSec }));
+                              await persistSectionToDatabase('safetyCertifications', updatedSec);
                             }}
-                            style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '2px 8px', fontSize: '12px', cursor: 'pointer' }}
+                            style={{ background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: '6px', padding: '4px 10px', fontSize: '12px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                           >
-                            Delete
+                            <Trash2 style={{ width: '13px', height: '13px' }} /> Delete
                           </button>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -17715,19 +17746,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* SAFETY MATERIALS FORM */}
           {activeSection === 'safetyMaterials' && (() => {
             const currentSec = formData.safetyMaterials || defaultSafetyMaterials;
-            const cardsList = Array.isArray(currentSec.cards) && currentSec.cards.length > 0 ? currentSec.cards : defaultSafetyMaterialsCards;
+            const cardsList = Array.isArray(currentSec.cards) ? currentSec.cards : defaultSafetyMaterialsCards;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Material & Fire Safety Section</h3>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Material & Fire Safety Section (Total {cardsList.length} Cards)</h3>
                   <button
-                    onClick={() => {
+                    type="button"
+                    onClick={async () => {
                       const updated = [...cardsList, { title: "New Material Standard", desc: "Description..." }];
-                      setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), cards: updated } }));
+                      const updatedSec = { ...(formData.safetyMaterials || defaultSafetyMaterials), cards: updated };
+                      setFormData(prev => ({ ...prev, safetyMaterials: updatedSec }));
+                      await persistSectionToDatabase('safetyMaterials', updatedSec);
                     }}
-                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer' }}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    + Add Card
+                    <Plus style={{ width: '14px', height: '14px' }} /> Add Card
                   </button>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -17799,13 +17833,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                           <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>Material Card #{idx + 1}</span>
                           <button
-                            onClick={() => {
+                            type="button"
+                            onClick={async () => {
                               const updated = cardsList.filter((_, i) => i !== idx);
-                              setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), cards: updated } }));
+                              const updatedSec = { ...(formData.safetyMaterials || defaultSafetyMaterials), cards: updated };
+                              setFormData(prev => ({ ...prev, safetyMaterials: updatedSec }));
+                              await persistSectionToDatabase('safetyMaterials', updatedSec);
                             }}
-                            style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '2px 8px', fontSize: '12px', cursor: 'pointer' }}
+                            style={{ background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: '6px', padding: '4px 10px', fontSize: '12px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                           >
-                            Delete
+                            <Trash2 style={{ width: '13px', height: '13px' }} /> Delete
                           </button>
                         </div>
                         <input
@@ -17850,19 +17887,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* SAFETY ELECTRICAL FORM */}
           {activeSection === 'safetyElectrical' && (() => {
             const currentSec = formData.safetyElectrical || defaultSafetyElectrical;
-            const itemsList = Array.isArray(currentSec.items) && currentSec.items.length > 0 ? currentSec.items : defaultSafetyElectricalItems;
+            const itemsList = Array.isArray(currentSec.items) ? currentSec.items : defaultSafetyElectricalItems;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Electrical & Machine Safety Section</h3>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Electrical & Machine Safety Section (Total {itemsList.length} Items)</h3>
                   <button
-                    onClick={() => {
+                    type="button"
+                    onClick={async () => {
                       const updated = [...itemsList, { num: `${itemsList.length + 1}`, title: "New Item", desc: "Description..." }];
-                      setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), items: updated } }));
+                      const updatedSec = { ...(formData.safetyElectrical || defaultSafetyElectrical), items: updated };
+                      setFormData(prev => ({ ...prev, safetyElectrical: updatedSec }));
+                      await persistSectionToDatabase('safetyElectrical', updatedSec);
                     }}
-                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer' }}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    + Add List Item
+                    <Plus style={{ width: '14px', height: '14px' }} /> Add List Item
                   </button>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -17932,13 +17972,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                           <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>List Item #{item.num || idx + 1}</span>
                           <button
-                            onClick={() => {
+                            type="button"
+                            onClick={async () => {
                               const updated = itemsList.filter((_, i) => i !== idx);
-                              setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), items: updated } }));
+                              const updatedSec = { ...(formData.safetyElectrical || defaultSafetyElectrical), items: updated };
+                              setFormData(prev => ({ ...prev, safetyElectrical: updatedSec }));
+                              await persistSectionToDatabase('safetyElectrical', updatedSec);
                             }}
-                            style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '2px 8px', fontSize: '12px', cursor: 'pointer' }}
+                            style={{ background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: '6px', padding: '4px 10px', fontSize: '12px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                           >
-                            Delete
+                            <Trash2 style={{ width: '13px', height: '13px' }} /> Delete
                           </button>
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '10px', marginBottom: '10px' }}>
@@ -17996,20 +18039,23 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* SAFETY STRUCTURE FORM */}
           {activeSection === 'safetyStructure' && (() => {
             const currentSec = formData.safetyStructure || defaultSafetyStructure;
-            const cardsList = Array.isArray(currentSec.cards) && currentSec.cards.length > 0 ? currentSec.cards : defaultSafetyStructureCards;
+            const cardsList = Array.isArray(currentSec.cards) ? currentSec.cards : defaultSafetyStructureCards;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Structure & Installation Safety Section</h3>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Structure & Installation Safety Section (Total {cardsList.length} Cards)</h3>
                   <button
-                    onClick={() => {
+                    type="button"
+                    onClick={async () => {
                       const nextNum = cardsList.length + 1 < 10 ? `0${cardsList.length + 1}` : `${cardsList.length + 1}`;
                       const updated = [...cardsList, { num: nextNum, accent: "#00aeef", title: "New Structure Standard", desc: "Description..." }];
-                      setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), cards: updated } }));
+                      const updatedSec = { ...(formData.safetyStructure || defaultSafetyStructure), cards: updated };
+                      setFormData(prev => ({ ...prev, safetyStructure: updatedSec }));
+                      await persistSectionToDatabase('safetyStructure', updatedSec);
                     }}
-                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer' }}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    + Add Card
+                    <Plus style={{ width: '14px', height: '14px' }} /> Add Card
                   </button>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -18049,13 +18095,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                           <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>Structure Card #{card.num || idx + 1}</span>
                           <button
-                            onClick={() => {
+                            type="button"
+                            onClick={async () => {
                               const updated = cardsList.filter((_, i) => i !== idx);
-                              setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), cards: updated } }));
+                              const updatedSec = { ...(formData.safetyStructure || defaultSafetyStructure), cards: updated };
+                              setFormData(prev => ({ ...prev, safetyStructure: updatedSec }));
+                              await persistSectionToDatabase('safetyStructure', updatedSec);
                             }}
-                            style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '2px 8px', fontSize: '12px', cursor: 'pointer' }}
+                            style={{ background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: '6px', padding: '4px 10px', fontSize: '12px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                           >
-                            Delete
+                            <Trash2 style={{ width: '13px', height: '13px' }} /> Delete
                           </button>
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: '80px 140px 1fr', gap: '10px', marginBottom: '10px' }}>
