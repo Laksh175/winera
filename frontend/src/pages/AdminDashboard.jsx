@@ -4,6 +4,7 @@ import { updateSectionContent, uploadImageFile } from '../services/api';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
+import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, X, Star, Video, Trophy, Sparkles, Calculator, Menu } from 'lucide-react';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
@@ -53,7 +54,7 @@ import safetyStandardBg2 from '../assets/safety-standard-bg-2.webp';
 import safetyStandard2 from '../assets/safety-standard-2.webp';
 import safetyStandardImg3 from '../assets/safety-standard-img3.webp';
 
-import roiBgImage from '../assets/roi-bg-image.webp';
+import roiBgImage from '../assets/roi-hero-bg.webp';
 import roiImg1 from '../assets/roi-img1.webp';
 import roiImage3bg from '../assets/roi-image-3bg.webp';
 import roiBlock5Img1 from '../assets/roi-block5-img1.webp';
@@ -83,6 +84,7 @@ import bowlingImg from '../assets/bowling.webp';
 import bowlingPinsExplode from '../assets/bowling-pins-explode.webp';
 import bowlingBallPinsBlue from '../assets/bowling-ball-pins-blue.webp';
 import bowlingImage from '../assets/bowlling-image.png';
+import blogHeroBg from '../assets/blog-hero-bg.webp';
 import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
 import bumpercarCtaBannerBg from '../assets/cta-consultations-banner.webp';
 import bumpercarOptionsBg from '../assets/bumper-car-bg.png';
@@ -146,6 +148,7 @@ import arcadeBoy from '../assets/arcade-boy.webp';
 import arcadeHall from '../assets/arcade-hall.webp';
 import founderUnnit from '../assets/founder-unnit.webp';
 import welcomeWineraImg from '../assets/welcome-to-winera.webp';
+import aboutHeroBg from '../assets/about-us-banner.webp';
 
 const getAdminValidImageUrl = (url, fallback = bikeArcade) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -341,6 +344,243 @@ const defaultProjectHero = {
   breadcrumbPage: 'Project'
 };
 
+const defaultProjectItemsList = [
+  {
+    id: "fifthalley",
+    name: "FifthAlley Sport Bowling",
+    category: "Bowling",
+    city: "Surat",
+    state: "Gujarat",
+    area: "3,000 sq. ft.",
+    type: "Bowling Alley Setup",
+    slug: "fifthalley-sport-bowling",
+    img: projectImage01,
+    metaTitle: "FifthAlley Sport Bowling Setup in Surat | Winera International",
+    metaDescription: "Explore FifthAlley Sport Bowling in Surat by Winera International — a 3,000 sq. ft. complete bowling alley setup delivered from empty space to ready venue."
+  },
+  {
+    id: "hulaboo",
+    name: "Hulaboo Game Zone",
+    category: "Game Zones",
+    city: "Surat",
+    state: "Gujarat",
+    area: "27,000 sq. ft.",
+    type: "Game Zone Setup",
+    slug: "hulaboo",
+    img: projHulaboo,
+    metaTitle: "Hulaboo Game Zone Setup in Surat | Winera International",
+    metaDescription: "Discover how Winera International built Hulaboo, a 27,000 sq. ft. indoor game zone setup in Surat with multi-age attractions and turnkey execution."
+  },
+  {
+    id: "playzonia",
+    name: "Playzonia Kids Play Area",
+    category: "Soft Play",
+    city: "Surat",
+    state: "Gujarat",
+    area: "1,500 sq. ft.",
+    type: "Soft Play Area",
+    slug: "playzonia",
+    img: projSoft1,
+    metaTitle: "Playzonia Kids Soft Play Area in Surat | Winera International",
+    metaDescription: "See how Winera International designed & installed Playzonia, a 1,500 sq. ft. safe and playful soft play area for young children in Surat."
+  },
+  {
+    id: "lanex",
+    name: "LaneX Bowling Alley by Rajhans",
+    category: "Bowling",
+    city: "Surat",
+    state: "Gujarat",
+    area: "4,800 sq. ft.",
+    type: "Bowling Alley",
+    slug: "lanex-bowling-alley",
+    img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "Bowling Alley Setup in Surat – LaneX at AR Mall | Winera International",
+    metaDescription: "See how Winera International built LaneX Bowling Alley in Surat. A Complete 4,800 sq. ft. bowling setup, planned and installed from empty floor to opening day."
+  },
+  {
+    id: "funfair",
+    name: "Funfair Game Zone",
+    category: "Game Zones",
+    city: "Surat",
+    state: "Gujarat",
+    area: "10,000 sq. ft.",
+    type: "Game Zone",
+    slug: "funfair",
+    img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "Funfair Game Zone Setup in Surat | Winera International",
+    metaDescription: "See how Winera International built Funfair a complete 10,000 sq. ft. game zone in Surat, planned and set up from start to finish, ready to welcome families."
+  },
+  {
+    id: "neonpanda",
+    name: "Neon Panda Trampoline & Gamezone",
+    category: "Game Zones",
+    city: "Indore",
+    state: "Madhya Pradesh",
+    area: "8,500 sq. ft.",
+    type: "Trampoline & Game Zone",
+    slug: "neon-panda",
+    img: projNeon1,
+    metaTitle: "Neon Panda Trampoline & Gamezone Setup in Indore | Winera International",
+    metaDescription: "Explore Neon Panda in Indore — an 8,500 sq. ft. trampoline park and indoor game zone setup executed turnkey by Winera International."
+  },
+  {
+    id: "rebounce",
+    name: "Rebounce Game Zone",
+    category: "Game Zones",
+    city: "Surat",
+    state: "Gujarat",
+    area: "12,000 sq. ft.",
+    type: "Game Zone",
+    slug: "rebounce",
+    img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "Rebounce Game Zone Setup in Surat | Winera International",
+    metaDescription: "See how Winera International designed & equipped Rebounce Game Zone in Surat with high-energy arcade and VR attractions."
+  },
+  {
+    id: "kingsman",
+    name: "Kingsman Arcade & VR",
+    category: "Arcade & VR",
+    city: "Navi Mumbai",
+    state: "Maharashtra",
+    area: "4,000 sq. ft.",
+    type: "Arcade & VR Center",
+    slug: "kingsman-arcade-vr",
+    img: "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "Kingsman Arcade & VR Setup in Navi Mumbai | Winera International",
+    metaDescription: "Discover Kingsman Arcade & VR setup in Navi Mumbai featuring premier VR motion simulators and arcade games by Winera International."
+  },
+  {
+    id: "houseofpepe",
+    name: "House of Pepe Softplay & Arcade",
+    category: "Soft Play",
+    city: "Kolkata",
+    state: "West Bengal",
+    area: "6,000 sq. ft.",
+    type: "Softplay & Arcade",
+    slug: "house-of-pepe",
+    img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "House of Pepe Softplay & Arcade in Kolkata | Winera International",
+    metaDescription: "Turnkey design and installation of House of Pepe in Kolkata combining safe indoor soft play with family arcade games by Winera."
+  },
+  {
+    id: "oneup",
+    name: "1 Up Game Zone",
+    category: "Game Zones",
+    city: "Gauhati",
+    state: "Assam",
+    area: "5,500 sq. ft.",
+    type: "Game Zone",
+    slug: "1-up-game-zone",
+    img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "1 Up Game Zone Setup in Gauhati | Winera International",
+    metaDescription: "Complete game zone planning and turnkey equipment supply for 1 Up Game Zone in Gauhati, Assam by Winera International."
+  },
+  {
+    id: "happyhoppers",
+    name: "Happy Hoppers Soft Play",
+    category: "Soft Play",
+    city: "Kolkata",
+    state: "West Bengal",
+    area: "3,200 sq. ft.",
+    type: "Kids Soft Play",
+    slug: "happy-hoppers",
+    img: projSoft1,
+    metaTitle: "Happy Hoppers Kids Soft Play in Kolkata | Winera International",
+    metaDescription: "Safe, colorful and interactive soft play equipment setup for Happy Hoppers in Kolkata by Winera International."
+  },
+  {
+    id: "kidzania",
+    name: "Kidzania Arcade Games",
+    category: "Arcade & VR",
+    city: "Delhi",
+    state: "Delhi",
+    area: "7,000 sq. ft.",
+    type: "Arcade Zone",
+    slug: "kidzania-delhi",
+    img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "Kidzania Arcade Games Setup in Delhi | Winera International",
+    metaDescription: "Commercial arcade games and motion simulators installed at Kidzania Delhi by Winera International."
+  },
+  {
+    id: "funevers",
+    name: "Funevers Bowling",
+    category: "Bowling",
+    city: "Bhopal",
+    state: "Madhya Pradesh",
+    area: "4,200 sq. ft.",
+    type: "Bowling Alley",
+    slug: "funevers-bowling",
+    img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "Funevers Bowling Setup in Bhopal | Winera International",
+    metaDescription: "Professional bowling alley installation with automated scoring and modern lane furniture for Funevers in Bhopal by Winera."
+  },
+  {
+    id: "kidzonation",
+    name: "Kidzonation Softplay",
+    category: "Soft Play",
+    city: "Bhopal",
+    state: "Madhya Pradesh",
+    area: "2,800 sq. ft.",
+    type: "Soft Play Center",
+    slug: "kidzonation",
+    img: projSoft1,
+    metaTitle: "Kidzonation Soft Play Setup in Bhopal | Winera International",
+    metaDescription: "Custom multi-level indoor playground and soft play structure installed for Kidzonation in Bhopal by Winera."
+  },
+  {
+    id: "rockandbowl",
+    name: "Rock and Bowl Vapi",
+    category: "Bowling",
+    city: "Vapi",
+    state: "Gujarat",
+    area: "3,600 sq. ft.",
+    type: "Bowling Alley",
+    slug: "rock-and-bowl-vapi",
+    img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "Rock and Bowl Bowling Alley Setup in Vapi | Winera International",
+    metaDescription: "Turnkey bowling alley setup in Vapi with LED lanes, pinsetters, and player seating installed by Winera International."
+  },
+  {
+    id: "zestopia",
+    name: "Zestopia Game Zone",
+    category: "Game Zones",
+    city: "Surat",
+    state: "Gujarat",
+    area: "9,000 sq. ft.",
+    type: "Game Zone",
+    slug: "zestopia",
+    img: projHulaboo,
+    metaTitle: "Zestopia Game Zone Setup in Surat | Winera International",
+    metaDescription: "Turnkey family entertainment center setup for Zestopia Game Zone in Surat with mixed arcade, VR and redemption games."
+  },
+  {
+    id: "redisson",
+    name: "Hotel Redisson & Marriot Resort",
+    category: "Hospitality",
+    city: "Kamrej, Surat",
+    state: "Gujarat",
+    area: "5,000 sq. ft.",
+    type: "Resort Entertainment Zone",
+    slug: "hotel-redisson-marriott",
+    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "Hotel Redisson & Marriott Resort Play Zone Setup | Winera International",
+    metaDescription: "Premium recreation and entertainment zone setup for Hotel Redisson & Marriott Resort in Kamrej, Surat by Winera."
+  },
+  {
+    id: "kkbrio",
+    name: "KKB Rio Colina - Club & Villa",
+    category: "Hospitality",
+    city: "Surat",
+    state: "Gujarat",
+    area: "4,500 sq. ft.",
+    type: "Club & Villa Amenities",
+    slug: "kkb-rio-colina",
+    img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
+    metaTitle: "KKB Rio Colina Club & Villa Entertainment Setup | Winera International",
+    metaDescription: "Boutique entertainment and leisure amenities setup for KKB Rio Colina Club & Villa in Surat by Winera International."
+  }
+];
+
 const defaultProjectBlock = {
   strokeImg: yellowStrokeLine,
   titleLine1: 'FifthAlley Sport Bowling: A',
@@ -407,33 +647,13 @@ const defaultProjectSeo = {
 
 const defaultBlogHero = {
   breadcrumbText: "Blog",
-  bgUrl: "/src/assets/blog-image-bg.webp"
+  bgUrl: blogHeroBg
 };
 
-const defaultBlogPosts = Array.from({ length: 9 }, (_, i) => ({
-  id: i + 1,
-  title: "Soft Play vs Trampoline Park: Which",
-  subtitle: "Is Better for Your Space?",
-  line1: "Soft play or trampoline park? Discover",
-  line2: "the key differences in investment, space",
-  line3: "requirements, safety, and revenue.....",
-  date: "Aug 22, 2026",
-  category: "Game Zone Setup & ROI",
-  readTime: "4 min read",
-  author: "Winera Experts",
-  image: "/src/assets/blog-images.webp",
-  content: "Planning a new game zone or family entertainment center requires critical decisions regarding layout design, equipment mix, safety standards, and overall investment strategy. Understanding the distinct operational and financial characteristics of each attraction model is vital to maximizing your long-term return on investment (ROI).",
-  section1Title: "1. Space Requirements & Architectural Layout",
-  section1Text: "Soft Play zones typically require a minimum ceiling height of 3.5 to 4.5 meters for multi-level tubular structures, whereas Trampoline Parks demand clear ceiling heights of 5.5 to 6.5 meters to accommodate high jumps, foam pits, and airbag stunt zones safely.",
-  takeawayText: "Soft play delivers higher throughput per square meter for toddlers and kids aged 2–8, while Trampoline Parks attract older kids, teens, and young adults with higher per-ticket pricing.",
-  section2Title: "2. Safety Standards & Commercial Durability",
-  section2Text: "All commercial equipment supplied by Winera International meets rigorous global standards including EN 1176 / ASTM F1918 for Soft Play and ASTM F2970 for Trampoline Parks. Flame-retardant PVC padding, high-density impact foams, and non-toxic materials ensure long-lasting commercial durability.",
-  section3Title: "3. Revenue Projection & Operating Costs",
-  section3Text: "Integrating a balanced game zone mix — combining Soft Play, Trampoline Courts, Arcade Games, and VR simulators — creates a comprehensive family destination that drives repeat visits and higher average spend per customer."
-}));
+const defaultBlogPosts = DEFAULT_BLOG_POSTS;
 
 const defaultBlogSeo = {
-  pageTitle: "Blog & Game Zone Insights | Winera International",
+  pageTitle: "Blog | Winera International – Game Zone Insights & Tips",
   metaDescription: "Read the Winera International blog for expert insights on game zone setup, ROI tips, soft play trends, VR gaming, trampoline parks, and indoor amusement equipment."
 };
 
@@ -471,20 +691,20 @@ const defaultRoiComparison = {
   title: "Why most game zones fail vs. why ours profit",
   subCaption: "The difference isn't the games. It's the system behind them.",
   wrongItems: [
-    { num: "01", text: "Random game selection", offset: "20px" },
-    { num: "02", text: "No space planning", offset: "65px" },
+    { num: "01", text: "Random game selection", offset: "0px" },
+    { num: "02", text: "No space planning", offset: "45px" },
     { num: "03", text: "Buy machines, then figure it out", offset: "95px" },
     { num: "04", text: "No pricing strategy", offset: "95px" },
-    { num: "05", text: "Owner manages everything manually", offset: "65px" },
-    { num: "06", text: "Guessing monthly income", offset: "20px" }
+    { num: "05", text: "Owner manages everything manually", offset: "45px" },
+    { num: "06", text: "Guessing monthly income", offset: "0px" }
   ],
   rightItems: [
-    { num: "01", text: "Data-backed game mix (high footfall + high margin)", offset: "20px" },
-    { num: "02", text: "Optimized layout for max games per sq. ft.", offset: "65px" },
+    { num: "01", text: "Data-backed game mix (high footfall + high margin)", offset: "0px" },
+    { num: "02", text: "Optimized layout for max games per sq. ft.", offset: "45px" },
     { num: "03", text: "ROI modeled before you spend a rupee", offset: "95px" },
     { num: "04", text: "Dynamic pricing + package systems", offset: "95px" },
-    { num: "05", text: "Full management + POS + reporting system", offset: "65px" },
-    { num: "06", text: "Predictable, tracked revenue", offset: "20px" }
+    { num: "05", text: "Full management + POS + reporting system", offset: "45px" },
+    { num: "06", text: "Predictable, tracked revenue", offset: "0px" }
   ]
 };
 
@@ -532,9 +752,9 @@ const defaultRoiChecklist = {
 };
 
 const defaultRoiCta = {
-  yellowText: "READY TO",
-  whiteText: "SEE YOUR",
-  cyanText: "NUMBERS?",
+  yellowText: "Ready To",
+  whiteText: "See Your",
+  cyanText: "Numbers?",
   subtitle: "Book A Free Consultation With Winera International. We'll Walk You Through The ROI Projection For Your Space, Your Budget, And Your City — Before You Spend Anything.",
   buttonText: "Book Your Free ROI Call",
   buttonLink: "https://wa.me/919428989488",
@@ -542,8 +762,8 @@ const defaultRoiCta = {
 };
 
 const defaultRoiSeo = {
-  pageTitle: "ROI Calculator for Game Zones | Return on Investment | Winera International",
-  metaDescription: "Calculate your game zone ROI before investing. Winera International provides free ROI consultations, data-backed game mix planning, and complete setup services across India."
+  pageTitle: "Know Your Game Zone ROI Before You Invest | Winera International",
+  metaDescription: "Opening a game zone is easy, making it profitable is a system. Winera International models your ROI around your space and budget before you invest a rupee."
 };
 
 const defaultSafetyHero = {
@@ -2131,13 +2351,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     let currentList = Array.isArray(formData[secKey]) ? [...formData[secKey]] : [];
 
     if (secKey === 'projectItems') {
-      const defaultRawList = [
-        { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: projectImage01, metaTitle: 'FifthAlley Sport Bowling Setup in Surat | Winera International', metaDescription: 'Explore FifthAlley Sport Bowling in Surat by Winera International — a 3,000 sq. ft. complete bowling alley setup delivered from empty space to ready venue.' },
-        { id: 'hulaboo', name: 'Hulaboo Game Zone', category: 'Game Zones', city: 'Surat', state: 'Gujarat', area: '27,000 sq. ft.', type: 'Game Zone Setup', slug: 'hulaboo', img: projHulaboo, metaTitle: 'Hulaboo Game Zone Setup in Surat | Winera International', metaDescription: 'Discover how Winera International built Hulaboo, a 27,000 sq. ft. indoor game zone setup in Surat with multi-age attractions and turnkey execution.' },
-        { id: 'playzonia', name: 'Playzonia Kids Play Area', category: 'Soft Play', city: 'Surat', state: 'Gujarat', area: '1,500 sq. ft.', type: 'Soft Play Area', slug: 'playzonia', img: projSoft1, metaTitle: 'Playzonia Kids Soft Play Area in Surat | Winera International', metaDescription: 'See how Winera International designed & installed Playzonia, a 1,500 sq. ft. safe and playful soft play area for young children in Surat.' },
-        { id: 'lanex', name: 'LaneX Bowling Alley', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '4,800 sq. ft.', type: 'Bowling Alley', slug: 'lanex-bowling-alley', img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80', metaTitle: 'Bowling Alley Setup in Surat – LaneX at AR Mall | Winera International', metaDescription: 'See how Winera International built LaneX Bowling Alley in Surat. A Complete 4,800 sq. ft. bowling setup, planned and installed from empty floor to opening day.' },
-        { id: 'funfair', name: 'Funfair Game Zone', category: 'Game Zones', city: 'Surat', state: 'Gujarat', area: '10,000 sq. ft.', type: 'Game Zone', slug: 'funfair', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80', metaTitle: 'Funfair Game Zone Setup in Surat | Winera International', metaDescription: 'See how Winera International built Funfair a complete 10,000 sq. ft. game zone in Surat, planned and set up from start to finish, ready to welcome families.' }
-      ];
+      const defaultRawList = defaultProjectItemsList;
       if (currentList.length === 0) {
         currentList = [...defaultRawList];
       }
@@ -12697,10 +12911,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     const currentList = Array.isArray(formData.arFaqs) && formData.arFaqs.length > 0
                       ? formData.arFaqs
                       : [
-                        { question: "What is an AR Gaming Setup and how does it work?", answer: "Augmented Reality (AR) gaming combines physical play spaces with interactive digital projections, sensors, and motion tracking to create immersive experiences for players without needing heavy headsets." },
-                        { question: "What type of venues are AR games best suited for?", answer: "AR games are ideal for Family Entertainment Centres (FECs), shopping malls, amusement parks, sports bars, resorts, trampoline parks, and indoor play zones." },
-                        { question: "Do you provide installation and technical support across India?", answer: "Yes, Winera International provides end-to-end site inspection, custom installation, game software setup, staff training, and nationwide maintenance support." },
-                        { question: "What is the expected ROI for an AR gaming setup?", answer: "With high repeat play rates and low operator maintenance, most commercial venue operators achieve full break-even within 6 to 12 months depending on footfall." }
+                        { question: "Who is a reliable AR games supplier in India?", answer: "Winera International is a direct AR games supplier in India, sourcing and installing commercial AR and interactive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres." },
+                        { question: "What is the setup cost for AR gaming equipment in India?", answer: "AR gaming cost in India depends on the product category, number of units and customisation requirements. Winera provides a complete cost breakdown of equipment, installation, and maintenance before confirming any order. Contact our team for a quote specific to your venue." },
+                        { question: "What is the minimum space required for AR gaming equipment?", answer: "Space requirements vary by product. Interactive floor tiles start from 30x30cm per module, while full sports simulators typically require 4–9 metres in length and 3–3.5 metres ceiling height. Winera's team assesses your exact dimensions before recommending compatible products." },
+                        { question: "How do I get started with an AR gaming zone setup from Winera?", answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP." },
+                        { question: "Can AR gaming equipment be customised with branding or specific game content?", answer: "Yes. Many products in our range support custom branding, game library selection, and venue-specific content configuration. We confirm available customisation options for each product during the consultation stage." },
+                        { question: "What is the typical ROI for an AR gaming zone in India?", answer: "ROI depends on your venue type, daily footfall, session pricing, and machine mix. Winera prepares a free ROI report for every project — covering projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline — specific to your venue before you confirm any order." },
+                        { question: "Does Winera provide after-sales support for AR and interactive gaming equipment?", answer: "Yes. Our own technicians provide software updates, hardware servicing, and on-site support for all AR games and interactive gaming equipment we install — directly through our own team, without third-party service agents." },
+                        { question: "How long does AR gaming equipment installation take?", answer: "Installation timelines depend on the number of products, venue readiness, and configuration complexity. A single interactive floor system can be operational within days, while a complete multi-category AR gaming zone takes longer for full setup and software configuration." }
                       ];
                     const updated = [...currentList, { question: '', answer: '' }];
                     setFormData((prev) => ({ ...prev, arFaqs: updated }));
@@ -12715,10 +12933,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 {(Array.isArray(formData.arFaqs) && formData.arFaqs.length > 0
                   ? formData.arFaqs
                   : [
-                    { question: "What is an AR Gaming Setup and how does it work?", answer: "Augmented Reality (AR) gaming combines physical play spaces with interactive digital projections, sensors, and motion tracking to create immersive experiences for players without needing heavy headsets." },
-                    { question: "What type of venues are AR games best suited for?", answer: "AR games are ideal for Family Entertainment Centres (FECs), shopping malls, amusement parks, sports bars, resorts, trampoline parks, and indoor play zones." },
-                    { question: "Do you provide installation and technical support across India?", answer: "Yes, Winera International provides end-to-end site inspection, custom installation, game software setup, staff training, and nationwide maintenance support." },
-                    { question: "What is the expected ROI for an AR gaming setup?", answer: "With high repeat play rates and low operator maintenance, most commercial venue operators achieve full break-even within 6 to 12 months depending on footfall." }
+                    { question: "Who is a reliable AR games supplier in India?", answer: "Winera International is a direct AR games supplier in India, sourcing and installing commercial AR and interactive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres." },
+                    { question: "What is the setup cost for AR gaming equipment in India?", answer: "AR gaming cost in India depends on the product category, number of units and customisation requirements. Winera provides a complete cost breakdown of equipment, installation, and maintenance before confirming any order. Contact our team for a quote specific to your venue." },
+                    { question: "What is the minimum space required for AR gaming equipment?", answer: "Space requirements vary by product. Interactive floor tiles start from 30x30cm per module, while full sports simulators typically require 4–9 metres in length and 3–3.5 metres ceiling height. Winera's team assesses your exact dimensions before recommending compatible products." },
+                    { question: "How do I get started with an AR gaming zone setup from Winera?", answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP." },
+                    { question: "Can AR gaming equipment be customised with branding or specific game content?", answer: "Yes. Many products in our range support custom branding, game library selection, and venue-specific content configuration. We confirm available customisation options for each product during the consultation stage." },
+                    { question: "What is the typical ROI for an AR gaming zone in India?", answer: "ROI depends on your venue type, daily footfall, session pricing, and machine mix. Winera prepares a free ROI report for every project — covering projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline — specific to your venue before you confirm any order." },
+                    { question: "Does Winera provide after-sales support for AR and interactive gaming equipment?", answer: "Yes. Our own technicians provide software updates, hardware servicing, and on-site support for all AR games and interactive gaming equipment we install — directly through our own team, without third-party service agents." },
+                    { question: "How long does AR gaming equipment installation take?", answer: "Installation timelines depend on the number of products, venue readiness, and configuration complexity. A single interactive floor system can be operational within days, while a complete multi-category AR gaming zone takes longer for full setup and software configuration." }
                   ]
                 ).map((faq, idx) => (
                   <div key={idx} style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -12730,10 +12952,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           const currentList = Array.isArray(formData.arFaqs) && formData.arFaqs.length > 0
                             ? [...formData.arFaqs]
                             : [
-                              { question: "What is an AR Gaming Setup and how does it work?", answer: "Augmented Reality (AR) gaming combines physical play spaces with interactive digital projections, sensors, and motion tracking to create immersive experiences for players without needing heavy headsets." },
-                              { question: "What type of venues are AR games best suited for?", answer: "AR games are ideal for Family Entertainment Centres (FECs), shopping malls, amusement parks, sports bars, resorts, trampoline parks, and indoor play zones." },
-                              { question: "Do you provide installation and technical support across India?", answer: "Yes, Winera International provides end-to-end site inspection, custom installation, game software setup, staff training, and nationwide maintenance support." },
-                              { question: "What is the expected ROI for an AR gaming setup?", answer: "With high repeat play rates and low operator maintenance, most commercial venue operators achieve full break-even within 6 to 12 months depending on footfall." }
+                              { question: "Who is a reliable AR games supplier in India?", answer: "Winera International is a direct AR games supplier in India, sourcing and installing commercial AR and interactive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres." },
+                              { question: "What is the setup cost for AR gaming equipment in India?", answer: "AR gaming cost in India depends on the product category, number of units and customisation requirements. Winera provides a complete cost breakdown of equipment, installation, and maintenance before confirming any order. Contact our team for a quote specific to your venue." },
+                              { question: "What is the minimum space required for AR gaming equipment?", answer: "Space requirements vary by product. Interactive floor tiles start from 30x30cm per module, while full sports simulators typically require 4–9 metres in length and 3–3.5 metres ceiling height. Winera's team assesses your exact dimensions before recommending compatible products." },
+                              { question: "How do I get started with an AR gaming zone setup from Winera?", answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP." },
+                              { question: "Can AR gaming equipment be customised with branding or specific game content?", answer: "Yes. Many products in our range support custom branding, game library selection, and venue-specific content configuration. We confirm available customisation options for each product during the consultation stage." },
+                              { question: "What is the typical ROI for an AR gaming zone in India?", answer: "ROI depends on your venue type, daily footfall, session pricing, and machine mix. Winera prepares a free ROI report for every project — covering projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline — specific to your venue before you confirm any order." },
+                              { question: "Does Winera provide after-sales support for AR and interactive gaming equipment?", answer: "Yes. Our own technicians provide software updates, hardware servicing, and on-site support for all AR games and interactive gaming equipment we install — directly through our own team, without third-party service agents." },
+                              { question: "How long does AR gaming equipment installation take?", answer: "Installation timelines depend on the number of products, venue readiness, and configuration complexity. A single interactive floor system can be operational within days, while a complete multi-category AR gaming zone takes longer for full setup and software configuration." }
                             ];
                           const updated = currentList.filter((_, i) => i !== idx);
                           setFormData((prev) => ({ ...prev, arFaqs: updated }));
@@ -13362,14 +13588,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* OUR VR GAMING MACHINE RANGE FORM */}
           {activeSection === 'vrRange' && (() => {
             const defaultVrRangeItems = [
-              { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR Wings Experience", img: vrBlock1, status: "ONLINE", latency: "4ms", icon: "plane" },
+              { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR Wings Experience", img: "/src/assets/vr-block-1.webp", status: "ONLINE", latency: "4ms", icon: "plane" },
               { title: "VR Wings", subtitle: "Immersive Flight", category: "FLIGHT SIMULATION", name: "VR Wings Flight Arena", img: "/src/assets/about-3.webp", status: "ONLINE", latency: "2ms", icon: "users" },
-              { title: "VR UFO 5 player", subtitle: "Multiplayer Ride", category: "THEATER SIMULATION", name: "VR UFO 5 Player Motion Pod", img: "/src/assets/arcade-hall.webp", status: "ONLINE", latency: "5ms", icon: "radio" },
-              { title: "VR UFO 4 player", subtitle: "Multiplayer Ride", category: "ARCADE SIMULATION", name: "VR UFO 4 Player Battle Station", img: "/src/assets/about-4.webp", status: "ONLINE", latency: "3ms", icon: "gamepad" },
+              { title: "VR UFO 5 player", subtitle: "Group Pod Ride", category: "THEATER SIMULATION", name: "VR UFO 5 Player Motion Pod", img: "/src/assets/arcade-hall.webp", status: "ONLINE", latency: "5ms", icon: "radio" },
+              { title: "VR UFO 4 player", subtitle: "Group Battle", category: "ARCADE SIMULATION", name: "VR UFO 4 Player Battle Station", img: "/src/assets/about-4.webp", status: "ONLINE", latency: "3ms", icon: "gamepad" },
               { title: "VR Thunder Dual 360", subtitle: "Combat Station", category: "ACTION SIMULATION", name: "VR Thunder Dual 360 Platform", img: "/src/assets/cta-arcade.webp", status: "ONLINE", latency: "4ms", icon: "zap" },
-              { title: "VR 360 Egg Chair", subtitle: "Dual Seat Pod", category: "MOTION CINEMA", name: "VR 360 Egg Chair Simulator", img: "/src/assets/about-3.webp", status: "ONLINE", latency: "3ms", icon: "sparkles" },
-              { title: "VR Racing Motorbike", subtitle: "Speed Simulation", category: "RACING SIMULATION", name: "VR Moto Racing Simulator", img: "/src/assets/about-4.webp", status: "ONLINE", latency: "2ms", icon: "flame" },
-              { title: "VR Standing Arena", subtitle: "360 Platform", category: "ACTIVE SIMULATION", name: "VR Standing Flight Arena", img: "/src/assets/cta-arcade.webp", status: "ONLINE", latency: "4ms", icon: "target" }
+              { title: "VR small platform", subtitle: "Compact Pod", category: "MOTION CINEMA", name: "VR Small Platform Simulator", img: "/src/assets/about-3.webp", status: "ONLINE", latency: "3ms", icon: "sparkles" },
+              { title: "VR skyside 2 player", subtitle: "Co-op Flight", category: "ACTIVE SIMULATION", name: "VR Skyside 2 Player Arena", img: "/src/assets/about-4.webp", status: "ONLINE", latency: "4ms", icon: "target" },
+              { title: "VR Ski Machine 1P", subtitle: "Active Sports", category: "SPORTS SIMULATION", name: "VR Ski Machine Single Player", img: "/src/assets/cta-arcade.webp", status: "ONLINE", latency: "2ms", icon: "activity" },
+              { title: "VR Single 360-exclusive", subtitle: "Solo Simulation", category: "360 MOTION EXCLUSIVE", name: "VR Single 360 Exclusive Pod", img: "/src/assets/VR.webp", status: "ONLINE", latency: "3ms", icon: "layers" },
+              { title: "VR Single 360 Fighter Jet Simulator", subtitle: "Fighter Jet Sim", category: "MILITARY SIMULATION", name: "VR Single 360 Fighter Jet Simulator", img: "/src/assets/about-3.webp", status: "ONLINE", latency: "5ms", icon: "plane" }
             ];
 
             const currentSec = formData.vrRange || {};
@@ -13515,7 +13743,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             Machine Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1670 × 940 px (16:9 Widescreen)</span>
                           </label>
                           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            <img src={getAdminValidImageUrl(item.img, idx === 0 ? vrBlock1 : about3)} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
+                            <img src={getAdminValidImageUrl(item.img, idx === 0 ? vrBlock1 : (item.img || '/src/assets/about-3.webp'))} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
                             <input
                               type="file"
                               accept="image/*"
@@ -13526,7 +13754,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                     const res = await uploadImageFile(file, admin.token);
                                     if (res.url) {
                                       const updated = [...vrItemsList];
-                                      updated[idx] = { ...updated[idx], img: res.url };
+                                      updated[idx] = { ...updated[idx], img: res.url, imgUrl: res.url };
                                       const updatedSec = { ...currentSec, items: updated };
                                       setFormData(prev => ({ ...prev, vrRange: updatedSec }));
                                       await persistSectionToDatabase('vrRange', updatedSec);
@@ -13567,7 +13795,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue.</p>
                 <input
                   type="text"
-                  value={formData.vrReliability?.title || '*Commercial-Grade* Quality<br/>and Reliability'}
+                  value={formData.vrReliability?.title || '*Commercial-Grade Quality*<br/>and Reliability'}
                   onChange={(e) => handleFieldChange('vrReliability', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -15567,15 +15795,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
                   Hero Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                   <input
                     type="text"
                     value={formData.aboutHero?.bgUrl || ''}
                     onChange={(e) => handleFieldChange('aboutHero', 'bgUrl', e.target.value)}
-                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-hero-bg.webp)"
+                    placeholder="Image URL or Asset Path (e.g. /src/assets/about-us-banner.webp)"
                     style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
                   />
-                  <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                  <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
                     <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
                     Upload
                     <input
@@ -15590,6 +15818,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
+                  <img
+                    src={getAdminValidImageUrl(formData.aboutHero?.bgUrl, aboutHeroBg)}
+                    alt="About Hero Preview"
+                    style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                  />
                 </div>
               </div>
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -16288,7 +16521,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             };
 
             return (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '850px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
                   <div>
                     <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Founder & Leadership Profiles ({founderProfiles.length})</h3>
@@ -16426,11 +16659,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div>
                       <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Biography / About Details</label>
                       <textarea
-                        rows={4}
+                        rows={7}
                         value={item.aboutDetails !== undefined ? item.aboutDetails : defaultBio}
                         onChange={(e) => handleProfileFieldChange(idx, 'aboutDetails', e.target.value)}
                         placeholder="Enter founder biography & details..."
-                        style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.6 }}
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6, minHeight: '150px' }}
                       />
                     </div>
                   </div>
@@ -16781,13 +17014,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               setNewCategoryInput('');
             };
 
-            const rawList = Array.isArray(formData.projectItems) && formData.projectItems.length > 0 ? formData.projectItems : [
-              { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: projectImage01, metaTitle: 'FifthAlley Sport Bowling Setup in Surat | Winera International', metaDescription: 'Explore FifthAlley Sport Bowling in Surat by Winera International — a 3,000 sq. ft. complete bowling alley setup delivered from empty space to ready venue.' },
-              { id: 'hulaboo', name: 'Hulaboo Game Zone', category: 'Game Zones', city: 'Surat', state: 'Gujarat', area: '27,000 sq. ft.', type: 'Game Zone Setup', slug: 'hulaboo', img: projHulaboo, metaTitle: 'Hulaboo Game Zone Setup in Surat | Winera International', metaDescription: 'Discover how Winera International built Hulaboo, a 27,000 sq. ft. indoor game zone setup in Surat with multi-age attractions and turnkey execution.' },
-              { id: 'playzonia', name: 'Playzonia Kids Play Area', category: 'Soft Play', city: 'Surat', state: 'Gujarat', area: '1,500 sq. ft.', type: 'Soft Play Area', slug: 'playzonia', img: projSoft1, metaTitle: 'Playzonia Kids Soft Play Area in Surat | Winera International', metaDescription: 'See how Winera International designed & installed Playzonia, a 1,500 sq. ft. safe and playful soft play area for young children in Surat.' },
-              { id: 'lanex', name: 'LaneX Bowling Alley', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '4,800 sq. ft.', type: 'Bowling Alley', slug: 'lanex-bowling-alley', img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80', metaTitle: 'Bowling Alley Setup in Surat – LaneX at AR Mall | Winera International', metaDescription: 'See how Winera International built LaneX Bowling Alley in Surat. A Complete 4,800 sq. ft. bowling setup, planned and installed from empty floor to opening day.' },
-              { id: 'funfair', name: 'Funfair Game Zone', category: 'Game Zones', city: 'Surat', state: 'Gujarat', area: '10,000 sq. ft.', type: 'Game Zone', slug: 'funfair', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80', metaTitle: 'Funfair Game Zone Setup in Surat | Winera International', metaDescription: 'See how Winera International built Funfair a complete 10,000 sq. ft. game zone in Surat, planned and set up from start to finish, ready to welcome families.' }
-            ];
+            const rawList = Array.isArray(formData.projectItems) && formData.projectItems.length > 0 ? formData.projectItems : defaultProjectItemsList;
 
             const fifthAlleyItem = { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: projectImage01 };
             const hasFA = rawList.some(p => p.slug === "fifthalley-sport-bowling" || (p.name || "").toLowerCase().includes("fifthalley"));
@@ -19551,14 +19778,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                       Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                     </label>
-                    <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                       <input
                         type="text"
                         value={currentSec.bgUrl !== undefined ? currentSec.bgUrl : defaultRoiHero.bgUrl}
                         onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), bgUrl: e.target.value } }))}
                         style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
-                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
                         <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
                         Upload
                         <input
@@ -19573,6 +19800,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.bgUrl, roiBgImage)}
+                        alt="ROI Hero Preview"
+                        style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                      />
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -20036,6 +20268,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {activeSection === 'roiProcess' && (() => {
             const currentSec = formData.roiProcess || defaultRoiProcess;
             const cardsList = Array.isArray(currentSec.cards) ? currentSec.cards : defaultRoiProcess.cards;
+            const defaultProcessImgs = [roiBlock5Img1, roiBlock5Img2, roiBlock5Img3, roiBlock5Img4, roiBlock5Img5, roiBlock5Img6];
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Working Process Steps (Cards)</h3>
@@ -20115,7 +20348,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
                             Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                           </label>
-                          <div style={{ display: 'flex', gap: '6px' }}>
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                             <input
                               type="text"
                               value={card.img}
@@ -20126,7 +20359,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               }}
                               style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
                             />
-                            <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '6px 12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', fontSize: '11px' }}>
+                            <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '8px 12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', fontSize: '11.5px' }}>
                               <Upload style={{ width: '12px', height: '12px', marginRight: '4px' }} />
                               Upload
                               <input
@@ -20143,6 +20376,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 }}
                               />
                             </label>
+                            <img
+                              src={getAdminValidImageUrl(card.img, defaultProcessImgs[idx % defaultProcessImgs.length])}
+                              alt="Process Step Preview"
+                              style={{ width: '55px', height: '40px', borderRadius: '6px', objectFit: 'cover', border: '1.5px solid #38bdf8', padding: '2px', background: '#fff' }}
+                            />
                           </div>
                         </div>
                       </div>
@@ -20205,14 +20443,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                         Section Left Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                       </label>
-                      <div style={{ display: 'flex', gap: '10px' }}>
+                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                         <input
                           type="text"
                           value={currentSec.image !== undefined ? currentSec.image : defaultRoiGet.image}
                           onChange={(e) => setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), image: e.target.value } }))}
                           style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                         />
-                        <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                        <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
                           <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
                           Upload
                           <input
@@ -20227,6 +20465,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             }}
                           />
                         </label>
+                        <img
+                          src={getAdminValidImageUrl(currentSec.image, roiBlock6)}
+                          alt="ROI Get Preview"
+                          style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'contain', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '4px' }}
+                        />
                       </div>
                     </div>
                   </div>
@@ -20348,6 +20591,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         value={currentSec.unfitPill !== undefined ? currentSec.unfitPill : defaultRoiChecklist.unfitPill}
                         onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), unfitPill: e.target.value } }))}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Section Background Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      <input
+                        type="text"
+                        value={currentSec.bgImage !== undefined ? currentSec.bgImage : defaultRoiChecklist.bgImage}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), bgImage: e.target.value } }))}
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                        <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            if (e.target.files?.[0]) {
+                              const res = await uploadImageFile(e.target.files[0], admin.token);
+                              setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), bgImage: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.bgImage, roiBlock7Bg)}
+                        alt="Checklist BG Preview"
+                        style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
                       />
                     </div>
                   </div>
@@ -20534,14 +20811,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                       Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                     </label>
-                    <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                       <input
                         type="text"
                         value={currentSec.bgUrl !== undefined ? currentSec.bgUrl : defaultRoiCta.bgUrl}
                         onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), bgUrl: e.target.value } }))}
                         style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
-                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
                         <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
                         Upload
                         <input
@@ -20556,6 +20833,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.bgUrl, homeBlockBg)}
+                        alt="CTA BG Preview"
+                        style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                      />
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -21043,14 +21325,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                       Background Image URL <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                     </label>
-                    <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                       <input
                         type="text"
                         value={currentSec.bgUrl !== undefined ? currentSec.bgUrl : defaultBlogHero.bgUrl}
                         onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), bgUrl: e.target.value } }))}
                         style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
-                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}>
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
                         <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
                         Upload
                         <input
@@ -21065,6 +21347,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.bgUrl, blogHeroBg)}
+                        alt="Blog Hero Preview"
+                        style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                      />
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -21320,7 +21607,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           })()}
 
           {/* FALLBACK FOR OTHER UNCHECKED SECTIONS */}
-          {!activeSection.endsWith('Related') && !activeSection.endsWith('Seo') && !activeSection.startsWith('bowling') && !activeSection.startsWith('amusement') && !activeSection.startsWith('bumper') && !activeSection.startsWith('vr') && !activeSection.startsWith('ar') && !activeSection.startsWith('softplay') && !activeSection.startsWith('home') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo', 'header', 'footer'].includes(activeSection) && (
+          {!activeSection.endsWith('Related') && !activeSection.endsWith('Seo') && !activeSection.startsWith('bowling') && !activeSection.startsWith('amusement') && !activeSection.startsWith('bumper') && !activeSection.startsWith('vr') && !activeSection.startsWith('ar') && !activeSection.startsWith('softplay') && !activeSection.startsWith('home') && !activeSection.startsWith('about') && !activeSection.startsWith('contact') && !activeSection.startsWith('terms') && !activeSection.startsWith('privacy') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo', 'header', 'footer'].includes(activeSection) && (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               <FileText style={{ width: '48px', height: '48px', color: '#38bdf8', marginBottom: '14px' }} />
               <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>

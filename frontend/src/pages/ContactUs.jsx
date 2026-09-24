@@ -90,8 +90,8 @@ export default function ContactUs({ siteData }) {
           maxWidth: '1240px',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr',
-          gap: isMobile ? '30px' : '60px',
+          gridTemplateColumns: isMobile ? '1fr' : '1.12fr 0.98fr',
+          gap: isMobile ? '30px' : '50px',
           alignItems: 'flex-start',
           boxSizing: 'border-box',
           width: '100%'
@@ -99,21 +99,33 @@ export default function ContactUs({ siteData }) {
           {/* LEFT COLUMN: Section Title, Subtext & Stacked Contact Info Cards */}
           <div className="winera-contact-left-col" style={{ textAlign: 'left', width: '100%', boxSizing: 'border-box' }}>
             <div className="winera-contact-heading-wrap">
-              <SectionHeading align="left" marginBottom="20px" accentWidth="240px" accentMaxWidth="400px">
+              <SectionHeading align="left" marginBottom="20px" accentWidth="255px" accentMaxWidth="420px">
                 {(() => {
-                  const rawTitle = siteData?.contactPage?.title || "Get in Touch with *Winera International*";
-                  const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-                  return parts.map((part, index) => {
-                    if (index % 2 === 1) {
-                      return (
-                        <span key={index} className="winera-contact-title-line2" style={{ color: '#0f172a', display: 'block' }}>
-                          {part}
-                        </span>
-                      );
-                    }
+                  let rawTitle = siteData?.contactPage?.title || "Get in Touch with *Winera*<br />*International*";
+                  if (rawTitle.includes('*Winera International*')) {
+                    rawTitle = rawTitle.replace('*Winera International*', '*Winera*<br />*International*');
+                  }
+
+                  const lines = rawTitle.split(/<br\s*\/?>/i);
+                  return lines.map((line, lIdx) => {
+                    const parts = line.split(/\*{1,2}(.*?)\*{1,2}/g);
                     return (
-                      <span key={index} className="winera-contact-title-line1" style={{ color: '#38bdf8', display: 'block' }}>
-                        {part.trim()}
+                      <span key={lIdx} style={{ display: 'block', lineHeight: 1.18 }}>
+                        {parts.map((part, pIdx) => {
+                          const isDark = pIdx % 2 === 1;
+                          if (isDark) {
+                            return (
+                              <span key={pIdx} className="winera-contact-title-dark" style={{ color: '#0f172a' }}>
+                                {part}
+                              </span>
+                            );
+                          }
+                          return (
+                            <span key={pIdx} className="winera-contact-title-cyan" style={{ color: '#38bdf8' }}>
+                              {part}
+                            </span>
+                          );
+                        })}
                       </span>
                     );
                   });
@@ -121,7 +133,7 @@ export default function ContactUs({ siteData }) {
               </SectionHeading>
             </div>
 
-            <p className="winera-contact-desc" style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '36px', maxWidth: '540px' }}>
+            <p className="winera-contact-desc" style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '36px', maxWidth: '590px' }}>
               {siteData?.contactPage?.desc || "Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations."}
             </p>
 
@@ -482,8 +494,8 @@ export default function ContactUs({ siteData }) {
                       <MapPin style={{ width: '22px', height: '22px' }} />
                     </motion.div>
                     <div>
-                      <h3 className="winera-contact-hq-title" style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq1Name || "Surat Headquarters (India)"}</h3>
-                      <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq1Badge || "Corporate & Sales Office"}</span>
+                      <h3 className="winera-contact-hq-title" style={{ fontSize: '1.2rem', fontWeight: '600', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq1Name || "Surat Headquarters (India)"}</h3>
+                      <span style={{ fontSize: '14px', color: '#475569', fontWeight: '500' }}>{siteData?.contactPage?.hq1Badge || "Corporate & Sales Office"}</span>
                     </div>
                   </div>
                   <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '300', margin: 0, whiteSpace: 'pre-line' }}>
@@ -549,8 +561,8 @@ export default function ContactUs({ siteData }) {
                       <Globe style={{ width: '22px', height: '22px' }} />
                     </motion.div>
                     <div>
-                      <h3 className="winera-contact-hq-title" style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq2Name || "China Manufacturing Facility"}</h3>
-                      <span style={{ fontSize: '11.5px', color: '#475569', fontWeight: '700' }}>{siteData?.contactPage?.hq2Badge || "Sourcing & Assembly Hub"}</span>
+                      <h3 className="winera-contact-hq-title" style={{ fontSize: '1.2rem', fontWeight: '600', color: '#0f172a', margin: 0 }}>{siteData?.contactPage?.hq2Name || "China Manufacturing Facility"}</h3>
+                      <span style={{ fontSize: '14px', color: '#475569', fontWeight: '500' }}>{siteData?.contactPage?.hq2Badge || "Sourcing & Assembly Hub"}</span>
                     </div>
                   </div>
                   <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '300', margin: 0, whiteSpace: 'pre-line' }}>
