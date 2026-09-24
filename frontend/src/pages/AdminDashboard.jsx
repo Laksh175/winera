@@ -48,7 +48,7 @@ import leftTiltedCard from '../assets/Left Tilted Card.webp';
 import rightTiltedCard from '../assets/Right Tilted Card.webp';
 import arImage from '../assets/AR-image.webp';
 
-import safetyBg from '../assets/safety-bg.webp';
+import safetyBg from '../assets/safety-standard-hero-bg.webp';
 import safetyStandardImg1 from '../assets/safety-standard-img1.webp';
 import safetyStandardBg2 from '../assets/safety-standard-bg-2.webp';
 import safetyStandard2 from '../assets/safety-standard-2.webp';
@@ -1255,7 +1255,8 @@ const defaultHeaderProductSubMenu = [
   { label: 'Soft Play', href: '/product/soft-play' },
   { label: 'Bumper Car', href: '/product/bumper-car' },
   { label: 'Hypergrid', href: '/product/hypergrid' },
-  { label: 'Amusement Park', href: '/product/amusement-park' }
+  { label: 'Amusement Park', href: '/product/amusement-park' },
+  { label: 'Laser Tag', href: '/product/laser-tag' }
 ];
 
 const defaultHeaderResourcesSubMenu = [
@@ -1266,6 +1267,11 @@ const defaultHeaderResourcesSubMenu = [
 
 const defaultHeaderData = {
   logoUrl: wineraLogo,
+  facebookUrl: 'https://facebook.com',
+  instagramUrl: 'https://instagram.com',
+  youtubeUrl: 'https://youtube.com',
+  twitterUrl: 'https://x.com',
+  whatsappUrl: 'https://wa.me/919428989488',
   navLinks: defaultHeaderNavLinks,
   productSubMenu: defaultHeaderProductSubMenu,
   resourcesSubMenu: defaultHeaderResourcesSubMenu,
@@ -1282,7 +1288,8 @@ const defaultFooterProductLinks = [
   { name: "AR Games", link: "/product/ar-games" },
   { name: "Bumper Car", link: "/product/bumper-car" },
   { name: "Amusement Park", link: "/product/amusement-park" },
-  { name: "Hypergrid", link: "/product/hypergrid" }
+  { name: "Hypergrid", link: "/product/hypergrid" },
+  { name: "Laser Tag", link: "/product/laser-tag" }
 ];
 
 const defaultFooterQuickLinks = [
@@ -1827,6 +1834,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       icon: <Layout style={{ width: '18px', height: '18px' }} />,
       sections: [
         { id: 'footer', name: 'Footer Details' }
+      ]
+    },
+    privacyPolicyPage: {
+      label: 'Privacy Policy Page',
+      icon: <FileText style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'privacySections', name: 'Privacy Policy Content & Sections' },
+        { id: 'privacySeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
+    termsConditionsPage: {
+      label: 'Terms & Conditions Page',
+      icon: <FileText style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'termsSections', name: 'Terms & Conditions Content & Sections' },
+        { id: 'termsSeo', name: 'SEO Meta Title & Description' }
       ]
     }
   };
@@ -21420,6 +21443,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
 
+                  {/* Social Profile URLs */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -21427,9 +21451,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </label>
                       <input
                         type="text"
-                        value={currentSec.facebookUrl !== undefined ? currentSec.facebookUrl : defaultHeaderData.facebookUrl}
+                        value={currentSec.facebookUrl || defaultHeaderData.facebookUrl || 'https://facebook.com'}
                         onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), facebookUrl: e.target.value } }))}
-                        placeholder="https://facebook.com/yourpage"
+                        placeholder="https://facebook.com"
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
@@ -21440,9 +21464,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </label>
                       <input
                         type="text"
-                        value={currentSec.instagramUrl !== undefined ? currentSec.instagramUrl : defaultHeaderData.instagramUrl}
+                        value={currentSec.instagramUrl || defaultHeaderData.instagramUrl || 'https://instagram.com'}
                         onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), instagramUrl: e.target.value } }))}
-                        placeholder="https://instagram.com/yourhandle"
+                        placeholder="https://instagram.com"
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
@@ -21455,9 +21479,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </label>
                       <input
                         type="text"
-                        value={currentSec.youtubeUrl !== undefined ? currentSec.youtubeUrl : defaultHeaderData.youtubeUrl}
+                        value={currentSec.youtubeUrl || defaultHeaderData.youtubeUrl || 'https://youtube.com'}
                         onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), youtubeUrl: e.target.value } }))}
-                        placeholder="https://youtube.com/@yourchannel"
+                        placeholder="https://youtube.com"
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
@@ -21468,21 +21492,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </label>
                       <input
                         type="text"
-                        value={currentSec.twitterUrl !== undefined ? currentSec.twitterUrl : defaultHeaderData.twitterUrl}
+                        value={currentSec.twitterUrl || defaultHeaderData.twitterUrl || 'https://x.com'}
                         onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), twitterUrl: e.target.value } }))}
-                        placeholder="https://x.com/yourhandle"
+                        placeholder="https://x.com"
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
                   </div>
 
+                  {/* WhatsApp Contact Link */}
                   <div>
                     <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                       WhatsApp Contact Link / Number
                     </label>
                     <input
                       type="text"
-                      value={currentSec.whatsappUrl !== undefined ? currentSec.whatsappUrl : defaultHeaderData.whatsappUrl}
+                      value={currentSec.whatsappUrl || defaultHeaderData.whatsappUrl || 'https://wa.me/919428989488'}
                       onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), whatsappUrl: e.target.value } }))}
                       placeholder="https://wa.me/919428989488"
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
@@ -21545,7 +21570,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Footer About Tagline Paragraph</label>
                       <textarea
                         rows={3}
-                        value={currentSec.tagline !== undefined ? currentSec.tagline : defaultFooterData.tagline}
+                        value={currentSec.tagline || defaultFooterData.tagline}
                         onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), tagline: e.target.value } }))}
                         style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                       />
@@ -21558,7 +21583,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Phone Number 1</label>
                       <input
                         type="text"
-                        value={currentSec.phone1 !== undefined ? currentSec.phone1 : defaultFooterData.phone1}
+                        value={currentSec.phone1 || defaultFooterData.phone1}
                         onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), phone1: e.target.value } }))}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
@@ -21567,7 +21592,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Phone Number 2</label>
                       <input
                         type="text"
-                        value={currentSec.phone2 !== undefined ? currentSec.phone2 : defaultFooterData.phone2}
+                        value={currentSec.phone2 || defaultFooterData.phone2}
                         onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), phone2: e.target.value } }))}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
@@ -21576,7 +21601,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Email Address</label>
                       <input
                         type="text"
-                        value={currentSec.email !== undefined ? currentSec.email : defaultFooterData.email}
+                        value={currentSec.email || defaultFooterData.email}
                         onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), email: e.target.value } }))}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
@@ -21587,7 +21612,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Copyright Notice Text</label>
                     <input
                       type="text"
-                      value={currentSec.copyright !== undefined ? currentSec.copyright : defaultFooterData.copyright}
+                      value={currentSec.copyright || defaultFooterData.copyright}
                       onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), copyright: e.target.value } }))}
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                     />
