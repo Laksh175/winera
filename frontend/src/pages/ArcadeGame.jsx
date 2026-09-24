@@ -1387,14 +1387,15 @@ export default function ArcadeGame({ siteData }) {
               if (item?.iconUrl) {
                 return <img src={item.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />;
               }
-              if (item?.icon) {
+              if (item?.icon && React.isValidElement(item.icon)) {
                 return item.icon;
               }
 
               const title = (item?.title || '').toLowerCase();
+              const iconStr = (typeof item?.icon === 'string' ? item.icon : '').toLowerCase();
 
               // 0. 15+ Years In The Industry (Star / Experience Icon)
-              if (index === 0 || title.includes('year') || title.includes('industry')) {
+              if (index === 0 || title.includes('year') || title.includes('industry') || iconStr.includes('star')) {
                 return (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -1403,7 +1404,7 @@ export default function ArcadeGame({ siteData }) {
               }
 
               // 1. Successful Installations (Settings / Gear Icon)
-              if (index === 1 || title.includes('installation') || title.includes('success')) {
+              if (index === 1 || title.includes('installation') || title.includes('success') || iconStr.includes('setting') || iconStr.includes('gear')) {
                 return (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="3" />
@@ -1413,7 +1414,7 @@ export default function ArcadeGame({ siteData }) {
               }
 
               // 2. Direct Sourcing (Database / Stack of Coins Icon)
-              if (index === 2 || title.includes('sourcing') || title.includes('direct')) {
+              if (index === 2 || title.includes('sourcing') || title.includes('direct') || iconStr.includes('database') || iconStr.includes('coin')) {
                 return (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <ellipse cx="12" cy="5" rx="9" ry="3" />
@@ -1424,7 +1425,7 @@ export default function ArcadeGame({ siteData }) {
               }
 
               // 3. Pricing That Makes Sense (Shield Check / Value Icon)
-              if (index === 3 || title.includes('pricing') || title.includes('price') || title.includes('cost')) {
+              if (index === 3 || title.includes('pricing') || title.includes('price') || title.includes('cost') || iconStr.includes('shield')) {
                 return (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -1434,7 +1435,7 @@ export default function ArcadeGame({ siteData }) {
               }
 
               // 4. Local Support In 50+ Cities (Support Headset Icon)
-              if (index === 4 || title.includes('support') || title.includes('cities') || title.includes('local')) {
+              if (index === 4 || title.includes('support') || title.includes('cities') || title.includes('local') || iconStr.includes('headset')) {
                 return (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
@@ -1444,7 +1445,7 @@ export default function ArcadeGame({ siteData }) {
               }
 
               // 5. Easy To Maintain (Wrench / Maintenance Tool Icon)
-              if (index === 5 || title.includes('maintain') || title.includes('maintenance') || title.includes('easy')) {
+              if (index === 5 || title.includes('maintain') || title.includes('maintenance') || title.includes('easy') || iconStr.includes('wrench')) {
                 return (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
