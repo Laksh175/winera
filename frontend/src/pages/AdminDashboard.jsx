@@ -6790,11 +6790,26 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* MATERIALS QUALITY SECTION FORM */}
           {activeSection === 'softplayMaterials' && (() => {
             const defaultMaterials = [
-              { title: 'Plastic Parts', desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant.' },
-              { title: 'Post Structure', desc: 'Constructed from national standard galvanized steel pipes providing structural backbone.' },
-              { title: 'Metal Components', desc: 'All metal parts are galvanized to resist corrosion.' },
-              { title: 'Deck, Stair & Bridge', desc: 'Features a robust wood core padded with high-density sponge.' },
-              { title: 'Outer Cover', desc: 'Finished with a soft PVC covering that is pleasant to touch.' }
+              {
+                title: 'Plastic Parts',
+                desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant. This material maintains its colour and structural integrity even after years of heavy commercial use.'
+              },
+              {
+                title: 'Post Structure',
+                desc: 'Constructed from national standard galvanized steel pipes providing the structural backbone that keeps every soft play structure stable, safe, and built to last for years.'
+              },
+              {
+                title: 'Metal Components',
+                desc: 'All metal parts are galvanized to resist corrosion critical for indoor environments where moisture and regular cleaning can degrade lower-grade metals quickly.'
+              },
+              {
+                title: 'Deck, Stair & Bridge',
+                desc: 'Features a robust wood core padded with high-density sponge and coated with rubber or powder finish — providing comfort underfoot and impact protection for children.'
+              },
+              {
+                title: 'Outer Cover',
+                desc: 'Finished with a soft PVC covering that is pleasant to touch, easy to clean, and provides an additional protective layer across all play surfaces.'
+              }
             ];
             const currentSec = formData.softplayMaterials || {};
             const subpointsList = Array.isArray(currentSec.subpoints) ? currentSec.subpoints : defaultMaterials;
@@ -6826,7 +6841,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
                   <input
                     type="text"
-                    value={currentSec.title !== undefined ? currentSec.title : '*Materials Quality That Defines a* Trusted Soft Play Manufacturer'}
+                    value={currentSec.title !== undefined ? currentSec.title : '*Materials — Quality That Defines a* Trusted Soft Play Manufacturer'}
                     onChange={(e) => handleFieldChange('softplayMaterials', 'title', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -8966,9 +8981,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Feature #{cIdx + 1}</span>
                             <button
-                              onClick={() => {
+                              onClick={async () => {
                                 const newCards = cardsList.filter((_, i) => i !== cIdx);
-                                setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), cards: newCards } }));
+                                const updatedSec = { ...(formData.hypergridWhyUs || defaultHypergridWhyUs), cards: newCards };
+                                setFormData(prev => ({ ...prev, hypergridWhyUs: updatedSec }));
+                                await persistSectionToDatabase('hypergridWhyUs', updatedSec);
                               }}
                               style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}
                             >
@@ -9191,9 +9208,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Card #{iIdx + 1}</span>
                             <button
-                              onClick={() => {
+                              onClick={async () => {
                                 const newItems = itemsList.filter((_, i) => i !== iIdx);
-                                setFormData(prev => ({ ...prev, hypergridWhyWinera: { ...(prev.hypergridWhyWinera || defaultHypergridWhyWinera), items: newItems } }));
+                                const updatedSec = { ...(formData.hypergridWhyWinera || defaultHypergridWhyWinera), items: newItems };
+                                setFormData(prev => ({ ...prev, hypergridWhyWinera: updatedSec }));
+                                await persistSectionToDatabase('hypergridWhyWinera', updatedSec);
                               }}
                               style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
                             >
@@ -9290,10 +9309,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontWeight: '800', fontSize: '13px', color: '#0369a1' }}>FAQ #{idx + 1}</span>
                       <button
-                        onClick={() => {
-                          const currentList = [...(formData.hypergridFaqs || [])];
-                          currentList.splice(idx, 1);
-                          setFormData((prev) => ({ ...prev, hypergridFaqs: currentList }));
+                        onClick={async () => {
+                          const currentList = Array.isArray(formData.hypergridFaqs) && formData.hypergridFaqs.length > 0
+                            ? [...formData.hypergridFaqs]
+                            : [...defaultHypergridFaqs];
+                          const updated = currentList.filter((_, i) => i !== idx);
+                          setFormData((prev) => ({ ...prev, hypergridFaqs: updated }));
+                          await persistSectionToDatabase('hypergridFaqs', updated);
                         }}
                         style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '900' }}
                       >
@@ -18477,7 +18499,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* TRAMPOLINE INSIDE ZONES FORM */}
           {activeSection === 'trampolineInside' && (() => {
             const currentSec = formData.trampolineInside || defaultTrampolineInside;
-            const zonesList = currentSec.zones || defaultTrampolineInside.zones;
+            const zonesList = Array.isArray(currentSec.zones) ? currentSec.zones : defaultTrampolineInside.zones;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What is inside a Custom Trampoline Park (Zones Carousel)</h3>
@@ -18521,9 +18543,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Zone #{idx + 1} Tab: {z.name}</span>
                             <button
-                              onClick={() => {
+                              onClick={async () => {
                                 const updated = zonesList.filter((_, i) => i !== idx);
-                                setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                                const updatedSec = { ...(formData.trampolineInside || defaultTrampolineInside), zones: updated };
+                                setFormData(prev => ({ ...prev, trampolineInside: updatedSec }));
+                                await persistSectionToDatabase('trampolineInside', updatedSec);
                               }}
                               style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
                             >
@@ -18749,7 +18773,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* TRAMPOLINE WHY CHOOSE FORM */}
           {activeSection === 'trampolineWhyChoose' && (() => {
             const currentSec = formData.trampolineWhyChoose || defaultTrampolineWhyChoose;
-            const itemsList = currentSec.items || defaultTrampolineWhyChoose.items;
+            const itemsList = Array.isArray(currentSec.items) ? currentSec.items : defaultTrampolineWhyChoose.items;
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Why Choose Winera International Section</h3>
@@ -18782,9 +18806,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0284c7' }}>Item #{idx + 1}</span>
                             <button
-                              onClick={() => {
+                              onClick={async () => {
                                 const updated = itemsList.filter((_, i) => i !== idx);
-                                setFormData(prev => ({ ...prev, trampolineWhyChoose: { ...(prev.trampolineWhyChoose || defaultTrampolineWhyChoose), items: updated } }));
+                                const updatedSec = { ...(formData.trampolineWhyChoose || defaultTrampolineWhyChoose), items: updated };
+                                setFormData(prev => ({ ...prev, trampolineWhyChoose: updatedSec }));
+                                await persistSectionToDatabase('trampolineWhyChoose', updatedSec);
                               }}
                               style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '3px 8px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '11px' }}
                             >
@@ -18853,9 +18879,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>FAQ #{idx + 1}</span>
                         <button
-                          onClick={() => {
+                          onClick={async () => {
                             const updated = currentFaqs.filter((_, i) => i !== idx);
                             setFormData(prev => ({ ...prev, trampolineFaqs: updated }));
+                            await persistSectionToDatabase('trampolineFaqs', updated);
                           }}
                           style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
                         >

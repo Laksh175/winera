@@ -401,7 +401,7 @@ export default function SoftPlay({ siteData }) {
                   style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
                 />
                 <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                  {renderTitleMarkup(siteData?.softplayMaterials?.title, "*Materials Quality That Defines a* Trusted Soft Play Manufacturer")}
+                  {renderTitleMarkup(siteData?.softplayMaterials?.title, "*Materials — Quality That Defines a* Trusted Soft Play Manufacturer")}
                 </h2>
               </div>
 
@@ -1318,7 +1318,7 @@ const defaultSpecsList = [
 const defaultMaterialsSubpoints = [
   {
     title: 'Plastic Parts',
-    desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant. This material maintains its colour and structural integrity even after years of heavy commercial use'
+    desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant. This material maintains its colour and structural integrity even after years of heavy commercial use.'
   },
   {
     title: 'Post Structure',
