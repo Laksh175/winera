@@ -11599,11 +11599,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                     <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Games under "${selectedCat}" ({gamesList.length} Games)</h4>
                     <button
-                      onClick={() => {
+                      type="button"
+                      onClick={async () => {
                         const newGame = { name: 'New Game', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80' };
                         const updatedCatList = [...gamesList, newGame];
                         const updated = { ...categoriesData, [selectedCat]: updatedCatList };
                         setFormData(prev => ({ ...prev, arCategoriesData: updated }));
+                        await persistSectionToDatabase('arCategoriesData', updated);
                       }}
                       style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 16px', borderRadius: '8px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer' }}
                     >
@@ -11615,12 +11617,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     {gamesList.map((game, gIdx) => (
                       <div key={gIdx} style={{ background: '#ffffff', padding: '14px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0284c7' }}>Game #{gIdx + 1}</span>
+                          <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0284c7' }}>Game #{gIdx + 1}: {game.name}</span>
                           <button
-                            onClick={() => {
+                            type="button"
+                            onClick={async () => {
                               const updatedCatList = gamesList.filter((_, i) => i !== gIdx);
                               const updated = { ...categoriesData, [selectedCat]: updatedCatList };
                               setFormData(prev => ({ ...prev, arCategoriesData: updated }));
+                              await persistSectionToDatabase('arCategoriesData', updated);
                             }}
                             style={{ background: '#ef4444', color: '#fff', border: 'none', width: '26px', height: '26px', borderRadius: '6px', cursor: 'pointer', fontWeight: '900' }}
                           >
@@ -11662,6 +11666,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                       updatedCatList[gIdx] = { ...updatedCatList[gIdx], img: res.url };
                                       const updated = { ...categoriesData, [selectedCat]: updatedCatList };
                                       setFormData(prev => ({ ...prev, arCategoriesData: updated }));
+                                      await persistSectionToDatabase('arCategoriesData', updated);
                                     }
                                   } catch (err) {
                                     console.error(err);
@@ -12334,10 +12339,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Card #{idx + 1}</span>
                         <button
-                          onClick={() => {
-                            const list = [...(formData.arWhyUs?.cardsList || [])];
-                            list.splice(idx, 1);
-                            handleFieldChange('arWhyUs', 'cardsList', list);
+                          type="button"
+                          onClick={async () => {
+                            const list = [...(formData.arWhyUs?.cardsList || [
+                              { title: "Right Product, Right Venue", desc: "We Recommend What Actually Fits Your Space And Footfall." },
+                              { title: "ROI Before You Invest", desc: "We Show You The Real Numbers Before You Commit." },
+                              { title: "Operational From Day One", desc: "We Install And Configure Everything, So You Open Without The Headaches." },
+                              { title: "Support Beyond Installation", desc: "Our Own Technicians Handle Servicing And Updates After Handover." },
+                              { title: "Age-Inclusive Entertainment", desc: "We Choose A Mix That Entertains All Ages, So More Visitors Walk In." },
+                              { title: "Trusted Across Venue Types", desc: "From Malls And Hotels To Schools And Resorts Across India Trust Us." }
+                            ])];
+                            const updated = list.filter((_, i) => i !== idx);
+                            const updatedSec = { ...(formData.arWhyUs || {}), cardsList: updated };
+                            setFormData(prev => ({ ...prev, arWhyUs: updatedSec }));
+                            await persistSectionToDatabase('arWhyUs', updatedSec);
                           }}
                           style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '900' }}
                         >
@@ -12422,10 +12437,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontWeight: '800', fontSize: '13px', color: '#0369a1' }}>FAQ #{idx + 1}</span>
                       <button
-                        onClick={() => {
-                          const currentList = Array.isArray(formData.arFaqs) ? [...formData.arFaqs] : [];
-                          currentList.splice(idx, 1);
-                          setFormData((prev) => ({ ...prev, arFaqs: currentList }));
+                        type="button"
+                        onClick={async () => {
+                          const currentList = Array.isArray(formData.arFaqs) && formData.arFaqs.length > 0
+                            ? [...formData.arFaqs]
+                            : [
+                              { question: "What is an AR Gaming Setup and how does it work?", answer: "Augmented Reality (AR) gaming combines physical play spaces with interactive digital projections, sensors, and motion tracking to create immersive experiences for players without needing heavy headsets." },
+                              { question: "What type of venues are AR games best suited for?", answer: "AR games are ideal for Family Entertainment Centres (FECs), shopping malls, amusement parks, sports bars, resorts, trampoline parks, and indoor play zones." },
+                              { question: "Do you provide installation and technical support across India?", answer: "Yes, Winera International provides end-to-end site inspection, custom installation, game software setup, staff training, and nationwide maintenance support." },
+                              { question: "What is the expected ROI for an AR gaming setup?", answer: "With high repeat play rates and low operator maintenance, most commercial venue operators achieve full break-even within 6 to 12 months depending on footfall." }
+                            ];
+                          const updated = currentList.filter((_, i) => i !== idx);
+                          setFormData((prev) => ({ ...prev, arFaqs: updated }));
+                          await persistSectionToDatabase('arFaqs', updated);
                         }}
                         style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '900' }}
                       >
