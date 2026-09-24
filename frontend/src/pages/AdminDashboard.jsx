@@ -4,45 +4,14 @@ import { updateSectionContent, uploadImageFile } from '../services/api';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
-import {
-  Save,
-  LogOut,
-  ExternalLink,
-  RefreshCw,
-  CheckCircle,
-  Users,
-  Home,
-  Gamepad2,
-  Info,
-  Layout,
-  MessageSquare,
-  HelpCircle,
-  List,
-  Sliders,
-  PhoneCall,
-  ShieldCheck,
-  Building,
-  Plus,
-  Trash2,
-  FileText,
-  Upload,
-  Image as ImageIcon,
-  Edit2,
-  Edit,
-  X,
-  Star,
-  Video,
-  Trophy,
-  Sparkles,
-  Calculator,
-  Menu
-} from 'lucide-react';
+import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, X, Star, Video, Trophy, Sparkles, Calculator, Menu } from 'lucide-react';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
 import vrCtaRightImg from '../assets/vr-cta-right-img.webp';
 import vrBlock1 from '../assets/vr-block-1.webp';
 import wineraLogo from '../assets/logo.webp';
+import heroBg from '../assets/home-page-banner-bg.webp';
 
 import projectBanner from '../assets/project-banner.webp';
 import projectImage01 from '../assets/project-image01.webp';
@@ -61,7 +30,7 @@ import projSoft1 from '../assets/proj-softplay1.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 
 import hypergridHeroBg from '../assets/hypergrid-hero-bg.webp';
-import trampolineParkBg from '../assets/trampoline-park-bg.webp';
+import trampolineParkBg from '../assets/trampoline-park-hero-bg.webp';
 import trampolineParkImg1 from '../assets/trampoline-park-img1.webp';
 import trampolineParkImg2 from '../assets/trampoline-park-img-2.webp';
 import trampolineImg3 from '../assets/trampoline-img-3.webp';
@@ -106,8 +75,14 @@ import about4 from '../assets/about-4.webp';
 import aboutusCtaBg from '../assets/aboutus-cta-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
 import ctaMainBanner from '../assets/cta-main-banner.png';
-import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
-import bowlingHeroBg from '../assets/bowling-hero-bg.webp';
+import arcadeHeroBg from '../assets/arcadegame-hero-bg.webp';
+import commercialTeam from '../assets/commercial-team.webp';
+import arcadeCtaBg from '../assets/arcadegame-cta-bg.webp';
+import bowlingHeroBg from '../assets/bowlling-hero-bg.webp';
+import bowlingImg from '../assets/bowling.webp';
+import bowlingPinsExplode from '../assets/bowling-pins-explode.webp';
+import bowlingBallPinsBlue from '../assets/bowling-ball-pins-blue.webp';
+import bowlingImage from '../assets/bowlling-image.png';
 import bumpercarHeroBg from '../assets/bumpercar-hero-bg.webp';
 import bumpercarCtaBannerBg from '../assets/cta-consultations-banner.webp';
 import bumpercarOptionsBg from '../assets/bumper-car-bg.png';
@@ -136,10 +111,20 @@ import allImg from '../assets/all.webp';
 import softPalyImage from '../assets/soft-paly-image.webp';
 import groupImg from '../assets/group-image.webp';
 import aboutCollage from '../assets/about-collage.webp';
+import softplayHeroBg from '../assets/softplay-hero-bg.webp';
+import softplaySpecsBg from '../assets/softplay-specs-bg.webp';
+import softplayMaterialsBg from '../assets/softplay-materials-bg.webp';
+import softplayRoiBg from '../assets/softplay-roi-bg.webp';
+import softplayCtaBg from '../assets/softplay-cta-bg.webp';
 import ctaSoftplayBg from '../assets/cta-softplay-bg.webp';
 import amusementCtaBg from '../assets/cta-consultations-banner.webp';
 import amusementLeftImg from '../assets/amusement-park-left-img.webp';
 import amusementRightImg from '../assets/amusement-park-right-img.webp';
+import amusementHeroBg from '../assets/amusement-park-hero-bg.webp';
+import amusementSupplierCollage from '../assets/amusement-supplier-collage.webp';
+import amusementSetupsCollage from '../assets/amusement-setups-collage.webp';
+import amusementOptionsTopCollage from '../assets/amusement-options-top-collage.webp';
+import amusementOptionsBottomImg from '../assets/amusement-options-bottom-img.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import superAirHockeyImg from '../assets/super-air-hockey.webp';
 import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.webp';
@@ -215,7 +200,7 @@ const defaultHypergridIntro = {
 const defaultHypergridBanner = {
   title: 'Interactive LED Floor Games *for High-<br/>Footfall Venues*',
   paragraph1: 'Winera International is a trusted Hypergrid game supplier in India, sourcing and installing commercial Hypergrid interactive LED floor systems for malls, family entertainment centres, hotels, schools, trampoline parks, and bowling alleys since 2014. Every Hypergrid unit we supply is sourced from established global manufacturers — configured specifically for sustained daily commercial use in high-footfall Indian venues.',
-  paragraph2: 'As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order to opening day',
+  paragraph2: 'As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order to opening day.',
   imgUrl: hypergridBannerImg
 };
 
@@ -1113,14 +1098,15 @@ const defaultTrampolineHero = {
 
 const defaultTrampolineIntro = {
   title: 'Trampoline Park *Manufacturer in India*',
-  desc: "India's trusted trampoline park manufacturer — safety-certified equipment, custom-designed layouts, and installed by our own team across India.",
+  desc: "India's trusted trampoline park manufacturer safety-certified equipment, custom-designed layouts, and installed by our own team across India.",
   buttonText: 'Get Quote From Expert',
-  buttonLink: 'https://wa.me/919999999999?text=Hi%20Winera%2C%20I%20want%20to%20get%20a%20quote%20for%20a%20Trampoline%20Park',
+  buttonLink: 'https://wa.me/919428989488',
+  waMessage: 'Hello Winera International! I want to get a quote and design details for a Trampoline Park setup. Please share details. [Ref: Trampoline Park Page]',
   mainImgUrl: trampolineParkImg1
 };
 
 const defaultTrampolineCustom = {
-  title1: 'Custom Trampoline Parks ',
+  title1: 'Custom Trampoline Parks',
   title2: 'by Winera',
   title3: 'International',
   paragraph: "At Winera International, we specialize in creating custom-built trampoline parks tailored to your space, budget, and activity preferences. As a leading trampoline manufacturer in India we ensure top-quality design, safety, and durability in every project. Whether you're envisioning a compact jump zone or a large-scale interactive entertainment center, we are the trampoline park manufacturer that delivers complete turnkey solutions to bring your vision to life. We have been designing and supplying commercial trampoline parks for malls, hotels, schools, resorts, and family entertainment centres since 2014.",
@@ -1128,68 +1114,77 @@ const defaultTrampolineCustom = {
 };
 
 const defaultTrampolineSpecs = {
-  title: 'Technical Specifications — *Commercial Trampoline Parks*',
+  title: '*Technical* Specifications',
   bgUrl: trampolineImg3,
   imgUrl: trampolineImg3,
+  buttonText: 'Download Our Brochure',
+  buttonLink: 'https://wa.me/919428989488',
   specsData: [
-    { label: "Steel Frame", value: "80x80mm / 100x50mm Galvanized Steel (2.5mm–3.0mm thickness)" },
-    { label: "Jump Mat", value: "Commercial-Grade PP Mesh (Polypropylene), Anti-UV, High Tensile" },
-    { label: "Safety Padding", value: "0.45mm PVC Surface + 70mm EPE High-Density Foam Padding" },
-    { label: "Spring Systems", value: "3.2mm Oil-Quenched Manganese Steel Wire (21.5cm length)" },
-    { label: "Enclosure Net", value: "High-Strength PE Netting, Flame Retardant, Anti-Drop" },
-    { label: "Foam Pit Pits", value: "200x200x200mm High-Density Flame-Retardant Foam Cubes" },
-    { label: "Certifications", value: "TUV / CE / ASTM F2970 Safety Standard Compliant" },
-    { label: "Target Lifespan", value: "8–12 Years Commercial Operation with Routine Maintenance" }
+    { label: "Minimum space required", value: "2,000 sq ft" },
+    { label: "Ceiling height required", value: "4.5 m minimum" },
+    { label: "Weight capacity", value: "150 kg per mat" },
+    { label: "Frame", value: "Hot-dip galvanized steel" },
+    { label: "Jump mats", value: "UV-stabilized polypropylene mesh" },
+    { label: "Springs", value: "Zinc-coated carbon steel" },
+    { label: "Expected lifespan", value: "8–12 years" }
   ]
 };
 
 const defaultTrampolineInside = {
-  title: 'What is inside a *custom trampoline park?*',
+  title: '*What is inside a* custom<br />trampoline park?',
   subtitle: 'A Winera trampoline park is built around your available space and visitor profile. Below are the zones you can include each can be combined in any configuration based on your floor area and budget.',
   zones: [
     {
+      id: "free-jump",
       name: "Free Jump Zones",
       title: "Free Jump Zones",
       desc: "Free jump zones are open trampoline areas where visitors of all ages jump freely without restrictions. They are the primary attraction of any trampoline park — simple to supervise, high throughput, and effective at keeping visitors active throughout their session. Suitable for all age groups from 3 years upward.",
       img: tampolineImg5
     },
     {
+      id: "dunk-hoops",
       name: "Dunk Hoops",
       title: "Dunk Hoops",
       desc: "Dunk hoops are basketball hoops mounted above trampolines so visitors can jump and slam-dunk — something impossible at standard court height. A consistently popular zone with teenagers and young adults that extends session time. Low maintenance and easy to integrate into any free jump area.",
       img: tampolineImg5
     },
     {
+      id: "zip-line",
       name: "Zip Line",
       title: "Zip Line",
       desc: "An indoor zip line where visitors glide from an elevated platform to a foam landing pit. The zip line is an aerial experience that most standard trampoline parks do not include, making it a strong differentiator for venues wanting a premium attraction mix. Suitable for visitors aged 6 and above.",
       img: tampolineImg5
     },
     {
+      id: "obstacle-courts",
       name: "Obstacle Courts",
       title: "Obstacle Courts",
       desc: "Obstacle courts are connected physical challenge courses built across trampoline surfaces jumping, dodging, climbing, and balancing in a single run. They work particularly well for school group bookings, birthday parties, and corporate team events, where structured activity rather than open jumping is preferred.",
       img: tampolineImg5
     },
     {
+      id: "air-bags",
       name: "Air Bags",
       title: "Air Bags",
       desc: "Large soft inflatable bags where visitors land after jumping from a height. Safe and exciting visitors can try flips and aerial jumps without worrying about hard landings. Very popular with teenagers.",
       img: tampolineImg5
     },
     {
+      id: "climbing-wall",
       name: "Climbing Wall",
       title: "Climbing Wall",
       desc: "Indoor climbing walls where visitors use fixed grips to climb to the top. Winera International is a trusted Climbing Wall Manufacturer in India — offering options from beginner-friendly bouldering walls to more challenging rope climb routes, suitable for all ages and fitness levels.",
       img: tampolineImg5
     },
     {
+      id: "ninja-courses",
       name: "Ninja Courses",
       title: "Ninja Courses",
       desc: "A set of physical obstacles warped walls, balance beams, hanging bars, rope bridges, and timed speed courses. Winera International is a leading Ninja Course Equipment Manufacturer in India, designing courses for ages 6 and above. Visitors come back again and again to beat their own time and improve their skills.",
       img: tampolineImg5
     },
     {
+      id: "foam-cubes",
       name: "Foam Cubes",
       title: "Foam Cubes",
       desc: "A large pit filled with soft foam cubes where visitors jump in and land safely. One of the most popular attractions is that children especially love it and tend to spend more time here than any other zone.",
@@ -1199,12 +1194,13 @@ const defaultTrampolineInside = {
 };
 
 const defaultTrampolineRoi = {
-  title: 'What Will Your *Trampoline Park Actually Earn?*',
+  title: 'What Will Your *Trampoline<br />Park Actually Earn?*',
   subtitle: 'Most trampoline park suppliers in India send a price list and wait for you to decide.',
-  paragraph1: "As India's ROI-First Game Zone Developer, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact trampoline park setup cost, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline.",
-  paragraph2: "Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average. Very few indoor trampoline park suppliers in India include this as a standard part of their process. For Winera, the ROI report is not an add-on, it is how every project starts.",
+  paragraph1: "As India's ROI-First Game Zone Developer, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact trampoline park setup cost, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline. Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average.",
+  paragraph2: "Very few indoor trampoline park suppliers in India include this as a standard part of their process. For Winera, the ROI report is not an add-on, it is how every project starts.",
   buttonText: 'Talk to an ROI Expert',
-  buttonLink: 'https://wa.me/919999999999?text=Hi%20Winera%2C%20I%20want%20to%20talk%20to%20an%20ROI%20Expert%20for%20a%20Trampoline%20Park',
+  buttonLink: 'https://wa.me/919428989488',
+  waMessage: 'Hello Winera International! I want to talk to an ROI Expert for Trampoline Park setup & commercial ROI calculation. Please share details. [Ref: Trampoline Park Page]',
   imgUrl: tampolineImage6
 };
 
@@ -1282,18 +1278,18 @@ const defaultBowlingFaqs = [
 ];
 
 const defaultTrampolineCta = {
-  titleLine1: "Plan your trampoline park",
-  titleLine2: "with Winera",
+  titleLine1: "Plan Your Trampoline",
+  titleLine2: "Park With Winera",
   descLine1: "Our team will assess your venue, prepare a free ROI report, and",
   descLine2: "recommend the right zone mix for your space.",
   buttonText: "Get Quote Now",
-  buttonLink: "https://wa.me/919999999999?text=Hi%20Winera%2C%20I%20want%20to%20plan%20a%20Trampoline%20Park",
+  buttonLink: "https://wa.me/919428989488",
   bgUrl: trampolineParkCtaBg
 };
 
 const defaultTrampolineSeo = {
   pageTitle: "Trampoline Park Manufacturer in India | Winera International",
-  metaDescription: "India's trusted trampoline park manufacturer — safety-certified equipment, custom-designed layouts, and installed by our own team across India."
+  metaDescription: "Looking for a trampoline park manufacturer in India? Winera International designs and installs custom trampoline parks to your space, vision, and budget."
 };
 
 export default function AdminDashboard({ siteData, refreshContent }) {
@@ -2861,7 +2857,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.hero?.title !== undefined && formData.hero.title !== '' ? formData.hero.title : "Indoor Amusement & Gaming Equipment Manufacturer"}
+                  value={formData.hero?.title !== undefined && formData.hero.title !== '' ? formData.hero.title : "Game Zone Equipment *Manufacturer* & Supplier"}
                   onChange={(e) => handleFieldChange('hero', 'title', e.target.value)}
                   style={{
                     width: '100%',
@@ -2881,7 +2877,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <textarea
                   rows={3}
-                  value={formData.hero?.subtitle !== undefined && formData.hero.subtitle !== '' ? formData.hero.subtitle : "Turnkey indoor game zone setup, commercial arcade machines, bowling alley equipment, and soft play areas with complete ROI blueprint for B2B entertainment centers across India."}
+                  value={formData.hero?.subtitle !== undefined && formData.hero.subtitle !== '' ? formData.hero.subtitle : "India's ROI-First Game Zone Developer from bowling alleys and trampoline parks to arcade zones and VR gaming & complete indoor amusement park setup, installed by our own team across 50+ cities."}
                   onChange={(e) => handleFieldChange('hero', 'subtitle', e.target.value)}
                   style={{
                     width: '100%',
@@ -2965,9 +2961,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 840 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  {formData.hero?.bgUrl && (
-                    <img src={formData.hero.bgUrl} alt="Preview" style={{ height: '40px', borderRadius: '6px', objectFit: 'cover' }} />
-                  )}
+                  <img
+                    src={getAdminValidImageUrl(formData.hero?.bgUrl, heroBg)}
+                    alt="Hero Background Preview"
+                    style={{ width: '80px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Hero Background
                     <input
@@ -2988,6 +2986,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
+                  {formData.hero?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('hero', 'bgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -3073,6 +3080,31 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   }}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.6, fontFamily: 'monospace' }}
                 />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    CTA Button Text
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.aboutHome?.btnText || "Talk to an ROI Expert"}
+                    onChange={(e) => handleFieldChange('aboutHome', 'btnText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    CTA Button Link / URL
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.aboutHome?.btnUrl || "/why-us"}
+                    onChange={(e) => handleFieldChange('aboutHome', 'btnUrl', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
               </div>
 
               {/* About Section Side Photo */}
@@ -3412,6 +3444,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                   />
                 </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#475569', marginBottom: '6px' }}>Card 1 Link URL (e.g. /roi)</label>
+                  <input
+                    type="text"
+                    value={formData.partnerHome?.box1Link || "/roi"}
+                    onChange={(e) => handleFieldChange('partnerHome', 'box1Link', e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                  />
+                </div>
               </div>
 
               {/* Box 2 Inputs */}
@@ -3432,6 +3473,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     rows={2}
                     value={formData.partnerHome?.box2Desc || "Every product we install meets commercial safety standards tested for high-footfall environments, assembled by our own trained team, and handed over only after a full on-site safety inspection."}
                     onChange={(e) => handleFieldChange('partnerHome', 'box2Desc', e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#475569', marginBottom: '6px' }}>Card 2 Link URL (e.g. /safety-standards)</label>
+                  <input
+                    type="text"
+                    value={formData.partnerHome?.box2Link || "/safety-standards"}
+                    onChange={(e) => handleFieldChange('partnerHome', 'box2Link', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                   />
                 </div>
@@ -4285,7 +4335,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.channelPartnersHeader?.title || "*Our Channel* partners"}
+                    value={formData.channelPartnersHeader?.title || "*Our Channel* Partners"}
                     onChange={(e) => handleFieldChange('channelPartnersHeader', 'title', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '600' }}
                   />
@@ -4378,7 +4428,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.builtProjectsHeader?.title || "GAME ZONES WE HAVE *BUILT ACROSS INDIA*"}
+                    value={formData.builtProjectsHeader?.title || "Game Zones *Built Across* India"}
                     onChange={(e) => handleFieldChange('builtProjectsHeader', 'title', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '600' }}
                   />
@@ -4389,7 +4439,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <textarea
                     rows={2}
-                    value={formData.builtProjectsHeader?.subtext || "Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers."}
+                    value={formData.builtProjectsHeader?.subtext || "Complete indoor game zone setups engineered and delivered by Winera International"}
                     onChange={(e) => handleFieldChange('builtProjectsHeader', 'subtext', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
                   />
@@ -4484,7 +4534,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.faqsHeader?.title || "Frequently Asked *Questions*"}
+                    value={formData.faqsHeader?.title || "*Frequently* Asked Questions"}
                     onChange={(e) => handleFieldChange('faqsHeader', 'title', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '600' }}
                   />
@@ -4495,7 +4545,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.faqsHeader?.subtitle || "Got questions about setting up your game zone? We've got answers."}
+                    value={formData.faqsHeader?.subtitle || "Everything you need to know about setting up a game zone in India"}
                     onChange={(e) => handleFieldChange('faqsHeader', 'subtitle', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
                   />
@@ -4973,6 +5023,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Main Top-Left Image (Racing/Boy Photo) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 600 px (Square 1:1)</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.arcadeIntro?.mainImgUrl, arcadeBoy)}
+                    alt="Main Photo Preview"
+                    style={{ width: '80px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#fff',
@@ -5006,7 +5061,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   {formData.arcadeIntro?.mainImgUrl && (
-                    <img src={formData.arcadeIntro.mainImgUrl} alt="" style={{ width: '50px', height: '50px', borderRadius: '12px', objectFit: 'cover', border: '2px solid #38bdf8' }} />
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('arcadeIntro', 'mainImgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
                   )}
                 </div>
               </div>
@@ -5017,6 +5078,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Secondary Bottom-Right Image (Arcade Arena Overview) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 500 × 380 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.arcadeIntro?.secondaryImgUrl, arcadeHall)}
+                    alt="Secondary Photo Preview"
+                    style={{ width: '80px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#fff',
@@ -5050,7 +5116,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   {formData.arcadeIntro?.secondaryImgUrl && (
-                    <img src={formData.arcadeIntro.secondaryImgUrl} alt="" style={{ width: '50px', height: '50px', borderRadius: '12px', objectFit: 'cover', border: '2px solid #38bdf8' }} />
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('arcadeIntro', 'secondaryImgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
                   )}
                 </div>
               </div>
@@ -5536,6 +5608,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Team Photo (Right Graphic Frame) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.arcadeCommercial?.teamImgUrl, commercialTeam)}
+                    alt="Team Photo Preview"
+                    style={{ width: '80px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#fff',
@@ -5569,7 +5646,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   {formData.arcadeCommercial?.teamImgUrl && (
-                    <img src={formData.arcadeCommercial.teamImgUrl} alt="" style={{ width: '50px', height: '50px', borderRadius: '12px', objectFit: 'cover', border: '2px solid #38bdf8' }} />
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('arcadeCommercial', 'teamImgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
                   )}
                 </div>
               </div>
@@ -6142,11 +6225,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Background Banner Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                  {formData.arcadeCta?.bgUrl && (
-                    <div style={{ position: 'relative', width: '180px', height: '60px', borderRadius: '12px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
-                      <img src={formData.arcadeCta.bgUrl} alt="Banner Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                  )}
+                  <img
+                    src={getAdminValidImageUrl(formData.arcadeCta?.bgUrl, arcadeCtaBg)}
+                    alt="Banner Preview"
+                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -6185,7 +6268,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       onClick={() => handleFieldChange('arcadeCta', 'bgUrl', '')}
                       style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                     >
-                      Remove Custom Banner
+                      Reset Image
                     </button>
                   )}
                 </div>
@@ -6383,10 +6466,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Custom Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  {formData.softplayHero?.bgUrl && (
-                    <img src={formData.softplayHero.bgUrl} alt="Preview" style={{ height: '50px', borderRadius: '8px', objectFit: 'cover' }} />
-                  )}
-                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.softplayHero?.bgUrl, softplayHeroBg)}
+                    alt="Preview"
+                    style={{ height: '50px', width: '90px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.softplayHero?.bgUrl || ''}
+                    onChange={(e) => handleFieldChange('softplayHero', 'bgUrl', e.target.value)}
+                    placeholder="Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
+                  />
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Custom Background
                     <input
                       type="file"
@@ -6521,7 +6613,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     placeholder="Image URL"
                     style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
                   />
-                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload
                     <input
                       type="file"
@@ -6569,7 +6661,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
                   rows={4}
-                  value={formData.softplayManufacture?.p1 !== undefined && formData.softplayManufacture.p1 !== '' ? formData.softplayManufacture.p1 : "Winera International is a leading indoor soft play equipment manufacturer in India, specializing in custom-designed play areas for children aged 1 to 12 years. Our soft play structures adhere to European EN-1176 safety standards, utilizing non-toxic PVC leather, high-density EPE foam padding, and heavy-duty steel framing."}
+                  value={formData.softplayManufacture?.p1 !== undefined && formData.softplayManufacture.p1 !== '' ? formData.softplayManufacture.p1 : "At Winera International, we are one of India's leading soft play equipment manufacturers, designing and supplying custom indoor play areas for kids across malls, hotels, schools, hospitals, and family entertainment centres since 2014. As a direct soft play manufacturer in India, we ensure every project starts with a detailed 3D design and ends with a fully installed, safety-certified play zone with our own team managing every step from concept to handover."}
                   onChange={(e) => handleFieldChange('softplayManufacture', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -6579,7 +6671,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
                   rows={4}
-                  value={formData.softplayManufacture?.p2 !== undefined && formData.softplayManufacture.p2 !== '' ? formData.softplayManufacture.p2 : "From multi-level toddler play structures and giant ball pits to interactive slides and obstacle courses, we provide complete turnkey solutions from 3D layout design to professional installation across 50+ Indian cities."}
+                  value={formData.softplayManufacture?.p2 !== undefined && formData.softplayManufacture.p2 !== '' ? formData.softplayManufacture.p2 : "Whether you are setting up a compact 500 sq ft play corner or a large-scale interactive soft play zone, we deliver indoor kids play zone equipment tailored precisely to your space, budget, and audience, not a pre-packaged, off-the-shelf solution."}
                   onChange={(e) => handleFieldChange('softplayManufacture', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -6609,13 +6701,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               {/* 3D Castle Image Upload */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
                   3D Castle Render Image Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
-                </label>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload 3D Render Image
+                </h4>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.softplayManufacture?.imgUrl, softplayCastle3d)}
+                    alt="3D Castle Render Preview"
+                    style={{ width: '100px', height: '60px', objectFit: 'contain', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#ffffff' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.softplayManufacture?.imgUrl || ''}
+                    onChange={(e) => handleFieldChange('softplayManufacture', 'imgUrl', e.target.value)}
+                    placeholder="3D Castle Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
+                  />
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 20px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload 3D Render
                     <input
                       type="file"
                       accept="image/*"
@@ -6634,11 +6738,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
-                  {formData.softplayManufacture?.imgUrl ? (
-                    <img src={formData.softplayManufacture.imgUrl} alt="" style={{ height: '50px', objectFit: 'contain' }} />
-                  ) : (
-                    <img src={softplayCastle3d} alt="Default Preview" style={{ height: '50px', objectFit: 'contain' }} />
-                  )}
                 </div>
               </div>
 
@@ -6744,13 +6843,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
 
                 {/* Background Banner Image Upload */}
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
                     Background Card Image Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
-                  </label>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                      <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
+                  </h4>
+                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(currentSec.bgUrl, softplaySpecsBg)}
+                      alt="Specs Background Preview"
+                      style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+                    />
+                    <input
+                      type="text"
+                      value={currentSec.bgUrl || ''}
+                      onChange={(e) => handleFieldChange('softplaySpecs', 'bgUrl', e.target.value)}
+                      placeholder="Background Image URL"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
+                    />
+                    <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
+                      <Upload style={{ width: '16px', height: '16px' }} /> Upload
                       <input
                         type="file"
                         accept="image/*"
@@ -6769,9 +6880,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         }}
                       />
                     </label>
-                    {currentSec.bgUrl && (
-                      <img src={currentSec.bgUrl} alt="" style={{ height: '40px', borderRadius: '6px' }} />
-                    )}
                   </div>
                 </div>
 
@@ -6862,35 +6970,39 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
                     Left Kids Play Area Photo Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                   </h4>
-                  <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
-                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>Play Area Photo</label>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                        <Upload style={{ width: '13px', height: '13px' }} /> Upload Photo
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={async (e) => {
-                            const file = e.target.files[0];
-                            if (!file) return;
-                            setStatusMsg('Uploading photo...');
-                            try {
-                              const res = await uploadImageFile(file, admin.token);
-                              handleFieldChange('softplayMaterials', 'imgUrl', res.url);
-                              setStatusMsg('Photo uploaded!');
-                            } catch (err) {
-                              setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                            }
-                          }}
-                          style={{ display: 'none' }}
-                        />
-                      </label>
-                      {currentSec.imgUrl ? (
-                        <img src={currentSec.imgUrl} alt="" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
-                      ) : (
-                        <img src={allImg} alt="Default Preview" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
-                      )}
-                    </div>
+                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                    <img
+                      src={getAdminValidImageUrl(currentSec.imgUrl, allImg)}
+                      alt="Materials Photo Preview"
+                      style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+                    />
+                    <input
+                      type="text"
+                      value={currentSec.imgUrl || ''}
+                      onChange={(e) => handleFieldChange('softplayMaterials', 'imgUrl', e.target.value)}
+                      placeholder="Image URL"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
+                    />
+                    <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
+                      <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          setStatusMsg('Uploading photo...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            handleFieldChange('softplayMaterials', 'imgUrl', res.url);
+                            setStatusMsg('Photo uploaded!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
                   </div>
                 </div>
 
@@ -6907,30 +7019,39 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                     {subpointsList.map((mSub, subIdx) => (
-                      <div key={subIdx} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: '10px', alignItems: 'center', background: '#ffffff', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
-                        <input
-                          type="text"
-                          placeholder="Subpoint Title (e.g. Plastic Parts)"
-                          value={mSub.title}
-                          onChange={(e) => handleSubpointChange(subIdx, 'title', e.target.value)}
-                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                        />
-                        <input
-                          type="text"
-                          placeholder="Subpoint Description"
-                          value={mSub.desc}
-                          onChange={(e) => handleSubpointChange(subIdx, 'desc', e.target.value)}
-                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => handleDeleteSubpoint(subIdx)}
-                          style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
-                        >
-                          <Trash2 style={{ width: '15px', height: '15px' }} />
-                        </button>
+                      <div key={subIdx} style={{ display: 'flex', flexDirection: 'column', gap: '10px', background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Material Subpoint #{subIdx + 1}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteSubpoint(subIdx)}
+                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '3px' }}
+                          >
+                            <Trash2 style={{ width: '13px', height: '13px' }} /> Remove Subpoint
+                          </button>
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#475569', marginBottom: '4px' }}>Subpoint Title (e.g. Plastic Parts)</label>
+                          <input
+                            type="text"
+                            placeholder="Subpoint Title (e.g. Plastic Parts)"
+                            value={mSub.title}
+                            onChange={(e) => handleSubpointChange(subIdx, 'title', e.target.value)}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700', background: '#f8fafc' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#475569', marginBottom: '4px' }}>Full Material Description</label>
+                          <textarea
+                            rows={3}
+                            placeholder="Material Description"
+                            value={mSub.desc}
+                            onChange={(e) => handleSubpointChange(subIdx, 'desc', e.target.value)}
+                            style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5, fontFamily: 'inherit', background: '#f8fafc' }}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -6958,6 +7079,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             ];
             const currentSec = formData.softplayTypes || {};
             const typesList = Array.isArray(currentSec.typesList) ? currentSec.typesList : defaultTypes;
+            const defaultZoneImgs = [about1, about2, about3, about4];
 
             const handleAddType = () => {
               const updated = [...typesList, { title: '', desc: '', img: '' }];
@@ -7007,9 +7129,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <input
                         type="text"
-                        value={currentSec.brochureUrl !== undefined ? currentSec.brochureUrl : '#'}
+                        value={currentSec.brochureUrl !== undefined ? currentSec.brochureUrl : '/winera-brochure.pdf'}
                         onChange={(e) => handleFieldChange('softplayTypes', 'brochureUrl', e.target.value)}
-                        placeholder="e.g. /assets/brochure.pdf or upload PDF..."
+                        placeholder="e.g. /winera-brochure.pdf or upload PDF..."
                         style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                       />
                       <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
@@ -7052,64 +7174,76 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                    {typesList.map((tItem, tIdx) => (
-                      <div key={tIdx} style={{ display: 'flex', flexDirection: 'column', gap: '10px', background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Zone Type #{tIdx + 1}</span>
-                          <button
-                            type="button"
-                            onClick={() => handleDeleteType(tIdx)}
-                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '3px' }}
-                          >
-                            <Trash2 style={{ width: '13px', height: '13px' }} /> Remove Card
-                          </button>
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="Zone Title (e.g. Themed Soft Play Zones)"
-                          value={tItem.title}
-                          onChange={(e) => handleTypeChange(tIdx, 'title', e.target.value)}
-                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                        />
-                        <textarea
-                          rows={2}
-                          placeholder="Zone Description"
-                          value={tItem.desc}
-                          onChange={(e) => handleTypeChange(tIdx, 'desc', e.target.value)}
-                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
-                        />
+                    {typesList.map((tItem, tIdx) => {
+                      const cardPreviewImg = getAdminValidImageUrl(tItem.img || currentSec[`step${tIdx + 1}Img`], defaultZoneImgs[tIdx % defaultZoneImgs.length]);
+                      return (
+                        <div key={tIdx} style={{ display: 'flex', flexDirection: 'column', gap: '10px', background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Zone Type #{tIdx + 1}</span>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteType(tIdx)}
+                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '3px' }}
+                            >
+                              <Trash2 style={{ width: '13px', height: '13px' }} /> Remove Card
+                            </button>
+                          </div>
+                          <input
+                            type="text"
+                            placeholder="Zone Title (e.g. Themed Soft Play Zones)"
+                            value={tItem.title}
+                            onChange={(e) => handleTypeChange(tIdx, 'title', e.target.value)}
+                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <textarea
+                            rows={2}
+                            placeholder="Zone Description"
+                            value={tItem.desc}
+                            onChange={(e) => handleTypeChange(tIdx, 'desc', e.target.value)}
+                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
+                          />
 
-                        {/* Integrated Zone Card Image Upload */}
-                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                          <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '6px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                            <Upload style={{ width: '13px', height: '13px' }} /> Upload Card Image
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={async (e) => {
-                                const file = e.target.files[0];
-                                if (!file) return;
-                                setStatusMsg(`Uploading image for Zone #${tIdx + 1}...`);
-                                try {
-                                  const res = await uploadImageFile(file, admin.token);
-                                  handleTypeChange(tIdx, 'img', res.url);
-                                  setStatusMsg('Image uploaded!');
-                                } catch (err) {
-                                  setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                                }
-                              }}
-                              style={{ display: 'none' }}
+                          {/* Integrated Zone Card Image Upload */}
+                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center', background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0', flexWrap: 'wrap' }}>
+                            <img
+                              src={cardPreviewImg}
+                              alt={`Zone #${tIdx + 1} Preview`}
+                              style={{ height: '40px', width: '60px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }}
                             />
-                          </label>
-                          {tItem.img && (
-                            <img src={tItem.img} alt="" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
-                          )}
-                          <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>
-                            📐 600 × 400 px
-                          </span>
+                            <input
+                              type="text"
+                              placeholder="Card Image URL"
+                              value={tItem.img || ''}
+                              onChange={(e) => handleTypeChange(tIdx, 'img', e.target.value)}
+                              style={{ flex: 1, minWidth: '150px', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                            />
+                            <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '6px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                              <Upload style={{ width: '13px', height: '13px' }} /> Upload Card Image
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={async (e) => {
+                                  const file = e.target.files[0];
+                                  if (!file) return;
+                                  setStatusMsg(`Uploading image for Zone #${tIdx + 1}...`);
+                                  try {
+                                    const res = await uploadImageFile(file, admin.token);
+                                    handleTypeChange(tIdx, 'img', res.url);
+                                    setStatusMsg('Image uploaded!');
+                                  } catch (err) {
+                                    setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                                  }
+                                }}
+                                style={{ display: 'none' }}
+                              />
+                            </label>
+                            <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>
+                              📐 600 × 400 px
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -7244,7 +7378,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     placeholder="Image URL"
                     style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
                   />
-                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload
                     <input
                       type="file"
@@ -7371,7 +7505,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               onChange={async (e) => {
                                 const file = e.target.files[0];
                                 if (!file) return;
-                                setStatusMsg(`Uploading icon for Card #${wIdx + 1}...`);
+                                StatusMsg(`Uploading icon for Card #${wIdx + 1}...`);
                                 try {
                                   const res = await uploadImageFile(file, admin.token);
                                   handleCardChange(wIdx, 'iconUrl', res.url);
@@ -7445,10 +7579,34 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {(() => {
                   const defaultSoftPlayFaqs = [
-                    { question: "What space is required to set up an indoor soft play area?", answer: "A minimum of 500 sq ft is recommended for a compact soft play zone. We custom design soft play areas for any footprint from 500 sq ft up to 10,000+ sq ft multi-level play centers." },
-                    { question: "Are your soft play equipment safety certified?", answer: "Yes, all our soft play structures utilize imported anti-UV LLDPE plastics, high-density impact-absorbing sponge foam padding, rounded edges, and heavy-duty PVC covers conforming to international commercial safety standards." },
-                    { question: "How long does installation take for a soft play project?", answer: "Standard soft play installations typically take 7 to 15 days on-site depending on the size and complexity of the structure. Our own in-house installation team manages everything pan-India." },
-                    { question: "Do you provide a customized 3D design before manufacturing?", answer: "Absolutely. Every project begins with a 3D CAD design tailored to your specific venue dimensions, ceiling height, theme preferences, and budget before manufacturing begins." }
+                    {
+                      question: "Why does Winera International stand out as the best soft play equipment manufacturer in India?",
+                      answer: "Winera International manufactures every soft play structure in-house, provides a free ROI report before every project, and installs across 50+ cities through our own team, not a third-party contractor. One partner, from 3D design to after-sales support."
+                    },
+                    {
+                      question: "How much does a soft play zone cost in India?",
+                      answer: "Soft play zone cost in India depends on space size, design complexity, and materials. Winera International provides a complete cost breakdown before project confirmation. Contact our team for a customized quote based on your specific space and budget."
+                    },
+                    {
+                      question: "What businesses should install a soft play zone?",
+                      answer: "Malls, hotels, schools, hospitals, airports, family entertainment centres, and residential township projects benefit most from soft play zones, any venue that regularly attracts families with children aged 2–12 years."
+                    },
+                    {
+                      question: "Can soft play zones be customized with themes?",
+                      answer: "Yes. Winera International offers full customisation of jungle, ocean, space, and venue-branded themes with matching colours, structures, and visual elements. Every project includes a detailed 3D visual for client approval before manufacturing begins."
+                    },
+                    {
+                      question: "What maintenance does commercial soft play equipment need?",
+                      answer: "Winera soft play structures are designed for a 10+ year commercial lifespan with standard maintenance. Routine checks include: foam padding condition, PVC cover integrity, structural connection points, and slide surface smoothness — typically quarterly. Daily venue-side maintenance is limited to cleaning and a visual safety check before opening. Winera provides a maintenance schedule and inspection checklist with every installation."
+                    },
+                    {
+                      question: "What kind of Soft Play Equipment does Winera International supply?",
+                      answer: "Winera International manufactures and supplies themed play zones, toddler and junior play areas, multi-level play structures, and ball pit and sensory zones — all custom designed around your space, budget, and target age group, installed by our own team across 50+ cities in India."
+                    },
+                    {
+                      question: "How much floor space is needed to install a soft play zone?",
+                      answer: "A soft play zone can be installed in spaces starting from 500 sq ft. Our design team creates a custom layout around your exact floor dimensions, ensuring every square foot is used effectively — along with a free ROI report before confirming any project."
+                    }
                   ];
                   const faqList = (Array.isArray(formData.softplayFaqs) && formData.softplayFaqs.length > 0) ? formData.softplayFaqs : defaultSoftPlayFaqs;
                   return faqList.map((faq, index) => (
@@ -7558,7 +7716,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </h4>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                   <img
-                    src={getAdminValidImageUrl(formData.softplayCta?.bgUrl || formData.softplayCta?.bg, ctaSoftplayBg)}
+                    src={getAdminValidImageUrl(formData.softplayCta?.bgUrl || formData.softplayCta?.bg, softplayCtaBg)}
                     alt="CTA Background Preview"
                     style={{ width: '120px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
                   />
@@ -7572,7 +7730,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     placeholder="Background Image URL"
                     style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
                   />
-                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload BG Image
                     <input
                       type="file"
@@ -7642,6 +7800,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.amusementHero?.bgUrl, amusementHeroBg)}
+                    alt="Hero Background Preview"
+                    style={{ width: '80px', height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -7676,7 +7839,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   {formData.amusementHero?.bgUrl && (
-                    <img src={formData.amusementHero.bgUrl} alt="Hero Background Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('amusementHero', 'bgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
                   )}
                 </div>
               </div>
@@ -7782,6 +7951,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Left Collage Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.amusementIntro?.mainImgUrl, amusementSupplierCollage)}
+                    alt="Collage Preview"
+                    style={{ width: '80px', height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -7816,7 +7990,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   {formData.amusementIntro?.mainImgUrl && (
-                    <img src={formData.amusementIntro.mainImgUrl} alt="Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('amusementIntro', 'mainImgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
                   )}
                 </div>
               </div>
@@ -7872,6 +8052,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Right Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.amusementBanner?.imgUrl, amusementSetupsCollage)}
+                    alt="Graphic Preview"
+                    style={{ width: '80px', height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -7906,7 +8091,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   {formData.amusementBanner?.imgUrl && (
-                    <img src={formData.amusementBanner.imgUrl} alt="Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('amusementBanner', 'imgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
                   )}
                 </div>
               </div>
@@ -8043,6 +8234,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Top Collage Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.amusementOptions?.topImgUrl, amusementOptionsTopCollage)}
+                    alt="Top Collage Preview"
+                    style={{ width: '80px', height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -8077,7 +8273,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   {formData.amusementOptions?.topImgUrl && (
-                    <img src={formData.amusementOptions.topImgUrl} alt="Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('amusementOptions', 'topImgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
                   )}
                 </div>
               </div>
@@ -8193,6 +8395,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Bottom Inflatable Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.amusementRoi?.bottomImgUrl, amusementOptionsBottomImg)}
+                    alt="Inflatable Graphic Preview"
+                    style={{ width: '80px', height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -8227,7 +8434,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   {formData.amusementRoi?.bottomImgUrl && (
-                    <img src={formData.amusementRoi.bottomImgUrl} alt="Preview" style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }} />
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('amusementRoi', 'bottomImgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
                   )}
                 </div>
               </div>
@@ -8244,7 +8457,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           )}
 
           
-              {/* AMUSEMENT PARK FAQS MANAGEMENT FORM (MATCHING BUMPER CAR FAQS 1:1) */}
+          {/* AMUSEMENT PARK FAQS MANAGEMENT FORM */}
           {activeSection === 'amusementFaqs' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -8255,35 +8468,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       ? formData.amusementFaqs
                       : [
                         {
-                          question: "Who is a reliable amusement park manufacturer in India?",
-                          answer: "Winera International is a direct amusement park manufacturer in India, supplying and installing rides and equipment for theme parks, malls, and family entertainment centres since 2014 installed across 50+ cities by our own team."
+                          q: "Who is a reliable amusement park manufacturer in India?",
+                          a: "Winera International is a direct amusement park manufacturer in India, supplying and installing rides and equipment for theme parks, malls, and family entertainment centres since 2014 installed across 50+ cities by our own team."
                         },
                         {
-                          question: "What is the cost of setting up an amusement park in India?",
-                          answer: "Amusement park setup cost in India depends on land size, number of rides, ride category, and customisation. Winera provides a complete cost breakdown, installation, and maintenance before confirming any project."
+                          q: "What is the cost of setting up an amusement park in India?",
+                          a: "Amusement park setup cost in India depends on land size, number of rides, ride category, and customisation. Winera provides a complete cost breakdown, installation, and maintenance before confirming any project."
                         },
                         {
-                          question: "What safety standards do Winera's amusement park rides meet?",
-                          answer: "Every ride is built with load-rated restraints, sensor-based safety stops, and commercial-grade structural materials, then tested on-site before handover."
+                          q: "What safety standards do Winera's amusement park rides meet?",
+                          a: "Every ride is built with load-rated restraints, sensor-based safety stops, and commercial-grade structural materials, then tested on-site before handover."
                         },
                         {
-                          question: "How much land is needed to start an amusement park in India?",
-                          answer: "Land requirements vary significantly by ride mix and target capacity Winera's team assesses your available space and recommends an attraction layout that fits it."
+                          q: "How much land is needed to start an amusement park in India?",
+                          a: "Land requirements vary significantly by ride mix and target capacity Winera's team assesses your available space and recommends an attraction layout that fits it."
                         },
                         {
-                          question: "Which businesses typically work with an amusement park equipment manufacturer in India?",
-                          answer: "Theme parks, malls, resorts, family entertainment centres, and tourism developments are the most common buyers of amusement park equipment in India."
+                          q: "Which businesses typically work with an amusement park equipment manufacturer in India?",
+                          a: "Theme parks, malls, resorts, family entertainment centres, and tourism developments are the most common buyers of amusement park equipment in India."
                         },
                         {
-                          question: "How long does amusement park ride installation take?",
-                          answer: "Timelines depend on ride complexity and project scale. Winera confirms an exact schedule covering manufacturing, delivery, and installation at the quote stage."
+                          q: "How long does amusement park ride installation take?",
+                          a: "Timelines depend on ride complexity and project scale. Winera confirms an exact schedule covering manufacturing, delivery, and installation at the quote stage."
                         },
                         {
-                          question: "What after-sales support does Winera provide for amusement park rides?",
-                          answer: "Winera provides ongoing maintenance, spare parts, and on-site servicing support for all rides and equipment installed available directly through our after-sales team."
+                          q: "What after-sales support does Winera provide for amusement park rides?",
+                          a: "Winera provides ongoing maintenance, spare parts, and on-site servicing support for all rides and equipment installed available directly through our after-sales team."
                         }
                       ];
-                    const updated = [...currentList, { question: '', answer: '' }];
+                    const updated = [...currentList, { q: '', a: '' }];
                     setFormData((prev) => ({ ...prev, amusementFaqs: updated }));
                   }}
                   style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
@@ -8297,24 +8510,32 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   ? formData.amusementFaqs
                   : [
                     {
-                      question: "What types of amusement park rides do you supply and install?",
-                      answer: "We supply a complete range of amusement park attractions including thrill rides, family rides, kids' rides, bumper cars, Ferris wheels, carousel rides, and custom themed attractions engineered for indoor & outdoor venues."
+                      q: "Who is a reliable amusement park manufacturer in India?",
+                      a: "Winera International is a direct amusement park manufacturer in India, supplying and installing rides and equipment for theme parks, malls, and family entertainment centres since 2014 installed across 50+ cities by our own team."
                     },
                     {
-                      question: "Do you handle complete end-to-end park setup and installation?",
-                      answer: "Yes! Winera International handles full turnkey project management — from space planning and layout design to ride sourcing, civil foundation guidance, structural assembly, safety testing, and final handover."
+                      q: "What is the cost of setting up an amusement park in India?",
+                      a: "Amusement park setup cost in India depends on land size, number of rides, ride category, and customisation. Winera provides a complete cost breakdown, installation, and maintenance before confirming any project."
                     },
                     {
-                      question: "What safety standards and certifications do Winera amusement rides comply with?",
-                      answer: "All our rides are built to international safety benchmarks. They feature reinforced structural steel, emergency automatic stop sensors, dual-lock safety harnesses/belts, and undergo rigorous load and performance testing prior to public operation."
+                      q: "What safety standards do Winera's amusement park rides meet?",
+                      a: "Every ride is built with load-rated restraints, sensor-based safety stops, and commercial-grade structural materials, then tested on-site before handover."
                     },
                     {
-                      question: "Can Winera provide a venue-specific ROI and financial projection report?",
-                      answer: "Absolutely. Before finalizing any purchase, our ROI experts prepare a comprehensive financial model detailing ride capacities, daily throughput, operational costs, estimated ticket revenue, and projected break-even timelines customized to your land size and city demographic."
+                      q: "How much land is needed to start an amusement park in India?",
+                      a: "Land requirements vary significantly by ride mix and target capacity Winera's team assesses your available space and recommends an attraction layout that fits it."
                     },
                     {
-                      question: "What after-sales service and spare parts support do you offer?",
-                      answer: "We maintain an in-house engineering and service team across 50+ Indian cities. We provide routine maintenance support, operator training, and stocked replacement spare parts to ensure zero extended downtime for your venue."
+                      q: "Which businesses typically work with an amusement park equipment manufacturer in India?",
+                      a: "Theme parks, malls, resorts, family entertainment centres, and tourism developments are the most common buyers of amusement park equipment in India."
+                    },
+                    {
+                      q: "How long does amusement park ride installation take?",
+                      a: "Timelines depend on ride complexity and project scale. Winera confirms an exact schedule covering manufacturing, delivery, and installation at the quote stage."
+                    },
+                    {
+                      q: "What after-sales support does Winera provide for amusement park rides?",
+                      a: "Winera provides ongoing maintenance, spare parts, and on-site servicing support for all rides and equipment installed available directly through our after-sales team."
                     }
                   ]
                 ).map((faq, idx) => (
@@ -8328,24 +8549,32 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             ? [...formData.amusementFaqs]
                             : [
                               {
-                                question: "What types of amusement park rides do you supply and install?",
-                                answer: "We supply a complete range of amusement park attractions including thrill rides, family rides, kids' rides, bumper cars, Ferris wheels, carousel rides, and custom themed attractions engineered for indoor & outdoor venues."
+                                q: "Who is a reliable amusement park manufacturer in India?",
+                                a: "Winera International is a direct amusement park manufacturer in India, supplying and installing rides and equipment for theme parks, malls, and family entertainment centres since 2014 installed across 50+ cities by our own team."
                               },
                               {
-                                question: "Do you handle complete end-to-end park setup and installation?",
-                                answer: "Yes! Winera International handles full turnkey project management — from space planning and layout design to ride sourcing, civil foundation guidance, structural assembly, safety testing, and final handover."
+                                q: "What is the cost of setting up an amusement park in India?",
+                                a: "Amusement park setup cost in India depends on land size, number of rides, ride category, and customisation. Winera provides a complete cost breakdown, installation, and maintenance before confirming any project."
                               },
                               {
-                                question: "What safety standards and certifications do Winera amusement rides comply with?",
-                                answer: "All our rides are built to international safety benchmarks. They feature reinforced structural steel, emergency automatic stop sensors, dual-lock safety harnesses/belts, and undergo rigorous load and performance testing prior to public operation."
+                                q: "What safety standards do Winera's amusement park rides meet?",
+                                a: "Every ride is built with load-rated restraints, sensor-based safety stops, and commercial-grade structural materials, then tested on-site before handover."
                               },
                               {
-                                question: "Can Winera provide a venue-specific ROI and financial projection report?",
-                                answer: "Absolutely. Before finalizing any purchase, our ROI experts prepare a comprehensive financial model detailing ride capacities, daily throughput, operational costs, estimated ticket revenue, and projected break-even timelines customized to your land size and city demographic."
+                                q: "How much land is needed to start an amusement park in India?",
+                                a: "Land requirements vary significantly by ride mix and target capacity Winera's team assesses your available space and recommends an attraction layout that fits it."
                               },
                               {
-                                question: "What after-sales service and spare parts support do you offer?",
-                                answer: "We maintain an in-house engineering and service team across 50+ Indian cities. We provide routine maintenance support, operator training, and stocked replacement spare parts to ensure zero extended downtime for your venue."
+                                q: "Which businesses typically work with an amusement park equipment manufacturer in India?",
+                                a: "Theme parks, malls, resorts, family entertainment centres, and tourism developments are the most common buyers of amusement park equipment in India."
+                              },
+                              {
+                                q: "How long does amusement park ride installation take?",
+                                a: "Timelines depend on ride complexity and project scale. Winera confirms an exact schedule covering manufacturing, delivery, and installation at the quote stage."
+                              },
+                              {
+                                q: "What after-sales support does Winera provide for amusement park rides?",
+                                a: "Winera provides ongoing maintenance, spare parts, and on-site servicing support for all rides and equipment installed available directly through our after-sales team."
                               }
                             ];
                           const updated = currentList.filter((_, i) => i !== idx);
@@ -9877,13 +10106,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* BUMPER CAR TECHNICAL SPECIFICATIONS CARD FORM */}
           {activeSection === 'bumpercarSpecs' && (() => {
             const defaultBumpercarSpecs = [
-              { spec: "Drive Type", details: "Electric Grid / Battery Operated" },
-              { spec: "Body Material", details: "High-density FRP / Polyethylene" },
-              { spec: "Power Source", details: "48V DC / Ceiling Floor Grid" },
-              { spec: "Frame", details: "Hot-dip galvanized steel chassis" },
-              { spec: "Safety Ring", details: "Heavy-duty PVC / Rubber Bumper" },
-              { spec: "Controls", details: "Dual pedal & steering wheel" },
-              { spec: "Expected lifespan", details: "8-12 years" }
+              { spec: "Drive Type", details: "Electric floor type or battery-powered" },
+              { spec: "Body Material", details: "High-density polyethylene (HDPE) — impact resistant" },
+              { spec: "Power Source", details: "Conductive floor grid (electric) or rechargeable battery" },
+              { spec: "Weight Capacity", details: "Up to 150 kg per car — commercial grade" },
+              { spec: "Minimum Area Required", details: "400 sq ft" },
+              { spec: "Expected Lifespan", details: "8–12 years with proper maintenance" }
             ];
             const currentSec = formData.bumpercarSpecs || {};
             const specsList = Array.isArray(currentSec.specsList) ? currentSec.specsList : defaultBumpercarSpecs;
@@ -10678,20 +10906,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       ? formData.bumpercarFaqs
                       : [
                         {
+                          question: "Where can I buy bumper cars in India?",
+                          answer: "Winera International manufactures and supplies electric floor and battery-operated bumper cars across India for amusement parks, malls, FECs, and gaming zones. We have completed installations in 50+ cities since 2014 and handle setup through our own engineering team."
+                        },
+                        {
+                          question: "What does the bumper car arena setup cost India?",
+                          answer: "Bumper car price in India depends on drive type, car count, arena size, and customisation. Winera provides a complete cost breakdown — equipment, installation, and maintenance — before you confirm anything. Contact us for a venue-specific quote."
+                        },
+                        {
                           question: "What is the difference between electric floor and battery-operated bumper cars?",
-                          answer: "Electric floor grid bumper cars draw continuous power from a conductive floor and ceiling contact rig, ideal for high-throughput fixed venues. Battery-operated bumper cars run on rechargeable batteries, requiring no specialized floor modifications, making them perfect for malls, gaming zones, and flexible setups."
+                          answer: "Electric floor bumper cars are powered through a conductive floor grid and ceiling contact system; they run continuously without battery management and suit permanent amusement park installations. Battery-operated bumper cars need no floor modification and can be relocated, making them ideal for malls, gaming zones, and flexible setups."
                         },
                         {
-                          question: "What minimum space is required for an indoor bumper car arena?",
-                          answer: "A standard indoor bumper car arena typically requires between 800 sq ft to 3,000+ sq ft depending on the number of bumper cars operating simultaneously and safety perimeter fencing."
+                          question: "Do bumper cars require special flooring?",
+                          answer: "Electric floor bumper cars require a conductive floor grid installation. Battery-operated bumper cars work on any flat surface with no floor modification needed. Our team assesses your existing floor and recommends the right type based on your infrastructure and venue goals."
                         },
                         {
-                          question: "Do you offer installation and commissioning services across India?",
-                          answer: "Yes! Winera International has its own in-house installation team that conducts complete site preparation, grid setup, testing, and commissioning in 50+ cities across India."
+                          question: "How much floor area do I need for a bumper car attraction?",
+                          answer: "The minimum floor area required is 400 sq ft. A standard 6–8 car setup runs well in 500–700 sq ft. Larger venues with 12–15 cars typically use 1,000 sq ft or more. Our team calculates exact requirements based on your car count and traffic flow during the ROI planning stage."
                         },
                         {
-                          question: "Can we receive a free ROI projection report before ordering?",
-                          answer: "Absolutely. Before finalizing any purchase, our experts provide a free custom ROI report detailing equipment breakdown, rider capacity, revenue projections, and payback timelines specific to your venue."
+                          question: "What ROI can I expect from a bumper car ride?",
+                          answer: "ROI varies by venue size, daily footfall, session pricing, and operating hours. Winera prepares a free, venue-specific ROI report for every project covering projected rider capacity, estimated daily revenue, and break-even timeline — calculated against your actual floor size and local pricing, not a generic average."
+                        },
+                        {
+                          question: "Can bumper cars be used outdoors?",
+                          answer: "Our bumper cars are designed for indoor commercial use. Outdoor setups require a covered structure (shed or canopy) to protect the electrical components and floor systems from weather exposure. We advise on suitable outdoor setup configurations during the venue assessment."
+                        },
+                        {
+                          question: "What maintenance do bumper cars require?",
+                          answer: "Winera bumper cars are built for continuous commercial use with an expected lifespan of 8–12 years. Routine maintenance includes periodic inspection of bumpers, motors, and electrical contacts typically once or twice annually. Battery-operated models require regular battery health checks. We provide a maintenance schedule with every installation."
+                        },
+                        {
+                          question: "Why choose Winera International as your bumper car supplier in India?",
+                          answer: "Three reasons: first, we provide a free ROI report for your venue before you commit to any purchase. Second, our own engineering team installs and commissions every ride across 50+ cities in India with no third-party contractors. Third, as a direct manufacturer, you receive manufacturer pricing with no distributor markup."
                         }
                       ];
                     const updated = [...currentList, { question: '', answer: '' }];
@@ -10708,20 +10956,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   ? formData.bumpercarFaqs
                   : [
                     {
+                      question: "Where can I buy bumper cars in India?",
+                      answer: "Winera International manufactures and supplies electric floor and battery-operated bumper cars across India for amusement parks, malls, FECs, and gaming zones. We have completed installations in 50+ cities since 2014 and handle setup through our own engineering team."
+                    },
+                    {
+                      question: "What does the bumper car arena setup cost India?",
+                      answer: "Bumper car price in India depends on drive type, car count, arena size, and customisation. Winera provides a complete cost breakdown — equipment, installation, and maintenance — before you confirm anything. Contact us for a venue-specific quote."
+                    },
+                    {
                       question: "What is the difference between electric floor and battery-operated bumper cars?",
-                      answer: "Electric floor grid bumper cars draw continuous power from a conductive floor and ceiling contact rig, ideal for high-throughput fixed venues. Battery-operated bumper cars run on rechargeable batteries, requiring no specialized floor modifications, making them perfect for malls, gaming zones, and flexible setups."
+                      answer: "Electric floor bumper cars are powered through a conductive floor grid and ceiling contact system; they run continuously without battery management and suit permanent amusement park installations. Battery-operated bumper cars need no floor modification and can be relocated, making them ideal for malls, gaming zones, and flexible setups."
                     },
                     {
-                      question: "What minimum space is required for an indoor bumper car arena?",
-                      answer: "A standard indoor bumper car arena typically requires between 800 sq ft to 3,000+ sq ft depending on the number of bumper cars operating simultaneously and safety perimeter fencing."
+                      question: "Do bumper cars require special flooring?",
+                      answer: "Electric floor bumper cars require a conductive floor grid installation. Battery-operated bumper cars work on any flat surface with no floor modification needed. Our team assesses your existing floor and recommends the right type based on your infrastructure and venue goals."
                     },
                     {
-                      question: "Do you offer installation and commissioning services across India?",
-                      answer: "Yes! Winera International has its own in-house installation team that conducts complete site preparation, grid setup, testing, and commissioning in 50+ cities across India."
+                      question: "How much floor area do I need for a bumper car attraction?",
+                      answer: "The minimum floor area required is 400 sq ft. A standard 6–8 car setup runs well in 500–700 sq ft. Larger venues with 12–15 cars typically use 1,000 sq ft or more. Our team calculates exact requirements based on your car count and traffic flow during the ROI planning stage."
                     },
                     {
-                      question: "Can we receive a free ROI projection report before ordering?",
-                      answer: "Absolutely. Before finalizing any purchase, our experts provide a free custom ROI report detailing equipment breakdown, rider capacity, revenue projections, and payback timelines specific to your venue."
+                      question: "What ROI can I expect from a bumper car ride?",
+                      answer: "ROI varies by venue size, daily footfall, session pricing, and operating hours. Winera prepares a free, venue-specific ROI report for every project covering projected rider capacity, estimated daily revenue, and break-even timeline — calculated against your actual floor size and local pricing, not a generic average."
+                    },
+                    {
+                      question: "Can bumper cars be used outdoors?",
+                      answer: "Our bumper cars are designed for indoor commercial use. Outdoor setups require a covered structure (shed or canopy) to protect the electrical components and floor systems from weather exposure. We advise on suitable outdoor setup configurations during the venue assessment."
+                    },
+                    {
+                      question: "What maintenance do bumper cars require?",
+                      answer: "Winera bumper cars are built for continuous commercial use with an expected lifespan of 8–12 years. Routine maintenance includes periodic inspection of bumpers, motors, and electrical contacts typically once or twice annually. Battery-operated models require regular battery health checks. We provide a maintenance schedule with every installation."
+                    },
+                    {
+                      question: "Why choose Winera International as your bumper car supplier in India?",
+                      answer: "Three reasons: first, we provide a free ROI report for your venue before you commit to any purchase. Second, our own engineering team installs and commissions every ride across 50+ cities in India with no third-party contractors. Third, as a direct manufacturer, you receive manufacturer pricing with no distributor markup."
                     }
                   ]
                 ).map((faq, idx) => (
@@ -10735,20 +11003,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             ? [...formData.bumpercarFaqs]
                             : [
                               {
+                                question: "Where can I buy bumper cars in India?",
+                                answer: "Winera International manufactures and supplies electric floor and battery-operated bumper cars across India for amusement parks, malls, FECs, and gaming zones. We have completed installations in 50+ cities since 2014 and handle setup through our own engineering team."
+                              },
+                              {
+                                question: "What does the bumper car arena setup cost India?",
+                                answer: "Bumper car price in India depends on drive type, car count, arena size, and customisation. Winera provides a complete cost breakdown — equipment, installation, and maintenance — before you confirm anything. Contact us for a venue-specific quote."
+                              },
+                              {
                                 question: "What is the difference between electric floor and battery-operated bumper cars?",
-                                answer: "Electric floor grid bumper cars draw continuous power from a conductive floor and ceiling contact rig, ideal for high-throughput fixed venues. Battery-operated bumper cars run on rechargeable batteries, requiring no specialized floor modifications, making them perfect for malls, gaming zones, and flexible setups."
+                                answer: "Electric floor bumper cars are powered through a conductive floor grid and ceiling contact system; they run continuously without battery management and suit permanent amusement park installations. Battery-operated bumper cars need no floor modification and can be relocated, making them ideal for malls, gaming zones, and flexible setups."
                               },
                               {
-                                question: "What minimum space is required for an indoor bumper car arena?",
-                                answer: "A standard indoor bumper car arena typically requires between 800 sq ft to 3,000+ sq ft depending on the number of bumper cars operating simultaneously and safety perimeter fencing."
+                                question: "Do bumper cars require special flooring?",
+                                answer: "Electric floor bumper cars require a conductive floor grid installation. Battery-operated bumper cars work on any flat surface with no floor modification needed. Our team assesses your existing floor and recommends the right type based on your infrastructure and venue goals."
                               },
                               {
-                                question: "Do you offer installation and commissioning services across India?",
-                                answer: "Yes! Winera International has its own in-house installation team that conducts complete site preparation, grid setup, testing, and commissioning in 50+ cities across India."
+                                question: "How much floor area do I need for a bumper car attraction?",
+                                answer: "The minimum floor area required is 400 sq ft. A standard 6–8 car setup runs well in 500–700 sq ft. Larger venues with 12–15 cars typically use 1,000 sq ft or more. Our team calculates exact requirements based on your car count and traffic flow during the ROI planning stage."
                               },
                               {
-                                question: "Can we receive a free ROI projection report before ordering?",
-                                answer: "Absolutely. Before finalizing any purchase, our experts provide a free custom ROI report detailing equipment breakdown, rider capacity, revenue projections, and payback timelines specific to your venue."
+                                question: "What ROI can I expect from a bumper car ride?",
+                                answer: "ROI varies by venue size, daily footfall, session pricing, and operating hours. Winera prepares a free, venue-specific ROI report for every project covering projected rider capacity, estimated daily revenue, and break-even timeline — calculated against your actual floor size and local pricing, not a generic average."
+                              },
+                              {
+                                question: "Can bumper cars be used outdoors?",
+                                answer: "Our bumper cars are designed for indoor commercial use. Outdoor setups require a covered structure (shed or canopy) to protect the electrical components and floor systems from weather exposure. We advise on suitable outdoor setup configurations during the venue assessment."
+                              },
+                              {
+                                question: "What maintenance do bumper cars require?",
+                                answer: "Winera bumper cars are built for continuous commercial use with an expected lifespan of 8–12 years. Routine maintenance includes periodic inspection of bumpers, motors, and electrical contacts typically once or twice annually. Battery-operated models require regular battery health checks. We provide a maintenance schedule with every installation."
+                              },
+                              {
+                                question: "Why choose Winera International as your bumper car supplier in India?",
+                                answer: "Three reasons: first, we provide a free ROI report for your venue before you commit to any purchase. Second, our own engineering team installs and commissions every ride across 50+ cities in India with no third-party contractors. Third, as a direct manufacturer, you receive manufacturer pricing with no distributor markup."
                               }
                             ];
                           const updated = currentList.filter((_, i) => i !== idx);
@@ -14135,11 +14423,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Section Main Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  {formData.bowlingIntro?.mainImgUrl && (
-                    <div style={{ position: 'relative', width: '120px', height: '80px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
-                      <img src={formData.bowlingIntro.mainImgUrl} alt="Bowling Intro Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    </div>
-                  )}
+                  <img
+                    src={getAdminValidImageUrl(formData.bowlingIntro?.mainImgUrl || formData.bowlingIntro?.imgUrl, bowlingImg)}
+                    alt="Bowling Intro Graphic Preview"
+                    style={{ width: '80px', height: '60px', borderRadius: '10px', border: '1.5px solid #38bdf8', objectFit: 'contain', background: '#ffffff', padding: '2px' }}
+                  />
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Main Graphic Image
                     <input
@@ -14151,7 +14439,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         setStatusMsg('Uploading main graphic image...');
                         try {
                           const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.bowlingIntro || {}), mainImgUrl: res.url };
+                          const updated = { ...(formData.bowlingIntro || {}), mainImgUrl: res.url, imgUrl: res.url };
                           setFormData(prev => ({ ...prev, bowlingIntro: updated }));
                           await persistSectionToDatabase('bowlingIntro', updated);
                           setStatusMsg('Main graphic image uploaded successfully!');
@@ -14162,17 +14450,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.bowlingIntro?.mainImgUrl && (
+                  {(formData.bowlingIntro?.mainImgUrl || formData.bowlingIntro?.imgUrl) && (
                     <button
                       type="button"
                       onClick={async () => {
-                        const updated = { ...(formData.bowlingIntro || {}), mainImgUrl: '' };
+                        const updated = { ...(formData.bowlingIntro || {}), mainImgUrl: '', imgUrl: '' };
                         setFormData(prev => ({ ...prev, bowlingIntro: updated }));
                         await persistSectionToDatabase('bowlingIntro', updated);
                       }}
                       style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                     >
-                      Remove Custom Image
+                      Reset Image
                     </button>
                   )}
                 </div>
@@ -14293,11 +14581,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Right Side Graphic Image (Exploding Bowling Pins & Ball) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 500 × 500 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  {formData.bowlingManufacturer?.mainImgUrl && (
-                    <div style={{ position: 'relative', width: '90px', height: '90px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
-                      <img src={formData.bowlingManufacturer.mainImgUrl} alt="Pins Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    </div>
-                  )}
+                  <img
+                    src={getAdminValidImageUrl(formData.bowlingManufacturer?.mainImgUrl || formData.bowlingManufacturer?.imgUrl, bowlingPinsExplode)}
+                    alt="Pins Graphic Preview"
+                    style={{ width: '80px', height: '60px', borderRadius: '10px', border: '1.5px solid #38bdf8', objectFit: 'contain', background: '#ffffff', padding: '2px' }}
+                  />
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Pins Graphic Image
                     <input
@@ -14309,7 +14597,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         setStatusMsg('Uploading pins graphic image...');
                         try {
                           const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.bowlingManufacturer || {}), mainImgUrl: res.url };
+                          const updated = { ...(formData.bowlingManufacturer || {}), mainImgUrl: res.url, imgUrl: res.url };
                           setFormData(prev => ({ ...prev, bowlingManufacturer: updated }));
                           await persistSectionToDatabase('bowlingManufacturer', updated);
                           setStatusMsg('Pins graphic image uploaded successfully!');
@@ -14320,17 +14608,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.bowlingManufacturer?.mainImgUrl && (
+                  {(formData.bowlingManufacturer?.mainImgUrl || formData.bowlingManufacturer?.imgUrl) && (
                     <button
                       type="button"
                       onClick={async () => {
-                        const updated = { ...(formData.bowlingManufacturer || {}), mainImgUrl: '' };
+                        const updated = { ...(formData.bowlingManufacturer || {}), mainImgUrl: '', imgUrl: '' };
                         setFormData(prev => ({ ...prev, bowlingManufacturer: updated }));
                         await persistSectionToDatabase('bowlingManufacturer', updated);
                       }}
                       style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                     >
-                      Remove Custom Image
+                      Reset Image
                     </button>
                   )}
                 </div>
@@ -14357,7 +14645,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.bowlingFreeFall?.title || '*Free-Fall Bowling:* Give the Full Professional Experience'}
+                  value={formData.bowlingFreeFall?.title || '*Free-Fall Bowling:*<br/>Give the Full<br/>Professional Experience'}
                   onChange={(e) => handleFieldChange('bowlingFreeFall', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -14389,9 +14677,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Free-Fall Pinsetter Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 520 × 460 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  <div style={{ position: 'relative', width: '90px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <img src={getAdminValidImageUrl(formData.bowlingFreeFall?.mainImgUrl || formData.bowlingFreeFall?.imgUrl, maskGroupImg)} alt="Free Fall Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  </div>
+                  <img
+                    src={getAdminValidImageUrl(formData.bowlingFreeFall?.mainImgUrl || formData.bowlingFreeFall?.imgUrl, maskGroupImg)}
+                    alt="Free Fall Graphic Preview"
+                    style={{ width: '80px', height: '60px', borderRadius: '10px', border: '1.5px solid #38bdf8', objectFit: 'contain', background: '#0f172a', padding: '2px' }}
+                  />
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Graphic Image
                     <input
@@ -14424,7 +14714,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                       style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                     >
-                      Remove Custom Image
+                      Reset Image
                     </button>
                   )}
                 </div>
@@ -14450,50 +14740,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     onChange={(e) => handleFieldChange('bowlingFreeFall', 'videoUrl', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Download Brochure Button Label</label>
-                  <input
-                    type="text"
-                    value={formData.bowlingFreeFall?.brochureBtnText || 'Download Brochure'}
-                    onChange={(e) => handleFieldChange('bowlingFreeFall', 'brochureBtnText', e.target.value)}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File / Link URL</label>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <input
-                      type="text"
-                      value={formData.bowlingFreeFall?.brochureUrl || '#'}
-                      onChange={(e) => handleFieldChange('bowlingFreeFall', 'brochureUrl', e.target.value)}
-                      placeholder="e.g. /uploads/bowling_brochure.pdf"
-                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                    />
-                    <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
-                      <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
-                      <input
-                        type="file"
-                        accept="application/pdf,.pdf"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading PDF brochure...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            handleFieldChange('bowlingFreeFall', 'brochureUrl', res.url);
-                            setStatusMsg('PDF Brochure uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                  </div>
                 </div>
               </div>
 
@@ -14567,7 +14813,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.bowlingString?.title || 'String Bowling Machines: *Affordable Bowling Setup for Every Venue*'}
+                  value={formData.bowlingString?.title || 'String Bowling Machines:<br/>*Affordable Bowling Setup*<br/>*for Every Venue*'}
                   onChange={(e) => handleFieldChange('bowlingString', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -14577,7 +14823,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
                   rows={4}
-                  value={formData.bowlingString?.p1 !== undefined && formData.bowlingString.p1 !== '' ? formData.bowlingString.p1 : "In a string bowling system, each pin is attached to a high-strength nylon cord at the top. When the ball hits the pins, an overhead motorized unit reels them up and places them cleanly back on the lane pin spots. This setup eliminates 95% of the mechanical jams associated with traditional free-fall pinsetters."}
+                  value={formData.bowlingString?.p1 !== undefined && formData.bowlingString.p1 !== '' ? formData.bowlingString.p1 : "Add a complete, ready-to-play bowling setup to your venue at a lower upfront cost than a traditional free-fall system. We supply and install full string bowling lanes pins, strings, scoring screens, and commissioning so you get a finished attraction, not just a machine."}
                   onChange={(e) => handleFieldChange('bowlingString', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -14587,7 +14833,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
                   rows={4}
-                  value={formData.bowlingString?.p2 !== undefined && formData.bowlingString.p2 !== '' ? formData.bowlingString.p2 : "String pinsetters require far less space, dramatically reduced electricity, and minimal maintenance — making them the most cost-effective solution for Family Entertainment Centers (FECs), bars, cafes, resorts, and boutique bowling zones that want high entertainment without dedicated mechanics."}
+                  value={formData.bowlingString?.p2 !== undefined && formData.bowlingString.p2 !== '' ? formData.bowlingString.p2 : "String systems have fewer moving parts, which means quieter lanes, easier maintenance your own team can handle, and a compact footprint that fits where a full 89 ft lane won't. That's why family entertainment centers, malls, resorts, and cafés choose them. Lower to set up, lower to run, and quick to start earning."}
                   onChange={(e) => handleFieldChange('bowlingString', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -14599,9 +14845,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   String Bowling Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 520 × 460 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  <div style={{ position: 'relative', width: '90px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <img src={getAdminValidImageUrl(formData.bowlingString?.mainImgUrl || formData.bowlingString?.imgUrl, maskGroup01Img)} alt="String Bowling Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  </div>
+                  <img
+                    src={getAdminValidImageUrl(formData.bowlingString?.mainImgUrl || formData.bowlingString?.imgUrl, maskGroup01Img)}
+                    alt="String Bowling Graphic Preview"
+                    style={{ width: '80px', height: '60px', borderRadius: '10px', border: '1.5px solid #38bdf8', objectFit: 'contain', background: '#0f172a', padding: '2px' }}
+                  />
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Graphic Image
                     <input
@@ -14634,7 +14882,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                       style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                     >
-                      Remove Custom Image
+                      Reset Image
                     </button>
                   )}
                 </div>
@@ -14642,22 +14890,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Watch Video Button Label</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure Button Label</label>
                   <input
                     type="text"
-                    value={formData.bowlingString?.btnText || 'Watch Video'}
-                    onChange={(e) => handleFieldChange('bowlingString', 'btnText', e.target.value)}
+                    value={formData.bowlingString?.brochureBtnText || 'Download Our Brochure'}
+                    onChange={(e) => handleFieldChange('bowlingString', 'brochureBtnText', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                    Watch Video URL Link <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>🎬 Video Ratio: 16:9 Landscape (YouTube / MP4)</span>
-                  </label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File URL / Link</label>
                   <input
                     type="text"
-                    value={formData.bowlingString?.videoUrl || 'https://wa.me/919428989488'}
-                    onChange={(e) => handleFieldChange('bowlingString', 'videoUrl', e.target.value)}
+                    value={formData.bowlingString?.brochureUrl || '/winera-brochure.pdf'}
+                    onChange={(e) => handleFieldChange('bowlingString', 'brochureUrl', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
@@ -14742,7 +14988,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
                   rows={4}
-                  value={formData.bowlingRoi?.p1 !== undefined && formData.bowlingRoi.p1 !== '' ? formData.bowlingRoi.p1 : "Setting up a bowling alley is one of the highest-return commercial investments in the indoor entertainment sector. A typical 4-lane or 6-lane bowling center operating in a mall or commercial complex generates high weekend footfall, repeat group bookings, corporate events, and steady game fee revenues."}
+                  value={formData.bowlingRoi?.p1 !== undefined && formData.bowlingRoi.p1 !== '' ? formData.bowlingRoi.p1 : "Setting up a bowling center is a significant investment which is why we don't just sell you equipment and walk away. We're India's ROI-First Game Zone Developer. Before you commit to a project, every client receives a complete report covering product costing, maintenance costs, and projected revenue timeline, so your investment decision is based on real numbers, not estimates."}
                   onChange={(e) => handleFieldChange('bowlingRoi', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -14752,7 +14998,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
                   rows={4}
-                  value={formData.bowlingRoi?.p2 !== undefined && formData.bowlingRoi.p2 !== '' ? formData.bowlingRoi.p2 : "By sourcing refurbished Brunswick equipment through Winera International, your initial capital investment (CapEx) is reduced by up to 50–60% compared to brand new machinery — shortening your payback period down to 14–22 months while enjoying full commercial durability."}
+                  value={formData.bowlingRoi?.p2 !== undefined && formData.bowlingRoi.p2 !== '' ? formData.bowlingRoi.p2 : "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment."}
                   onChange={(e) => handleFieldChange('bowlingRoi', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -14821,11 +15067,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Right Column Image (High-Tech Bowling Alley Graphic) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  {formData.bowlingRoi?.mainImgUrl && (
-                    <div style={{ position: 'relative', width: '120px', height: '70px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
-                      <img src={formData.bowlingRoi.mainImgUrl} alt="ROI Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                  )}
+                  <img
+                    src={getAdminValidImageUrl(formData.bowlingRoi?.mainImgUrl || formData.bowlingRoi?.imgUrl, bowlingImage)}
+                    alt="ROI Graphic Preview"
+                    style={{ width: '90px', height: '60px', borderRadius: '10px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                  />
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload ROI Section Image
                     <input
@@ -14837,7 +15083,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         setStatusMsg('Uploading ROI section image...');
                         try {
                           const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.bowlingRoi || {}), mainImgUrl: res.url };
+                          const updated = { ...(formData.bowlingRoi || {}), mainImgUrl: res.url, imgUrl: res.url };
                           setFormData(prev => ({ ...prev, bowlingRoi: updated }));
                           await persistSectionToDatabase('bowlingRoi', updated);
                           setStatusMsg('ROI section image uploaded successfully!');
@@ -14848,17 +15094,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {formData.bowlingRoi?.mainImgUrl && (
+                  {(formData.bowlingRoi?.mainImgUrl || formData.bowlingRoi?.imgUrl) && (
                     <button
                       type="button"
                       onClick={async () => {
-                        const updated = { ...(formData.bowlingRoi || {}), mainImgUrl: '' };
+                        const updated = { ...(formData.bowlingRoi || {}), mainImgUrl: '', imgUrl: '' };
                         setFormData(prev => ({ ...prev, bowlingRoi: updated }));
                         await persistSectionToDatabase('bowlingRoi', updated);
                       }}
                       style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                     >
-                      Remove Custom Image
+                      Reset Image
                     </button>
                   )}
                 </div>
@@ -14885,7 +15131,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.bowlingWhyUs?.title || '*Why Choose* Winera International?'}
+                  value={formData.bowlingWhyUs?.title || 'Why Choose *Winera International*'}
                   onChange={(e) => handleFieldChange('bowlingWhyUs', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -14895,7 +15141,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
                 <textarea
                   rows={4}
-                  value={formData.bowlingWhyUs?.p1 !== undefined && formData.bowlingWhyUs.p1 !== '' ? formData.bowlingWhyUs.p1 : "With 15+ years of dedicated expertise in bowling equipment sourcing, refurbishment, and installation across India, Winera International provides end-to-end turnkey services — from 2D/3D lane layout planning to final pinsetter calibration."}
+                  value={formData.bowlingWhyUs?.p1 !== undefined && formData.bowlingWhyUs.p1 !== '' ? formData.bowlingWhyUs.p1 : "At Winera International, we bring over 15 years of industry experience as a trusted bowling alley manufacturer in India. We are the largest bowling alley supplier in the country, with more than 30 complete setups delivered successfully."}
                   onChange={(e) => handleFieldChange('bowlingWhyUs', 'p1', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -14905,7 +15151,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
                 <textarea
                   rows={4}
-                  value={formData.bowlingWhyUs?.p2 !== undefined && formData.bowlingWhyUs.p2 !== '' ? formData.bowlingWhyUs.p2 : "Our pan-India team of certified technicians ensures uninterrupted maintenance, genuine Brunswick replacement spare parts, lane oiling machine supplies, and 24/7 technical assistance so your bowling alley operates seamlessly for decades."}
+                  value={formData.bowlingWhyUs?.p2 !== undefined && formData.bowlingWhyUs.p2 !== '' ? formData.bowlingWhyUs.p2 : "Our equipment is sourced from the USA/China, ensuring proven quality. We provide affordable refurbished options along with installation, maintenance, and support across India with low failure rates and easy servicing, tailored to your budget and space."}
                   onChange={(e) => handleFieldChange('bowlingWhyUs', 'p2', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
@@ -14916,11 +15162,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Left Side Graphic Image (Blue Ball & Pins Graphic) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 500 × 500 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  {(formData.bowlingWhyUs?.mainImgUrl || formData.bowlingWhyUs?.graphicUrl) && (
-                    <div style={{ position: 'relative', width: '90px', height: '90px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
-                      <img src={formData.bowlingWhyUs.mainImgUrl || formData.bowlingWhyUs.graphicUrl} alt="Why Choose Us Graphic Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    </div>
-                  )}
+                  <img
+                    src={getAdminValidImageUrl(formData.bowlingWhyUs?.mainImgUrl || formData.bowlingWhyUs?.graphicUrl || formData.bowlingWhyUs?.imgUrl, bowlingBallPinsBlue)}
+                    alt="Why Choose Us Graphic Preview"
+                    style={{ width: '80px', height: '60px', borderRadius: '10px', border: '1.5px solid #38bdf8', objectFit: 'contain', background: '#ffffff', padding: '2px' }}
+                  />
                   <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <Upload style={{ width: '16px', height: '16px' }} /> Upload Blue Ball & Pins Image
                     <input
@@ -14932,7 +15178,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         setStatusMsg('Uploading graphic image...');
                         try {
                           const res = await uploadImageFile(file, admin.token);
-                          const updated = { ...(formData.bowlingWhyUs || {}), mainImgUrl: res.url, graphicUrl: res.url };
+                          const updated = { ...(formData.bowlingWhyUs || {}), mainImgUrl: res.url, graphicUrl: res.url, imgUrl: res.url };
                           setFormData(prev => ({ ...prev, bowlingWhyUs: updated }));
                           await persistSectionToDatabase('bowlingWhyUs', updated);
                           setStatusMsg('Graphic image uploaded successfully!');
@@ -14943,17 +15189,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
-                  {(formData.bowlingWhyUs?.mainImgUrl || formData.bowlingWhyUs?.graphicUrl) && (
+                  {(formData.bowlingWhyUs?.mainImgUrl || formData.bowlingWhyUs?.graphicUrl || formData.bowlingWhyUs?.imgUrl) && (
                     <button
                       type="button"
                       onClick={async () => {
-                        const updated = { ...(formData.bowlingWhyUs || {}), mainImgUrl: '', graphicUrl: '' };
+                        const updated = { ...(formData.bowlingWhyUs || {}), mainImgUrl: '', graphicUrl: '', imgUrl: '' };
                         setFormData(prev => ({ ...prev, bowlingWhyUs: updated }));
                         await persistSectionToDatabase('bowlingWhyUs', updated);
                       }}
                       style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                     >
-                      Remove Custom Image
+                      Reset Image
                     </button>
                   )}
                 </div>
@@ -14982,7 +15228,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> for Yellow, <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;cyan&gt;word&lt;/cyan&gt;</code> for Cyan.</p>
                 <input
                   type="text"
-                  value={formData.bowlingCta?.title !== undefined ? formData.bowlingCta.title : "*Need Any* <cyan>Consultations?</cyan>"}
+                  value={formData.bowlingCta?.title !== undefined ? formData.bowlingCta.title : "Need Any Consultations?"}
                   onChange={(e) => handleFieldChange('bowlingCta', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '700' }}
                 />
@@ -15026,11 +15272,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Background Banner Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                  {formData.bowlingCta?.bgUrl && (
-                    <div style={{ position: 'relative', width: '180px', height: '60px', borderRadius: '12px', overflow: 'hidden', border: '2px solid #cbd5e1' }}>
-                      <img src={formData.bowlingCta.bgUrl} alt="CTA Banner Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                  )}
+                  <img
+                    src={getAdminValidImageUrl(formData.bowlingCta?.bgUrl, trampolineParkCtaBg)}
+                    alt="CTA Banner Preview"
+                    style={{ width: '120px', height: '55px', borderRadius: '10px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                  />
                   <label style={{
                     background: '#00a8ff',
                     color: '#ffffff',
@@ -15075,7 +15321,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                       style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
                     >
-                      Remove Custom Banner
+                      Reset Image
                     </button>
                   )}
                 </div>
@@ -18319,7 +18565,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                     </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <img src={heroImg} alt="Hero Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <img src={getAdminValidImageUrl(heroImg, trampolineParkBg)} alt="Hero Preview" style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
                         type="text"
                         value={currentSec.bgUrl || ''}
@@ -18456,7 +18702,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Main Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                     </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <img src={getAdminValidImageUrl(mainImg, trampolineParkImg1)} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
                         type="text"
                         value={currentSec.mainImgUrl || ''}
@@ -18545,7 +18791,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Panda Mascot / Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 500 × 500 px</span>
                     </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <img src={mascotImg} alt="Mascot Preview" style={{ width: '60px', height: '60px', objectFit: 'contain', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <img src={getAdminValidImageUrl(mascotImg, trampolineParkImg2)} alt="Mascot Preview" style={{ width: '60px', height: '60px', objectFit: 'contain', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
                         type="text"
                         value={currentSec.imgUrl || ''}
@@ -18602,7 +18848,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>Specifications Table Rows</label>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>Specifications Table Rows ({specsList.length})</label>
                       <button
                         onClick={() => {
                           const updatedRows = [...specsList, { label: 'New Parameter', value: 'Details here' }];
@@ -18624,7 +18870,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               updatedRows[idx] = { ...updatedRows[idx], label: e.target.value };
                               setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), specsData: updatedRows } }));
                             }}
-                            placeholder="Label (e.g. Steel Frame)"
+                            placeholder="Label (e.g. Frame)"
                             style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                           />
                           <input
@@ -18686,7 +18932,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
 
-                  {/* WhatsApp Action Button Controls for Specs */}
                   {/* Action Button Controls for Specs */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '16px' }}>
                     <div>
@@ -18703,7 +18948,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <div style={{ display: 'flex', gap: '8px' }}>
                         <input
                           type="text"
-                          value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : (currentSec.brochureLink || defaultTrampolineIntro.buttonLink)}
+                          value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : (currentSec.brochureLink || defaultTrampolineSpecs.buttonLink)}
                           onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), buttonLink: e.target.value } }))}
                           placeholder="e.g. /uploads/trampoline_brochure.pdf"
                           style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
@@ -18753,10 +18998,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What is inside a Custom Trampoline Park (Zones Carousel)</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>
-                      Park Attractions & Zones ({zonesList.length}) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Card Image: 600 × 400 px (3:2)</span>
-                    </label>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan, &lt;br/&gt; for linebreaks)</label>
                     <input
                       type="text"
                       value={currentSec.title !== undefined ? currentSec.title : defaultTrampolineInside.title}
@@ -18766,19 +19009,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
-                    <input
-                      type="text"
+                    <textarea
+                      rows={2}
                       value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultTrampolineInside.subtitle}
                       onChange={(e) => setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), subtitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5 }}
                     />
                   </div>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>Park Attractions & Zones ({zonesList.length})</label>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>
+                        Park Attractions & Zones ({zonesList.length}) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Card Image: 600 × 400 px (3:2)</span>
+                      </label>
                       <button
                         onClick={() => {
-                          const updated = [...zonesList, { name: 'New Zone', title: 'Zone Title', desc: 'Zone description here.', img: trampolineParkImg1 }];
+                          const updated = [...zonesList, { id: `zone-${Date.now()}`, name: 'New Zone', title: 'New Zone', desc: 'Zone description here.', img: tampolineImg5 }];
                           setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
                         }}
                         style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
@@ -18790,7 +19035,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       {zonesList.map((z, idx) => (
                         <div key={idx} style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Zone #{idx + 1} Tab: {z.name}</span>
+                            <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Zone #{idx + 1} Tab: {z.name || z.title}</span>
                             <button
                               onClick={async () => {
                                 const updated = zonesList.filter((_, i) => i !== idx);
@@ -18812,10 +19057,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
                             }}
                             placeholder="Zone Name (e.g. Free Jump Zones)"
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%' }}
+                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', fontWeight: '700' }}
                           />
                           <textarea
-                            rows={2}
+                            rows={3}
                             value={z.desc}
                             onChange={(e) => {
                               const updated = [...zonesList];
@@ -18823,10 +19068,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
                             }}
                             placeholder="Description"
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
                           />
                           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            <img src={z.img} alt="" style={{ width: '50px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
+                            <img src={getAdminValidImageUrl(z.img, tampolineImg5)} alt="" style={{ width: '60px', height: '45px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                             <input
                               type="text"
                               value={z.img || ''}
@@ -18835,11 +19080,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 updated[idx] = { ...updated[idx], img: e.target.value };
                                 setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
                               }}
-                              placeholder="Image URL"
+                              placeholder="Image URL or Asset Path"
                               style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                             />
-                            <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}>
-                              Upload
+                            <label style={{ background: '#38bdf8', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                              <Upload style={{ width: '14px', height: '14px' }} /> Upload
                               <input
                                 type="file"
                                 accept="image/*"
@@ -18882,7 +19127,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>What Will Your Trampoline Park Earn (ROI Section)</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for yellow highlight)</label>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title (*word* for cyan highlight, &lt;br/&gt; for linebreak)</label>
                     <input
                       type="text"
                       value={currentSec.title !== undefined ? currentSec.title : defaultTrampolineRoi.title}
@@ -18981,7 +19226,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Right Image Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
                     </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <img src={getAdminValidImageUrl(mainImg, tampolineImage6)} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
                         type="text"
                         value={currentSec.imgUrl || ''}
@@ -19248,7 +19493,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                     </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <img src={bgImg} alt="CTA Preview" style={{ width: '100px', height: '55px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <img src={getAdminValidImageUrl(bgImg, trampolineParkCtaBg)} alt="CTA Preview" style={{ width: '100px', height: '55px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
                         type="text"
                         value={currentSec.bgUrl || ''}
@@ -21075,7 +21320,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           })()}
 
           {/* FALLBACK FOR OTHER UNCHECKED SECTIONS */}
-          {!activeSection.endsWith('Related') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo', 'header', 'footer'].includes(activeSection) && (
+          {!activeSection.endsWith('Related') && !activeSection.endsWith('Seo') && !activeSection.startsWith('bowling') && !activeSection.startsWith('amusement') && !activeSection.startsWith('bumper') && !activeSection.startsWith('vr') && !activeSection.startsWith('ar') && !activeSection.startsWith('softplay') && !activeSection.startsWith('home') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo', 'header', 'footer'].includes(activeSection) && (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               <FileText style={{ width: '48px', height: '48px', color: '#38bdf8', marginBottom: '14px' }} />
               <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>

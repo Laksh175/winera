@@ -46,14 +46,37 @@ const splitTextForMobilePreview = (text, charLimit = 130) => {
   };
 };
 
+// Helper function to format comparison points with proper line breaks matching figma
+const formatComparisonPointText = (rawText) => {
+  if (!rawText || typeof rawText !== 'string') return rawText || '';
+  let text = rawText.trim();
+  if (text.includes('<br') || text.includes('\n')) {
+    return text;
+  }
+  const breakMap = [
+    { match: /Conductive floor \+\s*ceiling grid/i, replacement: "Conductive floor +<br/>ceiling grid" },
+    { match: /None\s*[—–-]\s*continuous supply/i, replacement: "None — continuous<br/>supply" },
+    { match: /Permanent amusement parks,?\s*FECs?/i, replacement: "Permanent amusement<br/>parks, FECs" },
+    { match: /Higher\s*\(\s*floor infrastructure\s*\)/i, replacement: "Higher (floor<br/>infrastructure)" },
+    { match: /Flat surface only\s*[—–-]\s*no modification needed/i, replacement: "Flat surface only — no<br/>modification needed" },
+    { match: /Recharge between sessions/i, replacement: "Recharge between<br/>sessions" },
+    { match: /Malls,?\s*gaming zones,?\s*events?/i, replacement: "Malls, gaming zones,<br/>events" },
+    { match: /Can be moved to new venues/i, replacement: "Can be moved to new<br/>venues" },
+    { match: /Lower initial investment/i, replacement: "Lower initial<br/>investment" },
+    { match: /Battery replacement over time/i, replacement: "Battery replacement<br/>over time" },
+  ];
+  for (const { match, replacement } of breakMap) {
+    if (match.test(text)) {
+      return replacement;
+    }
+  }
+  return text;
+};
+
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
   let text = rawText || defaultText;
   if (!text) return null;
-
-  if (text.includes("QUICK COMPARISON")) {
-    text = text.replace(/QUICK COMPARISON/g, "Quick Comparison").replace(/TABLE/g, "Table");
-  }
 
   // Ensure spacing around <br/> tags so words never stick together if line breaks are hidden on mobile
   text = text.replace(/([^\s>])(<br\s*\/?>)/gi, '$1 $2').replace(/(<br\s*\/?>)([^\s<])/gi, '$1 $2');
@@ -699,28 +722,18 @@ export default function BumperCar({ siteData }) {
                 <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px 0' }}>
                   {siteData?.bumpercarOptions?.option1Title || "Electric Floor Bumper Cars"}
                 </h4>
-                {(() => {
-                  const fullText = siteData?.bumpercarOptions?.option1Desc || "Powered through a conductive floor grid and ceiling contact system. Delivers consistent, uninterrupted power throughout operating hours with zero battery management. Best suited for permanent, fixed installations in amusement parks, large FECs, and dedicated entertainment venues where the infrastructure investment is justified by high daily footfall.";
-                  const { preview, expanded } = splitTextForMobilePreview(fullText, 140);
-                  return (
-                    <div className="winera-bumpercar-option-desc" style={{
-                      fontFamily: "'Open Sans', sans-serif",
-                      fontWeight: '400',
-                      fontStyle: 'normal',
-                      fontSize: '17px',
-                      lineHeight: '28px',
-                      letterSpacing: '0px',
-                      color: 'rgb(55, 62, 65)',
-                      margin: 0
-                    }}>
-                      <MobileExpandableText
-                        preview={<span>{preview}</span>}
-                        expandedContent={expanded ? <span>{expanded}</span> : null}
-                        style={{ margin: 0 }}
-                      />
-                    </div>
-                  );
-                })()}
+                <p className="winera-bumpercar-option-desc" style={{
+                  fontFamily: "'Open Sans', sans-serif",
+                  fontWeight: '400',
+                  fontStyle: 'normal',
+                  fontSize: '17px',
+                  lineHeight: '28px',
+                  letterSpacing: '0px',
+                  color: 'rgb(55, 62, 65)',
+                  margin: 0
+                }}>
+                  {siteData?.bumpercarOptions?.option1Desc || "Powered through a conductive floor grid and ceiling contact system. Delivers consistent, uninterrupted power throughout operating hours with zero battery management. Best suited for permanent, fixed installations in amusement parks, large FECs, and dedicated entertainment venues where the infrastructure investment is justified by high daily footfall."}
+                </p>
               </div>
             </div>
 
@@ -751,28 +764,18 @@ export default function BumperCar({ siteData }) {
                 <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px 0' }}>
                   {siteData?.bumpercarOptions?.option2Title || "Battery-Operated Bumper Cars"}
                 </h4>
-                {(() => {
-                  const fullText = siteData?.bumpercarOptions?.option2Desc || "Self-contained rides running on rechargeable batteries — no floor grid or ceiling rig required. Ideal for malls, gaming zones, and temporary event setups where floor modification is not possible or where the operator wants the flexibility to relocate the attraction.";
-                  const { preview, expanded } = splitTextForMobilePreview(fullText, 110);
-                  return (
-                    <div className="winera-bumpercar-option-desc" style={{
-                      fontFamily: "'Open Sans', sans-serif",
-                      fontWeight: '400',
-                      fontStyle: 'normal',
-                      fontSize: '17px',
-                      lineHeight: '28px',
-                      letterSpacing: '0px',
-                      color: 'rgb(55, 62, 65)',
-                      margin: 0
-                    }}>
-                      <MobileExpandableText
-                        preview={<span>{preview}</span>}
-                        expandedContent={expanded ? <span>{expanded}</span> : null}
-                        style={{ margin: 0 }}
-                      />
-                    </div>
-                  );
-                })()}
+                <p className="winera-bumpercar-option-desc" style={{
+                  fontFamily: "'Open Sans', sans-serif",
+                  fontWeight: '400',
+                  fontStyle: 'normal',
+                  fontSize: '17px',
+                  lineHeight: '28px',
+                  letterSpacing: '0px',
+                  color: 'rgb(55, 62, 65)',
+                  margin: 0
+                }}>
+                  {siteData?.bumpercarOptions?.option2Desc || "Self-contained rides running on rechargeable batteries — no floor grid or ceiling rig required. Ideal for malls, gaming zones, and temporary event setups where floor modification is not possible or where the operator wants the flexibility to relocate the attraction."}
+                </p>
               </div>
             </div>
           </div>
@@ -801,7 +804,7 @@ export default function BumperCar({ siteData }) {
       <section className="winera-bumpercar-comparison-section" style={{ padding: '80px 4vw 20px', background: '#F5F5F9', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           {/* Section Heading */}
-          <div style={{ textAlign: 'center', marginBottom: '25px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center', marginBottom: '45px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -830,34 +833,42 @@ export default function BumperCar({ siteData }) {
                 {(siteData?.bumpercarComparison?.electricPoints || defaultElectricPoints).map((pt, idx) => {
                   const curveOffsets = [0, 45, 90, 75, 40, 0];
                   const offsetRight = curveOffsets[idx] || 0;
+                  const formattedText = formatComparisonPointText(pt?.text || '');
 
                   return (
                     <div key={idx} style={{
                       background: 'linear-gradient(135deg, #fef08a 0%, #fde047 50%, #facc15 100%)',
                       borderRadius: '24px',
-                      padding: '10px 12px 10px 16px',
+                      padding: '7px 10px 7px 16px',
                       boxShadow: 'none',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '12px',
+                      gap: '10px',
                       justifyContent: 'flex-end',
                       marginRight: `${offsetRight}px`,
-                      minHeight: '38px',
+                      minHeight: '36px',
+                      maxWidth: '245px',
+                      width: 'fit-content',
                       transition: 'all 0.3s ease'
                     }}>
-                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a', textAlign: 'left', lineHeight: 1.3, marginRight: '14px' }}>
-                        {pt.text && typeof pt.text === 'string'
-                          ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                            <React.Fragment key={lIdx}>
-                              {lIdx > 0 && <br />}
-                              {line}
-                            </React.Fragment>
-                          ))
-                          : pt.text}
+                      <span style={{
+                        fontSize: '12.5px',
+                        fontWeight: '600',
+                        color: '#0f172a',
+                        textAlign: 'left',
+                        lineHeight: 1.25,
+                        whiteSpace: 'normal'
+                      }}>
+                        {formattedText.split(/<br\s*\/?>|\n/i).map((line, lIdx) => (
+                          <React.Fragment key={lIdx}>
+                            {lIdx > 0 && <br />}
+                            {line}
+                          </React.Fragment>
+                        ))}
                       </span>
                       <span style={{
-                        width: '33px',
-                        height: '31px',
+                        width: '30px',
+                        height: '30px',
                         borderRadius: '50%',
                         background: '#ffffff',
                         color: '#0f172a',
@@ -894,7 +905,7 @@ export default function BumperCar({ siteData }) {
                 zIndex: 2,
                 position: 'relative'
               }}>
-                <span style={{ fontSize: '14px', fontWeight: '600', color: '#ca8a04', lineHeight: 1.25, letterSpacing: '0.3px' }}>
+                <span style={{ fontSize: '13px', fontWeight: '700', color: '#ca8a04', lineHeight: 1.25, letterSpacing: '0.3px' }}>
                   BATTERY-<br />OPERATED
                 </span>
               </div>
@@ -916,21 +927,29 @@ export default function BumperCar({ siteData }) {
 
             {/* CENTER COLUMN: Features Pill Column (Gradient Pill Card with Pill Ends) */}
             <div style={{
-              width: '270px',
-              minHeight: '440px',
+              width: '260px',
               borderRadius: '24px',
-              background: 'linear-gradient(180deg, #dcfce7 0%, #a7f3d0 25%, #7dd3fc 65%, #38bdf8 100%)',
-              padding: '34px 16px',
+              background: 'linear-gradient(rgb(220, 252, 231) 0%, rgb(167, 243, 208) 25%, rgb(125, 211, 252) 65%, rgb(56, 189, 248) 100%)',
+              padding: '50px 16px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
+              gap: '10px',
               textAlign: 'center',
               boxShadow: 'none',
+              paddingBottom: '50px',
               zIndex: 4,
               flexShrink: 0
             }}>
               {(siteData?.bumpercarComparison?.features || defaultComparisonFeatures).map((fText, idx) => (
-                <div key={idx} style={{ fontSize: '17.5px', fontWeight: '500', color: 'rgba(50, 52, 50, 1)' }}>
+                <div key={idx} style={{
+                  fontSize: '17px',
+                  fontWeight: '500',
+                  color: 'rgba(50, 52, 50, 1)',
+                  minHeight: '36px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
                   {fText}
                 </div>
               ))}
@@ -956,7 +975,7 @@ export default function BumperCar({ siteData }) {
                 zIndex: 2,
                 position: 'relative'
               }}>
-                <span style={{ fontSize: '14px', fontWeight: '600', color: '#0284c7', lineHeight: 1.25, letterSpacing: '0.3px' }}>
+                <span style={{ fontSize: '13px', fontWeight: '700', color: '#0284c7', lineHeight: 1.25, letterSpacing: '0.3px' }}>
                   BATTERY-<br />OPERATED
                 </span>
               </div>
@@ -980,23 +999,26 @@ export default function BumperCar({ siteData }) {
                 {(siteData?.bumpercarComparison?.batteryPoints || defaultBatteryPoints).map((pt, idx) => {
                   const curveOffsets = [0, 45, 90, 75, 40, 0];
                   const offsetLeft = curveOffsets[idx] || 0;
+                  const formattedText = formatComparisonPointText(pt?.text || '');
 
                   return (
                     <div key={idx} style={{
                       background: 'linear-gradient(135deg, #7dd3fc 0%, #38bdf8 50%, #0284c7 100%)',
                       borderRadius: '24px',
-                      padding: '10px 16px 10px 12px',
+                      padding: '7px 16px 7px 10px',
                       boxShadow: 'none',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '12px',
+                      gap: '10px',
                       marginLeft: `${offsetLeft}px`,
-                      minHeight: '38px',
+                      minHeight: '36px',
+                      maxWidth: '245px',
+                      width: 'fit-content',
                       transition: 'all 0.3s ease'
                     }}>
                       <span style={{
-                        width: '33px',
-                        height: '31px',
+                        width: '30px',
+                        height: '30px',
                         borderRadius: '50%',
                         background: '#ffffff',
                         color: '#0284c7',
@@ -1010,15 +1032,20 @@ export default function BumperCar({ siteData }) {
                       }}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#ffffff', textAlign: 'left', lineHeight: 1.3, marginLeft: '14px' }}>
-                        {pt.text && typeof pt.text === 'string'
-                          ? pt.text.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                            <React.Fragment key={lIdx}>
-                              {lIdx > 0 && <br />}
-                              {line}
-                            </React.Fragment>
-                          ))
-                          : pt.text}
+                      <span style={{
+                        fontSize: '12.5px',
+                        fontWeight: '600',
+                        color: '#ffffff',
+                        textAlign: 'left',
+                        lineHeight: 1.25,
+                        whiteSpace: 'normal'
+                      }}>
+                        {formattedText.split(/<br\s*\/?>|\n/i).map((line, lIdx) => (
+                          <React.Fragment key={lIdx}>
+                            {lIdx > 0 && <br />}
+                            {line}
+                          </React.Fragment>
+                        ))}
                       </span>
                     </div>
                   );
