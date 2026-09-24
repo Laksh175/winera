@@ -1240,7 +1240,7 @@ export default function BowlingAlley({ siteData }) {
 
       {/* 9. RELATED PRODUCTS CAROUSEL SECTION */}
       <RelatedProductsSection
-        sectionData={siteData?.bowlingRelated}
+        sectionData={siteData?.bowlingRelated || siteData?.arcadeRelated}
         accentColor="#38bdf8"
         accentWidth="370px"
         accentMaxWidth="95%"

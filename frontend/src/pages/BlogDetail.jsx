@@ -338,7 +338,7 @@ export default function BlogDetail({ siteData }) {
   const headings = extractHeadings(rawArticleContent);
 
   return (
-    <div style={{ background: '#F5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflowX: 'hidden' }}>
+    <div style={{ background: '#F5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflowX: 'clip' }}>
       {/* 1. HEADER */}
       <Header headerData={header} />
 
@@ -380,6 +380,65 @@ export default function BlogDetail({ siteData }) {
       <section style={{ padding: '45px 3vw 70px', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1360px', margin: '0 auto' }}>
           
+          {/* ── TOP BANNER: TITLE & META BAR ── */}
+          <div className="winera-blog-top-header" style={{ marginBottom: '24px', textAlign: 'left' }}>
+            {/* Main Article Title & Subtitle */}
+            <h1 className="winera-blog-article-title" style={{
+              fontSize: '38px',
+              fontWeight: '600',
+              color: '#0f172a',
+              lineHeight: 1.25,
+              margin: '0 0 16px',
+              letterSpacing: '-0.5px'
+            }}>
+              {getFullTitle(post)}
+            </h1>
+
+            {/* Article Meta Bar */}
+            <div className="winera-blog-article-meta" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+              fontSize: '13px',
+              color: '#64748b',
+              fontWeight: '600',
+              marginBottom: '0',
+              paddingBottom: '16px',
+              borderBottom: '1.5px solid #cbd5e1',
+              flexWrap: 'nowrap',
+              whiteSpace: 'nowrap'
+            }}>
+              <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>📅 {post.date || 'FEB 19, 2026'}</span>
+              <span style={{ flexShrink: 0 }}>•</span>
+              <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>⏱️ {post.readTime || '5 min read'}</span>
+              <span style={{ flexShrink: 0 }}>•</span>
+              <span style={{ color: '#0284c7', fontWeight: '700', whiteSpace: 'nowrap', flexShrink: 0 }}>✍️ {post.author || post.founder || 'Divyang Mandani'}</span>
+            </div>
+          </div>
+
+          {/* ── TOP BIG FEATURED IMAGE BANNER ── */}
+          <div className="winera-blog-top-featured-img" style={{
+            width: '100%',
+            borderRadius: '24px',
+            overflow: 'hidden',
+            boxShadow: '0 12px 35px rgba(0,0,0,0.08)',
+            marginBottom: '42px',
+            background: '#e0f2fe'
+          }}>
+            <WineraImage
+              src={postImg}
+              alt={post.title}
+              style={{ width: '100%', display: 'block' }}
+              imgStyle={{
+                width: '100%',
+                height: 'auto',
+                maxHeight: '520px',
+                objectFit: 'cover',
+                display: 'block'
+              }}
+            />
+          </div>
+
           <div className="winera-blog-3col-grid" style={{
             display: 'grid',
             gridTemplateColumns: '260px minmax(0, 1fr) 310px',
@@ -464,70 +523,12 @@ export default function BlogDetail({ siteData }) {
               </div>
             </div>
 
-            {/* ── MIDDLE COLUMN: TITLE, META, FEATURED IMAGE & ARTICLE CONTENT ── */}
+            {/* ── MIDDLE COLUMN: ARTICLE CONTENT ── */}
             <div className="winera-blog-article-main-col" style={{ width: '100%', textAlign: 'left' }}>
-              
-              {/* Main Article Title & Subtitle */}
-              <h1 className="winera-blog-article-title" style={{
-                fontSize: '38px',
-                fontWeight: '600',
-                color: '#0f172a',
-                lineHeight: 1.25,
-                margin: '0 0 16px',
-                letterSpacing: '-0.5px'
-              }}>
-                {getFullTitle(post)}
-              </h1>
-
-              {/* Article Meta Bar */}
-              <div className="winera-blog-article-meta" style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '14px',
-                fontSize: '13px',
-                color: '#64748b',
-                fontWeight: '600',
-                marginBottom: '26px',
-                paddingBottom: '16px',
-                borderBottom: '1.5px solid #cbd5e1',
-                flexWrap: 'nowrap',
-                whiteSpace: 'nowrap'
-              }}>
-                <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>📅 {post.date || 'FEB 19, 2026'}</span>
-                <span style={{ flexShrink: 0 }}>•</span>
-                <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>⏱️ {post.readTime || '5 min read'}</span>
-                <span style={{ flexShrink: 0 }}>•</span>
-                <span style={{ color: '#0284c7', fontWeight: '700', whiteSpace: 'nowrap', flexShrink: 0 }}>✍️ {post.author || post.founder || 'Divyang Mandani'}</span>
-              </div>
-
-              {/* Featured Image Centered in Middle Column */}
-              <div style={{
-                width: '100%',
-                borderRadius: '20px',
-                overflow: 'hidden',
-                boxShadow: '0 12px 30px rgba(0,0,0,0.08)',
-                marginBottom: '35px',
-                background: '#e0f2fe'
-              }}>
-                <WineraImage
-                  src={postImg}
-                  alt={post.title}
-                  style={{ width: '100%', display: 'block' }}
-                  imgStyle={{
-                    width: '100%',
-                    height: 'auto',
-                    maxHeight: '440px',
-                    objectFit: 'cover',
-                    display: 'block'
-                  }}
-                />
-              </div>
-
               {/* Formatted Article Text Stream */}
               <div style={{ marginBottom: '40px' }}>
                 {renderFormattedText(rawArticleContent)}
               </div>
-
             </div>
 
             {/* ── RIGHT COLUMN: STICKY REGISTER FORM POSTER CARD ─────────────── */}
@@ -780,11 +781,17 @@ export default function BlogDetail({ siteData }) {
         .winera-blog-article-main-col li {
           text-align: left !important;
         }
-        .winera-blog-article-main-col h2,
-        .winera-blog-article-main-col h3,
-        .winera-blog-article-main-col h4,
-        .winera-blog-article-main-col h5 {
-          font-weight: 600 !important;
+        .winera-blog-left-toc-sticky {
+          position: sticky !important;
+          top: 100px !important;
+          align-self: flex-start !important;
+          z-index: 10 !important;
+        }
+        .winera-blog-right-sidebar-sticky {
+          position: sticky !important;
+          top: 100px !important;
+          align-self: flex-start !important;
+          z-index: 10 !important;
         }
         @media (max-width: 1080px) {
           .winera-blog-3col-grid {
@@ -799,6 +806,13 @@ export default function BlogDetail({ siteData }) {
           }
         }
         @media (max-width: 768px) {
+          .winera-blog-top-header {
+            margin-bottom: 18px !important;
+          }
+          .winera-blog-top-featured-img {
+            border-radius: 16px !important;
+            margin-bottom: 24px !important;
+          }
           .winera-blog-3col-grid {
             grid-template-columns: 1fr !important;
             gap: 24px !important;

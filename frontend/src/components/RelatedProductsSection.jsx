@@ -10,6 +10,21 @@ import projSoft1 from '../assets/proj-softplay1.webp';
 
 import WineraImage from './WineraImage';
 
+const resolveImgUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string') return fallback || '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads/') || url.startsWith('uploads/')) {
+    const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+    const apiUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '').replace(/\/$/, '') : '';
+    if (apiUrl) return `${apiUrl}${cleanUrl}`;
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${cleanUrl}`;
+  }
+  return url || fallback || '';
+};
+
 export default function RelatedProductsSection({
   sectionData,
   accentColor = '#38bdf8',
@@ -29,6 +44,7 @@ export default function RelatedProductsSection({
     { title: "Soft Play", link: "/products/soft-play", img: projSoft1 },
     { title: "Bumper Cars", link: "/products/bumper-cars", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
     { title: "Hypergrid", link: "/products/hypergrid", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
+    { title: "Laser Tag", link: "/products/laser-tag", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
     { title: "Amusement Park", link: "/products/amusement-park", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" },
     { title: "Lights", link: "/products/lights", img: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80" },
     { title: "Sculpture", link: "/products/sculpture", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80" },
@@ -36,24 +52,32 @@ export default function RelatedProductsSection({
     { title: "Other Furniture", link: "/products/other-furniture", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80" }
   ];
 
-  const rawItems = ((Array.isArray(sectionData?.items) && sectionData.items.length > 0)
+  const rawItems = (Array.isArray(sectionData?.items) && sectionData.items.length > 0)
     ? sectionData.items
-    : defaultCategories).filter(item => !(item.title || '').toLowerCase().includes('laser') && !(item.link || '').toLowerCase().includes('laser'));
+    : defaultCategories;
 
   const baseCategories = rawItems.map((item, idx) => ({
     title: item.title,
-    link: item.link || `/products/${item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-    img: item.img || defaultCategories[idx % defaultCategories.length].img
+    link: item.link || `/products/${(item.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+    img: resolveImgUrl(item.img || item.image || item.imgUrl, defaultCategories[idx % defaultCategories.length]?.img)
   }));
 
   const N = baseCategories.length;
   // Repeat baseCategories enough times so track is always full
-  const repeatCount = N < 4 ? Math.ceil(12 / (N || 1)) : 3;
+  const repeatCount = N === 0 ? 0 : (N < 4 ? Math.ceil(12 / (N || 1)) : 3);
   const relatedCategories = Array(repeatCount).fill(baseCategories).flat();
 
   const [relatedIndex, setRelatedIndex] = useState(N > 0 ? N : 0);
   const [isPaused, setIsPaused] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(true);
+
+  // Sync index when items count changes dynamically from API
+  useEffect(() => {
+    if (N > 0) {
+      setRelatedIndex(N);
+      setIsTransitioning(false);
+    }
+  }, [N]);
 
   // Seamless loop reset when sliding past 2*N or before N
   useEffect(() => {
@@ -94,6 +118,8 @@ export default function RelatedProductsSection({
 
     return () => clearInterval(interval);
   }, [isPaused, N]);
+
+  if (N === 0) return null;
 
   return (
     <section

@@ -33,7 +33,7 @@ body {
   background-color: var(--bg-main);
   color: var(--text-dark);
   letter-spacing: 0px;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -739,7 +739,7 @@ html {
 
   html,
   body {
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
   }
 
   section:not(.winera-about-stats-section):not(.winera-marquee-fullwidth):not(.winera-projects-marquee-section):not(.winera-clients-section):not(.winera-channel-partners-section):not(#projects):not(#clients):not(#partners) {
@@ -11336,7 +11336,7 @@ button[style*="background:transparent"]:hover,
   /* Global Body & Container Protection */
   html,
   body {
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
     width: 100% !important;
   }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import RelatedProductsSection from '../components/RelatedProductsSection';
 import arHeroBg from '../assets/ar-hero-bg.webp';
 
 export default function LaserTag({ siteData }) {
@@ -68,7 +69,13 @@ export default function LaserTag({ siteData }) {
         </div>
       </section>
 
-      {/* 3. FOOTER SECTION */}
+      {/* 3. RELATED PRODUCTS CAROUSEL SECTION */}
+      <RelatedProductsSection
+        sectionData={siteData?.lasertagRelated || siteData?.arcadeRelated}
+        accentColor="#38bdf8"
+      />
+
+      {/* 4. FOOTER SECTION */}
       <div style={{ marginTop: 'auto' }}>
         <Footer footerData={footer} />
       </div>
