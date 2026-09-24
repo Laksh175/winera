@@ -134,11 +134,12 @@ import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.webp';
 import auroraAirHockeyImg from '../assets/aurora-air-hockey.webp';
 import ochaAirHockeyImg from '../assets/ocha-air-hockey.webp';
 import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.webp';
+import arcadegamesImg from '../assets/arcadegames-img.webp';
 import maskGroupImg from '../assets/Mask-group.webp';
 import maskGroup01Img from '../assets/Mask-group-01.webp';
 
 const getValidImageUrl = (url, fallback) => {
-  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+  if (!url || typeof url !== 'string' || url.trim() === '') {
     return fallback;
   }
   return url;
@@ -150,16 +151,27 @@ import founderUnnit from '../assets/founder-unnit.webp';
 import welcomeWineraImg from '../assets/welcome-to-winera.webp';
 import aboutHeroBg from '../assets/about-us-banner.webp';
 
+const arcadeProductImageMap = {
+  "Parkour Motor II (DX)": arcadegamesImg,
+  "MANX TT 32\"": bikeArcade,
+  "Super Air Hockey": superAirHockeyImg,
+  "Puck Carnival Air Hockey": puckCarnivalAirHockeyImg,
+  "Dazzling Air Hockey - Multi Puck": dazzlingAirHockeyImg,
+  "Aurora Air Hockey": auroraAirHockeyImg,
+  "Ocha Air Hockey": ochaAirHockeyImg,
+  "Aero X Air Hockey": aeroXAirHockeyImg
+};
+
 const getAdminValidImageUrl = (url, fallback = bikeArcade) => {
-  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
-    return fallback;
-  }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+  if (!url) return fallback;
+  if (typeof url === 'object' && url.default) return url.default;
+  if (typeof url !== 'string' || url.trim() === '') return fallback;
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:') || url.startsWith('/') || url.startsWith('./')) {
+    if (url.startsWith('/uploads')) {
+      const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+      return `http://${hostname}:5001${url}`;
+    }
     return url;
-  }
-  if (url.startsWith('/uploads')) {
-    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${url}`;
   }
   return fallback;
 };
@@ -2116,11 +2128,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         width: item.width || knownDefault.width || '2140 mm',
         depth: item.depth || knownDefault.depth || '2310 mm',
         height: item.height || knownDefault.height || '2490 mm',
-        img: (item.img && !item.img.includes('/src/assets/')) ? item.img : (item.imageUrl && !item.imageUrl.includes('/src/assets/') ? item.imageUrl : ''),
-        gallery1: (item.gallery1 && !item.gallery1.includes('/src/assets/')) ? item.gallery1 : '',
-        gallery2: (item.gallery2 && !item.gallery2.includes('/src/assets/')) ? item.gallery2 : '',
-        gallery3: (item.gallery3 && !item.gallery3.includes('/src/assets/')) ? item.gallery3 : '',
-        gallery4: (item.gallery4 && !item.gallery4.includes('/src/assets/')) ? item.gallery4 : '',
+        img: item.img || item.imageUrl || arcadeProductImageMap[cardTitle] || arcadeProductImageMap[item.name] || arcadeProductImageMap[item.title] || '',
+        gallery1: item.gallery1 || '',
+        gallery2: item.gallery2 || '',
+        gallery3: item.gallery3 || '',
+        gallery4: item.gallery4 || '',
         videoUrl: item.videoUrl || knownDefault.videoUrl || 'https://youtube.com',
         quoteUrl: item.quoteUrl || knownDefault.quoteUrl || 'https://wa.me/919428989488',
         feature1Title: item.feature1Title || '12+ Years of Expertise',
@@ -2133,14 +2145,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         feature4Desc: item.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.'
       };
 
-      const cleanedCurrentItem = { ...item };
-      ['img', 'imageUrl', 'gallery1', 'gallery2', 'gallery3', 'gallery4'].forEach(k => {
-        if (cleanedCurrentItem[k] && typeof cleanedCurrentItem[k] === 'string' && cleanedCurrentItem[k].includes('/src/assets/')) {
-          delete cleanedCurrentItem[k];
-        }
-      });
-
-      setModalItemData({ ...defaultArcadeItem, ...cleanedCurrentItem });
+      setModalItemData({ ...defaultArcadeItem, ...item });
       setIsModalOpen(true);
       return;
     }
@@ -2280,13 +2285,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         galleryImages: Array.isArray(currentItem.galleryImages) && currentItem.galleryImages.length > 0
           ? currentItem.galleryImages
           : [
-              currentItem.galleryImage1 || projectBlock1,
-              currentItem.galleryImage2 || projectBlock2,
-              currentItem.galleryImage3 || projectBlock3,
-              currentItem.galleryImage4 || projectBlock1,
-              currentItem.galleryImage5 || projectBlock2,
-              currentItem.galleryImage6 || projectBlock3
-            ].filter(Boolean),
+            currentItem.galleryImage1 || projectBlock1,
+            currentItem.galleryImage2 || projectBlock2,
+            currentItem.galleryImage3 || projectBlock3,
+            currentItem.galleryImage4 || projectBlock1,
+            currentItem.galleryImage5 || projectBlock2,
+            currentItem.galleryImage6 || projectBlock3
+          ].filter(Boolean),
         galleryImage1: (currentItem.galleryImages && currentItem.galleryImages[0]) || currentItem.galleryImage1 || projectBlock1,
         galleryImage2: (currentItem.galleryImages && currentItem.galleryImages[1]) || currentItem.galleryImage2 || projectBlock2,
         galleryImage3: (currentItem.galleryImages && currentItem.galleryImages[2]) || currentItem.galleryImage3 || projectBlock3,
@@ -3028,8 +3033,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               borderRadius: '16px',
               fontSize: '14px',
               fontWeight: '800',
-              boxShadow: statusMsg.toLowerCase().includes('error') 
-                ? '0 12px 30px rgba(239, 68, 68, 0.4)' 
+              boxShadow: statusMsg.toLowerCase().includes('error')
+                ? '0 12px 30px rgba(239, 68, 68, 0.4)'
                 : '0 12px 30px rgba(16, 185, 129, 0.4)',
               display: 'flex',
               alignItems: 'center',
@@ -4299,9 +4304,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
             const homeStatsList = (Array.isArray(formData.stats) && formData.stats.length > 0)
               ? formData.stats.map(item => ({
-                  number: item.number || item.num || '',
-                  label: item.label || item.title || ''
-                }))
+                number: item.number || item.num || '',
+                label: item.label || item.title || ''
+              }))
               : defaultHomeStats;
 
             return (
@@ -4967,28 +4972,28 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     {((Array.isArray(formData.testimonials) && formData.testimonials.length > 0)
                       ? formData.testimonials
                       : [
-                          {
-                            gameZoneName: "Rebounce Game Zone",
-                            reviewerRole: "Surat",
-                            starRating: 5,
-                            youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                            quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
-                          },
-                          {
-                            gameZoneName: "Fun Houze",
-                            reviewerRole: "Surat",
-                            starRating: 5,
-                            youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                            quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
-                          },
-                          {
-                            gameZoneName: "Hulaboo Game Zone",
-                            reviewerRole: "Surat",
-                            starRating: 5,
-                            youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                            quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
-                          }
-                        ]
+                        {
+                          gameZoneName: "Rebounce Game Zone",
+                          reviewerRole: "Surat",
+                          starRating: 5,
+                          youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                          quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
+                        },
+                        {
+                          gameZoneName: "Fun Houze",
+                          reviewerRole: "Surat",
+                          starRating: 5,
+                          youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                          quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
+                        },
+                        {
+                          gameZoneName: "Hulaboo Game Zone",
+                          reviewerRole: "Surat",
+                          starRating: 5,
+                          youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                          quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
+                        }
+                      ]
                     ).map((item, idx) => (
                       <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
                         <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
@@ -5606,7 +5611,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
             return (
               <div className="winera-admin-card" style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                
+
                 {/* Header & Add Project Button */}
                 <div className="winera-admin-flex-header" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
                   <div>
@@ -5721,7 +5726,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     {filteredCards.map((card, idx) => {
                       const realIdx = cardsList.findIndex(c => (c.slug && card.slug && c.slug === card.slug) || (c.title && card.title && c.title === card.title) || c === card);
                       const displayTitle = card.name || card.title || "Arcade Machine";
-                      const displayImg = getAdminValidImageUrl(card.imageUrl || card.img, bikeArcade);
+                      const displayImg = getAdminValidImageUrl(
+                        card.imageUrl || card.img || arcadeProductImageMap[displayTitle] || arcadeProductImageMap[card.title] || arcadeProductImageMap[card.name],
+                        arcadeProductImageMap[displayTitle] || bikeArcade
+                      );
 
                       return (
                         <div
@@ -5983,7 +5991,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.arcadeCommercial.ctaLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to talk to an ROI Expert for setup & commercial guidance. Please share details. [Ref: Arcade Game Page]";
                   })()}
@@ -6812,7 +6820,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.softplayIntro.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to get custom design & quote for Soft Play equipment. Please share details. [Ref: Soft Play Page]";
                   })()}
@@ -7577,7 +7585,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.softplayRoi.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to talk to an ROI Expert for Soft Play setup & commercial ROI calculation. Please share details. [Ref: Soft Play Page]";
                   })()}
@@ -8161,7 +8169,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.amusementIntro.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to get a quote and details for Amusement Park Rides. Please share details. [Ref: Amusement Park Page]";
                   })()}
@@ -8605,7 +8613,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.amusementRoi.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to talk to an ROI Expert for Amusement Park setup & commercial ROI calculation. Please share details. [Ref: Amusement Park Page]";
                   })()}
@@ -8693,7 +8701,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-          
+
           {/* AMUSEMENT PARK FAQS MANAGEMENT FORM */}
           {activeSection === 'amusementFaqs' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -8862,7 +8870,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-          
+
           {/* AMUSEMENT PARK CTA BANNER FORM */}
           {activeSection === 'amusementCta' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -9109,7 +9117,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           try {
                             const match = currentSec.buttonLink.match(/text=([^&]+)/);
                             if (match && match[1]) return decodeURIComponent(match[1]);
-                          } catch (err) {}
+                          } catch (err) { }
                         }
                         return "Hello Winera International! I want to get a quote and details for Hypergrid LED Floor Game setup. Please share details. [Ref: Hypergrid Page]";
                       })()}
@@ -9604,7 +9612,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           try {
                             const match = currentSec.buttonLink.match(/text=([^&]+)/);
                             if (match && match[1]) return decodeURIComponent(match[1]);
-                          } catch (err) {}
+                          } catch (err) { }
                         }
                         return "Hello Winera International! I want to talk to an ROI Expert for Hypergrid LED Floor Game setup & commercial ROI calculation. Please share details. [Ref: Hypergrid Page]";
                       })()}
@@ -10126,7 +10134,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.bumpercarIntro.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to get a quote and details for Bumper Car setup. Please share details. [Ref: Bumper Car Page]";
                   })()}
@@ -10260,7 +10268,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             return (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>The Perfect Blend Of Thrill And Safety Carousel Cards</h3>
-                
+
                 <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                     <label style={{ fontWeight: '800', fontSize: '14px', color: '#0369a1' }}>Carousel Cards List ({currentCards.length})</label>
@@ -10955,7 +10963,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.bumpercarInvestment.btnLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to talk to an ROI Expert for Bumper Car setup & commercial ROI calculation. Please share details. [Ref: Bumper Car Page]";
                   })()}
@@ -11519,468 +11527,468 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-                    {/* CATEGORIES & GAMES CATALOG FORM */}
+          {/* CATEGORIES & GAMES CATALOG FORM */}
           {activeSection === 'arCategoriesData' && (() => {
             const defaultCategoriesData = {
-  "Sports Simulators": [
-    {
-      "name": "Soccer Simulator",
-      "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Penalty Shootout",
-      "img": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Tennis Simulator",
-      "img": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Basketball",
-      "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Archery Simulator",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Shooting Simulator",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cycling Simulator",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Skiing Simulator",
-      "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Ski Simulator",
-      "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Boxing Simulator",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Running Simulator",
-      "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Rowing Simulator",
-      "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Curling Simulator",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Crazy Slingshot",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Super Rolling Ball",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Dynamic Styling",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Motion Sensing Game",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Golf Simulator",
-      "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Golf Plus",
-      "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Smart Soccer Wall",
-      "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Interactive Games": [
-    {
-      "name": "SAIO All-in-One 2.0",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "SAIO (LED Version)",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Omniball LED Version",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Omniball",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Combat 6",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber Dunk Reality",
-      "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Running Wall",
-      "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Curling",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber AR Boxing",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bikes — Luxe",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Rock Climbing",
-      "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Billiard",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Dynamic Kayaking",
-      "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Billiards",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Whac-a-Mole on Wall",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wonder Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Slide",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Magic Swing",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Music Wall",
-      "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Legend Archery",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Roll Action",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Particle Man",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Super Grid",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Laser Maze",
-      "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Motion Master Console",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "AR & VR Experiences": [
-    {
-      "name": "AR Bumper Car",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Garden",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bikes — Luxe",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Laser Shooting",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "10M High Range High Accuracy Laser Shooting",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Hunting Storm Realistic",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wireless Laser Tag",
-      "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "7D Imax Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Dynamic Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Room",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Restaurant",
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AI Holographic Bot",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Fog Screen Machine",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Radar",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Interactive Floor & Walls": [
-    {
-      "name": "Magic Floor — Integrated",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Floor — Outdoor",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Floor — Indoor",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Active Game LED Floor",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Digital Display Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wonderful World",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magical Waterfall",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wonder Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Projection Lamp",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Projection Mapping Software",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Electronic Whiteboard",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Kids & Family Attractions": [
-    {
-      "name": "Interactive Trampoline",
-      "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Sandbox",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Egg Fort",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Slide",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Garden",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Gesture Interactive Book",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Draw2Life (Scan)",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Draw2Life (Screen)",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "GymBuster",
-      "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Fitness & Education": [
-    {
-      "name": "Gym Education Interactive Training System",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bikes — Luxe",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Rock Climbing",
-      "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber AR Boxing",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Combat 6",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Roll Action",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Motion Master Console",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Bowling & Ball Games": [
-    {
-      "name": "Top Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Mini Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Billiard",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Billiards",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Super Rolling Ball",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Themed & Immersive Zones": [
-    {
-      "name": "Immersive Room",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Restaurant",
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Dynamic Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "7D Imax Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Themed Sports Bar",
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Whole Site Planning",
-      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Technology & Infrastructure": [
-    {
-      "name": "Projection Mapping Software",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AI Holographic Bot",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Electronic Whiteboard",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Fog Screen Machine",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Projection Lamp",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Radar",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Digital Display Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Whole Site Planning",
-      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
-    }
-  ]
-};
+              "Sports Simulators": [
+                {
+                  "name": "Soccer Simulator",
+                  "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Penalty Shootout",
+                  "img": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Tennis Simulator",
+                  "img": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Basketball",
+                  "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Archery Simulator",
+                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Shooting Simulator",
+                  "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Cycling Simulator",
+                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Skiing Simulator",
+                  "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Ski Simulator",
+                  "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Boxing Simulator",
+                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Running Simulator",
+                  "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Rowing Simulator",
+                  "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Curling Simulator",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Crazy Slingshot",
+                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Super Rolling Ball",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Dynamic Styling",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Motion Sensing Game",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Golf Simulator",
+                  "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Golf Plus",
+                  "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Smart Soccer Wall",
+                  "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
+                }
+              ],
+              "Interactive Games": [
+                {
+                  "name": "SAIO All-in-One 2.0",
+                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "SAIO (LED Version)",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Omniball LED Version",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Omniball",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Combat 6",
+                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Cyber Dunk Reality",
+                  "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Running Wall",
+                  "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Curling",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Cyber AR Boxing",
+                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AR Spin Bike",
+                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AR Spin Bikes — Luxe",
+                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Rock Climbing",
+                  "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Magic Billiard",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Dynamic Kayaking",
+                  "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Billiards",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Whac-a-Mole on Wall",
+                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Wonder Wall",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Slide",
+                  "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AR Magic Swing",
+                  "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Music Wall",
+                  "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Legend Archery",
+                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Roll Action",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Particle Man",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Super Grid",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Laser Maze",
+                  "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Motion Master Console",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                }
+              ],
+              "AR & VR Experiences": [
+                {
+                  "name": "AR Bumper Car",
+                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AR Garden",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AR Spin Bike",
+                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AR Spin Bikes — Luxe",
+                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Immersive Laser Shooting",
+                  "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "10M High Range High Accuracy Laser Shooting",
+                  "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Hunting Storm Realistic",
+                  "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Wireless Laser Tag",
+                  "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "7D Imax Cinema",
+                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Immersive Dynamic Cinema",
+                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Immersive Room",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Immersive Restaurant",
+                  "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AI Holographic Bot",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Fog Screen Machine",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Radar",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                }
+              ],
+              "Interactive Floor & Walls": [
+                {
+                  "name": "Magic Floor — Integrated",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Magic Floor — Outdoor",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Magic Floor — Indoor",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Active Game LED Floor",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Digital Display Wall",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Wonderful World",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Magical Waterfall",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Wonder Wall",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Projection Lamp",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Projection Mapping Software",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Electronic Whiteboard",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                }
+              ],
+              "Kids & Family Attractions": [
+                {
+                  "name": "Interactive Trampoline",
+                  "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Sandbox",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Magic Egg Fort",
+                  "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Slide",
+                  "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AR Garden",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Gesture Interactive Book",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Draw2Life (Scan)",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Draw2Life (Screen)",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "GymBuster",
+                  "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
+                }
+              ],
+              "Fitness & Education": [
+                {
+                  "name": "Gym Education Interactive Training System",
+                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AR Spin Bike",
+                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AR Spin Bikes — Luxe",
+                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Rock Climbing",
+                  "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Cyber AR Boxing",
+                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Combat 6",
+                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Roll Action",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Motion Master Console",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                }
+              ],
+              "Bowling & Ball Games": [
+                {
+                  "name": "Top Bowling",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Bowling",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Mini Bowling",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Bowling",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Magic Billiard",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Interactive Billiards",
+                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Super Rolling Ball",
+                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+                }
+              ],
+              "Themed & Immersive Zones": [
+                {
+                  "name": "Immersive Room",
+                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Immersive Restaurant",
+                  "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Immersive Dynamic Cinema",
+                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "7D Imax Cinema",
+                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Themed Sports Bar",
+                  "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Whole Site Planning",
+                  "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
+                }
+              ],
+              "Technology & Infrastructure": [
+                {
+                  "name": "Projection Mapping Software",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "AI Holographic Bot",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Electronic Whiteboard",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Fog Screen Machine",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Projection Lamp",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Radar",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Digital Display Wall",
+                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                  "name": "Whole Site Planning",
+                  "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
+                }
+              ]
+            };
 
             const categoriesData = (formData.arCategoriesData && typeof formData.arCategoriesData === 'object' && Object.keys(formData.arCategoriesData).length > 0)
               ? formData.arCategoriesData
@@ -12219,7 +12227,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             );
           })()}
 
-{/* AR GAMES SUPPLIER FORM */}
+          {/* AR GAMES SUPPLIER FORM */}
           {activeSection === 'arIntro' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>AR Games Supplier in India Section</h3>
@@ -12328,7 +12336,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.arIntro.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to get a quote and details for AR Games setup. Please share details. [Ref: AR Games Page]";
                   })()}
@@ -12480,7 +12488,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.arMatchedVenue.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to get a quote for Interactive AR Attractions setup for my venue. Please share details. [Ref: AR Games Page]";
                   })()}
@@ -13403,7 +13411,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.vrIntro.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to get a quote and details for VR Gaming Machine setup. Please share details. [Ref: VR Games Page]";
                   })()}
@@ -13575,7 +13583,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.vrMatchedVenue.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to get a quote for Commercial VR Machines matched to my venue. Please share details. [Ref: VR Games Page]";
                   })()}
@@ -13938,47 +13946,47 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
                   Right Graphic Image (VR Player) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                 </label>
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                    <label style={{
-                      background: '#38bdf8',
-                      color: '#ffffff',
-                      padding: '10px 18px',
-                      borderRadius: '12px',
-                      fontWeight: '800',
-                      fontSize: '13px',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      <Upload style={{ width: '16px', height: '16px' }} /> Right Graphic Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading VR player graphic...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            const updated = { ...(formData.vrEarn || {}), imgUrl: res.url };
-                            setFormData(prev => ({ ...prev, vrEarn: updated }));
-                            await persistSectionToDatabase('vrEarn', updated);
-                            setStatusMsg('Image uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                    <img
-                      src={getAdminValidImageUrl(formData.vrEarn?.imgUrl, vrEarnPlayer)}
-                      alt="Right Graphic Preview"
-                      style={{ width: '100px', height: '55px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <label style={{
+                    background: '#38bdf8',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Right Graphic Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading VR player graphic...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.vrEarn || {}), imgUrl: res.url };
+                          setFormData(prev => ({ ...prev, vrEarn: updated }));
+                          await persistSectionToDatabase('vrEarn', updated);
+                          setStatusMsg('Image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
                     />
-                  </div>
+                  </label>
+                  <img
+                    src={getAdminValidImageUrl(formData.vrEarn?.imgUrl, vrEarnPlayer)}
+                    alt="Right Graphic Preview"
+                    style={{ width: '100px', height: '55px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
                 </div>
+              </div>
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
@@ -14049,7 +14057,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.vrEarn.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to talk to an ROI Expert for VR Gaming Zone setup & commercial ROI calculation. Please share details. [Ref: VR Games Page]";
                   })()}
@@ -14181,7 +14189,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 {/* Section CTA Button Controls */}
                 <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                   <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Call To Action (CTA) Button Settings</h4>
-                  
+
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                     <div>
                       <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>CTA Button Text</label>
@@ -14760,7 +14768,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.bowlingIntro.buttonLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to get a quote and estimation for a Bowling Alley setup. Please share details. [Ref: Bowling Alley Page]";
                   })()}
@@ -15293,7 +15301,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.bowlingRoi.videoUrl.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return "Hello Winera International! I want to get custom Bowling ROI calculation & setup guidance. Please share details. [Ref: Bowling Alley Page]";
                   })()}
@@ -16003,7 +16011,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       try {
                         const match = formData.aboutWelcome.btnLink.match(/text=([^&]+)/);
                         if (match && match[1]) return decodeURIComponent(match[1]);
-                      } catch (err) {}
+                      } catch (err) { }
                     }
                     return 'Hello Winera International! I want to contact your team regarding amusement solutions. Please share details. [Ref: About Us Page]';
                   })()}
@@ -16330,10 +16338,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
-                            {/* CTA Buttons Management */}
+              {/* CTA Buttons Management */}
               <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '18px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Call To Action (CTA) Buttons</h4>
-                
+
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                   <div>
                     <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Primary Button Text</label>
@@ -16387,7 +16395,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           try {
                             const match = formData.aboutWhyUsDetail.ctaPrimaryLink.match(/text=([^&]+)/);
                             if (match && match[1]) return decodeURIComponent(match[1]);
-                          } catch (err) {}
+                          } catch (err) { }
                         }
                         return 'Hello Winera International! I want to get started with a game zone project. Please share details. [Ref: About Us Page]';
                       })()}
@@ -16459,7 +16467,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               const currentList = Array.isArray(formData.founder?.items)
                 ? [...formData.founder.items]
                 : [...founderProfiles];
-              
+
               const newProfile = {
                 name: '',
                 image: '',
@@ -16741,7 +16749,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {activeSection === 'contactPage' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Contact Us Info & Form Details</h3>
-              
+
               {/* Heading Title & Subtext */}
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
@@ -17050,7 +17058,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
             return (
               <div className="winera-admin-card" style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                
+
                 {/* Header & Add Project Button */}
                 <div className="winera-admin-flex-header" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
                   <div>
@@ -17184,42 +17192,43 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         const origIndex = currentList.findIndex(x => (x.slug && item.slug && x.slug === item.slug) || (x.id && item.id && x.id === item.id) || (x.name && item.name && x.name === item.name));
                         const targetIdx = origIndex !== -1 ? origIndex : idx;
                         return (
-                        <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
-                          <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
-                          <td style={{ padding: '14px 18px' }}>
-                            <img src={getAdminValidImageUrl(item.img || item.imageUrl, projectImage01)} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
-                          </td>
-                          <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.name || 'Unnamed Project'}</td>
-                          <td style={{ padding: '14px 18px', fontWeight: '700', color: '#38bdf8' }}>{item.category || 'Game Zones'}</td>
-                          <td style={{ padding: '14px 18px', fontWeight: '600', color: '#475569' }}>{item.city ? `${item.city}${item.state ? `, ${item.state}` : ''}` : 'N/A'}</td>
-                          <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b' }}>{item.area || 'N/A'}</td>
-                          <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b', fontSize: '12px' }}>/project/{item.slug || 'detail'}</td>
-                          <td style={{ padding: '14px 18px', textAlign: 'right' }}>
-                            <button
-                              onClick={() => openModal('edit', targetIdx, item)}
-                              style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
-                            >
-                              <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit Details
-                            </button>
-                            <button
-                              onClick={() => {
-                                setDeleteConfirmModal({
-                                  title: 'Delete Project Card?',
-                                  message: `Are you sure you want to delete project '${item.name || 'this item'}'?`,
-                                  onConfirm: () => {
-                                    const newList = currentList.filter((_, i) => i !== targetIdx);
-                                    setFormData(prev => ({ ...prev, projectItems: newList }));
-                                    persistSectionToDatabase('projectItems', newList);
-                                  }
-                                });
-                              }}
-                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
-                            >
-                              <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
-                            </button>
-                          </td>
-                        </tr>
-                      );})}
+                          <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
+                            <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
+                            <td style={{ padding: '14px 18px' }}>
+                              <img src={getAdminValidImageUrl(item.img || item.imageUrl, projectImage01)} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
+                            </td>
+                            <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.name || 'Unnamed Project'}</td>
+                            <td style={{ padding: '14px 18px', fontWeight: '700', color: '#38bdf8' }}>{item.category || 'Game Zones'}</td>
+                            <td style={{ padding: '14px 18px', fontWeight: '600', color: '#475569' }}>{item.city ? `${item.city}${item.state ? `, ${item.state}` : ''}` : 'N/A'}</td>
+                            <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b' }}>{item.area || 'N/A'}</td>
+                            <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b', fontSize: '12px' }}>/project/{item.slug || 'detail'}</td>
+                            <td style={{ padding: '14px 18px', textAlign: 'right' }}>
+                              <button
+                                onClick={() => openModal('edit', targetIdx, item)}
+                                style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
+                              >
+                                <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit Details
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setDeleteConfirmModal({
+                                    title: 'Delete Project Card?',
+                                    message: `Are you sure you want to delete project '${item.name || 'this item'}'?`,
+                                    onConfirm: () => {
+                                      const newList = currentList.filter((_, i) => i !== targetIdx);
+                                      setFormData(prev => ({ ...prev, projectItems: newList }));
+                                      persistSectionToDatabase('projectItems', newList);
+                                    }
+                                  });
+                                }}
+                                style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
+                              >
+                                <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -17336,7 +17345,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           try {
                             const match = currentSec.buttonLink.match(/text=([^&]+)/);
                             if (match && match[1]) return decodeURIComponent(match[1]);
-                          } catch (err) {}
+                          } catch (err) { }
                         }
                         return 'Hello Winera International! I want to get a project quote. Please share details. [Ref: Project Detail Page]';
                       })()}
@@ -18673,7 +18682,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Why This Matters & Build Yours Now CTA Section</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  
+
                   {/* Banner Background Image Upload */}
                   <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                     <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
@@ -18723,8 +18732,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         currentSec.ctaTitle !== undefined && currentSec.ctaTitle !== "BUILD YOURS NOW" && !currentSec.ctaTitle.includes("BUILD")
                           ? currentSec.ctaTitle
                           : currentSec.ctaTitle1 || currentSec.ctaTitle2
-                          ? `${(currentSec.ctaTitle1 || '').trim()} ${(currentSec.ctaTitle2 || '').trim()}`.replace(/\s+/g, ' ')
-                          : "Need Any Consultations?"
+                            ? `${(currentSec.ctaTitle1 || '').trim()} ${(currentSec.ctaTitle2 || '').trim()}`.replace(/\s+/g, ' ')
+                            : "Need Any Consultations?"
                       }
                       onChange={(e) => {
                         const val = e.target.value;
@@ -18926,7 +18935,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           try {
                             const match = currentSec.buttonLink.match(/text=([^&]+)/);
                             if (match && match[1]) return decodeURIComponent(match[1]);
-                          } catch (err) {}
+                          } catch (err) { }
                         }
                         return "Hello Winera International! I want to get a quote and design details for a Trampoline Park setup. Please share details. [Ref: Trampoline Park Page]";
                       })()}
@@ -19450,7 +19459,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           try {
                             const match = currentSec.buttonLink.match(/text=([^&]+)/);
                             if (match && match[1]) return decodeURIComponent(match[1]);
-                          } catch (err) {}
+                          } catch (err) { }
                         }
                         return "Hello Winera International! I want to talk to an ROI Expert for Trampoline Park setup & commercial ROI calculation. Please share details. [Ref: Trampoline Park Page]";
                       })()}
@@ -19940,7 +19949,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           try {
                             const match = currentSec.buttonLink.match(/text=([^&]+)/);
                             if (match && match[1]) return decodeURIComponent(match[1]);
-                          } catch (err) {}
+                          } catch (err) { }
                         }
                         return 'Hello Winera International! I want to book a free ROI consultation. Please share details. [Ref: ROI Page]';
                       })()}
@@ -20053,7 +20062,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {cardsList.map((cardVal, idx) => (
                         <div key={idx} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <span style={{ fontWeight: 'bold', fontSize: '13px', color: '#64748b', width: '20px' }}>{idx+1}.</span>
+                          <span style={{ fontWeight: 'bold', fontSize: '13px', color: '#64748b', width: '20px' }}>{idx + 1}.</span>
                           <input
                             type="text"
                             value={cardVal}
@@ -20326,7 +20335,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     {cardsList.map((card, idx) => (
                       <div key={idx} style={{ padding: '20px', borderRadius: '16px', border: '1.5px solid #e2e8f0', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: '900', fontSize: '14px', color: '#00aeef' }}>Step {idx+1}</span>
+                          <span style={{ fontWeight: '900', fontSize: '14px', color: '#00aeef' }}>Step {idx + 1}</span>
                           <button
                             type="button"
                             onClick={async () => {
@@ -20517,7 +20526,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       {steps.map((step, idx) => (
                         <div key={idx} style={{ padding: '16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px', background: '#f8fafc' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#64748b' }}>Feature #{idx+1}</span>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#64748b' }}>Feature #{idx + 1}</span>
                             <button
                               type="button"
                               onClick={async () => {
@@ -20673,7 +20682,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {fitItems.map((item, idx) => (
                           <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8' }}>{idx+1}.</span>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8' }}>{idx + 1}.</span>
                             <input
                               type="text"
                               value={item}
@@ -20722,7 +20731,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {unfitItems.map((item, idx) => (
                           <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8' }}>{idx+1}.</span>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8' }}>{idx + 1}.</span>
                             <input
                               type="text"
                               value={item}
@@ -21157,8 +21166,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             sec.bulletsText
                               ? sec.bulletsText.join('\n')
                               : sec.bullets
-                              ? sec.bullets.map(b => `${b.label ? b.label + ': ' : ''}${b.text}`).join('\n')
-                              : ''
+                                ? sec.bullets.map(b => `${b.label ? b.label + ': ' : ''}${b.text}`).join('\n')
+                                : ''
                           }
                           onChange={(e) => {
                             const updated = [...sectionsList];
@@ -21300,8 +21309,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             sec.bulletsText
                               ? sec.bulletsText.join('\n')
                               : sec.bullets
-                              ? sec.bullets.map(b => `${b.label ? b.label + ': ' : ''}${b.text}`).join('\n')
-                              : ''
+                                ? sec.bullets.map(b => `${b.label ? b.label + ': ' : ''}${b.text}`).join('\n')
+                                : ''
                           }
                           onChange={(e) => {
                             const updated = [...sectionsList];
@@ -21685,7 +21694,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             background: '#ffffff',
             borderRadius: '24px',
             width: '100%',
-            maxWidth: activeSection === 'projectItems' ? '720px' : '560px',
+            maxWidth: activeSection === 'arcadeCategories' ? '760px' : activeSection === 'projectItems' ? '720px' : '560px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             border: '1px solid #e2e8f0',
             overflow: 'hidden',
@@ -22033,13 +22042,32 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <h4 style={{ margin: 0, color: '#0284c7', fontSize: '15px', fontWeight: '800' }}>4. Showcase Image & Thumbnail Photos</h4>
                   </div>
 
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
-                      Main Product Showcase Photo <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 600 × 600 px (Square 1:1)</span>
+                  {/* Main Photo - Stacked Layout */}
+                  <div style={{ background: '#f8fafc', borderRadius: '14px', padding: '14px', border: '1px solid #e2e8f0' }}>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                      Main Product Showcase Photo
+                      <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '8px' }}>📐 600 × 600 px (1:1)</span>
                     </label>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <label style={{ background: '#0284c7', color: '#fff', padding: '10px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-                        <Upload style={{ width: '14px', height: '14px' }} /> Upload Main Photo
+                    {/* Image Preview */}
+                    {(() => {
+                      const resolvedMainImg = getAdminValidImageUrl(
+                        modalItemData.img || modalItemData.imageUrl || arcadeProductImageMap[modalItemData.name || modalItemData.title],
+                        arcadeProductImageMap[modalItemData.name || modalItemData.title] || bikeArcade
+                      );
+                      return (
+                        <div style={{ width: '100%', height: '160px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #38bdf8', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
+                          <img
+                            src={resolvedMainImg}
+                            alt="Product Preview"
+                            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                          />
+                        </div>
+                      );
+                    })()}
+                    {/* Upload + URL row */}
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <label style={{ background: '#0284c7', color: '#fff', padding: '9px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                        <Upload style={{ width: '13px', height: '13px' }} /> Upload
                         <input
                           type="file"
                           accept="image/*"
@@ -22049,33 +22077,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </label>
                       <input
                         type="text"
-                        value={modalItemData.img || ''}
+                        value={typeof modalItemData.img === 'string' ? modalItemData.img : ''}
                         onChange={(e) => setModalItemData(prev => ({ ...prev, img: e.target.value }))}
-                        placeholder="Image URL or upload above..."
-                        style={{ flex: 1, padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                        placeholder="Paste image URL here..."
+                        style={{ flex: 1, padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px', minWidth: 0 }}
                       />
-                      {modalItemData.img && (
-                        <div style={{ width: '56px', height: '40px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #cbd5e1', flexShrink: 0, background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <img
-                            src={getAdminValidImageUrl(modalItemData.img)}
-                            alt=""
-                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                          />
-                        </div>
-                      )}
                     </div>
                   </div>
 
-                  {/* 4 Gallery Thumbnails */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  {/* 4 Gallery Thumbnails - Single Column */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <label style={{ fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '2px' }}>Thumbnail Photos <span style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '600' }}>(Optional — shown in product detail gallery)</span></label>
                     {[1, 2, 3, 4].map(num => {
-                      const thumbVal = modalItemData[`gallery${num}`] || '';
+                      const thumbVal = typeof modalItemData[`gallery${num}`] === 'string' ? modalItemData[`gallery${num}`] : '';
                       return (
                         <div key={num} style={{ background: '#f8fafc', padding: '10px 12px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                             <label style={{ fontSize: '11.5px', fontWeight: '800', color: '#0f172a' }}>
-                              Thumbnail {num} Photo <span style={{ fontSize: '10px', color: '#0284c7', background: '#e0f2fe', padding: '1px 5px', borderRadius: '4px', fontWeight: '700', marginLeft: '4px' }}>📐 300 × 300 px</span>
+                              Thumbnail {num}
+                              <span style={{ fontSize: '10px', color: '#0284c7', background: '#e0f2fe', padding: '1px 5px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>300 × 300 px</span>
                             </label>
                             {thumbVal && (
                               <button
@@ -22083,13 +22103,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 onClick={() => setModalItemData(prev => ({ ...prev, [`gallery${num}`]: '' }))}
                                 style={{ background: 'none', border: 'none', color: '#ef4444', fontSize: '11px', fontWeight: '700', cursor: 'pointer', padding: 0 }}
                               >
-                                Clear
+                                ✕ Clear
                               </button>
                             )}
                           </div>
                           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <label style={{ background: '#0284c7', color: '#fff', padding: '8px 12px', borderRadius: '8px', fontWeight: '800', fontSize: '11px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                              <Upload style={{ width: '12px', height: '12px' }} /> Upload
+                            <label style={{ background: '#0284c7', color: '#fff', padding: '7px 11px', borderRadius: '8px', fontWeight: '800', fontSize: '11px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                              <Upload style={{ width: '11px', height: '11px' }} /> Upload
                               <input
                                 type="file"
                                 accept="image/*"
@@ -22101,16 +22121,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               type="text"
                               value={thumbVal}
                               onChange={(e) => setModalItemData(prev => ({ ...prev, [`gallery${num}`]: e.target.value }))}
-                              placeholder="Image URL or upload..."
+                              placeholder="Paste image URL..."
                               style={{ flex: 1, padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px', minWidth: 0 }}
                             />
                             {thumbVal && (
-                              <div style={{ width: '42px', height: '34px', borderRadius: '6px', overflow: 'hidden', border: '1px solid #cbd5e1', flexShrink: 0, background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              <div style={{ width: '44px', height: '36px', borderRadius: '6px', overflow: 'hidden', border: '1.5px solid #38bdf8', flexShrink: 0, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <img
                                   src={getAdminValidImageUrl(thumbVal)}
                                   alt=""
                                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
                               </div>
                             )}
@@ -22150,7 +22170,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 try {
                                   const match = prev.quoteUrl.match(/text=([^&]+)/);
                                   if (match && match[1]) return decodeURIComponent(match[1]);
-                                } catch (err) {}
+                                } catch (err) { }
                               }
                               return prev.name ? `Hello Winera International! I want to get a quote for ${prev.name}. Please share price and details.` : '';
                             })();
@@ -22176,7 +22196,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           try {
                             const match = modalItemData.quoteUrl.match(/text=([^&]+)/);
                             if (match && match[1]) return decodeURIComponent(match[1]);
-                          } catch (err) {}
+                          } catch (err) { }
                         }
                         return modalItemData.name ? `Hello Winera International! I want to get a quote for ${modalItemData.name}. Please share price and details.` : '';
                       })()}
@@ -22441,7 +22461,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 try {
                                   const match = modalItemData.buttonLink.match(/text=([^&]+)/);
                                   if (match && match[1]) return decodeURIComponent(match[1]);
-                                } catch (err) {}
+                                } catch (err) { }
                               }
                               return `Hello Winera International! I want to get a project quote for ${modalItemData.name || 'this project'}. Please share details. [Ref: Project Detail Page]`;
                             })()}
@@ -22599,13 +22619,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         const galleryList = Array.isArray(modalItemData.galleryImages) && modalItemData.galleryImages.length > 0
                           ? modalItemData.galleryImages
                           : [
-                              modalItemData.galleryImage1 || projectBlock1,
-                              modalItemData.galleryImage2 || projectBlock2,
-                              modalItemData.galleryImage3 || projectBlock3,
-                              modalItemData.galleryImage4 || projectBlock1,
-                              modalItemData.galleryImage5 || projectBlock2,
-                              modalItemData.galleryImage6 || projectBlock3
-                            ].filter(Boolean);
+                            modalItemData.galleryImage1 || projectBlock1,
+                            modalItemData.galleryImage2 || projectBlock2,
+                            modalItemData.galleryImage3 || projectBlock3,
+                            modalItemData.galleryImage4 || projectBlock1,
+                            modalItemData.galleryImage5 || projectBlock2,
+                            modalItemData.galleryImage6 || projectBlock3
+                          ].filter(Boolean);
 
                         return (
                           <div style={{ background: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -22623,13 +22643,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                     const currentList = Array.isArray(prev.galleryImages) && prev.galleryImages.length > 0
                                       ? [...prev.galleryImages]
                                       : [
-                                          prev.galleryImage1 || projectBlock1,
-                                          prev.galleryImage2 || projectBlock2,
-                                          prev.galleryImage3 || projectBlock3,
-                                          prev.galleryImage4 || projectBlock1,
-                                          prev.galleryImage5 || projectBlock2,
-                                          prev.galleryImage6 || projectBlock3
-                                        ].filter(Boolean);
+                                        prev.galleryImage1 || projectBlock1,
+                                        prev.galleryImage2 || projectBlock2,
+                                        prev.galleryImage3 || projectBlock3,
+                                        prev.galleryImage4 || projectBlock1,
+                                        prev.galleryImage5 || projectBlock2,
+                                        prev.galleryImage6 || projectBlock3
+                                      ].filter(Boolean);
                                     const updated = [...currentList, projectBlock1];
                                     return {
                                       ...prev,
@@ -22674,13 +22694,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                                 const currentList = Array.isArray(prev.galleryImages) && prev.galleryImages.length > 0
                                                   ? [...prev.galleryImages]
                                                   : [
-                                                      prev.galleryImage1 || projectBlock1,
-                                                      prev.galleryImage2 || projectBlock2,
-                                                      prev.galleryImage3 || projectBlock3,
-                                                      prev.galleryImage4 || projectBlock1,
-                                                      prev.galleryImage5 || projectBlock2,
-                                                      prev.galleryImage6 || projectBlock3
-                                                    ].filter(Boolean);
+                                                    prev.galleryImage1 || projectBlock1,
+                                                    prev.galleryImage2 || projectBlock2,
+                                                    prev.galleryImage3 || projectBlock3,
+                                                    prev.galleryImage4 || projectBlock1,
+                                                    prev.galleryImage5 || projectBlock2,
+                                                    prev.galleryImage6 || projectBlock3
+                                                  ].filter(Boolean);
                                                 const updated = currentList.filter((_, i) => i !== idx);
                                                 return {
                                                   ...prev,
@@ -22717,13 +22737,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                                 const currentList = Array.isArray(prev.galleryImages) && prev.galleryImages.length > 0
                                                   ? [...prev.galleryImages]
                                                   : [
-                                                      prev.galleryImage1 || projectBlock1,
-                                                      prev.galleryImage2 || projectBlock2,
-                                                      prev.galleryImage3 || projectBlock3,
-                                                      prev.galleryImage4 || projectBlock1,
-                                                      prev.galleryImage5 || projectBlock2,
-                                                      prev.galleryImage6 || projectBlock3
-                                                    ].filter(Boolean);
+                                                    prev.galleryImage1 || projectBlock1,
+                                                    prev.galleryImage2 || projectBlock2,
+                                                    prev.galleryImage3 || projectBlock3,
+                                                    prev.galleryImage4 || projectBlock1,
+                                                    prev.galleryImage5 || projectBlock2,
+                                                    prev.galleryImage6 || projectBlock3
+                                                  ].filter(Boolean);
                                                 currentList[idx] = res.url;
                                                 return {
                                                   ...prev,
@@ -22751,13 +22771,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                           const currentList = Array.isArray(prev.galleryImages) && prev.galleryImages.length > 0
                                             ? [...prev.galleryImages]
                                             : [
-                                                prev.galleryImage1 || projectBlock1,
-                                                prev.galleryImage2 || projectBlock2,
-                                                prev.galleryImage3 || projectBlock3,
-                                                prev.galleryImage4 || projectBlock1,
-                                                prev.galleryImage5 || projectBlock2,
-                                                prev.galleryImage6 || projectBlock3
-                                              ].filter(Boolean);
+                                              prev.galleryImage1 || projectBlock1,
+                                              prev.galleryImage2 || projectBlock2,
+                                              prev.galleryImage3 || projectBlock3,
+                                              prev.galleryImage4 || projectBlock1,
+                                              prev.galleryImage5 || projectBlock2,
+                                              prev.galleryImage6 || projectBlock3
+                                            ].filter(Boolean);
                                           currentList[idx] = newUrl;
                                           return {
                                             ...prev,
