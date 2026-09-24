@@ -6654,556 +6654,461 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           )}
 
           {/* TECHNICAL SPECIFICATIONS SECTION FORM */}
-          {activeSection === 'softplaySpecs' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Technical Specifications Section</h3>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
-                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Yellow, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
-                <input
-                  type="text"
-                  value={formData.softplaySpecs?.title || '*Technical* Specifications'}
-                  onChange={(e) => handleFieldChange('softplaySpecs', 'title', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+          {activeSection === 'softplaySpecs' && (() => {
+            const defaultSpecs = [
+              { spec: 'Target age group', details: '2–12 years' },
+              { spec: 'Minimum space required', details: '500 sq ft' },
+              { spec: 'Maximum height', details: 'Customisable to your venue' },
+              { spec: 'Construction', details: 'Galvanized steel frame, imported LLDPE, soft PVC cover' },
+              { spec: 'Safety', details: 'Padded surfaces, rounded edges — commercial grade' },
+              { spec: 'Customisation', details: 'Theme, colour, layout, activities' },
+              { spec: 'Installation', details: "Pan-India by Winera's own team" },
+              { spec: 'Expected lifespan', details: '10+ years with proper maintenance' }
+            ];
+            const currentSec = formData.softplaySpecs || {};
+            const specsList = Array.isArray(currentSec.specsList) ? currentSec.specsList : defaultSpecs;
 
-              {/* Dynamic Specifications Rows Manager */}
-              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Specification Table Rows</h4>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const currentSpecs = Array.isArray(formData.softplaySpecs?.specsList) && formData.softplaySpecs.specsList.length > 0
-                        ? [...formData.softplaySpecs.specsList]
-                        : [
-                          { spec: 'Target age group', details: '2–12 years' },
-                          { spec: 'Minimum space required', details: '500 sq ft' },
-                          { spec: 'Maximum height', details: 'Customisable to your venue' },
-                          { spec: 'Construction', details: 'Galvanized steel frame, imported LLDPE, soft PVC cover' },
-                          { spec: 'Safety', details: 'Padded surfaces, rounded edges — commercial grade' },
-                          { spec: 'Customisation', details: 'Theme, colour, layout, activities' },
-                          { spec: 'Installation', details: "Pan-India by Winera's own team" },
-                          { spec: 'Expected lifespan', details: '10+ years with proper maintenance' }
-                        ];
-                      currentSpecs.push({ spec: '', details: '' });
-                      handleFieldChange('softplaySpecs', 'specsList', currentSpecs);
-                    }}
-                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                  >
-                    <Plus style={{ width: '14px', height: '14px' }} /> Add Row
-                  </button>
-                </div>
+            const handleAddRow = () => {
+              const updated = [...specsList, { spec: '', details: '' }];
+              const updatedSec = { ...currentSec, specsList: updated };
+              setFormData(prev => ({ ...prev, softplaySpecs: updatedSec }));
+            };
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {(Array.isArray(formData.softplaySpecs?.specsList) && formData.softplaySpecs.specsList.length > 0
-                    ? formData.softplaySpecs.specsList
-                    : [
-                      { spec: 'Target age group', details: '2–12 years' },
-                      { spec: 'Minimum space required', details: '500 sq ft' },
-                      { spec: 'Maximum height', details: 'Customisable to your venue' },
-                      { spec: 'Construction', details: 'Galvanized steel frame, imported LLDPE, soft PVC cover' },
-                      { spec: 'Safety', details: 'Padded surfaces, rounded edges — commercial grade' },
-                      { spec: 'Customisation', details: 'Theme, colour, layout, activities' },
-                      { spec: 'Installation', details: "Pan-India by Winera's own team" },
-                      { spec: 'Expected lifespan', details: '10+ years with proper maintenance' }
-                    ]
-                  ).map((sRow, rIdx) => (
-                    <div key={rIdx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '10px', alignItems: 'center', background: '#ffffff', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
-                      <input
-                        type="text"
-                        placeholder="Specification Name"
-                        value={sRow.spec}
-                        onChange={(e) => {
-                          const currentSpecs = Array.isArray(formData.softplaySpecs?.specsList) && formData.softplaySpecs.specsList.length > 0
-                            ? [...formData.softplaySpecs.specsList]
-                            : [
-                              { spec: 'Target age group', details: '2–12 years' },
-                              { spec: 'Minimum space required', details: '500 sq ft' },
-                              { spec: 'Maximum height', details: 'Customisable to your venue' },
-                              { spec: 'Construction', details: 'Galvanized steel frame, imported LLDPE, soft PVC cover' },
-                              { spec: 'Safety', details: 'Padded surfaces, rounded edges — commercial grade' },
-                              { spec: 'Customisation', details: 'Theme, colour, layout, activities' },
-                              { spec: 'Installation', details: "Pan-India by Winera's own team" },
-                              { spec: 'Expected lifespan', details: '10+ years with proper maintenance' }
-                            ];
-                          currentSpecs[rIdx] = { ...currentSpecs[rIdx], spec: e.target.value };
-                          handleFieldChange('softplaySpecs', 'specsList', currentSpecs);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
-                      />
-                      <input
-                        type="text"
-                        placeholder="Details Value"
-                        value={sRow.details}
-                        onChange={(e) => {
-                          const currentSpecs = Array.isArray(formData.softplaySpecs?.specsList) && formData.softplaySpecs.specsList.length > 0
-                            ? [...formData.softplaySpecs.specsList]
-                            : [
-                              { spec: 'Target age group', details: '2–12 years' },
-                              { spec: 'Minimum space required', details: '500 sq ft' },
-                              { spec: 'Maximum height', details: 'Customisable to your venue' },
-                              { spec: 'Construction', details: 'Galvanized steel frame, imported LLDPE, soft PVC cover' },
-                              { spec: 'Safety', details: 'Padded surfaces, rounded edges — commercial grade' },
-                              { spec: 'Customisation', details: 'Theme, colour, layout, activities' },
-                              { spec: 'Installation', details: "Pan-India by Winera's own team" },
-                              { spec: 'Expected lifespan', details: '10+ years with proper maintenance' }
-                            ];
-                          currentSpecs[rIdx] = { ...currentSpecs[rIdx], details: e.target.value };
-                          handleFieldChange('softplaySpecs', 'specsList', currentSpecs);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const currentSpecs = Array.isArray(formData.softplaySpecs?.specsList) && formData.softplaySpecs.specsList.length > 0
-                            ? [...formData.softplaySpecs.specsList]
-                            : [
-                              { spec: 'Target age group', details: '2–12 years' },
-                              { spec: 'Minimum space required', details: '500 sq ft' },
-                              { spec: 'Maximum height', details: 'Customisable to your venue' },
-                              { spec: 'Construction', details: 'Galvanized steel frame, imported LLDPE, soft PVC cover' },
-                              { spec: 'Safety', details: 'Padded surfaces, rounded edges — commercial grade' },
-                              { spec: 'Customisation', details: 'Theme, colour, layout, activities' },
-                              { spec: 'Installation', details: "Pan-India by Winera's own team" },
-                              { spec: 'Expected lifespan', details: '10+ years with proper maintenance' }
-                            ];
-                          currentSpecs.splice(rIdx, 1);
-                          handleFieldChange('softplaySpecs', 'specsList', currentSpecs);
-                        }}
-                        style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
-                      >
-                        <Trash2 style={{ width: '15px', height: '15px' }} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            const handleRowChange = (index, field, value) => {
+              const updated = specsList.map((row, i) => i === index ? { ...row, [field]: value } : row);
+              const updatedSec = { ...currentSec, specsList: updated };
+              setFormData(prev => ({ ...prev, softplaySpecs: updatedSec }));
+            };
 
-              {/* Background Banner Image Upload */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Background Card Image Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
-                </label>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        setStatusMsg('Uploading background...');
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          handleFieldChange('softplaySpecs', 'bgUrl', res.url);
-                          setStatusMsg('Background uploaded!');
-                        } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                        }
-                      }}
-                    />
-                  </label>
-                  {formData.softplaySpecs?.bgUrl && (
-                    <img src={formData.softplaySpecs.bgUrl} alt="" style={{ height: '40px', borderRadius: '6px' }} />
-                  )}
-                </div>
-              </div>
+            const handleDeleteRow = async (index) => {
+              const updated = specsList.filter((_, i) => i !== index);
+              const updatedSec = { ...currentSec, specsList: updated };
+              setFormData(prev => ({ ...prev, softplaySpecs: updatedSec }));
+              await persistSectionToDatabase('softplaySpecs', updatedSec);
+            };
 
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('softplaySpecs', formData.softplaySpecs || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Technical Specifications Section
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* MATERIALS QUALITY SECTION FORM */}
-          {activeSection === 'softplayMaterials' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Materials Quality & Durability Section</h3>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
-                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
-                <input
-                  type="text"
-                  value={formData.softplayMaterials?.title || '*Materials Quality That Defines a* Trusted Soft Play Manufacturer'}
-                  onChange={(e) => handleFieldChange('softplayMaterials', 'title', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Intro Description</label>
-                <textarea
-                  rows={3}
-                  value={formData.softplayMaterials?.desc || "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:"}
-                  onChange={(e) => handleFieldChange('softplayMaterials', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
-                />
-              </div>
-
-              {/* Photo Upload */}
-              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
-                  Left Kids Play Area Photo Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
-                </h4>
-                <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>Play Area Photo</label>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                      <Upload style={{ width: '13px', height: '13px' }} /> Upload Photo
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading photo...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            handleFieldChange('softplayMaterials', 'imgUrl', res.url);
-                            setStatusMsg('Photo uploaded!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
-                    </label>
-                    {formData.softplayMaterials?.imgUrl ? (
-                      <img src={formData.softplayMaterials.imgUrl} alt="" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
-                    ) : (
-                      <img src={allImg} alt="Default Preview" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Subpoints Manager */}
-              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Materials Subpoints (e.g. Plastic Parts, Post Structure)</h4>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const currentSubs = Array.isArray(formData.softplayMaterials?.subpoints) && formData.softplayMaterials.subpoints.length > 0
-                        ? [...formData.softplayMaterials.subpoints]
-                        : [
-                          { title: 'Plastic Parts', desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant.' },
-                          { title: 'Post Structure', desc: 'Constructed from national standard galvanized steel pipes providing structural backbone.' },
-                          { title: 'Metal Components', desc: 'All metal parts are galvanized to resist corrosion.' },
-                          { title: 'Deck, Stair & Bridge', desc: 'Features a robust wood core padded with high-density sponge.' },
-                          { title: 'Outer Cover', desc: 'Finished with a soft PVC covering that is pleasant to touch.' }
-                        ];
-                      currentSubs.push({ title: '', desc: '' });
-                      handleFieldChange('softplayMaterials', 'subpoints', currentSubs);
-                    }}
-                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                  >
-                    <Plus style={{ width: '14px', height: '14px' }} /> Add Subpoint
-                  </button>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {(Array.isArray(formData.softplayMaterials?.subpoints) && formData.softplayMaterials.subpoints.length > 0
-                    ? formData.softplayMaterials.subpoints
-                    : [
-                      { title: 'Plastic Parts', desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant.' },
-                      { title: 'Post Structure', desc: 'Constructed from national standard galvanized steel pipes providing structural backbone.' },
-                      { title: 'Metal Components', desc: 'All metal parts are galvanized to resist corrosion.' },
-                      { title: 'Deck, Stair & Bridge', desc: 'Features a robust wood core padded with high-density sponge.' },
-                      { title: 'Outer Cover', desc: 'Finished with a soft PVC covering that is pleasant to touch.' }
-                    ]
-                  ).map((mSub, subIdx) => (
-                    <div key={subIdx} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: '10px', alignItems: 'center', background: '#ffffff', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
-                      <input
-                        type="text"
-                        placeholder="Subpoint Title (e.g. Plastic Parts)"
-                        value={mSub.title}
-                        onChange={(e) => {
-                          const currentSubs = Array.isArray(formData.softplayMaterials?.subpoints) && formData.softplayMaterials.subpoints.length > 0
-                            ? [...formData.softplayMaterials.subpoints]
-                            : [
-                              { title: 'Plastic Parts', desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant.' },
-                              { title: 'Post Structure', desc: 'Constructed from national standard galvanized steel pipes providing structural backbone.' },
-                              { title: 'Metal Components', desc: 'All metal parts are galvanized to resist corrosion.' },
-                              { title: 'Deck, Stair & Bridge', desc: 'Features a robust wood core padded with high-density sponge.' },
-                              { title: 'Outer Cover', desc: 'Finished with a soft PVC covering that is pleasant to touch.' }
-                            ];
-                          currentSubs[subIdx] = { ...currentSubs[subIdx], title: e.target.value };
-                          handleFieldChange('softplayMaterials', 'subpoints', currentSubs);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                      />
-                      <input
-                        type="text"
-                        placeholder="Subpoint Description"
-                        value={mSub.desc}
-                        onChange={(e) => {
-                          const currentSubs = Array.isArray(formData.softplayMaterials?.subpoints) && formData.softplayMaterials.subpoints.length > 0
-                            ? [...formData.softplayMaterials.subpoints]
-                            : [
-                              { title: 'Plastic Parts', desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant.' },
-                              { title: 'Post Structure', desc: 'Constructed from national standard galvanized steel pipes providing structural backbone.' },
-                              { title: 'Metal Components', desc: 'All metal parts are galvanized to resist corrosion.' },
-                              { title: 'Deck, Stair & Bridge', desc: 'Features a robust wood core padded with high-density sponge.' },
-                              { title: 'Outer Cover', desc: 'Finished with a soft PVC covering that is pleasant to touch.' }
-                            ];
-                          currentSubs[subIdx] = { ...currentSubs[subIdx], desc: e.target.value };
-                          handleFieldChange('softplayMaterials', 'subpoints', currentSubs);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const currentSubs = Array.isArray(formData.softplayMaterials?.subpoints) && formData.softplayMaterials.subpoints.length > 0
-                            ? [...formData.softplayMaterials.subpoints]
-                            : [
-                              { title: 'Plastic Parts', desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant.' },
-                              { title: 'Post Structure', desc: 'Constructed from national standard galvanized steel pipes providing structural backbone.' },
-                              { title: 'Metal Components', desc: 'All metal parts are galvanized to resist corrosion.' },
-                              { title: 'Deck, Stair & Bridge', desc: 'Features a robust wood core padded with high-density sponge.' },
-                              { title: 'Outer Cover', desc: 'Finished with a soft PVC covering that is pleasant to touch.' }
-                            ];
-                          currentSubs.splice(subIdx, 1);
-                          handleFieldChange('softplayMaterials', 'subpoints', currentSubs);
-                        }}
-                        style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
-                      >
-                        <Trash2 style={{ width: '15px', height: '15px' }} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('softplayMaterials', formData.softplayMaterials || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Materials Quality Section
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* TYPES OF SOFT PLAY ZONES TIMELINE FORM */}
-          {activeSection === 'softplayTypes' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Types of Soft Play Zones Timeline Section</h3>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
-                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
-                <input
-                  type="text"
-                  value={formData.softplayTypes?.title || 'Types of Soft Play Zones<br />*We Design & Install*'}
-                  onChange={(e) => handleFieldChange('softplayTypes', 'title', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Technical Specifications Section</h3>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure Button Label</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
+                  <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Yellow, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
                   <input
                     type="text"
-                    value={formData.softplayTypes?.buttonText || 'Download Our Brochure'}
-                    onChange={(e) => handleFieldChange('softplayTypes', 'buttonText', e.target.value)}
+                    value={currentSec.title !== undefined ? currentSec.title : '*Technical* Specifications'}
+                    onChange={(e) => handleFieldChange('softplaySpecs', 'title', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
+
+                {/* Dynamic Specifications Rows Manager */}
+                <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                    <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Specification Table Rows</h4>
+                    <button
+                      type="button"
+                      onClick={handleAddRow}
+                      style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    >
+                      <Plus style={{ width: '14px', height: '14px' }} /> Add Row
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {specsList.map((sRow, rIdx) => (
+                      <div key={rIdx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '10px', alignItems: 'center', background: '#ffffff', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                        <input
+                          type="text"
+                          placeholder="Specification Name"
+                          value={sRow.spec}
+                          onChange={(e) => handleRowChange(rIdx, 'spec', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Details Value"
+                          value={sRow.details}
+                          onChange={(e) => handleRowChange(rIdx, 'details', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteRow(rIdx)}
+                          style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                        >
+                          <Trash2 style={{ width: '15px', height: '15px' }} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Background Banner Image Upload */}
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File / Link URL</label>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <input
-                      type="text"
-                      value={formData.softplayTypes?.brochureUrl || '#'}
-                      onChange={(e) => handleFieldChange('softplayTypes', 'brochureUrl', e.target.value)}
-                      placeholder="e.g. /assets/brochure.pdf or upload PDF..."
-                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                    />
-                    <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
-                      <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Background Card Image Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                      <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
                       <input
                         type="file"
-                        accept="application/pdf,.pdf"
+                        accept="image/*"
+                        style={{ display: 'none' }}
                         onChange={async (e) => {
                           const file = e.target.files[0];
                           if (!file) return;
-                          setStatusMsg('Uploading PDF brochure...');
+                          setStatusMsg('Uploading background...');
                           try {
                             const res = await uploadImageFile(file, admin.token);
-                            handleFieldChange('softplayTypes', 'brochureUrl', res.url);
-                            setStatusMsg('PDF Brochure uploaded successfully!');
+                            handleFieldChange('softplaySpecs', 'bgUrl', res.url);
+                            setStatusMsg('Background uploaded!');
                           } catch (err) {
                             setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
                           }
                         }}
-                        style={{ display: 'none' }}
                       />
                     </label>
+                    {currentSec.bgUrl && (
+                      <img src={currentSec.bgUrl} alt="" style={{ height: '40px', borderRadius: '6px' }} />
+                    )}
                   </div>
                 </div>
-              </div>
 
-              {/* Types of Soft Play Zones List Manager */}
-              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>
-                    Soft Play Zone Types (Title, Description & Image) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Card Image: 600 × 400 px (3:2)</span>
-                  </h4>
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
                   <button
-                    type="button"
-                    onClick={() => {
-                      const currentTypes = Array.isArray(formData.softplayTypes?.typesList) && formData.softplayTypes.typesList.length > 0
-                        ? [...formData.softplayTypes.typesList]
-                        : [
-                          { title: 'Themed Soft Play Zones', desc: 'A Fully Designed Play Environment Built Around A Visual Theme — Jungle, Ocean, Space, Or A Custom Branded Concept Tailored To Your Venue. Every Element From Colours And Structures To Signage Works Together, Creating A Space Visitors Photograph, Share, And Return To. Ideal For Malls, Hotels, And Family Entertainment Centres Looking To Build A Recognisable, Destination-Worthy Indoor Play Area For Kids.', img: formData.softplayTypes?.step1Img || '' },
-                          { title: 'Toddler & Junior Play Areas', desc: 'Age-Segmented Zones Designed For Children Aged 2–5 And 6–12 Years Separately Ensure The Right Structure Height, Challenge Level, And Safety Padding For Each Group. Allows Venues Serving Mixed-Age Families To Keep Younger Toddlers Safe Without Restricting Older Children. Popular In Hospitals, Airports, And Hotel Recreation Zones Where The Play Area Must Serve A Wide Visitor Demographic.', img: formData.softplayTypes?.step2Img || '' },
-                          { title: 'Multi-Level Play Structures', desc: 'Vertical Installations That Use Your Full Ceiling Height — Slides, Climbing Walls, Rope Bridges, Tunnels, And Elevated Platforms Across Multiple Levels. Delivers Large Play Capacity In A Smaller Floor Footprint, Making It The Preferred Format For Venues Where Floor Space Is Limited But Ceiling Height Is Available. Commonly Installed In Malls And Standalone Soft Play Centres Across India.', img: formData.softplayTypes?.step3Img || '' },
-                          { title: 'Ball Pit & Sensory Zones', desc: 'Foam-Filled Ball Pits And Sensory Play Areas Built For Children Aged 2–6 Years — Fully Padded, Rounded Edges, And Commercial-Grade Foam Throughout. These Zones Generate Some Of The Highest Dwell Times Of Any Soft Play Equipment Category, Keeping Young Visitors Engaged While Parents Relax Nearby. Works Well As A Standalone Addition Or As Part Of A Larger Play Zone Setup.', img: formData.softplayTypes?.step4Img || '' }
-                        ];
-                      currentTypes.push({ title: '', desc: '', img: '' });
-                      handleFieldChange('softplayTypes', 'typesList', currentTypes);
-                    }}
-                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    onClick={() => persistSectionToDatabase('softplaySpecs', { ...currentSec, specsList })}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
-                    <Plus style={{ width: '14px', height: '14px' }} /> Add Zone Type
+                    Save Technical Specifications Section
                   </button>
                 </div>
+              </div>
+            );
+          })()}
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  {(Array.isArray(formData.softplayTypes?.typesList) && formData.softplayTypes.typesList.length > 0
-                    ? formData.softplayTypes.typesList
-                    : [
-                      { title: 'Themed Soft Play Zones', desc: 'A Fully Designed Play Environment Built Around A Visual Theme — Jungle, Ocean, Space, Or A Custom Branded Concept Tailored To Your Venue. Every Element From Colours And Structures To Signage Works Together, Creating A Space Visitors Photograph, Share, And Return To. Ideal For Malls, Hotels, And Family Entertainment Centres Looking To Build A Recognisable, Destination-Worthy Indoor Play Area For Kids.', img: formData.softplayTypes?.step1Img || '' },
-                      { title: 'Toddler & Junior Play Areas', desc: 'Age-Segmented Zones Designed For Children Aged 2–5 And 6–12 Years Separately Ensure The Right Structure Height, Challenge Level, And Safety Padding For Each Group. Allows Venues Serving Mixed-Age Families To Keep Younger Toddlers Safe Without Restricting Older Children. Popular In Hospitals, Airports, And Hotel Recreation Zones Where The Play Area Must Serve A Wide Visitor Demographic.', img: formData.softplayTypes?.step2Img || '' },
-                      { title: 'Multi-Level Play Structures', desc: 'Vertical Installations That Use Your Full Ceiling Height — Slides, Climbing Walls, Rope Bridges, Tunnels, And Elevated Platforms Across Multiple Levels. Delivers Large Play Capacity In A Smaller Floor Footprint, Making It The Preferred Format For Venues Where Floor Space Is Limited But Ceiling Height Is Available. Commonly Installed In Malls And Standalone Soft Play Centres Across India.', img: formData.softplayTypes?.step3Img || '' },
-                      { title: 'Ball Pit & Sensory Zones', desc: 'Foam-Filled Ball Pits And Sensory Play Areas Built For Children Aged 2–6 Years — Fully Padded, Rounded Edges, And Commercial-Grade Foam Throughout. These Zones Generate Some Of The Highest Dwell Times Of Any Soft Play Equipment Category, Keeping Young Visitors Engaged While Parents Relax Nearby. Works Well As A Standalone Addition Or As Part Of A Larger Play Zone Setup.', img: formData.softplayTypes?.step4Img || '' }
-                    ]
-                  ).map((tItem, tIdx) => (
-                    <div key={tIdx} style={{ display: 'flex', flexDirection: 'column', gap: '10px', background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Zone Type #{tIdx + 1}</span>
+          {/* MATERIALS QUALITY SECTION FORM */}
+          {activeSection === 'softplayMaterials' && (() => {
+            const defaultMaterials = [
+              { title: 'Plastic Parts', desc: 'Crafted from high-quality imported LLDPE (Linear Low-Density Polyethylene) anti-UV, anti-static, and impact-resistant.' },
+              { title: 'Post Structure', desc: 'Constructed from national standard galvanized steel pipes providing structural backbone.' },
+              { title: 'Metal Components', desc: 'All metal parts are galvanized to resist corrosion.' },
+              { title: 'Deck, Stair & Bridge', desc: 'Features a robust wood core padded with high-density sponge.' },
+              { title: 'Outer Cover', desc: 'Finished with a soft PVC covering that is pleasant to touch.' }
+            ];
+            const currentSec = formData.softplayMaterials || {};
+            const subpointsList = Array.isArray(currentSec.subpoints) ? currentSec.subpoints : defaultMaterials;
+
+            const handleAddSubpoint = () => {
+              const updated = [...subpointsList, { title: '', desc: '' }];
+              const updatedSec = { ...currentSec, subpoints: updated };
+              setFormData(prev => ({ ...prev, softplayMaterials: updatedSec }));
+            };
+
+            const handleSubpointChange = (index, field, value) => {
+              const updated = subpointsList.map((sub, i) => i === index ? { ...sub, [field]: value } : sub);
+              const updatedSec = { ...currentSec, subpoints: updated };
+              setFormData(prev => ({ ...prev, softplayMaterials: updatedSec }));
+            };
+
+            const handleDeleteSubpoint = async (index) => {
+              const updated = subpointsList.filter((_, i) => i !== index);
+              const updatedSec = { ...currentSec, subpoints: updated };
+              setFormData(prev => ({ ...prev, softplayMaterials: updatedSec }));
+              await persistSectionToDatabase('softplayMaterials', updatedSec);
+            };
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Materials Quality & Durability Section</h3>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
+                  <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
+                  <input
+                    type="text"
+                    value={currentSec.title !== undefined ? currentSec.title : '*Materials Quality That Defines a* Trusted Soft Play Manufacturer'}
+                    onChange={(e) => handleFieldChange('softplayMaterials', 'title', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Intro Description</label>
+                  <textarea
+                    rows={3}
+                    value={currentSec.desc !== undefined ? currentSec.desc : "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:"}
+                    onChange={(e) => handleFieldChange('softplayMaterials', 'desc', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  />
+                </div>
+
+                {/* Photo Upload */}
+                <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                    Left Kids Play Area Photo Upload <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
+                  </h4>
+                  <div style={{ background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '6px' }}>Play Area Photo</label>
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        <Upload style={{ width: '13px', height: '13px' }} /> Upload Photo
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            setStatusMsg('Uploading photo...');
+                            try {
+                              const res = await uploadImageFile(file, admin.token);
+                              handleFieldChange('softplayMaterials', 'imgUrl', res.url);
+                              setStatusMsg('Photo uploaded!');
+                            } catch (err) {
+                              setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                            }
+                          }}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                      {currentSec.imgUrl ? (
+                        <img src={currentSec.imgUrl} alt="" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
+                      ) : (
+                        <img src={allImg} alt="Default Preview" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Subpoints Manager */}
+                <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                    <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Materials Subpoints (e.g. Plastic Parts, Post Structure)</h4>
+                    <button
+                      type="button"
+                      onClick={handleAddSubpoint}
+                      style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    >
+                      <Plus style={{ width: '14px', height: '14px' }} /> Add Subpoint
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {subpointsList.map((mSub, subIdx) => (
+                      <div key={subIdx} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: '10px', alignItems: 'center', background: '#ffffff', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                        <input
+                          type="text"
+                          placeholder="Subpoint Title (e.g. Plastic Parts)"
+                          value={mSub.title}
+                          onChange={(e) => handleSubpointChange(subIdx, 'title', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Subpoint Description"
+                          value={mSub.desc}
+                          onChange={(e) => handleSubpointChange(subIdx, 'desc', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                        />
                         <button
                           type="button"
-                          onClick={() => {
-                            const currentTypes = Array.isArray(formData.softplayTypes?.typesList) && formData.softplayTypes.typesList.length > 0
-                              ? [...formData.softplayTypes.typesList]
-                              : [
-                                { title: 'Themed Soft Play Zones', desc: 'A Fully Designed Play Environment...' },
-                                { title: 'Toddler & Junior Play Areas', desc: 'Age-Segmented Zones...' },
-                                { title: 'Multi-Level Play Structures', desc: 'Vertical Installations...' },
-                                { title: 'Ball Pit & Sensory Zones', desc: 'Foam-Filled Ball Pits...' }
-                              ];
-                            currentTypes.splice(tIdx, 1);
-                            handleFieldChange('softplayTypes', 'typesList', currentTypes);
-                          }}
-                          style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '3px' }}
+                          onClick={() => handleDeleteSubpoint(subIdx)}
+                          style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
                         >
-                          <Trash2 style={{ width: '13px', height: '13px' }} /> Remove Card
+                          <Trash2 style={{ width: '15px', height: '15px' }} />
                         </button>
                       </div>
-                      <input
-                        type="text"
-                        placeholder="Zone Title (e.g. Themed Soft Play Zones)"
-                        value={tItem.title}
-                        onChange={(e) => {
-                          const currentTypes = Array.isArray(formData.softplayTypes?.typesList) && formData.softplayTypes.typesList.length > 0
-                            ? [...formData.softplayTypes.typesList]
-                            : [
-                              { title: 'Themed Soft Play Zones', desc: 'A Fully Designed Play Environment...' },
-                              { title: 'Toddler & Junior Play Areas', desc: 'Age-Segmented Zones...' },
-                              { title: 'Multi-Level Play Structures', desc: 'Vertical Installations...' },
-                              { title: 'Ball Pit & Sensory Zones', desc: 'Foam-Filled Ball Pits...' }
-                            ];
-                          currentTypes[tIdx] = { ...currentTypes[tIdx], title: e.target.value };
-                          handleFieldChange('softplayTypes', 'typesList', currentTypes);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                      />
-                      <textarea
-                        rows={2}
-                        placeholder="Zone Description"
-                        value={tItem.desc}
-                        onChange={(e) => {
-                          const currentTypes = Array.isArray(formData.softplayTypes?.typesList) && formData.softplayTypes.typesList.length > 0
-                            ? [...formData.softplayTypes.typesList]
-                            : [
-                              { title: 'Themed Soft Play Zones', desc: 'A Fully Designed Play Environment...' },
-                              { title: 'Toddler & Junior Play Areas', desc: 'Age-Segmented Zones...' },
-                              { title: 'Multi-Level Play Structures', desc: 'Vertical Installations...' },
-                              { title: 'Ball Pit & Sensory Zones', desc: 'Foam-Filled Ball Pits...' }
-                            ];
-                          currentTypes[tIdx] = { ...currentTypes[tIdx], desc: e.target.value };
-                          handleFieldChange('softplayTypes', 'typesList', currentTypes);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
-                      />
+                    ))}
+                  </div>
+                </div>
 
-                      {/* Integrated Zone Card Image Upload */}
-                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                        <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '6px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                          <Upload style={{ width: '13px', height: '13px' }} /> Upload Card Image
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={async (e) => {
-                              const file = e.target.files[0];
-                              if (!file) return;
-                              setStatusMsg(`Uploading image for Zone #${tIdx + 1}...`);
-                              try {
-                                const res = await uploadImageFile(file, admin.token);
-                                const currentTypes = Array.isArray(formData.softplayTypes?.typesList) && formData.softplayTypes.typesList.length > 0
-                                  ? [...formData.softplayTypes.typesList]
-                                  : [
-                                    { title: 'Themed Soft Play Zones', desc: 'A Fully Designed Play Environment...' },
-                                    { title: 'Toddler & Junior Play Areas', desc: 'Age-Segmented Zones...' },
-                                    { title: 'Multi-Level Play Structures', desc: 'Vertical Installations...' },
-                                    { title: 'Ball Pit & Sensory Zones', desc: 'Foam-Filled Ball Pits...' }
-                                  ];
-                                currentTypes[tIdx] = { ...currentTypes[tIdx], img: res.url };
-                                handleFieldChange('softplayTypes', 'typesList', currentTypes);
-                                setStatusMsg('Image uploaded!');
-                              } catch (err) {
-                                setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                              }
-                            }}
-                            style={{ display: 'none' }}
-                          />
-                        </label>
-                        {tItem.img && (
-                          <img src={tItem.img} alt="" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
-                        )}
-                        <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>
-                          📐 600 × 400 px
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <button
+                    onClick={() => persistSectionToDatabase('softplayMaterials', { ...currentSec, subpoints: subpointsList })}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                  >
+                    Save Materials Quality Section
+                  </button>
                 </div>
               </div>
+            );
+          })()}
 
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('softplayTypes', formData.softplayTypes || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Soft Play Types Timeline Section
-                </button>
+          {/* TYPES OF SOFT PLAY ZONES TIMELINE FORM */}
+          {activeSection === 'softplayTypes' && (() => {
+            const defaultTypes = [
+              { title: 'Themed Soft Play Zones', desc: 'A Fully Designed Play Environment Built Around A Visual Theme — Jungle, Ocean, Space, Or A Custom Branded Concept Tailored To Your Venue. Every Element From Colours And Structures To Signage Works Together, Creating A Space Visitors Photograph, Share, And Return To. Ideal For Malls, Hotels, And Family Entertainment Centres Looking To Build A Recognisable, Destination-Worthy Indoor Play Area For Kids.', img: '' },
+              { title: 'Toddler & Junior Play Areas', desc: 'Age-Segmented Zones Designed For Children Aged 2–5 And 6–12 Years Separately Ensure The Right Structure Height, Challenge Level, And Safety Padding For Each Group. Allows Venues Serving Mixed-Age Families To Keep Younger Toddlers Safe Without Restricting Older Children. Popular In Hospitals, Airports, And Hotel Recreation Zones Where The Play Area Must Serve A Wide Visitor Demographic.', img: '' },
+              { title: 'Multi-Level Play Structures', desc: 'Vertical Installations That Use Your Full Ceiling Height — Slides, Climbing Walls, Rope Bridges, Tunnels, And Elevated Platforms Across Multiple Levels. Delivers Large Play Capacity In A Smaller Floor Footprint, Making It The Preferred Format For Venues Where Floor Space Is Limited But Ceiling Height Is Available. Commonly Installed In Malls And Standalone Soft Play Centres Across India.', img: '' },
+              { title: 'Ball Pit & Sensory Zones', desc: 'Foam-Filled Ball Pits And Sensory Play Areas Built For Children Aged 2–6 Years — Fully Padded, Rounded Edges, And Commercial-Grade Foam Throughout. These Zones Generate Some Of The Highest Dwell Times Of Any Soft Play Equipment Category, Keeping Young Visitors Engaged While Parents Relax Nearby. Works Well As A Standalone Addition Or As Part Of A Larger Play Zone Setup.', img: '' }
+            ];
+            const currentSec = formData.softplayTypes || {};
+            const typesList = Array.isArray(currentSec.typesList) ? currentSec.typesList : defaultTypes;
+
+            const handleAddType = () => {
+              const updated = [...typesList, { title: '', desc: '', img: '' }];
+              const updatedSec = { ...currentSec, typesList: updated };
+              setFormData(prev => ({ ...prev, softplayTypes: updatedSec }));
+            };
+
+            const handleTypeChange = (index, field, value) => {
+              const updated = typesList.map((t, i) => i === index ? { ...t, [field]: value } : t);
+              const updatedSec = { ...currentSec, typesList: updated };
+              setFormData(prev => ({ ...prev, softplayTypes: updatedSec }));
+            };
+
+            const handleDeleteType = async (index) => {
+              const updated = typesList.filter((_, i) => i !== index);
+              const updatedSec = { ...currentSec, typesList: updated };
+              setFormData(prev => ({ ...prev, softplayTypes: updatedSec }));
+              await persistSectionToDatabase('softplayTypes', updatedSec);
+            };
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Types of Soft Play Zones Timeline Section</h3>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
+                  <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
+                  <input
+                    type="text"
+                    value={currentSec.title !== undefined ? currentSec.title : 'Types of Soft Play Zones<br />*We Design & Install*'}
+                    onChange={(e) => handleFieldChange('softplayTypes', 'title', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure Button Label</label>
+                    <input
+                      type="text"
+                      value={currentSec.buttonText !== undefined ? currentSec.buttonText : 'Download Our Brochure'}
+                      onChange={(e) => handleFieldChange('softplayTypes', 'buttonText', e.target.value)}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File / Link URL</label>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <input
+                        type="text"
+                        value={currentSec.brochureUrl !== undefined ? currentSec.brochureUrl : '#'}
+                        onChange={(e) => handleFieldChange('softplayTypes', 'brochureUrl', e.target.value)}
+                        placeholder="e.g. /assets/brochure.pdf or upload PDF..."
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                      />
+                      <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                        <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                        <input
+                          type="file"
+                          accept="application/pdf,.pdf"
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            setStatusMsg('Uploading PDF brochure...');
+                            try {
+                              const res = await uploadImageFile(file, admin.token);
+                              handleFieldChange('softplayTypes', 'brochureUrl', res.url);
+                              setStatusMsg('PDF Brochure uploaded successfully!');
+                            } catch (err) {
+                              setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                            }
+                          }}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Types of Soft Play Zones List Manager */}
+                <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                    <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                      Soft Play Zone Types (Title, Description & Image) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Card Image: 600 × 400 px (3:2)</span>
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={handleAddType}
+                      style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    >
+                      <Plus style={{ width: '14px', height: '14px' }} /> Add Zone Type
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                    {typesList.map((tItem, tIdx) => (
+                      <div key={tIdx} style={{ display: 'flex', flexDirection: 'column', gap: '10px', background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Zone Type #{tIdx + 1}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteType(tIdx)}
+                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '3px' }}
+                          >
+                            <Trash2 style={{ width: '13px', height: '13px' }} /> Remove Card
+                          </button>
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Zone Title (e.g. Themed Soft Play Zones)"
+                          value={tItem.title}
+                          onChange={(e) => handleTypeChange(tIdx, 'title', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                        />
+                        <textarea
+                          rows={2}
+                          placeholder="Zone Description"
+                          value={tItem.desc}
+                          onChange={(e) => handleTypeChange(tIdx, 'desc', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
+                        />
+
+                        {/* Integrated Zone Card Image Upload */}
+                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                          <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '6px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                            <Upload style={{ width: '13px', height: '13px' }} /> Upload Card Image
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={async (e) => {
+                                const file = e.target.files[0];
+                                if (!file) return;
+                                setStatusMsg(`Uploading image for Zone #${tIdx + 1}...`);
+                                try {
+                                  const res = await uploadImageFile(file, admin.token);
+                                  handleTypeChange(tIdx, 'img', res.url);
+                                  setStatusMsg('Image uploaded!');
+                                } catch (err) {
+                                  setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                                }
+                              }}
+                              style={{ display: 'none' }}
+                            />
+                          </label>
+                          {tItem.img && (
+                            <img src={tItem.img} alt="" style={{ height: '35px', width: '50px', objectFit: 'cover', borderRadius: '4px' }} />
+                          )}
+                          <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>
+                            📐 600 × 400 px
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <button
+                    onClick={() => persistSectionToDatabase('softplayTypes', { ...currentSec, typesList })}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                  >
+                    Save Soft Play Types Timeline Section
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* KNOW YOUR RETURNS & ROI SECTION FORM */}
           {activeSection === 'softplayRoi' && (
@@ -7306,7 +7211,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-
               {/* Section Image Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                 <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
@@ -7355,174 +7259,138 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           )}
 
           {/* WHY CHOOSE WINERA SECTION FORM */}
-          {activeSection === 'softplayWhyUs' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Why Choose Winera Section</h3>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
-                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
-                <input
-                  type="text"
-                  value={formData.softplayWhyUs?.title || 'Why Choose *Winera International*'}
-                  onChange={(e) => handleFieldChange('softplayWhyUs', 'title', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+          {activeSection === 'softplayWhyUs' && (() => {
+            const defaultCards = [
+              { title: 'Expertise', desc: 'Building Commercial Soft Play Zones Since 2014, Made To Survive Heavy Daily Use.', iconUrl: '' },
+              { title: 'Customized Solutions', desc: 'Every Project Starts With A Custom 3D Design, Never An Off-The-Shelf Kit.', iconUrl: '' },
+              { title: 'Proven Track Record', desc: 'Trusted By Malls, Hotels, And Schools Across 50+ Cities In India.', iconUrl: '' },
+              { title: 'Competitive Pricing', desc: 'Factory-Direct Pricing With No Distributor Markup, Plus A Free ROI Report.', iconUrl: '' },
+              { title: 'Single Point Of Contact', desc: 'One Team From 3D Design To Installation With No Third-Party Contractors.', iconUrl: '' }
+            ];
+            const currentSec = formData.softplayWhyUs || {};
+            const cardsList = Array.isArray(currentSec.cardsList) ? currentSec.cardsList : defaultCards;
 
-              {/* Why Choose Winera Cards Manager */}
-              <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Feature Cards (Title, Description & Icon)</h4>
+            const handleAddCard = () => {
+              const updated = [...cardsList, { title: '', desc: '', iconUrl: '' }];
+              const updatedSec = { ...currentSec, cardsList: updated };
+              setFormData(prev => ({ ...prev, softplayWhyUs: updatedSec }));
+            };
+
+            const handleCardChange = (index, field, value) => {
+              const updated = cardsList.map((c, i) => i === index ? { ...c, [field]: value } : c);
+              const updatedSec = { ...currentSec, cardsList: updated };
+              setFormData(prev => ({ ...prev, softplayWhyUs: updatedSec }));
+            };
+
+            const handleDeleteCard = async (index) => {
+              const updated = cardsList.filter((_, i) => i !== index);
+              const updatedSec = { ...currentSec, cardsList: updated };
+              setFormData(prev => ({ ...prev, softplayWhyUs: updatedSec }));
+              await persistSectionToDatabase('softplayWhyUs', updatedSec);
+            };
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Why Choose Winera Section</h3>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
+                  <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
+                  <input
+                    type="text"
+                    value={currentSec.title !== undefined ? currentSec.title : 'Why Choose *Winera International*'}
+                    onChange={(e) => handleFieldChange('softplayWhyUs', 'title', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+
+                {/* Why Choose Winera Cards Manager */}
+                <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                    <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Feature Cards (Title, Description & Icon)</h4>
+                    <button
+                      type="button"
+                      onClick={handleAddCard}
+                      style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    >
+                      <Plus style={{ width: '14px', height: '14px' }} /> Add Card
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                    {cardsList.map((wCard, wIdx) => (
+                      <div key={wIdx} style={{ display: 'flex', flexDirection: 'column', gap: '10px', background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Card #{wIdx + 1}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteCard(wIdx)}
+                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '3px' }}
+                          >
+                            <Trash2 style={{ width: '13px', height: '13px' }} /> Remove Card
+                          </button>
+                        </div>
+
+                        <input
+                          type="text"
+                          placeholder="Card Title (e.g. Expertise)"
+                          value={wCard.title}
+                          onChange={(e) => handleCardChange(wIdx, 'title', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                        />
+
+                        <textarea
+                          rows={2}
+                          placeholder="Card Description"
+                          value={wCard.desc}
+                          onChange={(e) => handleCardChange(wIdx, 'desc', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
+                        />
+
+                        {/* Custom Icon Image Upload */}
+                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                          <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '6px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                            <Upload style={{ width: '13px', height: '13px' }} /> Upload Custom Icon
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={async (e) => {
+                                const file = e.target.files[0];
+                                if (!file) return;
+                                setStatusMsg(`Uploading icon for Card #${wIdx + 1}...`);
+                                try {
+                                  const res = await uploadImageFile(file, admin.token);
+                                  handleCardChange(wIdx, 'iconUrl', res.url);
+                                  setStatusMsg('Icon uploaded!');
+                                } catch (err) {
+                                  setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                                }
+                              }}
+                              style={{ display: 'none' }}
+                            />
+                          </label>
+                          {wCard.iconUrl && (
+                            <img src={wCard.iconUrl} alt="" style={{ height: '30px', width: '30px', objectFit: 'contain' }} />
+                          )}
+                          <span style={{ fontSize: '11.5px', color: '#64748b', fontWeight: '500' }}>
+                            {wCard.iconUrl ? 'Custom Icon Uploaded' : 'Using default SVG icon'}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
                   <button
-                    type="button"
-                    onClick={() => {
-                      const currentCards = Array.isArray(formData.softplayWhyUs?.cardsList) && formData.softplayWhyUs.cardsList.length > 0
-                        ? [...formData.softplayWhyUs.cardsList]
-                        : [
-                          { title: 'Expertise', desc: 'Building Commercial Soft Play Zones Since 2014, Made To Survive Heavy Daily Use.' },
-                          { title: 'Customized Solutions', desc: 'Every Project Starts With A Custom 3D Design, Never An Off-The-Shelf Kit.' },
-                          { title: 'Proven Track Record', desc: 'Trusted By Malls, Hotels, And Schools Across 50+ Cities In India.' },
-                          { title: 'Competitive Pricing', desc: 'Factory-Direct Pricing With No Distributor Markup, Plus A Free ROI Report.' },
-                          { title: 'Single Point Of Contact', desc: 'One Team From 3D Design To Installation With No Third-Party Contractors.' }
-                        ];
-                      currentCards.push({ title: '', desc: '', iconUrl: '' });
-                      handleFieldChange('softplayWhyUs', 'cardsList', currentCards);
-                    }}
-                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    onClick={() => persistSectionToDatabase('softplayWhyUs', { ...currentSec, cardsList })}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
-                    <Plus style={{ width: '14px', height: '14px' }} /> Add Card
+                    Save Why Choose Winera Section
                   </button>
                 </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  {(Array.isArray(formData.softplayWhyUs?.cardsList) && formData.softplayWhyUs.cardsList.length > 0
-                    ? formData.softplayWhyUs.cardsList
-                    : [
-                      { title: 'Expertise', desc: 'Building Commercial Soft Play Zones Since 2014, Made To Survive Heavy Daily Use.' },
-                      { title: 'Customized Solutions', desc: 'Every Project Starts With A Custom 3D Design, Never An Off-The-Shelf Kit.' },
-                      { title: 'Proven Track Record', desc: 'Trusted By Malls, Hotels, And Schools Across 50+ Cities In India.' },
-                      { title: 'Competitive Pricing', desc: 'Factory-Direct Pricing With No Distributor Markup, Plus A Free ROI Report.' },
-                      { title: 'Single Point Of Contact', desc: 'One Team From 3D Design To Installation With No Third-Party Contractors.' }
-                    ]
-                  ).map((wCard, wIdx) => (
-                    <div key={wIdx} style={{ display: 'flex', flexDirection: 'column', gap: '10px', background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: '12px', fontWeight: '800', color: '#38bdf8' }}>Card #{wIdx + 1}</span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const currentCards = Array.isArray(formData.softplayWhyUs?.cardsList) && formData.softplayWhyUs.cardsList.length > 0
-                              ? [...formData.softplayWhyUs.cardsList]
-                              : [
-                                { title: 'Expertise', desc: 'Building Commercial Soft Play Zones...' },
-                                { title: 'Customized Solutions', desc: 'Every Project Starts With A Custom 3D Design...' },
-                                { title: 'Proven Track Record', desc: 'Trusted By Malls...' },
-                                { title: 'Competitive Pricing', desc: 'Factory-Direct Pricing...' },
-                                { title: 'Single Point Of Contact', desc: 'One Team From 3D Design...' }
-                              ];
-                            currentCards.splice(wIdx, 1);
-                            handleFieldChange('softplayWhyUs', 'cardsList', currentCards);
-                          }}
-                          style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '3px' }}
-                        >
-                          <Trash2 style={{ width: '13px', height: '13px' }} /> Remove Card
-                        </button>
-                      </div>
-
-                      <input
-                        type="text"
-                        placeholder="Card Title (e.g. Expertise)"
-                        value={wCard.title}
-                        onChange={(e) => {
-                          const currentCards = Array.isArray(formData.softplayWhyUs?.cardsList) && formData.softplayWhyUs.cardsList.length > 0
-                            ? [...formData.softplayWhyUs.cardsList]
-                            : [
-                              { title: 'Expertise', desc: 'Building Commercial Soft Play Zones...' },
-                              { title: 'Customized Solutions', desc: 'Every Project Starts...' },
-                              { title: 'Proven Track Record', desc: 'Trusted By Malls...' },
-                              { title: 'Competitive Pricing', desc: 'Factory-Direct Pricing...' },
-                              { title: 'Single Point Of Contact', desc: 'One Team From 3D Design...' }
-                            ];
-                          currentCards[wIdx] = { ...currentCards[wIdx], title: e.target.value };
-                          handleFieldChange('softplayWhyUs', 'cardsList', currentCards);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                      />
-
-                      <textarea
-                        rows={2}
-                        placeholder="Card Description"
-                        value={wCard.desc}
-                        onChange={(e) => {
-                          const currentCards = Array.isArray(formData.softplayWhyUs?.cardsList) && formData.softplayWhyUs.cardsList.length > 0
-                            ? [...formData.softplayWhyUs.cardsList]
-                            : [
-                              { title: 'Expertise', desc: 'Building Commercial Soft Play Zones...' },
-                              { title: 'Customized Solutions', desc: 'Every Project Starts...' },
-                              { title: 'Proven Track Record', desc: 'Trusted By Malls...' },
-                              { title: 'Competitive Pricing', desc: 'Factory-Direct Pricing...' },
-                              { title: 'Single Point Of Contact', desc: 'One Team From 3D Design...' }
-                            ];
-                          currentCards[wIdx] = { ...currentCards[wIdx], desc: e.target.value };
-                          handleFieldChange('softplayWhyUs', 'cardsList', currentCards);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
-                      />
-
-                      {/* Custom Icon Image Upload */}
-                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                        <label style={{ background: '#38bdf8', color: '#fff', padding: '6px 12px', borderRadius: '6px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                          <Upload style={{ width: '13px', height: '13px' }} /> Upload Custom Icon
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={async (e) => {
-                              const file = e.target.files[0];
-                              if (!file) return;
-                              setStatusMsg(`Uploading icon for Card #${wIdx + 1}...`);
-                              try {
-                                const res = await uploadImageFile(file, admin.token);
-                                const currentCards = Array.isArray(formData.softplayWhyUs?.cardsList) && formData.softplayWhyUs.cardsList.length > 0
-                                  ? [...formData.softplayWhyUs.cardsList]
-                                  : [
-                                    { title: 'Expertise', desc: 'Building Commercial Soft Play Zones...' },
-                                    { title: 'Customized Solutions', desc: 'Every Project Starts...' },
-                                    { title: 'Proven Track Record', desc: 'Trusted By Malls...' },
-                                    { title: 'Competitive Pricing', desc: 'Factory-Direct Pricing...' },
-                                    { title: 'Single Point Of Contact', desc: 'One Team From 3D Design...' }
-                                  ];
-                                currentCards[wIdx] = { ...currentCards[wIdx], iconUrl: res.url };
-                                handleFieldChange('softplayWhyUs', 'cardsList', currentCards);
-                                setStatusMsg('Icon uploaded!');
-                              } catch (err) {
-                                setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                              }
-                            }}
-                            style={{ display: 'none' }}
-                          />
-                        </label>
-                        {wCard.iconUrl && (
-                          <img src={wCard.iconUrl} alt="" style={{ height: '30px', width: '30px', objectFit: 'contain' }} />
-                        )}
-                        <span style={{ fontSize: '11.5px', color: '#64748b', fontWeight: '500' }}>
-                          {wCard.iconUrl ? 'Custom Icon Uploaded' : 'Using default SVG icon'}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('softplayWhyUs', formData.softplayWhyUs || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Why Choose Winera Section
-                </button>
-              </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* SOFT PLAY FAQS FORM */}
           {activeSection === 'softplayFaqs' && (
@@ -8926,7 +8794,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <button
                         onClick={() => {
                           const currentRows = [...rowsList];
-                          currentRows.push({ spec: 'New Spec', details: 'New Value' });
+                          currentRows.push({ spec: '', details: '' });
                           setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), rows: currentRows } }));
                         }}
                         style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', color: '#0f172a', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
@@ -8960,9 +8828,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                           />
                           <button
-                            onClick={() => {
+                            onClick={async () => {
                               const newRows = rowsList.filter((_, i) => i !== rIdx);
-                              setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), rows: newRows } }));
+                              const updatedSec = { ...(formData.hypergridSpecs || defaultHypergridSpecs), rows: newRows };
+                              setFormData(prev => ({ ...prev, hypergridSpecs: updatedSec }));
+                              await persistSectionToDatabase('hypergridSpecs', updatedSec);
                             }}
                             style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
                           >
@@ -9942,162 +9812,166 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           })()}
 
           {/* BUMPER CAR TECHNICAL SPECIFICATIONS CARD FORM */}
-          {activeSection === 'bumpercarSpecs' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Technical Specifications Card</h3>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
-                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Yellow accent.</p>
-                <input
-                  type="text"
-                  value={formData.bumpercarSpecs?.title || '*Technical* Specifications'}
-                  onChange={(e) => handleFieldChange('bumpercarSpecs', 'title', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+          {activeSection === 'bumpercarSpecs' && (() => {
+            const defaultBumpercarSpecs = [
+              { spec: "Drive Type", details: "Electric Grid / Battery Operated" },
+              { spec: "Body Material", details: "High-density FRP / Polyethylene" },
+              { spec: "Power Source", details: "48V DC / Ceiling Floor Grid" },
+              { spec: "Frame", details: "Hot-dip galvanized steel chassis" },
+              { spec: "Safety Ring", details: "Heavy-duty PVC / Rubber Bumper" },
+              { spec: "Controls", details: "Dual pedal & steering wheel" },
+              { spec: "Expected lifespan", details: "8-12 years" }
+            ];
+            const currentSec = formData.bumpercarSpecs || {};
+            const specsList = Array.isArray(currentSec.specsList) ? currentSec.specsList : defaultBumpercarSpecs;
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 600 px (2:1)</span>
-                </label>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        setStatusMsg('Uploading specs background image...');
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          handleFieldChange('bumpercarSpecs', 'bgUrl', res.url);
-                          setStatusMsg('Specs background image uploaded successfully!');
-                        } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                        }
-                      }}
-                      style={{ display: 'none' }}
-                    />
-                  </label>
-                  <img src={getAdminValidImageUrl(formData.bumpercarSpecs?.bgUrl, bumpercarSpecsBg)} alt="Specs Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
-                </div>
-              </div>
+            const handleAddRow = () => {
+              const updated = [...specsList, { spec: '', details: '' }];
+              const updatedSec = { ...currentSec, specsList: updated };
+              setFormData(prev => ({ ...prev, bumpercarSpecs: updatedSec }));
+            };
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF Document / Link URL</label>
-                <div style={{ display: 'flex', gap: '8px' }}>
+            const handleRowChange = (index, field, value) => {
+              const updated = specsList.map((row, i) => i === index ? { ...row, [field]: value } : row);
+              const updatedSec = { ...currentSec, specsList: updated };
+              setFormData(prev => ({ ...prev, bumpercarSpecs: updatedSec }));
+            };
+
+            const handleDeleteRow = async (index) => {
+              const updated = specsList.filter((_, i) => i !== index);
+              const updatedSec = { ...currentSec, specsList: updated };
+              setFormData(prev => ({ ...prev, bumpercarSpecs: updatedSec }));
+              await persistSectionToDatabase('bumpercarSpecs', updatedSec);
+            };
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Technical Specifications Card</h3>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
+                  <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Yellow accent.</p>
                   <input
                     type="text"
-                    value={formData.bumpercarSpecs?.brochureUrl || '#'}
-                    onChange={(e) => handleFieldChange('bumpercarSpecs', 'brochureUrl', e.target.value)}
-                    placeholder="e.g. /uploads/bumpercar_brochure.pdf"
-                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    value={currentSec.title !== undefined ? currentSec.title : '*Technical* Specifications'}
+                    onChange={(e) => handleFieldChange('bumpercarSpecs', 'title', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
-                  <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
-                    <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
-                    <input
-                      type="file"
-                      accept="application/pdf,.pdf"
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        setStatusMsg('Uploading brochure PDF...');
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          handleFieldChange('bumpercarSpecs', 'brochureUrl', res.url);
-                          setStatusMsg('Brochure PDF uploaded successfully!');
-                        } catch (err) {
-                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                        }
-                      }}
-                      style={{ display: 'none' }}
-                    />
-                  </label>
                 </div>
-              </div>
 
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <label style={{ fontWeight: '800', fontSize: '13px', color: '#0f172a' }}>Specifications Table Rows</label>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 600 px (2:1)</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          setStatusMsg('Uploading specs background image...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            handleFieldChange('bumpercarSpecs', 'bgUrl', res.url);
+                            setStatusMsg('Specs background image uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                    <img src={getAdminValidImageUrl(currentSec.bgUrl, bumpercarSpecsBg)} alt="Specs Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+                  </div>
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF Document / Link URL</label>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <input
+                      type="text"
+                      value={currentSec.brochureUrl !== undefined ? currentSec.brochureUrl : '#'}
+                      onChange={(e) => handleFieldChange('bumpercarSpecs', 'brochureUrl', e.target.value)}
+                      placeholder="e.g. /uploads/bumpercar_brochure.pdf"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                    <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                      <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                      <input
+                        type="file"
+                        accept="application/pdf,.pdf"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          setStatusMsg('Uploading brochure PDF...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            handleFieldChange('bumpercarSpecs', 'brochureUrl', res.url);
+                            setStatusMsg('Brochure PDF uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <label style={{ fontWeight: '800', fontSize: '13px', color: '#0f172a' }}>Specifications Table Rows</label>
+                    <button
+                      type="button"
+                      onClick={handleAddRow}
+                      style={{ background: '#0f172a', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                    >
+                      + Add Row
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {specsList.map((item, idx) => (
+                      <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '10px', alignItems: 'center', background: '#F5F5F9', padding: '10px', borderRadius: '10px' }}>
+                        <input
+                          type="text"
+                          placeholder="Specification"
+                          value={item.spec}
+                          onChange={(e) => handleRowChange(idx, 'spec', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Details"
+                          value={item.details}
+                          onChange={(e) => handleRowChange(idx, 'details', e.target.value)}
+                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteRow(idx)}
+                          style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', height: '32px', borderRadius: '8px', cursor: 'pointer' }}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
                   <button
-                    onClick={() => {
-                      const cur = formData.bumpercarSpecs?.specsList || [
-                        { spec: "Drive Type", details: "Electric Grid / Battery Operated" },
-                        { spec: "Body Material", details: "High-density FRP / Polyethylene" },
-                        { spec: "Power Source", details: "48V DC / Ceiling Floor Grid" },
-                        { spec: "Frame", details: "Hot-dip galvanized steel chassis" },
-                        { spec: "Safety Ring", details: "Heavy-duty PVC / Rubber Bumper" },
-                        { spec: "Controls", details: "Dual pedal & steering wheel" },
-                        { spec: "Expected lifespan", details: "8-12 years" }
-                      ];
-                      handleFieldChange('bumpercarSpecs', 'specsList', [...cur, { spec: '', details: '' }]);
-                    }}
-                    style={{ background: '#0f172a', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                    onClick={() => persistSectionToDatabase('bumpercarSpecs', { ...currentSec, specsList })}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
-                    + Add Row
+                    Save Technical Specifications Card
                   </button>
                 </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {(formData.bumpercarSpecs?.specsList || [
-                    { spec: "Drive Type", details: "Electric Grid / Battery Operated" },
-                    { spec: "Body Material", details: "High-density FRP / Polyethylene" },
-                    { spec: "Power Source", details: "48V DC / Ceiling Floor Grid" },
-                    { spec: "Frame", details: "Hot-dip galvanized steel chassis" },
-                    { spec: "Safety Ring", details: "Heavy-duty PVC / Rubber Bumper" },
-                    { spec: "Controls", details: "Dual pedal & steering wheel" },
-                    { spec: "Expected lifespan", details: "8-12 years" }
-                  ]).map((item, idx) => (
-                    <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '10px', alignItems: 'center', background: '#F5F5F9', padding: '10px', borderRadius: '10px' }}>
-                      <input
-                        type="text"
-                        placeholder="Specification"
-                        value={item.spec}
-                        onChange={(e) => {
-                          const list = [...(formData.bumpercarSpecs?.specsList || [])];
-                          list[idx] = { ...list[idx], spec: e.target.value };
-                          handleFieldChange('bumpercarSpecs', 'specsList', list);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                      <input
-                        type="text"
-                        placeholder="Details"
-                        value={item.details}
-                        onChange={(e) => {
-                          const list = [...(formData.bumpercarSpecs?.specsList || [])];
-                          list[idx] = { ...list[idx], details: e.target.value };
-                          handleFieldChange('bumpercarSpecs', 'specsList', list);
-                        }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                      <button
-                        onClick={() => {
-                          const list = [...(formData.bumpercarSpecs?.specsList || [])];
-                          list.splice(idx, 1);
-                          handleFieldChange('bumpercarSpecs', 'specsList', list);
-                        }}
-                        style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', height: '32px', borderRadius: '8px', cursor: 'pointer' }}
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                </div>
               </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('bumpercarSpecs', formData.bumpercarSpecs || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Technical Specifications Card
-                </button>
-              </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* INDOOR BUMPER CAR OPTIONS FOR YOUR VENUE FORM */}
           {activeSection === 'bumpercarOptions' && (
@@ -10207,212 +10081,208 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           )}
 
           {/* QUICK COMPARISON TABLE SECTION FORM */}
-          {activeSection === 'bumpercarComparison' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Quick Comparison Table Section</h3>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
-                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue.</p>
-                <input
-                  type="text"
-                  value={formData.bumpercarComparison?.title || '*QUICK COMPARISON* TABLE'}
-                  onChange={(e) => handleFieldChange('bumpercarComparison', 'title', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+          {activeSection === 'bumpercarComparison' && (() => {
+            const defaultFeatures = [
+              "Installation",
+              "Power management",
+              "Best for",
+              "Relocation",
+              "Setup cost",
+              "Operating cost"
+            ];
+            const defaultElectric = [
+              { text: "Conductive floor + ceiling grid" },
+              { text: "None — continuous supply" },
+              { text: "Permanent amusement parks, FECs" },
+              { text: "Fixed installation" },
+              { text: "Higher (floor infrastructure)" },
+              { text: "Lower per session" }
+            ];
+            const defaultBattery = [
+              { text: "Flat surface only — no modification needed" },
+              { text: "Recharge between sessions" },
+              { text: "Malls, gaming zones, events" },
+              { text: "Can be moved to new venues" },
+              { text: "Lower initial investment" },
+              { text: "Battery replacement over time" }
+            ];
 
-              {/* Center Comparison Labels Manager */}
-              <div style={{ background: '#ECFDF5', padding: '16px', borderRadius: '16px', border: '1px solid #a7f3d0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#047857' }}>Center Comparison Labels (Middle Column)</h4>
+            const currentSec = formData.bumpercarComparison || {};
+            const features = Array.isArray(currentSec.features) ? currentSec.features : defaultFeatures;
+            const electricPoints = Array.isArray(currentSec.electricPoints) ? currentSec.electricPoints : defaultElectric;
+            const batteryPoints = Array.isArray(currentSec.batteryPoints) ? currentSec.batteryPoints : defaultBattery;
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Quick Comparison Table Section</h3>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
+                  <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue.</p>
+                  <input
+                    type="text"
+                    value={currentSec.title !== undefined ? currentSec.title : '*QUICK COMPARISON* TABLE'}
+                    onChange={(e) => {
+                      const updatedSec = { ...currentSec, title: e.target.value };
+                      setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                    }}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+
+                {/* Center Comparison Labels Manager */}
+                <div style={{ background: '#ECFDF5', padding: '16px', borderRadius: '16px', border: '1px solid #a7f3d0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#047857' }}>Center Comparison Labels (Middle Column)</h4>
+                    <button
+                      onClick={() => {
+                        const updated = [...features, ''];
+                        const updatedSec = { ...currentSec, features: updated };
+                        setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                      }}
+                      style={{ background: '#10b981', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                    >
+                      + Add Label
+                    </button>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {features.map((itemText, idx) => (
+                      <div key={idx} style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                          type="text"
+                          value={itemText}
+                          onChange={(e) => {
+                            const updated = [...features];
+                            updated[idx] = e.target.value;
+                            const updatedSec = { ...currentSec, features: updated };
+                            setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                          }}
+                          style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                        <button
+                          onClick={async () => {
+                            const updated = features.filter((_, i) => i !== idx);
+                            const updatedSec = { ...currentSec, features: updated };
+                            setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                            await persistSectionToDatabase('bumpercarComparison', updatedSec);
+                          }}
+                          style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', borderRadius: '8px', cursor: 'pointer' }}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Electric Points Manager */}
+                <div style={{ background: '#FEFCE8', padding: '16px', borderRadius: '16px', border: '1px solid #fef08a' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#a16207' }}>Electric Floor Points (Yellow Points)</h4>
+                    <button
+                      onClick={() => {
+                        const updated = [...electricPoints, { text: '' }];
+                        const updatedSec = { ...currentSec, electricPoints: updated };
+                        setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                      }}
+                      style={{ background: '#ca8a04', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                    >
+                      + Add Electric Point
+                    </button>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {electricPoints.map((item, idx) => (
+                      <div key={idx} style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                          type="text"
+                          value={item.text || ''}
+                          onChange={(e) => {
+                            const updated = [...electricPoints];
+                            updated[idx] = { text: e.target.value };
+                            const updatedSec = { ...currentSec, electricPoints: updated };
+                            setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                          }}
+                          style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                        <button
+                          onClick={async () => {
+                            const updated = electricPoints.filter((_, i) => i !== idx);
+                            const updatedSec = { ...currentSec, electricPoints: updated };
+                            setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                            await persistSectionToDatabase('bumpercarComparison', updatedSec);
+                          }}
+                          style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', borderRadius: '8px', cursor: 'pointer' }}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Battery Points Manager */}
+                <div style={{ background: '#F0F9FF', padding: '16px', borderRadius: '16px', border: '1px solid #bae6fd' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Battery-Operated Points (Cyan Points)</h4>
+                    <button
+                      onClick={() => {
+                        const updated = [...batteryPoints, { text: '' }];
+                        const updatedSec = { ...currentSec, batteryPoints: updated };
+                        setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                      }}
+                      style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                    >
+                      + Add Battery Point
+                    </button>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {batteryPoints.map((item, idx) => (
+                      <div key={idx} style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                          type="text"
+                          value={item.text || ''}
+                          onChange={(e) => {
+                            const updated = [...batteryPoints];
+                            updated[idx] = { text: e.target.value };
+                            const updatedSec = { ...currentSec, batteryPoints: updated };
+                            setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                          }}
+                          style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                        <button
+                          onClick={async () => {
+                            const updated = batteryPoints.filter((_, i) => i !== idx);
+                            const updatedSec = { ...currentSec, batteryPoints: updated };
+                            setFormData(prev => ({ ...prev, bumpercarComparison: updatedSec }));
+                            await persistSectionToDatabase('bumpercarComparison', updatedSec);
+                          }}
+                          style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', borderRadius: '8px', cursor: 'pointer' }}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
                   <button
                     onClick={() => {
-                      const cur = formData.bumpercarComparison?.features || [
-                        "Installation",
-                        "Power management",
-                        "Best for",
-                        "Relocation",
-                        "Setup cost",
-                        "Operating cost"
-                      ];
-                      handleFieldChange('bumpercarComparison', 'features', [...cur, '']);
+                      const updatedSec = {
+                        ...currentSec,
+                        features,
+                        electricPoints,
+                        batteryPoints
+                      };
+                      persistSectionToDatabase('bumpercarComparison', updatedSec);
                     }}
-                    style={{ background: '#10b981', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
-                    + Add Label
+                    Save Quick Comparison Table
                   </button>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {(formData.bumpercarComparison?.features || [
-                    "Installation",
-                    "Power management",
-                    "Best for",
-                    "Relocation",
-                    "Setup cost",
-                    "Operating cost"
-                  ]).map((itemText, idx) => (
-                    <div key={idx} style={{ display: 'flex', gap: '8px' }}>
-                      <input
-                        type="text"
-                        value={itemText}
-                        onChange={(e) => {
-                          const list = [...(formData.bumpercarComparison?.features || [
-                            "Installation",
-                            "Power management",
-                            "Best for",
-                            "Relocation",
-                            "Setup cost",
-                            "Operating cost"
-                          ])];
-                          list[idx] = e.target.value;
-                          handleFieldChange('bumpercarComparison', 'features', list);
-                        }}
-                        style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                      <button
-                        onClick={() => {
-                          const list = [...(formData.bumpercarComparison?.features || [
-                            "Installation",
-                            "Power management",
-                            "Best for",
-                            "Relocation",
-                            "Setup cost",
-                            "Operating cost"
-                          ])];
-                          list.splice(idx, 1);
-                          handleFieldChange('bumpercarComparison', 'features', list);
-                        }}
-                        style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', borderRadius: '8px', cursor: 'pointer' }}
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                </div>
               </div>
-
-              {/* Electric Points Manager */}
-              <div style={{ background: '#FEFCE8', padding: '16px', borderRadius: '16px', border: '1px solid #fef08a' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#a16207' }}>Electric Floor Points (Yellow Points)</h4>
-                  <button
-                    onClick={() => {
-                      const cur = formData.bumpercarComparison?.electricPoints || [
-                        { text: "Conductive floor + ceiling grid" },
-                        { text: "None — continuous supply" },
-                        { text: "Permanent amusement parks, FECs" },
-                        { text: "Fixed installation" },
-                        { text: "Higher (floor infrastructure)" },
-                        { text: "Lower per session" }
-                      ];
-                      handleFieldChange('bumpercarComparison', 'electricPoints', [...cur, { text: '' }]);
-                    }}
-                    style={{ background: '#ca8a04', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
-                  >
-                    + Add Electric Point
-                  </button>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {(formData.bumpercarComparison?.electricPoints || [
-                    { text: "Conductive floor + ceiling grid" },
-                    { text: "None — continuous supply" },
-                    { text: "Permanent amusement parks, FECs" },
-                    { text: "Fixed installation" },
-                    { text: "Higher (floor infrastructure)" },
-                    { text: "Lower per session" }
-                  ]).map((item, idx) => (
-                    <div key={idx} style={{ display: 'flex', gap: '8px' }}>
-                      <input
-                        type="text"
-                        value={item.text}
-                        onChange={(e) => {
-                          const list = [...(formData.bumpercarComparison?.electricPoints || [])];
-                          list[idx] = { text: e.target.value };
-                          handleFieldChange('bumpercarComparison', 'electricPoints', list);
-                        }}
-                        style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                      <button
-                        onClick={() => {
-                          const list = [...(formData.bumpercarComparison?.electricPoints || [])];
-                          list.splice(idx, 1);
-                          handleFieldChange('bumpercarComparison', 'electricPoints', list);
-                        }}
-                        style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', borderRadius: '8px', cursor: 'pointer' }}
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Battery Points Manager */}
-              <div style={{ background: '#F0F9FF', padding: '16px', borderRadius: '16px', border: '1px solid #bae6fd' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Battery-Operated Points (Cyan Points)</h4>
-                  <button
-                    onClick={() => {
-                      const cur = formData.bumpercarComparison?.batteryPoints || [
-                        { text: "Flat surface only — no modification needed" },
-                        { text: "Recharge between sessions" },
-                        { text: "Malls, gaming zones, events" },
-                        { text: "Can be moved to new venues" },
-                        { text: "Lower initial investment" },
-                        { text: "Battery replacement over time" }
-                      ];
-                      handleFieldChange('bumpercarComparison', 'batteryPoints', [...cur, { text: '' }]);
-                    }}
-                    style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
-                  >
-                    + Add Battery Point
-                  </button>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {(formData.bumpercarComparison?.batteryPoints || [
-                    { text: "Flat surface only — no modification needed" },
-                    { text: "Recharge between sessions" },
-                    { text: "Malls, gaming zones, events" },
-                    { text: "Can be moved to new venues" },
-                    { text: "Lower initial investment" },
-                    { text: "Battery replacement over time" }
-                  ]).map((item, idx) => (
-                    <div key={idx} style={{ display: 'flex', gap: '8px' }}>
-                      <input
-                        type="text"
-                        value={item.text}
-                        onChange={(e) => {
-                          const list = [...(formData.bumpercarComparison?.batteryPoints || [])];
-                          list[idx] = { text: e.target.value };
-                          handleFieldChange('bumpercarComparison', 'batteryPoints', list);
-                        }}
-                        style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                      <button
-                        onClick={() => {
-                          const list = [...(formData.bumpercarComparison?.batteryPoints || [])];
-                          list.splice(idx, 1);
-                          handleFieldChange('bumpercarComparison', 'batteryPoints', list);
-                        }}
-                        style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', borderRadius: '8px', cursor: 'pointer' }}
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('bumpercarComparison', formData.bumpercarComparison || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Quick Comparison Table
-                </button>
-              </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* BUMPER CAR RIDE SMART INVESTMENT FORM */}
           {activeSection === 'bumpercarInvestment' && (
@@ -18498,9 +18368,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                           />
                           <button
-                            onClick={() => {
+                            onClick={async () => {
                               const updatedRows = specsList.filter((_, i) => i !== idx);
-                              setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), specsData: updatedRows } }));
+                              const updatedSec = { ...(formData.trampolineSpecs || defaultTrampolineSpecs), specsData: updatedRows };
+                              setFormData(prev => ({ ...prev, trampolineSpecs: updatedSec }));
+                              await persistSectionToDatabase('trampolineSpecs', updatedSec);
                             }}
                             style={{ background: '#fef2f2', color: '#dc2626', border: 'none', width: '36px', height: '36px', borderRadius: '8px', cursor: 'pointer', fontWeight: '800' }}
                           >
@@ -19539,11 +19411,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             />
                             <button
                               type="button"
-                              onClick={() => {
+                              onClick={async () => {
                                 const copy = [...wrongItems];
                                 copy.splice(idx, 1);
                                 const reindexed = copy.map((x, i) => ({ ...x, num: (i + 1).toString().padStart(2, '0') }));
-                                setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), wrongItems: reindexed } }));
+                                const updatedSec = { ...(formData.roiComparison || defaultRoiComparison), wrongItems: reindexed };
+                                setFormData(prev => ({ ...prev, roiComparison: updatedSec }));
+                                await persistSectionToDatabase('roiComparison', updatedSec);
                               }}
                               style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
                             >
@@ -19598,11 +19472,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             />
                             <button
                               type="button"
-                              onClick={() => {
+                              onClick={async () => {
                                 const copy = [...rightItems];
                                 copy.splice(idx, 1);
                                 const reindexed = copy.map((x, i) => ({ ...x, num: (i + 1).toString().padStart(2, '0') }));
-                                setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), rightItems: reindexed } }));
+                                const updatedSec = { ...(formData.roiComparison || defaultRoiComparison), rightItems: reindexed };
+                                setFormData(prev => ({ ...prev, roiComparison: updatedSec }));
+                                await persistSectionToDatabase('roiComparison', updatedSec);
                               }}
                               style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
                             >
@@ -19666,10 +19542,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <span style={{ fontWeight: '900', fontSize: '14px', color: '#00aeef' }}>Step {idx+1}</span>
                           <button
                             type="button"
-                            onClick={() => {
+                            onClick={async () => {
                               const copy = [...cardsList];
                               copy.splice(idx, 1);
-                              setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                              const updatedSec = { ...(formData.roiProcess || defaultRoiProcess), cards: copy };
+                              setFormData(prev => ({ ...prev, roiProcess: updatedSec }));
+                              await persistSectionToDatabase('roiProcess', updatedSec);
                             }}
                             style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '6px 10px', borderRadius: '8px', cursor: 'pointer', fontSize: '12px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                           >
@@ -19843,10 +19721,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#64748b' }}>Feature #{idx+1}</span>
                             <button
                               type="button"
-                              onClick={() => {
+                              onClick={async () => {
                                 const copy = [...steps];
                                 copy.splice(idx, 1);
-                                setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), steps: copy } }));
+                                const updatedSec = { ...(formData.roiGet || defaultRoiGet), steps: copy };
+                                setFormData(prev => ({ ...prev, roiGet: updatedSec }));
+                                await persistSectionToDatabase('roiGet', updatedSec);
                               }}
                               style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '4px 8px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}
                             >
@@ -19971,10 +19851,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             />
                             <button
                               type="button"
-                              onClick={() => {
+                              onClick={async () => {
                                 const copy = [...fitItems];
                                 copy.splice(idx, 1);
-                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), fitItems: copy } }));
+                                const updatedSec = { ...(formData.roiChecklist || defaultRoiChecklist), fitItems: copy };
+                                setFormData(prev => ({ ...prev, roiChecklist: updatedSec }));
+                                await persistSectionToDatabase('roiChecklist', updatedSec);
                               }}
                               style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
                             >
@@ -20016,10 +19898,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             />
                             <button
                               type="button"
-                              onClick={() => {
+                              onClick={async () => {
                                 const copy = [...unfitItems];
                                 copy.splice(idx, 1);
-                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), unfitItems: copy } }));
+                                const updatedSec = { ...(formData.roiChecklist || defaultRoiChecklist), unfitItems: copy };
+                                setFormData(prev => ({ ...prev, roiChecklist: updatedSec }));
+                                await persistSectionToDatabase('roiChecklist', updatedSec);
                               }}
                               style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
                             >

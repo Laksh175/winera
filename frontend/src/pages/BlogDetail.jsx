@@ -641,115 +641,126 @@ export default function BlogDetail({ siteData }) {
                   Register Now &rarr;
                 </button>
               </div>
+            </div>
 
-              {/* ── MORE TO EXPLORE (VERTICAL SIDEBAR CARDS) ── */}
-              <div className="winera-blog-more-explore-section" style={{ margin: '36px 0 20px 0' }}>
-                <h4 style={{
-                  fontSize: '26px',
-                  fontWeight: '900',
-                  color: '#0f172a',
-                  margin: 0,
-                  letterSpacing: '-0.3px',
-                }}>
-                  More to <span className="winera-blog-explore-accent" style={{ color: '#0284c7' }}>Explore</span>
-                </h4>
-              </div>
+          </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                  {recentPosts.slice(0, 3).map((recPost) => {
-                    const recImage = recPost.image || getValidImageUrl(recPost.imgUrl, blogCardImg, recPost.id);
-                    const recExcerpt = recPost.excerpt || recPost.line1 || 'Soft play or trampoline park? Discover the key differences in investment...';
-                    const truncatedExcerpt = formatExcerpt(recExcerpt, 75);
+          {/* ── MORE TO EXPLORE (FULL WIDTH RELATED ARTICLES AT THE END OF THE BLOG) ── */}
+          <div className="winera-blog-more-explore-bottom" style={{ marginTop: '70px', paddingTop: '45px', borderTop: '1.5px solid #cbd5e1' }}>
+            <div style={{ marginBottom: '28px', textAlign: 'left' }}>
+              <h3 style={{
+                fontSize: '32px',
+                fontWeight: '900',
+                color: '#0f172a',
+                margin: 0,
+                letterSpacing: '-0.5px'
+              }}>
+                More to <span className="winera-blog-explore-accent" style={{ color: '#0284c7' }}>Explore</span>
+              </h3>
+            </div>
 
-                    return (
-                      <div
-                        key={recPost.id}
-                        className="winera-blog-more-explore-card"
-                        onClick={() => navigate(`/blog/${recPost.id}`)}
-                        style={{
-                          background: '#ffffff',
-                          border: '1.5px solid #e2e8f0',
-                          borderRadius: '20px',
-                          padding: '16px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          transition: 'all 0.25s ease',
-                          boxShadow: '0 4px 18px rgba(0,0,0,0.04)'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = '#0284c7';
-                          e.currentTarget.style.transform = 'translateY(-4px)';
-                          e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.08)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor = '#e2e8f0';
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 4px 18px rgba(0,0,0,0.04)';
-                        }}
-                      >
-                        {/* Card Top Image */}
-                        <div style={{ width: '100%', height: '165px', borderRadius: '14px', overflow: 'hidden', flexShrink: 0, marginBottom: '12px', background: '#e0f2fe' }}>
-                          <WineraImage
-                            src={recImage}
-                            alt={getFullTitle(recPost)}
-                            style={{ width: '100%', height: '100%' }}
-                            imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                          />
-                        </div>
+            <div className="winera-related-articles-full-grid" style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '28px'
+            }}>
+              {recentPosts.slice(0, 3).map((recPost) => {
+                const recImage = recPost.image || getValidImageUrl(recPost.imgUrl, blogCardImg, recPost.id);
+                const recExcerpt = recPost.excerpt || recPost.line1 || 'Soft play or trampoline park? Discover the key differences in investment...';
+                const truncatedExcerpt = formatExcerpt(recExcerpt, 95);
 
-                        {/* Blog Title & Subtitle */}
-                        <h5 style={{
-                          fontSize: '15px',
-                          fontWeight: '600',
-                          color: '#0f172a',
-                          lineHeight: 1.35,
-                          margin: '0 0 8px 0'
-                        }}>
-                          {getFullTitle(recPost)}
-                        </h5>
+                return (
+                  <div
+                    key={recPost.id}
+                    className="winera-blog-more-explore-card"
+                    onClick={() => {
+                      navigate(`/blog/${recPost.id}`);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    style={{
+                      background: '#ffffff',
+                      border: '1.5px solid #e2e8f0',
+                      borderRadius: '20px',
+                      padding: '18px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      transition: 'all 0.25s ease',
+                      boxShadow: '0 4px 18px rgba(0,0,0,0.04)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#0284c7';
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.08)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 18px rgba(0,0,0,0.04)';
+                    }}
+                  >
+                    {/* Card Top Image */}
+                    <div style={{ width: '100%', height: '190px', borderRadius: '14px', overflow: 'hidden', flexShrink: 0, marginBottom: '14px', background: '#e0f2fe' }}>
+                      <WineraImage
+                        src={recImage}
+                        alt={getFullTitle(recPost)}
+                        style={{ width: '100%', height: '100%' }}
+                        imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      />
+                    </div>
 
-                        {/* Excerpt Description */}
-                        <p className="winera-blog-card-desc" style={{
-                          fontSize: '13px',
-                          color: '#475569',
-                          lineHeight: 1.5,
-                          margin: '0 0 14px 0',
-                          flexGrow: 1
-                        }}>
-                          {truncatedExcerpt}
-                        </p>
+                    {/* Blog Title & Subtitle */}
+                    <h4 style={{
+                      fontSize: '17px',
+                      fontWeight: '700',
+                      color: '#0f172a',
+                      lineHeight: 1.35,
+                      margin: '0 0 10px 0',
+                      textAlign: 'left'
+                    }}>
+                      {getFullTitle(recPost)}
+                    </h4>
 
-                        {/* Card Footer: Date & Founder Name */}
-                        <div style={{
-                          paddingTop: '12px',
-                          borderTop: '1px solid #f1f5f9',
-                          fontSize: '12px',
-                          fontWeight: '700',
-                          color: '#64748b',
-                          marginTop: 'auto',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between'
-                        }}>
-                          <span className="winera-blog-card-date" style={{ textTransform: 'uppercase', letterSpacing: '0.5px', color: '#64748b' }}>
-                            {recPost.date || 'SEP 12, 2026'}
-                          </span>
-                          <span className="winera-blog-card-readmore" style={{
-                            color: '#0284c7',
-                            fontWeight: '700',
-                            fontSize: '12px',
-                            letterSpacing: '0.2px'
-                          }}>
-                            {recPost.author || recPost.founder || 'Divyang Mandani'}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+                    {/* Excerpt Description */}
+                    <p className="winera-blog-card-desc" style={{
+                      fontSize: '13.5px',
+                      color: '#475569',
+                      lineHeight: 1.55,
+                      margin: '0 0 16px 0',
+                      flexGrow: 1,
+                      textAlign: 'left'
+                    }}>
+                      {truncatedExcerpt}
+                    </p>
 
+                    {/* Card Footer: Date & Founder Name */}
+                    <div style={{
+                      paddingTop: '14px',
+                      borderTop: '1px solid #f1f5f9',
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      color: '#64748b',
+                      marginTop: 'auto',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}>
+                      <span className="winera-blog-card-date" style={{ textTransform: 'uppercase', letterSpacing: '0.5px', color: '#64748b' }}>
+                        {recPost.date || 'SEP 12, 2026'}
+                      </span>
+                      <span className="winera-blog-card-readmore" style={{
+                        color: '#0284c7',
+                        fontWeight: '700',
+                        fontSize: '12.5px',
+                        letterSpacing: '0.2px'
+                      }}>
+                        {recPost.author || recPost.founder || 'Divyang Mandani'}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
         </div>
