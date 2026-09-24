@@ -169,7 +169,7 @@ export default function Roi({ siteData }) {
     title: "This is for you if",
     bgImage: roiBlock7Bg,
     fitPill: "You're a fit",
-    unfitPill: "You're a fit",
+    unfitPill: "You're not a fit",
     fitItems: [
       "You want to invest ₹XX Lakh+ in a proven, growing business",
       "You want returns backed by data, not hope",
@@ -177,9 +177,9 @@ export default function Roi({ siteData }) {
       "You want a zone that runs as a system, not a headache"
     ],
     unfitItems: [
-      "You want to invest ₹XX Lakh+ in a proven, growing business",
-      "You want the cheapest possible setup",
-      "You're not serious about returns",
+      "You want the cheapest possible setup without care for quality",
+      "You're looking for overnight shortcuts",
+      "You're not serious about long term ROI",
       "You expect profit without a proper system"
     ]
   };
@@ -538,8 +538,14 @@ export default function Roi({ siteData }) {
               maxWidth: '900px',
               letterSpacing: '-0.5px'
             }}>
-              {roiComparison.title.split(' vs. ')[0]}<br />
-              <span style={{ color: '#38bdf8' }}>vs. {roiComparison.title.split(' vs. ')[1]}</span>
+              {roiComparison.title && roiComparison.title.includes(' vs. ') ? (
+                <>
+                  {roiComparison.title.split(' vs. ')[0]}<br />
+                  <span style={{ color: '#38bdf8' }}>vs. {roiComparison.title.split(' vs. ')[1]}</span>
+                </>
+              ) : (
+                roiComparison.title
+              )}
             </h2>
           </div>
 
@@ -899,7 +905,7 @@ export default function Roi({ siteData }) {
               maxWidth: '900px',
               letterSpacing: '-0.5px'
             }}>
-              {roiProcess.title.includes("profit") ? (
+              {roiProcess.title && roiProcess.title.includes("profit") ? (
                 <>
                   <span style={{ color: '#38bdf8' }}>{roiProcess.title.split("profit")[0]}</span> profit<br />
                   {roiProcess.title.split("profit")[1]}
@@ -1198,7 +1204,7 @@ export default function Roi({ siteData }) {
               maxWidth: '900px',
               letterSpacing: '-0.5px'
             }}>
-              {roiChecklist.title.includes("This is") ? (
+              {roiChecklist.title && roiChecklist.title.includes("This is") ? (
                 <>
                   <span style={{ color: '#38bdf8' }}>This is</span> {roiChecklist.title.split("This is")[1]}
                 </>
@@ -1208,7 +1214,7 @@ export default function Roi({ siteData }) {
 
           {/* Large Card Box with grid lines background */}
           <div className="winera-roi-checklist-card" style={{
-            background: `url(${roiChecklist.bgImage && (roiChecklist.bgImage.startsWith('http') || roiChecklist.bgImage.startsWith('data:')) ? roiChecklist.bgImage : roiBlock7Bg}) center center / cover no-repeat, #030f26`,
+            background: `url(${getValidImageUrl(roiChecklist.bgImage, roiBlock7Bg)}) center center / cover no-repeat, #030f26`,
             borderRadius: '24px',
             padding: '70px 60px',
             boxShadow: '0 20px 50px rgba(3, 15, 38, 0.25)',

@@ -531,7 +531,7 @@ const defaultRoiChecklist = {
   title: "This is for you if",
   bgImage: roiBlock7Bg,
   fitPill: "You're a fit",
-  unfitPill: "You're a fit",
+  unfitPill: "You're not a fit",
   fitItems: [
     "You want to invest ₹XX Lakh+ in a proven, growing business",
     "You want returns backed by data, not hope",
@@ -539,9 +539,9 @@ const defaultRoiChecklist = {
     "You want a zone that runs as a system, not a headache"
   ],
   unfitItems: [
-    "You want to invest ₹XX Lakh+ in a proven, growing business",
-    "You want the cheapest possible setup",
-    "You're not serious about returns",
+    "You want the cheapest possible setup without care for quality",
+    "You're looking for overnight shortcuts",
+    "You're not serious about long term ROI",
     "You expect profit without a proper system"
   ]
 };
@@ -19490,9 +19490,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ fontSize: '13px', fontWeight: '900', color: '#0f172a', margin: 0 }}>Pain Point Cards (Total {cardsList.length})</label>
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={async () => {
                           const copy = [...cardsList, ""];
-                          setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), cards: copy } }));
+                          const updatedSec = { ...(formData.roiMatters || defaultRoiMatters), cards: copy };
+                          setFormData(prev => ({ ...prev, roiMatters: updatedSec }));
+                          await persistSectionToDatabase('roiMatters', updatedSec);
                         }}
                         style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                       >
@@ -19515,10 +19517,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           />
                           <button
                             type="button"
-                            onClick={() => {
+                            onClick={async () => {
                               const copy = [...cardsList];
                               copy.splice(idx, 1);
-                              setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), cards: copy } }));
+                              const updatedSec = { ...(formData.roiMatters || defaultRoiMatters), cards: copy };
+                              setFormData(prev => ({ ...prev, roiMatters: updatedSec }));
+                              await persistSectionToDatabase('roiMatters', updatedSec);
                             }}
                             style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
                           >
@@ -19600,10 +19604,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <h4 style={{ fontSize: '14px', fontWeight: '900', color: '#ef4444', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Why Most Game Zones Fail ({wrongItems.length})</h4>
                         <button
                           type="button"
-                          onClick={() => {
+                          onClick={async () => {
                             const newNum = (wrongItems.length + 1).toString().padStart(2, '0');
                             const copy = [...wrongItems, { num: newNum, text: "", offset: "20px" }];
-                            setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), wrongItems: copy } }));
+                            const updatedSec = { ...(formData.roiComparison || defaultRoiComparison), wrongItems: copy };
+                            setFormData(prev => ({ ...prev, roiComparison: updatedSec }));
+                            await persistSectionToDatabase('roiComparison', updatedSec);
                           }}
                           style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                         >
@@ -19661,10 +19667,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <h4 style={{ fontSize: '14px', fontWeight: '900', color: '#22c55e', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Why Ours Profit ({rightItems.length})</h4>
                         <button
                           type="button"
-                          onClick={() => {
+                          onClick={async () => {
                             const newNum = (rightItems.length + 1).toString().padStart(2, '0');
                             const copy = [...rightItems, { num: newNum, text: "", offset: "20px" }];
-                            setFormData(prev => ({ ...prev, roiComparison: { ...(prev.roiComparison || defaultRoiComparison), rightItems: copy } }));
+                            const updatedSec = { ...(formData.roiComparison || defaultRoiComparison), rightItems: copy };
+                            setFormData(prev => ({ ...prev, roiComparison: updatedSec }));
+                            await persistSectionToDatabase('roiComparison', updatedSec);
                           }}
                           style={{ background: '#22c55e', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                         >
@@ -19752,9 +19760,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ fontSize: '13px', fontWeight: '900', color: '#0f172a', margin: 0 }}>Process Steps Cards (Total {cardsList.length})</label>
                     <button
                       type="button"
-                      onClick={() => {
+                      onClick={async () => {
                         const copy = [...cardsList, { title: "", desc: "", img: "" }];
-                        setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                        const updatedSec = { ...(formData.roiProcess || defaultRoiProcess), cards: copy };
+                        setFormData(prev => ({ ...prev, roiProcess: updatedSec }));
+                        await persistSectionToDatabase('roiProcess', updatedSec);
                       }}
                       style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                     >
@@ -19932,9 +19942,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ fontSize: '13px', fontWeight: '900', color: '#0f172a', margin: 0 }}>List Features (Total {steps.length})</label>
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={async () => {
                           const copy = [...steps, { title: "", desc: "" }];
-                          setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), steps: copy } }));
+                          const updatedSec = { ...(formData.roiGet || defaultRoiGet), steps: copy };
+                          setFormData(prev => ({ ...prev, roiGet: updatedSec }));
+                          await persistSectionToDatabase('roiGet', updatedSec);
                         }}
                         style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                       >
@@ -20053,9 +20065,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <h4 style={{ fontSize: '14px', fontWeight: '900', color: '#38bdf8', margin: 0 }}>You're a Fit Checklist Items (Total {fitItems.length})</h4>
                         <button
                           type="button"
-                          onClick={() => {
+                          onClick={async () => {
                             const copy = [...fitItems, ""];
-                            setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), fitItems: copy } }));
+                            const updatedSec = { ...(formData.roiChecklist || defaultRoiChecklist), fitItems: copy };
+                            setFormData(prev => ({ ...prev, roiChecklist: updatedSec }));
+                            await persistSectionToDatabase('roiChecklist', updatedSec);
                           }}
                           style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                         >
@@ -20100,9 +20114,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <h4 style={{ fontSize: '14px', fontWeight: '900', color: '#ef4444', margin: 0 }}>You're Not a Fit Checklist Items (Total {unfitItems.length})</h4>
                         <button
                           type="button"
-                          onClick={() => {
+                          onClick={async () => {
                             const copy = [...unfitItems, ""];
-                            setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), unfitItems: copy } }));
+                            const updatedSec = { ...(formData.roiChecklist || defaultRoiChecklist), unfitItems: copy };
+                            setFormData(prev => ({ ...prev, roiChecklist: updatedSec }));
+                            await persistSectionToDatabase('roiChecklist', updatedSec);
                           }}
                           style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                         >

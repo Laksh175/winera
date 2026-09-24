@@ -17,18 +17,28 @@ import projectCtaBg from '../assets/project-cta-bg.webp';
 import { ArrowRight, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
 
 const resolveProjectImg = (proj) => {
+  const url = proj?.img || proj?.imageUrl || proj?.imgUrl || '';
+
+  if (url && typeof url === 'string' && url.trim() !== '' && !url.includes('/src/assets/')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    if (url.startsWith('http://localhost:5001/uploads/')) {
+      return url.replace('localhost', hostname);
+    }
+    if (url.startsWith('/uploads')) {
+      return `http://${hostname}:5001${url}`;
+    }
+    if (url.includes('/uploads/')) {
+      const uploadPath = url.substring(url.indexOf('/uploads/'));
+      return `http://${hostname}:5001${uploadPath}`;
+    }
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/')) {
+      return url;
+    }
+  }
+
   const slug = (proj?.slug || '').toLowerCase();
   const name = (proj?.name || '').toLowerCase();
   const category = (proj?.category || '').toLowerCase();
-  const url = proj?.img || proj?.imgUrl || '';
-
-  if (url && typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:'))) {
-    return url;
-  }
-  if (url && typeof url === 'string' && url.startsWith('/uploads')) {
-    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${url}`;
-  }
 
   if (slug.includes('hulaboo') || name.includes('hulaboo')) return projHulaboo;
   if (slug.includes('neon') || name.includes('neon')) return projNeon1;
