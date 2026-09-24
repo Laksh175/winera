@@ -7956,8 +7956,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   { boldText: "Classic Favourites", desc: "Proven, Time-Tested Crowd-Pullers" },
                   { boldText: "Custom Attractions", desc: "Tailored To Your Theme And Space" }
                 ];
-                const rideItemsList = Array.isArray(formData.amusementOptions?.items) && formData.amusementOptions.items.length > 0
-                  ? formData.amusementOptions.items
+                const currentSec = formData.amusementOptions || {};
+                const rideItemsList = Array.isArray(currentSec.items)
+                  ? currentSec.items
                   : defaultRideItems;
 
                 return (
@@ -7965,9 +7966,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                       <label style={{ fontWeight: '800', fontSize: '13px', color: '#0f172a' }}>Ride & Attraction Items ({rideItemsList.length})</label>
                       <button
+                        type="button"
                         onClick={() => {
                           const updated = [...rideItemsList, { boldText: 'New Ride Category', desc: 'Category description here.' }];
-                          setFormData(prev => ({ ...prev, amusementOptions: { ...(prev.amusementOptions || {}), items: updated } }));
+                          const updatedSec = { ...currentSec, items: updated };
+                          setFormData(prev => ({ ...prev, amusementOptions: updatedSec }));
                         }}
                         style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
                       >
@@ -7980,9 +7983,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Ride Category #{idx + 1}: {item.boldText || item.title}</span>
                             <button
-                              onClick={() => {
+                              type="button"
+                              onClick={async () => {
                                 const updated = rideItemsList.filter((_, i) => i !== idx);
-                                setFormData(prev => ({ ...prev, amusementOptions: { ...(prev.amusementOptions || {}), items: updated } }));
+                                const updatedSec = { ...currentSec, items: updated };
+                                setFormData(prev => ({ ...prev, amusementOptions: updatedSec }));
+                                await persistSectionToDatabase('amusementOptions', updatedSec);
                               }}
                               style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
                             >
@@ -7996,7 +8002,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               onChange={(e) => {
                                 const updated = [...rideItemsList];
                                 updated[idx] = { ...updated[idx], boldText: e.target.value, title: e.target.value };
-                                setFormData(prev => ({ ...prev, amusementOptions: { ...(prev.amusementOptions || {}), items: updated } }));
+                                const updatedSec = { ...currentSec, items: updated };
+                                setFormData(prev => ({ ...prev, amusementOptions: updatedSec }));
                               }}
                               placeholder="Category Name (e.g. Thrill Rides)"
                               style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
@@ -8007,7 +8014,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               onChange={(e) => {
                                 const updated = [...rideItemsList];
                                 updated[idx] = { ...updated[idx], desc: e.target.value, description: e.target.value };
-                                setFormData(prev => ({ ...prev, amusementOptions: { ...(prev.amusementOptions || {}), items: updated } }));
+                                const updatedSec = { ...currentSec, items: updated };
+                                setFormData(prev => ({ ...prev, amusementOptions: updatedSec }));
                               }}
                               placeholder="Description (e.g. For Teens And Adults...)"
                               style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
@@ -8314,10 +8322,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontWeight: '800', fontSize: '13px', color: '#0369a1' }}>FAQ #{idx + 1}</span>
                       <button
-                        onClick={() => {
-                          const currentList = [...(formData.amusementFaqs || [])];
-                          currentList.splice(idx, 1);
-                          setFormData((prev) => ({ ...prev, amusementFaqs: currentList }));
+                        type="button"
+                        onClick={async () => {
+                          const currentList = Array.isArray(formData.amusementFaqs) && formData.amusementFaqs.length > 0
+                            ? [...formData.amusementFaqs]
+                            : [
+                              {
+                                question: "What types of amusement park rides do you supply and install?",
+                                answer: "We supply a complete range of amusement park attractions including thrill rides, family rides, kids' rides, bumper cars, Ferris wheels, carousel rides, and custom themed attractions engineered for indoor & outdoor venues."
+                              },
+                              {
+                                question: "Do you handle complete end-to-end park setup and installation?",
+                                answer: "Yes! Winera International handles full turnkey project management — from space planning and layout design to ride sourcing, civil foundation guidance, structural assembly, safety testing, and final handover."
+                              },
+                              {
+                                question: "What safety standards and certifications do Winera amusement rides comply with?",
+                                answer: "All our rides are built to international safety benchmarks. They feature reinforced structural steel, emergency automatic stop sensors, dual-lock safety harnesses/belts, and undergo rigorous load and performance testing prior to public operation."
+                              },
+                              {
+                                question: "Can Winera provide a venue-specific ROI and financial projection report?",
+                                answer: "Absolutely. Before finalizing any purchase, our ROI experts prepare a comprehensive financial model detailing ride capacities, daily throughput, operational costs, estimated ticket revenue, and projected break-even timelines customized to your land size and city demographic."
+                              },
+                              {
+                                question: "What after-sales service and spare parts support do you offer?",
+                                answer: "We maintain an in-house engineering and service team across 50+ Indian cities. We provide routine maintenance support, operator training, and stocked replacement spare parts to ensure zero extended downtime for your venue."
+                              }
+                            ];
+                          const updated = currentList.filter((_, i) => i !== idx);
+                          setFormData((prev) => ({ ...prev, amusementFaqs: updated }));
+                          await persistSectionToDatabase('amusementFaqs', updated);
                         }}
                         style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '900' }}
                       >
@@ -13842,56 +13875,82 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              {/* 5 Feature Cards */}
-              <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '18px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', marginBottom: '14px' }}>5 Feature Cards</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  {[
-                    { defaultTitle: "Full Project, Not Just Equipment", defaultDesc: "We Handle Everything From Layout To Installation, So You're Not Left Coordinating Vendors." },
-                    { defaultTitle: "Right Attractions For Your Space", defaultDesc: "We Recommend Rides That Fit Your Land, Footfall, And Visitors Not A Catalogue Guess" },
-                    { defaultTitle: "One Team, Zero Confusion", defaultDesc: "Sourcing, Installation, And Service Handled By Our Own Dedicated Team" },
-                    { defaultTitle: "Ready To Open From Day One", defaultDesc: "Every Ride Is Tested On-Site Before Handover, So Opening Day Runs Smoothly" },
-                    { defaultTitle: "We Know What Keeps Visitors Coming Back", defaultDesc: "Years Of Real Projects Tell Us Which Attractions Drive Repeat Footfall" }
-                  ].map((cDef, cIdx) => {
-                    const cardsList = Array.isArray(formData.amusementWhyUs?.cards) ? formData.amusementWhyUs.cards : [];
-                    const currentCard = cardsList[cIdx] || cDef;
+              {/* Feature Cards Manager */}
+              {(() => {
+                const defaultWhyUsCards = [
+                  { title: "Full Project, Not Just Equipment", desc: "We Handle Everything From Layout To Installation, So You're Not Left Coordinating Vendors." },
+                  { title: "Right Attractions For Your Space", desc: "We Recommend Rides That Fit Your Land, Footfall, And Visitors Not A Catalogue Guess" },
+                  { title: "One Team, Zero Confusion", desc: "Sourcing, Installation, And Service Handled By Our Own Dedicated Team" },
+                  { title: "Ready To Open From Day One", desc: "Every Ride Is Tested On-Site Before Handover, So Opening Day Runs Smoothly" },
+                  { title: "We Know What Keeps Visitors Coming Back", desc: "Years Of Real Projects Tell Us Which Attractions Drive Repeat Footfall" }
+                ];
+                const currentSec = formData.amusementWhyUs || {};
+                const cardsList = Array.isArray(currentSec.cards) ? currentSec.cards : defaultWhyUsCards;
 
-                    return (
-                      <div key={cIdx} style={{ background: '#ffffff', padding: '12px 16px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
-                        <div style={{ fontWeight: '800', fontSize: '12px', color: '#38bdf8', marginBottom: '6px' }}>Card #{cIdx + 1}</div>
-                        <input
-                          type="text"
-                          placeholder="Title"
-                          value={currentCard.title || ''}
-                          onChange={(e) => {
-                            const newCards = [...cardsList];
-                            newCards[cIdx] = { ...(newCards[cIdx] || cDef), title: e.target.value };
-                            setFormData(prev => ({
-                              ...prev,
-                              amusementWhyUs: { ...(prev.amusementWhyUs || {}), cards: newCards }
-                            }));
-                          }}
-                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}
-                        />
-                        <textarea
-                          rows={2}
-                          placeholder="Description"
-                          value={currentCard.desc || ''}
-                          onChange={(e) => {
-                            const newCards = [...cardsList];
-                            newCards[cIdx] = { ...(newCards[cIdx] || cDef), desc: e.target.value };
-                            setFormData(prev => ({
-                              ...prev,
-                              amusementWhyUs: { ...(prev.amusementWhyUs || {}), cards: newCards }
-                            }));
-                          }}
-                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+                return (
+                  <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '18px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', margin: 0 }}>Feature Cards ({cardsList.length})</h4>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...cardsList, { title: 'New Feature Card', desc: 'Card description here.' }];
+                          const updatedSec = { ...currentSec, cards: updated };
+                          setFormData(prev => ({ ...prev, amusementWhyUs: updatedSec }));
+                        }}
+                        style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
+                      >
+                        + Add Card
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                      {cardsList.map((card, cIdx) => (
+                        <div key={cIdx} style={{ background: '#ffffff', padding: '14px 16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontWeight: '800', fontSize: '12px', color: '#38bdf8' }}>Card #{cIdx + 1}: {card.title}</span>
+                            <button
+                              type="button"
+                              onClick={async () => {
+                                const updated = cardsList.filter((_, i) => i !== cIdx);
+                                const updatedSec = { ...currentSec, cards: updated };
+                                setFormData(prev => ({ ...prev, amusementWhyUs: updatedSec }));
+                                await persistSectionToDatabase('amusementWhyUs', updatedSec);
+                              }}
+                              style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
+                            >
+                              Delete Card
+                            </button>
+                          </div>
+                          <input
+                            type="text"
+                            placeholder="Title"
+                            value={card.title || ''}
+                            onChange={(e) => {
+                              const updated = [...cardsList];
+                              updated[cIdx] = { ...updated[cIdx], title: e.target.value };
+                              const updatedSec = { ...currentSec, cards: updated };
+                              setFormData(prev => ({ ...prev, amusementWhyUs: updatedSec }));
+                            }}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                          />
+                          <textarea
+                            rows={2}
+                            placeholder="Description"
+                            value={card.desc || ''}
+                            onChange={(e) => {
+                              const updated = [...cardsList];
+                              updated[cIdx] = { ...updated[cIdx], desc: e.target.value };
+                              const updatedSec = { ...currentSec, cards: updated };
+                              setFormData(prev => ({ ...prev, amusementWhyUs: updatedSec }));
+                            }}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
