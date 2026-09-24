@@ -1956,16 +1956,16 @@ html {
 
   /* Global Inner Page Mobile Responsiveness */
   /* Sub-Hero Banners */
-  section[style*="aspectRatio"]:not(#hero):not(.winera-home-hero-section),
-  section[style*="aspect-ratio"]:not(#hero):not(.winera-home-hero-section),
-  section[style*="paddingTop: '210px'"]:not(#hero):not(.winera-home-hero-section),
-  section[style*="paddingTop: 210px"]:not(#hero):not(.winera-home-hero-section),
-  section[style*="paddingTop: '180px'"]:not(#hero):not(.winera-home-hero-section),
-  section[style*="paddingTop: 180px"]:not(#hero):not(.winera-home-hero-section),
-  section[style*="paddingTop: '165px'"]:not(#hero):not(.winera-home-hero-section),
-  section[style*="paddingTop: 165px"]:not(#hero):not(.winera-home-hero-section),
-  section[style*="paddingTop: '160px'"]:not(#hero):not(.winera-home-hero-section),
-  section[style*="paddingTop: 160px"]:not(#hero):not(.winera-home-hero-section) {
+  section[style*="aspectRatio"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section),
+  section[style*="aspect-ratio"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section),
+  section[style*="paddingTop: '210px'"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section),
+  section[style*="paddingTop: 210px"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section),
+  section[style*="paddingTop: '180px'"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section),
+  section[style*="paddingTop: 180px"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section),
+  section[style*="paddingTop: '165px'"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section),
+  section[style*="paddingTop: 165px"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section),
+  section[style*="paddingTop: '160px'"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section),
+  section[style*="paddingTop: 160px"]:not(#hero):not(.winera-home-hero-section):not(.winera-about-hero-section) {
     background-size: cover !important;
     background-position: center !important;
     padding-top: 120px !important;
@@ -5174,7 +5174,6 @@ html {
     padding-bottom: 95px !important;
   }
 
-  .winera-about-hero-section,
   .winera-contact-hero-section {
     background-size: cover !important;
     background-position: center !important;
@@ -5185,23 +5184,37 @@ html {
   }
 
   /* About Us Page Mobile Overrides */
+  section.winera-about-hero-section,
   .winera-about-hero-section {
     background-size: cover !important;
     background-position: center !important;
     aspect-ratio: auto !important;
-    min-height: 220px !important;
-    padding-top: 130px !important;
-    padding-bottom: 45px !important;
+    min-height: 250px !important;
+    padding-top: 120px !important;
+    padding-bottom: 40px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justifyContent: center !important;
   }
 
   .winera-about-hero-section h1 {
-    font-size: 1.85rem !important;
-    line-height: 1.25 !important;
+    font-size: 38px !important;
+    line-height: 1.2 !important;
     margin-bottom: 10px !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7) !important;
   }
 
-  .winera-about-hero-section p {
-    font-size: 13px !important;
+  .winera-about-hero-breadcrumb,
+  .winera-about-hero-breadcrumb *,
+  .winera-about-hero-breadcrumb > a,
+  .winera-about-hero-breadcrumb > span,
+  .winera-about-hero-breadcrumb > span:nth-of-type(1),
+  .winera-about-hero-breadcrumb > span:nth-of-type(2),
+  .winera-about-hero-section .winera-about-hero-breadcrumb,
+  .winera-about-hero-section .winera-about-hero-breadcrumb * {
+    font-size: 14px !important;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7) !important;
   }
 
   .winera-about-welcome-grid {
@@ -5465,78 +5478,106 @@ html {
 
   .winera-founder-arrow-left,
   .winera-founder-arrow-right {
-    top: 160px !important;
-    width: 44px !important;
-    height: 44px !important;
-    z-index: 45 !important;
+    position: absolute !important;
+    top: 155px !important;
+    transform: translateY(-50%) !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+    z-index: 50 !important;
+    outline: none !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
   }
 
   .winera-founder-arrow-left {
-    left: max(8px, calc(50% - 170px)) !important;
+    left: 4px !important;
+    right: auto !important;
   }
 
   .winera-founder-arrow-right {
-    right: max(8px, calc(50% - 170px)) !important;
+    right: 4px !important;
+    left: auto !important;
   }
 
   .winera-founder-arrow-left img,
   .winera-founder-arrow-right img {
-    width: 40px !important;
-    max-width: 40px !important;
+    width: 22px !important;
+    height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: auto !important;
+    filter: brightness(0.2) !important;
+  }
+
+  .winera-founder-arrow-left:active,
+  .winera-founder-arrow-right:active {
+    transform: translateY(-50%) scale(0.92) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
   }
 }
 
-.winera-founder-arrow-left,
-.winera-founder-arrow-right {
-  position: absolute !important;
-  top: 48% !important;
-  transform: translateY(-50%) !important;
-  z-index: 40 !important;
-  background: transparent !important;
-  border: none !important;
-  outline: none !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-  padding: 4px !important;
-  width: 50px !important;
-  height: 50px !important;
-  box-shadow: none !important;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease !important;
-}
+@media (min-width: 769px) {
+  .winera-founder-arrow-left,
+  .winera-founder-arrow-right {
+    position: absolute !important;
+    top: 48% !important;
+    transform: translateY(-50%) !important;
+    z-index: 40 !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+    width: 50px !important;
+    height: 50px !important;
+    box-shadow: none !important;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease !important;
+  }
 
-.winera-founder-arrow-left {
-  left: -42px !important;
-}
+  .winera-founder-arrow-left {
+    left: -42px !important;
+  }
 
-.winera-founder-arrow-right {
-  right: -42px !important;
-}
+  .winera-founder-arrow-right {
+    right: -42px !important;
+  }
 
-.winera-founder-arrow-left img,
-.winera-founder-arrow-right img {
-  width: 45px !important;
-  height: auto !important;
-  max-width: 45px !important;
-  object-fit: contain !important;
-  display: block !important;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.12));
-}
+  .winera-founder-arrow-left img,
+  .winera-founder-arrow-right img {
+    width: 45px !important;
+    height: auto !important;
+    max-width: 45px !important;
+    object-fit: contain !important;
+    display: block !important;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.12));
+  }
 
-.winera-founder-arrow-left:hover {
-  transform: translateY(-50%) scale(1.18) !important;
-  opacity: 0.9 !important;
-}
+  .winera-founder-arrow-left:hover,
+  .winera-founder-arrow-right:hover {
+    transform: translateY(-50%) scale(1.18) !important;
+    opacity: 0.9 !important;
+  }
 
-.winera-founder-arrow-right:hover {
-  transform: translateY(-50%) scale(1.18) !important;
-  opacity: 0.9 !important;
-}
-
-.winera-founder-arrow-left:active,
-.winera-founder-arrow-right:active {
-  transform: translateY(-50%) scale(0.92) !important;
+  .winera-founder-arrow-left:active,
+  .winera-founder-arrow-right:active {
+    transform: translateY(-50%) scale(0.92) !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -5558,23 +5599,29 @@ html {
 
   .winera-founder-arrow-left,
   .winera-founder-arrow-right {
-    top: 145px !important;
-    width: 40px !important;
-    height: 40px !important;
+    top: 150px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
   }
 
   .winera-founder-arrow-left {
-    left: max(4px, calc(50% - 150px)) !important;
+    left: 2px !important;
+    right: auto !important;
   }
 
   .winera-founder-arrow-right {
-    right: max(4px, calc(50% - 150px)) !important;
+    right: 2px !important;
+    left: auto !important;
   }
 
   .winera-founder-arrow-left img,
   .winera-founder-arrow-right img {
-    width: 38px !important;
-    max-width: 38px !important;
+    width: 20px !important;
+    height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
   }
 }
 
@@ -8131,9 +8178,29 @@ textarea::placeholder,
     padding-bottom: 0px !important;
   }
 
+  section.winera-about-hero-section,
+  .winera-about-hero-section {
+    min-height: 250px !important;
+    padding-top: 120px !important;
+    padding-bottom: 40px !important;
+  }
+
   .winera-about-hero-section h1 {
-    font-size: 1.8rem !important;
-    line-height: 1.22 !important;
+    font-size: 38px !important;
+    line-height: 1.2 !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7) !important;
+  }
+
+  .winera-about-hero-breadcrumb,
+  .winera-about-hero-breadcrumb *,
+  .winera-about-hero-breadcrumb > a,
+  .winera-about-hero-breadcrumb > span,
+  .winera-about-hero-breadcrumb > span:nth-of-type(1),
+  .winera-about-hero-breadcrumb > span:nth-of-type(2),
+  .winera-about-hero-section .winera-about-hero-breadcrumb,
+  .winera-about-hero-section .winera-about-hero-breadcrumb * {
+    font-size: 14px !important;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7) !important;
   }
 
   .winera-section-heading-container h2 {
@@ -9615,7 +9682,6 @@ img.winera-yellow-stroke,
 .winera-blog-hero-h1>span:nth-of-type(1),
 .winera-lasertag-hero-h1>span:nth-of-type(1),
 .winera-contact-hero-h1>span:nth-of-type(1),
-.winera-about-hero-breadcrumb>span:nth-of-type(1),
 .winera-breadcrumb-hero>span:nth-of-type(1) {
   font-size: 21px !important;
   display: inline-block;
@@ -9641,7 +9707,6 @@ img.winera-yellow-stroke,
 .winera-blog-hero-h1>span:nth-of-type(2),
 .winera-lasertag-hero-h1>span:nth-of-type(2),
 .winera-contact-hero-h1>span:nth-of-type(2),
-.winera-about-hero-breadcrumb>span:nth-of-type(2),
 .winera-breadcrumb-hero>span:nth-of-type(2) {
   font-size: 21px !important;
   display: inline-block;
@@ -10668,8 +10733,7 @@ span.winera-hero-highlight {
   }
 
   /* About Winera Section Mobile Adjustments */
-  #about,
-  .winera-about-hero-section {
+  #about {
     padding: 35px 30px 30px !important;
   }
 
@@ -18442,61 +18506,78 @@ button[style*="background:transparent"]:hover,
 }
 
 /* ==========================================================================
-   GLOBAL HERO BREADCRUMB 21PX FOR ALL PAGES ACROSS ALL SCREENS
+   GLOBAL HERO BREADCRUMB 21PX FOR DESKTOP / LARGE SCREENS ONLY
    ========================================================================== */
-.winera-arcade-hero-h1,
-.winera-bowling-hero-h1,
-.winera-softplay-hero-h1,
-.winera-vr-hero-h1,
-.winera-ar-hero-h1,
-.winera-bumpercar-hero-h1,
-.winera-amusement-hero-h1,
-.winera-amusement-hero-title,
-.winera-trampoline-hero-h1,
-.winera-hypergrid-hero-h1,
-.winera-hypergrid-hero-title,
-.winera-safety-hero-h1,
-.winera-project-hero-h1,
-.winera-roi-hero-h1,
-.winera-blog-hero-h1,
-.winera-lasertag-hero-h1,
-.winera-contact-hero-h1,
-.winera-about-hero-breadcrumb,
-.winera-breadcrumb-hero,
-.winera-arcade-hero-breadcrumb,
-.winera-vr-hero-breadcrumb,
-.winera-bowling-hero-breadcrumb,
-.winera-softplay-hero-breadcrumb,
-.winera-bumpercar-hero-breadcrumb,
-.winera-ar-hero-breadcrumb,
-div[class*="hero-breadcrumb"],
-h1[class*="-hero-h1"],
-.winera-arcade-hero-h1 *,
-.winera-bowling-hero-h1 *,
-.winera-softplay-hero-h1 *,
-.winera-vr-hero-h1 *,
-.winera-ar-hero-h1 *,
-.winera-bumpercar-hero-h1 *,
-.winera-amusement-hero-h1 *,
-.winera-amusement-hero-title *,
-.winera-trampoline-hero-h1 *,
-.winera-hypergrid-hero-h1 *,
-.winera-hypergrid-hero-title *,
-.winera-safety-hero-h1 *,
-.winera-project-hero-h1 *,
-.winera-roi-hero-h1 *,
-.winera-blog-hero-h1 *,
-.winera-lasertag-hero-h1 *,
-.winera-contact-hero-h1 *,
-.winera-about-hero-breadcrumb *,
-.winera-breadcrumb-hero *,
-.winera-arcade-hero-breadcrumb *,
-.winera-vr-hero-breadcrumb *,
-.winera-bowling-hero-breadcrumb *,
-.winera-softplay-hero-breadcrumb *,
-.winera-bumpercar-hero-breadcrumb *,
-.winera-ar-hero-breadcrumb *,
-div[class*="hero-breadcrumb"] *,
-h1[class*="-hero-h1"] * {
-  font-size: 21px !important;
+@media (min-width: 851px) {
+  .winera-arcade-hero-h1,
+  .winera-bowling-hero-h1,
+  .winera-softplay-hero-h1,
+  .winera-vr-hero-h1,
+  .winera-ar-hero-h1,
+  .winera-bumpercar-hero-h1,
+  .winera-amusement-hero-h1,
+  .winera-amusement-hero-title,
+  .winera-trampoline-hero-h1,
+  .winera-hypergrid-hero-h1,
+  .winera-hypergrid-hero-title,
+  .winera-safety-hero-h1,
+  .winera-project-hero-h1,
+  .winera-roi-hero-h1,
+  .winera-blog-hero-h1,
+  .winera-lasertag-hero-h1,
+  .winera-contact-hero-h1,
+  .winera-about-hero-breadcrumb,
+  .winera-breadcrumb-hero,
+  .winera-arcade-hero-breadcrumb,
+  .winera-vr-hero-breadcrumb,
+  .winera-bowling-hero-breadcrumb,
+  .winera-softplay-hero-breadcrumb,
+  .winera-bumpercar-hero-breadcrumb,
+  .winera-ar-hero-breadcrumb,
+  div[class*="hero-breadcrumb"],
+  h1[class*="-hero-h1"],
+  .winera-arcade-hero-h1 *,
+  .winera-bowling-hero-h1 *,
+  .winera-softplay-hero-h1 *,
+  .winera-vr-hero-h1 *,
+  .winera-ar-hero-h1 *,
+  .winera-bumpercar-hero-h1 *,
+  .winera-amusement-hero-h1 *,
+  .winera-amusement-hero-title *,
+  .winera-trampoline-hero-h1 *,
+  .winera-hypergrid-hero-h1 *,
+  .winera-hypergrid-hero-title *,
+  .winera-safety-hero-h1 *,
+  .winera-project-hero-h1 *,
+  .winera-roi-hero-h1 *,
+  .winera-blog-hero-h1 *,
+  .winera-lasertag-hero-h1 *,
+  .winera-contact-hero-h1 *,
+  .winera-about-hero-breadcrumb *,
+  .winera-breadcrumb-hero *,
+  .winera-arcade-hero-breadcrumb *,
+  .winera-vr-hero-breadcrumb *,
+  .winera-bowling-hero-breadcrumb *,
+  .winera-softplay-hero-breadcrumb *,
+  .winera-bumpercar-hero-breadcrumb *,
+  .winera-ar-hero-breadcrumb *,
+  div[class*="hero-breadcrumb"] *,
+  h1[class*="-hero-h1"] * {
+    font-size: 21px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .winera-about-hero-breadcrumb,
+  .winera-about-hero-breadcrumb *,
+  .winera-about-hero-breadcrumb a,
+  .winera-about-hero-breadcrumb span,
+  .winera-about-hero-breadcrumb > a,
+  .winera-about-hero-breadcrumb > span,
+  .winera-about-hero-breadcrumb > span:nth-of-type(1),
+  .winera-about-hero-breadcrumb > span:nth-of-type(2),
+  .winera-about-hero-section .winera-about-hero-breadcrumb,
+  .winera-about-hero-section .winera-about-hero-breadcrumb * {
+    font-size: 14px !important;
+  }
 }
