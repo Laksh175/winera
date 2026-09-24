@@ -149,9 +149,45 @@ export default function ProjectDetail({ siteData }) {
     }
   };
 
+  const normalizeSlug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  const targetSlug = normalizeSlug(slug);
+
   const cmsItem = Array.isArray(siteData?.projectItems)
-    ? siteData.projectItems.find(p => p.slug === slug || p.id === slug)
+    ? siteData.projectItems.find(p => {
+        const itemSlug = (p.slug && p.slug !== 'new-turnkey-project') ? normalizeSlug(p.slug) : normalizeSlug(p.name);
+        return itemSlug === targetSlug || normalizeSlug(p.name) === targetSlug || normalizeSlug(p.id) === targetSlug || (targetSlug === 'new-turnkey-project' && normalizeSlug(p.slug) === 'new-turnkey-project');
+      })
     : null;
+
+  const builtItem = Array.isArray(siteData?.builtProjects)
+    ? siteData.builtProjects.find(p => {
+        const itemSlug = normalizeSlug(p.slug || p.name);
+        return itemSlug === targetSlug || normalizeSlug(p.name) === targetSlug || normalizeSlug(p.id) === targetSlug;
+      })
+    : null;
+
+  const resolvedItem = cmsItem || (builtItem ? {
+    name: builtItem.name,
+    titleLine1: `${builtItem.name}: A`,
+    titleLine2: "Turnkey ",
+    titleLine2Black: "Entertainment Setup",
+    titleLine3: `in ${builtItem.city || 'India'}`,
+    description: `How Winera International designed, manufactured, and installed a complete turnkey game zone setup for ${builtItem.name} in ${builtItem.city || 'India'}, delivering a high-revenue entertainment venue from 3D planning to opening day.`,
+    metaTitle: `${builtItem.name} Game Zone Setup in ${builtItem.city || 'India'} | Winera International`,
+    metaDescription: `Explore how Winera International designed and built ${builtItem.name} in ${builtItem.city || 'India'}. Turnkey entertainment venue execution from empty space to opening day.`,
+    type: builtItem.type || builtItem.category || "Game Zone Setup",
+    location: builtItem.city ? `${builtItem.city}${builtItem.state ? `, ${builtItem.state}` : ''}` : "India",
+    area: builtItem.area || "Turnkey Facility",
+    clientWanted1: `The client wanted to create an unforgettable game zone destination in ${builtItem.city || 'India'} featuring multi-age amusement attractions for families and kids.`,
+    clientWanted2: `They trusted Winera International as their single turnkey partner for 3D layout planning, equipment sourcing, installation, and complete venue execution.`,
+    solution1: `At Winera International, we planned the complete space layout for ${builtItem.name} in ${builtItem.city || 'India'}, organizing attractions and seating for maximum footfall and smooth visitor flow.`,
+    solution2: `The resulting venue delivers top-tier entertainment, reliable high-uptime equipment, and strong revenue performance from day one.`,
+    imageUrl: builtItem.imageUrl || builtItem.img,
+    img: builtItem.imageUrl || builtItem.img,
+    clientImg: builtItem.clientImg || builtItem.imageUrl || builtItem.img,
+    solutionImg: builtItem.solutionImg || builtItem.imageUrl || builtItem.img
+  } : null);
 
   const defaultProject = caseStudies[slug] || {
     name: slug ? slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Featured Winera Project",
@@ -174,41 +210,41 @@ export default function ProjectDetail({ siteData }) {
     solutionImg: projectImage4
   };
 
-  const currentProject = cmsItem ? {
-    name: cmsItem.name || defaultProject.name,
-    titleLine1: cmsItem.titleLine1 || defaultProject.titleLine1,
-    titleLine2: cmsItem.titleLine2 || defaultProject.titleLine2,
-    titleLine2Black: cmsItem.titleLine2Black || defaultProject.titleLine2Black,
-    titleLine3: cmsItem.titleLine3 || defaultProject.titleLine3,
-    description: cmsItem.description || defaultProject.description,
-    metaTitle: cmsItem.metaTitle || cmsItem.seoTitle || defaultProject.metaTitle,
-    metaDescription: cmsItem.metaDescription || cmsItem.seoDescription || defaultProject.metaDescription,
-    type: cmsItem.type || defaultProject.type,
-    location: cmsItem.city ? `${cmsItem.city}${cmsItem.state ? `, ${cmsItem.state}` : ''}` : (cmsItem.location || defaultProject.location),
-    area: cmsItem.area || defaultProject.area,
-    clientWanted1: cmsItem.clientWanted1 || defaultProject.clientWanted1,
-    clientWanted2: cmsItem.clientWanted2 || defaultProject.clientWanted2,
-    solution1: cmsItem.solution1 || defaultProject.solution1,
-    solution2: cmsItem.solution2 || defaultProject.solution2,
-    mainImg: getValidImageUrl(cmsItem.img || cmsItem.imageUrl, defaultProject.mainImg),
-    clientImg: getValidImageUrl(cmsItem.clientImg || cmsItem.clientImageUrl, defaultProject.clientImg),
-    solutionImg: getValidImageUrl(cmsItem.solutionImg || cmsItem.solutionImageUrl, defaultProject.solutionImg),
-    galleryImages: (Array.isArray(cmsItem.galleryImages) && cmsItem.galleryImages.length > 0)
-      ? cmsItem.galleryImages
+  const currentProject = resolvedItem ? {
+    name: resolvedItem.name || defaultProject.name,
+    titleLine1: resolvedItem.titleLine1 || defaultProject.titleLine1,
+    titleLine2: resolvedItem.titleLine2 || defaultProject.titleLine2,
+    titleLine2Black: resolvedItem.titleLine2Black || defaultProject.titleLine2Black,
+    titleLine3: resolvedItem.titleLine3 || defaultProject.titleLine3,
+    description: resolvedItem.description || defaultProject.description,
+    metaTitle: resolvedItem.metaTitle || resolvedItem.seoTitle || defaultProject.metaTitle,
+    metaDescription: resolvedItem.metaDescription || resolvedItem.seoDescription || defaultProject.metaDescription,
+    type: resolvedItem.type || defaultProject.type,
+    location: resolvedItem.city ? `${resolvedItem.city}${resolvedItem.state ? `, ${resolvedItem.state}` : ''}` : (resolvedItem.location || defaultProject.location),
+    area: resolvedItem.area || defaultProject.area,
+    clientWanted1: resolvedItem.clientWanted1 || defaultProject.clientWanted1,
+    clientWanted2: resolvedItem.clientWanted2 || defaultProject.clientWanted2,
+    solution1: resolvedItem.solution1 || defaultProject.solution1,
+    solution2: resolvedItem.solution2 || defaultProject.solution2,
+    mainImg: getValidImageUrl(resolvedItem.img || resolvedItem.imageUrl, defaultProject.mainImg),
+    clientImg: getValidImageUrl(resolvedItem.clientImg || resolvedItem.clientImageUrl, defaultProject.clientImg),
+    solutionImg: getValidImageUrl(resolvedItem.solutionImg || resolvedItem.solutionImageUrl, defaultProject.solutionImg),
+    galleryImages: (Array.isArray(resolvedItem.galleryImages) && resolvedItem.galleryImages.length > 0)
+      ? resolvedItem.galleryImages
       : [
-        cmsItem.galleryImage1,
-        cmsItem.galleryImage2,
-        cmsItem.galleryImage3,
-        cmsItem.galleryImage4,
-        cmsItem.galleryImage5,
-        cmsItem.galleryImage6
+        resolvedItem.galleryImage1,
+        resolvedItem.galleryImage2,
+        resolvedItem.galleryImage3,
+        resolvedItem.galleryImage4,
+        resolvedItem.galleryImage5,
+        resolvedItem.galleryImage6
       ].filter(Boolean),
-    videoImg: cmsItem.videoImg || cmsItem.videoCoverUrl || defaultProject.videoImg,
-    videoUrl: cmsItem.videoUrl || cmsItem.videoLink || defaultProject.videoUrl,
-    basicInfoBg: cmsItem.basicInfoBg || cmsItem.basicBg || '',
-    buttonText: cmsItem.buttonText,
-    buttonLink: cmsItem.buttonLink,
-    waMessage: cmsItem.waMessage
+    videoImg: resolvedItem.videoImg || resolvedItem.videoCoverUrl || defaultProject.videoImg,
+    videoUrl: resolvedItem.videoUrl || resolvedItem.videoLink || defaultProject.videoUrl,
+    basicInfoBg: resolvedItem.basicInfoBg || resolvedItem.basicBg || '',
+    buttonText: resolvedItem.buttonText,
+    buttonLink: resolvedItem.buttonLink,
+    waMessage: resolvedItem.waMessage
   } : defaultProject;
 
   // Dynamic content sections from CMS siteData
@@ -792,6 +828,8 @@ export default function ProjectDetail({ siteData }) {
 
       {/* 8. OUR RECENT PROJECTS MARQUEE */}
       <ProjectsMarqueeSection
+        siteData={siteData}
+        projects={siteData?.builtProjects}
         showTopHeader={false}
         simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
         showBottomButton={true}

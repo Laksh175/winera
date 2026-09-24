@@ -260,9 +260,20 @@ export default function Project({ siteData }) {
     img: projectImage01
   };
 
-  const rawProjectList = (Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
+  const normalizeSlug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  const rawProjectList = ((Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
     ? siteData.projectItems
-    : allProjects;
+    : allProjects).map((p, idx) => {
+      const cleanSlug = (p.slug && p.slug !== 'new-turnkey-project')
+        ? normalizeSlug(p.slug)
+        : normalizeSlug(p.name || `project-${idx}`);
+      return {
+        ...p,
+        slug: cleanSlug,
+        id: p.id && p.id !== 'new-turnkey-project' ? p.id : cleanSlug
+      };
+    });
 
   const hasFifthAlley = rawProjectList.some(p => p.slug === "fifthalley-sport-bowling" || (p.name || "").toLowerCase().includes("fifthalley"));
   const projectList = hasFifthAlley ? rawProjectList : [fifthAlleyObj, ...rawProjectList];

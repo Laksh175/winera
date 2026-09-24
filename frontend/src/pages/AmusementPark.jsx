@@ -716,6 +716,7 @@ export default function AmusementPark({ siteData }) {
       {/* 7. RELATED PRODUCTS & SECTIONS */}
       <ProjectsMarqueeSection
         siteData={siteData}
+        projects={siteData?.builtProjects}
         showTopHeader={false}
         simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
       />

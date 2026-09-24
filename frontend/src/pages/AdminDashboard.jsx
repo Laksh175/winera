@@ -1678,7 +1678,37 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
   // Delete item from table & save directly to MongoDB
   const handleDeleteItem = async (sectionKey, index) => {
-    const currentList = [...(formData[sectionKey] || [])];
+    let currentList = [];
+    if (Array.isArray(formData[sectionKey])) {
+      currentList = [...formData[sectionKey]];
+    } else {
+      const fallbackDefaults = {
+        stats: [
+          { number: "14+", label: "YEARS OF EXPERIENCE" },
+          { number: "200+", label: "Project Completed" },
+          { number: "98%", label: "Happy Clients" },
+          { number: "50+", label: "Cities Covered" }
+        ],
+        clientLogos: [
+          { name: "Rebounce", logoUrl: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=300&q=80" },
+          { name: "Hulaboo", logoUrl: "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?auto=format&fit=crop&w=300&q=80" },
+          { name: "Nenopanda", logoUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=300&q=80" },
+          { name: "Fun Houze", logoUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=300&q=80" }
+        ],
+        channelPartners: [
+          { name: "Partner 1", logoUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" },
+          { name: "Partner 2", logoUrl: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=300&q=80" },
+          { name: "Partner 3", logoUrl: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=300&q=80" }
+        ],
+        builtProjects: [
+          { name: "Hulaboo", city: "Surat", imageUrl: "" },
+          { name: "Nenopanda", city: "Indore", imageUrl: "" },
+          { name: "FizzyFox", city: "Nashik", imageUrl: "" },
+          { name: "Playzonia", city: "Surat", imageUrl: "" }
+        ]
+      };
+      currentList = fallbackDefaults[sectionKey] ? [...fallbackDefaults[sectionKey]] : [];
+    }
     const updatedList = currentList.filter((_, i) => i !== index);
     setFormData(prev => ({ ...prev, [sectionKey]: updatedList }));
     await persistSectionToDatabase(sectionKey, updatedList);
@@ -1878,8 +1908,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
     if (sec === 'projectItems') {
       const slugifyText = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      const projTitle = currentItem.name || currentItem.title || (mode === 'add' ? 'New Turnkey Project' : 'FifthAlley Sport Bowling');
-      const projSlug = currentItem.slug || slugifyText(projTitle);
+      const projTitle = currentItem.name || currentItem.title || (mode === 'add' ? '' : 'FifthAlley Sport Bowling');
+      const projSlug = currentItem.slug && currentItem.slug !== 'new-turnkey-project'
+        ? currentItem.slug
+        : (projTitle ? slugifyText(projTitle) : '');
 
       const projectCaseStudiesDefaults = {
         'fifthalley-sport-bowling': {
@@ -2113,6 +2145,24 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       if (currentList.length === 0) {
         currentList = [...defaultRawList];
       }
+
+      const slugifyText = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      const projName = modalItemData.name || 'New Project';
+      let autoSlug = (modalItemData.slug && modalItemData.slug !== 'new-turnkey-project')
+        ? slugifyText(modalItemData.slug)
+        : slugifyText(projName);
+      if (!autoSlug) autoSlug = 'project-' + Date.now();
+
+      modalItemData.name = projName;
+      modalItemData.slug = autoSlug;
+      modalItemData.id = modalItemData.id && modalItemData.id !== 'new-turnkey-project' ? modalItemData.id : autoSlug;
+
+      if (!modalItemData.titleLine1 || modalItemData.titleLine1.startsWith('New Project')) modalItemData.titleLine1 = `${projName}: A`;
+      if (!modalItemData.titleLine2) modalItemData.titleLine2 = 'Complete ';
+      if (!modalItemData.titleLine2Black) modalItemData.titleLine2Black = modalItemData.type || 'Game Zone Setup';
+      if (!modalItemData.titleLine3) modalItemData.titleLine3 = `in ${modalItemData.city || 'India'}`;
+      if (!modalItemData.metaTitle) modalItemData.metaTitle = `${projName} Setup in ${modalItemData.city || 'India'} | Winera International`;
+      if (!modalItemData.metaDescription) modalItemData.metaDescription = `Explore ${projName} in ${modalItemData.city || 'India'} by Winera International. Complete turnkey entertainment setup.`;
     }
 
     if (secKey === 'arcadeCategories') {
@@ -3117,24 +3167,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Product Cards List</h4>
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       const defaultCards = [
                         { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
                         { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
                         { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
                         { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
                         { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
-                        { id: "trampoline", title: "Trampoline", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
+                        { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
                         { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
-                        { id: "lasertag", title: "Laser Tag & Spy", desc: "High-adrenaline commercial laser tag arena setup delivering competitive team battles for malls & venues.", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80", link: "/products/laser-tag" },
-                        { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" },
-                        { id: "decorative", title: "Decorative Items", desc: "Custom themed lights, sculptures, reception desks, and ambient furniture to elevate your game zone.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80", link: "/products/lights" }
+                        { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
+                        { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" }
                       ];
                       const cur = (Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)
                         ? formData.productsHome.cardsList
                         : defaultCards;
-                      const updated = [...cur, { title: 'New Product', desc: 'Short description.', img: '', link: '/products/new' }];
-                      handleFieldChange('productsHome', 'cardsList', updated);
+                      const updatedList = [...cur, { id: `prod-${Date.now()}`, title: 'New Product', desc: 'Short description.', img: '', link: '/products/arcade-games' }];
+                      const updated = { ...(formData.productsHome || {}), cardsList: updatedList };
+                      setFormData(prev => ({ ...prev, productsHome: updated }));
+                      await persistSectionToDatabase('productsHome', updated);
                     }}
                     style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
                   >
@@ -3143,125 +3194,153 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  {((Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)
-                    ? formData.productsHome.cardsList
-                    : [
+                  {(() => {
+                    const defaultCardsList = [
                       { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
                       { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
                       { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
                       { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
                       { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
-                      { id: "trampoline", title: "Trampoline", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
+                      { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
                       { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
-                      { id: "lasertag", title: "Laser Tag & Spy", desc: "High-adrenaline commercial laser tag arena setup delivering competitive team battles for malls & venues.", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80", link: "/products/laser-tag" },
-                      { id: "ride", title: "Amusement Ride", desc: "Exhilarating blend of collisions and smooth handling designed with top commercial safety.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
-                      { id: "decorative", title: "Decorative Items", desc: "Custom themed lights, sculptures, reception desks, and ambient furniture to elevate your game zone.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80", link: "/products/lights" }
-                    ]
-                  ).map((card, idx) => {
-                    const getList = () => (Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)
+                      { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
+                      { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" }
+                    ];
+
+                    const displayCards = (Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)
                       ? formData.productsHome.cardsList
-                      : [
-                        { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
-                        { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
-                        { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
-                        { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
-                        { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
-                        { id: "trampoline", title: "Trampoline", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
-                        { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
-                        { id: "lasertag", title: "Laser Tag & Spy", desc: "High-adrenaline commercial laser tag arena setup delivering competitive team battles for malls & venues.", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80", link: "/products/laser-tag" },
-                        { id: "ride", title: "Amusement Ride", desc: "Exhilarating blend of collisions and smooth handling designed with top commercial safety.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
-                        { id: "decorative", title: "Decorative Items", desc: "Custom themed lights, sculptures, reception desks, and ambient furniture to elevate your game zone.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80", link: "/products/lights" }
-                      ];
+                      : defaultCardsList;
 
-                    return (
-                      <div key={idx} style={{ background: '#ffffff', padding: '16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Card #{idx + 1} - {card.title}</span>
-                          <button
-                            onClick={() => {
-                              const list = [...getList()];
-                              list.splice(idx, 1);
-                              handleFieldChange('productsHome', 'cardsList', list);
-                            }}
-                            style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '900' }}
-                          >
-                            ×
-                          </button>
-                        </div>
+                    return displayCards.map((card, idx) => {
+                      const getList = () => displayCards;
 
-                        <div>
-                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Title</label>
-                          <input
-                            type="text"
-                            placeholder="Card Title"
-                            value={card.title || ''}
-                            onChange={(e) => {
-                              const list = [...getList()];
-                              list[idx] = { ...list[idx], title: e.target.value };
-                              handleFieldChange('productsHome', 'cardsList', list);
-                            }}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                          />
-                        </div>
-
-                        <div>
-                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Short Description</label>
-                          <textarea
-                            rows={2}
-                            placeholder="Short Description"
-                            value={card.desc || ''}
-                            onChange={(e) => {
-                              const list = [...getList()];
-                              list[idx] = { ...list[idx], desc: e.target.value };
-                              handleFieldChange('productsHome', 'cardsList', list);
-                            }}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
-                          />
-                        </div>
-
-                        <div>
-                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>
-                            Card Image <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 600 × 600 px (Square 1:1)</span>
-                          </label>
-                          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                            {card.img && (
-                              <img
-                                src={card.img}
-                                alt="Card Preview"
-                                style={{ width: '80px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
-                              />
-                            )}
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={async (e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                  try {
-                                    const res = await uploadImageFile(file, admin.token);
-                                    if (res.url) {
-                                      const list = [...getList()];
-                                      list[idx] = { ...list[idx], img: res.url };
-                                      handleFieldChange('productsHome', 'cardsList', list);
-                                    }
-                                  } catch (err) {
-                                    console.error('Image upload failed', err);
-                                  }
-                                }
+                      return (
+                        <div key={card.id || `card-${idx}`} style={{ background: '#ffffff', padding: '16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Card #{idx + 1} - {card.title || 'Untitled Card'}</span>
+                            <button
+                              onClick={async () => {
+                                const list = [...getList()];
+                                list.splice(idx, 1);
+                                const updated = { ...(formData.productsHome || {}), cardsList: list };
+                                setFormData(prev => ({ ...prev, productsHome: updated }));
+                                await persistSectionToDatabase('productsHome', updated);
                               }}
-                              style={{ fontSize: '12px' }}
+                              style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '900' }}
+                            >
+                              ×
+                            </button>
+                          </div>
+
+                          <div>
+                            <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Title</label>
+                            <input
+                              type="text"
+                              placeholder="Card Title"
+                              value={card.title || ''}
+                              onChange={(e) => {
+                                const list = [...getList()];
+                                list[idx] = { ...list[idx], title: e.target.value };
+                                handleFieldChange('productsHome', 'cardsList', list);
+                              }}
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                             />
                           </div>
+
+                          <div>
+                            <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Short Description</label>
+                            <textarea
+                              rows={2}
+                              placeholder="Short Description"
+                              value={card.desc || ''}
+                              onChange={(e) => {
+                                const list = [...getList()];
+                                list[idx] = { ...list[idx], desc: e.target.value };
+                                handleFieldChange('productsHome', 'cardsList', list);
+                              }}
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                            />
+                          </div>
+
+                          <div>
+                            <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Link (e.g. /products/arcade-games)</label>
+                            <input
+                              type="text"
+                              placeholder="/products/arcade-games"
+                              value={card.link || ''}
+                              onChange={(e) => {
+                                const list = [...getList()];
+                                list[idx] = { ...list[idx], link: e.target.value };
+                                handleFieldChange('productsHome', 'cardsList', list);
+                              }}
+                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                            />
+                          </div>
+
+                          <div>
+                            <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>
+                              Card Image <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 600 × 600 px (Square 1:1)</span>
+                            </label>
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                              {card.img && (
+                                <img
+                                  src={card.img}
+                                  alt="Card Preview"
+                                  style={{ width: '80px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+                                />
+                              )}
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={async (e) => {
+                                  const file = e.target.files[0];
+                                  if (file) {
+                                    try {
+                                      const res = await uploadImageFile(file, admin.token);
+                                      if (res.url) {
+                                        const list = [...getList()];
+                                        list[idx] = { ...list[idx], img: res.url };
+                                        handleFieldChange('productsHome', 'cardsList', list);
+                                      }
+                                    } catch (err) {
+                                      console.error('Image upload failed', err);
+                                    }
+                                  }
+                                }}
+                                style={{ fontSize: '12px' }}
+                              />
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    });
+                  })()}
                 </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
-                  onClick={() => persistSectionToDatabase('productsHome', formData.productsHome || {})}
+                  onClick={() => {
+                    const defaultCardsList = [
+                      { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
+                      { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
+                      { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
+                      { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
+                      { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
+                      { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
+                      { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
+                      { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
+                      { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" }
+                    ];
+                    const dataToSave = {
+                      title: formData.productsHome?.title || "Take a look At *Our Best Products*",
+                      subtitle: formData.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions",
+                      cardsList: (Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)
+                        ? formData.productsHome.cardsList
+                        : defaultCardsList
+                    };
+                    persistSectionToDatabase('productsHome', dataToSave);
+                  }}
                   style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -3413,155 +3492,148 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Industries Items Manager */}
               <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Industries List</h4>
-                  <button
-                    onClick={() => {
-                      const defaultItems = [
-                        { title: "Shopping Malls", img: "" },
-                        { title: "Hotels & Resorts", img: "" },
-                        { title: "Schools & Academies", img: "" },
-                        { title: "Commercial Spaces", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Residential Projects", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Sports Centres", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Entertainment Hubs", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Airports & Terminals", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Hospitals & Clinics", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Food and Beverage", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" }
-                      ];
+                {(() => {
+                  const defaultItems = [
+                    { title: "Shopping Malls", img: "" },
+                    { title: "Hotels & Resorts", img: "" },
+                    { title: "Schools & Academies", img: "" },
+                    { title: "Commercial Spaces", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Residential Projects", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Sports Centres", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Entertainment Hubs", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Airports & Terminals", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Hospitals & Clinics", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Food and Beverage", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" }
+                  ];
 
-                      const getList = () => (Array.isArray(formData.industriesHeader?.items) && formData.industriesHeader.items.length > 0)
-                        ? formData.industriesHeader.items
-                        : defaultItems;
-
-                      const updated = [...getList(), { title: 'New Industry', img: '' }];
-                      handleFieldChange('industriesHeader', 'items', updated);
-                    }}
-                    style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
-                  >
-                    + Add Industry
-                  </button>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  {((Array.isArray(formData.industriesHeader?.items) && formData.industriesHeader.items.length > 0)
+                  const getList = () => Array.isArray(formData.industriesHeader?.items)
                     ? formData.industriesHeader.items
-                    : [
-                      { title: "Shopping Malls", img: "" },
-                      { title: "Hotels & Resorts", img: "" },
-                      { title: "Schools & Academies", img: "" },
-                      { title: "Commercial Spaces", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Residential Projects", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Sports Centres", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Entertainment Hubs", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Airports & Terminals", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Hospitals & Clinics", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" },
-                      { title: "Food and Beverage", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" }
-                    ]
-                  ).map((item, idx) => {
-                    const getList = () => (Array.isArray(formData.industriesHeader?.items) && formData.industriesHeader.items.length > 0)
-                      ? formData.industriesHeader.items
-                      : [
-                        { title: "Shopping Malls", img: "" },
-                        { title: "Hotels & Resorts", img: "" },
-                        { title: "Schools & Academies", img: "" },
-                        { title: "Commercial Spaces", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Residential Projects", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Sports Centres", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Entertainment Hubs", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Airports & Terminals", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Hospitals & Clinics", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" },
-                        { title: "Food and Beverage", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" }
-                      ];
+                    : defaultItems;
 
-                    return (
-                      <div key={idx} style={{ background: '#ffffff', padding: '16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Industry #{idx + 1} - {item.title}</span>
-                          <button
-                            onClick={() => {
-                              const list = [...getList()];
-                              list.splice(idx, 1);
-                              handleFieldChange('industriesHeader', 'items', list);
-                            }}
-                            style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '900' }}
-                          >
-                            ×
-                          </button>
-                        </div>
+                  const currentItemsList = getList();
 
-                        <div>
-                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Industry Title</label>
-                          <input
-                            type="text"
-                            placeholder="Industry Title"
-                            value={item.title || ''}
-                            onChange={(e) => {
-                              const list = [...getList()];
-                              list[idx] = { ...list[idx], title: e.target.value };
-                              handleFieldChange('industriesHeader', 'items', list);
-                            }}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                          />
-                        </div>
-
-                        <div>
-                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>
-                            Industry Image <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 800 × 600 px (4:3)</span>
-                          </label>
-                          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                            {item.img && (
-                              <img
-                                src={item.img}
-                                alt="Industry Preview"
-                                style={{ width: '80px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
-                              />
-                            )}
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={async (e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                  try {
-                                    const res = await uploadImageFile(file, admin.token);
-                                    if (res.url) {
-                                      const list = [...getList()];
-                                      list[idx] = { ...list[idx], img: res.url };
-                                      handleFieldChange('industriesHeader', 'items', list);
-                                    }
-                                  } catch (err) {
-                                    console.error('Image upload failed', err);
-                                  }
-                                }
-                              }}
-                              style={{ fontSize: '12px' }}
-                            />
-                          </div>
-                        </div>
+                  return (
+                    <>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                        <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Industries List ({currentItemsList.length})</h4>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const updated = [...currentItemsList, { title: 'New Industry', img: '' }];
+                            const updatedHeader = { ...(formData.industriesHeader || {}), items: updated };
+                            setFormData(prev => ({ ...prev, industriesHeader: updatedHeader }));
+                            await persistSectionToDatabase('industriesHeader', updatedHeader);
+                          }}
+                          style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                        >
+                          + Add Industry
+                        </button>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
 
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('industriesHeader', formData.industriesHeader || {})}
-                  style={{
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    border: 'none',
-                    padding: '12px 28px',
-                    borderRadius: '12px',
-                    fontWeight: '900',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
-                  }}
-                >
-                  Save Industries Header
-                </button>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        {currentItemsList.map((item, idx) => (
+                          <div key={idx} style={{ background: '#ffffff', padding: '16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Industry #{idx + 1} - {item.title}</span>
+                              <button
+                                type="button"
+                                onClick={async () => {
+                                  const list = [...currentItemsList];
+                                  list.splice(idx, 1);
+                                  const updatedHeader = { ...(formData.industriesHeader || {}), items: list };
+                                  setFormData(prev => ({ ...prev, industriesHeader: updatedHeader }));
+                                  await persistSectionToDatabase('industriesHeader', updatedHeader);
+                                }}
+                                style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '900' }}
+                              >
+                                ×
+                              </button>
+                            </div>
+
+                            <div>
+                              <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Industry Title</label>
+                              <input
+                                type="text"
+                                placeholder="Industry Title"
+                                value={item.title || ''}
+                                onChange={(e) => {
+                                  const list = [...currentItemsList];
+                                  list[idx] = { ...list[idx], title: e.target.value };
+                                  handleFieldChange('industriesHeader', 'items', list);
+                                }}
+                                style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                              />
+                            </div>
+
+                            <div>
+                              <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>
+                                Industry Image <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 800 × 600 px (4:3)</span>
+                              </label>
+                              <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                                {item.img && (
+                                  <img
+                                    src={item.img}
+                                    alt="Industry Preview"
+                                    style={{ width: '80px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+                                  />
+                                )}
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={async (e) => {
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                      try {
+                                        const res = await uploadImageFile(file, admin.token);
+                                        if (res.url) {
+                                          const list = [...currentItemsList];
+                                          list[idx] = { ...list[idx], img: res.url };
+                                          const updatedHeader = { ...(formData.industriesHeader || {}), items: list };
+                                          setFormData(prev => ({ ...prev, industriesHeader: updatedHeader }));
+                                          await persistSectionToDatabase('industriesHeader', updatedHeader);
+                                        }
+                                      } catch (err) {
+                                        console.error('Image upload failed', err);
+                                      }
+                                    }
+                                  }}
+                                  style={{ fontSize: '12px' }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div style={{ textAlign: 'right', marginTop: '14px' }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const dataToSave = {
+                              title: formData.industriesHeader?.title || "Industries *We Serve*",
+                              subtitle: formData.industriesHeader?.subtitle || "We deliver complete game zone setup solutions for businesses across India",
+                              items: currentItemsList
+                            };
+                            persistSectionToDatabase('industriesHeader', dataToSave);
+                          }}
+                          style={{
+                            background: '#38bdf8',
+                            color: '#ffffff',
+                            border: 'none',
+                            padding: '12px 28px',
+                            borderRadius: '12px',
+                            fontWeight: '900',
+                            fontSize: '14px',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                          }}
+                        >
+                          Save Industries Header
+                        </button>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
           )}
@@ -3600,46 +3672,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Working Process Dynamic Step Cards */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '10px 0 0' }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Process Step Cards</h4>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const defaultInitial = [
-                        { num: "01", title: "Free Consultation", points: ["Share your project idea and business goal", "Tell us your space size and budget", "We suggest the best game zone setup for you"] },
-                        { num: "02", title: "Planning & Selection", points: ["We design a complete game zone layout for your space", "Best equipment and activities selected as per your budget", "Detailed project timeline and execution plan prepared"] },
-                        { num: "03", title: "Production & Procurement", points: ["Order confirmed with transparent pricing", "Production process begins and Equipment sourcing", "Quality checks done at every stage"] },
-                        { num: "04", title: "Project Installation", points: ["Complete equipment assembly at your site", "Product installation and setup", "Full equipment inspection after installation"] },
-                        { num: "05", title: "Forever Support", points: ["Technical support whenever you need assistance", "Spare parts and maintenance support available", "Expert guidance to keep operations running smoothly"] }
-                      ];
-                      const currentCards = (Array.isArray(formData.processHome?.cards) && formData.processHome.cards.length > 0)
-                        ? [...formData.processHome.cards]
-                        : [...defaultInitial];
-
-                      const newStepNum = currentCards.length < 9 ? `0${currentCards.length + 1}` : `${currentCards.length + 1}`;
-                      currentCards.push({
-                        num: newStepNum,
-                        title: "New Process Step",
-                        points: ["Feature Detail 1", "Feature Detail 2"]
-                      });
-                      handleFieldChange('processHome', 'cards', currentCards);
-                    }}
-                    style={{
-                      background: '#00a8ff',
-                      color: '#ffffff',
-                      border: 'none',
-                      padding: '8px 16px',
-                      borderRadius: '10px',
-                      fontWeight: '800',
-                      fontSize: '12.5px',
-                      cursor: 'pointer',
-                      boxShadow: '0 4px 12px rgba(0, 168, 255, 0.3)'
-                    }}
-                  >
-                    + Add New Card
-                  </button>
-                </div>
-
                 {(() => {
                   const defaultInitial = [
                     { num: "01", title: "Free Consultation", points: ["Share your project idea and business goal", "Tell us your space size and budget", "We suggest the best game zone setup for you"] },
@@ -3653,90 +3685,144 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     ? formData.processHome.cards
                     : defaultInitial;
 
-                  return cardsList.map((cardItem, cardIdx) => {
-                    const cardData = {
-                      num: cardItem?.num || `0${cardIdx + 1}`,
-                      title: cardItem?.title || '',
-                      points: Array.isArray(cardItem?.points) ? cardItem.points : (cardItem?.points ? [cardItem.points] : [])
-                    };
-
-                    const updateSingleCard = (updated) => {
-                      const updatedCards = [...cardsList];
-                      updatedCards[cardIdx] = updated;
-                      handleFieldChange('processHome', 'cards', updatedCards);
-                    };
-
-                    const deleteSingleCard = () => {
-                      const updatedCards = cardsList.filter((_, idx) => idx !== cardIdx);
-                      handleFieldChange('processHome', 'cards', updatedCards);
-                    };
-
-                    return (
-                      <div key={cardIdx} style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '10px', position: 'relative' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px' }}>
-                          <span style={{ fontSize: '12px', fontWeight: '800', color: '#64748b' }}>Card #{cardIdx + 1}</span>
-                          {cardsList.length > 1 && (
-                            <button
-                              type="button"
-                              onClick={deleteSingleCard}
-                              style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}
-                            >
-                              Delete Card
-                            </button>
-                          )}
-                        </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '12px' }}>
-                          <div>
-                            <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Step #</label>
-                            <input
-                              type="text"
-                              value={cardData.num}
-                              onChange={(e) => updateSingleCard({ ...cardData, num: e.target.value })}
-                              style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '800', color: '#00a8ff' }}
-                            />
-                          </div>
-                          <div>
-                            <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Step Title</label>
-                            <input
-                              type="text"
-                              value={cardData.title}
-                              onChange={(e) => updateSingleCard({ ...cardData, title: e.target.value })}
-                              style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Bullet Points (One per line)</label>
-                          <textarea
-                            rows={3}
-                            value={cardData.points.join('\n')}
-                            onChange={(e) => updateSingleCard({ ...cardData, points: e.target.value.split('\n') })}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'monospace' }}
-                          />
-                        </div>
+                  return (
+                    <>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '10px 0 0' }}>
+                        <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                          Process Step Cards ({cardsList.length})
+                        </h4>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const newStepNum = cardsList.length < 9 ? `0${cardsList.length + 1}` : `${cardsList.length + 1}`;
+                            const updatedCards = [
+                              ...cardsList,
+                              {
+                                num: newStepNum,
+                                title: "New Process Step",
+                                points: ["Feature Detail 1", "Feature Detail 2"]
+                              }
+                            ];
+                            const updatedHeader = {
+                              ...(formData.processHome || {}),
+                              cards: updatedCards
+                            };
+                            setFormData(prev => ({ ...prev, processHome: updatedHeader }));
+                            await persistSectionToDatabase('processHome', updatedHeader);
+                          }}
+                          style={{
+                            background: '#00a8ff',
+                            color: '#ffffff',
+                            border: 'none',
+                            padding: '8px 16px',
+                            borderRadius: '10px',
+                            fontWeight: '800',
+                            fontSize: '12.5px',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(0, 168, 255, 0.3)'
+                          }}
+                        >
+                          + Add New Card
+                        </button>
                       </div>
-                    );
-                  });
-                })()}
-              </div>
 
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('processHome', formData.processHome || {})}
-                  style={{
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    border: 'none',
-                    padding: '12px 28px',
-                    borderRadius: '12px',
-                    fontWeight: '900',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
-                  }}
-                >
-                  Save Process Header
-                </button>
+                      {cardsList.map((cardItem, cardIdx) => {
+                        const cardData = {
+                          num: cardItem?.num || `0${cardIdx + 1}`,
+                          title: cardItem?.title || '',
+                          points: Array.isArray(cardItem?.points) ? cardItem.points : (cardItem?.points ? [cardItem.points] : [])
+                        };
+
+                        const updateSingleCard = (updated) => {
+                          const updatedCards = [...cardsList];
+                          updatedCards[cardIdx] = updated;
+                          handleFieldChange('processHome', 'cards', updatedCards);
+                        };
+
+                        const deleteSingleCard = async () => {
+                          const updatedCards = cardsList.filter((_, idx) => idx !== cardIdx);
+                          const updatedHeader = {
+                            ...(formData.processHome || {}),
+                            cards: updatedCards
+                          };
+                          setFormData(prev => ({ ...prev, processHome: updatedHeader }));
+                          await persistSectionToDatabase('processHome', updatedHeader);
+                        };
+
+                        return (
+                          <div key={cardIdx} style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '10px', position: 'relative' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px' }}>
+                              <span style={{ fontSize: '13px', fontWeight: '800', color: '#0369a1' }}>Card #{cardIdx + 1}</span>
+                              <button
+                                type="button"
+                                onClick={deleteSingleCard}
+                                style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                              >
+                                ✕ Delete Card
+                              </button>
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '12px' }}>
+                              <div>
+                                <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Step #</label>
+                                <input
+                                  type="text"
+                                  value={cardData.num}
+                                  onChange={(e) => updateSingleCard({ ...cardData, num: e.target.value })}
+                                  style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '800', color: '#00a8ff' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Step Title</label>
+                                <input
+                                  type="text"
+                                  value={cardData.title}
+                                  onChange={(e) => updateSingleCard({ ...cardData, title: e.target.value })}
+                                  style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Bullet Points (One per line)</label>
+                              <textarea
+                                rows={3}
+                                value={cardData.points.join('\n')}
+                                onChange={(e) => updateSingleCard({ ...cardData, points: e.target.value.split('\n') })}
+                                style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'monospace' }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                      <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const dataToSave = {
+                              title: formData.processHome?.title || "*Our Working* Process",
+                              subtitle: formData.processHome?.subtitle || "How We Setup Your Game Zone",
+                              cards: cardsList
+                            };
+                            persistSectionToDatabase('processHome', dataToSave);
+                          }}
+                          style={{
+                            background: '#38bdf8',
+                            color: '#ffffff',
+                            border: 'none',
+                            padding: '12px 28px',
+                            borderRadius: '12px',
+                            fontWeight: '900',
+                            fontSize: '14px',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                          }}
+                        >
+                          Save Process Header
+                        </button>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
           )}
@@ -3775,45 +3861,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               {/* Dynamic Feature List */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '10px 0 0' }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Why Choose Us Feature Items</h4>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const defaultItems = [
-                        { title: "ROI-Focused, From Day One", desc: "We consult on ROI first every client receives a complete report covering footfall, revenue, and payback period before we plan or select equipment." },
-                        { title: "Industry Expertise", desc: "Our team recommends the right entertainment attractions based on your space, budget, and business goals." },
-                        { title: "Premium Quality Equipment", desc: "We supply high-grade amusement equipment designed for reliable performance and durability." },
-                        { title: "Customized Planning", desc: "Our team recommends the right entertainment attractions based on your space, budget, and business goals." },
-                        { title: "Complete Turnkey Solutions", desc: "We provide end-to-end support from project planning and equipment selection to installation and execution" },
-                        { title: "Pan-India Execution", desc: "We support projects across India with professional installation, project management, and execution services." }
-                      ];
-                      const currentItems = (Array.isArray(formData.whyChooseUs?.items) && formData.whyChooseUs.items.length > 0)
-                        ? [...formData.whyChooseUs.items]
-                        : [...defaultItems];
-
-                      currentItems.push({
-                        title: "New Feature Title",
-                        desc: "Detailed description of feature point."
-                      });
-                      handleFieldChange('whyChooseUs', 'items', currentItems);
-                    }}
-                    style={{
-                      background: '#00a8ff',
-                      color: '#ffffff',
-                      border: 'none',
-                      padding: '8px 16px',
-                      borderRadius: '10px',
-                      fontWeight: '800',
-                      fontSize: '12.5px',
-                      cursor: 'pointer',
-                      boxShadow: '0 4px 12px rgba(0, 168, 255, 0.3)'
-                    }}
-                  >
-                    + Add Feature
-                  </button>
-                </div>
-
                 {(() => {
                   const defaultItems = [
                     { title: "ROI-Focused, From Day One", desc: "We consult on ROI first every client receives a complete report covering footfall, revenue, and payback period before we plan or select equipment." },
@@ -3828,78 +3875,128 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     ? formData.whyChooseUs.items
                     : defaultItems;
 
-                  return itemsList.map((item, itemIdx) => {
-                    const itemData = {
-                      title: item?.title || '',
-                      desc: item?.desc || ''
-                    };
-
-                    const updateSingleItem = (updated) => {
-                      const updatedItems = [...itemsList];
-                      updatedItems[itemIdx] = updated;
-                      handleFieldChange('whyChooseUs', 'items', updatedItems);
-                    };
-
-                    const deleteSingleItem = () => {
-                      const updatedItems = itemsList.filter((_, idx) => idx !== itemIdx);
-                      handleFieldChange('whyChooseUs', 'items', updatedItems);
-                    };
-
-                    return (
-                      <div key={itemIdx} style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '12px', fontWeight: '800', color: '#64748b' }}>Feature #{itemIdx + 1}</span>
-                          {itemsList.length > 1 && (
-                            <button
-                              type="button"
-                              onClick={deleteSingleItem}
-                              style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}
-                            >
-                              Delete
-                            </button>
-                          )}
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Feature Title</label>
-                          <input
-                            type="text"
-                            value={itemData.title}
-                            onChange={(e) => updateSingleItem({ ...itemData, title: e.target.value })}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                          />
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Feature Description</label>
-                          <textarea
-                            rows={2}
-                            value={itemData.desc}
-                            onChange={(e) => updateSingleItem({ ...itemData, desc: e.target.value })}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '12.5px' }}
-                          />
-                        </div>
+                  return (
+                    <>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '10px 0 0' }}>
+                        <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                          Why Choose Us Feature Items ({itemsList.length})
+                        </h4>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const currentItems = [...itemsList];
+                            currentItems.push({
+                              title: "New Feature Title",
+                              desc: "Detailed description of feature point."
+                            });
+                            const updatedSection = {
+                              ...(formData.whyChooseUs || {}),
+                              items: currentItems
+                            };
+                            setFormData(prev => ({ ...prev, whyChooseUs: updatedSection }));
+                            await persistSectionToDatabase('whyChooseUs', updatedSection);
+                          }}
+                          style={{
+                            background: '#00a8ff',
+                            color: '#ffffff',
+                            border: 'none',
+                            padding: '8px 16px',
+                            borderRadius: '10px',
+                            fontWeight: '800',
+                            fontSize: '12.5px',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(0, 168, 255, 0.3)'
+                          }}
+                        >
+                          + Add Feature
+                        </button>
                       </div>
-                    );
-                  });
-                })()}
-              </div>
 
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('whyChooseUs', formData.whyChooseUs || {})}
-                  style={{
-                    background: '#38bdf8',
-                    color: '#ffffff',
-                    border: 'none',
-                    padding: '12px 28px',
-                    borderRadius: '12px',
-                    fontWeight: '900',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
-                  }}
-                >
-                  Save Why Choose Us
-                </button>
+                      {itemsList.map((item, itemIdx) => {
+                        const itemData = {
+                          title: item?.title || '',
+                          desc: item?.desc || ''
+                        };
+
+                        const updateSingleItem = (updated) => {
+                          const updatedItems = [...itemsList];
+                          updatedItems[itemIdx] = updated;
+                          handleFieldChange('whyChooseUs', 'items', updatedItems);
+                        };
+
+                        const deleteSingleItem = async () => {
+                          const updatedItems = itemsList.filter((_, idx) => idx !== itemIdx);
+                          const updatedSection = {
+                            ...(formData.whyChooseUs || {}),
+                            items: updatedItems
+                          };
+                          setFormData(prev => ({ ...prev, whyChooseUs: updatedSection }));
+                          await persistSectionToDatabase('whyChooseUs', updatedSection);
+                        };
+
+                        return (
+                          <div key={itemIdx} style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontSize: '12px', fontWeight: '800', color: '#64748b' }}>Feature #{itemIdx + 1}</span>
+                              <button
+                                type="button"
+                                onClick={deleteSingleItem}
+                                style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}
+                              >
+                                ✕ Delete
+                              </button>
+                            </div>
+                            <div>
+                              <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Feature Title</label>
+                              <input
+                                type="text"
+                                value={itemData.title}
+                                onChange={(e) => updateSingleItem({ ...itemData, title: e.target.value })}
+                                style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                              />
+                            </div>
+                            <div>
+                              <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Feature Description</label>
+                              <textarea
+                                rows={2}
+                                value={itemData.desc}
+                                onChange={(e) => updateSingleItem({ ...itemData, desc: e.target.value })}
+                                style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '12.5px' }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                      <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const dataToSave = {
+                              title: formData.whyChooseUs?.title || "*Why* Choose Us",
+                              subtitle: formData.whyChooseUs?.subtitle || "We deliver complete game zone setup solutions for businesses across India",
+                              items: itemsList
+                            };
+                            persistSectionToDatabase('whyChooseUs', dataToSave);
+                          }}
+                          style={{
+                            background: '#38bdf8',
+                            color: '#ffffff',
+                            border: 'none',
+                            padding: '12px 28px',
+                            borderRadius: '12px',
+                            fontWeight: '900',
+                            fontSize: '14px',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                          }}
+                        >
+                          Save Why Choose Us
+                        </button>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
           )}
@@ -4349,7 +4446,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit
                           </button>
                           <button
-                            onClick={() => setFormData(prev => ({ ...prev, builtProjects: prev.builtProjects.filter((_, i) => i !== idx) }))}
+                            onClick={() => handleDeleteItem('builtProjects', idx)}
                             style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
                           >
                             <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
@@ -5629,7 +5726,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </h4>
 
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       const defaultItems = [
                         { title: "15+ Years In The Industry", desc: "Supplying And Supporting Indoor Amusement Equipment Across India" },
                         { title: "Successful Installations", desc: "From Malls To Resorts, Our Track Record Speaks Through Completed Projects, Not Just Promises." },
@@ -5644,10 +5741,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         : defaultItems;
 
                       const updatedItems = [...currentItems, { title: "New Feature Title", desc: "Description text..." }];
+                      const updatedSection = { ...(formData.arcadeWhyUs || {}), items: updatedItems };
                       setFormData(prev => ({
                         ...prev,
-                        arcadeWhyUs: { ...(prev.arcadeWhyUs || {}), items: updatedItems }
+                        arcadeWhyUs: updatedSection
                       }));
+                      await persistSectionToDatabase('arcadeWhyUs', updatedSection);
                     }}
                     style={{
                       background: '#38bdf8',
@@ -5690,16 +5789,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                           <span style={{ fontWeight: '800', fontSize: '12px', color: '#38bdf8' }}>Feature Item #{idx + 1}</span>
                           <button
-                            onClick={() => {
+                            type="button"
+                            onClick={async () => {
                               const updated = itemsList.filter((_, i) => i !== idx);
+                              const updatedSection = { ...(formData.arcadeWhyUs || {}), items: updated };
                               setFormData(prev => ({
                                 ...prev,
-                                arcadeWhyUs: { ...(prev.arcadeWhyUs || {}), items: updated }
+                                arcadeWhyUs: updatedSection
                               }));
+                              await persistSectionToDatabase('arcadeWhyUs', updatedSection);
                             }}
                             style={{
                               background: '#fee2e2',
-                              color: '#ef4444',
+                              color: '#dc2626',
                               border: 'none',
                               padding: '4px 10px',
                               borderRadius: '8px',
@@ -5722,10 +5824,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           onChange={(e) => {
                             const updated = [...itemsList];
                             updated[idx] = { ...updated[idx], title: e.target.value };
-                            setFormData(prev => ({
-                              ...prev,
-                              arcadeWhyUs: { ...(prev.arcadeWhyUs || {}), items: updated }
-                            }));
+                            handleFieldChange('arcadeWhyUs', 'items', updated);
                           }}
                           style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}
                         />
@@ -5736,10 +5835,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           onChange={(e) => {
                             const updated = [...itemsList];
                             updated[idx] = { ...updated[idx], desc: e.target.value };
-                            setFormData(prev => ({
-                              ...prev,
-                              arcadeWhyUs: { ...(prev.arcadeWhyUs || {}), items: updated }
-                            }));
+                            handleFieldChange('arcadeWhyUs', 'items', updated);
                           }}
                           style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
                         />
@@ -5751,7 +5847,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
-                  onClick={() => persistSectionToDatabase('arcadeWhyUs', formData.arcadeWhyUs || {})}
+                  type="button"
+                  onClick={() => {
+                    const dataToSave = {
+                      title: formData.arcadeWhyUs?.title || "Why Buy Arcade Games *From Winera International?*",
+                      subtitle: formData.arcadeWhyUs?.subtitle || "We are direct arcade game machines manufacturer and supplier...",
+                      items: (Array.isArray(formData.arcadeWhyUs?.items) && formData.arcadeWhyUs.items.length > 0) ? formData.arcadeWhyUs.items : undefined
+                    };
+                    persistSectionToDatabase('arcadeWhyUs', dataToSave);
+                  }}
                   style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                 >
                   Save Why Choose Section
@@ -16463,7 +16567,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredDisplayList.map((item, idx) => (
+                      {filteredDisplayList.map((item, idx) => {
+                        const origIndex = currentList.findIndex(x => (x.slug && item.slug && x.slug === item.slug) || (x.id && item.id && x.id === item.id) || (x.name && item.name && x.name === item.name));
+                        const targetIdx = origIndex !== -1 ? origIndex : idx;
+                        return (
                         <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
                           <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
                           <td style={{ padding: '14px 18px' }}>
@@ -16476,7 +16583,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b', fontSize: '12px' }}>/project/{item.slug || 'detail'}</td>
                           <td style={{ padding: '14px 18px', textAlign: 'right' }}>
                             <button
-                              onClick={() => openModal('edit', idx, item)}
+                              onClick={() => openModal('edit', targetIdx, item)}
                               style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
                             >
                               <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit Details
@@ -16487,7 +16594,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                   title: 'Delete Project Card?',
                                   message: `Are you sure you want to delete project '${item.name || 'this item'}'?`,
                                   onConfirm: () => {
-                                    const newList = currentList.filter((_, i) => i !== idx);
+                                    const newList = currentList.filter((_, i) => i !== targetIdx);
                                     setFormData(prev => ({ ...prev, projectItems: newList }));
                                     persistSectionToDatabase('projectItems', newList);
                                   }
@@ -16499,7 +16606,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             </button>
                           </td>
                         </tr>
-                      ))}
+                      );})}
                     </tbody>
                   </table>
                 </div>

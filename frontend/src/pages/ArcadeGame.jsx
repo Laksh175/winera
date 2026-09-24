@@ -1604,6 +1604,7 @@ export default function ArcadeGame({ siteData }) {
 
       {/* 7. OUR RECENT PROJECT SHOWCASE SECTION */}
       <ProjectsMarqueeSection
+        siteData={siteData}
         showTopHeader={true}
         title={<><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>GAME ZONES WE HAVE</span><br /><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span></span></>}
         subtext="Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers."

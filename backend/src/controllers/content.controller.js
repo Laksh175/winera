@@ -135,6 +135,22 @@ export const defaultSiteData = {
     { name: "FizzyFox", city: "Nashik", imageUrl: "" },
     { name: "Playzonia", city: "Surat", imageUrl: "" }
   ],
+  industriesHeader: {
+    title: "Industries *We Serve*",
+    subtitle: "We deliver complete game zone setup solutions for businesses across India",
+    items: [
+      { title: "Shopping Malls", img: "" },
+      { title: "Hotels & Resorts", img: "" },
+      { title: "Schools & Academies", img: "" },
+      { title: "Commercial Spaces", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
+      { title: "Residential Projects", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
+      { title: "Sports Centres", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+      { title: "Entertainment Hubs", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
+      { title: "Airports & Terminals", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" },
+      { title: "Hospitals & Clinics", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" },
+      { title: "Food and Beverage", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" }
+    ]
+  },
   faqs: [
     {
       q: "How do I set up a game zone in India?",
@@ -1666,191 +1682,13 @@ export const getContent = async (req, res) => {
       }
     }
 
-    // Ensure faqs (Home Page FAQs) in MongoDB has all default items if empty or outdated
-    if (!Array.isArray(siteData.faqs) || siteData.faqs.length < 7 || siteData.faqs[0]?.q?.includes('Pepe') || siteData.faqs[0]?.q === 'Question 1') {
-      siteData.faqs = defaultSiteData.faqs;
-      await Content.findOneAndUpdate(
-        { sectionKey: 'faqs' },
-        { sectionKey: 'faqs', data: defaultSiteData.faqs },
-        { upsert: true, new: true }
-      );
-    }
-
-    // Ensure arcadeFaqs in MongoDB has all 10 items
-    if (!Array.isArray(siteData.arcadeFaqs) || siteData.arcadeFaqs.length < 10) {
-      siteData.arcadeFaqs = defaultArcadeFaqs;
-      await Content.findOneAndUpdate(
-        { sectionKey: 'arcadeFaqs' },
-        { sectionKey: 'arcadeFaqs', data: defaultArcadeFaqs },
-        { upsert: true, new: true }
-      );
-    }
-
-    // Ensure amusementFaqs in MongoDB has all 7 items
-    if (!Array.isArray(siteData.amusementFaqs) || siteData.amusementFaqs.length < 7) {
-      siteData.amusementFaqs = defaultSiteData.amusementFaqs;
-      await Content.findOneAndUpdate(
-        { sectionKey: 'amusementFaqs' },
-        { sectionKey: 'amusementFaqs', data: defaultSiteData.amusementFaqs },
-        { upsert: true, new: true }
-      );
-    }
-
-    // Ensure vrFaqs in MongoDB has all 8 items
-    const defaultVrFaqsList = [
-      {
-        question: "What is included in a commercial VR gaming set?",
-        answer: "A complete commercial VR gaming set from Winera includes the VR machine unit, motion platform (where applicable), VR headsets, a pre-loaded and commercially licensed game library, safety barriers, installation by our own team, and post-installation support. Exact components vary by machine model — confirmed at the quote stage."
-      },
-      {
-        question: "Which businesses typically need a VR games supplier in India?",
-        answer: "Family entertainment centres, malls, amusement parks, hotels, resorts, bowling centers, and standalone gaming zones are the most common businesses that work with a VR games supplier in India."
-      },
-      {
-        question: "What is the VR gaming setup cost in India?",
-        answer: "VR gaming setup cost in India depends on the number of machines, machine category, motion system complexity, and game library size. Pricing varies significantly between a single compact platform and a multi-machine zone with group rides."
-      },
-      {
-        question: "Do VR gaming machines require a minimum ceiling height or floor space?",
-        answer: "Yes. Motion platforms and group rides typically need higher ceiling clearance than solo simulators, and floor space requirements scale with player count. Winera assesses your venue's exact dimensions before recommending machine models, since not every machine fits every space."
-      },
-      {
-        question: "How long does VR gaming machine installation take?",
-        answer: "Installation timelines depend on machine count and complexity; a single solo platform can be operational within days, while a multi-machine zone with group rides takes longer for setup and software configuration. We confirm an exact schedule at the quote stage."
-      },
-      {
-        question: "Can VR gaming machines be customised with branded content or specific game libraries?",
-        answer: "Yes. Game library selection, branding wraps, and venue-specific configuration can be tailored per machine. We confirm available customisation options for each model during the consultation."
-      },
-      {
-        question: "What happens if a VR machine breaks down after installation?",
-        answer: "Our own technicians handle servicing directly, with coverage across 50+ cities in India. For software issues, remote diagnostics are available for most machines. For hardware faults, our own team visits your site; you're not waiting on an overseas manufacturer or a disconnected logistics partner."
-      },
-      {
-        question: "How do I get started with a VR gaming machine order from Winera?",
-        answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
-      }
-    ];
-    if (!Array.isArray(siteData.vrFaqs) || siteData.vrFaqs.length < 8) {
-      siteData.vrFaqs = defaultVrFaqsList;
-      await Content.findOneAndUpdate(
-        { sectionKey: 'vrFaqs' },
-        { sectionKey: 'vrFaqs', data: defaultVrFaqsList },
-        { upsert: true, new: true }
-      );
-    }
-
-    const defaultArFaqsList = [
-      { question: "What is an AR Gaming Setup and how does it work?", answer: "Augmented Reality (AR) gaming combines physical play spaces with interactive digital projections, sensors, and motion tracking to create immersive experiences for players without needing heavy headsets." },
-      { question: "What type of venues are AR games best suited for?", answer: "AR games are ideal for Family Entertainment Centres (FECs), shopping malls, amusement parks, sports bars, resorts, trampoline parks, and indoor play zones." },
-      { question: "Do you provide installation and technical support across India?", answer: "Yes, Winera International provides end-to-end site inspection, custom installation, game software setup, staff training, and nationwide maintenance support." },
-      { question: "What is the expected ROI for an AR gaming setup?", answer: "With high repeat play rates and low operator maintenance, most commercial venue operators achieve full break-even within 6 to 12 months depending on footfall." }
-    ];
-    if (!Array.isArray(siteData.arFaqs) || siteData.arFaqs.length < 4) {
-      siteData.arFaqs = defaultArFaqsList;
-      await Content.findOneAndUpdate(
-        { sectionKey: 'arFaqs' },
-        { sectionKey: 'arFaqs', data: defaultArFaqsList },
-        { upsert: true, new: true }
-      );
-    }
-
-    // Ensure processHome in MongoDB has the 5 new steps
-    const defaultProcessHome = {
-      title: "*OUR WORKING* PROCESS",
-      subtitle: "How We Setup Your Game Zone",
-      cards: [
-        {
-          num: "01",
-          title: "Free Consultation",
-          points: [
-            "Share your project idea and business goal",
-            "Tell us your space size and budget",
-            "We suggest the best game zone setup for you"
-          ]
-        },
-        {
-          num: "02",
-          title: "Planning & Selection",
-          points: [
-            "We design a complete game zone layout for your space",
-            "Best equipment and activities selected as per your budget",
-            "Detailed project timeline and execution plan prepared"
-          ]
-        },
-        {
-          num: "03",
-          title: "Production & Procurement",
-          points: [
-            "Order confirmed with transparent pricing",
-            "Production process begins and Equipment sourcing",
-            "Quality checks done at every stage"
-          ]
-        },
-        {
-          num: "04",
-          title: "Project Installation",
-          points: [
-            "Complete equipment assembly at your site",
-            "Product installation and setup",
-            "Full equipment inspection after installation"
-          ]
-        },
-        {
-          num: "05",
-          title: "Forever Support",
-          points: [
-            "Technical support whenever you need assistance",
-            "Spare parts and maintenance support available",
-            "Expert guidance to keep operations running smoothly"
-          ]
-        }
-      ]
-    };
-    if (!siteData.processHome || !Array.isArray(siteData.processHome?.cards) || siteData.processHome.cards.length === 0) {
-      siteData.processHome = defaultProcessHome;
-      await Content.findOneAndUpdate(
-        { sectionKey: 'processHome' },
-        { sectionKey: 'processHome', data: defaultProcessHome },
-        { upsert: true, new: true }
-      );
-    }
-
-    // Ensure testimonials in MongoDB has client testimonials default if empty
-    const defaultTestimonialsList = [
-      {
-        founderImage: "",
-        gameZoneName: "Rebounce Game Zone",
-        reviewerRole: "Surat",
-        starRating: 5,
-        youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
-      },
-      {
-        founderImage: "",
-        gameZoneName: "Fun Houze",
-        reviewerRole: "Surat",
-        starRating: 5,
-        youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
-      },
-      {
-        founderImage: "",
-        gameZoneName: "Hulaboo Game Zone",
-        reviewerRole: "Surat",
-        starRating: 5,
-        youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
-      }
-    ];
-
-    if (!Array.isArray(siteData.testimonials) || siteData.testimonials.length === 0 || siteData.testimonials[0]?.gameZoneName === 'House of pepe') {
-      siteData.testimonials = defaultTestimonialsList;
-      await Content.findOneAndUpdate(
-        { sectionKey: 'testimonials' },
-        { sectionKey: 'testimonials', data: defaultTestimonialsList },
-        { upsert: true, new: true }
-      );
+    // Auto-clean stale dummy blogPosts from MongoDB so 28 rich blogs with local assets load cleanly
+    if (Array.isArray(siteData.blogPosts) && siteData.blogPosts.length > 0 && (
+      siteData.blogPosts[0]?.title === 'Blog 1' ||
+      siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
+    )) {
+      await Content.deleteOne({ sectionKey: 'blogPosts' });
+      delete siteData.blogPosts;
     }
 
     // Auto-clean stale dummy blogPosts from MongoDB so 28 rich blogs with local assets load cleanly

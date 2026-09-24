@@ -1100,6 +1100,7 @@ export default function TrampolinePark({ siteData }) {
       {/* PROJECTS MARQUEE SECTION (OUR RECENT PROJECTS MATCHING VR GAMES PAGE 1:1) */}
       <ProjectsMarqueeSection
         siteData={siteData}
+        projects={siteData?.builtProjects}
         showTopHeader={false}
         simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
       />

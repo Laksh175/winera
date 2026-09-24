@@ -910,15 +910,9 @@ export default function Home({ siteData }) {
                   return { padding: '0 0 120px 0', fontSize: '30px', letterSpacing: '2px' };
                 };
 
-                const rawCards = ((Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
+                const cards = (Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
                   ? siteData.productsHome.cardsList
-                  : defaultProductsCards).filter(c => !(c.id || '').toLowerCase().includes('laser') && !(c.title || '').toLowerCase().includes('laser') && !(c.link || '').toLowerCase().includes('laser'));
-
-                const cards = rawCards.filter(prod => {
-                  const idKey = (prod.id || '').toLowerCase();
-                  const titleKey = (prod.title || '').toLowerCase();
-                  return !idKey.includes('decorative') && !titleKey.includes('decorative') && !titleKey.includes('light');
-                });
+                  : defaultProductsCards;
 
                 return cards.map((prod, idx) => {
                   const isExpanded = activeProductIndex === idx;
@@ -1725,6 +1719,7 @@ export default function Home({ siteData }) {
         </section>
 
         <ProjectsMarqueeSection
+          siteData={siteData}
           showTopHeader={true}
           projects={siteData?.builtProjects}
           title={siteData?.builtProjectsHeader?.title}

@@ -21,7 +21,8 @@ export default function ProjectsMarqueeSection({
   simpleTitle = null,
   showTopHeader = true,
   subtext = "Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers.",
-  projects = defaultProjects,
+  projects = null,
+  siteData = null,
   bg = 'transparent',
   buttonText = "View All",
   showBottomButton = false,
@@ -31,7 +32,13 @@ export default function ProjectsMarqueeSection({
   accentMarginBottom = '8px',
   accentAlign = 'left'
 }) {
-  const items = Array.isArray(projects) && projects.length > 0 ? projects : defaultProjects;
+  const dynamicProjects = (Array.isArray(projects) && projects.length > 0)
+    ? projects
+    : (Array.isArray(siteData?.builtProjects) && siteData.builtProjects.length > 0)
+      ? siteData.builtProjects
+      : defaultProjects;
+
+  const items = dynamicProjects;
   const isImageBg = bg && (typeof bg === 'string' && (bg.includes('.webp') || bg.includes('.png') || bg.includes('.jpg') || bg.startsWith('/')) || typeof bg === 'object');
 
   const trackRef = useRef(null);

@@ -1395,6 +1395,8 @@ export default function BumperCar({ siteData }) {
 
       {/* 11. OUR RECENT PROJECT SHOWCASE SECTION */}
       <ProjectsMarqueeSection
+        siteData={siteData}
+        projects={siteData?.builtProjects}
         showTopHeader={false}
         simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
         showBottomButton={true}

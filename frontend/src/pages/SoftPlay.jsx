@@ -1201,6 +1201,8 @@ export default function SoftPlay({ siteData }) {
 
       {/* 10. OUR RECENT PROJECT SHOWCASE SECTION */}
       <ProjectsMarqueeSection
+        siteData={siteData}
+        projects={siteData?.builtProjects}
         showTopHeader={false}
         simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
       />

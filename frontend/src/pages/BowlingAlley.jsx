@@ -1222,6 +1222,8 @@ export default function BowlingAlley({ siteData }) {
 
       {/* 7. OUR RECENT PROJECT SHOWCASE SECTION */}
       <ProjectsMarqueeSection
+        siteData={siteData}
+        projects={siteData?.builtProjects}
         showTopHeader={false}
         simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
         showBottomButton={true}
