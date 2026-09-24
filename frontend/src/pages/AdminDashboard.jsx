@@ -9789,17 +9789,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
           {/* BUMPER CAR THRILL & SAFETY CAROUSEL CARDS FORM */}
           {activeSection === 'bumpercarThrill' && (() => {
-            const currentCards = formData.bumpercarThrill?.cards || defaultBumperCarThrillCards;
+            const currentSec = formData.bumpercarThrill || {};
+            const currentCards = Array.isArray(currentSec.cards) ? currentSec.cards : defaultBumperCarThrillCards;
             return (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>The Perfect Blend Of Thrill And Safety Carousel Cards</h3>
                 
                 <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                    <label style={{ fontWeight: '800', fontSize: '14px', color: '#0369a1' }}>Carousel Cards List</label>
+                    <label style={{ fontWeight: '800', fontSize: '14px', color: '#0369a1' }}>Carousel Cards List ({currentCards.length})</label>
                     <button
+                      type="button"
                       onClick={() => {
-                        handleFieldChange('bumpercarThrill', 'cards', [...currentCards, { title: '', desc: '' }]);
+                        const updated = [...currentCards, { title: 'New Thrill & Safety Card', desc: 'Description of the card here...' }];
+                        const updatedSec = { ...currentSec, cards: updated };
+                        setFormData(prev => ({ ...prev, bumpercarThrill: updatedSec }));
                       }}
                       style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}
                     >
@@ -9811,16 +9815,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     {currentCards.map((card, idx) => (
                       <div key={idx} style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0f172a' }}>Card #{idx + 1}</span>
+                          <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0f172a' }}>Card #{idx + 1}: {card.title}</span>
                           <button
-                            onClick={() => {
-                              const list = [...currentCards];
-                              list.splice(idx, 1);
-                              handleFieldChange('bumpercarThrill', 'cards', list);
+                            type="button"
+                            onClick={async () => {
+                              const updated = currentCards.filter((_, i) => i !== idx);
+                              const updatedSec = { ...currentSec, cards: updated };
+                              setFormData(prev => ({ ...prev, bumpercarThrill: updatedSec }));
+                              await persistSectionToDatabase('bumpercarThrill', updatedSec);
                             }}
-                            style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800' }}
+                            style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
                           >
-                            ×
+                            Delete Card
                           </button>
                         </div>
                         <div>
@@ -9829,9 +9835,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             type="text"
                             value={card.title || ''}
                             onChange={(e) => {
-                              const list = [...currentCards];
-                              list[idx] = { ...list[idx], title: e.target.value };
-                              handleFieldChange('bumpercarThrill', 'cards', list);
+                              const updated = [...currentCards];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              const updatedSec = { ...currentSec, cards: updated };
+                              setFormData(prev => ({ ...prev, bumpercarThrill: updatedSec }));
                             }}
                             style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                           />
@@ -9842,9 +9849,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             rows={3}
                             value={card.desc || ''}
                             onChange={(e) => {
-                              const list = [...currentCards];
-                              list[idx] = { ...list[idx], desc: e.target.value };
-                              handleFieldChange('bumpercarThrill', 'cards', list);
+                              const updated = [...currentCards];
+                              updated[idx] = { ...updated[idx], desc: e.target.value };
+                              const updatedSec = { ...currentSec, cards: updated };
+                              setFormData(prev => ({ ...prev, bumpercarThrill: updatedSec }));
                             }}
                             style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
                           />
@@ -10412,10 +10420,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                       />
                       <button
-                        onClick={() => {
-                          const list = [...(formData.bumpercarInvestment?.bullets || [])];
-                          list.splice(idx, 1);
-                          handleFieldChange('bumpercarInvestment', 'bullets', list);
+                        type="button"
+                        onClick={async () => {
+                          const list = [...(formData.bumpercarInvestment?.bullets || [
+                            "Equipment and installation cost breakdown",
+                            "Projected daily and monthly rider capacity based on your floor size",
+                            "Estimated revenue per session at your pricing",
+                            "Annual maintenance cost estimate"
+                          ])];
+                          const updated = list.filter((_, i) => i !== idx);
+                          const updatedSec = { ...(formData.bumpercarInvestment || {}), bullets: updated };
+                          setFormData(prev => ({ ...prev, bumpercarInvestment: updatedSec }));
+                          await persistSectionToDatabase('bumpercarInvestment', updatedSec);
                         }}
                         style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', borderRadius: '8px', cursor: 'pointer' }}
                       >
@@ -10613,10 +10629,23 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </div>
                       <button
-                        onClick={() => {
-                          const list = [...(formData.bumpercarWhyChoose?.cardsList || [])];
-                          list.splice(idx, 1);
-                          handleFieldChange('bumpercarWhyChoose', 'cardsList', list);
+                        type="button"
+                        onClick={async () => {
+                          const list = [...(formData.bumpercarWhyChoose?.cardsList || (
+                            Array.isArray(formData.bumpercarWhyChoose?.topCards)
+                              ? [...formData.bumpercarWhyChoose.topCards, ...(formData.bumpercarWhyChoose?.bottomCards || [])]
+                              : [
+                                { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And Break-Even Before You Commit" },
+                                { title: "Own Installation Team", desc: "Our Own Team Install And Commission Every Project Across 50+ Cities" },
+                                { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With Servicing And Maintenance So Your Setup Keeps Running." },
+                                { title: "Proven Track Record", desc: "Take A Look At What We've Built And Hear From The Venues We've Worked With." },
+                                { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything, No Hidden Costs Added Later." }
+                              ]
+                          ))];
+                          const updated = list.filter((_, i) => i !== idx);
+                          const updatedSec = { ...(formData.bumpercarWhyChoose || {}), cardsList: updated };
+                          setFormData(prev => ({ ...prev, bumpercarWhyChoose: updatedSec }));
+                          await persistSectionToDatabase('bumpercarWhyChoose', updatedSec);
                         }}
                         style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', height: '32px', borderRadius: '8px', cursor: 'pointer', flexShrink: 0 }}
                       >
@@ -10700,10 +10729,31 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontWeight: '800', fontSize: '13px', color: '#0369a1' }}>FAQ #{idx + 1}</span>
                       <button
-                        onClick={() => {
-                          const currentList = [...(formData.bumpercarFaqs || [])];
-                          currentList.splice(idx, 1);
-                          setFormData((prev) => ({ ...prev, bumpercarFaqs: currentList }));
+                        type="button"
+                        onClick={async () => {
+                          const currentList = Array.isArray(formData.bumpercarFaqs) && formData.bumpercarFaqs.length > 0
+                            ? [...formData.bumpercarFaqs]
+                            : [
+                              {
+                                question: "What is the difference between electric floor and battery-operated bumper cars?",
+                                answer: "Electric floor grid bumper cars draw continuous power from a conductive floor and ceiling contact rig, ideal for high-throughput fixed venues. Battery-operated bumper cars run on rechargeable batteries, requiring no specialized floor modifications, making them perfect for malls, gaming zones, and flexible setups."
+                              },
+                              {
+                                question: "What minimum space is required for an indoor bumper car arena?",
+                                answer: "A standard indoor bumper car arena typically requires between 800 sq ft to 3,000+ sq ft depending on the number of bumper cars operating simultaneously and safety perimeter fencing."
+                              },
+                              {
+                                question: "Do you offer installation and commissioning services across India?",
+                                answer: "Yes! Winera International has its own in-house installation team that conducts complete site preparation, grid setup, testing, and commissioning in 50+ cities across India."
+                              },
+                              {
+                                question: "Can we receive a free ROI projection report before ordering?",
+                                answer: "Absolutely. Before finalizing any purchase, our experts provide a free custom ROI report detailing equipment breakdown, rider capacity, revenue projections, and payback timelines specific to your venue."
+                              }
+                            ];
+                          const updated = currentList.filter((_, i) => i !== idx);
+                          setFormData((prev) => ({ ...prev, bumpercarFaqs: updated }));
+                          await persistSectionToDatabase('bumpercarFaqs', updated);
                         }}
                         style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '900' }}
                       >
@@ -13010,16 +13060,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               { title: "VR Standing Arena", subtitle: "360 Platform", category: "ACTIVE SIMULATION", name: "VR Standing Flight Arena", img: "/src/assets/cta-arcade.webp", status: "ONLINE", latency: "4ms", icon: "target" }
             ];
 
-            const vrItemsListRaw = (Array.isArray(formData.vrRange?.items) && formData.vrRange.items.length > 0)
-              ? formData.vrRange.items
+            const currentSec = formData.vrRange || {};
+            const vrItemsList = Array.isArray(currentSec.items)
+              ? currentSec.items
               : defaultVrRangeItems;
-
-            const vrItemsList = vrItemsListRaw.map((item, idx) => {
-              if (idx === 0) {
-                return { ...item, img: vrBlock1 };
-              }
-              return item;
-            });
 
             return (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -13030,8 +13074,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue.</p>
                   <input
                     type="text"
-                    value={formData.vrRange?.title || '*Our VR Gaming* Machine Range'}
-                    onChange={(e) => handleFieldChange('vrRange', 'title', e.target.value)}
+                    value={currentSec.title !== undefined ? currentSec.title : '*Our VR Gaming* Machine Range'}
+                    onChange={(e) => {
+                      const updatedSec = { ...currentSec, title: e.target.value };
+                      setFormData(prev => ({ ...prev, vrRange: updatedSec }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
@@ -13040,8 +13087,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Section Subtitle Paragraph</label>
                   <textarea
                     rows={2}
-                    value={formData.vrRange?.subtitle || "Every model in our VR gaming set is sourced from established global manufacturers and configured for sustained commercial operation."}
-                    onChange={(e) => handleFieldChange('vrRange', 'subtitle', e.target.value)}
+                    value={currentSec.subtitle !== undefined ? currentSec.subtitle : "Every model in our VR gaming set is sourced from established global manufacturers and configured for sustained commercial operation."}
+                    onChange={(e) => {
+                      const updatedSec = { ...currentSec, subtitle: e.target.value };
+                      setFormData(prev => ({ ...prev, vrRange: updatedSec }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
                   />
                 </div>
@@ -13051,8 +13101,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                     <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>VR Range Machine Models ({vrItemsList.length} items)</h4>
                     <button
+                      type="button"
                       onClick={() => {
-                        handleFieldChange('vrRange', 'items', [...vrItemsList, { title: 'New VR Model', subtitle: 'Category', category: 'SIMULATION', name: 'VR Model Name', img: '', status: 'ONLINE', latency: '4ms', icon: 'gamepad' }]);
+                        const updated = [...vrItemsList, { title: 'New VR Model', subtitle: 'Category', category: 'SIMULATION', name: 'VR Model Name', img: '', status: 'ONLINE', latency: '4ms', icon: 'gamepad' }];
+                        const updatedSec = { ...currentSec, items: updated };
+                        setFormData(prev => ({ ...prev, vrRange: updatedSec }));
                       }}
                       style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
                     >
@@ -13064,16 +13117,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     {vrItemsList.map((item, idx) => (
                       <div key={idx} style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>VR Model #{idx + 1}</span>
+                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>VR Model #{idx + 1}: {item.title}</span>
                           <button
-                            onClick={() => {
-                              const list = [...vrItemsList];
-                              list.splice(idx, 1);
-                              handleFieldChange('vrRange', 'items', list);
+                            type="button"
+                            onClick={async () => {
+                              const updated = vrItemsList.filter((_, i) => i !== idx);
+                              const updatedSec = { ...currentSec, items: updated };
+                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
+                              await persistSectionToDatabase('vrRange', updatedSec);
                             }}
-                            style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '900' }}
+                            style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
                           >
-                            ×
+                            Delete Model
                           </button>
                         </div>
 
@@ -13083,9 +13138,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             placeholder="Tab Title (e.g. VR4 Seated)"
                             value={item.title || ''}
                             onChange={(e) => {
-                              const list = [...vrItemsList];
-                              list[idx] = { ...list[idx], title: e.target.value };
-                              handleFieldChange('vrRange', 'items', list);
+                              const updated = [...vrItemsList];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              const updatedSec = { ...currentSec, items: updated };
+                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
                             }}
                             style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                           />
@@ -13094,9 +13150,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             placeholder="Tab Subtitle (e.g. Multiplayer Ride)"
                             value={item.subtitle || ''}
                             onChange={(e) => {
-                              const list = [...vrItemsList];
-                              list[idx] = { ...list[idx], subtitle: e.target.value };
-                              handleFieldChange('vrRange', 'items', list);
+                              const updated = [...vrItemsList];
+                              updated[idx] = { ...updated[idx], subtitle: e.target.value };
+                              const updatedSec = { ...currentSec, items: updated };
+                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
                             }}
                             style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                           />
@@ -13108,9 +13165,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             placeholder="Category Badge (e.g. ACTIVE SIMULATION)"
                             value={item.category || ''}
                             onChange={(e) => {
-                              const list = [...vrItemsList];
-                              list[idx] = { ...list[idx], category: e.target.value };
-                              handleFieldChange('vrRange', 'items', list);
+                              const updated = [...vrItemsList];
+                              updated[idx] = { ...updated[idx], category: e.target.value };
+                              const updatedSec = { ...currentSec, items: updated };
+                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
                             }}
                             style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                           />
@@ -13119,9 +13177,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             placeholder="Full Machine Name"
                             value={item.name || ''}
                             onChange={(e) => {
-                              const list = [...vrItemsList];
-                              list[idx] = { ...list[idx], name: e.target.value };
-                              handleFieldChange('vrRange', 'items', list);
+                              const updated = [...vrItemsList];
+                              updated[idx] = { ...updated[idx], name: e.target.value };
+                              const updatedSec = { ...currentSec, items: updated };
+                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
                             }}
                             style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                           />
@@ -13130,9 +13189,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             placeholder="Icon (plane, users, radio, gamepad, zap, sparkles, flame, target)"
                             value={item.icon || 'gamepad'}
                             onChange={(e) => {
-                              const list = [...vrItemsList];
-                              list[idx] = { ...list[idx], icon: e.target.value };
-                              handleFieldChange('vrRange', 'items', list);
+                              const updated = [...vrItemsList];
+                              updated[idx] = { ...updated[idx], icon: e.target.value };
+                              const updatedSec = { ...currentSec, items: updated };
+                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
                             }}
                             style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                           />
@@ -13153,9 +13213,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                   try {
                                     const res = await uploadImageFile(file, admin.token);
                                     if (res.url) {
-                                      const list = [...vrItemsList];
-                                      list[idx] = { ...list[idx], img: res.url };
-                                      handleFieldChange('vrRange', 'items', list);
+                                      const updated = [...vrItemsList];
+                                      updated[idx] = { ...updated[idx], img: res.url };
+                                      const updatedSec = { ...currentSec, items: updated };
+                                      setFormData(prev => ({ ...prev, vrRange: updatedSec }));
+                                      await persistSectionToDatabase('vrRange', updatedSec);
                                     }
                                   } catch (err) {
                                     console.error(err);
@@ -13173,7 +13235,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                 <div style={{ textAlign: 'right', marginTop: '10px' }}>
                   <button
-                    onClick={() => persistSectionToDatabase('vrRange', { ...formData.vrRange, items: vrItemsList })}
+                    onClick={() => persistSectionToDatabase('vrRange', { ...currentSec, items: vrItemsList })}
                     style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
                     Save Range Section
@@ -13467,8 +13529,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               { title: "Built Around Your Space", desc: "We Recommend Machines That Fit Your Actual Floor, Not A Catalogue." }
             ];
 
-            const cardsList = (Array.isArray(formData.vrWhyUs?.cardsList) && formData.vrWhyUs.cardsList.length > 0)
-              ? formData.vrWhyUs.cardsList
+            const currentSec = formData.vrWhyUs || {};
+            const cardsList = Array.isArray(currentSec.cardsList)
+              ? currentSec.cardsList
               : defaultVrWhyUsCards;
 
             return (
@@ -13480,8 +13543,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue.</p>
                   <input
                     type="text"
-                    value={formData.vrWhyUs?.title || 'Why Choose *Winera International*'}
-                    onChange={(e) => handleFieldChange('vrWhyUs', 'title', e.target.value)}
+                    value={currentSec.title !== undefined ? currentSec.title : 'Why Choose *Winera International*'}
+                    onChange={(e) => {
+                      const updatedSec = { ...currentSec, title: e.target.value };
+                      setFormData(prev => ({ ...prev, vrWhyUs: updatedSec }));
+                    }}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
@@ -13491,8 +13557,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                     <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Feature Cards ({cardsList.length} cards)</h4>
                     <button
+                      type="button"
                       onClick={() => {
-                        handleFieldChange('vrWhyUs', 'cardsList', [...cardsList, { title: '', desc: '' }]);
+                        const updated = [...cardsList, { title: 'New Feature Card', desc: 'Description here...' }];
+                        const updatedSec = { ...currentSec, cardsList: updated };
+                        setFormData(prev => ({ ...prev, vrWhyUs: updatedSec }));
                       }}
                       style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
                     >
@@ -13509,9 +13578,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             placeholder="Card Title"
                             value={card.title || ''}
                             onChange={(e) => {
-                              const list = [...cardsList];
-                              list[idx] = { ...list[idx], title: e.target.value };
-                              handleFieldChange('vrWhyUs', 'cardsList', list);
+                              const updated = [...cardsList];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              const updatedSec = { ...currentSec, cardsList: updated };
+                              setFormData(prev => ({ ...prev, vrWhyUs: updatedSec }));
                             }}
                             style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                           />
@@ -13520,18 +13590,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             placeholder="Card Description"
                             value={card.desc || ''}
                             onChange={(e) => {
-                              const list = [...cardsList];
-                              list[idx] = { ...list[idx], desc: e.target.value };
-                              handleFieldChange('vrWhyUs', 'cardsList', list);
+                              const updated = [...cardsList];
+                              updated[idx] = { ...updated[idx], desc: e.target.value };
+                              const updatedSec = { ...currentSec, cardsList: updated };
+                              setFormData(prev => ({ ...prev, vrWhyUs: updatedSec }));
                             }}
                             style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12.5px' }}
                           />
                         </div>
                         <button
-                          onClick={() => {
-                            const list = [...cardsList];
-                            list.splice(idx, 1);
-                            handleFieldChange('vrWhyUs', 'cardsList', list);
+                          type="button"
+                          onClick={async () => {
+                            const updated = cardsList.filter((_, i) => i !== idx);
+                            const updatedSec = { ...currentSec, cardsList: updated };
+                            setFormData(prev => ({ ...prev, vrWhyUs: updatedSec }));
+                            await persistSectionToDatabase('vrWhyUs', updatedSec);
                           }}
                           style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', height: '32px', borderRadius: '8px', cursor: 'pointer', flexShrink: 0 }}
                         >
@@ -13551,8 +13624,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>CTA Button Text</label>
                       <input
                         type="text"
-                        value={formData.vrWhyUs?.ctaText || 'Get Free Consultation'}
-                        onChange={(e) => handleFieldChange('vrWhyUs', 'ctaText', e.target.value)}
+                        value={currentSec.ctaText || 'Get Free Consultation'}
+                        onChange={(e) => {
+                          const updatedSec = { ...currentSec, ctaText: e.target.value };
+                          setFormData(prev => ({ ...prev, vrWhyUs: updatedSec }));
+                        }}
                         style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '600' }}
                       />
                     </div>
@@ -13561,8 +13637,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>CTA Button Link (URL or WhatsApp)</label>
                       <input
                         type="text"
-                        value={formData.vrWhyUs?.ctaLink || 'https://wa.me/919428989488'}
-                        onChange={(e) => handleFieldChange('vrWhyUs', 'ctaLink', e.target.value)}
+                        value={currentSec.ctaLink || 'https://wa.me/919428989488'}
+                        onChange={(e) => {
+                          const updatedSec = { ...currentSec, ctaLink: e.target.value };
+                          setFormData(prev => ({ ...prev, vrWhyUs: updatedSec }));
+                        }}
                         style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '600' }}
                       />
                     </div>
@@ -13571,7 +13650,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                 <div style={{ textAlign: 'right', marginTop: '10px' }}>
                   <button
-                    onClick={() => persistSectionToDatabase('vrWhyUs', { ...formData.vrWhyUs, cardsList })}
+                    onClick={() => persistSectionToDatabase('vrWhyUs', { ...currentSec, cardsList })}
                     style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
                     Save Why Choose Section
@@ -13676,10 +13755,48 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontWeight: '800', fontSize: '13px', color: '#0369a1' }}>FAQ #{idx + 1}</span>
                       <button
-                        onClick={() => {
-                          const currentList = [...(formData.vrFaqs || [])];
-                          currentList.splice(idx, 1);
-                          setFormData((prev) => ({ ...prev, vrFaqs: currentList }));
+                        type="button"
+                        onClick={async () => {
+                          const defaultVrFaqsList = [
+                            {
+                              question: "What is included in a commercial VR gaming set?",
+                              answer: "A complete commercial VR gaming set from Winera includes the VR machine unit, motion platform (where applicable), VR headsets, a pre-loaded and commercially licensed game library, safety barriers, installation by our own team, and post-installation support. Exact components vary by machine model — confirmed at the quote stage."
+                            },
+                            {
+                              question: "Which businesses typically need a VR games supplier in India?",
+                              answer: "Family entertainment centres, malls, amusement parks, hotels, resorts, bowling centers, and standalone gaming zones are the most common businesses that work with a VR games supplier in India."
+                            },
+                            {
+                              question: "What is the VR gaming setup cost in India?",
+                              answer: "VR gaming setup cost in India depends on the number of machines, machine category, motion system complexity, and game library size. Pricing varies significantly between a single compact platform and a multi-machine zone with group rides."
+                            },
+                            {
+                              question: "Do VR gaming machines require a minimum ceiling height or floor space?",
+                              answer: "Yes. Motion platforms and group rides typically need higher ceiling clearance than solo simulators, and floor space requirements scale with player count. Winera assesses your venue's exact dimensions before recommending machine models, since not every machine fits every space."
+                            },
+                            {
+                              question: "How long does VR gaming machine installation take?",
+                              answer: "Installation timelines depend on machine count and complexity; a single solo platform can be operational within days, while a multi-machine zone with group rides takes longer for setup and software configuration. We confirm an exact schedule at the quote stage."
+                            },
+                            {
+                              question: "Can VR gaming machines be customised with branded content or specific game libraries?",
+                              answer: "Yes. Game library selection, branding wraps, and venue-specific configuration can be tailored per machine. We confirm available customisation options for each model during the consultation."
+                            },
+                            {
+                              question: "What happens if a VR machine breaks down after installation?",
+                              answer: "Our own technicians handle servicing directly, with coverage across 50+ cities in India. For software issues, remote diagnostics are available for most machines. For hardware faults, our own team visits your site; you're not waiting on an overseas manufacturer or a disconnected logistics partner."
+                            },
+                            {
+                              question: "How do I get started with a VR gaming machine order from Winera?",
+                              answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
+                            }
+                          ];
+                          const currentList = Array.isArray(formData.vrFaqs) && formData.vrFaqs.length > 0
+                            ? [...formData.vrFaqs]
+                            : defaultVrFaqsList;
+                          const updated = currentList.filter((_, i) => i !== idx);
+                          setFormData((prev) => ({ ...prev, vrFaqs: updated }));
+                          await persistSectionToDatabase('vrFaqs', updated);
                         }}
                         style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '900' }}
                       >

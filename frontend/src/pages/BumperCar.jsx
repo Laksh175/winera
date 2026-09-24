@@ -260,7 +260,7 @@ export default function BumperCar({ siteData }) {
   ];
 
   const thrillCards = (Array.isArray(siteData?.bumpercarThrill?.cards) && siteData.bumpercarThrill.cards.length > 0)
-    ? siteData.bumpercarThrill.cards.slice(0, 5)
+    ? siteData.bumpercarThrill.cards
     : defaultThrillCards;
 
   const currentThrillCard = thrillCards[activeThrillIndex % thrillCards.length] || thrillCards[0];
