@@ -8,6 +8,7 @@ import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
 import amusementHeroBg from '../assets/amusement-park-hero-bg.webp';
+import amusementMobileHeroBg from '../assets/amusement-park-phone-banner.png';
 import amusementSupplierCollage from '../assets/amusement-supplier-collage.webp';
 import amusementSetupsCollage from '../assets/amusement-setups-collage.webp';
 import amusementOptionsBg from '../assets/amusement-options-bg.webp';
@@ -211,6 +212,7 @@ export default function AmusementPark({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
+        '--winera-amusement-mobile-bg': `url("${amusementMobileHeroBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

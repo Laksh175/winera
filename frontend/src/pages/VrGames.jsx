@@ -10,6 +10,7 @@ import MobileExpandableText from '../components/MobileExpandableText';
 import { ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity, Plus, Minus } from 'lucide-react';
 
 import vrHeroBg from '../assets/vrgame-hero-bg.webp';
+import vrMobileHeroBg from '../assets/vr-game-phone-banner.png';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import ctaGamersBg from '../assets/cta-gamers-bg.webp';
 import ctaMainBanner from '../assets/cta-main-banner.png';
@@ -256,6 +257,7 @@ export default function VrGames({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
+        '--winera-vr-mobile-bg': `url("${vrMobileHeroBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

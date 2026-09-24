@@ -2387,21 +2387,27 @@ html {
 
   /* VR Games Hero Section – mobile adjustments */
   .winera-vr-hero-section {
-    padding-top: 110px !important;
-    padding-bottom: 50px !important;
-    background-size: cover !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-vr-mobile-bg, url('./assets/vr-game-phone-banner.png')) !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    aspect-ratio: 941 / 550 !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
   }
 
-  .winera-vr-hero-h1,
-  .winera-blog-hero-h1 {
-    font-size: 1.45rem !important;
-    letter-spacing: -0.5px !important;
-    margin-bottom: 8px !important;
-  }
-
-  .winera-vr-hero-breadcrumb {
-    font-size: 13px !important;
+  .winera-vr-hero-h1 {
+    font-size: 1.15rem !important;
+    letter-spacing: -0.2px !important;
     gap: 6px !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
   }
 
   /* Arcade Game Hero Section – mobile adjustments */
@@ -2410,8 +2416,15 @@ html {
     background-size: 100% 100% !important;
     background-position: center top !important;
     background-repeat: no-repeat !important;
-    padding-top: 105px !important;
-    padding-bottom: 25px !important;
+    height: 250px !important;
+    min-height: 250px !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justifyContent: center !important;
+    box-sizing: border-box !important;
   }
 
   .winera-arcade-hero-h1 {
@@ -2814,14 +2827,6 @@ html {
 
   /* ─── VR Games Page Mobile Responsive Spacing ─── */
 
-  /* Hero */
-  .winera-vr-hero-section {
-    padding-top: 105px !important;
-    padding-bottom: 25px !important;
-    background-size: cover !important;
-  }
-
-  .winera-vr-hero-h1,
   .winera-blog-hero-h1 {
     font-size: 1.25rem !important;
     letter-spacing: -0.2px !important;
@@ -4914,6 +4919,32 @@ html {
     justify-content: center !important;
   }
 
+  /* Amusement Park Hero Section – mobile adjustments */
+  .winera-amusement-hero-section {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-amusement-mobile-bg, url('./assets/amusement-park-phone-banner.png')) !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    aspect-ratio: 941 / 550 !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justifyContent: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-amusement-hero-title,
+  .winera-amusement-hero-h1 {
+    font-size: 1.15rem !important;
+    letter-spacing: -0.2px !important;
+    gap: 6px !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
+  }
+
   /* Amusement Park Supplier Section Mobile Sequence: Title -> Content -> Button -> Image */
   section.winera-amusement-supplier-section,
   .winera-amusement-supplier-section {
@@ -5144,9 +5175,7 @@ html {
   }
 
   .winera-about-hero-section,
-  .winera-contact-hero-section,
-  .winera-vr-hero-section,
-  .winera-arcade-hero-section {
+  .winera-contact-hero-section {
     background-size: cover !important;
     background-position: center !important;
     aspect-ratio: auto !important;
@@ -6512,11 +6541,7 @@ textarea::placeholder,
 
   /* Hero Sections Padding Fix across all sub-hero pages */
   .winera-project-hero-section,
-  .winera-hypergrid-hero-section,
-  .winera-vr-hero-section,
-  .winera-arcade-hero-section,
-  .winera-amusement-hero-section,
-  section[class*="hero"]:not(.winera-home-hero-section):not(.winera-bumpercar-hero-section):not(.winera-softplay-hero-section):not(.winera-trampoline-hero-section):not(.winera-ar-hero-section):not(.winera-bowling-hero-section) {
+  section[class*="hero"]:not(.winera-home-hero-section):not(.winera-vr-hero-section):not(.winera-hypergrid-hero-section):not(.winera-bumpercar-hero-section):not(.winera-softplay-hero-section):not(.winera-trampoline-hero-section):not(.winera-ar-hero-section):not(.winera-bowling-hero-section):not(.winera-arcade-hero-section):not(.winera-amusement-hero-section) {
     padding-top: 110px !important;
     padding-bottom: 60px !important;
     min-height: 260px !important;
@@ -7227,9 +7252,26 @@ textarea::placeholder,
 
   /* Hypergrid Page Mobile Adjustments */
   .winera-hypergrid-hero-section {
-    padding-top: 140px !important;
-    padding-bottom: 50px !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-hypergrid-mobile-bg, url('./assets/hypergrid-game-phone-banner.png')) !important;
+    background-size: 100% 100% !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    aspect-ratio: 941 / 550 !important;
+    height: auto !important;
     min-height: auto !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justifyContent: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-hypergrid-hero-title,
+  .winera-hypergrid-hero-h1,
+  .winera-hypergrid-hero-section > div {
+    margin-top: 20px !important;
   }
 
   .winera-hypergrid-supplier-section,
@@ -7316,11 +7358,7 @@ textarea::placeholder,
 @media (max-width: 480px) {
 
   .winera-project-hero-section,
-  .winera-hypergrid-hero-section,
-  .winera-vr-hero-section,
-  .winera-arcade-hero-section,
-  .winera-amusement-hero-section,
-  section[class*="hero"]:not(.winera-home-hero-section):not(.winera-bumpercar-hero-section):not(.winera-softplay-hero-section):not(.winera-trampoline-hero-section):not(.winera-ar-hero-section):not(.winera-bowling-hero-section) {
+  section[class*="hero"]:not(.winera-home-hero-section):not(.winera-vr-hero-section):not(.winera-hypergrid-hero-section):not(.winera-bumpercar-hero-section):not(.winera-softplay-hero-section):not(.winera-trampoline-hero-section):not(.winera-ar-hero-section):not(.winera-bowling-hero-section):not(.winera-arcade-hero-section):not(.winera-amusement-hero-section) {
     padding-top: 110px !important;
     padding-bottom: 70px !important;
     min-height: 320px !important;
@@ -7360,12 +7398,8 @@ textarea::placeholder,
 @media (max-width: 380px) {
 
   .winera-project-hero-section,
-  .winera-hypergrid-hero-section,
   .winera-safety-hero-section,
-  .winera-vr-hero-section,
-  .winera-arcade-hero-section,
-  .winera-amusement-hero-section,
-  section[class*="hero"]:not(.winera-home-hero-section):not(.winera-bumpercar-hero-section):not(.winera-softplay-hero-section):not(.winera-trampoline-hero-section):not(.winera-ar-hero-section):not(.winera-bowling-hero-section) {
+  section[class*="hero"]:not(.winera-home-hero-section):not(.winera-vr-hero-section):not(.winera-hypergrid-hero-section):not(.winera-bumpercar-hero-section):not(.winera-softplay-hero-section):not(.winera-trampoline-hero-section):not(.winera-ar-hero-section):not(.winera-bowling-hero-section):not(.winera-arcade-hero-section):not(.winera-amusement-hero-section) {
     padding-top: 110px !important;
     padding-bottom: 60px !important;
     min-height: 300px !important;
@@ -9333,8 +9367,15 @@ img.winera-yellow-stroke,
     background-size: 100% 100% !important;
     background-position: center top !important;
     background-repeat: no-repeat !important;
-    padding-top: 140px !important;
-    padding-bottom: 35px !important;
+    height: 250px !important;
+    min-height: 250px !important;
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justifyContent: center !important;
+    box-sizing: border-box !important;
   }
 
   .winera-arcade-hero-h1 {

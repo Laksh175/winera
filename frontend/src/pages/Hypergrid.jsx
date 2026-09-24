@@ -9,6 +9,7 @@ import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
 import hypergridHeroBg from '../assets/hypergrid-hero-bg.webp';
+import hypergridMobileHeroBg from '../assets/hypergrid-game-phone-banner.png';
 import hypergridSupplierCollage from '../assets/hypergrid-supplier-collage.webp';
 import hypergridBannerImg from '../assets/hypergrid-banner-img.webp';
 import hypergridSpecsBg from '../assets/hypergrid-specs-bg.webp';
@@ -186,6 +187,7 @@ export default function Hypergrid({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
+        '--winera-hypergrid-mobile-bg': `url("${hypergridMobileHeroBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
