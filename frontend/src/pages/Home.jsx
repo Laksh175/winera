@@ -1623,11 +1623,18 @@ export default function Home({ siteData }) {
                             {(() => {
                               let t = step?.title || '';
                               const clean = t.trim().toLowerCase().replace(/\s+/g, ' ');
-                              if (clean === 'planning & selection') {
-                                return 'Planning &\nSelection';
-                              }
-                              if (clean === 'production & procurement') {
-                                return 'Production &\nProcurement';
+                              if (isPhone) {
+                                if (clean === 'free consultation') return 'Free\nConsultation';
+                                if (clean === 'planning & selection') return 'Planning &\nSelection';
+                                if (clean === 'production & procurement') return 'Production &\nProcurement';
+                                if (clean === 'project installation') return 'Project\nInstallation';
+                                if (clean === 'forever support') return 'Forever\nSupport';
+                                if (!t.includes('\n') && t.trim().split(/\s+/).length === 2) {
+                                  return t.trim().split(/\s+/).join('\n');
+                                }
+                              } else {
+                                if (clean === 'planning & selection') return 'Planning &\nSelection';
+                                if (clean === 'production & procurement') return 'Production &\nProcurement';
                               }
                               return t;
                             })()}
