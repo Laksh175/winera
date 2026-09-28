@@ -7,6 +7,7 @@ import CtaBanner from '../components/CtaBanner';
 import FaqSection from '../components/FaqSection';
 import { Phone, Mail, Building2, Globe, CheckCircle2, MapPin } from 'lucide-react';
 import contactUsHeroBg from '../assets/contact-us-banner-bg.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 import aboutHeroBg from '../assets/about-hero-bg.webp';
 import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
 
@@ -19,10 +20,12 @@ export default function ContactUs({ siteData }) {
   });
   const [submitted, setSubmitted] = useState(false);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 850 : false);
+  const [isPhone, setIsPhone] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 850);
+      setIsPhone(window.innerWidth <= 768);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -45,31 +48,36 @@ export default function ContactUs({ siteData }) {
       <section className="winera-contact-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: isMobile ? '120px' : '165px',
-        paddingBottom: isMobile ? '60px' : '100px',
-        background: `url(${contactUsHeroBg}) center top / 100% 100% no-repeat`,
+        minHeight: 'auto',
+        aspectRatio: isPhone ? '941 / 550' : 'auto',
+        paddingTop: isPhone ? '55px' : (isMobile ? '120px' : '165px'),
+        paddingBottom: isPhone ? '0px' : (isMobile ? '60px' : '100px'),
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${contactUsHeroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
         color: '#ffffff',
-        paddingLeft: isMobile ? '25px' : '20px',
-        paddingRight: isMobile ? '25px' : '20px',
-        boxSizing: 'border-box'
+        paddingLeft: isPhone ? '0px' : (isMobile ? '25px' : '20px'),
+        paddingRight: isPhone ? '0px' : (isMobile ? '25px' : '20px'),
+        boxSizing: 'border-box',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: 0, zIndex: 2 }}>
           <h1 className="winera-contact-hero-h1" style={{
-            fontSize: '21px',
+            fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
+            flexWrap: 'wrap',
+            gap: isPhone ? '6px' : '8px',
             margin: 0,
             lineHeight: 1.2,
-            textAlign: 'center'
+            textAlign: 'center',
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
           }}>
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>

@@ -1,9 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import aboutHeroBg from '../assets/about-hero-bg.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 
 export default function TermsAndConditions({ siteData }) {
+  const [isPhone, setIsPhone] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPhone(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const header = siteData?.header || {};
   const footer = siteData?.footer || {};
 
@@ -206,37 +219,80 @@ export default function TermsAndConditions({ siteData }) {
       <Header headerData={header} />
 
       {/* Hero Header Section matching AboutUs.jsx */}
-      <section className="winera-vr-hero-section" style={{
-        position: 'relative', width: '100%', paddingTop: '165px', paddingBottom: '50px',
-        background: `url(${aboutHeroBg}) center/100% 100% no-repeat`, display: 'flex', flexDirection: 'column', alignItems: 'center',
-        justifyContent: 'center', textAlign: 'center', color: '#ffffff'
+      <section className="winera-terms-hero-section" style={{
+        position: 'relative',
+        width: '100%',
+        minHeight: 'auto',
+        aspectRatio: isPhone ? '941 / 550' : 'auto',
+        paddingTop: isPhone ? '55px' : '165px',
+        paddingBottom: isPhone ? '0px' : '50px',
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${aboutHeroBg}) center/100% 100% no-repeat`,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: '#ffffff',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          <h1 style={{ fontSize: '42px', fontWeight: '900', letterSpacing: '-1px', marginBottom: '8px', lineHeight: 1.15 }}>
-            Terms & <span style={{ color: '#ffcd00' }}>Conditions</span>
-          </h1>
-          <p style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', opacity: 0.9, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
-            <span style={{ color: '#ffcd00' }}>&gt;</span>
-            <span style={{ color: '#ffffff' }}>Terms & Conditions</span>
-          </p>
+          {isPhone ? (
+            <h1 className="winera-terms-hero-h1" style={{
+              fontSize: '1.15rem',
+              fontWeight: '800',
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              gap: '6px',
+              margin: 0,
+              lineHeight: 1.2,
+              textAlign: 'center',
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
+            }}>
+              <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+              <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+              <span style={{ color: '#ffcd00', fontWeight: '900' }}>Terms & Conditions</span>
+            </h1>
+          ) : (
+            <>
+              <h1 style={{ fontSize: '42px', fontWeight: '900', letterSpacing: '-1px', marginBottom: '8px', lineHeight: 1.15 }}>
+                Terms & <span style={{ color: '#ffcd00' }}>Conditions</span>
+              </h1>
+              <p style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', opacity: 0.9, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+                <span style={{ color: '#ffcd00' }}>&gt;</span>
+                <span style={{ color: '#ffffff' }}>Terms & Conditions</span>
+              </p>
+            </>
+          )}
         </div>
       </section>
 
       {/* Main Content Container */}
-      <section style={{ padding: '60px 4vw 90px', maxWidth: '940px', margin: '0 auto' }}>
-        <div style={{
+      <section style={{ padding: '60px 4vw 90px', maxWidth: '940px', margin: '0 auto', textAlign: 'left' }}>
+        <div className="winera-terms-content-card" style={{
           background: '#ffffff',
           borderRadius: '24px',
           border: '1.5px solid #e2e8f0',
           padding: '40px 45px',
-          boxShadow: 'none'
+          boxShadow: 'none',
+          textAlign: 'left'
         }}>
 
           {/* Preamble */}
           <div style={{ marginBottom: '32px', paddingBottom: '28px', borderBottom: '1px solid #e2e8f0' }}>
-            <h2 style={{ fontSize: '1.4rem', fontWeight: '900', color: '#0f172a', margin: '0 0 10px' }}>
-              Winera International Pvt. Ltd.
+            <h2 className="winera-terms-preamble-title" style={{ fontSize: isPhone ? '1.25rem' : '1.4rem', fontWeight: '900', color: '#0f172a', margin: '0 0 10px', lineHeight: 1.3 }}>
+              {isPhone ? (
+                <>
+                  <span style={{ whiteSpace: 'nowrap' }}>Winera International</span>
+                  <br />
+                  <span style={{ whiteSpace: 'nowrap' }}>Pvt. Ltd.</span>
+                </>
+              ) : (
+                "Winera International Pvt. Ltd."
+              )}
             </h2>
             <p style={{ fontSize: '14.5px', color: '#334155', lineHeight: 1.75, margin: 0, fontWeight: '450' }}>
               These Terms and Conditions (“Agreement”, “Terms”) govern your (“you”, “your”, “client”, “customer”) access to and use of the website <a href="http://www.winera.in" target="_blank" rel="noreferrer" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>www.winera.in</a> (the “Site”), and the products and services (“Services”) offered by Winera International Pvt. Ltd. (“Company”, “Winera”, “we”, “our”, or “us”). By accessing or using our Site and/or Services, you agree to be legally bound by these Terms. If you do not agree, please do not use this Site or engage with our services.

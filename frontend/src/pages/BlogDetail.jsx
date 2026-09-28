@@ -4,9 +4,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
 import blogHeroBg from '../assets/blog-hero-bg.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import WineraImage from '../components/WineraImage';
+import { Calendar, Clock, PenTool } from 'lucide-react';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 
 const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
@@ -260,6 +262,18 @@ const renderFormattedText = (text) => {
 };
 
 export default function BlogDetail({ siteData }) {
+  const [isPhone, setIsPhone] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPhone(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -346,15 +360,18 @@ export default function BlogDetail({ siteData }) {
       <section className="winera-blog-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '175px',
-        paddingBottom: '95px',
-        background: `url(${heroBg}) center top / 100% 100% no-repeat`,
+        minHeight: 'auto',
+        aspectRatio: isPhone ? '941 / 550' : 'auto',
+        paddingTop: isPhone ? '55px' : '175px',
+        paddingBottom: isPhone ? '0px' : '95px',
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${heroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#ffffff'
+        color: '#ffffff',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <div className="winera-blog-hero-h1" style={{
@@ -408,11 +425,20 @@ export default function BlogDetail({ siteData }) {
               flexWrap: 'nowrap',
               whiteSpace: 'nowrap'
             }}>
-              <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>📅 {post.date || 'FEB 19, 2026'}</span>
-              <span style={{ flexShrink: 0 }}>•</span>
-              <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>⏱️ {post.readTime || '5 min read'}</span>
-              <span style={{ flexShrink: 0 }}>•</span>
-              <span style={{ color: '#0284c7', fontWeight: '700', whiteSpace: 'nowrap', flexShrink: 0 }}>✍️ {post.author || post.founder || 'Divyang Mandani'}</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                <Calendar style={{ width: '15px', height: '15px', color: '#0284c7' }} />
+                {post.date || 'FEB 19, 2026'}
+              </span>
+              <span style={{ flexShrink: 0, color: '#cbd5e1' }}>•</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                <Clock style={{ width: '15px', height: '15px', color: '#0284c7' }} />
+                {post.readTime || '5 min read'}
+              </span>
+              <span style={{ flexShrink: 0, color: '#cbd5e1' }}>•</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#0284c7', fontWeight: '700', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                <PenTool style={{ width: '15px', height: '15px', color: '#0284c7' }} />
+                {post.author || post.founder || 'Divyang Mandani'}
+              </span>
             </div>
           </div>
 
@@ -745,15 +771,20 @@ export default function BlogDetail({ siteData }) {
                       alignItems: 'center',
                       justifyContent: 'space-between'
                     }}>
-                      <span className="winera-blog-card-date" style={{ textTransform: 'uppercase', letterSpacing: '0.5px', color: '#64748b' }}>
+                      <span className="winera-blog-card-date" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', textTransform: 'uppercase', letterSpacing: '0.5px', color: '#64748b' }}>
+                        <Calendar style={{ width: '13px', height: '13px', color: '#0284c7' }} />
                         {recPost.date || 'SEP 12, 2026'}
                       </span>
                       <span className="winera-blog-card-readmore" style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '5px',
                         color: '#0284c7',
                         fontWeight: '700',
                         fontSize: '12.5px',
                         letterSpacing: '0.2px'
                       }}>
+                        <PenTool style={{ width: '13px', height: '13px', color: '#0284c7' }} />
                         {recPost.author || recPost.founder || 'Divyang Mandani'}
                       </span>
                     </div>

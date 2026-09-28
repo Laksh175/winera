@@ -1,10 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 import aboutHeroBg from '../assets/about-hero-bg.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 
 export default function PrivacyPolicy({ siteData }) {
+  const [isPhone, setIsPhone] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPhone(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const header = siteData?.header || {};
   const footer = siteData?.footer || {};
 
@@ -160,31 +173,66 @@ export default function PrivacyPolicy({ siteData }) {
       <Header headerData={header} />
 
       {/* Hero Header Section */}
-      <section className="winera-vr-hero-section" style={{
-        position: 'relative', width: '100%', paddingTop: '165px', paddingBottom: '50px',
-        background: `url(${aboutHeroBg}) center/100% 100% no-repeat`, display: 'flex', flexDirection: 'column', alignItems: 'center',
-        justifyContent: 'center', textAlign: 'center', color: '#ffffff'
+      <section className="winera-privacy-hero-section" style={{
+        position: 'relative',
+        width: '100%',
+        minHeight: 'auto',
+        aspectRatio: isPhone ? '941 / 550' : 'auto',
+        paddingTop: isPhone ? '55px' : '165px',
+        paddingBottom: isPhone ? '0px' : '50px',
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${aboutHeroBg}) center/100% 100% no-repeat`,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: '#ffffff',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          <h1 style={{ fontSize: '42px', fontWeight: '900', letterSpacing: '-1px', marginBottom: '8px', lineHeight: 1.15 }}>
-            Privacy <span style={{ color: '#ffcd00' }}>Policy</span>
-          </h1>
-          <p style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', opacity: 0.9, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
-            <span style={{ color: '#ffcd00' }}>&gt;</span>
-            <span style={{ color: '#ffffff' }}>Privacy Policy</span>
-          </p>
+          {isPhone ? (
+            <h1 className="winera-privacy-hero-h1" style={{
+              fontSize: '1.15rem',
+              fontWeight: '800',
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              gap: '6px',
+              margin: 0,
+              lineHeight: 1.2,
+              textAlign: 'center',
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
+            }}>
+              <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+              <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+              <span style={{ color: '#ffcd00', fontWeight: '900' }}>Privacy Policy</span>
+            </h1>
+          ) : (
+            <>
+              <h1 style={{ fontSize: '42px', fontWeight: '900', letterSpacing: '-1px', marginBottom: '8px', lineHeight: 1.15 }}>
+                Privacy <span style={{ color: '#ffcd00' }}>Policy</span>
+              </h1>
+              <p style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', opacity: 0.9, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+                <span style={{ color: '#ffcd00' }}>&gt;</span>
+                <span style={{ color: '#ffffff' }}>Privacy Policy</span>
+              </p>
+            </>
+          )}
         </div>
       </section>
 
       {/* Main Content Container */}
-      <section style={{ padding: '60px 4vw 90px', maxWidth: '940px', margin: '0 auto' }}>
-        <div style={{
+      <section style={{ padding: '60px 4vw 90px', maxWidth: '940px', margin: '0 auto', textAlign: 'left' }}>
+        <div className="winera-policy-content-card" style={{
           background: '#ffffff',
           borderRadius: '24px',
           border: '1.5px solid #e2e8f0',
           padding: '40px 45px',
-          boxShadow: 'none'
+          boxShadow: 'none',
+          textAlign: 'left'
         }}>
 
           {/* Render Sections 1 to 14 */}

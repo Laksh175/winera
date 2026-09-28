@@ -1441,8 +1441,8 @@ export default function Home({ siteData }) {
           </div>
         </section>
 
-        <section id="process" className="winera-process-section" style={{ padding: isMobile ? '25px 25px 10px' : '70px 4vw 75px', background: '#F5F5F9', textAlign: 'center' }}>
-          <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
+        <section id="process" className="winera-process-section" style={{ padding: isMobile ? '25px 20px 10px' : '50px 4vw 50px', background: '#F5F5F9', textAlign: 'center' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <SectionHeading
               marginBottom="8px"
               accentWidth={isMobile ? "140px" : "440px"}
@@ -1473,13 +1473,13 @@ export default function Home({ siteData }) {
               letterSpacing: '0px',
               color: isMobile ? 'rgb(55, 62, 65)' : 'rgb(30, 35, 44)',
               textAlign: 'center',
-              marginBottom: isMobile ? '16px' : '50px'
+              marginBottom: isMobile ? '16px' : '36px'
             }}>
               {siteData?.processHome?.subtitle || "How We Setup Your Game Zone"}
             </p>
 
             {/* Dynamic Working Process Cards */}
-            <div className="winera-process-cards-container" style={{ display: 'flex', flexDirection: 'column', gap: '80px', maxWidth: '1220px', margin: '0 auto', paddingTop: '12px' }}>
+            <div className="winera-process-cards-container" style={{ display: 'flex', flexDirection: 'column', gap: '50px', maxWidth: '1180px', margin: '0 auto', paddingTop: '8px' }}>
               {(() => {
                 const defaultCards = [
                   {
@@ -1493,7 +1493,7 @@ export default function Home({ siteData }) {
                   },
                   {
                     num: "02",
-                    title: "Planning & Selection",
+                    title: "Planning &\nSelection",
                     points: [
                       "We design a complete game zone layout for your space",
                       "Best equipment and activities selected as per your budget",
@@ -1502,7 +1502,7 @@ export default function Home({ siteData }) {
                   },
                   {
                     num: "03",
-                    title: "Production & Procurement",
+                    title: "Production &\nProcurement",
                     points: [
                       "Order confirmed with transparent pricing",
                       "Production process begins and Equipment sourcing",
@@ -1568,11 +1568,11 @@ export default function Home({ siteData }) {
                           className="winera-process-step-num"
                           style={{
                             position: 'absolute',
-                            top: '-15px',
-                            right: '0px',
-                            width: '165px',
-                            height: '140px',
-                            fontSize: '115px',
+                            top: '-30px',
+                            right: '-11px',
+                            width: '100px',
+                            height: '100px',
+                            fontSize: '70px',
                             fontWeight: '800',
                             fontFamily: "'Open Sans', sans-serif",
                             lineHeight: '140px',
@@ -1584,29 +1584,58 @@ export default function Home({ siteData }) {
                           {formattedNum}
                         </div>
 
-                        {/* Icon Badge Container */}
+                        {/* Header: Icon & Title side-by-side */}
                         <div style={{
-                          width: '54px',
-                          height: '54px',
-                          borderRadius: '16px',
-                          background: iconBg,
                           display: 'flex',
                           alignItems: 'center',
-                          justifyContent: 'center',
-                          marginBottom: '40px',
-                          flexShrink: 0,
-                          boxShadow: isYellow ? '0 6px 18px rgba(234, 179, 8, 0.18)' : '0 6px 18px rgba(56, 189, 248, 0.18)'
+                          gap: '12px',
+                          marginBottom: '14px',
+                          position: 'relative',
+                          zIndex: 1
                         }}>
-                          {iconComponent}
+                          {/* Icon Badge Container */}
+                          <div
+                            className="winera-process-icon-badge"
+                            style={{
+                              width: '44px',
+                              height: '44px',
+                              borderRadius: '13px',
+                              background: iconBg,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0,
+                              boxShadow: isYellow ? '0 4px 14px rgba(234, 179, 8, 0.18)' : '0 4px 14px rgba(56, 189, 248, 0.18)'
+                            }}>
+                            {iconComponent}
+                          </div>
+
+                          {/* Card Title */}
+                          <h3 style={{
+                            fontSize: '1.2rem',
+                            fontWeight: '900',
+                            color: '#0f172a',
+                            margin: 0,
+                            lineHeight: 1.25,
+                            textAlign: 'left',
+                            whiteSpace: 'pre-line'
+                          }}>
+                            {(() => {
+                              let t = step?.title || '';
+                              const clean = t.trim().toLowerCase().replace(/\s+/g, ' ');
+                              if (clean === 'planning & selection') {
+                                return 'Planning &\nSelection';
+                              }
+                              if (clean === 'production & procurement') {
+                                return 'Production &\nProcurement';
+                              }
+                              return t;
+                            })()}
+                          </h3>
                         </div>
 
-                        {/* Card Title */}
-                        <h3 style={{ fontSize: '1.3rem', fontWeight: '900', color: '#0f172a', margin: '0 0 16px 0', lineHeight: 1.3 }}>
-                          {step?.title || ''}
-                        </h3>
-
                         {/* Bullet Points */}
-                        <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
                           {(() => {
                             const validPts = (Array.isArray(step?.points) ? step.points : []).filter(p => p && p.trim() !== '');
                             return validPts.map((pt, pIdx) => {
@@ -1614,17 +1643,17 @@ export default function Home({ siteData }) {
                               return (
                                 <li key={pIdx} style={{
                                   fontFamily: "'Open Sans', sans-serif",
-                                  fontSize: '16px',
+                                  fontSize: '15px',
                                   color: 'rgb(55, 62, 65)',
                                   fontWeight: '400',
-                                  lineHeight: '26px',
+                                  lineHeight: '22px',
                                   letterSpacing: '0px',
                                   display: 'flex',
                                   alignItems: 'flex-start',
                                   gap: '8px',
-                                  paddingBottom: isLastInCard45 ? '14px' : '0px'
+                                  paddingBottom: isLastInCard45 ? '6px' : '0px'
                                 }}>
-                                  <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '16px', fontWeight: '900', marginTop: '-1px', flexShrink: 0 }}>•</span>
+                                  <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '15px', fontWeight: '900', marginTop: '-1px', flexShrink: 0 }}>•</span>
                                   <span>{pt}</span>
                                 </li>
                               );
@@ -1691,7 +1720,7 @@ export default function Home({ siteData }) {
 
                 if (totalCards % 3 === 0) {
                   return (
-                    <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', width: '100%' }}>
+                    <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '36px', width: '100%' }}>
                       {cardList.map((step, idx) => renderCard(step, idx, idx))}
                     </div>
                   );
@@ -1702,12 +1731,12 @@ export default function Home({ siteData }) {
 
                 return (
                   <>
-                    <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(topRowCards.length, 3)}, 1fr)`, gap: '40px' }}>
+                    <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(topRowCards.length, 3)}, 1fr)`, gap: '36px' }}>
                       {topRowCards.map((step, idx) => renderCard(step, idx, idx))}
                     </div>
 
                     {bottomRowCards.length > 0 && (
-                      <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: `repeat(${bottomRowCards.length}, 1fr)`, gap: '40px', maxWidth: bottomRowCards.length === 2 ? '820px' : '1220px', margin: '0 auto', width: '100%' }}>
+                      <div className="winera-process-row" style={{ display: 'grid', gridTemplateColumns: `repeat(${bottomRowCards.length}, 1fr)`, gap: '36px', maxWidth: bottomRowCards.length === 2 ? '780px' : '1180px', margin: '0 auto', width: '100%' }}>
                         {bottomRowCards.map((step, idx) => renderCard(step, idx, idx + topRowCards.length))}
                       </div>
                     )}

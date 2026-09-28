@@ -7,6 +7,7 @@ import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 
 import projectBanner from '../assets/main-project-bg.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 import projHulaboo from '../assets/proj-hulaboo.webp';
 import projNeon1 from '../assets/proj-neonpanda1.webp';
 import projSoft1 from '../assets/proj-softplay1.webp';
@@ -52,6 +53,18 @@ const resolveProjectImg = (proj) => {
 };
 
 export default function Project({ siteData }) {
+  const [isPhone, setIsPhone] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPhone(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
   const heroData = siteData?.projectHero || {};
@@ -386,29 +399,34 @@ export default function Project({ siteData }) {
       <section className="winera-project-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '175px',
-        paddingBottom: '95px',
-        background: `url(${bannerImg}) center top / 100% 100% no-repeat`,
+        minHeight: 'auto',
+        paddingTop: isPhone ? '55px' : '175px',
+        paddingBottom: isPhone ? '0px' : '95px',
+        aspectRatio: isPhone ? '941 / 550' : 'auto',
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${bannerImg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#ffffff'
+        color: '#ffffff',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Breadcrumb: Home › Project */}
           <h1 className="winera-project-hero-h1" style={{
-            fontSize: '21px',
+            fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
+            flexWrap: 'wrap',
+            gap: isPhone ? '6px' : '8px',
             margin: 0,
             lineHeight: 1.2,
-            textAlign: 'center'
+            textAlign: 'center',
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
           }}>
             <Link to="/" style={{ color: '#ffffff', textDecoration: 'none' }}>{breadcrumbHome}</Link>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>

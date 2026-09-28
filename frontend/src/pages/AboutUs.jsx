@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MotionCardFlip from '../components/MotionCardFlip';
@@ -7,6 +7,7 @@ import SectionHeading from '../components/SectionHeading';
 import MobileExpandableText from '../components/MobileExpandableText';
 import CtaBanner from '../components/CtaBanner';
 import aboutHeroBg from '../assets/about-us-banner.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 import about1 from '../assets/about-01.webp';
 import about3 from '../assets/about-3.webp';
 import about4 from '../assets/about-4.webp';
@@ -79,6 +80,18 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => 
 };
 
 export default function AboutUs({ siteData }) {
+  const [isPhone, setIsPhone] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPhone(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [currentFounderIndex, setCurrentFounderIndex] = React.useState(0);
   const aboutSeo = siteData?.aboutSeo || {
     pageTitle: "The Right Choice for Your Business | Winera International",
@@ -152,57 +165,82 @@ export default function AboutUs({ siteData }) {
       <section className="winera-about-hero-section" style={{
         position: 'relative',
         width: '100%',
-        aspectRatio: '1920 / 460',
-        paddingTop: '120px',
-        paddingBottom: '50px',
-        background: `url(${heroBg}) center/100% 100% no-repeat`,
+        aspectRatio: isPhone ? '941 / 550' : '1920 / 460',
+        minHeight: 'auto',
+        paddingTop: isPhone ? '55px' : '120px',
+        paddingBottom: isPhone ? '0px' : '50px',
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${heroBg}) center/100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#ffffff'
+        color: '#ffffff',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          <h1 style={{
-            fontSize: '3.6rem',
-            fontWeight: '900',
-            letterSpacing: '-1px',
-            marginBottom: '12px',
-            lineHeight: 1.15
-          }}>
-            {(() => {
-              const rawTitle = siteData?.aboutHero?.title || "*About* Us";
-              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-              return parts.map((part, index) => {
-                if (index % 2 === 1) {
-                  return (
-                    <span key={index} style={{ color: '#ffcd00' }}>
-                      {part}
-                    </span>
-                  );
-                }
-                return part;
-              });
-            })()}
-          </h1>
+          {isPhone ? (
+            <h1 className="winera-about-hero-h1" style={{
+              fontSize: '1.15rem',
+              fontWeight: '800',
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              gap: '6px',
+              margin: 0,
+              lineHeight: 1.2,
+              textAlign: 'center',
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
+            }}>
+              <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+              <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+              <span style={{ color: '#ffcd00', fontWeight: '900' }}>About Us</span>
+            </h1>
+          ) : (
+            <>
+              <h1 style={{
+                fontSize: '3.6rem',
+                fontWeight: '900',
+                letterSpacing: '-1px',
+                marginBottom: '12px',
+                lineHeight: 1.15
+              }}>
+                {(() => {
+                  const rawTitle = siteData?.aboutHero?.title || "*About* Us";
+                  const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+                  return parts.map((part, index) => {
+                    if (index % 2 === 1) {
+                      return (
+                        <span key={index} style={{ color: '#ffcd00' }}>
+                          {part}
+                        </span>
+                      );
+                    }
+                    return part;
+                  });
+                })()}
+              </h1>
 
-          <div className="winera-about-hero-breadcrumb" style={{
-            fontSize: '21px',
-            fontWeight: '600',
-            color: '#ffffff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            margin: 0,
-            lineHeight: 1.2,
-            textAlign: 'center'
-          }}>
-            <a href="/" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: '600' }}>Home</a>
-            <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
-            <span style={{ color: '#ffffff', fontWeight: '600' }}>About Us</span>
-          </div>
+              <div className="winera-about-hero-breadcrumb" style={{
+                fontSize: '21px',
+                fontWeight: '600',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                margin: 0,
+                lineHeight: 1.2,
+                textAlign: 'center'
+              }}>
+                <a href="/" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: '600' }}>Home</a>
+                <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+                <span style={{ color: '#ffffff', fontWeight: '600' }}>About Us</span>
+              </div>
+            </>
+          )}
         </div>
       </section>
 

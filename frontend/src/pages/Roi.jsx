@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
 import roiBgImage from '../assets/roi-hero-bg.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 import roiImg1 from '../assets/roi-img1.webp';
 import roiImage3bg from '../assets/roi-image-3bg.webp';
 import roiBlock5Img1 from '../assets/roi-block5-img1.webp';
@@ -44,6 +45,18 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 export default function Roi({ siteData }) {
+  const [isPhone, setIsPhone] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPhone(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
@@ -231,28 +244,33 @@ export default function Roi({ siteData }) {
       <section className="winera-roi-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '175px',
-        paddingBottom: '95px',
-        background: `url(${getValidImageUrl(roiHero.bgUrl, roiBgImage)}) center top / 100% 100% no-repeat`,
+        minHeight: 'auto',
+        aspectRatio: isPhone ? '941 / 550' : 'auto',
+        paddingTop: isPhone ? '55px' : '175px',
+        paddingBottom: isPhone ? '0px' : '95px',
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${getValidImageUrl(roiHero.bgUrl, roiBgImage)}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#ffffff'
+        color: '#ffffff',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <h1 className="winera-roi-hero-h1" style={{
-            fontSize: '21px',
+            fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
+            flexWrap: 'wrap',
+            gap: isPhone ? '6px' : '8px',
             margin: 0,
             lineHeight: 1.2,
-            textAlign: 'center'
+            textAlign: 'center',
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
           }}>
             <Link to="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</Link>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>

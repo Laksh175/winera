@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import arHeroBg from '../assets/ar-hero-bg.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 
 export default function LaserTag({ siteData }) {
+  const [isPhone, setIsPhone] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPhone(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Laser Tag...</div>;
 
   React.useEffect(() => {
@@ -36,29 +49,34 @@ export default function LaserTag({ siteData }) {
       <section className="winera-lasertag-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '165px',
-        paddingBottom: '75px',
-        background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
+        minHeight: 'auto',
+        aspectRatio: isPhone ? '941 / 550' : 'auto',
+        paddingTop: isPhone ? '55px' : '165px',
+        paddingBottom: isPhone ? '0px' : '75px',
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#ffffff'
+        color: '#ffffff',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Laser Tag */}
           <h1 className="winera-lasertag-hero-h1" style={{
-            fontSize: '21px',
+            fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
+            flexWrap: 'wrap',
+            gap: isPhone ? '6px' : '8px',
             margin: 0,
             lineHeight: 1.2,
-            textAlign: 'center'
+            textAlign: 'center',
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
           }}>
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>

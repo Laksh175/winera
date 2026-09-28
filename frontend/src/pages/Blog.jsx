@@ -4,10 +4,11 @@ import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import blogHeroBg from '../assets/blog-hero-bg.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import WineraImage from '../components/WineraImage';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Calendar, PenTool } from 'lucide-react';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 
 const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
@@ -66,6 +67,18 @@ const formatExcerpt = (text) => {
 };
 
 export default function Blog({ siteData }) {
+  const [isPhone, setIsPhone] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPhone(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const navigate = useNavigate();
   const header = siteData?.header || {};
   const footer = siteData?.footer || {};
@@ -134,28 +147,33 @@ export default function Blog({ siteData }) {
       <section className="winera-blog-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '175px',
-        paddingBottom: '95px',
-        background: `url(${heroBg}) center top / 100% 100% no-repeat`,
+        minHeight: 'auto',
+        aspectRatio: isPhone ? '941 / 550' : 'auto',
+        paddingTop: isPhone ? '55px' : '175px',
+        paddingBottom: isPhone ? '0px' : '95px',
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${heroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#ffffff'
+        color: '#ffffff',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <h1 className="winera-blog-hero-h1" style={{
-            fontSize: '21px',
+            fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
+            flexWrap: 'wrap',
+            gap: isPhone ? '6px' : '8px',
             margin: 0,
             lineHeight: 1.2,
-            textAlign: 'center'
+            textAlign: 'center',
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
           }}>
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
@@ -285,15 +303,20 @@ export default function Blog({ siteData }) {
                     alignItems: 'center',
                     justifyContent: 'space-between'
                   }}>
-                    <span style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      <Calendar style={{ width: '13px', height: '13px', color: '#0284c7' }} />
                       {post.date || 'SEP 12, 2026'}
                     </span>
                     <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '5px',
                       color: '#0284c7',
                       fontWeight: '700',
                       fontSize: '13px',
                       letterSpacing: '0.2px'
                     }}>
+                      <PenTool style={{ width: '13px', height: '13px', color: '#0284c7' }} />
                       {post.author || post.founder || 'Divyang Mandani'}
                     </span>
                   </div>

@@ -7,6 +7,7 @@ import MobileExpandableText from '../components/MobileExpandableText';
 import { ShieldCheck } from 'lucide-react';
 import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
 import safetyBg from '../assets/safety-standard-hero-bg.webp';
+import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
 import safetyStandardImg1 from '../assets/safety-standard-img1.webp';
 import safetyStandardBg2 from '../assets/safety-standard-bg-2.webp';
 import safetyStandard2 from '../assets/safety-standard-2.webp';
@@ -137,6 +138,18 @@ const defaultSafetyStructureCards = [
 ];
 
 export default function SafetyStandards({ siteData }) {
+  const [isPhone, setIsPhone] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPhone(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeCertIndex, setActiveCertIndex] = useState(0);
   const [openElectricalIndex, setOpenElectricalIndex] = useState(0);
@@ -196,29 +209,34 @@ export default function SafetyStandards({ siteData }) {
       <section className="winera-safety-hero-section" style={{
         position: 'relative',
         width: '100%',
-        paddingTop: '175px',
-        paddingBottom: '95px',
-        background: `url(${bgImage}) center top / 100% 100% no-repeat`,
+        minHeight: 'auto',
+        aspectRatio: isPhone ? '941 / 550' : 'auto',
+        paddingTop: isPhone ? '55px' : '175px',
+        paddingBottom: isPhone ? '0px' : '95px',
+        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${bgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#ffffff'
+        color: '#ffffff',
+        overflow: 'hidden'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Safety Standards */}
           <h1 className="winera-safety-hero-h1" style={{
-            fontSize: '21px',
+            fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
+            flexWrap: 'wrap',
+            gap: isPhone ? '6px' : '8px',
             margin: 0,
             lineHeight: 1.2,
-            textAlign: 'center'
+            textAlign: 'center',
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
           }}>
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>

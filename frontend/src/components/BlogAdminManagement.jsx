@@ -9,6 +9,7 @@ import {
   Calendar,
   Clock,
   User,
+  PenTool,
   Search,
   CheckCircle,
   AlertCircle,
@@ -419,11 +420,20 @@ export default function BlogAdminManagement({
                           {post.title} {post.subtitle ? `– ${post.subtitle}` : ''}
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12.5px', color: '#64748b', fontWeight: '600', flexWrap: 'wrap' }}>
-                          <span>📅 {post.date || 'SEP 12, 2026'}</span>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                            <Calendar style={{ width: '13px', height: '13px', color: '#0284c7' }} />
+                            {post.date || 'SEP 12, 2026'}
+                          </span>
                           <span>•</span>
-                          <span>⏱️ {post.readTime || '4 min read'}</span>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                            <Clock style={{ width: '13px', height: '13px', color: '#0284c7' }} />
+                            {post.readTime || '4 min read'}
+                          </span>
                           <span>•</span>
-                          <span style={{ color: '#0284c7', fontWeight: '700' }}>✍️ {post.author || 'Divyang Mandani'}</span>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#0284c7', fontWeight: '700' }}>
+                            <PenTool style={{ width: '13px', height: '13px', color: '#0284c7' }} />
+                            {post.author || 'Divyang Mandani'}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -573,11 +583,20 @@ export default function BlogAdminManagement({
 
               {/* Meta bar */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '13px', color: '#64748b', fontWeight: '600', marginBottom: '22px', paddingBottom: '14px', borderBottom: '1.5px solid #cbd5e1' }}>
-                <span>📅 {editingBlog.date || 'SEP 12, 2026'}</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                  <Calendar style={{ width: '14px', height: '14px', color: '#0284c7' }} />
+                  {editingBlog.date || 'SEP 12, 2026'}
+                </span>
                 <span>•</span>
-                <span>⏱️ {editingBlog.readTime || '4 min read'}</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                  <Clock style={{ width: '14px', height: '14px', color: '#0284c7' }} />
+                  {editingBlog.readTime || '4 min read'}
+                </span>
                 <span>•</span>
-                <span style={{ color: '#0284c7', fontWeight: '700' }}>✍️ {editingBlog.author || 'Divyang Mandani'}</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#0284c7', fontWeight: '700' }}>
+                  <PenTool style={{ width: '14px', height: '14px', color: '#0284c7' }} />
+                  {editingBlog.author || 'Divyang Mandani'}
+                </span>
               </div>
 
               {/* Defined 16:9 Image */}
