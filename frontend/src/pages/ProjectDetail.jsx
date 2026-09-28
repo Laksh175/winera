@@ -184,13 +184,29 @@ export default function ProjectDetail({ siteData }) {
         const itemAlpha = cleanAlpha(p.slug || p.name);
         const nameAlpha = cleanAlpha(p.name);
         const idAlpha = cleanAlpha(p.id);
-        return (
+
+        // 1. Direct exact matches
+        if (
           itemSlug === targetSlug ||
           itemAlpha === targetAlpha ||
           nameAlpha === targetAlpha ||
-          idAlpha === targetAlpha ||
-          (targetSlug === 'new-turnkey-project' && normalizeSlug(p.slug) === 'new-turnkey-project')
-        );
+          idAlpha === targetAlpha
+        ) {
+          return true;
+        }
+
+        // 2. Prefix & substring fuzzy matches (e.g. rebounce <-> rebounce-game-zone, fizzyfox <-> fizzy-fox)
+        if (targetAlpha && targetAlpha.length >= 3) {
+          if (itemAlpha.startsWith(targetAlpha) || targetAlpha.startsWith(itemAlpha)) return true;
+          if (nameAlpha.startsWith(targetAlpha) || targetAlpha.startsWith(nameAlpha)) return true;
+          if (itemAlpha.includes(targetAlpha) || targetAlpha.includes(itemAlpha)) return true;
+          if (nameAlpha.includes(targetAlpha) || targetAlpha.includes(nameAlpha)) return true;
+        }
+
+        if (targetSlug === 'new-turnkey-project' && normalizeSlug(p.slug) === 'new-turnkey-project') {
+          return true;
+        }
+        return false;
       })
     : null;
 
@@ -756,44 +772,11 @@ export default function ProjectDetail({ siteData }) {
       <section className="winera-project-gallery-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '90px 4vw 100px',
-        background: 'linear-gradient(180deg, #bcecfe 0%, #e2f5fe 25%, #f0f9ff 65%, #ade9fe 100%)',
-        margin: '20px 0 0',
-        overflow: 'hidden'
+        padding: '140px 4vw 170px',
+        background: `url(${galleryBg}) center top / 100% 100% no-repeat`,
+        margin: '20px 0 0'
       }}>
-        {/* Top Decorative Cutout Shape */}
-        <div
-          className="winera-project-gallery-top-cut"
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            width: '100%',
-            height: '44px',
-            background: `url(${projectGalleryTopCut}) center top / 100% 100% no-repeat`,
-            pointerEvents: 'none',
-            zIndex: 1
-          }}
-        />
-
-        {/* Bottom Decorative Cutout Shape */}
-        <div
-          className="winera-project-gallery-bottom-cut"
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            width: '100%',
-            height: '46px',
-            background: `url(${projectGalleryBottomCut}) center bottom / 100% 100% no-repeat`,
-            pointerEvents: 'none',
-            zIndex: 1
-          }}
-        />
-
-        <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
+        <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center' }}>
           <motion.div
             className="winera-project-gallery-heading"
             initial={{ opacity: 0, y: -25 }}
@@ -818,8 +801,7 @@ export default function ProjectDetail({ siteData }) {
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '24px',
             maxWidth: '1000px',
-            margin: '0 auto',
-            paddingBottom: '25px'
+            margin: '0 auto'
           }}>
             {galleryImages.map((imgSrc, idx) => (
               <motion.div

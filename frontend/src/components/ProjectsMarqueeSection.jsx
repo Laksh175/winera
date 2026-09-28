@@ -271,7 +271,25 @@ export default function ProjectsMarqueeSection({
             {[...Array(4)].map((_, setIdx) => (
               <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingRight: '14px' }}>
                 {items.map((proj, idx) => {
-                  const cardSlug = proj.slug || (proj.name || proj.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                  const matchedCmsItem = Array.isArray(siteData?.projectItems)
+                    ? siteData.projectItems.find(p => {
+                        const pSlug = (p.slug || p.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                        const pName = (p.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                        const cSlug = (proj.slug || proj.name || proj.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                        const cName = (proj.name || proj.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                        return (
+                          (cSlug && pSlug === cSlug) ||
+                          (cSlug && pName === cSlug) ||
+                          (cName && pName === cName) ||
+                          (cSlug && pSlug.startsWith(cSlug)) ||
+                          (cSlug && cSlug.startsWith(pSlug)) ||
+                          (cName && pName.includes(cName)) ||
+                          (cName && cName.includes(pName))
+                        );
+                      })
+                    : null;
+
+                  const cardSlug = matchedCmsItem?.slug || proj.slug || (proj.name || proj.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                   const href = cardSlug ? `/project/${cardSlug}` : '/project';
 
                   const imgSrc = proj.img || proj.imageUrl || proj.imgUrl || projHulaboo;

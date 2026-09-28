@@ -586,7 +586,7 @@ export default function Project({ siteData }) {
                   }}
                 >
                   <Link
-                    to={`/project/${proj.slug}`}
+                    to={`/project/${proj.slug || (proj.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`}
                     style={{
                       display: 'block',
                       width: '100%',
