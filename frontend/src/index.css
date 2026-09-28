@@ -13952,13 +13952,16 @@ button[style*="background:transparent"]:hover,
   .winera-project-gallery-grid>div {
     border-radius: 18px !important;
     overflow: hidden !important;
+    aspect-ratio: 6 / 5 !important;
+    width: 100% !important;
+    height: auto !important;
   }
 
   div.winera-project-gallery-grid img,
   .winera-project-gallery-grid img {
     border-radius: 18px !important;
     width: 100% !important;
-    height: 190px !important;
+    height: 100% !important;
     object-fit: cover !important;
     display: block !important;
   }
@@ -14713,12 +14716,22 @@ button[style*="background:transparent"]:hover,
     inset: -18px -20px -18px 22px !important;
   }
 
-  /* 9. Project Detail Page Gallery Grid 2 Images Per Row for Tablet / 768px */
+  /* 9. Project Detail Page Gallery Grid for Tablet / 1024px */
   div.winera-project-gallery-grid,
   .winera-project-gallery-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 20px !important;
+    max-width: 960px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  div.winera-project-gallery-grid img,
+  .winera-project-gallery-grid img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
   }
 
   /* 10. Hypergrid Tablet (768px - 1024px) Compact Spacing & Image Sizing */
