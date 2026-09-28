@@ -6858,6 +6858,11 @@ textarea::placeholder,
     box-sizing: border-box !important;
   }
 
+  .winera-project-gallery-top-cut,
+  .winera-project-gallery-bottom-cut {
+    display: none !important;
+  }
+
   /* Safety Standards Page Responsiveness */
   .winera-safety-hero-section {
     padding-top: 210px !important;
@@ -13922,9 +13927,8 @@ button[style*="background:transparent"]:hover,
   }
 
   .winera-project-gallery-section {
-    padding: 60px 4vw 75px !important;
+    padding: 85px 4vw 95px !important;
     margin-top: 30px !important;
-    background-size: 100% 100% !important;
   }
 
   .winera-project-gallery-section h2,

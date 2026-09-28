@@ -13,6 +13,8 @@ import projectImage2Bg from '../assets/project-image2-bg.webp';
 import projectImage3 from '../assets/project-image-3.webp';
 import projectImage4 from '../assets/project-image-4.webp';
 import projectImagesBg from '../assets/project-images-bg.webp';
+import projectGalleryTopCut from '../assets/project-gallery-top-cut.webp';
+import projectGalleryBottomCut from '../assets/project-gallery-bottom-cut.webp';
 import projectBlock1 from '../assets/project-block1.webp';
 import projectBlock2 from '../assets/project-block2.webp';
 import projectBlock3 from '../assets/project-block3.webp';
@@ -171,20 +173,34 @@ export default function ProjectDetail({ siteData }) {
   };
 
   const normalizeSlug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const cleanAlpha = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 
   const targetSlug = normalizeSlug(slug);
+  const targetAlpha = cleanAlpha(slug);
 
   const cmsItem = Array.isArray(siteData?.projectItems)
     ? siteData.projectItems.find(p => {
         const itemSlug = (p.slug && p.slug !== 'new-turnkey-project') ? normalizeSlug(p.slug) : normalizeSlug(p.name);
-        return itemSlug === targetSlug || normalizeSlug(p.name) === targetSlug || normalizeSlug(p.id) === targetSlug || (targetSlug === 'new-turnkey-project' && normalizeSlug(p.slug) === 'new-turnkey-project');
+        const itemAlpha = cleanAlpha(p.slug || p.name);
+        const nameAlpha = cleanAlpha(p.name);
+        const idAlpha = cleanAlpha(p.id);
+        return (
+          itemSlug === targetSlug ||
+          itemAlpha === targetAlpha ||
+          nameAlpha === targetAlpha ||
+          idAlpha === targetAlpha ||
+          (targetSlug === 'new-turnkey-project' && normalizeSlug(p.slug) === 'new-turnkey-project')
+        );
       })
     : null;
 
   const builtItem = Array.isArray(siteData?.builtProjects)
     ? siteData.builtProjects.find(p => {
         const itemSlug = normalizeSlug(p.slug || p.name);
-        return itemSlug === targetSlug || normalizeSlug(p.name) === targetSlug || normalizeSlug(p.id) === targetSlug;
+        const itemAlpha = cleanAlpha(p.slug || p.name);
+        const nameAlpha = cleanAlpha(p.name);
+        const idAlpha = cleanAlpha(p.id);
+        return itemSlug === targetSlug || itemAlpha === targetAlpha || nameAlpha === targetAlpha || idAlpha === targetAlpha;
       })
     : null;
 
@@ -740,11 +756,44 @@ export default function ProjectDetail({ siteData }) {
       <section className="winera-project-gallery-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '70px 4vw 90px',
-        background: `url(${galleryBg}) center top / 100% 100% no-repeat`,
-        margin: '20px 0 0'
+        padding: '90px 4vw 100px',
+        background: 'linear-gradient(180deg, #bcecfe 0%, #e2f5fe 25%, #f0f9ff 65%, #ade9fe 100%)',
+        margin: '20px 0 0',
+        overflow: 'hidden'
       }}>
-        <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center' }}>
+        {/* Top Decorative Cutout Shape */}
+        <div
+          className="winera-project-gallery-top-cut"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            width: '100%',
+            height: '44px',
+            background: `url(${projectGalleryTopCut}) center top / 100% 100% no-repeat`,
+            pointerEvents: 'none',
+            zIndex: 1
+          }}
+        />
+
+        {/* Bottom Decorative Cutout Shape */}
+        <div
+          className="winera-project-gallery-bottom-cut"
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            width: '100%',
+            height: '46px',
+            background: `url(${projectGalleryBottomCut}) center bottom / 100% 100% no-repeat`,
+            pointerEvents: 'none',
+            zIndex: 1
+          }}
+        />
+
+        <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
           <motion.div
             className="winera-project-gallery-heading"
             initial={{ opacity: 0, y: -25 }}
