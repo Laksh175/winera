@@ -13,8 +13,8 @@ import projectImage2Bg from '../assets/project-image2-bg.webp';
 import projectImage3 from '../assets/project-image-3.webp';
 import projectImage4 from '../assets/project-image-4.webp';
 import projectImagesBg from '../assets/project-images-bg.webp';
-import projectGalleryTopCut from '../assets/project-gallery-top-cut.webp';
-import projectGalleryBottomCut from '../assets/project-gallery-bottom-cut.webp';
+import projectGalleryTopCut from '../assets/project_gallery_top_cut_filled.webp';
+import projectGalleryBottomCut from '../assets/project_gallery_bottom_cut_filled.webp';
 import projectBlock1 from '../assets/project-block1.webp';
 import projectBlock2 from '../assets/project-block2.webp';
 import projectBlock3 from '../assets/project-block3.webp';
@@ -772,11 +772,44 @@ export default function ProjectDetail({ siteData }) {
       <section className="winera-project-gallery-section" style={{
         position: 'relative',
         width: '100%',
-        padding: '140px 4vw 170px',
-        background: `url(${galleryBg}) center top / 100% 100% no-repeat`,
-        margin: '20px 0 0'
+        padding: '105px 4vw 120px',
+        background: 'linear-gradient(180deg, #c1edfc 0%, #dff4fe 20%, #f4faff 50%, #d8f1fe 80%, #ade9fe 100%)',
+        margin: '20px 0 0',
+        overflow: 'hidden'
       }}>
-        <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center' }}>
+        {/* Top Decorative Cut Shape (Exact Original Asset Notch Cut) */}
+        <div
+          className="winera-project-gallery-top-cut"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            width: '100%',
+            height: '80px',
+            background: `url(${projectGalleryTopCut}) center top / 100% 100% no-repeat`,
+            pointerEvents: 'none',
+            zIndex: 3
+          }}
+        />
+
+        {/* Bottom Decorative Cut Shape (Exact Original Asset Stepped Yellow Cut Matching Image 2) */}
+        <div
+          className="winera-project-gallery-bottom-cut"
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            width: '100%',
+            height: '100px',
+            background: `url(${projectGalleryBottomCut}) center bottom / 100% 100% no-repeat`,
+            pointerEvents: 'none',
+            zIndex: 3
+          }}
+        />
+
+        <div style={{ maxWidth: '1240px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
           <motion.div
             className="winera-project-gallery-heading"
             initial={{ opacity: 0, y: -25 }}
