@@ -1788,7 +1788,12 @@ export const uploadImage = async (req, res) => {
 };
 
 export const mutateContentItem = async (req, res) => {
-  const { sectionKey, action, item, index, matchKey, matchValue } = req.body;
+  const sectionKey = req.body?.sectionKey || req.query?.sectionKey;
+  const action = req.body?.action || req.query?.action || (req.method === 'DELETE' ? 'delete' : 'update');
+  const item = req.body?.item;
+  const index = req.body?.index !== undefined ? req.body.index : (req.query?.index !== undefined ? parseInt(req.query.index) : undefined);
+  const matchKey = req.body?.matchKey || req.query?.matchKey || 'slug';
+  const matchValue = req.body?.matchValue || req.query?.matchValue || req.params?.id;
 
   if (!sectionKey || !action) {
     return res.status(400).json({ message: 'sectionKey and action are required' });

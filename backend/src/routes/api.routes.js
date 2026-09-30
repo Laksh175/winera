@@ -14,7 +14,7 @@ router.use('/leads', leadRoutes);
 
 // Protected Admin routes
 router.put('/admin/content', protect, updateContent);
-router.post('/admin/content-item', protect, mutateContentItem);
+router.all(['/admin/content-item', '/admin/content-item/:id?'], protect, mutateContentItem);
 router.post('/admin/upload', protect, upload.single('image'), uploadImage);
 
 export default router;
