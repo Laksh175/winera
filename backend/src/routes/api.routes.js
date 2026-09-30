@@ -1,5 +1,5 @@
 import express from 'express';
-import { getContent, updateContent, adminLogin, uploadImage, upload } from '../controllers/content.controller.js';
+import { getContent, updateContent, mutateContentItem, adminLogin, uploadImage, upload } from '../controllers/content.controller.js';
 import protect from '../middleware/auth.middleware.js';
 import leadRoutes from './lead.routes.js';
 
@@ -14,6 +14,7 @@ router.use('/leads', leadRoutes);
 
 // Protected Admin routes
 router.put('/admin/content', protect, updateContent);
+router.post('/admin/content-item', protect, mutateContentItem);
 router.post('/admin/upload', protect, upload.single('image'), uploadImage);
 
 export default router;

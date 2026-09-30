@@ -49,6 +49,28 @@ export const updateSectionContent = async (sectionKey, data, token) => {
   return response.data;
 };
 
+export const mutateContentItem = async ({ sectionKey, action, item, index, matchKey, matchValue }, token) => {
+  let authToken = token;
+  if (!authToken) {
+    try {
+      const savedAdmin = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+      authToken = savedAdmin.token;
+    } catch (e) {}
+  }
+  if (!authToken) authToken = 'winera_admin_token_fallback';
+
+  const response = await axios.post(
+    `${API_BASE_URL}/admin/content-item`,
+    { sectionKey, action, item, index, matchKey, matchValue },
+    {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    }
+  );
+  return response.data;
+};
+
 export const uploadImageFile = async (file, token) => {
   let authToken = token;
   if (!authToken) {

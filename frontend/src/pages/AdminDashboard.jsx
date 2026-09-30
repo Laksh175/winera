@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { updateSectionContent, uploadImageFile } from '../services/api';
+import { updateSectionContent, mutateContentItem, uploadImageFile } from '../services/api';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
@@ -2401,6 +2401,36 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       if (!modalItemData.titleLine3) modalItemData.titleLine3 = `in ${modalItemData.city || 'India'}`;
       if (!modalItemData.metaTitle) modalItemData.metaTitle = `${projName} Setup in ${modalItemData.city || 'India'} | Winera International`;
       if (!modalItemData.metaDescription) modalItemData.metaDescription = `Explore ${projName} in ${modalItemData.city || 'India'} by Winera International. Complete turnkey entertainment setup.`;
+
+      // Update local state for immediate UI feedback
+      if (modalMode === 'add') {
+        currentList.push(modalItemData);
+      } else if (modalMode === 'edit' && editingIndex !== null) {
+        currentList[editingIndex] = modalItemData;
+      }
+      setFormData(prev => ({ ...prev, projectItems: currentList }));
+      closeModal();
+
+      // Send ONLY THIS SINGLE PROJECT to backend payload!
+      setLoadingSection('projectItems');
+      try {
+        await mutateContentItem({
+          sectionKey: 'projectItems',
+          action: modalMode === 'add' ? 'add' : 'update',
+          item: modalItemData,
+          matchKey: 'slug',
+          matchValue: autoSlug,
+          index: editingIndex
+        }, admin.token);
+        await refreshContent();
+        setStatusMsg(`Project '${projName}' saved directly to database!`);
+      } catch (err) {
+        console.error("Single project save error:", err);
+        setStatusMsg('Database Save Error: ' + (err.response?.data?.message || err.message));
+      } finally {
+        setLoadingSection('');
+      }
+      return;
     }
 
     if (secKey === 'arcadeCategories') {
@@ -17214,10 +17244,23 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                   setDeleteConfirmModal({
                                     title: 'Delete Project Card?',
                                     message: `Are you sure you want to delete project '${item.name || 'this item'}'?`,
-                                    onConfirm: () => {
+                                    onConfirm: async () => {
                                       const newList = currentList.filter((_, i) => i !== targetIdx);
                                       setFormData(prev => ({ ...prev, projectItems: newList }));
-                                      persistSectionToDatabase('projectItems', newList);
+                                      try {
+                                        await mutateContentItem({
+                                          sectionKey: 'projectItems',
+                                          action: 'delete',
+                                          matchKey: 'slug',
+                                          matchValue: item.slug || item.id,
+                                          index: targetIdx
+                                        }, admin.token);
+                                        await refreshContent();
+                                        setStatusMsg(`Project '${item.name || 'item'}' deleted successfully!`);
+                                      } catch (err) {
+                                        console.error("Delete project error:", err);
+                                        setStatusMsg('Delete error: ' + (err.response?.data?.message || err.message));
+                                      }
                                     }
                                   });
                                 }}
@@ -17231,15 +17274,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       })}
                     </tbody>
                   </table>
-                </div>
-
-                <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                  <button
-                    onClick={() => persistSectionToDatabase('projectItems', formData.projectItems || currentList)}
-                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.3)' }}
-                  >
-                    Save All Projects List
-                  </button>
                 </div>
               </div>
             );

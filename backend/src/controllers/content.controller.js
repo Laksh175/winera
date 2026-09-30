@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
   }
 });
 
-export const upload = multer({ storage });
+export const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } });
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET || 'winera_secret_key_123', {
@@ -1786,5 +1786,130 @@ export const uploadImage = async (req, res) => {
   const fileUrl = `${protocol}://${host}/uploads/${finalFilename}`;
   res.json({ url: fileUrl, filename: finalFilename });
 };
+
+export const mutateContentItem = async (req, res) => {
+  const { sectionKey, action, item, index, matchKey, matchValue } = req.body;
+
+  if (!sectionKey || !action) {
+    return res.status(400).json({ message: 'sectionKey and action are required' });
+  }
+
+  try {
+    let contentDoc = await Content.findOne({ sectionKey });
+    let existingData = contentDoc ? contentDoc.data : null;
+
+    if (sectionKey === 'arcadeCategories') {
+      let catData = existingData || { categoriesList: [], cards: [] };
+      if (!Array.isArray(catData.cards)) catData.cards = [];
+      if (!Array.isArray(catData.categoriesList)) catData.categoriesList = [];
+
+      if (action === 'add') {
+        if (item) {
+          catData.cards.unshift(item);
+          if (item.category && !catData.categoriesList.includes(item.category)) {
+            catData.categoriesList.push(item.category);
+          }
+        }
+      } else if (action === 'update') {
+        let foundIdx = -1;
+        if (matchKey && matchValue !== undefined) {
+          foundIdx = catData.cards.findIndex(x => x && x[matchKey] === matchValue);
+        }
+        if (foundIdx === -1 && typeof index === 'number' && index >= 0 && index < catData.cards.length) {
+          foundIdx = index;
+        }
+        if (foundIdx !== -1 && item) {
+          catData.cards[foundIdx] = { ...catData.cards[foundIdx], ...item };
+        } else if (item) {
+          catData.cards.push(item);
+        }
+        if (item?.category && !catData.categoriesList.includes(item.category)) {
+          catData.categoriesList.push(item.category);
+        }
+      } else if (action === 'delete') {
+        let foundIdx = -1;
+        if (matchKey && matchValue !== undefined) {
+          foundIdx = catData.cards.findIndex(x => x && x[matchKey] === matchValue);
+        }
+        if (foundIdx === -1 && typeof index === 'number' && index >= 0 && index < catData.cards.length) {
+          foundIdx = index;
+        }
+        if (foundIdx !== -1) {
+          catData.cards.splice(foundIdx, 1);
+        }
+      }
+
+      if (contentDoc) {
+        contentDoc.data = catData;
+        contentDoc.markModified('data');
+        await contentDoc.save();
+      } else {
+        contentDoc = await Content.create({ sectionKey, data: catData });
+      }
+
+      return res.json({
+        success: true,
+        message: `Arcade item ${action}ed successfully`,
+        data: catData
+      });
+    }
+
+    // Generic Array sections (e.g. projectItems, faqs, testimonials, builtProjects, etc.)
+    let list = Array.isArray(existingData) ? [...existingData] : [];
+
+    if (action === 'add') {
+      if (item) {
+        const dupIdx = (item.slug || item.id) ? list.findIndex(x => (x.slug && x.slug === item.slug) || (x.id && x.id === item.id)) : -1;
+        if (dupIdx !== -1) {
+          list[dupIdx] = { ...list[dupIdx], ...item };
+        } else {
+          list.push(item);
+        }
+      }
+    } else if (action === 'update') {
+      let foundIdx = -1;
+      if (matchKey && matchValue !== undefined) {
+        foundIdx = list.findIndex(x => x && (x[matchKey] === matchValue || (matchKey === 'slug' && (x.slug === matchValue || x.id === matchValue))));
+      }
+      if (foundIdx === -1 && typeof index === 'number' && index >= 0 && index < list.length) {
+        foundIdx = index;
+      }
+      if (foundIdx !== -1 && item) {
+        list[foundIdx] = { ...list[foundIdx], ...item };
+      } else if (item) {
+        list.push(item);
+      }
+    } else if (action === 'delete') {
+      let foundIdx = -1;
+      if (matchKey && matchValue !== undefined) {
+        foundIdx = list.findIndex(x => x && (x[matchKey] === matchValue || (matchKey === 'slug' && (x.slug === matchValue || x.id === matchValue))));
+      }
+      if (foundIdx === -1 && typeof index === 'number' && index >= 0 && index < list.length) {
+        foundIdx = index;
+      }
+      if (foundIdx !== -1) {
+        list.splice(foundIdx, 1);
+      }
+    }
+
+    if (contentDoc) {
+      contentDoc.data = list;
+      contentDoc.markModified('data');
+      await contentDoc.save();
+    } else {
+      contentDoc = await Content.create({ sectionKey, data: list });
+    }
+
+    return res.json({
+      success: true,
+      message: `Item in '${sectionKey}' ${action}ed successfully`,
+      data: list
+    });
+  } catch (error) {
+    console.error('Error in mutateContentItem:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 
 
