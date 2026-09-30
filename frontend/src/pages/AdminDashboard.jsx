@@ -2426,6 +2426,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         setStatusMsg(`Project '${projName}' saved directly to database!`);
       } catch (err) {
         console.error("Single project save error:", err);
+        if (err.response?.status === 404) {
+          try {
+            await updateSectionContent('projectItems', currentList, admin.token);
+            await refreshContent();
+            setStatusMsg(`Project '${projName}' saved directly to database!`);
+            return;
+          } catch (fbErr) {
+            setStatusMsg('Database Save Error: ' + (fbErr.response?.data?.message || fbErr.message));
+            return;
+          }
+        }
         setStatusMsg('Database Save Error: ' + (err.response?.data?.message || err.message));
       } finally {
         setLoadingSection('');
@@ -17259,6 +17270,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                         setStatusMsg(`Project '${item.name || 'item'}' deleted successfully!`);
                                       } catch (err) {
                                         console.error("Delete project error:", err);
+                                        if (err.response?.status === 404) {
+                                          try {
+                                            await updateSectionContent('projectItems', newList, admin.token);
+                                            await refreshContent();
+                                            setStatusMsg(`Project '${item.name || 'item'}' deleted successfully!`);
+                                            return;
+                                          } catch (fbErr) {
+                                            setStatusMsg('Delete error: ' + (fbErr.response?.data?.message || fbErr.message));
+                                            return;
+                                          }
+                                        }
                                         setStatusMsg('Delete error: ' + (err.response?.data?.message || err.message));
                                       }
                                     }
