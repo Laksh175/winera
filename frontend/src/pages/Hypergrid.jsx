@@ -105,7 +105,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
   } else if (text.toLowerCase().includes('is hypergrid a smart') || text.toLowerCase().includes('investment for your venue')) {
     text = "Is Hypergrid a Smart <br/>*Investment for Your Venue?*";
   } else if (text.toLowerCase().includes('hypergrid game') && text.toLowerCase().includes('supplier')) {
-    text = "*Hypergrid Game* <br/>Supplier in India";
+    text = "*Hypergrid Game* Supplier<br/>in India";
   }
 
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
@@ -252,7 +252,7 @@ export default function Hypergrid({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game* <br/>Supplier in India", '#38bdf8')}
+                {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game* Supplier<br/>in India", '#38bdf8')}
               </h2>
             </div>
 

@@ -205,7 +205,7 @@ const defaultHypergridHero = {
 };
 
 const defaultHypergridIntro = {
-  title: '*Hypergrid Game* <br/>Supplier in India',
+  title: '*Hypergrid Game* Supplier<br/>in India',
   desc: "India's trusted Hypergrid game supplier commercial-grade interactive LED floor systems, installed and serviced by our own team across 50+ cities.",
   buttonText: 'Get A Quote',
   buttonLink: 'https://wa.me/919428989488',
@@ -10121,7 +10121,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue, and use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
                 <input
                   type="text"
-                  value={formData.bumpercarIntro?.title || '*Bumper Car*<br/>Manufacturer in India'}
+                  value={formData.bumpercarIntro?.title || '*Bumper Car* Manufacturer<br/>in India'}
                   onChange={(e) => handleFieldChange('bumpercarIntro', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />

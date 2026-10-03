@@ -353,7 +353,13 @@ export default function BumperCar({ siteData }) {
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.bumpercarIntro?.title, "*Bumper Car*<br/>Manufacturer in India", '#38bdf8')}
+                {renderTitleMarkup(
+                  (siteData?.bumpercarIntro?.title === "*Bumper Car*<br/>Manufacturer in India" || siteData?.bumpercarIntro?.title === "*Bumper Car* <br/> Manufacturer in India" || !siteData?.bumpercarIntro?.title)
+                    ? "*Bumper Car* Manufacturer<br/>in India"
+                    : siteData?.bumpercarIntro?.title,
+                  "*Bumper Car* Manufacturer<br/>in India",
+                  '#38bdf8'
+                )}
               </h2>
             </div>
 
