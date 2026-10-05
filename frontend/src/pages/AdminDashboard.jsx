@@ -2135,14 +2135,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         gallery4: item.gallery4 || '',
         videoUrl: item.videoUrl || knownDefault.videoUrl || 'https://youtube.com',
         quoteUrl: item.quoteUrl || knownDefault.quoteUrl || 'https://wa.me/919428989488',
-        feature1Title: item.feature1Title || '12+ Years of Expertise',
-        feature1Desc: item.feature1Desc || 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.',
-        feature2Title: item.feature2Title || 'Quality & Safety Standards',
-        feature2Desc: item.feature2Desc || 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.',
-        feature3Title: item.feature3Title || 'ROI-First Approach',
-        feature3Desc: item.feature3Desc || 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.',
-        feature4Title: item.feature4Title || 'Reliable Pan-India Service',
-        feature4Desc: item.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.'
+        feature1Title: item.feature1Title !== undefined ? item.feature1Title : (knownDefault.feature1Title || '12+ Years of Expertise'),
+        feature1Desc: item.feature1Desc !== undefined ? item.feature1Desc : (knownDefault.feature1Desc || 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.'),
+        feature2Title: item.feature2Title !== undefined ? item.feature2Title : (knownDefault.feature2Title || 'Quality & Safety Standards'),
+        feature2Desc: item.feature2Desc !== undefined ? item.feature2Desc : (knownDefault.feature2Desc || 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.'),
+        feature3Title: item.feature3Title !== undefined ? item.feature3Title : (knownDefault.feature3Title || 'ROI-First Approach'),
+        feature3Desc: item.feature3Desc !== undefined ? item.feature3Desc : (knownDefault.feature3Desc || 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.'),
+        feature4Title: item.feature4Title !== undefined ? item.feature4Title : (knownDefault.feature4Title || 'Reliable Pan-India Service'),
+        feature4Desc: item.feature4Desc !== undefined ? item.feature4Desc : (knownDefault.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.')
       };
 
       setModalItemData({ ...defaultArcadeItem, ...item });
@@ -2499,14 +2499,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         height: modalItemData.height || '2490 mm',
         videoUrl: modalItemData.videoUrl || '',
         quoteUrl: modalItemData.quoteUrl || 'https://wa.me/919428989488',
-        feature1Title: modalItemData.feature1Title || '12+ Years of Expertise',
-        feature1Desc: modalItemData.feature1Desc || 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.',
-        feature2Title: modalItemData.feature2Title || 'Quality & Safety Standards',
-        feature2Desc: modalItemData.feature2Desc || 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.',
-        feature3Title: modalItemData.feature3Title || 'ROI-First Approach',
-        feature3Desc: modalItemData.feature3Desc || 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.',
-        feature4Title: modalItemData.feature4Title || 'Reliable Pan-India Service',
-        feature4Desc: modalItemData.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.'
+        feature1Title: modalItemData.feature1Title !== undefined ? modalItemData.feature1Title : '12+ Years of Expertise',
+        feature1Desc: modalItemData.feature1Desc !== undefined ? modalItemData.feature1Desc : 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.',
+        feature2Title: modalItemData.feature2Title !== undefined ? modalItemData.feature2Title : 'Quality & Safety Standards',
+        feature2Desc: modalItemData.feature2Desc !== undefined ? modalItemData.feature2Desc : 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.',
+        feature3Title: modalItemData.feature3Title !== undefined ? modalItemData.feature3Title : 'ROI-First Approach',
+        feature3Desc: modalItemData.feature3Desc !== undefined ? modalItemData.feature3Desc : 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.',
+        feature4Title: modalItemData.feature4Title !== undefined ? modalItemData.feature4Title : 'Reliable Pan-India Service',
+        feature4Desc: modalItemData.feature4Desc !== undefined ? modalItemData.feature4Desc : 'Our own team installs and supports every project across 50+ cities on time, every time.'
       };
 
       if (modalMode === 'add') {
@@ -5770,7 +5770,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     gap: '20px'
                   }}>
                     {filteredCards.map((card, idx) => {
-                      const realIdx = cardsList.findIndex(c => (c.slug && card.slug && c.slug === card.slug) || (c.title && card.title && c.title === card.title) || c === card);
+                      const realIdx = cardsList.indexOf(card) !== -1 
+                        ? cardsList.indexOf(card) 
+                        : cardsList.findIndex(c => (c._id && card._id && c._id === card._id) || (c.slug && card.slug && c.slug !== 'new-arcade-game' && c.slug === card.slug) || (c.title && card.title && c.title === card.title));
                       const displayTitle = card.name || card.title || "Arcade Machine";
                       const displayImg = getAdminValidImageUrl(
                         card.imageUrl || card.img || arcadeProductImageMap[displayTitle] || arcadeProductImageMap[card.title] || arcadeProductImageMap[card.name],
@@ -22062,11 +22064,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                     <div>
-                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Category Name</label>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Category Name (Specification)</label>
                       <input
                         type="text"
-                        value={modalItemData.specsCategory || modalItemData.category || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, specsCategory: e.target.value, category: e.target.value }))}
+                        value={modalItemData.specsCategory !== undefined ? modalItemData.specsCategory : (modalItemData.category || '')}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, specsCategory: e.target.value }))}
                         placeholder="e.g. Bike Racing Game"
                         style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />

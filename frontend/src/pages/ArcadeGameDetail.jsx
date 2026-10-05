@@ -343,23 +343,23 @@ export default function ArcadeGameDetail({ siteData }) {
     features: [
       {
         num: "1.",
-        title: cmsFoundCard?.feature1Title || "12+ Years of Expertise",
-        desc: cmsFoundCard?.feature1Desc || "Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014."
+        title: (cmsFoundCard?.feature1Title !== undefined && cmsFoundCard?.feature1Title !== '') ? cmsFoundCard.feature1Title : (defaultProduct.features?.[0]?.title || "12+ Years of Expertise"),
+        desc: (cmsFoundCard?.feature1Desc !== undefined && cmsFoundCard?.feature1Desc !== '') ? cmsFoundCard.feature1Desc : (defaultProduct.features?.[0]?.desc || "Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.")
       },
       {
         num: "2.",
-        title: cmsFoundCard?.feature2Title || "Quality & Safety Standards",
-        desc: cmsFoundCard?.feature2Desc || "Every product sourced from global manufacturers and tested for commercial-grade safety and durability."
+        title: (cmsFoundCard?.feature2Title !== undefined && cmsFoundCard?.feature2Title !== '') ? cmsFoundCard.feature2Title : (defaultProduct.features?.[1]?.title || "Quality & Safety Standards"),
+        desc: (cmsFoundCard?.feature2Desc !== undefined && cmsFoundCard?.feature2Desc !== '') ? cmsFoundCard.feature2Desc : (defaultProduct.features?.[1]?.desc || "Every product sourced from global manufacturers and tested for commercial-grade safety and durability.")
       },
       {
         num: "3.",
-        title: cmsFoundCard?.feature3Title || "ROI-First Approach",
-        desc: cmsFoundCard?.feature3Desc || "Every project begins with a free ROI report, revenue and break-even calculated before you invest."
+        title: (cmsFoundCard?.feature3Title !== undefined && cmsFoundCard?.feature3Title !== '') ? cmsFoundCard.feature3Title : (defaultProduct.features?.[2]?.title || "ROI-First Approach"),
+        desc: (cmsFoundCard?.feature3Desc !== undefined && cmsFoundCard?.feature3Desc !== '') ? cmsFoundCard.feature3Desc : (defaultProduct.features?.[2]?.desc || "Every project begins with a free ROI report, revenue and break-even calculated before you invest.")
       },
       {
         num: "4.",
-        title: cmsFoundCard?.feature4Title || "Reliable Pan-India Service",
-        desc: cmsFoundCard?.feature4Desc || "Our own team installs and supports every project across 50+ cities on time, every time."
+        title: (cmsFoundCard?.feature4Title !== undefined && cmsFoundCard?.feature4Title !== '') ? cmsFoundCard.feature4Title : (defaultProduct.features?.[3]?.title || "Reliable Pan-India Service"),
+        desc: (cmsFoundCard?.feature4Desc !== undefined && cmsFoundCard?.feature4Desc !== '') ? cmsFoundCard.feature4Desc : (defaultProduct.features?.[3]?.desc || "Our own team installs and supports every project across 50+ cities on time, every time.")
       }
     ]
   };
@@ -569,8 +569,13 @@ export default function ArcadeGameDetail({ siteData }) {
 
                 {/* Title */}
                 <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                  {product.nameBase || "Parkour Motor "}
-                  <span style={{ color: '#38bdf8' }}>{product.nameHighlight || "II (DX)"}</span>
+                  {product.nameBase || product.name || "Parkour Motor "}
+                  {product.nameHighlight ? (
+                    <>
+                      {(!String(product.nameBase || product.name || '').endsWith(' ') && !String(product.nameHighlight || '').startsWith(' ')) ? ' ' : ''}
+                      <span style={{ color: '#38bdf8' }}>{product.nameHighlight}</span>
+                    </>
+                  ) : null}
                 </h2>
 
                 {/* Specification Long Banner */}
