@@ -755,7 +755,15 @@ export default function ArcadeGame({ siteData }) {
                   'ocha air hockey', 'ocha-air-hockey',
                   'aero x air hockey', 'aero-x-air-hockey',
                   'toy story plush claw machine', 'toy-story-plush-claw-machine',
-                  'lucky catcher crane machine', 'lucky-catcher-crane-machine'
+                  'lucky catcher crane machine', 'lucky-catcher-crane-machine',
+                  'super speed mini racer', 'super-speed-mini-racer',
+                  'happy carousel kiddy ride', 'happy-carousel-kiddy-ride',
+                  'ultimate hammer king pro', 'ultimate-hammer-king-pro',
+                  'dragon boxer punching machine', 'dragon-boxer-punching-machine',
+                  'jurassic motion arcade shooter', 'jurassic-motion-arcade-shooter',
+                  'scarlet dawn dual gun shooter', 'scarlet-dawn-dual-gun-shooter',
+                  'outrun 2 supercar simulator', 'outrun-2-supercar-simulator',
+                  'speed driver 5 twin motion', 'speed-driver-5-twin-motion'
                 ]);
 
                 const deletedSlugs = new Set((siteData?.arcadeCategories?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
@@ -1098,7 +1106,15 @@ export default function ArcadeGame({ siteData }) {
               'ocha air hockey', 'ocha-air-hockey',
               'aero x air hockey', 'aero-x-air-hockey',
               'toy story plush claw machine', 'toy-story-plush-claw-machine',
-              'lucky catcher crane machine', 'lucky-catcher-crane-machine'
+              'lucky catcher crane machine', 'lucky-catcher-crane-machine',
+              'super speed mini racer', 'super-speed-mini-racer',
+              'happy carousel kiddy ride', 'happy-carousel-kiddy-ride',
+              'ultimate hammer king pro', 'ultimate-hammer-king-pro',
+              'dragon boxer punching machine', 'dragon-boxer-punching-machine',
+              'jurassic motion arcade shooter', 'jurassic-motion-arcade-shooter',
+              'scarlet dawn dual gun shooter', 'scarlet-dawn-dual-gun-shooter',
+              'outrun 2 supercar simulator', 'outrun-2-supercar-simulator',
+              'speed driver 5 twin motion', 'speed-driver-5-twin-motion'
             ]);
 
             const deletedSlugs = new Set((siteData?.arcadeCategories?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
