@@ -5,6 +5,7 @@ import { useNavigate, Navigate, Link } from 'react-router-dom';
 import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
+import allArcadeProducts from '../data/allArcadeProducts.json';
 import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, X, Star, Video, Trophy, Sparkles, Calculator, Menu } from 'lucide-react';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
@@ -152,6 +153,11 @@ import welcomeWineraImg from '../assets/welcome-to-winera.webp';
 import aboutHeroBg from '../assets/about-us-banner.webp';
 
 const arcadeProductImageMap = {
+  "Astrology Cointopia": arcadeHall,
+  "Astrology Capsule Version": arcadeBoy,
+  "Basketball Star": superAirHockeyImg,
+  "Pinball Storm": aeroXAirHockeyImg,
+  "Larva Kids Ride": arcadeBoy,
   "Parkour Motor II (DX)": arcadegamesImg,
   "MANX TT 32\"": bikeArcade,
   "Super Air Hockey": superAirHockeyImg,
@@ -159,7 +165,26 @@ const arcadeProductImageMap = {
   "Dazzling Air Hockey - Multi Puck": dazzlingAirHockeyImg,
   "Aurora Air Hockey": auroraAirHockeyImg,
   "Ocha Air Hockey": ochaAirHockeyImg,
-  "Aero X Air Hockey": aeroXAirHockeyImg
+  "Aero X Air Hockey": aeroXAirHockeyImg,
+  "Happy Carousel Kiddy Ride": arcadeBoy,
+  "Super Speed Mini Racer": bikeArcade,
+  "Speed Driver 5 Twin Motion": arcadeBoy,
+  "OutRun 2 Supercar Simulator": bikeArcade,
+  "Scarlet Dawn Dual Gun Shooter": arcadeHall,
+  "Jurassic Motion Arcade Shooter": arcadeBoy,
+  "Dragon Boxer Punching Machine": arcadeHall,
+  "Ultimate Hammer King Pro": arcadeBoy,
+  "Toy Story Plush Claw Machine": arcadeHall,
+  "Lucky Catcher Crane Machine": arcadeBoy,
+  "Claw Machine": arcadeHall,
+  "Redemption Game": superAirHockeyImg,
+  "Bike Racing Game": bikeArcade,
+  "Car Racing Game": arcadegamesImg,
+  "Shooting Games": arcadeHall,
+  "VR Games": arcadeBoy,
+  "Kiddy Ride": arcadeBoy,
+  "Strength Based Games": arcadeHall,
+  "Arcade Games": arcadegamesImg
 };
 
 const getAdminValidImageUrl = (url, fallback = bikeArcade) => {
@@ -1546,6 +1571,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const [adminSelectedCat, setAdminSelectedCat] = useState('Sports Simulators');
   const [adminProjectFilterCat, setAdminProjectFilterCat] = useState('All');
   const [newCategoryInput, setNewCategoryInput] = useState('');
+  const [adminArcadeSearch, setAdminArcadeSearch] = useState('');
+  const [adminArcadePage, setAdminArcadePage] = useState(1);
 
   // Modal State for Add / Edit Operations
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -5629,54 +5656,32 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
           {/* ARCADE GAME CATEGORIES & PRODUCTS MANAGER FORM */}
           {activeSection === 'arcadeCategories' && (() => {
-            const defaultArcadeCategories = [
+            const defaultArcadeCategories = allArcadeProducts.categoriesList || [
               "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
-              "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
+              "Bike Racing Game", "Car Racing Game", "Shooting Games", "VR Games", "Strength Based Games"
             ];
 
-            const defaultArcadeCards = [
-              // Astrology / Claw / Prize Machines
-              { title: "Astrology Cointopia", name: "Astrology Cointopia", nameBase: "Astrology ", nameHighlight: "Cointopia", category: "Claw Machine", tag: "Popular", slug: "astrology-cointopia", desc: "Commercial Astrology Cointopia coin & capsule redemption machine.", img: arcadeHall },
-              { title: "Astrology Capsule Version", name: "Astrology Capsule Version", nameBase: "Astrology Capsule ", nameHighlight: "Version", category: "Claw Machine", tag: "Hot Seller", slug: "astrology-capsule-version", desc: "Interactive capsule prize gashapon vending arcade machine.", img: arcadeBoy },
-              { title: "Toy Story Plush Claw Machine", name: "Toy Story Plush Claw Machine", category: "Claw Machine", tag: "Hot Seller", slug: "toy-story-plush-claw-machine", desc: "Commercial grade plush prize claw crane game.", img: arcadeHall },
-              { title: "Lucky Catcher Crane Machine", name: "Lucky Catcher Crane Machine", category: "Claw Machine", tag: "Popular", slug: "lucky-catcher-crane-machine", desc: "High earning LED claw machine for malls and gaming zones.", img: arcadeBoy },
+            const masterCards = allArcadeProducts.cards || [];
 
-              // Sports & Redemption Games
-              { title: "Basketball Star", name: "Basketball Star", category: "Redemption Game", tag: "Trending", slug: "basketball-star", desc: "Commercial LED basketball hoop arcade sports machine.", img: superAirHockeyImg },
-              { title: "Pinball Storm", name: "Pinball Storm", category: "Arcade Games", tag: "Classic", slug: "pinball-storm", desc: "Digital LED commercial pinball machine with high score tracking.", img: aeroXAirHockeyImg },
-              { title: "Super Air Hockey", name: "Super Air Hockey", category: "Redemption Game", tag: "Popular", slug: "super-air-hockey", desc: "Commercial grade heavy-duty air hockey table with digital score display.", img: superAirHockeyImg },
-              { title: "Puck Carnival Air Hockey", name: "Puck Carnival Air Hockey", category: "Redemption Game", tag: "Hot Seller", slug: "puck-carnival-air-hockey", desc: "Multi-puck carnival style air hockey machine for high footfall game zones.", img: puckCarnivalAirHockeyImg },
-              { title: "Dazzling Air Hockey - Multi Puck", name: "Dazzling Air Hockey - Multi Puck", category: "Redemption Game", tag: "High Revenue", slug: "dazzling-air-hockey-multi-puck", desc: "LED illuminated stainless steel air hockey table with sound effects.", img: dazzlingAirHockeyImg },
-              { title: "Aurora Air Hockey", name: "Aurora Air Hockey", category: "Redemption Game", tag: "Classic", slug: "aurora-air-hockey", desc: "High-power air blower tournament air hockey table with durable aluminum rails.", img: auroraAirHockeyImg },
+            const legacyMockups = new Set([
+              'super air hockey', 'super-air-hockey',
+              'puck carnival air hockey', 'puck-carnival-air-hockey',
+              'dazzling air hockey - multi puck', 'dazzling-air-hockey-multi-puck', 'dazzling-air-hockey',
+              'aurora air hockey', 'aurora-air-hockey',
+              'ocha air hockey', 'ocha-air-hockey',
+              'aero x air hockey', 'aero-x-air-hockey',
+              'toy story plush claw machine', 'toy-story-plush-claw-machine',
+              'lucky catcher crane machine', 'lucky-catcher-crane-machine'
+            ]);
 
-              // Bike Racing Games
-              { title: "Parkour Motor II (DX)", name: "Parkour Motor II (DX)", nameBase: "Parkour Motor ", nameHighlight: "II (DX)", category: "Bike Racing Game", tag: "Popular", slug: "parkour-motor-2-dx", desc: "High-Performance Dual Player Commercial Motorbike Racing Simulator.", img: bikeArcade },
-              { title: "MANX TT 32\"", name: "MANX TT 32\"", nameBase: "MANX TT ", nameHighlight: "32\"", category: "Bike Racing Game", tag: "Classic", slug: "manx-tt-32", desc: "Classic High-Velocity Arcade Motorcycle Simulator.", img: bikeArcade },
-
-              // Kids & Kiddy Rides
-              { title: "Larva Kids Ride", name: "Larva Kids Ride", category: "Kiddy Ride", tag: "Kids Favorite", slug: "larva-kids-ride", desc: "Popular Larva animated coin-operated motion kiddy ride.", img: arcadeBoy },
-              { title: "Happy Carousel Kiddy Ride", name: "Happy Carousel Kiddy Ride", category: "Kiddy Ride", tag: "Family", slug: "happy-carousel-kiddy-ride", desc: "Interactive coin-operated carousel ride for kids and toddlers.", img: arcadeBoy },
-              { title: "Super Speed Mini Racer", name: "Super Speed Mini Racer", category: "Kiddy Ride", tag: "Featured", slug: "super-speed-mini-racer", desc: "Safe, colorful mini racing motion ride for children.", img: bikeArcade },
-
-              // Car Racing Games
-              { title: "Speed Driver 5 Twin Motion", name: "Speed Driver 5 Twin Motion", category: "Car Racing Game", tag: "Trending", slug: "speed-driver-5-twin-motion", desc: "Motion force-feedback twin car racing arcade machine with HD screen.", img: arcadeBoy },
-              { title: "OutRun 2 Supercar Simulator", name: "OutRun 2 Supercar Simulator", category: "Car Racing Game", tag: "Classic", slug: "outrun-2-supercar-simulator", desc: "Ultra-dynamic force feedback supercar racing simulator.", img: bikeArcade },
-
-              // Shooting Games
-              { title: "Scarlet Dawn Dual Gun Shooter", name: "Scarlet Dawn Dual Gun Shooter", category: "Shooting Games", tag: "Action", slug: "scarlet-dawn-dual-gun-shooter", desc: "Two-player recoil force arcade gun shooter with immersive sound.", img: arcadeHall },
-              { title: "Jurassic Motion Arcade Shooter", name: "Jurassic Motion Arcade Shooter", category: "Shooting Games", tag: "Top Rated", slug: "jurassic-motion-arcade-shooter", desc: "Full motion theater arcade shooting game machine.", img: arcadeBoy },
-
-              // Strength Based Games
-              { title: "Dragon Boxer Punching Machine", name: "Dragon Boxer Punching Machine", category: "Strength Based Games", tag: "Strength", slug: "dragon-boxer-punching-machine", desc: "Commercial boxing punch strength tester arcade game.", img: arcadeHall },
-              { title: "Ultimate Hammer King Pro", name: "Ultimate Hammer King Pro", category: "Strength Based Games", tag: "Popular", slug: "ultimate-hammer-king-pro", desc: "High power hammer strike carnival arcade machine.", img: arcadeBoy },
-
-              // General Arcade Games
-              { title: "Ocha Air Hockey", name: "Ocha Air Hockey", category: "Arcade Games", tag: "Featured", slug: "ocha-air-hockey", desc: "Compact & stylish commercial air hockey machine for malls & FECs.", img: ochaAirHockeyImg },
-              { title: "Aero X Air Hockey", name: "Aero X Air Hockey", category: "Arcade Games", tag: "Interactive", slug: "aero-x-air-hockey", desc: "Next-gen arcade air hockey table with multi-ticket dispenser system.", img: aeroXAirHockeyImg }
-            ];
+            const deletedSlugs = new Set((formData?.arcadeCategories?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
 
             let categoriesList = defaultArcadeCategories;
-            let cardsList = defaultArcadeCards;
+            let cardsList = masterCards.filter(mc => {
+              const k1 = (mc.slug || '').toLowerCase().trim();
+              const k2 = (mc.name || mc.title || '').toLowerCase().trim();
+              return !deletedSlugs.has(k1) && !deletedSlugs.has(k2) && !legacyMockups.has(k1) && !legacyMockups.has(k2);
+            });
 
             if (formData.arcadeCategories) {
               let rawCards = null;
@@ -5687,18 +5692,49 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               }
 
               if (rawCards) {
-                cardsList = rawCards;
+                const cmsMap = new Map();
+                rawCards.forEach(c => {
+                  const k1 = (c.slug || '').toLowerCase().trim();
+                  const k2 = (c.name || c.title || '').toLowerCase().trim();
+                  if (k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2)) cmsMap.set(k1, c);
+                });
+                cardsList = cardsList.map(mc => {
+                  const k = (mc.slug || mc.name || mc.title || '').toLowerCase().trim();
+                  return cmsMap.has(k) ? { ...mc, ...cmsMap.get(k) } : mc;
+                });
+                rawCards.forEach(cc => {
+                  const k1 = (cc.slug || '').toLowerCase().trim();
+                  const k2 = (cc.name || cc.title || '').toLowerCase().trim();
+                  if (k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2) && !cardsList.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
+                    cardsList.unshift(cc);
+                  }
+                });
               }
 
-              if (Array.isArray(formData.arcadeCategories.categoriesList)) {
+              if (Array.isArray(formData.arcadeCategories.categoriesList) && formData.arcadeCategories.categoriesList.length > 0) {
                 categoriesList = formData.arcadeCategories.categoriesList;
               }
             }
 
             const activeFilterCat = adminProjectFilterCat || "All";
-            const filteredCards = activeFilterCat === "All"
+            const categoryFiltered = activeFilterCat === "All"
               ? cardsList
               : cardsList.filter(item => (item.category || item.tag || "").toLowerCase().includes(activeFilterCat.toLowerCase()));
+
+            const searchFiltered = adminArcadeSearch.trim()
+              ? categoryFiltered.filter(item => {
+                  const q = adminArcadeSearch.toLowerCase().trim();
+                  const name = (item.name || item.title || "").toLowerCase();
+                  const cat = (item.category || item.tag || "").toLowerCase();
+                  return name.includes(q) || cat.includes(q);
+                })
+              : categoryFiltered;
+
+            const adminItemsPerPage = 24;
+            const adminTotalPages = Math.max(1, Math.ceil(searchFiltered.length / adminItemsPerPage));
+            const validAdminPage = Math.min(adminArcadePage, adminTotalPages);
+            const startAdminIdx = (validAdminPage - 1) * adminItemsPerPage;
+            const filteredCards = searchFiltered.slice(startAdminIdx, startAdminIdx + adminItemsPerPage);
 
             const handleAddArcadeCategory = async () => {
               let val = (newCategoryInput || '').trim();
@@ -5726,7 +5762,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div className="winera-admin-flex-header" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
                   <div>
                     <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>Discover our Products (Categories & Cards Manager)</h3>
-                    <p style={{ fontSize: '12.5px', color: '#64748b', margin: '4px 0 0' }}>Manage category tabs sidebar, add new products, edit product photos & details.</p>
+                    <p style={{ fontSize: '12.5px', color: '#64748b', margin: '4px 0 0' }}>Manage category tabs sidebar, add new products, edit product photos & details across all {cardsList.length} products.</p>
                   </div>
                   <button
                     onClick={() => openModal('add', null, null, 'arcadeCategories')}
@@ -5736,14 +5772,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </button>
                 </div>
 
-                {/* CATEGORY TABS & MANAGEMENT BAR */}
+                {/* CATEGORY TABS, SEARCH & MANAGEMENT BAR */}
                 <div style={{ background: '#f8fafc', padding: '18px 22px', borderRadius: '20px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
                     <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
                       <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Filter Category:</label>
                       <select
                         value={activeFilterCat}
-                        onChange={(e) => setAdminProjectFilterCat(e.target.value)}
+                        onChange={(e) => {
+                          setAdminProjectFilterCat(e.target.value);
+                          setAdminArcadePage(1);
+                        }}
                         style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700', background: '#ffffff', color: '#0284c7', maxWidth: '100%' }}
                       >
                         <option value="All">All Categories ({cardsList.length})</option>
@@ -5754,6 +5793,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           );
                         })}
                       </select>
+
+                      {/* Search in Admin */}
+                      <input
+                        type="text"
+                        placeholder="Search by game name..."
+                        value={adminArcadeSearch}
+                        onChange={(e) => {
+                          setAdminArcadeSearch(e.target.value);
+                          setAdminArcadePage(1);
+                        }}
+                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', width: '220px', maxWidth: '100%' }}
+                      />
                     </div>
 
                     {/* Add New Category Control */}
@@ -5769,7 +5820,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             handleAddArcadeCategory();
                           }
                         }}
-                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', width: '220px', maxWidth: '100%' }}
+                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', width: '200px', maxWidth: '100%' }}
                       />
                       <button
                         type="button"
@@ -5797,7 +5848,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         gap: '6px',
                         cursor: 'pointer'
                       }}
-                        onClick={() => setAdminProjectFilterCat(cat)}
+                        onClick={() => {
+                          setAdminProjectFilterCat(cat);
+                          setAdminArcadePage(1);
+                        }}
                       >
                         {cat}
                         {categoriesList.length > 1 && (
@@ -5824,8 +5878,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
-                      User-Side Style Product Cards Grid ({filteredCards.length} Items) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Card Image Recommended: 600 × 400 px (3:2) or 600 × 600 px (1:1)</span>
+                      User-Side Style Product Cards Grid ({searchFiltered.length} Total Matching) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Card Image: 1:1 Square</span>
                     </h4>
+                    {adminTotalPages > 1 && (
+                      <div style={{ fontSize: '13px', fontWeight: '700', color: '#64748b' }}>
+                        Page {validAdminPage} of {adminTotalPages}
+                      </div>
+                    )}
                   </div>
 
                   <div style={{
@@ -5868,12 +5927,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             marginBottom: '14px',
                             background: '#ffffff',
                             boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
-                            border: '4px solid #ffffff'
+                            border: '4px solid #ffffff',
+                            padding: '10px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
                           }}>
                             <img
                               src={displayImg}
                               alt={displayTitle}
-                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                             />
                           </div>
 
@@ -5915,33 +5978,24 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                   onConfirm: async () => {
                                     const targetIndex = realIdx !== -1 ? realIdx : idx;
                                     const newCards = cardsList.filter((_, i) => i !== targetIndex);
-                                    const updated = { categoriesList, cards: newCards };
+                                    const targetSlug = (card.slug || card.title || card.name || '').toLowerCase().trim();
+                                    const currentDeleted = Array.isArray(formData?.arcadeCategories?.deletedSlugs) ? formData.arcadeCategories.deletedSlugs : [];
+                                    const updatedDeletedSlugs = Array.from(new Set([...currentDeleted, targetSlug]));
+
+                                    const updated = { 
+                                      categoriesList, 
+                                      cards: newCards,
+                                      deletedSlugs: updatedDeletedSlugs
+                                    };
                                     setFormData(prev => ({ ...prev, arcadeCategories: updated }));
 
                                     setLoadingSection('arcadeCategories');
                                     try {
-                                      await mutateContentItem({
-                                        sectionKey: 'arcadeCategories',
-                                        action: 'delete',
-                                        matchKey: 'slug',
-                                        matchValue: card.slug || card.title || card.name,
-                                        index: targetIndex
-                                      }, admin.token);
+                                      await persistSectionToDatabase('arcadeCategories', updated);
                                       await refreshContent();
                                       setStatusMsg(`Product '${displayTitle}' deleted successfully!`);
                                     } catch (err) {
                                       console.error("Delete arcade card error:", err);
-                                      if (err.response?.status === 404) {
-                                        try {
-                                          await persistSectionToDatabase('arcadeCategories', updated);
-                                          await refreshContent();
-                                          setStatusMsg(`Product '${displayTitle}' deleted successfully!`);
-                                          return;
-                                        } catch (fbErr) {
-                                          setStatusMsg('Delete error: ' + (fbErr.response?.data?.message || fbErr.message));
-                                          return;
-                                        }
-                                      }
                                       setStatusMsg('Delete error: ' + (err.response?.data?.message || err.message));
                                     } finally {
                                       setLoadingSection('');
@@ -5958,6 +6012,47 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       );
                     })}
                   </div>
+
+                  {/* Admin Pagination Controls */}
+                  {adminTotalPages > 1 && (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', marginTop: '20px' }}>
+                      <button
+                        onClick={() => setAdminArcadePage(p => Math.max(1, p - 1))}
+                        disabled={validAdminPage <= 1}
+                        style={{
+                          background: validAdminPage <= 1 ? '#e2e8f0' : '#0284c7',
+                          color: validAdminPage <= 1 ? '#94a3b8' : '#ffffff',
+                          border: 'none',
+                          padding: '8px 16px',
+                          borderRadius: '10px',
+                          fontWeight: '800',
+                          fontSize: '13px',
+                          cursor: validAdminPage <= 1 ? 'not-allowed' : 'pointer'
+                        }}
+                      >
+                        Previous
+                      </button>
+                      <span style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>
+                        Page {validAdminPage} of {adminTotalPages} ({searchFiltered.length} items)
+                      </span>
+                      <button
+                        onClick={() => setAdminArcadePage(p => Math.min(adminTotalPages, p + 1))}
+                        disabled={validAdminPage >= adminTotalPages}
+                        style={{
+                          background: validAdminPage >= adminTotalPages ? '#e2e8f0' : '#0284c7',
+                          color: validAdminPage >= adminTotalPages ? '#94a3b8' : '#ffffff',
+                          border: 'none',
+                          padding: '8px 16px',
+                          borderRadius: '10px',
+                          fontWeight: '800',
+                          fontSize: '13px',
+                          cursor: validAdminPage >= adminTotalPages ? 'not-allowed' : 'pointer'
+                        }}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             );

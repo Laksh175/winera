@@ -141,7 +141,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
           position: 'relative',
           width: '100%',
           maxWidth: '330px',
-          height: showCta ? '370px' : '345px',
+          height: showCta ? '435px' : '390px',
           perspective: '1000px',
           display: 'flex',
           justifyContent: 'center',
@@ -199,7 +199,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
                 top: 0,
                 left: 0,
                 right: 0,
-                height: showCta ? '352px' : '325px',
+                height: showCta ? '418px' : '375px',
                 background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 80%, #ffffff 100%)',
                 borderRadius: '26px',
                 padding: '14px',
@@ -223,19 +223,23 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
               {/* Image Container with Glossy Inner Border */}
               <div style={{
                 width: '100%',
-                height: '222px',
+                aspectRatio: '1 / 1',
                 borderRadius: '20px',
                 overflow: 'hidden',
                 background: '#ffffff',
                 boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
                 border: '3.5px solid #ffffff',
-                position: 'relative'
+                position: 'relative',
+                padding: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}>
                 <WineraImage
                   src={card.imageUrl || card.img}
                   alt={card.name || card.title}
-                  style={{ width: '100%', height: '100%' }}
-                  imgStyle={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  imgStyle={{ width: '100%', height: '100%', objectFit: 'contain' }}
                 />
                 
                 {/* Category Badge on Card */}

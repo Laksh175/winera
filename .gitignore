@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.local
+.DS_Store
+dist/
+build/
+*.xls
+*.xlsx
+*.zip
+*.tar.gz
+ARCADE BOTTOM PRICE new.xls
+ARCADE_CATALOG_FAST.xlsx
+ARCADE_EXCEL_CATALOG.html
+backend/node_modules/
+frontend/node_modules/
+.venv/

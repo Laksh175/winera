@@ -44,6 +44,7 @@ import testiOwner from '../assets/testi-owner.webp';
 import { Gamepad2, Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight, Search, X } from 'lucide-react';
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 import ArcadeSwipeCardDeck from '../components/ArcadeSwipeCardDeck';
+import allArcadeProducts from '../data/allArcadeProducts.json';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -132,16 +133,9 @@ export default function ArcadeGame({ siteData }) {
 
   const { header, footer } = siteData;
 
-  const arcadeGames = Array.isArray(siteData?.arcadeCategories) && siteData.arcadeCategories.length > 0
-    ? siteData.arcadeCategories
-    : [
-        { title: "Super Air Hockey", name: "Super Air Hockey", category: "Arcade Games", tag: "Popular", desc: "Commercial grade heavy-duty air hockey table with digital score display.", img: superAirHockeyImg },
-        { title: "Puck Carnival Air Hockey", name: "Puck Carnival Air Hockey", category: "Arcade Games", tag: "Hot Seller", desc: "Multi-puck carnival style air hockey machine for high footfall game zones.", img: puckCarnivalAirHockeyImg },
-        { title: "Dazzling Air Hockey - Multi Puck", name: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games", tag: "High Revenue", desc: "LED illuminated stainless steel air hockey table with sound effects.", img: dazzlingAirHockeyImg },
-        { title: "Aurora Air Hockey", name: "Aurora Air Hockey", category: "Arcade Games", tag: "Classic", desc: "High-power air blower tournament air hockey table with durable aluminum rails.", img: auroraAirHockeyImg },
-        { title: "Ocha Air Hockey", name: "Ocha Air Hockey", category: "Arcade Games", tag: "Featured", desc: "Compact & stylish commercial air hockey machine for malls & FECs.", img: ochaAirHockeyImg },
-        { title: "Aero X Air Hockey", name: "Aero X Air Hockey", category: "Arcade Games", tag: "Interactive", desc: "Next-gen arcade air hockey table with multi-ticket dispenser system.", img: aeroXAirHockeyImg }
-      ];
+  const arcadeGames = Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0
+    ? siteData.arcadeCategories.cards
+    : (allArcadeProducts.cards || []);
 
   const arcadeFaqs = Array.isArray(siteData?.arcadeFaqs) && siteData.arcadeFaqs.length > 0
     ? siteData.arcadeFaqs
@@ -547,10 +541,10 @@ export default function ArcadeGame({ siteData }) {
               }}>
                 {((Array.isArray(siteData?.arcadeCategories?.categoriesList) && siteData.arcadeCategories.categoriesList.length > 0)
                   ? siteData.arcadeCategories.categoriesList
-                  : [
+                  : (allArcadeProducts?.categoriesList || [
                     "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
-                    "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
-                  ]
+                    "Bike Racing Game", "Car Racing Game", "Shooting Games", "VR Games", "Strength Based Games"
+                  ])
                 ).map((cat, cIdx) => {
                   const isSelected = (activeCategory || "Arcade Games") === cat;
                   return (
@@ -612,7 +606,7 @@ export default function ArcadeGame({ siteData }) {
                 {(() => {
                   const availableCats = (Array.isArray(siteData?.arcadeCategories?.categoriesList) && siteData.arcadeCategories.categoriesList.length > 0)
                     ? siteData.arcadeCategories.categoriesList
-                    : [
+                    : (allArcadeProducts?.categoriesList || [
                       "Arcade Games",
                       "Claw Machine",
                       "Redemption Game",
@@ -620,8 +614,9 @@ export default function ArcadeGame({ siteData }) {
                       "Bike Racing Game",
                       "Car Racing Game",
                       "Shooting Games",
+                      "VR Games",
                       "Strength Based Games"
-                    ];
+                    ]);
 
                   const topCategory = availableCats[0] || "Arcade Games";
                   const subCategories = availableCats.slice(1);
@@ -712,31 +707,17 @@ export default function ArcadeGame({ siteData }) {
             {/* RIGHT DISPLAY AREA: PRODUCT SEARCH BAR + CARDS GRID + PAGINATION */}
             <div className="winera-products-display-area" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               {(() => {
-                const defaultProdCards = [
-                  { name: "Astrology Cointopia", title: "Astrology Cointopia", category: "Claw Machine", slug: "astrology-cointopia", img: arcadeHall },
-                  { name: "Astrology Capsule Version", title: "Astrology Capsule Version", category: "Claw Machine", slug: "astrology-capsule-version", img: arcadeBoy },
-                  { name: "Toy Story Plush Claw Machine", title: "Toy Story Plush Claw Machine", category: "Claw Machine", slug: "toy-story-plush-claw-machine", img: arcadeHall },
-                  { name: "Lucky Catcher Crane Machine", title: "Lucky Catcher Crane Machine", category: "Claw Machine", slug: "lucky-catcher-crane-machine", img: arcadeBoy },
-                  { name: "Basketball Star", title: "Basketball Star", category: "Redemption Game", slug: "basketball-star", img: superAirHockeyImg },
-                  { name: "Pinball Storm", title: "Pinball Storm", category: "Arcade Games", slug: "pinball-storm", img: aeroXAirHockeyImg },
-                  { name: "Super Air Hockey", title: "Super Air Hockey", category: "Redemption Game", slug: "super-air-hockey", img: superAirHockeyImg },
-                  { name: "Puck Carnival Air Hockey", title: "Puck Carnival Air Hockey", category: "Redemption Game", slug: "puck-carnival-air-hockey", img: puckCarnivalAirHockeyImg },
-                  { name: "Dazzling Air Hockey - Multi Puck", title: "Dazzling Air Hockey - Multi Puck", category: "Redemption Game", slug: "dazzling-air-hockey-multi-puck", img: dazzlingAirHockeyImg },
-                  { name: "Aurora Air Hockey", title: "Aurora Air Hockey", category: "Redemption Game", slug: "aurora-air-hockey", img: auroraAirHockeyImg },
-                  { name: "Parkour Motor II (DX)", title: "Parkour Motor II (DX)", category: "Bike Racing Game", slug: "parkour-motor-2-dx", img: arcadegamesImg },
-                  { name: "MANX TT 32\"", title: "MANX TT 32\"", category: "Bike Racing Game", slug: "manx-tt-32", img: bikeArcade },
-                  { name: "Larva Kids Ride", title: "Larva Kids Ride", category: "Kiddy Ride", slug: "larva-kids-ride", img: arcadeBoy },
-                  { name: "Happy Carousel Kiddy Ride", title: "Happy Carousel Kiddy Ride", category: "Kiddy Ride", slug: "happy-carousel-kiddy-ride", img: arcadeBoy },
-                  { name: "Super Speed Mini Racer", title: "Super Speed Mini Racer", category: "Kiddy Ride", slug: "super-speed-mini-racer", img: bikeArcade },
-                  { name: "Speed Driver 5 Twin Motion", title: "Speed Driver 5 Twin Motion", category: "Car Racing Game", slug: "speed-driver-5-twin-motion", img: arcadeBoy },
-                  { name: "OutRun 2 Supercar Simulator", title: "OutRun 2 Supercar Simulator", category: "Car Racing Game", slug: "outrun-2-supercar-simulator", img: bikeArcade },
-                  { name: "Scarlet Dawn Dual Gun Shooter", title: "Scarlet Dawn Dual Gun Shooter", category: "Shooting Games", slug: "scarlet-dawn-dual-gun-shooter", img: arcadeHall },
-                  { name: "Jurassic Motion Arcade Shooter", title: "Jurassic Motion Arcade Shooter", category: "Shooting Games", slug: "jurassic-motion-arcade-shooter", img: arcadeBoy },
-                  { name: "Dragon Boxer Punching Machine", title: "Dragon Boxer Punching Machine", category: "Strength Based Games", slug: "dragon-boxer-punching-machine", img: arcadeHall },
-                  { name: "Ultimate Hammer King Pro", title: "Ultimate Hammer King Pro", category: "Strength Based Games", slug: "ultimate-hammer-king-pro", img: arcadeBoy },
-                  { name: "Ocha Air Hockey", title: "Ocha Air Hockey", category: "Arcade Games", slug: "ocha-air-hockey", img: ochaAirHockeyImg },
-                  { name: "Aero X Air Hockey", title: "Aero X Air Hockey", category: "Arcade Games", slug: "aero-x-air-hockey", img: aeroXAirHockeyImg }
-                ];
+                const categoryDefaultImages = {
+                  "Claw Machine": arcadeHall,
+                  "Redemption Game": superAirHockeyImg,
+                  "Bike Racing Game": bikeArcade,
+                  "Car Racing Game": arcadegamesImg,
+                  "Shooting Games": arcadeHall,
+                  "VR Games": arcadeBoy,
+                  "Kiddy Ride": arcadeBoy,
+                  "Strength Based Games": arcadeHall,
+                  "Arcade Games": arcadegamesImg
+                };
 
                 const imageMap = {
                   "Astrology Cointopia": arcadeHall,
@@ -751,25 +732,77 @@ export default function ArcadeGame({ siteData }) {
                   "Dazzling Air Hockey - Multi Puck": dazzlingAirHockeyImg,
                   "Aurora Air Hockey": auroraAirHockeyImg,
                   "Ocha Air Hockey": ochaAirHockeyImg,
-                  "Aero X Air Hockey": aeroXAirHockeyImg
+                  "Aero X Air Hockey": aeroXAirHockeyImg,
+                  "Happy Carousel Kiddy Ride": arcadeBoy,
+                  "Super Speed Mini Racer": bikeArcade,
+                  "Speed Driver 5 Twin Motion": arcadeBoy,
+                  "OutRun 2 Supercar Simulator": bikeArcade,
+                  "Scarlet Dawn Dual Gun Shooter": arcadeHall,
+                  "Jurassic Motion Arcade Shooter": arcadeBoy,
+                  "Dragon Boxer Punching Machine": arcadeHall,
+                  "Ultimate Hammer King Pro": arcadeBoy,
+                  "Toy Story Plush Claw Machine": arcadeHall,
+                  "Lucky Catcher Crane Machine": arcadeBoy
                 };
 
-                const rawCards = (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0)
-                  ? siteData.arcadeCategories.cards
-                  : (Array.isArray(siteData?.arcadeCategories) && siteData.arcadeCategories.length > 0 ? siteData.arcadeCategories : defaultProdCards);
+                const masterCards = Array.isArray(allArcadeProducts?.cards) && allArcadeProducts.cards.length > 0
+                  ? allArcadeProducts.cards
+                  : [];
 
-                const allCards = rawCards.map((c, i) => {
+                const legacyMockups = new Set([
+                  'super air hockey', 'super-air-hockey',
+                  'puck carnival air hockey', 'puck-carnival-air-hockey',
+                  'dazzling air hockey - multi puck', 'dazzling-air-hockey-multi-puck', 'dazzling-air-hockey',
+                  'aurora air hockey', 'aurora-air-hockey',
+                  'ocha air hockey', 'ocha-air-hockey',
+                  'aero x air hockey', 'aero-x-air-hockey',
+                  'toy story plush claw machine', 'toy-story-plush-claw-machine',
+                  'lucky catcher crane machine', 'lucky-catcher-crane-machine'
+                ]);
+
+                const deletedSlugs = new Set((siteData?.arcadeCategories?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
+
+                let baseCards = masterCards.filter(mc => {
+                  const k1 = (mc.slug || '').toLowerCase().trim();
+                  const k2 = (mc.name || mc.title || '').toLowerCase().trim();
+                  return !deletedSlugs.has(k1) && !deletedSlugs.has(k2) && !legacyMockups.has(k1) && !legacyMockups.has(k2);
+                });
+
+                if (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0) {
+                  const cmsCards = siteData.arcadeCategories.cards;
+                  const cmsMap = new Map();
+                  cmsCards.forEach(c => {
+                    const k1 = (c.slug || '').toLowerCase().trim();
+                    const k2 = (c.name || c.title || '').toLowerCase().trim();
+                    if (k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2)) cmsMap.set(k1, c);
+                  });
+                  baseCards = baseCards.map(mc => {
+                    const k = (mc.slug || mc.name || mc.title || '').toLowerCase().trim();
+                    return cmsMap.has(k) ? { ...mc, ...cmsMap.get(k) } : mc;
+                  });
+                  cmsCards.forEach(cc => {
+                    const k1 = (cc.slug || '').toLowerCase().trim();
+                    const k2 = (cc.name || cc.title || '').toLowerCase().trim();
+                    if (k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2) && !baseCards.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
+                      baseCards.unshift(cc);
+                    }
+                  });
+                }
+
+                const allCards = baseCards.map((c, i) => {
                   const customImg = c.img || c.imageUrl;
-                  const isValidCustom = customImg && !customImg.includes('unsplash.com');
+                  const isValidCustom = customImg && !customImg.includes('unsplash.com') && !customImg.startsWith('/src/assets/');
                   const nameKey = c.name || c.title || "";
-                  const finalImg = isValidCustom ? customImg : (imageMap[nameKey] || customImg || defaultProdCards[i % defaultProdCards.length]?.img);
+                  const catKey = c.category || c.specsCategory || c.tag || "Arcade Games";
+                  const defaultImg = imageMap[nameKey] || categoryDefaultImages[catKey] || arcadegamesImg;
+                  const finalImg = isValidCustom ? customImg : defaultImg;
                   const generatedSlug = (nameKey || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                   return {
                     ...c,
                     name: nameKey || "Arcade Machine",
                     title: nameKey || "Arcade Machine",
-                    category: c.category || c.tag || "Arcade Games",
-                    slug: c.slug || generatedSlug || 'parkour-motor-2-dx',
+                    category: catKey,
+                    slug: (c.slug && c.slug !== 'new-arcade-game') ? c.slug : (generatedSlug || 'arcade-game'),
                     img: finalImg,
                     imageUrl: finalImg
                   };
@@ -1000,19 +1033,26 @@ export default function ArcadeGame({ siteData }) {
                                 marginBottom: '16px',
                                 background: '#ffffff',
                                 boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
-                                border: '4px solid #ffffff'
+                                border: '4px solid #ffffff',
+                                padding: '10px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
                               }}>
                                 <WineraImage
                                   src={card.imageUrl || card.img}
                                   alt={card.name}
                                   style={{
                                     width: '100%',
-                                    height: '100%'
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
                                   }}
                                   imgStyle={{
                                     width: '100%',
                                     height: '100%',
-                                    objectFit: 'cover'
+                                    objectFit: 'contain'
                                   }}
                                 />
                               </div>
@@ -1048,28 +1088,58 @@ export default function ArcadeGame({ siteData }) {
 
           {/* Dynamic Pagination Toolbar (Centered across full section width) */}
           {(() => {
-            const defaultProdCards = [
-              { name: "Parkour Motor II (DX)", category: "Bike Racing Game" },
-              { name: "MANX TT 32\"", category: "Bike Racing Game" },
-              { name: "Super Air Hockey", category: "Arcade Games" },
-              { name: "Puck Carnival Air Hockey", category: "Arcade Games" },
-              { name: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games" },
-              { name: "Aurora Air Hockey", category: "Arcade Games" },
-              { name: "Ocha Air Hockey", category: "Arcade Games" },
-              { name: "Aero X Air Hockey", category: "Arcade Games" }
-            ];
-            const rawCards = (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0)
-              ? siteData.arcadeCategories.cards
-              : (Array.isArray(siteData?.arcadeCategories) && siteData.arcadeCategories.length > 0 ? siteData.arcadeCategories : defaultProdCards);
+            const masterCards = Array.isArray(allArcadeProducts?.cards) && allArcadeProducts.cards.length > 0
+              ? allArcadeProducts.cards
+              : [];
 
-            const allCardsPagination = rawCards.map(c => ({
+            const legacyMockups = new Set([
+              'super air hockey', 'super-air-hockey',
+              'puck carnival air hockey', 'puck-carnival-air-hockey',
+              'dazzling air hockey - multi puck', 'dazzling-air-hockey-multi-puck', 'dazzling-air-hockey',
+              'aurora air hockey', 'aurora-air-hockey',
+              'ocha air hockey', 'ocha-air-hockey',
+              'aero x air hockey', 'aero-x-air-hockey',
+              'toy story plush claw machine', 'toy-story-plush-claw-machine',
+              'lucky catcher crane machine', 'lucky-catcher-crane-machine'
+            ]);
+
+            const deletedSlugs = new Set((siteData?.arcadeCategories?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
+
+            let baseCards = masterCards.filter(mc => {
+              const k1 = (mc.slug || '').toLowerCase().trim();
+              const k2 = (mc.name || mc.title || '').toLowerCase().trim();
+              return !deletedSlugs.has(k1) && !deletedSlugs.has(k2) && !legacyMockups.has(k1) && !legacyMockups.has(k2);
+            });
+
+            if (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0) {
+              const cmsCards = siteData.arcadeCategories.cards;
+              const cmsMap = new Map();
+              cmsCards.forEach(c => {
+                const k1 = (c.slug || '').toLowerCase().trim();
+                const k2 = (c.name || c.title || '').toLowerCase().trim();
+                if (k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2)) cmsMap.set(k1, c);
+              });
+              baseCards = baseCards.map(mc => {
+                const k = (mc.slug || mc.name || mc.title || '').toLowerCase().trim();
+                return cmsMap.has(k) ? { ...mc, ...cmsMap.get(k) } : mc;
+              });
+              cmsCards.forEach(cc => {
+                const k1 = (cc.slug || '').toLowerCase().trim();
+                const k2 = (cc.name || cc.title || '').toLowerCase().trim();
+                if (k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2) && !baseCards.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
+                  baseCards.unshift(cc);
+                }
+              });
+            }
+
+            const allCardsPagination = baseCards.map(c => ({
               ...c,
               name: c.name || c.title || "",
-              category: c.category || c.tag || "Arcade Games"
+              category: c.category || c.specsCategory || c.tag || "Arcade Games"
             }));
 
             const isAllCategory = !activeCategory || activeCategory === "Arcade Games" || activeCategory === "All";
-            const filteredCards = isAllCategory
+            const categoryMatched = isAllCategory
               ? allCardsPagination
               : allCardsPagination.filter(c => {
                   const cat = (c.category || c.tag || c.subCategory || "").toLowerCase().trim();
@@ -1078,11 +1148,29 @@ export default function ArcadeGame({ siteData }) {
                   return cat === target || cat.includes(target) || target.includes(cat) || title.includes(target);
                 });
 
+            const filteredCards = searchQuery.trim()
+              ? categoryMatched.filter(c => {
+                  const q = searchQuery.toLowerCase().trim();
+                  const name = (c.name || c.title || "").toLowerCase();
+                  const cat = (c.category || c.tag || c.subCategory || "").toLowerCase();
+                  return name.includes(q) || cat.includes(q);
+                })
+              : categoryMatched;
+
             const itemsPerPage = 6;
             const totalPages = Math.max(1, Math.ceil(filteredCards.length / itemsPerPage));
             const validPage = Math.min(currentPage, totalPages);
 
             if (totalPages <= 1) return null;
+
+            const getPaginationRange = (curr, total) => {
+              if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+              if (curr <= 4) return [1, 2, 3, 4, 5, '...', total];
+              if (curr >= total - 3) return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+              return [1, '...', curr - 1, curr, curr + 1, '...', total];
+            };
+
+            const pageRange = getPaginationRange(validPage, totalPages);
 
             return (
               <div className="winera-desktop-pagination" style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '32px' }}>
@@ -1093,7 +1181,7 @@ export default function ArcadeGame({ siteData }) {
                   padding: '6px 20px',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '12px',
+                  gap: '8px',
                   boxShadow: 'none'
                 }}>
                   <button
@@ -1118,7 +1206,15 @@ export default function ArcadeGame({ siteData }) {
                     <ChevronLeft style={{ width: '18px', height: '18px' }} />
                   </button>
 
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                  {pageRange.map((item, idx) => {
+                    if (item === '...') {
+                      return (
+                        <span key={`ellipsis-${idx}`} style={{ padding: '0 4px', color: '#94a3b8', fontWeight: 'bold' }}>
+                          ...
+                        </span>
+                      );
+                    }
+                    const pageNum = item;
                     const isActive = pageNum === validPage;
                     return (
                       <button

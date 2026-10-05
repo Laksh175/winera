@@ -16,12 +16,14 @@ import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.webp';
 import arcadeCtaBg from '../assets/arcadegame-cta-bg.webp';
 import ctaArcade from '../assets/cta-arcade.webp';
 import arcadeHall from '../assets/arcade-hall.webp';
+import arcadeBoy from '../assets/arcade-boy.webp';
 import arcadeBtn1 from '../assets/arcadegame-button-1.png';
 import arcadeBtn2 from '../assets/arcadegame-button-2.png';
 
 import { 
   ChevronUp, ChevronDown, ChevronLeft, ChevronRight, MoveHorizontal, Box, Ruler, MessageCircle, ArrowRight 
 } from 'lucide-react';
+import allArcadeProducts from '../data/allArcadeProducts.json';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '') {
@@ -586,6 +588,18 @@ export default function ArcadeGameDetail({ siteData }) {
   const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
   // Image lookup map for preset products
+  const categoryDefaultImages = {
+    "Claw Machine": arcadeHall,
+    "Redemption Game": superAirHockeyImg,
+    "Bike Racing Game": bikeArcade,
+    "Car Racing Game": arcadegamesImg,
+    "Shooting Games": arcadeHall,
+    "VR Games": arcadeBoy,
+    "Kiddy Ride": arcadeBoy,
+    "Strength Based Games": arcadeHall,
+    "Arcade Games": arcadegamesImg
+  };
+
   const defaultImageMap = {
     'parkour-motor-2-dx': arcadegamesImg,
     'manx-tt-32': bikeArcade,
@@ -594,7 +608,22 @@ export default function ArcadeGameDetail({ siteData }) {
     'dazzling-air-hockey-multi-puck': dazzlingAirHockeyImg,
     'aurora-air-hockey': auroraAirHockeyImg,
     'ocha-air-hockey': ochaAirHockeyImg,
-    'aero-x-air-hockey': aeroXAirHockeyImg
+    'aero-x-air-hockey': aeroXAirHockeyImg,
+    'astrology-cointopia': arcadeHall,
+    'astrology-capsule-version': arcadeBoy,
+    'toy-story-plush-claw-machine': arcadeHall,
+    'lucky-catcher-crane-machine': arcadeBoy,
+    'basketball-star': superAirHockeyImg,
+    'pinball-storm': aeroXAirHockeyImg,
+    'larva-kids-ride': arcadeBoy,
+    'happy-carousel-kiddy-ride': arcadeBoy,
+    'super-speed-mini-racer': bikeArcade,
+    'speed-driver-5-twin-motion': arcadeBoy,
+    'outrun-2-supercar-simulator': bikeArcade,
+    'scarlet-dawn-dual-gun-shooter': arcadeHall,
+    'jurassic-motion-arcade-shooter': arcadeBoy,
+    'dragon-boxer-punching-machine': arcadeHall,
+    'ultimate-hammer-king-pro': arcadeBoy
   };
 
   // Extract dynamic cards from CMS siteData.arcadeCategories
@@ -618,19 +647,72 @@ export default function ArcadeGameDetail({ siteData }) {
     );
   });
 
+  // Find in master catalog
+  const masterCards = Array.isArray(allArcadeProducts?.cards) ? allArcadeProducts.cards : [];
+  const masterFoundCard = masterCards.find(c => {
+    const cardTitleSlug = slugify(c.title || c.name);
+    return (
+      c.slug === slug ||
+      cardTitleSlug === slug ||
+      (c.title && c.title.toLowerCase().trim() === (slug || '').replace(/-/g, ' ').toLowerCase().trim()) ||
+      (c.name && c.name.toLowerCase().trim() === (slug || '').replace(/-/g, ' ').toLowerCase().trim())
+    );
+  });
+
   // Find preset product by slug or name
-  const targetSlug = (cmsFoundCard?.slug && cmsFoundCard?.slug !== 'new-arcade-game') ? cmsFoundCard.slug : (slugify(cmsFoundCard?.name || cmsFoundCard?.title) || slug);
+  const targetSlug = (cmsFoundCard?.slug && cmsFoundCard?.slug !== 'new-arcade-game')
+    ? cmsFoundCard.slug
+    : (masterFoundCard?.slug || (slugify(cmsFoundCard?.name || cmsFoundCard?.title || masterFoundCard?.name || masterFoundCard?.title) || slug));
+
   const presetKey = Object.keys(arcadeProductsData).find(k => 
     k === targetSlug || 
     k === slug || 
     slugify(arcadeProductsData[k].name) === targetSlug || 
     slugify(arcadeProductsData[k].name) === slug
   );
-  const defaultProduct = presetKey ? arcadeProductsData[presetKey] : (arcadeProductsData[slug] || arcadeProductsData['parkour-motor-2-dx']);
-  const defaultGallery = defaultProduct.gallery || [defaultProduct.img, bikeArcade, ctaArcade, arcadeHall];
+
+  const defaultProduct = masterFoundCard
+    ? {
+        name: masterFoundCard.name || masterFoundCard.title,
+        category: masterFoundCard.category || 'Arcade Games',
+        tagline: masterFoundCard.desc || `Commercial ${masterFoundCard.category} arcade game machine.`,
+        img: masterFoundCard.img || categoryDefaultImages[masterFoundCard.category] || arcadegamesImg,
+        heroBg: arcadegame1Bg,
+        gallery: masterFoundCard.img ? [masterFoundCard.img] : [categoryDefaultImages[masterFoundCard.category] || arcadegamesImg],
+        specs: {
+          power: masterFoundCard.power || '450 W',
+          voltage: masterFoundCard.voltage || '220v',
+          category: masterFoundCard.category || 'Arcade Games',
+          players: masterFoundCard.players || '1-2 Players',
+          material: masterFoundCard.material || 'Commercial Steel & Acrylic',
+          width: masterFoundCard.width || '1200 mm',
+          depth: masterFoundCard.depth || '1100 mm',
+          height: masterFoundCard.height || '2100 mm'
+        }
+      }
+    : (presetKey ? arcadeProductsData[presetKey] : (arcadeProductsData[slug] || {
+        name: (slug || 'Arcade Game').replace(/-/g, ' ').toUpperCase(),
+        category: 'Arcade Games',
+        tagline: 'Commercial Arcade Game Machine',
+        img: arcadegamesImg,
+        heroBg: arcadegame1Bg,
+        gallery: [arcadegamesImg],
+        specs: {
+          power: '450 W',
+          voltage: '220v',
+          category: 'Arcade Games',
+          players: '1-2 Players',
+          material: 'Commercial Steel & Acrylic',
+          width: '1200 mm',
+          depth: '1100 mm',
+          height: '2100 mm'
+        }
+      }));
+
+  const defaultGallery = defaultProduct.gallery || [defaultProduct.img];
 
   // Resolve main image safely
-  const rawMainImg = cmsFoundCard?.imageUrl || cmsFoundCard?.img || defaultProduct.img || defaultImageMap[targetSlug] || arcadegamesImg;
+  const rawMainImg = cmsFoundCard?.imageUrl || cmsFoundCard?.img || masterFoundCard?.imageUrl || masterFoundCard?.img || defaultProduct.img || categoryDefaultImages[cmsFoundCard?.category || masterFoundCard?.category] || arcadegamesImg;
   const resolvedMainImg = getValidImageUrl(rawMainImg, defaultProduct.img || arcadegamesImg);
 
   // Collect ONLY uploaded gallery photos
@@ -654,9 +736,13 @@ export default function ArcadeGameDetail({ siteData }) {
 
   let galleryList = [];
   if (customGalleries.length > 0) {
-    galleryList = customGalleries.map(img => getValidImageUrl(img, resolvedMainImg));
-  } else if (cmsFoundCard) {
-    // Admin added/edited product with NO extra thumbnails -> show ONLY its main product image
+    const mapped = customGalleries.map(img => getValidImageUrl(img, resolvedMainImg));
+    if (resolvedMainImg && !mapped.includes(resolvedMainImg)) {
+      galleryList = [resolvedMainImg, ...mapped];
+    } else {
+      galleryList = mapped;
+    }
+  } else if (masterFoundCard?.img || cmsFoundCard?.img || cmsFoundCard?.imageUrl) {
     galleryList = [resolvedMainImg];
   } else {
     // Untouched default fallback mockups
@@ -683,27 +769,32 @@ export default function ArcadeGameDetail({ siteData }) {
       finalNameBase = fullTitle;
       finalNameHighlight = '';
     }
+  } else if (masterFoundCard?.title || masterFoundCard?.name) {
+    finalNameBase = masterFoundCard.title || masterFoundCard.name;
+    finalNameHighlight = '';
   }
 
   // Construct dynamic product object
-  const productName = cmsFoundCard?.name || cmsFoundCard?.title || defaultProduct.name;
+  const productName = cmsFoundCard?.name || cmsFoundCard?.title || masterFoundCard?.name || masterFoundCard?.title || defaultProduct.name;
+  const productCategory = cmsFoundCard?.category || cmsFoundCard?.specsCategory || masterFoundCard?.category || defaultProduct.category;
+
   const product = {
     name: productName,
-    nameBase: finalNameBase,
-    nameHighlight: finalNameHighlight,
-    category: cmsFoundCard?.category || cmsFoundCard?.specsCategory || defaultProduct.category,
-    tagline: cmsFoundCard?.tagline || cmsFoundCard?.desc || defaultProduct.tagline,
+    nameBase: finalNameBase || productName,
+    nameHighlight: finalNameHighlight || '',
+    category: productCategory,
+    tagline: cmsFoundCard?.tagline || cmsFoundCard?.desc || masterFoundCard?.desc || defaultProduct.tagline || `Commercial ${productCategory} machine.`,
     img: resolvedMainImg,
     heroBg: defaultProduct.heroBg || arcadegame1Bg,
     specs: {
-      power: cmsFoundCard?.power || defaultProduct.specs?.power || '750 W',
-      voltage: cmsFoundCard?.voltage || defaultProduct.specs?.voltage || '220v',
-      category: cmsFoundCard?.specsCategory || cmsFoundCard?.category || defaultProduct.specs?.category || defaultProduct.category,
-      players: cmsFoundCard?.players || defaultProduct.specs?.players || '1-2 Player',
-      material: cmsFoundCard?.material || defaultProduct.specs?.material || 'Imported Steel & Acrylic',
-      width: cmsFoundCard?.width || defaultProduct.specs?.width || '2100 mm',
-      depth: cmsFoundCard?.depth || defaultProduct.specs?.depth || '1200 mm',
-      height: cmsFoundCard?.height || defaultProduct.specs?.height || '1800 mm'
+      power: cmsFoundCard?.power || masterFoundCard?.power || defaultProduct.specs?.power || '450 W',
+      voltage: cmsFoundCard?.voltage || masterFoundCard?.voltage || defaultProduct.specs?.voltage || '220v',
+      category: cmsFoundCard?.specsCategory || cmsFoundCard?.category || masterFoundCard?.category || defaultProduct.specs?.category || productCategory,
+      players: cmsFoundCard?.players || masterFoundCard?.players || defaultProduct.specs?.players || '1-2 Players',
+      material: cmsFoundCard?.material || masterFoundCard?.material || defaultProduct.specs?.material || 'Commercial Steel & Acrylic Top',
+      width: cmsFoundCard?.width || masterFoundCard?.width || defaultProduct.specs?.width || '1200 mm',
+      depth: cmsFoundCard?.depth || masterFoundCard?.depth || defaultProduct.specs?.depth || '1100 mm',
+      height: cmsFoundCard?.height || masterFoundCard?.height || defaultProduct.specs?.height || '2100 mm'
     },
     gallery: galleryList,
     videoUrl: cmsFoundCard?.videoUrl || defaultProduct.videoUrl,
@@ -925,14 +1016,15 @@ export default function ArcadeGameDetail({ siteData }) {
                   minWidth: 0,
                   height: '450px',
                   borderRadius: '28px',
-                  background: 'radial-gradient(circle at center, #1e293b 0%, #090d16 100%)',
-                  boxShadow: '0 20px 45px rgba(0, 0, 0, 0.2)',
+                  background: '#ffffff',
+                  boxShadow: '0 12px 36px rgba(0, 0, 0, 0.08)',
+                  border: '1px solid #e2e8f0',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   position: 'relative',
                   overflow: 'hidden',
-                  padding: 0
+                  padding: '20px'
                 }} className="winera-arcade-main-card">
                   <img
                     key={selectedImageIndex}

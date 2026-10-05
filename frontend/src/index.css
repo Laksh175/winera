@@ -14334,7 +14334,7 @@ button[style*="background:transparent"]:hover,
     border-radius: 24px !important;
   }
 
-  /* Maintain large screen image box aspect-ratio, white border frame, and styling */
+  /* Maintain 1:1 Square aspect-ratio, white border frame, padding and uncropped contain fit */
   .winera-ar-products-grid>div>div:first-child,
   .winera-ar-products-grid>a>div:first-child,
   .winera-arcade-grid>div>div:first-child,
@@ -14345,15 +14345,18 @@ button[style*="background:transparent"]:hover,
   .winera-product-categories-grid>a>div:first-child,
   .winera-category-card-img-box {
     width: 100% !important;
-    height: 175px !important;
-    aspect-ratio: 16 / 10 !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
     margin-bottom: 14px !important;
-    padding: 0 !important;
+    padding: 8px !important;
     border-radius: 18px !important;
     background: #ffffff !important;
     border: 4px solid #ffffff !important;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06) !important;
     overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .winera-ar-products-grid>div>div:first-child img,
@@ -14367,8 +14370,8 @@ button[style*="background:transparent"]:hover,
   .winera-category-card-img-box img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
-    border-radius: 14px !important;
+    object-fit: contain !important;
+    border-radius: 12px !important;
     display: block !important;
   }
 

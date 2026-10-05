@@ -81,7 +81,7 @@ export default function WineraImage({
         position: 'relative',
         overflow: 'hidden',
         display: 'block',
-        backgroundColor: '#f1f5f9',
+        backgroundColor: 'transparent',
         ...style
       }}
       {...wrapperProps}
