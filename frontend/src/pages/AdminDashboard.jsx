@@ -2129,10 +2129,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         depth: item.depth || knownDefault.depth || '2310 mm',
         height: item.height || knownDefault.height || '2490 mm',
         img: item.img || item.imageUrl || arcadeProductImageMap[cardTitle] || arcadeProductImageMap[item.name] || arcadeProductImageMap[item.title] || '',
-        gallery1: item.gallery1 || '',
-        gallery2: item.gallery2 || '',
-        gallery3: item.gallery3 || '',
-        gallery4: item.gallery4 || '',
+        gallery: (Array.isArray(item.gallery) && item.gallery.length > 0)
+          ? item.gallery.filter(Boolean)
+          : [item.gallery1, item.gallery2, item.gallery3, item.gallery4, item.gallery5, item.gallery6].filter(Boolean),
+        gallery1: item.gallery1 || (Array.isArray(item.gallery) ? item.gallery[0] : '') || '',
+        gallery2: item.gallery2 || (Array.isArray(item.gallery) ? item.gallery[1] : '') || '',
+        gallery3: item.gallery3 || (Array.isArray(item.gallery) ? item.gallery[2] : '') || '',
+        gallery4: item.gallery4 || (Array.isArray(item.gallery) ? item.gallery[3] : '') || '',
+        gallery5: item.gallery5 || (Array.isArray(item.gallery) ? item.gallery[4] : '') || '',
+        gallery6: item.gallery6 || (Array.isArray(item.gallery) ? item.gallery[5] : '') || '',
         videoUrl: item.videoUrl || knownDefault.videoUrl || 'https://youtube.com',
         quoteUrl: item.quoteUrl || knownDefault.quoteUrl || 'https://wa.me/919428989488',
         feature1Title: item.feature1Title !== undefined ? item.feature1Title : (knownDefault.feature1Title || '12+ Years of Expertise'),
@@ -2145,7 +2150,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         feature4Desc: item.feature4Desc !== undefined ? item.feature4Desc : (knownDefault.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.')
       };
 
-      setModalItemData({ ...defaultArcadeItem, ...item });
+      const resolvedGallery = (Array.isArray(item.gallery) && item.gallery.length > 0)
+        ? item.gallery.filter(Boolean)
+        : [item.gallery1, item.gallery2, item.gallery3, item.gallery4, item.gallery5, item.gallery6].filter(Boolean);
+
+      setModalItemData({ ...defaultArcadeItem, ...item, gallery: resolvedGallery });
       setIsModalOpen(true);
       return;
     }
@@ -2485,10 +2494,23 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         tagline: modalItemData.tagline || '',
         desc: modalItemData.desc || '',
         img: modalItemData.img || modalItemData.imageUrl || '',
-        gallery1: modalItemData.gallery1 || modalItemData.img || modalItemData.imageUrl || '',
-        gallery2: modalItemData.gallery2 || '',
-        gallery3: modalItemData.gallery3 || '',
-        gallery4: modalItemData.gallery4 || '',
+        gallery: (Array.isArray(modalItemData.gallery)
+          ? modalItemData.gallery
+          : [
+              modalItemData.gallery1,
+              modalItemData.gallery2,
+              modalItemData.gallery3,
+              modalItemData.gallery4,
+              modalItemData.gallery5,
+              modalItemData.gallery6
+            ]
+        ).map(s => (typeof s === 'string' ? s.trim() : '')).filter(Boolean),
+        gallery1: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[0] : modalItemData.gallery1) || '',
+        gallery2: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[1] : modalItemData.gallery2) || '',
+        gallery3: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[2] : modalItemData.gallery3) || '',
+        gallery4: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[3] : modalItemData.gallery4) || '',
+        gallery5: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[4] : modalItemData.gallery5) || '',
+        gallery6: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[5] : modalItemData.gallery6) || '',
         power: modalItemData.power || '880 W',
         voltage: modalItemData.voltage || '220v',
         specsCategory: modalItemData.specsCategory || modalItemData.category || 'Bike Racing Game',
@@ -2528,10 +2550,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       setFormData(prev => ({ ...prev, arcadeCategories: updated }));
       closeModal();
 
+      // Send ONLY THIS SINGLE ARCADE PRODUCT to backend payload!
+      setLoadingSection('arcadeCategories');
       try {
-        await persistSectionToDatabase('arcadeCategories', updated);
+        await mutateContentItem({
+          sectionKey: 'arcadeCategories',
+          action: modalMode === 'add' ? 'add' : 'update',
+          item: cardItem,
+          matchKey: 'slug',
+          matchValue: cleanSlug,
+          index: editingIndex
+        }, admin.token);
+        await refreshContent();
+        setStatusMsg(`Product '${cardTitle}' saved directly to database!`);
       } catch (err) {
-        console.error("Save to MongoDB error:", err);
+        console.error("Single arcade card save error:", err);
+        if (err.response?.status === 404) {
+          try {
+            await persistSectionToDatabase('arcadeCategories', updated);
+            await refreshContent();
+            setStatusMsg(`Product '${cardTitle}' saved directly to database!`);
+            return;
+          } catch (fbErr) {
+            setStatusMsg('Database Save Error: ' + (fbErr.response?.data?.message || fbErr.message));
+            return;
+          }
+        }
+        setStatusMsg('Database Save Error: ' + (err.response?.data?.message || err.message));
+      } finally {
+        setLoadingSection('');
       }
       return;
     }
@@ -2566,14 +2613,26 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
 
   // Handle File Upload inside Modal
-  const handleModalFileUpload = async (e, field) => {
+  const handleModalFileUpload = async (e, field, index = null) => {
     const file = e.target.files[0];
     if (!file) return;
 
     setStatusMsg('Uploading image to server...');
     try {
       const res = await uploadImageFile(file, admin.token);
-      setModalItemData(prev => ({ ...prev, [field]: res.url }));
+      if (typeof index === 'number' && field === 'gallery') {
+        setModalItemData(prev => {
+          const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
+          list[index] = res.url;
+          return {
+            ...prev,
+            gallery: list,
+            [`gallery${index + 1}`]: res.url
+          };
+        });
+      } else {
+        setModalItemData(prev => ({ ...prev, [field]: res.url }));
+      }
       setStatusMsg('Image uploaded successfully to server!');
     } catch (err) {
       setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
@@ -5853,7 +5912,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                     const newCards = cardsList.filter((_, i) => i !== targetIndex);
                                     const updated = { categoriesList, cards: newCards };
                                     setFormData(prev => ({ ...prev, arcadeCategories: updated }));
-                                    await persistSectionToDatabase('arcadeCategories', updated);
+
+                                    setLoadingSection('arcadeCategories');
+                                    try {
+                                      await mutateContentItem({
+                                        sectionKey: 'arcadeCategories',
+                                        action: 'delete',
+                                        matchKey: 'slug',
+                                        matchValue: card.slug || card.title || card.name,
+                                        index: targetIndex
+                                      }, admin.token);
+                                      await refreshContent();
+                                      setStatusMsg(`Product '${displayTitle}' deleted successfully!`);
+                                    } catch (err) {
+                                      console.error("Delete arcade card error:", err);
+                                      if (err.response?.status === 404) {
+                                        try {
+                                          await persistSectionToDatabase('arcadeCategories', updated);
+                                          await refreshContent();
+                                          setStatusMsg(`Product '${displayTitle}' deleted successfully!`);
+                                          return;
+                                        } catch (fbErr) {
+                                          setStatusMsg('Delete error: ' + (fbErr.response?.data?.message || fbErr.message));
+                                          return;
+                                        }
+                                      }
+                                      setStatusMsg('Delete error: ' + (err.response?.data?.message || err.message));
+                                    } finally {
+                                      setLoadingSection('');
+                                    }
                                   }
                                 });
                               }}
@@ -5866,22 +5953,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       );
                     })}
                   </div>
-                </div>
-
-                <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                  <button
-                    onClick={() => {
-                      const slugifyText = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-                      const cleanedCards = cardsList.map(c => ({
-                        ...c,
-                        slug: (c.slug && c.slug !== 'new-arcade-game') ? c.slug : (slugifyText(c.title || c.name) || 'arcade-game')
-                      }));
-                      persistSectionToDatabase('arcadeCategories', { categoriesList, cards: cleanedCards });
-                    }}
-                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                  >
-                    Save All Arcade Products & Categories
-                  </button>
                 </div>
               </div>
             );
@@ -22169,59 +22240,160 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
 
-                  {/* 4 Gallery Thumbnails - Single Column */}
+                  {/* Dynamic Gallery Thumbnails */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <label style={{ fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '2px' }}>Thumbnail Photos <span style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '600' }}>(Optional — shown in product detail gallery)</span></label>
-                    {[1, 2, 3, 4].map(num => {
-                      const thumbVal = typeof modalItemData[`gallery${num}`] === 'string' ? modalItemData[`gallery${num}`] : '';
-                      return (
-                        <div key={num} style={{ background: '#f8fafc', padding: '10px 12px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                            <label style={{ fontSize: '11.5px', fontWeight: '800', color: '#0f172a' }}>
-                              Thumbnail {num}
-                              <span style={{ fontSize: '10px', color: '#0284c7', background: '#e0f2fe', padding: '1px 5px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>300 × 300 px</span>
-                            </label>
-                            {thumbVal && (
-                              <button
-                                type="button"
-                                onClick={() => setModalItemData(prev => ({ ...prev, [`gallery${num}`]: '' }))}
-                                style={{ background: 'none', border: 'none', color: '#ef4444', fontSize: '11px', fontWeight: '700', cursor: 'pointer', padding: 0 }}
-                              >
-                                ✕ Clear
-                              </button>
-                            )}
-                          </div>
-                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <label style={{ background: '#0284c7', color: '#fff', padding: '7px 11px', borderRadius: '8px', fontWeight: '800', fontSize: '11px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', flexShrink: 0, whiteSpace: 'nowrap' }}>
-                              <Upload style={{ width: '11px', height: '11px' }} /> Upload
-                              <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => handleModalFileUpload(e, `gallery${num}`)}
-                                style={{ display: 'none' }}
-                              />
-                            </label>
-                            <input
-                              type="text"
-                              value={thumbVal}
-                              onChange={(e) => setModalItemData(prev => ({ ...prev, [`gallery${num}`]: e.target.value }))}
-                              placeholder="Paste image URL..."
-                              style={{ flex: 1, padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px', minWidth: 0 }}
-                            />
-                            {thumbVal && (
-                              <div style={{ width: '44px', height: '36px', borderRadius: '6px', overflow: 'hidden', border: '1.5px solid #38bdf8', flexShrink: 0, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <img
-                                  src={getAdminValidImageUrl(thumbVal)}
-                                  alt=""
-                                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                />
-                              </div>
-                            )}
-                          </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                        Thumbnail Photos <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '600' }}>(Optional — jitni images add karenge utni hi detail gallery me aayegi)</span>
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setModalItemData(prev => {
+                            const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
+                            return { ...prev, gallery: [...list, ''] };
+                          });
+                        }}
+                        style={{
+                          background: '#0284c7',
+                          color: '#fff',
+                          border: 'none',
+                          padding: '6px 13px',
+                          borderRadius: '8px',
+                          fontWeight: '800',
+                          fontSize: '11.5px',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '5px',
+                          boxShadow: '0 2px 6px rgba(2, 132, 199, 0.25)'
+                        }}
+                      >
+                        <Plus style={{ width: '13px', height: '13px' }} /> Add Image
+                      </button>
+                    </div>
+
+                    {(!Array.isArray(modalItemData.gallery) || modalItemData.gallery.length === 0) ? (
+                      <div style={{ padding: '14px', background: '#f8fafc', border: '1.5px dashed #cbd5e1', borderRadius: '12px', textAlign: 'center', color: '#64748b', fontSize: '12px' }}>
+                        No gallery thumbnails added yet. Only main photo will be shown.
+                        <div style={{ marginTop: '8px' }}>
+                          <button
+                            type="button"
+                            onClick={() => setModalItemData(prev => ({ ...prev, gallery: [''] }))}
+                            style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', fontSize: '11.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                          >
+                            <Plus style={{ width: '12px', height: '12px' }} /> Add First Thumbnail
+                          </button>
                         </div>
-                      );
-                    })}
+                      </div>
+                    ) : (
+                      modalItemData.gallery.map((thumbVal, thumbIdx) => {
+                        const thumbStr = typeof thumbVal === 'string' ? thumbVal : '';
+                        return (
+                          <div key={thumbIdx} style={{ background: '#f8fafc', padding: '10px 12px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                              <label style={{ fontSize: '11.5px', fontWeight: '800', color: '#0f172a' }}>
+                                Thumbnail {thumbIdx + 1}
+                                <span style={{ fontSize: '10px', color: '#0284c7', background: '#e0f2fe', padding: '1px 5px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>300 × 300 px</span>
+                              </label>
+                              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                {thumbStr && (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setModalItemData(prev => {
+                                        const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
+                                        list[thumbIdx] = '';
+                                        return { ...prev, gallery: list };
+                                      });
+                                    }}
+                                    style={{ background: 'none', border: 'none', color: '#64748b', fontSize: '11px', fontWeight: '700', cursor: 'pointer', padding: 0 }}
+                                  >
+                                    Clear
+                                  </button>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setModalItemData(prev => {
+                                      const list = (prev.gallery || []).filter((_, i) => i !== thumbIdx);
+                                      return { ...prev, gallery: list };
+                                    });
+                                  }}
+                                  style={{ background: 'none', border: 'none', color: '#ef4444', fontSize: '11px', fontWeight: '800', cursor: 'pointer', padding: 0 }}
+                                >
+                                  ✕ Remove
+                                </button>
+                              </div>
+                            </div>
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                              <label style={{ background: '#0284c7', color: '#fff', padding: '7px 11px', borderRadius: '8px', fontWeight: '800', fontSize: '11px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                                <Upload style={{ width: '11px', height: '11px' }} /> Upload
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={(e) => handleModalFileUpload(e, 'gallery', thumbIdx)}
+                                  style={{ display: 'none' }}
+                                />
+                              </label>
+                              <input
+                                type="text"
+                                value={thumbStr}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  setModalItemData(prev => {
+                                    const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
+                                    list[thumbIdx] = val;
+                                    return { ...prev, gallery: list };
+                                  });
+                                }}
+                                placeholder="Paste image URL..."
+                                style={{ flex: 1, padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px', minWidth: 0 }}
+                              />
+                              {thumbStr && (
+                                <div style={{ width: '44px', height: '36px', borderRadius: '6px', overflow: 'hidden', border: '1.5px solid #38bdf8', flexShrink: 0, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                  <img
+                                    src={getAdminValidImageUrl(thumbStr)}
+                                    alt=""
+                                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+
+                    {Array.isArray(modalItemData.gallery) && modalItemData.gallery.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setModalItemData(prev => {
+                            const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
+                            return { ...prev, gallery: [...list, ''] };
+                          });
+                        }}
+                        style={{
+                          background: '#f0f9ff',
+                          color: '#0284c7',
+                          border: '1.5px dashed #38bdf8',
+                          padding: '8px 14px',
+                          borderRadius: '10px',
+                          fontWeight: '800',
+                          fontSize: '11.5px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          marginTop: '2px'
+                        }}
+                      >
+                        <Plus style={{ width: '13px', height: '13px' }} /> Add Another Image
+                      </button>
+                    )}
                   </div>
 
                   <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', marginTop: '10px', marginBottom: '8px' }}>

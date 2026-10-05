@@ -1818,7 +1818,7 @@ export const mutateContentItem = async (req, res) => {
       } else if (action === 'update') {
         let foundIdx = -1;
         if (matchKey && matchValue !== undefined) {
-          foundIdx = catData.cards.findIndex(x => x && x[matchKey] === matchValue);
+          foundIdx = catData.cards.findIndex(x => x && (x[matchKey] === matchValue || (matchKey === 'slug' && (x.slug === matchValue || x.title === matchValue || x.name === matchValue))));
         }
         if (foundIdx === -1 && typeof index === 'number' && index >= 0 && index < catData.cards.length) {
           foundIdx = index;
@@ -1834,7 +1834,7 @@ export const mutateContentItem = async (req, res) => {
       } else if (action === 'delete') {
         let foundIdx = -1;
         if (matchKey && matchValue !== undefined) {
-          foundIdx = catData.cards.findIndex(x => x && x[matchKey] === matchValue);
+          foundIdx = catData.cards.findIndex(x => x && (x[matchKey] === matchValue || (matchKey === 'slug' && (x.slug === matchValue || x.title === matchValue || x.name === matchValue))));
         }
         if (foundIdx === -1 && typeof index === 'number' && index >= 0 && index < catData.cards.length) {
           foundIdx = index;

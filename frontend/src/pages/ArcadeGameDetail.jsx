@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -284,16 +284,39 @@ export default function ArcadeGameDetail({ siteData }) {
   const defaultProduct = presetKey ? arcadeProductsData[presetKey] : (arcadeProductsData[slug] || arcadeProductsData['parkour-motor-2-dx']);
   const defaultGallery = defaultProduct.gallery || [defaultProduct.img, bikeArcade, ctaArcade, arcadeHall];
 
-  // Resolve main image and gallery images safely
+  // Resolve main image safely
   const rawMainImg = cmsFoundCard?.imageUrl || cmsFoundCard?.img || defaultProduct.img || defaultImageMap[targetSlug] || arcadegamesImg;
   const resolvedMainImg = getValidImageUrl(rawMainImg, defaultProduct.img || arcadegamesImg);
 
-  const galleryList = [
-    getValidImageUrl(cmsFoundCard?.gallery1, resolvedMainImg || defaultGallery[0]),
-    getValidImageUrl(cmsFoundCard?.gallery2, defaultGallery[1] || resolvedMainImg),
-    getValidImageUrl(cmsFoundCard?.gallery3, defaultGallery[2] || resolvedMainImg),
-    getValidImageUrl(cmsFoundCard?.gallery4, defaultGallery[3] || resolvedMainImg)
-  ];
+  // Collect ONLY uploaded gallery photos
+  let customGalleries = [];
+  if (Array.isArray(cmsFoundCard?.gallery) && cmsFoundCard.gallery.length > 0) {
+    customGalleries = cmsFoundCard.gallery.filter(g => typeof g === 'string' && g.trim() !== '');
+  }
+  if (customGalleries.length === 0) {
+    const direct = [
+      cmsFoundCard?.gallery1,
+      cmsFoundCard?.gallery2,
+      cmsFoundCard?.gallery3,
+      cmsFoundCard?.gallery4,
+      cmsFoundCard?.gallery5,
+      cmsFoundCard?.gallery6
+    ].filter(g => typeof g === 'string' && g.trim() !== '');
+    if (direct.length > 0) {
+      customGalleries = direct;
+    }
+  }
+
+  let galleryList = [];
+  if (customGalleries.length > 0) {
+    galleryList = customGalleries.map(img => getValidImageUrl(img, resolvedMainImg));
+  } else if (cmsFoundCard) {
+    // Admin added/edited product with NO extra thumbnails -> show ONLY its main product image
+    galleryList = [resolvedMainImg];
+  } else {
+    // Untouched default fallback mockups
+    galleryList = defaultGallery.map(img => getValidImageUrl(img, resolvedMainImg));
+  }
 
   // Calculate nameBase and nameHighlight cleanly to avoid duplicating title text
   let finalNameBase = defaultProduct.nameBase;
@@ -364,10 +387,23 @@ export default function ArcadeGameDetail({ siteData }) {
     ]
   };
 
+  const thumbRefs = useRef([]);
+  const thumbContainerRef = useRef(null);
+
   useEffect(() => {
     document.title = `${product.name} | Arcade Game Machine | Winera International`;
     window.scrollTo(0, 0);
   }, [product]);
+
+  useEffect(() => {
+    if (thumbRefs.current[selectedImageIndex]) {
+      thumbRefs.current[selectedImageIndex].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest'
+      });
+    }
+  }, [selectedImageIndex]);
 
   return (
     <div style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh', overflowX: 'hidden' }}>
@@ -437,91 +473,106 @@ export default function ArcadeGameDetail({ siteData }) {
               }} className="winera-arcade-left-group">
 
                 {/* 1. Left Vertical Thumbnails Menu */}
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  height: '450px',
-                  width: '85px',
-                  flexShrink: 0
-                }} className="winera-arcade-thumb-column">
-                  {/* Top / Left Arrow */}
-                  <button
-                    onClick={() => setSelectedImageIndex(prev => (prev > 0 ? prev - 1 : product.gallery.length - 1))}
-                    aria-label="Previous image"
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                  >
-                    <ChevronUp className="winera-arrow-up" style={{ width: '35px', height: '35px', strokeWidth: 2.5 }} />
-                    <ChevronLeft className="winera-arrow-left" style={{ width: '32px', height: '32px', strokeWidth: 2.5 }} />
-                  </button>
-
-                  {/* 4 Thumbnails */}
+                {product.gallery.length > 1 && (
                   <div style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'space-between',
                     alignItems: 'center',
-                    height: 'calc(100% - 66px)',
-                    width: '100%',
-                    padding: '2px 0'
-                  }} className="winera-arcade-thumb-inner">
-                    {product.gallery.map((thumbUrl, thumbIdx) => {
-                      const isSelected = selectedImageIndex === thumbIdx;
-                      return (
-                        <div
-                          key={thumbIdx}
-                          onClick={() => setSelectedImageIndex(thumbIdx)}
-                          role="button"
-                          tabIndex={0}
-                          aria-label={`Select product view ${thumbIdx + 1}`}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              setSelectedImageIndex(thumbIdx);
-                            }
-                          }}
-                          style={{
-                            width: '85px',
-                            height: '85px',
-                            borderRadius: '20px',
-                            overflow: 'hidden',
-                            background: 'radial-gradient(circle at center, #1e293b 0%, #090d16 100%)',
-                            border: isSelected ? '2.5px solid #38bdf8' : '1px solid rgba(203, 213, 225, 0.4)',
-                            boxShadow: isSelected ? '0 0 16px rgba(56, 189, 248, 0.7)' : '0 4px 12px rgba(0,0,0,0.1)',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: '6px',
-                            transform: isSelected ? 'scale(1.04)' : 'scale(1)',
-                            transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
-                          }}
-                          className="winera-arcade-thumb-box"
-                        >
-                          <img
-                            src={thumbUrl}
-                            alt=""
-                            onError={(e) => {
-                              e.currentTarget.onerror = null;
-                              e.currentTarget.src = defaultGallery[thumbIdx] || defaultProduct.img || arcadegamesImg;
-                            }}
-                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
+                    justifyContent: 'space-between',
+                    height: '450px',
+                    width: '85px',
+                    flexShrink: 0
+                  }} className="winera-arcade-thumb-column">
+                    {/* Top / Left Arrow */}
+                    <button
+                      onClick={() => setSelectedImageIndex(prev => (prev > 0 ? prev - 1 : product.gallery.length - 1))}
+                      aria-label="Previous image"
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#0284c7', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <ChevronUp className="winera-arrow-up" style={{ width: '32px', height: '32px', strokeWidth: 2.5 }} />
+                      <ChevronLeft className="winera-arrow-left" style={{ width: '30px', height: '30px', strokeWidth: 2.5 }} />
+                    </button>
 
-                  {/* Bottom / Right Arrow */}
-                  <button
-                    onClick={() => setSelectedImageIndex(prev => (prev < product.gallery.length - 1 ? prev + 1 : 0))}
-                    aria-label="Next image"
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                  >
-                    <ChevronDown className="winera-arrow-down" style={{ width: '35px', height: '35px', strokeWidth: 2.5 }} />
-                    <ChevronRight className="winera-arrow-right" style={{ width: '32px', height: '32px', strokeWidth: 2.5 }} />
-                  </button>
-                </div>
+                    {/* Thumbnails (1 to 6) */}
+                    <div
+                      ref={thumbContainerRef}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: product.gallery.length <= 4 ? 'space-evenly' : 'flex-start',
+                        alignItems: 'center',
+                        gap: '8px',
+                        height: 'calc(100% - 66px)',
+                        width: '100%',
+                        padding: '4px 0',
+                        overflowY: 'auto',
+                        overflowX: 'hidden',
+                        scrollBehavior: 'smooth',
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none'
+                      }}
+                      className="winera-arcade-thumb-inner"
+                    >
+                      {product.gallery.map((thumbUrl, thumbIdx) => {
+                        const isSelected = selectedImageIndex === thumbIdx;
+                        const boxSize = product.gallery.length > 4 ? '70px' : '78px';
+                        return (
+                          <div
+                            key={thumbIdx}
+                            ref={el => (thumbRefs.current[thumbIdx] = el)}
+                            onClick={() => setSelectedImageIndex(thumbIdx)}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`Select product view ${thumbIdx + 1}`}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                setSelectedImageIndex(thumbIdx);
+                              }
+                            }}
+                            style={{
+                              width: boxSize,
+                              height: boxSize,
+                              borderRadius: '16px',
+                              overflow: 'hidden',
+                              background: 'radial-gradient(circle at center, #1e293b 0%, #090d16 100%)',
+                              border: isSelected ? '2.5px solid #38bdf8' : '1px solid rgba(203, 213, 225, 0.4)',
+                              boxShadow: isSelected ? '0 0 16px rgba(56, 189, 248, 0.8), 0 4px 12px rgba(0,0,0,0.2)' : '0 2px 8px rgba(0,0,0,0.08)',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              padding: '4px',
+                              flexShrink: 0,
+                              transform: isSelected ? 'scale(1.05)' : 'scale(1)',
+                              transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                            className="winera-arcade-thumb-box"
+                          >
+                            <img
+                              src={thumbUrl}
+                              alt=""
+                              onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = defaultProduct.img || arcadegamesImg;
+                              }}
+                              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Bottom / Right Arrow */}
+                    <button
+                      onClick={() => setSelectedImageIndex(prev => (prev < product.gallery.length - 1 ? prev + 1 : 0))}
+                      aria-label="Next image"
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#0284c7', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <ChevronDown className="winera-arrow-down" style={{ width: '32px', height: '32px', strokeWidth: 2.5 }} />
+                      <ChevronRight className="winera-arrow-right" style={{ width: '30px', height: '30px', strokeWidth: 2.5 }} />
+                    </button>
+                  </div>
+                )}
 
                 {/* 2. Center Main Product Image Showcase Card */}
                 <div style={{

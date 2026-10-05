@@ -9612,7 +9612,17 @@ img.winera-yellow-stroke,
     flex-direction: row !important;
     height: auto !important;
     width: auto !important;
+    max-width: calc(100vw - 80px) !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-behavior: smooth !important;
     gap: 8px !important;
+    padding: 4px 2px !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .winera-arcade-thumb-inner::-webkit-scrollbar {
+    display: none !important;
   }
 
   .winera-arcade-thumb-box {
