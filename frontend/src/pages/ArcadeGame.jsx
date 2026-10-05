@@ -713,17 +713,37 @@ export default function ArcadeGame({ siteData }) {
             <div className="winera-products-display-area" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               {(() => {
                 const defaultProdCards = [
+                  { name: "Astrology Cointopia", title: "Astrology Cointopia", category: "Claw Machine", slug: "astrology-cointopia", img: arcadeHall },
+                  { name: "Astrology Capsule Version", title: "Astrology Capsule Version", category: "Claw Machine", slug: "astrology-capsule-version", img: arcadeBoy },
+                  { name: "Toy Story Plush Claw Machine", title: "Toy Story Plush Claw Machine", category: "Claw Machine", slug: "toy-story-plush-claw-machine", img: arcadeHall },
+                  { name: "Lucky Catcher Crane Machine", title: "Lucky Catcher Crane Machine", category: "Claw Machine", slug: "lucky-catcher-crane-machine", img: arcadeBoy },
+                  { name: "Basketball Star", title: "Basketball Star", category: "Redemption Game", slug: "basketball-star", img: superAirHockeyImg },
+                  { name: "Pinball Storm", title: "Pinball Storm", category: "Arcade Games", slug: "pinball-storm", img: aeroXAirHockeyImg },
+                  { name: "Super Air Hockey", title: "Super Air Hockey", category: "Redemption Game", slug: "super-air-hockey", img: superAirHockeyImg },
+                  { name: "Puck Carnival Air Hockey", title: "Puck Carnival Air Hockey", category: "Redemption Game", slug: "puck-carnival-air-hockey", img: puckCarnivalAirHockeyImg },
+                  { name: "Dazzling Air Hockey - Multi Puck", title: "Dazzling Air Hockey - Multi Puck", category: "Redemption Game", slug: "dazzling-air-hockey-multi-puck", img: dazzlingAirHockeyImg },
+                  { name: "Aurora Air Hockey", title: "Aurora Air Hockey", category: "Redemption Game", slug: "aurora-air-hockey", img: auroraAirHockeyImg },
                   { name: "Parkour Motor II (DX)", title: "Parkour Motor II (DX)", category: "Bike Racing Game", slug: "parkour-motor-2-dx", img: arcadegamesImg },
                   { name: "MANX TT 32\"", title: "MANX TT 32\"", category: "Bike Racing Game", slug: "manx-tt-32", img: bikeArcade },
-                  { name: "Super Air Hockey", title: "Super Air Hockey", category: "Arcade Games", slug: "super-air-hockey", img: superAirHockeyImg },
-                  { name: "Puck Carnival Air Hockey", title: "Puck Carnival Air Hockey", category: "Arcade Games", slug: "puck-carnival-air-hockey", img: puckCarnivalAirHockeyImg },
-                  { name: "Dazzling Air Hockey - Multi Puck", title: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games", slug: "dazzling-air-hockey-multi-puck", img: dazzlingAirHockeyImg },
-                  { name: "Aurora Air Hockey", title: "Aurora Air Hockey", category: "Arcade Games", slug: "aurora-air-hockey", img: auroraAirHockeyImg },
+                  { name: "Larva Kids Ride", title: "Larva Kids Ride", category: "Kiddy Ride", slug: "larva-kids-ride", img: arcadeBoy },
+                  { name: "Happy Carousel Kiddy Ride", title: "Happy Carousel Kiddy Ride", category: "Kiddy Ride", slug: "happy-carousel-kiddy-ride", img: arcadeBoy },
+                  { name: "Super Speed Mini Racer", title: "Super Speed Mini Racer", category: "Kiddy Ride", slug: "super-speed-mini-racer", img: bikeArcade },
+                  { name: "Speed Driver 5 Twin Motion", title: "Speed Driver 5 Twin Motion", category: "Car Racing Game", slug: "speed-driver-5-twin-motion", img: arcadeBoy },
+                  { name: "OutRun 2 Supercar Simulator", title: "OutRun 2 Supercar Simulator", category: "Car Racing Game", slug: "outrun-2-supercar-simulator", img: bikeArcade },
+                  { name: "Scarlet Dawn Dual Gun Shooter", title: "Scarlet Dawn Dual Gun Shooter", category: "Shooting Games", slug: "scarlet-dawn-dual-gun-shooter", img: arcadeHall },
+                  { name: "Jurassic Motion Arcade Shooter", title: "Jurassic Motion Arcade Shooter", category: "Shooting Games", slug: "jurassic-motion-arcade-shooter", img: arcadeBoy },
+                  { name: "Dragon Boxer Punching Machine", title: "Dragon Boxer Punching Machine", category: "Strength Based Games", slug: "dragon-boxer-punching-machine", img: arcadeHall },
+                  { name: "Ultimate Hammer King Pro", title: "Ultimate Hammer King Pro", category: "Strength Based Games", slug: "ultimate-hammer-king-pro", img: arcadeBoy },
                   { name: "Ocha Air Hockey", title: "Ocha Air Hockey", category: "Arcade Games", slug: "ocha-air-hockey", img: ochaAirHockeyImg },
                   { name: "Aero X Air Hockey", title: "Aero X Air Hockey", category: "Arcade Games", slug: "aero-x-air-hockey", img: aeroXAirHockeyImg }
                 ];
 
                 const imageMap = {
+                  "Astrology Cointopia": arcadeHall,
+                  "Astrology Capsule Version": arcadeBoy,
+                  "Basketball Star": superAirHockeyImg,
+                  "Pinball Storm": aeroXAirHockeyImg,
+                  "Larva Kids Ride": arcadeBoy,
                   "Parkour Motor II (DX)": arcadegamesImg,
                   "MANX TT 32\"": bikeArcade,
                   "Super Air Hockey": superAirHockeyImg,
@@ -974,7 +994,7 @@ export default function ArcadeGame({ siteData }) {
                             >
                               <div style={{
                                 width: '100%',
-                                height: '180px',
+                                aspectRatio: '1 / 1',
                                 borderRadius: '18px',
                                 overflow: 'hidden',
                                 marginBottom: '16px',

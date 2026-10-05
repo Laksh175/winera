@@ -5635,21 +5635,26 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             ];
 
             const defaultArcadeCards = [
-              // Bike Racing Games
-              { title: "Parkour Motor II (DX)", name: "Parkour Motor II (DX)", nameBase: "Parkour Motor ", nameHighlight: "II (DX)", category: "Bike Racing Game", tag: "Popular", slug: "parkour-motor-2-dx", desc: "High-Performance Dual Player Commercial Motorbike Racing Simulator.", img: bikeArcade },
-              { title: "MANX TT 32\"", name: "MANX TT 32\"", nameBase: "MANX TT ", nameHighlight: "32\"", category: "Bike Racing Game", tag: "Classic", slug: "manx-tt-32", desc: "Classic High-Velocity Arcade Motorcycle Simulator.", img: bikeArcade },
-
-              // Claw Machines
+              // Astrology / Claw / Prize Machines
+              { title: "Astrology Cointopia", name: "Astrology Cointopia", nameBase: "Astrology ", nameHighlight: "Cointopia", category: "Claw Machine", tag: "Popular", slug: "astrology-cointopia", desc: "Commercial Astrology Cointopia coin & capsule redemption machine.", img: arcadeHall },
+              { title: "Astrology Capsule Version", name: "Astrology Capsule Version", nameBase: "Astrology Capsule ", nameHighlight: "Version", category: "Claw Machine", tag: "Hot Seller", slug: "astrology-capsule-version", desc: "Interactive capsule prize gashapon vending arcade machine.", img: arcadeBoy },
               { title: "Toy Story Plush Claw Machine", name: "Toy Story Plush Claw Machine", category: "Claw Machine", tag: "Hot Seller", slug: "toy-story-plush-claw-machine", desc: "Commercial grade plush prize claw crane game.", img: arcadeHall },
               { title: "Lucky Catcher Crane Machine", name: "Lucky Catcher Crane Machine", category: "Claw Machine", tag: "Popular", slug: "lucky-catcher-crane-machine", desc: "High earning LED claw machine for malls and gaming zones.", img: arcadeBoy },
 
-              // Redemption Games / Air Hockey
+              // Sports & Redemption Games
+              { title: "Basketball Star", name: "Basketball Star", category: "Redemption Game", tag: "Trending", slug: "basketball-star", desc: "Commercial LED basketball hoop arcade sports machine.", img: superAirHockeyImg },
+              { title: "Pinball Storm", name: "Pinball Storm", category: "Arcade Games", tag: "Classic", slug: "pinball-storm", desc: "Digital LED commercial pinball machine with high score tracking.", img: aeroXAirHockeyImg },
               { title: "Super Air Hockey", name: "Super Air Hockey", category: "Redemption Game", tag: "Popular", slug: "super-air-hockey", desc: "Commercial grade heavy-duty air hockey table with digital score display.", img: superAirHockeyImg },
               { title: "Puck Carnival Air Hockey", name: "Puck Carnival Air Hockey", category: "Redemption Game", tag: "Hot Seller", slug: "puck-carnival-air-hockey", desc: "Multi-puck carnival style air hockey machine for high footfall game zones.", img: puckCarnivalAirHockeyImg },
               { title: "Dazzling Air Hockey - Multi Puck", name: "Dazzling Air Hockey - Multi Puck", category: "Redemption Game", tag: "High Revenue", slug: "dazzling-air-hockey-multi-puck", desc: "LED illuminated stainless steel air hockey table with sound effects.", img: dazzlingAirHockeyImg },
               { title: "Aurora Air Hockey", name: "Aurora Air Hockey", category: "Redemption Game", tag: "Classic", slug: "aurora-air-hockey", desc: "High-power air blower tournament air hockey table with durable aluminum rails.", img: auroraAirHockeyImg },
 
-              // Kiddy Rides
+              // Bike Racing Games
+              { title: "Parkour Motor II (DX)", name: "Parkour Motor II (DX)", nameBase: "Parkour Motor ", nameHighlight: "II (DX)", category: "Bike Racing Game", tag: "Popular", slug: "parkour-motor-2-dx", desc: "High-Performance Dual Player Commercial Motorbike Racing Simulator.", img: bikeArcade },
+              { title: "MANX TT 32\"", name: "MANX TT 32\"", nameBase: "MANX TT ", nameHighlight: "32\"", category: "Bike Racing Game", tag: "Classic", slug: "manx-tt-32", desc: "Classic High-Velocity Arcade Motorcycle Simulator.", img: bikeArcade },
+
+              // Kids & Kiddy Rides
+              { title: "Larva Kids Ride", name: "Larva Kids Ride", category: "Kiddy Ride", tag: "Kids Favorite", slug: "larva-kids-ride", desc: "Popular Larva animated coin-operated motion kiddy ride.", img: arcadeBoy },
               { title: "Happy Carousel Kiddy Ride", name: "Happy Carousel Kiddy Ride", category: "Kiddy Ride", tag: "Family", slug: "happy-carousel-kiddy-ride", desc: "Interactive coin-operated carousel ride for kids and toddlers.", img: arcadeBoy },
               { title: "Super Speed Mini Racer", name: "Super Speed Mini Racer", category: "Kiddy Ride", tag: "Featured", slug: "super-speed-mini-racer", desc: "Safe, colorful mini racing motion ride for children.", img: bikeArcade },
 
@@ -5857,7 +5862,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           {/* Image Box */}
                           <div style={{
                             width: '100%',
-                            height: '170px',
+                            aspectRatio: '1 / 1',
                             borderRadius: '18px',
                             overflow: 'hidden',
                             marginBottom: '14px',
