@@ -4,6 +4,7 @@ import protect from '../middleware/auth.middleware.js';
 import leadRoutes from './lead.routes.js';
 
 import { getArcadeProducts, getArcadeProductBySlug } from '../controllers/arcadeProduct.controller.js';
+import { getBlogs, getBlogBySlug } from '../controllers/blog.controller.js';
 
 const router = express.Router();
 
@@ -11,6 +12,8 @@ const router = express.Router();
 router.get('/content', getContent);
 router.get('/arcade-products', getArcadeProducts);
 router.get('/arcade-products/:slug', getArcadeProductBySlug);
+router.get('/blogs', getBlogs);
+router.get('/blogs/:slug', getBlogBySlug);
 router.post('/admin/login', adminLogin);
 
 // Lead Inquiry Routes
