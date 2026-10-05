@@ -192,10 +192,6 @@ const getAdminValidImageUrl = (url, fallback = bikeArcade) => {
   if (typeof url === 'object' && url.default) return url.default;
   if (typeof url !== 'string' || url.trim() === '') return fallback;
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:') || url.startsWith('/') || url.startsWith('./')) {
-    if (url.startsWith('/uploads')) {
-      const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-      return `http://${hostname}:5001${url}`;
-    }
     return url;
   }
   return fallback;

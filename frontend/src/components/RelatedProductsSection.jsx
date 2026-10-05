@@ -19,8 +19,7 @@ const resolveImgUrl = (url, fallback) => {
     const cleanUrl = url.startsWith('/') ? url : `/${url}`;
     const apiUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '').replace(/\/$/, '') : '';
     if (apiUrl) return `${apiUrl}${cleanUrl}`;
-    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${cleanUrl}`;
+    return cleanUrl;
   }
   return url || fallback || '';
 };
