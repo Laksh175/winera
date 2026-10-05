@@ -2477,27 +2477,30 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     }
 
     if (secKey === 'arcadeCategories') {
-      const defaultCats = [
+      const defaultCats = allArcadeProducts.categoriesList || [
         "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
         "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
       ];
-      const defaultCards = [
-        { title: "Parkour Motor II (DX)", name: "Parkour Motor II (DX)", nameBase: "Parkour Motor ", nameHighlight: "II (DX)", category: "Bike Racing Game", tag: "Popular", slug: "parkour-motor-2-dx", desc: "High-Performance Dual Player Commercial Motorbike Racing Simulator.", img: bikeArcade },
-        { title: "MANX TT 32\"", name: "MANX TT 32\"", nameBase: "MANX TT ", nameHighlight: "32\"", category: "Bike Racing Game", tag: "Classic", slug: "manx-tt-32", desc: "Classic High-Velocity Arcade Motorcycle Simulator.", img: bikeArcade },
-        { title: "Super Air Hockey", name: "Super Air Hockey", category: "Arcade Games", tag: "Popular", desc: "Commercial grade heavy-duty air hockey table with digital score display.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-        { title: "Puck Carnival Air Hockey", name: "Puck Carnival Air Hockey", category: "Arcade Games", tag: "Hot Seller", desc: "Multi-puck carnival style air hockey machine for high footfall game zones.", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
-        { title: "Dazzling Air Hockey - Multi Puck", name: "Dazzling Air Hockey - Multi Puck", category: "Arcade Games", tag: "High Revenue", desc: "LED illuminated stainless steel air hockey table with sound effects.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-        { title: "Aurora Air Hockey", name: "Aurora Air Hockey", category: "Arcade Games", tag: "Classic", desc: "High-power air blower tournament air hockey table with durable aluminum rails.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" },
-        { title: "Ocha Air Hockey", name: "Ocha Air Hockey", category: "Arcade Games", tag: "Featured", desc: "Compact & stylish commercial air hockey machine for malls & FECs.", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
-        { title: "Aero X Air Hockey", name: "Aero X Air Hockey", category: "Arcade Games", tag: "Interactive", desc: "Next-gen arcade air hockey table with multi-ticket dispenser system.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" }
-      ];
+      const masterCards = allArcadeProducts.cards || [];
 
       let categoriesList = defaultCats;
-      let cardsList = defaultCards;
+      let cardsList = [...masterCards];
 
       if (formData.arcadeCategories) {
-        if (Array.isArray(formData.arcadeCategories.cards)) cardsList = [...formData.arcadeCategories.cards];
-        else if (Array.isArray(formData.arcadeCategories)) cardsList = [...formData.arcadeCategories];
+        if (Array.isArray(formData.arcadeCategories.cards) && formData.arcadeCategories.cards.length > 0) {
+          const cmsMap = new Map();
+          formData.arcadeCategories.cards.forEach(c => {
+            const k = (c.slug || c.name || c.title || '').toLowerCase().trim();
+            if (k) cmsMap.set(k, c);
+          });
+          cardsList = cardsList.map(mc => {
+            const k = (mc.slug || mc.name || mc.title || '').toLowerCase().trim();
+            return cmsMap.has(k) ? { ...mc, ...cmsMap.get(k) } : mc;
+          });
+          formData.arcadeCategories.cards.forEach(cc => {
+            if (cc.isUserCreated) cardsList.unshift(cc);
+          });
+        }
         if (Array.isArray(formData.arcadeCategories.categoriesList)) categoriesList = [...formData.arcadeCategories.categoriesList];
       }
 
@@ -2507,6 +2510,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
       const cardItem = {
         ...modalItemData,
+        isUserCreated: modalMode === 'add' ? true : Boolean(modalItemData.isUserCreated),
         name: cardTitle,
         title: cardTitle,
         slug: cleanSlug,
@@ -5701,7 +5705,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 rawCards.forEach(cc => {
                   const k1 = (cc.slug || '').toLowerCase().trim();
                   const k2 = (cc.name || cc.title || '').toLowerCase().trim();
-                  if (k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2) && !cardsList.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
+                  if (cc.isUserCreated && k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2) && !cardsList.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
                     cardsList.unshift(cc);
                   }
                 });
