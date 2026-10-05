@@ -184,7 +184,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
             opacity = 0.55;
           }
 
-          const currentSlug = getCardSlug ? getCardSlug(card) : (card.slug || 'parkour-motor-2-dx');
+          const currentSlug = getCardSlug ? getCardSlug(card) : ((card.slug && card.slug !== 'new-arcade-game') ? card.slug : ((card.name || card.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'parkour-motor-2-dx'));
 
           return (
             <div

@@ -776,10 +776,11 @@ export default function ArcadeGame({ siteData }) {
                     })
                   : categoryMatched;
 
+                const slugifyText = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                 const getCardSlug = (card) => {
-                  if (card.slug) return card.slug;
+                  if (card.slug && card.slug !== 'new-arcade-game') return card.slug;
                   const title = card.name || card.title || '';
-                  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'parkour-motor-2-dx';
+                  return slugifyText(title) || 'parkour-motor-2-dx';
                 };
 
                 const itemsPerPage = 6;

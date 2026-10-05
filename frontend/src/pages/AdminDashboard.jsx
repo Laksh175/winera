@@ -1974,8 +1974,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     setEditingIndex(index);
     if (sec === 'arcadeCategories') {
       const slugifyText = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      const cardTitle = item.title || item.name || (mode === 'add' ? 'New Arcade Game' : 'Parkour Motor II (DX)');
-      const cardSlug = item.slug || slugifyText(cardTitle);
+      const cardTitle = item.title || item.name || (mode === 'add' ? '' : 'Parkour Motor II (DX)');
+      const cardSlug = (item.slug && item.slug !== 'new-arcade-game') ? item.slug : slugifyText(cardTitle);
 
       const arcadeDefaultsLookup = {
         'parkour-motor-2-dx': {
@@ -2471,12 +2471,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
       const slugifyText = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       const cardTitle = modalItemData.title || modalItemData.name || 'New Arcade Product';
+      const cleanSlug = (modalItemData.slug && modalItemData.slug !== 'new-arcade-game') ? modalItemData.slug : (slugifyText(cardTitle) || 'arcade-product');
 
       const cardItem = {
         ...modalItemData,
         name: cardTitle,
         title: cardTitle,
-        slug: modalItemData.slug || slugifyText(cardTitle),
+        slug: cleanSlug,
         nameBase: modalItemData.nameBase !== undefined ? modalItemData.nameBase : cardTitle,
         nameHighlight: modalItemData.nameHighlight || '',
         category: modalItemData.category || 'Arcade Games',
@@ -2519,7 +2520,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       }
 
       setAdminProjectFilterCat("All");
-      const updated = { categoriesList, cards: cardsList };
+      const cleanedCards = cardsList.map(c => ({
+        ...c,
+        slug: (c.slug && c.slug !== 'new-arcade-game') ? c.slug : (slugifyText(c.title || c.name) || 'arcade-game')
+      }));
+      const updated = { categoriesList, cards: cleanedCards };
       setFormData(prev => ({ ...prev, arcadeCategories: updated }));
       closeModal();
 
@@ -5863,7 +5868,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                 <div style={{ textAlign: 'right', marginTop: '10px' }}>
                   <button
-                    onClick={() => persistSectionToDatabase('arcadeCategories', { categoriesList, cards: cardsList })}
+                    onClick={() => {
+                      const slugifyText = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                      const cleanedCards = cardsList.map(c => ({
+                        ...c,
+                        slug: (c.slug && c.slug !== 'new-arcade-game') ? c.slug : (slugifyText(c.title || c.name) || 'arcade-game')
+                      }));
+                      persistSectionToDatabase('arcadeCategories', { categoriesList, cards: cleanedCards });
+                    }}
                     style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
                     Save All Arcade Products & Categories
@@ -21919,7 +21931,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <input
                       type="text"
                       value={modalItemData.title || modalItemData.name || ''}
-                      onChange={(e) => setModalItemData(prev => ({ ...prev, title: e.target.value, name: e.target.value }))}
+                      onChange={(e) => {
+                        const newTitle = e.target.value;
+                        setModalItemData(prev => {
+                          const slugify = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                          const oldSlug = prev.slug || '';
+                          const oldAutoSlug = slugify(prev.title || prev.name || '');
+                          const isAuto = !oldSlug || oldSlug === 'new-arcade-game' || oldSlug === oldAutoSlug;
+                          return {
+                            ...prev,
+                            title: newTitle,
+                            name: newTitle,
+                            slug: isAuto ? slugify(newTitle) : prev.slug
+                          };
+                        });
+                      }}
                       placeholder="e.g. Parkour Motor II (DX)"
                       style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px' }}
                     />

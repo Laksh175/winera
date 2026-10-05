@@ -258,12 +258,23 @@ export default function ArcadeGameDetail({ siteData }) {
 
   // Find dynamic CMS product card matching slug
   const cmsFoundCard = cmsCards.find(c => {
-    const cardSlug = c.slug || slugify(c.title || c.name);
-    return cardSlug === slug || c.slug === slug || slugify(c.title || c.name) === slug || (c.title && c.title.toLowerCase() === (slug || '').toLowerCase());
+    const cardTitleSlug = slugify(c.title || c.name);
+    const cardSlug = (c.slug && c.slug !== 'new-arcade-game') ? c.slug : cardTitleSlug;
+    return (
+      cardSlug === slug ||
+      cardTitleSlug === slug ||
+      (c.slug && c.slug === slug) ||
+      (c.title && slugify(c.title) === slug) ||
+      (c.name && slugify(c.name) === slug) ||
+      (c.title && c.title.toLowerCase().trim() === (slug || '').replace(/-/g, ' ').toLowerCase().trim()) ||
+      (c.name && c.name.toLowerCase().trim() === (slug || '').replace(/-/g, ' ').toLowerCase().trim()) ||
+      (c._id && String(c._id) === slug) ||
+      (c.id && String(c.id) === slug)
+    );
   });
 
   // Find preset product by slug or name
-  const targetSlug = cmsFoundCard?.slug || slug;
+  const targetSlug = (cmsFoundCard?.slug && cmsFoundCard?.slug !== 'new-arcade-game') ? cmsFoundCard.slug : (slugify(cmsFoundCard?.name || cmsFoundCard?.title) || slug);
   const presetKey = Object.keys(arcadeProductsData).find(k => 
     k === targetSlug || 
     k === slug || 
