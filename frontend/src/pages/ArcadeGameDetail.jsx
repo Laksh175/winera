@@ -29,9 +29,8 @@ const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '') {
     return fallback;
   }
-  if (url.startsWith('/uploads')) {
-    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${url}`;
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/uploads')) {
+    return url;
   }
   return url;
 };
@@ -712,7 +711,7 @@ export default function ArcadeGameDetail({ siteData }) {
   const defaultGallery = defaultProduct.gallery || [defaultProduct.img];
 
   // Resolve main image safely
-  const rawMainImg = cmsFoundCard?.imageUrl || cmsFoundCard?.img || masterFoundCard?.imageUrl || masterFoundCard?.img || defaultProduct.img || categoryDefaultImages[cmsFoundCard?.category || masterFoundCard?.category] || arcadegamesImg;
+  const rawMainImg = masterFoundCard?.imageUrl || masterFoundCard?.img || cmsFoundCard?.imageUrl || cmsFoundCard?.img || defaultProduct.img || categoryDefaultImages[masterFoundCard?.category || cmsFoundCard?.category] || arcadegamesImg;
   const resolvedMainImg = getValidImageUrl(rawMainImg, defaultProduct.img || arcadegamesImg);
 
   // Collect ONLY uploaded gallery photos

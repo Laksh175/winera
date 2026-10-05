@@ -50,12 +50,8 @@ const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/uploads')) {
     return url;
-  }
-  if (url.startsWith('/uploads')) {
-    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${url}`;
   }
   return fallback;
 };
@@ -133,9 +129,11 @@ export default function ArcadeGame({ siteData }) {
 
   const { header, footer } = siteData;
 
-  const arcadeGames = Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0
-    ? siteData.arcadeCategories.cards
-    : (allArcadeProducts.cards || []);
+  const arcadeGames = (allArcadeProducts && Array.isArray(allArcadeProducts.cards) && allArcadeProducts.cards.length > 0)
+    ? allArcadeProducts.cards
+    : (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0
+        ? siteData.arcadeCategories.cards
+        : []);
 
   const arcadeFaqs = Array.isArray(siteData?.arcadeFaqs) && siteData.arcadeFaqs.length > 0
     ? siteData.arcadeFaqs
