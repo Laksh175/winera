@@ -781,7 +781,7 @@ export default function ArcadeGame({ siteData }) {
                   cmsCards.forEach(cc => {
                     const k1 = (cc.slug || '').toLowerCase().trim();
                     const k2 = (cc.name || cc.title || '').toLowerCase().trim();
-                    if (k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2) && !baseCards.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
+                    if (cc.isUserCreated && k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2) && !baseCards.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
                       baseCards.unshift(cc);
                     }
                   });
@@ -789,10 +789,10 @@ export default function ArcadeGame({ siteData }) {
 
                 const allCards = baseCards.map((c, i) => {
                   const customImg = c.img || c.imageUrl;
-                  const isValidCustom = customImg && !customImg.includes('unsplash.com') && !customImg.startsWith('/src/assets/');
+                  const isValidCustom = customImg && typeof customImg === 'string' && customImg.trim() !== '' && !customImg.includes('unsplash.com') && !customImg.startsWith('/src/assets/');
                   const nameKey = c.name || c.title || "";
                   const catKey = c.category || c.specsCategory || c.tag || "Arcade Games";
-                  const defaultImg = imageMap[nameKey] || categoryDefaultImages[catKey] || arcadegamesImg;
+                  const defaultImg = categoryDefaultImages[catKey] || arcadegamesImg;
                   const finalImg = isValidCustom ? customImg : defaultImg;
                   const generatedSlug = (nameKey || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                   return {
@@ -1124,7 +1124,7 @@ export default function ArcadeGame({ siteData }) {
               cmsCards.forEach(cc => {
                 const k1 = (cc.slug || '').toLowerCase().trim();
                 const k2 = (cc.name || cc.title || '').toLowerCase().trim();
-                if (k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2) && !baseCards.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
+                if (cc.isUserCreated && k1 && !deletedSlugs.has(k1) && !legacyMockups.has(k1) && !legacyMockups.has(k2) && !baseCards.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
                   baseCards.unshift(cc);
                 }
               });
