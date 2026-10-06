@@ -18,9 +18,7 @@ export default function LaserTag({ siteData }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Laser Tag...</div>;
-
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
 
     const pageTitle = siteData?.lasertagSeo?.pageTitle || "Laser Tag Equipment Supplier in India | Winera International";
@@ -37,7 +35,10 @@ export default function LaserTag({ siteData }) {
     metaTag.content = metaDesc;
   }, [siteData]);
 
-  const { header, footer } = siteData;
+  if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Laser Tag...</div>;
+
+  const header = siteData?.header || {};
+  const footer = siteData?.footer || {};
   const heroBgImage = siteData?.lasertagHero?.bgUrl || arHeroBg;
 
   return (

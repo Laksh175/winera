@@ -14,7 +14,7 @@ const API_BASE_URL = getApiBaseUrl();
 
 export const fetchSiteContent = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/content`, { timeout: 3000 });
+    const response = await axios.get(`${API_BASE_URL}/content`, { timeout: 8000 });
     return optimizeSiteDataImages(response.data);
   } catch (err) {
     console.warn('Backend server response timeout/unavailable, falling back to default site data:', err?.message);

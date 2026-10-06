@@ -1615,7 +1615,8 @@ export const defaultSiteData = {
 };
 
 export const adminLogin = async (req, res) => {
-  const { username, password } = req.body;
+  const username = req.body.username || req.body.email;
+  const password = req.body.password;
 
   try {
     const inputUser = (username || '').trim().toLowerCase();

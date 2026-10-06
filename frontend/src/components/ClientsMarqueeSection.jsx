@@ -10,14 +10,14 @@ export default function ClientsMarqueeSection({
   subtitle = 'Our Complete Game Zone Equipment & Setup Solutions',
   bg = '#F5F5F9',
   defaultList = [
-    { name: "Infinity", text: "∞", font: "bold" },
-    { name: "LOGO", text: "LOGO˚", font: "900" },
-    { name: "Logoipsum", text: "🌊 Logoipsum", font: "600" },
-    { name: "IPSUM", text: "IPSUM™", font: "800" },
-    { name: "Infinity2", text: "∞", font: "bold" },
-    { name: "LOGO2", text: "LOGO˚", font: "900" },
-    { name: "IPSUM2", text: "IPSUM™", font: "800" },
-    { name: "Logoipsum2", text: "🌊 Logoipsum", font: "600" }
+    { name: "LaneX Bowling", text: "LANEX BOWLING", font: "900" },
+    { name: "Funfair Game Zone", text: "FUNFAIR GAMEZONE", font: "800" },
+    { name: "Neon Panda", text: "NEON PANDA", font: "900" },
+    { name: "Fizzy Fox", text: "FIZZY FOX", font: "800" },
+    { name: "Funiverse", text: "FUNIVERSE", font: "900" },
+    { name: "Rebounce", text: "REBOUNCE", font: "800" },
+    { name: "Playzonia", text: "PLAYZONIA", font: "900" },
+    { name: "FifthAlley", text: "FIFTHALLEY", font: "800" }
   ]
 }) {
   const trackRef = useRef(null);
