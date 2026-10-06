@@ -10,7 +10,8 @@
     "seed:arcade": "node src/scripts/seedArcadeProductsMongo.js",
     "seed:blogs": "node src/scripts/seedBlogsMongo.js",
     "seed:all": "node src/scripts/seedArcadeProductsMongo.js && node src/scripts/seedBlogsMongo.js",
-    "upload:cloudinary": "node src/scripts/uploadArcadeToCloudinary.js"
+    "upload:cloudinary": "node src/scripts/uploadArcadeToCloudinary.js",
+    "sync:json": "node src/scripts/syncJsonFromMongo.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
