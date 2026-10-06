@@ -1591,7 +1591,7 @@ export const defaultSiteData = {
   },
   lasertagHero: {
     breadcrumbText: "Laser Tag",
-    bgUrl: ""
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289365/winera_uploads/eyseeavds5nxr2bgyw5y.png"
   },
   lasertagIntro: {
     titleHighlight: "Laser Tag Gaming Equipment",
@@ -1601,7 +1601,7 @@ export const defaultSiteData = {
     buttonText: "Get A Quote",
     buttonLink: "https://wa.me/919428989488",
     waMessage: "Hello Winera International! I want to get a quote for Laser Tag & Laser Spy Equipment setup. Please share details.",
-    mainImgUrl: ""
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289349/winera_uploads/elpoxj7ydvsuhbwoocnk.png"
   },
   lasertagSetup: {
     titleNormal: "One Team for Your Whole Laser",
@@ -1609,7 +1609,7 @@ export const defaultSiteData = {
     title: "One Team for Your Whole<br/>Laser *Tag & Laser Spy Setup*",
     paragraph1: "Winera International has set up laser tag and laser spy games for entertainment centres, malls, hotels, schools, and resorts across India since 2014. Every setup comes with the full equipment, game software, scoreboards, and complete arena setup.",
     paragraph2: "Before you order anything, we check your space size, how many players you want, and how you plan to run it. Then our own team handles everything — design, setup, and staff training across 50+ cities in India.",
-    mainImgUrl: ""
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289351/winera_uploads/cbi5rh6i5r5s0lz0quee.png"
   },
   lasertagGroups: {
     titleHighlight: "Laser Tag - ",
@@ -1623,14 +1623,14 @@ export const defaultSiteData = {
       "A TV to explain the rules, and a live score screen that makes players want to play again",
       "Full sound, game software, setup, and staff training all done by our team"
     ],
-    mainImgUrl: "",
-    bgUrl: ""
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289353/winera_uploads/twtllnkchkmsbpm8nqeg.png",
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289365/winera_uploads/eyseeavds5nxr2bgyw5y.png"
   },
   lasertagSpecs: {
     titleHighlight: "Technical",
     titleNormal: "Specifications",
     title: "*Technical* Specifications",
-    bgUrl: "",
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289356/winera_uploads/rzfmnxulpmws60hun51o.png",
     buttonText: "Download Our Brochure",
     buttonLink: "https://wa.me/919428989488",
     waMessage: "Hello Winera International! I want to download the Laser Tag Equipment & Setup Brochure. Please share details.",
@@ -1648,7 +1648,7 @@ export const defaultSiteData = {
     titleHighlight: "How Much Space",
     titleNormal: "You Need for Laser Tag",
     desc: "A laser tag arena works from about 1,000 sq ft, but 2,500–5,000 sq ft is ideal; it gives players room to move, hide, and enjoy the game. Here's how the space is used:",
-    mainImgUrl: "",
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289357/winera_uploads/ef85n0nt8mvceo1nx1uf.png",
     zones: [
       {
         num: "01",
@@ -1679,11 +1679,11 @@ export const defaultSiteData = {
     desc: "Laser spy is a room full of laser beams. Players have to move through them without touching any. People love it and come back again and again to beat their best score. And it fits in a small room, so you can add it even when you don't have much space. We supply and set up the full game, ready to play.",
     listHeading: "What you get, fully set up:",
     badgeText: "Small Space. Big Thrills.",
-    mainImgUrl: "",
-    borderImgUrl: "",
-    smallImgUrl: "",
-    buttonImgUrl: "",
-    bgUrl: "",
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289359/winera_uploads/agukr6yvhv5uhgckz9li.png",
+    borderImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289362/winera_uploads/squemrijb3rs3vj9kdrm.png",
+    smallImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289361/winera_uploads/q06kf58wvkgvxofpgm2u.png",
+    buttonImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289363/winera_uploads/gv1ssxtmjhumr9navmwe.png",
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289365/winera_uploads/eyseeavds5nxr2bgyw5y.png",
     features: [
       "Laser guns with lights and a small screen, and vests that show each hit right away",
       "3 to 4 team games and one big final game",
@@ -1696,7 +1696,7 @@ export const defaultSiteData = {
     titleHighlight: "Technical",
     titleNormal: "Specifications",
     title: "*Technical* Specifications",
-    bgUrl: "",
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289356/winera_uploads/rzfmnxulpmws60hun51o.png",
     buttonText: "Download Our Brochure",
     buttonLink: "https://wa.me/919428989488",
     waMessage: "Hello Winera International! I want to download the Laser Spy Equipment & Setup Brochure. Please share details.",
