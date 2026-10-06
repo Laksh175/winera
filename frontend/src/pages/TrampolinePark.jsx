@@ -306,7 +306,7 @@ export default function TrampolinePark({ siteData }) {
           {/* Left Column: Image Graphic */}
           <div className="winera-trampoline-intro-img-wrapper" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
-              src={siteData?.trampolineIntro?.mainImgUrl || trampolineParkImg1}
+              src={getValidImageUrl(siteData?.trampolineIntro?.mainImgUrl, trampolineParkImg1)}
               alt="Trampoline Park Manufacturer in India"
               style={{
                 width: '100%',
@@ -468,7 +468,7 @@ export default function TrampolinePark({ siteData }) {
               zIndex: 2
             }}>
               <img
-                src={siteData?.trampolineCustom?.imgUrl || trampolineParkImg2}
+                src={getValidImageUrl(siteData?.trampolineCustom?.imgUrl, trampolineParkImg2)}
                 alt="Custom Trampoline Parks by Winera International"
                 style={{
                   width: '165px',
@@ -918,7 +918,7 @@ export default function TrampolinePark({ siteData }) {
             {/* Right Column: Graphic */}
             <div style={{ textAlign: 'center' }}>
               <img
-                src={siteData?.trampolineRoi?.imgUrl || tampolineImage6}
+                src={getValidImageUrl(siteData?.trampolineRoi?.imgUrl, tampolineImage6)}
                 alt="Trampoline Park ROI Report"
                 style={{
                   width: '100%',
