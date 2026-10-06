@@ -6,7 +6,7 @@ import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 import allArcadeProducts from '../data/allArcadeProducts.json';
-import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, X, Star, Video, Trophy, Sparkles, Calculator, Menu } from 'lucide-react';
+import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, X, Star, Video, Trophy, Sparkles, Calculator, Menu, Target } from 'lucide-react';
 import blogCardImg from '../assets/blog-images.webp';
 import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
 import ctaConsultationsBanner from '../assets/cta-consultations-banner.webp';
@@ -14,6 +14,19 @@ import vrCtaRightImg from '../assets/vr-cta-right-img.webp';
 import vrBlock1 from '../assets/vr-block-1.webp';
 import wineraLogo from '../assets/logo.webp';
 import heroBg from '../assets/home-page-banner-bg.webp';
+import laserTagImg1 from '../assets/laser-tag-1.png';
+import laserTagImg2 from '../assets/laser-tag-2.png';
+import laserTagImg3 from '../assets/laser-tag-3.png';
+import laserTagImg3Border from '../assets/laser-tag-3-border.png';
+import laserTagBg3 from '../assets/laser-tag-bg-3.png';
+import laserTagBg4 from '../assets/laser-tag-4.png';
+import laserTagImg5 from '../assets/laser-tag-5.png';
+import laserTagImg6 from '../assets/laser-tag-6.png';
+import laserTagImg6Bg from '../assets/laser-tag-6-bg.png';
+import laserTagImg6Small from '../assets/laser-tag-6-2.png';
+import laserTagImg6Btn from '../assets/laser-tag-6-button.png';
+import homePageIcon from '../assets/home-page-icon.png';
+import laserTagHeroBg from '../assets/blog-hero-bg.webp';
 
 import projectBanner from '../assets/project-banner.webp';
 import projectImage01 from '../assets/project-image01.webp';
@@ -369,6 +382,171 @@ const defaultHypergridCta = {
 const defaultHypergridSeo = {
   pageTitle: "Interactive LED Hypergrid Arena Manufacturer in India | Winera International",
   metaDescription: "Winera International is India's leading manufacturer of Interactive LED Hypergrid active gaming arenas, offering high-ROI illuminated floor tile systems and turnkey game zone setups."
+};
+
+const defaultLasertagHero = {
+  breadcrumbText: "Laser Tag",
+  bgUrl: laserTagHeroBg
+};
+
+const defaultLasertagIntro = {
+  titleHighlight: "Laser Tag Gaming Equipment",
+  titleNormal: "& Laser Spy Supplier in India",
+  title: "*Laser Tag Gaming<br/>Equipment* & Laser Spy<br/>Supplier in India",
+  desc: "Turn your venue into a place people book again and again. We set up complete laser tag and laser spy games for venues across India. arenas equipment, design, installation, and support handled by our own team across 50+ cities.",
+  buttonText: "Get A Quote",
+  buttonLink: "https://wa.me/919428989488",
+  waMessage: "Hello Winera International! I want to get a quote for Laser Tag & Laser Spy Equipment setup. Please share details.",
+  mainImgUrl: laserTagImg1
+};
+
+const defaultLasertagSetup = {
+  titleNormal: "One Team for Your Whole Laser",
+  titleHighlight: "Tag & Laser Spy Setup",
+  title: "One Team for Your Whole<br/>Laser *Tag & Laser Spy Setup*",
+  paragraph1: "Winera International has set up laser tag and laser spy games for entertainment centres, malls, hotels, schools, and resorts across India since 2014. Every setup comes with the full equipment, game software, scoreboards, and complete arena setup.",
+  paragraph2: "Before you order anything, we check your space size, how many players you want, and how you plan to run it. Then our own team handles everything — design, setup, and staff training across 50+ cities in India.",
+  mainImgUrl: laserTagImg2
+};
+
+const defaultLasertagGroups = {
+  titleHighlight: "Laser Tag - ",
+  titleNormal: "Great for Groups",
+  desc: "Laser tag fills fast because groups book many players at once at birthday parties, office teams, and school outings. We supply the complete game and set it up fully, so you're ready to take bookings from day one.",
+  listHeading: "What you get, fully set up:",
+  features: [
+    "Laser guns with lights and a small screen, and vests that show each hit right away",
+    "Wireless charging, so you don't have to wait between games",
+    "Home base points and power-ups that make the game more fun",
+    "A TV to explain the rules, and a live score screen that makes players want to play again",
+    "Full sound, game software, setup, and staff training all done by our team"
+  ],
+  mainImgUrl: laserTagImg3,
+  bgUrl: laserTagBg3
+};
+
+const defaultLasertagSpecs = {
+  titleHighlight: "Technical",
+  titleNormal: "Specifications",
+  title: "*Technical* Specifications",
+  bgUrl: laserTagBg4,
+  buttonText: "Download Our Brochure",
+  buttonLink: "https://wa.me/919428989488",
+  waMessage: "Hello Winera International! I want to download the Laser Tag Equipment & Setup Brochure. Please share details.",
+  specHeading: "Specification",
+  detailsHeading: "Details",
+  rows: [
+    { spec: "Players", details: "10 to 30+ simultaneously" },
+    { spec: "Guns & vests", details: "Start with 8, add more anytime" },
+    { spec: "Staff needed", details: "Just 1 person" },
+    { spec: "Game types", details: "Team battle, solo, elimination, capture the flag" },
+    { spec: "Lasts for", details: "8–10 years" }
+  ]
+};
+
+const defaultLasertagSpySpecs = {
+  titleHighlight: "Technical",
+  titleNormal: "Specifications",
+  title: "*Technical* Specifications",
+  bgUrl: laserTagBg4,
+  buttonText: "Download Our Brochure",
+  buttonLink: "https://wa.me/919428989488",
+  waMessage: "Hello Winera International! I want to download the Laser Spy Equipment & Setup Brochure. Please share details.",
+  specHeading: "Specification",
+  detailsHeading: "Details",
+  rows: [
+    { spec: "Smallest space", details: "150 sq ft" },
+    { spec: "Best space", details: "Around 560 sq ft" },
+    { spec: "Tasks", details: "3–4 team tasks + 1 main challenge" },
+    { spec: "Staff needed", details: "Just 1 person" },
+    { spec: "Scoreboard", details: "Automatic TV leaderboard" }
+  ]
+};
+
+const defaultLasertagSpace = {
+  titleHighlight: "How Much Space",
+  titleNormal: "You Need for Laser Tag",
+  desc: "A laser tag arena works from about 1,000 sq ft, but 2,500–5,000 sq ft is ideal; it gives players room to move, hide, and enjoy the game. Here's how the space is used:",
+  mainImgUrl: laserTagImg5,
+  zones: [
+    {
+      num: "01",
+      title: "BRIEFING AREA",
+      subtitle: "(EXPLAIN THE RULES)",
+      space: "~150 sq ft",
+      iconType: "rules"
+    },
+    {
+      num: "02",
+      title: "VESTING AREA",
+      subtitle: "(PLAYERS GEAR UP)",
+      space: "~250 sq ft",
+      iconType: "vest"
+    },
+    {
+      num: "03",
+      title: "PLAY AREA",
+      subtitle: "(COMBAT ZONE)",
+      space: "7–8 sq ft / pl",
+      iconType: "play"
+    }
+  ]
+};
+
+const defaultLasertagSpyFeatures = [
+  "Laser guns with lights and a small screen, and vests that show each hit right away",
+  "3 to 4 team games and one big final game",
+  "A 40-inch TV that shows the top players",
+  "Glowing lights, UV art, and smoke machines for a cool spy look",
+  "Control panels, game software, sound system, and staff training — all by our team"
+];
+
+const defaultLasertagSpy = {
+  titleDark: "Laser Spy — Laser ",
+  titleCyan: "Beam Game That Fits in a Small Room",
+  desc: "Laser spy is a room full of laser beams. Players have to move through them without touching any. People love it and come back again and again to beat their best score. And it fits in a small room, so you can add it even when you don't have much space. We supply and set up the full game, ready to play.",
+  listHeading: "What you get, fully set up:",
+  badgeText: "Small Space. Big Thrills.",
+  mainImgUrl: laserTagImg6,
+  borderImgUrl: laserTagImg6Bg,
+  smallImgUrl: laserTagImg6Small,
+  buttonImgUrl: laserTagImg6Btn,
+  bgUrl: laserTagBg3,
+  features: defaultLasertagSpyFeatures
+};
+
+const defaultLasertagComparison = {
+  title: "*Which Game Is* Right for Your Venue?",
+  features: [
+    "How to play",
+    "Space needed",
+    "Players at once",
+    "Best for",
+    "Earns money from",
+    "The feel"
+  ],
+  lasertagPoints: [
+    { text: "Teams shoot each other with laser guns in an open arena" },
+    { text: "A big open room" },
+    { text: "10 to 30+" },
+    { text: "Big groups, parties, and events" },
+    { text: "Group bookings and parties" },
+    { text: "Fast, active team battle" }
+  ],
+  laserspyPoints: [
+    { text: "Players move through laser beams without touching them" },
+    { text: "A small room (from 150 sq ft)" },
+    { text: "A few at a time" },
+    { text: "Quick play and small spaces" },
+    { text: "Repeat play and walk-ins" },
+    { text: "A cool spy-movie challenge" }
+  ],
+  note: "Not sure which fits your venue? Our team looks at your space and how you want to run it, then suggests the right game or both, if you have the room."
+};
+
+const defaultLasertagSeo = {
+  pageTitle: "Laser Tag Equipment Supplier in India | Winera International",
+  metaDescription: "Want to add laser tag or laser spy to your venue? Winera International handles the full setup, from arena design and gear to software and staff training."
 };
 
 const defaultProjectHero = {
@@ -1784,6 +1962,23 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'arFaqs', name: 'AR Games FAQs' },
         { id: 'arCta', name: 'CTA Consultations Banner' },
         { id: 'arSeo', name: 'SEO Meta Title & Description' }
+      ]
+    },
+    lasertag: {
+      label: 'Laser Tag Page',
+      icon: <Target style={{ width: '18px', height: '18px' }} />,
+      sections: [
+        { id: 'lasertagHero', name: 'Laser Tag Hero Banner' },
+        { id: 'lasertagIntro', name: 'Laser Tag Supplier Section' },
+        { id: 'lasertagSetup', name: 'Laser Tag Setup Section' },
+        { id: 'lasertagGroups', name: 'Great for Groups Section' },
+        { id: 'lasertagSpecs', name: 'Laser Tag Technical Specifications' },
+        { id: 'lasertagSpace', name: 'Space Requirements Section' },
+        { id: 'lasertagSpy', name: 'Laser Spy Section' },
+        { id: 'lasertagSpySpecs', name: 'Laser Spy Technical Specifications' },
+        { id: 'lasertagComparison', name: 'Game Comparison Section' },
+        { id: 'lasertagRelated', name: 'Related Products Carousel' },
+        { id: 'lasertagSeo', name: 'SEO Meta Title & Description' }
       ]
     },
     projectPage: {
@@ -13472,61 +13667,1423 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           )}
 
           {/* LASER TAG HERO BANNER FORM */}
-          {activeSection === 'lasertagHero' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Laser Tag Hero Banner Settings</h3>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Hero Background Image</label>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  {formData.lasertagHero?.bgUrl && (
-                    <img
-                      src={formData.lasertagHero.bgUrl}
-                      alt="Hero Background Preview"
-                      style={{ width: '120px', height: '70px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+          {activeSection === 'lasertagHero' && (() => {
+            const currentSec = formData.lasertagHero || defaultLasertagHero;
+            const heroImg = getAdminValidImageUrl(currentSec.bgUrl, defaultLasertagHero.bgUrl);
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Tag Hero Banner Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 550 px (Aspect Ratio 16:9 / Banner)</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={heroImg} alt="Hero Preview" style={{ width: '120px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), bgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Label</label>
+                    <input
+                      type="text"
+                      value={currentSec.breadcrumbText !== undefined ? currentSec.breadcrumbText : defaultLasertagHero.breadcrumbText}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), breadcrumbText: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                     />
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={async (e) => {
-                      const file = e.target.files[0];
-                      if (file) {
-                        try {
-                          const res = await uploadImageFile(file, admin.token);
-                          if (res.url) {
-                            handleFieldChange('lasertagHero', 'bgUrl', res.url);
-                          }
-                        } catch (err) {
-                          console.error('Image upload failed', err);
-                        }
-                      }
-                    }}
-                    style={{ fontSize: '13px' }}
-                  />
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('lasertagHero', formData.lasertagHero || defaultLasertagHero)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    >
+                      Save Laser Tag Hero Section
+                    </button>
+                  </div>
                 </div>
               </div>
+            );
+          })()}
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Breadcrumb Label</label>
-                <input
-                  type="text"
-                  value={formData.lasertagHero?.breadcrumbText || 'Laser Tag'}
-                  onChange={(e) => handleFieldChange('lasertagHero', 'breadcrumbText', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+          {/* LASER TAG SUPPLIER INTRO FORM */}
+          {activeSection === 'lasertagIntro' && (() => {
+            const currentSec = formData.lasertagIntro || defaultLasertagIntro;
+            const mainImg = getAdminValidImageUrl(currentSec.mainImgUrl, defaultLasertagIntro.mainImgUrl);
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Tag Supplier Section Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0284c7', marginBottom: '8px' }}>
+                        Cyan Highlighted Title <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>Blue Color</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.titleHighlight !== undefined ? currentSec.titleHighlight : (defaultLasertagIntro.titleHighlight || "Laser Tag Gaming Equipment")}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), titleHighlight: e.target.value } }))}
+                        placeholder="e.g. Laser Tag Gaming Equipment"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #38bdf8', fontSize: '14px', fontWeight: '600', color: '#0284c7' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Remaining Dark Title <span style={{ fontSize: '11px', color: '#475569', background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>Dark Color</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.titleNormal !== undefined ? currentSec.titleNormal : (defaultLasertagIntro.titleNormal || "& Laser Spy Supplier in India")}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), titleNormal: e.target.value } }))}
+                        placeholder="e.g. & Laser Spy Supplier in India"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600', color: '#0f172a' }}
+                      />
+                    </div>
+                  </div>
 
-              <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                <button
-                  onClick={() => persistSectionToDatabase('lasertagHero', formData.lasertagHero || {})}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
-                  Save Laser Tag Hero Section
-                </button>
+                  {/* Live Visual Title Preview */}
+                  <div style={{ background: '#f8fafc', border: '1px dashed #94a3b8', borderRadius: '12px', padding: '12px 16px' }}>
+                    <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Live Title Preview on Website:</span>
+                    <div style={{ fontSize: '18px', fontWeight: '900', marginTop: '4px', lineHeight: 1.25 }}>
+                      <span style={{ color: '#38bdf8' }}>{currentSec.titleHighlight || defaultLasertagIntro.titleHighlight}</span>
+                      {' '}
+                      <span style={{ color: '#0f172a' }}>{currentSec.titleNormal || defaultLasertagIntro.titleNormal}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.desc !== undefined ? currentSec.desc : defaultLasertagIntro.desc}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), desc: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultLasertagIntro.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                      <input
+                        type="text"
+                        value={(currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultLasertagIntro.buttonLink}
+                        onChange={(e) => {
+                          const baseLink = e.target.value;
+                          const msg = currentSec.waMessage || defaultLasertagIntro.waMessage;
+                          const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
+                          setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), buttonLink: updatedLink } }));
+                        }}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: '4px' }}>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      WhatsApp Auto Pre-filled Message (Readable Text) <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>💬 Sent when user clicks Get A Quote</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={(() => {
+                        if (currentSec.waMessage !== undefined && currentSec.waMessage !== '') return currentSec.waMessage;
+                        if (currentSec.buttonLink && currentSec.buttonLink.includes('text=')) {
+                          try {
+                            const match = currentSec.buttonLink.match(/text=([^&]+)/);
+                            if (match && match[1]) return decodeURIComponent(match[1]);
+                          } catch (err) { }
+                        }
+                        return defaultLasertagIntro.waMessage;
+                      })()}
+                      onChange={(e) => {
+                        const newMsg = e.target.value;
+                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || defaultLasertagIntro.buttonLink;
+                        const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
+                        setFormData(prev => ({
+                          ...prev,
+                          lasertagIntro: {
+                            ...(prev.lasertagIntro || defaultLasertagIntro),
+                            waMessage: newMsg,
+                            buttonLink: updatedLink
+                          }
+                        }));
+                      }}
+                      placeholder="e.g. Hello Winera International! I want to get a quote..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5, color: '#0f172a', fontWeight: '500' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Right Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 620 × 450 px (Aspect Ratio ~ 4:3 / 16:9 PNG)</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.mainImgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), mainImgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), mainImgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('lasertagIntro', formData.lasertagIntro || defaultLasertagIntro)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    >
+                      Save Laser Tag Supplier Section
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
+
+          {/* LASER TAG SETUP (BLOCK 2) FORM */}
+          {activeSection === 'lasertagSetup' && (() => {
+            const currentSec = formData.lasertagSetup || defaultLasertagSetup;
+            const mainImg = getAdminValidImageUrl(currentSec.mainImgUrl, defaultLasertagSetup.mainImgUrl);
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Tag Setup (Block 2) Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Main Dark Title <span style={{ fontSize: '11px', color: '#475569', background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>Dark Color</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.titleNormal !== undefined ? currentSec.titleNormal : (defaultLasertagSetup.titleNormal || "One Team for Your Whole Laser")}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), titleNormal: e.target.value } }))}
+                        placeholder="e.g. One Team for Your Whole Laser"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600', color: '#0f172a' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0284c7', marginBottom: '8px' }}>
+                        Cyan Highlighted Title <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>Blue Color</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.titleHighlight !== undefined ? currentSec.titleHighlight : (defaultLasertagSetup.titleHighlight || "Tag & Laser Spy Setup")}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), titleHighlight: e.target.value } }))}
+                        placeholder="e.g. Tag & Laser Spy Setup"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #38bdf8', fontSize: '14px', fontWeight: '600', color: '#0284c7' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Live Visual Title Preview */}
+                  <div style={{ background: '#f8fafc', border: '1px dashed #94a3b8', borderRadius: '12px', padding: '12px 16px' }}>
+                    <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Live Title Preview on Website:</span>
+                    <div style={{ fontSize: '18px', fontWeight: '900', marginTop: '4px', lineHeight: 1.25 }}>
+                      <span style={{ color: '#0f172a' }}>{currentSec.titleNormal || defaultLasertagSetup.titleNormal}</span>
+                      {' '}
+                      <span style={{ color: '#38bdf8' }}>{currentSec.titleHighlight || defaultLasertagSetup.titleHighlight}</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>First Paragraph</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultLasertagSetup.paragraph1}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), paragraph1: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Second Paragraph</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultLasertagSetup.paragraph2}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), paragraph2: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Left Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 520 × 450 px (Aspect Ratio ~ 4:3 / 1:1 PNG)</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.mainImgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), mainImgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), mainImgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('lasertagSetup', formData.lasertagSetup || defaultLasertagSetup)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    >
+                      Save Laser Tag Setup Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* LASER TAG GREAT FOR GROUPS (BLOCK 3) FORM */}
+          {activeSection === 'lasertagGroups' && (() => {
+            const currentSec = formData.lasertagGroups || defaultLasertagGroups;
+            const mainImg = getAdminValidImageUrl(currentSec.mainImgUrl, defaultLasertagGroups.mainImgUrl);
+            const currentFeatures = Array.isArray(currentSec.features) && currentSec.features.length > 0
+              ? currentSec.features
+              : defaultLasertagGroups.features;
+
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Tag - Great for Groups (Block 3) Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  
+                  {/* Title Fields */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0284c7', marginBottom: '8px' }}>
+                        Cyan Highlighted Title <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>Blue Color</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.titleHighlight !== undefined ? currentSec.titleHighlight : (defaultLasertagGroups.titleHighlight || "Laser Tag - ")}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), titleHighlight: e.target.value } }))}
+                        placeholder="e.g. Laser Tag - "
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #38bdf8', fontSize: '14px', fontWeight: '600', color: '#0284c7' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Main Dark Title <span style={{ fontSize: '11px', color: '#475569', background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>Dark Color</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.titleNormal !== undefined ? currentSec.titleNormal : (defaultLasertagGroups.titleNormal || "Great for Groups")}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), titleNormal: e.target.value } }))}
+                        placeholder="e.g. Great for Groups"
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '600', color: '#0f172a' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Live Visual Title Preview */}
+                  <div style={{ background: '#f8fafc', border: '1px dashed #94a3b8', borderRadius: '12px', padding: '12px 16px', textAlign: 'center' }}>
+                    <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Live Title Preview on Website:</span>
+                    <div style={{ fontSize: '20px', fontWeight: '900', marginTop: '6px', lineHeight: 1.25 }}>
+                      <span style={{ color: '#38bdf8' }}>{currentSec.titleHighlight || defaultLasertagGroups.titleHighlight}</span>
+                      <span style={{ color: '#0f172a' }}>{currentSec.titleNormal || defaultLasertagGroups.titleNormal}</span>
+                    </div>
+                  </div>
+
+                  {/* Section Description */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Subtitle / Description</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.desc !== undefined ? currentSec.desc : defaultLasertagGroups.desc}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), desc: e.target.value } }))}
+                      placeholder="Enter subtitle description..."
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                    />
+                  </div>
+
+                  {/* Checklist Subheading */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Checklist Heading</label>
+                    <input
+                      type="text"
+                      value={currentSec.listHeading !== undefined ? currentSec.listHeading : defaultLasertagGroups.listHeading}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), listHeading: e.target.value } }))}
+                      placeholder="e.g. What you get, fully set up:"
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700' }}
+                    />
+                  </div>
+
+                  {/* Checklist Features Manager */}
+                  <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                        Checklist Bullet Points ({currentFeatures.length} items)
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...currentFeatures, "New setup feature item"];
+                          setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), features: updated } }));
+                        }}
+                        style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        <Plus style={{ width: '14px', height: '14px' }} /> Add Point
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {currentFeatures.map((item, idx) => (
+                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <img src={homePageIcon} alt="check" style={{ width: '16px', height: '16px', flexShrink: 0 }} />
+                          <input
+                            type="text"
+                            value={item}
+                            onChange={(e) => {
+                              const updated = [...currentFeatures];
+                              updated[idx] = e.target.value;
+                              setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), features: updated } }));
+                            }}
+                            placeholder={`Point ${idx + 1}...`}
+                            style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px' }}
+                          />
+                          {currentFeatures.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = currentFeatures.filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), features: updated } }));
+                              }}
+                              style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '10px', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px' }} />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right Graphic Image */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Right Photo Graphic <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 616 × 482 px (PNG / WebP)</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={mainImg} alt="Graphic Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.mainImgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), mainImgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), mainImgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('lasertagGroups', formData.lasertagGroups || defaultLasertagGroups)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    >
+                      Save Great for Groups Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* LASER TAG TECHNICAL SPECIFICATIONS (BLOCK 4) FORM */}
+          {activeSection === 'lasertagSpecs' && (() => {
+            const currentSec = formData.lasertagSpecs || defaultLasertagSpecs;
+            const bgImg = getAdminValidImageUrl(currentSec.bgUrl, defaultLasertagSpecs.bgUrl);
+            const currentRows = Array.isArray(currentSec.rows) && currentSec.rows.length > 0
+              ? currentSec.rows
+              : defaultLasertagSpecs.rows;
+
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Tag - Technical Specifications (Block 4) Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  
+                  {/* Title Inputs with Color Separation */}
+                  <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#eab308', marginBottom: '8px' }}>
+                          🟡 Yellow Highlighted Title
+                        </label>
+                        <input
+                          type="text"
+                          value={currentSec.titleHighlight !== undefined ? currentSec.titleHighlight : defaultLasertagSpecs.titleHighlight}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), titleHighlight: e.target.value } }))}
+                          placeholder="e.g. Technical"
+                          style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                          ⚪ Main Title
+                        </label>
+                        <input
+                          type="text"
+                          value={currentSec.titleNormal !== undefined ? currentSec.titleNormal : defaultLasertagSpecs.titleNormal}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), titleNormal: e.target.value } }))}
+                          placeholder="e.g. Specifications"
+                          style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700' }}
+                        />
+                      </div>
+                    </div>
+                    {/* Live Preview */}
+                    <div style={{ marginTop: '14px', padding: '10px 16px', background: '#051b47', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '11.5px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase' }}>Preview:</span>
+                      <span style={{ fontSize: '18px', fontWeight: '900', color: '#eab308' }}>
+                        {currentSec.titleHighlight !== undefined ? currentSec.titleHighlight : defaultLasertagSpecs.titleHighlight}
+                      </span>
+                      <span style={{ fontSize: '18px', fontWeight: '900', color: '#ffffff' }}>
+                        {currentSec.titleNormal !== undefined ? currentSec.titleNormal : defaultLasertagSpecs.titleNormal}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Table Column Headers */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Table Column 1 Heading</label>
+                      <input
+                        type="text"
+                        value={currentSec.specHeading !== undefined ? currentSec.specHeading : defaultLasertagSpecs.specHeading}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), specHeading: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Table Column 2 Heading</label>
+                      <input
+                        type="text"
+                        value={currentSec.detailsHeading !== undefined ? currentSec.detailsHeading : defaultLasertagSpecs.detailsHeading}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), detailsHeading: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Table Rows Manager */}
+                  <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>
+                        Specifications Table Rows ({currentRows.length})
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...currentRows, { spec: "New Specification", details: "Specification details here" }];
+                          setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), rows: updated } }));
+                        }}
+                        style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer' }}
+                      >
+                        + Add Spec Row
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {currentRows.map((row, idx) => (
+                        <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 42px', gap: '10px', alignItems: 'center' }}>
+                          <input
+                            type="text"
+                            value={row.spec || ''}
+                            onChange={(e) => {
+                              const updated = [...currentRows];
+                              updated[idx] = { ...updated[idx], spec: e.target.value };
+                              setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), rows: updated } }));
+                            }}
+                            placeholder="Specification (e.g. Players)"
+                            style={{ padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <input
+                            type="text"
+                            value={row.details || row.detail || row.value || ''}
+                            onChange={(e) => {
+                              const updated = [...currentRows];
+                              updated[idx] = { ...updated[idx], details: e.target.value };
+                              setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), rows: updated } }));
+                            }}
+                            placeholder="Details (e.g. 10 to 30+ simultaneously)"
+                            style={{ padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                          {currentRows.length > 1 ? (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = currentRows.filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), rows: updated } }));
+                              }}
+                              style={{ background: '#fee2e2', color: '#ef4444', border: 'none', width: '38px', height: '38px', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px' }} />
+                            </button>
+                          ) : <div />}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Button Settings */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultLasertagSpecs.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Target URL / WhatsApp Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultLasertagSpecs.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Pre-filled WhatsApp Message</label>
+                    <input
+                      type="text"
+                      value={currentSec.waMessage !== undefined ? currentSec.waMessage : defaultLasertagSpecs.waMessage}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), waMessage: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  {/* Card Background Graphic */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Card Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1440 × 779 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={bgImg} alt="BG Preview" style={{ width: '110px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), bgUrl: e.target.value } }))}
+                        placeholder="Background Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('lasertagSpecs', formData.lasertagSpecs || defaultLasertagSpecs)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    >
+                      Save Technical Specifications Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* LASER TAG SPACE REQUIREMENTS (BLOCK 5) FORM */}
+          {activeSection === 'lasertagSpace' && (() => {
+            const currentSec = formData.lasertagSpace || defaultLasertagSpace;
+            const mainImg = getAdminValidImageUrl(currentSec.mainImgUrl, defaultLasertagSpace.mainImgUrl);
+            const currentZones = Array.isArray(currentSec.zones) && currentSec.zones.length > 0
+              ? currentSec.zones
+              : defaultLasertagSpace.zones;
+
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Tag - Space Requirements (Block 5) Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  
+                  {/* Title Inputs with Color Separation */}
+                  <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0284c7', marginBottom: '8px' }}>
+                          🔵 Cyan Highlighted Title
+                        </label>
+                        <input
+                          type="text"
+                          value={currentSec.titleHighlight !== undefined ? currentSec.titleHighlight : defaultLasertagSpace.titleHighlight}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), titleHighlight: e.target.value } }))}
+                          placeholder="e.g. How Much Space"
+                          style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                          ⚫ Main Dark Title
+                        </label>
+                        <input
+                          type="text"
+                          value={currentSec.titleNormal !== undefined ? currentSec.titleNormal : defaultLasertagSpace.titleNormal}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), titleNormal: e.target.value } }))}
+                          placeholder="e.g. You Need for Laser Tag"
+                          style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700' }}
+                        />
+                      </div>
+                    </div>
+                    {/* Live Preview */}
+                    <div style={{ marginTop: '14px', padding: '10px 16px', background: '#ffffff', borderRadius: '10px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '11.5px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase' }}>Preview:</span>
+                      <span style={{ fontSize: '18px', fontWeight: '900', color: '#38bdf8' }}>
+                        {currentSec.titleHighlight !== undefined ? currentSec.titleHighlight : defaultLasertagSpace.titleHighlight}
+                      </span>
+                      <span style={{ fontSize: '18px', fontWeight: '900', color: '#0f172a' }}>
+                        {currentSec.titleNormal !== undefined ? currentSec.titleNormal : defaultLasertagSpace.titleNormal}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Description Textarea */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Text</label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.desc !== undefined ? currentSec.desc : defaultLasertagSpace.desc}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), desc: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.5 }}
+                    />
+                  </div>
+
+                  {/* Zones Table Manager */}
+                  <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>
+                        Space Breakdown Zones ({currentZones.length})
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const nextNum = currentZones.length + 1 < 10 ? `0${currentZones.length + 1}` : `${currentZones.length + 1}`;
+                          const updated = [...currentZones, { num: nextNum, title: "NEW ZONE AREA", subtitle: "(ZONE PURPOSE)", space: "~200 sq ft", iconType: "rules" }];
+                          setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), zones: updated } }));
+                        }}
+                        style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer' }}
+                      >
+                        + Add Zone Row
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {currentZones.map((zone, idx) => (
+                        <div key={idx} style={{ display: 'grid', gridTemplateColumns: '70px 1.2fr 1.2fr 1fr 42px', gap: '10px', alignItems: 'center' }}>
+                          <input
+                            type="text"
+                            value={zone.num || ''}
+                            onChange={(e) => {
+                              const updated = [...currentZones];
+                              updated[idx] = { ...updated[idx], num: e.target.value };
+                              setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), zones: updated } }));
+                            }}
+                            placeholder="01"
+                            style={{ padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '800', textAlign: 'center' }}
+                          />
+                          <input
+                            type="text"
+                            value={zone.title || ''}
+                            onChange={(e) => {
+                              const updated = [...currentZones];
+                              updated[idx] = { ...updated[idx], title: e.target.value };
+                              setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), zones: updated } }));
+                            }}
+                            placeholder="Title (e.g. BRIEFING AREA)"
+                            style={{ padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <input
+                            type="text"
+                            value={zone.subtitle || ''}
+                            onChange={(e) => {
+                              const updated = [...currentZones];
+                              updated[idx] = { ...updated[idx], subtitle: e.target.value };
+                              setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), zones: updated } }));
+                            }}
+                            placeholder="Subtitle (e.g. (EXPLAIN THE RULES))"
+                            style={{ padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                          <input
+                            type="text"
+                            value={zone.space || ''}
+                            onChange={(e) => {
+                              const updated = [...currentZones];
+                              updated[idx] = { ...updated[idx], space: e.target.value };
+                              setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), zones: updated } }));
+                            }}
+                            placeholder="Space (e.g. ~150 sq ft)"
+                            style={{ padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          {currentZones.length > 1 ? (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = currentZones.filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), zones: updated } }));
+                              }}
+                              style={{ background: '#fee2e2', color: '#ef4444', border: 'none', width: '38px', height: '38px', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px' }} />
+                            </button>
+                          ) : <div />}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right 3D Schematic Image Graphic */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Right 3D Arena Schematic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 727 × 350 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={mainImg} alt="Arena Preview" style={{ width: '110px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.mainImgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), mainImgUrl: e.target.value } }))}
+                        placeholder="Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), mainImgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('lasertagSpace', formData.lasertagSpace || defaultLasertagSpace)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    >
+                      Save Space Requirements Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* LASER TAG - LASER SPY SECTION FORM */}
+          {activeSection === 'lasertagSpy' && (() => {
+            const spyData = formData.lasertagSpy || defaultLasertagSpy;
+            const features = Array.isArray(spyData.features) ? spyData.features : defaultLasertagSpyFeatures;
+
+            const handleSpyChange = (field, val) => {
+              setFormData(prev => ({
+                ...prev,
+                lasertagSpy: {
+                  ...(prev.lasertagSpy || defaultLasertagSpy),
+                  [field]: val
+                }
+              }));
+            };
+
+            const handleFeatureChange = (idx, val) => {
+              const updated = [...features];
+              updated[idx] = val;
+              handleSpyChange('features', updated);
+            };
+
+            const addFeature = () => {
+              handleSpyChange('features', [...features, 'New setup item']);
+            };
+
+            const removeFeature = (idx) => {
+              handleSpyChange('features', features.filter((_, i) => i !== idx));
+            };
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                    Laser Spy — Laser Beam Game Section (Small Space)
+                  </h3>
+                  <button
+                    onClick={() => persistSectionToDatabase('lasertagSpy', formData.lasertagSpy || defaultLasertagSpy)}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '10px 22px', borderRadius: '10px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)' }}
+                  >
+                    Save Laser Spy Section
+                  </button>
+                </div>
+
+                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#64748b', marginBottom: '6px' }}>Title (Dark Part):</label>
+                      <input
+                        type="text"
+                        value={spyData.titleDark ?? "Laser Spy — Laser "}
+                        onChange={(e) => handleSpyChange('titleDark', e.target.value)}
+                        style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#64748b', marginBottom: '6px' }}>Title (Cyan Highlight Part):</label>
+                      <input
+                        type="text"
+                        value={spyData.titleCyan ?? "Beam Game That Fits in a Small Room"}
+                        onChange={(e) => handleSpyChange('titleCyan', e.target.value)}
+                        style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#64748b', marginBottom: '6px' }}>Section Description:</label>
+                    <textarea
+                      rows={3}
+                      value={spyData.desc ?? ""}
+                      onChange={(e) => handleSpyChange('desc', e.target.value)}
+                      style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', lineHeight: 1.5 }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#64748b', marginBottom: '6px' }}>List Heading:</label>
+                      <input
+                        type="text"
+                        value={spyData.listHeading ?? "What you get, fully set up:"}
+                        onChange={(e) => handleSpyChange('listHeading', e.target.value)}
+                        style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#64748b', marginBottom: '6px' }}>Small Badge Text:</label>
+                      <input
+                        type="text"
+                        value={spyData.badgeText ?? "Small Space. Big Thrills."}
+                        onChange={(e) => handleSpyChange('badgeText', e.target.value)}
+                        style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* IMAGES UPLOADER SECTION */}
+                  <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
+                    <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#1e293b', marginBottom: '14px' }}>Section Image</h4>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#64748b', marginBottom: '6px' }}>
+                        Big Main Arena Image: <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 630 × 492 px</span>
+                      </label>
+                      <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                        <img src={spyData.mainImgUrl || laserTagImg6} alt="Main" style={{ width: '90px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }} />
+                        <input
+                          type="text"
+                          value={spyData.mainImgUrl || ''}
+                          onChange={(e) => handleSpyChange('mainImgUrl', e.target.value)}
+                          placeholder="Image URL or Asset Path"
+                          style={{ flex: 1, padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                        <label style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <Upload style={{ width: '15px', height: '15px' }} /> Upload
+                          <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => e.target.files?.[0] && handleCloudinaryUpload(e.target.files[0], (url) => handleSpyChange('mainImgUrl', url))} />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* FEATURES LIST */}
+                  <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#1e293b', margin: 0 }}>Checklist Items</h4>
+                      <button
+                        onClick={addFeature}
+                        style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', color: '#0f172a', padding: '6px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                      >
+                        + Add Item
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {features.map((feat, fIdx) => (
+                        <div key={fIdx} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                          <span style={{ fontSize: '12px', fontWeight: '700', color: '#64748b', width: '24px' }}>#{fIdx + 1}</span>
+                          <input
+                            type="text"
+                            value={feat}
+                            onChange={(e) => handleFeatureChange(fIdx, e.target.value)}
+                            style={{ flex: 1, padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                          <button
+                            onClick={() => removeFeature(fIdx)}
+                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '6px 10px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('lasertagSpy', formData.lasertagSpy || defaultLasertagSpy)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    >
+                      Save Laser Spy Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* LASER SPY TECHNICAL SPECIFICATIONS FORM */}
+          {activeSection === 'lasertagSpySpecs' && (() => {
+            const currentSec = formData.lasertagSpySpecs || defaultLasertagSpySpecs;
+            const bgImg = getAdminValidImageUrl(currentSec.bgUrl, defaultLasertagSpySpecs.bgUrl);
+            const currentRows = Array.isArray(currentSec.rows) && currentSec.rows.length > 0
+              ? currentSec.rows
+              : defaultLasertagSpySpecs.rows;
+
+            return (
+              <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Spy - Technical Specifications Settings</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  
+                  {/* Title Inputs with Color Separation */}
+                  <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#eab308', marginBottom: '8px' }}>
+                          🟡 Yellow Highlighted Title
+                        </label>
+                        <input
+                          type="text"
+                          value={currentSec.titleHighlight !== undefined ? currentSec.titleHighlight : defaultLasertagSpySpecs.titleHighlight}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), titleHighlight: e.target.value } }))}
+                          placeholder="e.g. Technical"
+                          style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                          ⚪ Main Title
+                        </label>
+                        <input
+                          type="text"
+                          value={currentSec.titleNormal !== undefined ? currentSec.titleNormal : defaultLasertagSpySpecs.titleNormal}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), titleNormal: e.target.value } }))}
+                          placeholder="e.g. Specifications"
+                          style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontWeight: '700' }}
+                        />
+                      </div>
+                    </div>
+                    {/* Live Preview */}
+                    <div style={{ marginTop: '14px', padding: '10px 16px', background: '#051b47', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '11.5px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase' }}>Preview:</span>
+                      <span style={{ fontSize: '18px', fontWeight: '900', color: '#eab308' }}>
+                        {currentSec.titleHighlight !== undefined ? currentSec.titleHighlight : defaultLasertagSpySpecs.titleHighlight}
+                      </span>
+                      <span style={{ fontSize: '18px', fontWeight: '900', color: '#ffffff' }}>
+                        {currentSec.titleNormal !== undefined ? currentSec.titleNormal : defaultLasertagSpySpecs.titleNormal}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Table Column Headers */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Table Column 1 Heading</label>
+                      <input
+                        type="text"
+                        value={currentSec.specHeading !== undefined ? currentSec.specHeading : defaultLasertagSpySpecs.specHeading}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), specHeading: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Table Column 2 Heading</label>
+                      <input
+                        type="text"
+                        value={currentSec.detailsHeading !== undefined ? currentSec.detailsHeading : defaultLasertagSpySpecs.detailsHeading}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), detailsHeading: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Table Rows Manager */}
+                  <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>
+                        Specifications Table Rows ({currentRows.length})
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...currentRows, { spec: "New Specification", details: "Specification details here" }];
+                          setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), rows: updated } }));
+                        }}
+                        style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', fontSize: '12px', cursor: 'pointer' }}
+                      >
+                        + Add Spec Row
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {currentRows.map((row, idx) => (
+                        <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 42px', gap: '10px', alignItems: 'center' }}>
+                          <input
+                            type="text"
+                            value={row.spec || ''}
+                            onChange={(e) => {
+                              const updated = [...currentRows];
+                              updated[idx] = { ...updated[idx], spec: e.target.value };
+                              setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), rows: updated } }));
+                            }}
+                            placeholder="Specification (e.g. Smallest space)"
+                            style={{ padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                          />
+                          <input
+                            type="text"
+                            value={row.details || row.detail || row.value || ''}
+                            onChange={(e) => {
+                              const updated = [...currentRows];
+                              updated[idx] = { ...updated[idx], details: e.target.value };
+                              setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), rows: updated } }));
+                            }}
+                            placeholder="Details (e.g. 150 sq ft)"
+                            style={{ padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                          />
+                          {currentRows.length > 1 ? (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = currentRows.filter((_, i) => i !== idx);
+                                setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), rows: updated } }));
+                              }}
+                              style={{ background: '#fee2e2', color: '#ef4444', border: 'none', width: '38px', height: '38px', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px' }} />
+                            </button>
+                          ) : <div />}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Button Settings */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonText !== undefined ? currentSec.buttonText : defaultLasertagSpySpecs.buttonText}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), buttonText: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Target URL / WhatsApp Link</label>
+                      <input
+                        type="text"
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultLasertagSpySpecs.buttonLink}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), buttonLink: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Pre-filled WhatsApp Message</label>
+                    <input
+                      type="text"
+                      value={currentSec.waMessage !== undefined ? currentSec.waMessage : defaultLasertagSpySpecs.waMessage}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), waMessage: e.target.value } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  {/* Card Background Graphic */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Card Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1440 × 779 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img src={bgImg} alt="BG Preview" style={{ width: '110px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <input
+                        type="text"
+                        value={currentSec.bgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), bgUrl: e.target.value } }))}
+                        placeholder="Background Image URL or Asset Path"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), bgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('lasertagSpySpecs', formData.lasertagSpySpecs || defaultLasertagSpySpecs)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    >
+                      Save Laser Spy Specifications Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* LASER TAG GAME COMPARISON FORM */}
+          {activeSection === 'lasertagComparison' && (() => {
+            const currentSec = formData.lasertagComparison || defaultLasertagComparison;
+            const features = currentSec.features || defaultLasertagComparison.features;
+            const lasertagPoints = currentSec.lasertagPoints || defaultLasertagComparison.lasertagPoints;
+            const laserspyPoints = currentSec.laserspyPoints || defaultLasertagComparison.laserspyPoints;
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                      Laser Tag vs Laser Spy Comparison Section
+                    </h3>
+                    <p style={{ fontSize: '13px', color: '#64748b', margin: '4px 0 0' }}>
+                      Manage title, 6 comparison parameters, points for both games, and bottom advisory note.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => persistSectionToDatabase('lasertagComparison', formData.lasertagComparison || defaultLasertagComparison)}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '10px 22px', borderRadius: '10px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                  >
+                    Save Changes
+                  </button>
+                </div>
+
+                <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>
+                      Main Heading <span style={{ fontSize: '12px', fontWeight: '500', color: '#64748b' }}>(use *word* for cyan highlight)</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={currentSec.title || ''}
+                      onChange={(e) => setFormData(prev => ({
+                        ...prev,
+                        lasertagComparison: { ...(prev.lasertagComparison || defaultLasertagComparison), title: e.target.value }
+                      }))}
+                      style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', background: '#ffffff', color: '#0f172a' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>
+                      Bottom Advice Note
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={currentSec.note || ''}
+                      onChange={(e) => setFormData(prev => ({
+                        ...prev,
+                        lasertagComparison: { ...(prev.lasertagComparison || defaultLasertagComparison), note: e.target.value }
+                      }))}
+                      style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', background: '#ffffff', color: '#0f172a', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  {/* 6 COMPARISON ROWS */}
+                  <div>
+                    <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                      6 Comparison Parameters & Points (01 to 06)
+                    </h4>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                      {features.map((featureName, idx) => (
+                        <div key={idx} style={{ background: '#ffffff', padding: '14px 18px', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <span style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#0284c7', color: '#fff', fontSize: '12px', fontWeight: '800', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                              {String(idx + 1).padStart(2, '0')}
+                            </span>
+                            <div style={{ flex: 1 }}>
+                              <label style={{ display: 'block', fontWeight: '700', fontSize: '11.5px', color: '#64748b', marginBottom: '4px' }}>
+                                Center Parameter Name
+                              </label>
+                              <input
+                                type="text"
+                                value={featureName || ''}
+                                onChange={(e) => {
+                                  const updated = [...features];
+                                  updated[idx] = e.target.value;
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    lasertagComparison: { ...(prev.lasertagComparison || defaultLasertagComparison), features: updated }
+                                  }));
+                                }}
+                                style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', background: '#f8fafc', color: '#0f172a' }}
+                              />
+                            </div>
+                          </div>
+
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '4px' }}>
+                            {/* Laser Tag Yellow Point */}
+                            <div style={{ background: '#fefce8', padding: '10px 14px', borderRadius: '10px', border: '1px solid #fef08a' }}>
+                              <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#854d0e', marginBottom: '4px' }}>
+                                🔫 Laser Tag Point #{idx + 1}
+                              </label>
+                              <textarea
+                                rows={2}
+                                value={lasertagPoints[idx]?.text || ''}
+                                onChange={(e) => {
+                                  const updated = [...lasertagPoints];
+                                  updated[idx] = { ...updated[idx], text: e.target.value };
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    lasertagComparison: { ...(prev.lasertagComparison || defaultLasertagComparison), lasertagPoints: updated }
+                                  }));
+                                }}
+                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #fde047', fontSize: '12.5px', background: '#ffffff', color: '#0f172a', resize: 'vertical' }}
+                              />
+                            </div>
+
+                            {/* Laser Spy Cyan Point */}
+                            <div style={{ background: '#f0f9ff', padding: '10px 14px', borderRadius: '10px', border: '1px solid #bae6fd' }}>
+                              <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#0369a1', marginBottom: '4px' }}>
+                                🎯 Laser Spy Point #{idx + 1}
+                              </label>
+                              <textarea
+                                rows={2}
+                                value={laserspyPoints[idx]?.text || ''}
+                                onChange={(e) => {
+                                  const updated = [...laserspyPoints];
+                                  updated[idx] = { ...updated[idx], text: e.target.value };
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    lasertagComparison: { ...(prev.lasertagComparison || defaultLasertagComparison), laserspyPoints: updated }
+                                  }));
+                                }}
+                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #7dd3fc', fontSize: '12.5px', background: '#ffffff', color: '#0f172a', resize: 'vertical' }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <button
+                      onClick={() => persistSectionToDatabase('lasertagComparison', formData.lasertagComparison || defaultLasertagComparison)}
+                      style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    >
+                      Save Comparison Section
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* VR GAMING MACHINE SUPPLIER FORM */}
           {activeSection === 'vrSupplier' && (
@@ -21882,7 +23439,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           })()}
 
           {/* FALLBACK FOR OTHER UNCHECKED SECTIONS */}
-          {!activeSection.endsWith('Related') && !activeSection.endsWith('Seo') && !activeSection.startsWith('bowling') && !activeSection.startsWith('amusement') && !activeSection.startsWith('bumper') && !activeSection.startsWith('vr') && !activeSection.startsWith('ar') && !activeSection.startsWith('softplay') && !activeSection.startsWith('home') && !activeSection.startsWith('about') && !activeSection.startsWith('contact') && !activeSection.startsWith('terms') && !activeSection.startsWith('privacy') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo', 'header', 'footer'].includes(activeSection) && (
+          {!activeSection.endsWith('Related') && !activeSection.endsWith('Seo') && !activeSection.startsWith('lasertag') && !activeSection.startsWith('bowling') && !activeSection.startsWith('amusement') && !activeSection.startsWith('bumper') && !activeSection.startsWith('vr') && !activeSection.startsWith('ar') && !activeSection.startsWith('softplay') && !activeSection.startsWith('home') && !activeSection.startsWith('about') && !activeSection.startsWith('contact') && !activeSection.startsWith('terms') && !activeSection.startsWith('privacy') && !['stats', 'clientLogos', 'channelPartners', 'builtProjects', 'faqs', 'testimonials', 'founder', 'projectHero', 'projectHeader', 'projectItems', 'projectBlock', 'projectBasicInfo', 'projectClientWanted', 'projectSolution', 'projectGallery', 'projectVideo', 'projectCta', 'projectSeo', 'arcadeHero', 'arcadeIntro', 'arcadeCategories', 'arcadeCommercial', 'arcadeWhyUs', 'arcadeRelated', 'arcadeFaqs', 'arcadeCta', 'arcadeSeo', 'hypergridHero', 'hypergridIntro', 'hypergridBanner', 'hypergridSpecs', 'hypergridWhyUs', 'hypergridRoi', 'hypergridWhyWinera', 'hypergridFaqs', 'hypergridCta', 'hypergridSeo', 'safetyHero', 'safetyIntro', 'safetyCertifications', 'safetyMaterials', 'safetyElectrical', 'safetyStructure', 'safetyWhyMatters', 'safetySeo', 'trampolineHero', 'trampolineIntro', 'trampolineCustom', 'trampolineSpecs', 'trampolineInside', 'trampolineRoi', 'trampolineWhyChoose', 'trampolineFaqs', 'trampolineCta', 'trampolineSeo', 'roiHero', 'roiIntro', 'roiMatters', 'roiComparison', 'roiProcess', 'roiGet', 'roiChecklist', 'roiCta', 'roiSeo', 'blogHero', 'blogPosts', 'blogSeo', 'header', 'footer'].includes(activeSection) && (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               <FileText style={{ width: '48px', height: '48px', color: '#38bdf8', marginBottom: '14px' }} />
               <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>

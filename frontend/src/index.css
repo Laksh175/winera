@@ -3572,24 +3572,30 @@ html {
   }
 
   section.winera-bumpercar-comparison-section,
-  .winera-bumpercar-comparison-section {
+  .winera-bumpercar-comparison-section,
+  section.winera-lasertag-comparison-section,
+  .winera-lasertag-comparison-section {
     padding: 15px 5vw 30px !important;
     padding-top: 15px !important;
   }
 
-  .winera-bumpercar-comparison-section h2 {
+  .winera-bumpercar-comparison-section h2,
+  .winera-lasertag-comparison-section h2 {
     font-size: 25px !important;
   }
 
-  .winera-bumpercar-comparison-section img {
+  .winera-bumpercar-comparison-section img,
+  .winera-lasertag-comparison-section img {
     margin: 0 auto 10px !important;
   }
 
-  .winera-bumpercar-comparison-desktop {
+  .winera-bumpercar-comparison-desktop,
+  .winera-lasertag-comparison-desktop {
     display: none !important;
   }
 
-  .winera-bumpercar-comparison-mobile {
+  .winera-bumpercar-comparison-mobile,
+  .winera-lasertag-comparison-mobile {
     display: flex !important;
     flex-direction: column;
     align-items: center;
@@ -3599,7 +3605,8 @@ html {
     gap: 18px;
   }
 
-  .winera-bumpercar-comparison-card {
+  .winera-bumpercar-comparison-card,
+  .winera-lasertag-comparison-card {
     width: 100%;
     background: #ffffff;
     border-radius: 22px;
@@ -17019,21 +17026,25 @@ button[style*="background:transparent"]:hover,
   }
 }
 
-/* Bumper Car Quick Comparison Desktop vs Mobile Visibility */
-.winera-bumpercar-comparison-desktop {
+/* Bumper Car & Laser Tag Quick Comparison Desktop vs Mobile Visibility */
+.winera-bumpercar-comparison-desktop,
+.winera-lasertag-comparison-desktop {
   display: flex !important;
 }
 
-.winera-bumpercar-comparison-mobile {
+.winera-bumpercar-comparison-mobile,
+.winera-lasertag-comparison-mobile {
   display: none !important;
 }
 
 @media (max-width: 900px) {
-  .winera-bumpercar-comparison-desktop {
+  .winera-bumpercar-comparison-desktop,
+  .winera-lasertag-comparison-desktop {
     display: none !important;
   }
 
-  .winera-bumpercar-comparison-mobile {
+  .winera-bumpercar-comparison-mobile,
+  .winera-lasertag-comparison-mobile {
     display: flex !important;
   }
 }

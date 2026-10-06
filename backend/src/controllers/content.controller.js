@@ -1590,7 +1590,153 @@ export const defaultSiteData = {
     metaDescription: "Want to add laser tag or laser spy to your venue? Winera International handles the full setup, from arena design and gear to software and staff training."
   },
   lasertagHero: {
-    breadcrumbText: "Laser Tag"
+    breadcrumbText: "Laser Tag",
+    bgUrl: ""
+  },
+  lasertagIntro: {
+    titleHighlight: "Laser Tag Gaming Equipment",
+    titleNormal: "& Laser Spy Supplier in India",
+    title: "*Laser Tag Gaming<br/>Equipment* & Laser Spy<br/>Supplier in India",
+    desc: "Turn your venue into a place people book again and again. We set up complete laser tag and laser spy games for venues across India. arenas equipment, design, installation, and support handled by our own team across 50+ cities.",
+    buttonText: "Get A Quote",
+    buttonLink: "https://wa.me/919428989488",
+    waMessage: "Hello Winera International! I want to get a quote for Laser Tag & Laser Spy Equipment setup. Please share details.",
+    mainImgUrl: ""
+  },
+  lasertagSetup: {
+    titleNormal: "One Team for Your Whole Laser",
+    titleHighlight: "Tag & Laser Spy Setup",
+    title: "One Team for Your Whole<br/>Laser *Tag & Laser Spy Setup*",
+    paragraph1: "Winera International has set up laser tag and laser spy games for entertainment centres, malls, hotels, schools, and resorts across India since 2014. Every setup comes with the full equipment, game software, scoreboards, and complete arena setup.",
+    paragraph2: "Before you order anything, we check your space size, how many players you want, and how you plan to run it. Then our own team handles everything — design, setup, and staff training across 50+ cities in India.",
+    mainImgUrl: ""
+  },
+  lasertagGroups: {
+    titleHighlight: "Laser Tag - ",
+    titleNormal: "Great for Groups",
+    desc: "Laser tag fills fast because groups book many players at once at birthday parties, office teams, and school outings. We supply the complete game and set it up fully, so you're ready to take bookings from day one.",
+    listHeading: "What you get, fully set up:",
+    features: [
+      "Laser guns with lights and a small screen, and vests that show each hit right away",
+      "Wireless charging, so you don't have to wait between games",
+      "Home base points and power-ups that make the game more fun",
+      "A TV to explain the rules, and a live score screen that makes players want to play again",
+      "Full sound, game software, setup, and staff training all done by our team"
+    ],
+    mainImgUrl: "",
+    bgUrl: ""
+  },
+  lasertagSpecs: {
+    titleHighlight: "Technical",
+    titleNormal: "Specifications",
+    title: "*Technical* Specifications",
+    bgUrl: "",
+    buttonText: "Download Our Brochure",
+    buttonLink: "https://wa.me/919428989488",
+    waMessage: "Hello Winera International! I want to download the Laser Tag Equipment & Setup Brochure. Please share details.",
+    specHeading: "Specification",
+    detailsHeading: "Details",
+    rows: [
+      { spec: "Players", details: "10 to 30+ simultaneously" },
+      { spec: "Guns & vests", details: "Start with 8, add more anytime" },
+      { spec: "Staff needed", details: "Just 1 person" },
+      { spec: "Game types", details: "Team battle, solo, elimination, capture the flag" },
+      { spec: "Lasts for", details: "8–10 years" }
+    ]
+  },
+  lasertagSpace: {
+    titleHighlight: "How Much Space",
+    titleNormal: "You Need for Laser Tag",
+    desc: "A laser tag arena works from about 1,000 sq ft, but 2,500–5,000 sq ft is ideal; it gives players room to move, hide, and enjoy the game. Here's how the space is used:",
+    mainImgUrl: "",
+    zones: [
+      {
+        num: "01",
+        title: "BRIEFING AREA",
+        subtitle: "(EXPLAIN THE RULES)",
+        space: "~150 sq ft",
+        iconType: "rules"
+      },
+      {
+        num: "02",
+        title: "VESTING AREA",
+        subtitle: "(PLAYERS GEAR UP)",
+        space: "~250 sq ft",
+        iconType: "vest"
+      },
+      {
+        num: "03",
+        title: "PLAY AREA",
+        subtitle: "(COMBAT ZONE)",
+        space: "7–8 sq ft / pl",
+        iconType: "play"
+      }
+    ]
+  },
+  lasertagSpy: {
+    titleDark: "Laser Spy — Laser ",
+    titleCyan: "Beam Game That Fits in a Small Room",
+    desc: "Laser spy is a room full of laser beams. Players have to move through them without touching any. People love it and come back again and again to beat their best score. And it fits in a small room, so you can add it even when you don't have much space. We supply and set up the full game, ready to play.",
+    listHeading: "What you get, fully set up:",
+    badgeText: "Small Space. Big Thrills.",
+    mainImgUrl: "",
+    borderImgUrl: "",
+    smallImgUrl: "",
+    buttonImgUrl: "",
+    bgUrl: "",
+    features: [
+      "Laser guns with lights and a small screen, and vests that show each hit right away",
+      "3 to 4 team games and one big final game",
+      "A 40-inch TV that shows the top players",
+      "Glowing lights, UV art, and smoke machines for a cool spy look",
+      "Control panels, game software, sound system, and staff training — all by our team"
+    ]
+  },
+  lasertagSpySpecs: {
+    titleHighlight: "Technical",
+    titleNormal: "Specifications",
+    title: "*Technical* Specifications",
+    bgUrl: "",
+    buttonText: "Download Our Brochure",
+    buttonLink: "https://wa.me/919428989488",
+    waMessage: "Hello Winera International! I want to download the Laser Spy Equipment & Setup Brochure. Please share details.",
+    specHeading: "Specification",
+    detailsHeading: "Details",
+    rows: [
+      { spec: "Smallest space", details: "150 sq ft" },
+      { spec: "Best space", details: "Around 560 sq ft" },
+      { spec: "Tasks", details: "3–4 team tasks + 1 main challenge" },
+      { spec: "Staff needed", details: "Just 1 person" },
+      { spec: "Scoreboard", details: "Automatic TV leaderboard" }
+    ]
+  },
+  lasertagComparison: {
+    title: "*Which Game Is* Right for Your Venue?",
+    features: [
+      "How to play",
+      "Space needed",
+      "Players at once",
+      "Best for",
+      "Earns money from",
+      "The feel"
+    ],
+    lasertagPoints: [
+      { text: "Teams shoot each other with laser guns in an open arena" },
+      { text: "A big open room" },
+      { text: "10 to 30+" },
+      { text: "Big groups, parties, and events" },
+      { text: "Group bookings and parties" },
+      { text: "Fast, active team battle" }
+    ],
+    laserspyPoints: [
+      { text: "Players move through laser beams without touching them" },
+      { text: "A small room (from 150 sq ft)" },
+      { text: "A few at a time" },
+      { text: "Quick play and small spaces" },
+      { text: "Repeat play and walk-ins" },
+      { text: "A cool spy-movie challenge" }
+    ],
+    note: "Not sure which fits your venue? Our team looks at your space and how you want to run it, then suggests the right game or both, if you have the room."
   },
   safetySeo: {
     pageTitle: "Where Game Zone Safety Comes First | Winera International",
