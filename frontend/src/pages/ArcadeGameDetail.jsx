@@ -748,29 +748,36 @@ export default function ArcadeGameDetail({ siteData }) {
     galleryList = defaultGallery.map(img => getValidImageUrl(img, resolvedMainImg));
   }
 
-  // Calculate nameBase and nameHighlight cleanly to avoid duplicating title text
-  let finalNameBase = defaultProduct.nameBase;
-  let finalNameHighlight = defaultProduct.nameHighlight;
+  // Calculate nameBase and nameHighlight cleanly to show stylish Black (Base) + Cyan (Highlight) colors
+  const rawTitle = cmsFoundCard?.name || cmsFoundCard?.title || masterFoundCard?.name || masterFoundCard?.title || defaultProduct.name || '';
+  let finalNameBase = '';
+  let finalNameHighlight = '';
 
-  if (cmsFoundCard?.nameBase !== undefined && cmsFoundCard?.nameHighlight !== undefined) {
+  if (cmsFoundCard?.nameBase !== undefined && cmsFoundCard?.nameHighlight !== undefined && (cmsFoundCard.nameBase || cmsFoundCard.nameHighlight)) {
     finalNameBase = cmsFoundCard.nameBase;
     finalNameHighlight = cmsFoundCard.nameHighlight;
-  } else if (cmsFoundCard?.title || cmsFoundCard?.name) {
-    const fullTitle = cmsFoundCard.title || cmsFoundCard.name;
-    const highlight = cmsFoundCard?.nameHighlight || (presetKey ? defaultProduct?.nameHighlight : '');
-    if (highlight && fullTitle.endsWith(highlight)) {
-      finalNameBase = fullTitle.slice(0, fullTitle.length - highlight.length);
+  } else if (cmsFoundCard?.nameHighlight) {
+    const highlight = cmsFoundCard.nameHighlight;
+    if (rawTitle.endsWith(highlight)) {
+      finalNameBase = rawTitle.slice(0, rawTitle.length - highlight.length).trim();
       finalNameHighlight = highlight;
-    } else if (presetKey && defaultProduct?.nameBase && fullTitle === defaultProduct.name) {
-      finalNameBase = defaultProduct.nameBase;
-      finalNameHighlight = defaultProduct.nameHighlight;
     } else {
-      finalNameBase = fullTitle;
+      finalNameBase = rawTitle;
+      finalNameHighlight = highlight;
+    }
+  } else if (presetKey && defaultProduct?.nameBase && defaultProduct?.nameHighlight) {
+    finalNameBase = defaultProduct.nameBase;
+    finalNameHighlight = defaultProduct.nameHighlight;
+  } else {
+    // Automatically split multi-word titles so the last word is Cyan (#38bdf8) and initial words are Black
+    const words = rawTitle.trim().split(/\s+/);
+    if (words.length > 1) {
+      finalNameHighlight = words[words.length - 1];
+      finalNameBase = words.slice(0, words.length - 1).join(' ');
+    } else {
+      finalNameBase = rawTitle;
       finalNameHighlight = '';
     }
-  } else if (masterFoundCard?.title || masterFoundCard?.name) {
-    finalNameBase = masterFoundCard.title || masterFoundCard.name;
-    finalNameHighlight = '';
   }
 
   // Construct dynamic product object
@@ -787,10 +794,11 @@ export default function ArcadeGameDetail({ siteData }) {
     heroBg: defaultProduct.heroBg || arcadegame1Bg,
     specs: {
       power: cmsFoundCard?.power || masterFoundCard?.power || defaultProduct.specs?.power || '450 W',
+      weight: cmsFoundCard?.weight || masterFoundCard?.weight || defaultProduct.specs?.weight || '',
       voltage: cmsFoundCard?.voltage || masterFoundCard?.voltage || defaultProduct.specs?.voltage || '220v',
       category: cmsFoundCard?.specsCategory || cmsFoundCard?.category || masterFoundCard?.category || defaultProduct.specs?.category || productCategory,
       players: cmsFoundCard?.players || masterFoundCard?.players || defaultProduct.specs?.players || '1-2 Players',
-      material: cmsFoundCard?.material || masterFoundCard?.material || defaultProduct.specs?.material || 'Commercial Steel & Acrylic Top',
+      material: cmsFoundCard?.material || masterFoundCard?.material || defaultProduct.specs?.material || 'Commercial Steel & Acrylic Finish',
       width: cmsFoundCard?.width || masterFoundCard?.width || defaultProduct.specs?.width || '1200 mm',
       depth: cmsFoundCard?.depth || masterFoundCard?.depth || defaultProduct.specs?.depth || '1100 mm',
       height: cmsFoundCard?.height || masterFoundCard?.height || defaultProduct.specs?.height || '2100 mm'
@@ -1084,7 +1092,11 @@ export default function ArcadeGameDetail({ siteData }) {
                 {/* Specs Key-Value List */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', color: '#334155', fontWeight: '600' }} className="winera-arcade-specs-list">
                   <div><strong style={{ color: '#0f172a' }}>Power :</strong> {product.specs.power}</div>
-                  <div><strong style={{ color: '#0f172a' }}>Voltage :</strong> {product.specs.voltage}</div>
+                  {product.specs.weight ? (
+                    <div><strong style={{ color: '#0f172a' }}>Weight :</strong> {product.specs.weight}</div>
+                  ) : (
+                    <div><strong style={{ color: '#0f172a' }}>Voltage :</strong> {product.specs.voltage}</div>
+                  )}
                   <div><strong style={{ color: '#0f172a' }}>Category :</strong> {product.specs.category}</div>
                   <div><strong style={{ color: '#0f172a' }}>Players :</strong> {product.specs.players}</div>
                   <div><strong style={{ color: '#0f172a' }}>Main Material :</strong> {product.specs.material}</div>
