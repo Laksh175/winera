@@ -1977,6 +1977,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'lasertagSpy', name: 'Laser Spy Section' },
         { id: 'lasertagSpySpecs', name: 'Laser Spy Technical Specifications' },
         { id: 'lasertagComparison', name: 'Game Comparison Section' },
+        { id: 'lasertagRoi', name: 'Know Your Numbers ROI Section' },
+        { id: 'lasertagWhyUs', name: 'Why Choose Winera Section' },
+        { id: 'lasertagFaqs', name: 'Frequently Asked Questions (FAQs)' },
+        { id: 'lasertagCta', name: 'Laser Tag CTA Banner' },
         { id: 'lasertagRelated', name: 'Related Products Carousel' },
         { id: 'lasertagSeo', name: 'SEO Meta Title & Description' }
       ]
@@ -15084,6 +15088,575 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
             );
           })()}
+
+          {/* LASER TAG KNOW YOUR NUMBERS ROI FORM */}
+          {activeSection === 'lasertagRoi' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Know Your Numbers ROI Section</h3>
+                <button
+                  onClick={() => persistSectionToDatabase('lasertagRoi', formData.lasertagRoi || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '10px 24px', borderRadius: '12px', fontWeight: '800', fontSize: '13.5px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Section Changes
+                </button>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Section Heading (use *stars* for highlight, &lt;br/&gt; for line breaks)
+                </label>
+                <input
+                  type="text"
+                  value={formData.lasertagRoi?.title ?? "Know Your Numbers *Before You Spend*"}
+                  onChange={(e) => handleFieldChange('lasertagRoi', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Paragraph 1 (First Description Block)
+                </label>
+                <textarea
+                  rows={3}
+                  value={formData.lasertagRoi?.paragraph1 ?? "Buying a laser tag or laser spy setup is a big decision, and you shouldn't have to guess whether it will pay off. That's why every project with Winera starts with a free ROI report built around your venue, not a general estimate copied from a brochure."}
+                  onChange={(e) => handleFieldChange('lasertagRoi', 'paragraph1', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', lineHeight: 1.5 }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Paragraph 2 (Second Description Block)
+                </label>
+                <textarea
+                  rows={4}
+                  value={formData.lasertagRoi?.paragraph2 ?? "We work out how many games you can run each day, how much you can earn from them, what upkeep will cost, and how soon you'll make your money back. Both games are strong earners because they pull in groups, parties, office teams, and school outings that book many players at once and with just one staff member running the show, you keep costs low and games flowing. You'll see the full picture first, then decide."}
+                  onChange={(e) => handleFieldChange('lasertagRoi', 'paragraph2', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', lineHeight: 1.5 }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Button Text
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.lasertagRoi?.buttonText ?? "Talk to an ROI Expert"}
+                    onChange={(e) => handleFieldChange('lasertagRoi', 'buttonText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    WhatsApp Link
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.lasertagRoi?.buttonLink ?? "https://wa.me/919428989488"}
+                    onChange={(e) => handleFieldChange('lasertagRoi', 'buttonLink', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  WhatsApp Prefilled Message
+                </label>
+                <input
+                  type="text"
+                  value={formData.lasertagRoi?.waMessage ?? "Hello Winera International! I want to talk to an ROI Expert regarding Laser Tag & Laser Spy setup for my venue."}
+                  onChange={(e) => handleFieldChange('lasertagRoi', 'waMessage', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Right Side Photo (laser-tag-7.png) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 911 × 636 px</span>
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', background: '#f8fafc', padding: '12px', borderRadius: '10px', border: '1px dashed #cbd5e1' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.lasertagRoi?.mainImgUrl, "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/c4xhhkjcjwhagwd8drzm.png")}
+                    alt="ROI Photo"
+                    style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '6px' }}
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const res = await uploadImageFile(file);
+                      if (res?.url) {
+                        const updated = { ...(formData.lasertagRoi || {}), mainImgUrl: res.url };
+                        setFormData(prev => ({ ...prev, lasertagRoi: updated }));
+                        await persistSectionToDatabase('lasertagRoi', updated);
+                      }
+                    }}
+                    style={{ fontSize: '12px' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('lasertagRoi', formData.lasertagRoi || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '800', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save ROI Section
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* LASER TAG WHY CHOOSE WINERA FORM */}
+          {activeSection === 'lasertagWhyUs' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Why Choose Winera International Section</h3>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Section Title (Use *word* for cyan highlight)</label>
+                <input
+                  type="text"
+                  value={formData.lasertagWhyUs?.title || 'Why Choose *Winera International*'}
+                  onChange={(e) => handleFieldChange('lasertagWhyUs', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              {/* Cards List Manager */}
+              <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Feature Cards</h4>
+                  <button
+                    onClick={() => {
+                      const cur = formData.lasertagWhyUs?.cardsList || [
+                        { title: "Complete Arena Setup", desc: "We handle the equipment, design, setup, and training, not just the supply." },
+                        { title: "Revenue Calculated", desc: "We show you the games, monthly income, and payback time before you spend." },
+                        { title: "Low Running Cost", desc: "Just one person runs the whole game, less staff, more games." },
+                        { title: "Built for Your Space", desc: "We plan the layout and player flow to fit your floor." },
+                        { title: "Direct After-Sales Support", desc: "One call reaches the same team that built your game." }
+                      ];
+                      handleFieldChange('lasertagWhyUs', 'cardsList', [...cur, { title: 'New Feature Card', desc: 'Card description goes here.' }]);
+                    }}
+                    style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '5px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
+                  >
+                    + Add Feature Card
+                  </button>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  {(formData.lasertagWhyUs?.cardsList || [
+                    { title: "Complete Arena Setup", desc: "We handle the equipment, design, setup, and training, not just the supply." },
+                    { title: "Revenue Calculated", desc: "We show you the games, monthly income, and payback time before you spend." },
+                    { title: "Low Running Cost", desc: "Just one person runs the whole game, less staff, more games." },
+                    { title: "Built for Your Space", desc: "We plan the layout and player flow to fit your floor." },
+                    { title: "Direct After-Sales Support", desc: "One call reaches the same team that built your game." }
+                  ]).map((card, idx) => (
+                    <div key={idx} style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Card #{idx + 1}</span>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const list = [...(formData.lasertagWhyUs?.cardsList || [
+                              { title: "Complete Arena Setup", desc: "We handle the equipment, design, setup, and training, not just the supply." },
+                              { title: "Revenue Calculated", desc: "We show you the games, monthly income, and payback time before you spend." },
+                              { title: "Low Running Cost", desc: "Just one person runs the whole game, less staff, more games." },
+                              { title: "Built for Your Space", desc: "We plan the layout and player flow to fit your floor." },
+                              { title: "Direct After-Sales Support", desc: "One call reaches the same team that built your game." }
+                            ])];
+                            const updated = list.filter((_, i) => i !== idx);
+                            const updatedSec = { ...(formData.lasertagWhyUs || {}), cardsList: updated };
+                            setFormData(prev => ({ ...prev, lasertagWhyUs: updatedSec }));
+                            await persistSectionToDatabase('lasertagWhyUs', updatedSec);
+                          }}
+                          style={{ background: '#ef4444', color: '#fff', border: 'none', width: '28px', height: '28px', borderRadius: '6px', cursor: 'pointer', fontWeight: '900' }}
+                        >
+                          ×
+                        </button>
+                      </div>
+
+                      <input
+                        type="text"
+                        placeholder="Card Title"
+                        value={card.title || ''}
+                        onChange={(e) => {
+                          const list = [...(formData.lasertagWhyUs?.cardsList || [])];
+                          list[idx] = { ...list[idx], title: e.target.value };
+                          handleFieldChange('lasertagWhyUs', 'cardsList', list);
+                        }}
+                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
+                      />
+
+                      <textarea
+                        rows={2}
+                        placeholder="Card Description"
+                        value={card.desc || ''}
+                        onChange={(e) => {
+                          const list = [...(formData.lasertagWhyUs?.cardsList || [])];
+                          list[idx] = { ...list[idx], desc: e.target.value };
+                          handleFieldChange('lasertagWhyUs', 'cardsList', list);
+                        }}
+                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('lasertagWhyUs', formData.lasertagWhyUs || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Why Choose Section
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* LASER TAG & LASER SPY FAQS FORM */}
+          {activeSection === 'lasertagFaqs' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Laser Tag & Laser Spy FAQs Management</h3>
+                <button
+                  onClick={() => {
+                    const currentList = Array.isArray(formData.lasertagFaqs) && formData.lasertagFaqs.length > 0
+                      ? formData.lasertagFaqs
+                      : [
+                        {
+                          question: "What is the laser tag equipment cost in India?",
+                          answer: "The cost depends on your arena size, player count, game types, and theming. We give you a full cost breakdown plus a free ROI report before you order, so you see the exact cost and payback for your venue. Contact us for a quote for your space."
+                        },
+                        {
+                          question: "How long does the setup take?",
+                          answer: "A standard laser tag or laser spy setup takes about 3–7 days, depending on the arena size and design. We give you an exact timeline at the quote stage, covering delivery, building, software, and staff training."
+                        },
+                        {
+                          question: "What ceiling height do I need for laser tag?",
+                          answer: "Laser tag works best with a ceiling of at least 3 metres, which allows proper obstacles and, where space allows, a multi-level layout. We check your ceiling and floor before designing the arena."
+                        },
+                        {
+                          question: "How much maintenance do these games need?",
+                          answer: "Very little. The equipment is built for daily commercial use, and routine upkeep is simple mostly charging, cleaning, and occasional checks. We provide servicing and support whenever you need it."
+                        },
+                        {
+                          question: "Can the arena be themed to match my venue?",
+                          answer: "Yes. We can theme the arena with custom design, lighting, and effects to match your venue's look. We suggest the theming options during the design stage."
+                        },
+                        {
+                          question: "Do you provide staff training?",
+                          answer: "Yes. Before opening day, we train your team to run games, manage sessions, and handle the software confidently, so you're ready from day one."
+                        },
+                        {
+                          question: "What happens if something breaks after installation?",
+                          answer: "Our own team handles all repairs and servicing directly across 50+ cities, you deal with us, not an outside agent or an overseas supplier. Most issues are fixed quickly so your games keep running."
+                        }
+                      ];
+                    const updated = [...currentList, { question: '', answer: '' }];
+                    setFormData((prev) => ({ ...prev, lasertagFaqs: updated }));
+                  }}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                >
+                  + Add FAQ Item
+                </button>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {(Array.isArray(formData.lasertagFaqs) && formData.lasertagFaqs.length > 0
+                  ? formData.lasertagFaqs
+                  : [
+                    {
+                      question: "What is the laser tag equipment cost in India?",
+                      answer: "The cost depends on your arena size, player count, game types, and theming. We give you a full cost breakdown plus a free ROI report before you order, so you see the exact cost and payback for your venue. Contact us for a quote for your space."
+                    },
+                    {
+                      question: "How long does the setup take?",
+                      answer: "A standard laser tag or laser spy setup takes about 3–7 days, depending on the arena size and design. We give you an exact timeline at the quote stage, covering delivery, building, software, and staff training."
+                    },
+                    {
+                      question: "What ceiling height do I need for laser tag?",
+                      answer: "Laser tag works best with a ceiling of at least 3 metres, which allows proper obstacles and, where space allows, a multi-level layout. We check your ceiling and floor before designing the arena."
+                    },
+                    {
+                      question: "How much maintenance do these games need?",
+                      answer: "Very little. The equipment is built for daily commercial use, and routine upkeep is simple mostly charging, cleaning, and occasional checks. We provide servicing and support whenever you need it."
+                    },
+                    {
+                      question: "Can the arena be themed to match my venue?",
+                      answer: "Yes. We can theme the arena with custom design, lighting, and effects to match your venue's look. We suggest the theming options during the design stage."
+                    },
+                    {
+                      question: "Do you provide staff training?",
+                      answer: "Yes. Before opening day, we train your team to run games, manage sessions, and handle the software confidently, so you're ready from day one."
+                    },
+                    {
+                      question: "What happens if something breaks after installation?",
+                      answer: "Our own team handles all repairs and servicing directly across 50+ cities, you deal with us, not an outside agent or an overseas supplier. Most issues are fixed quickly so your games keep running."
+                    }
+                  ]
+                ).map((faq, index) => (
+                  <div key={index} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '13px' }}>FAQ #{index + 1}</span>
+                      <button
+                        onClick={() => {
+                          const currentList = Array.isArray(formData.lasertagFaqs) && formData.lasertagFaqs.length > 0
+                            ? [...formData.lasertagFaqs]
+                            : [
+                              {
+                                question: "What is the laser tag equipment cost in India?",
+                                answer: "The cost depends on your arena size, player count, game types, and theming. We give you a full cost breakdown plus a free ROI report before you order, so you see the exact cost and payback for your venue. Contact us for a quote for your space."
+                              },
+                              {
+                                question: "How long does the setup take?",
+                                answer: "A standard laser tag or laser spy setup takes about 3–7 days, depending on the arena size and design. We give you an exact timeline at the quote stage, covering delivery, building, software, and staff training."
+                              },
+                              {
+                                question: "What ceiling height do I need for laser tag?",
+                                answer: "Laser tag works best with a ceiling of at least 3 metres, which allows proper obstacles and, where space allows, a multi-level layout. We check your ceiling and floor before designing the arena."
+                              },
+                              {
+                                question: "How much maintenance do these games need?",
+                                answer: "Very little. The equipment is built for daily commercial use, and routine upkeep is simple mostly charging, cleaning, and occasional checks. We provide servicing and support whenever you need it."
+                              },
+                              {
+                                question: "Can the arena be themed to match my venue?",
+                                answer: "Yes. We can theme the arena with custom design, lighting, and effects to match your venue's look. We suggest the theming options during the design stage."
+                              },
+                              {
+                                question: "Do you provide staff training?",
+                                answer: "Yes. Before opening day, we train your team to run games, manage sessions, and handle the software confidently, so you're ready from day one."
+                              },
+                              {
+                                question: "What happens if something breaks after installation?",
+                                answer: "Our own team handles all repairs and servicing directly across 50+ cities, you deal with us, not an outside agent or an overseas supplier. Most issues are fixed quickly so your games keep running."
+                              }
+                            ];
+                          currentList.splice(index, 1);
+                          setFormData((prev) => ({ ...prev, lasertagFaqs: currentList }));
+                        }}
+                        style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Question"
+                      value={faq.question || faq.q || ''}
+                      onChange={(e) => {
+                        const currentList = Array.isArray(formData.lasertagFaqs) && formData.lasertagFaqs.length > 0
+                          ? [...formData.lasertagFaqs]
+                          : [
+                            {
+                              question: "What is the laser tag equipment cost in India?",
+                              answer: "The cost depends on your arena size, player count, game types, and theming. We give you a full cost breakdown plus a free ROI report before you order, so you see the exact cost and payback for your venue. Contact us for a quote for your space."
+                            },
+                            {
+                              question: "How long does the setup take?",
+                              answer: "A standard laser tag or laser spy setup takes about 3–7 days, depending on the arena size and design. We give you an exact timeline at the quote stage, covering delivery, building, software, and staff training."
+                            },
+                            {
+                              question: "What ceiling height do I need for laser tag?",
+                              answer: "Laser tag works best with a ceiling of at least 3 metres, which allows proper obstacles and, where space allows, a multi-level layout. We check your ceiling and floor before designing the arena."
+                            },
+                            {
+                              question: "How much maintenance do these games need?",
+                              answer: "Very little. The equipment is built for daily commercial use, and routine upkeep is simple mostly charging, cleaning, and occasional checks. We provide servicing and support whenever you need it."
+                            },
+                            {
+                              question: "Can the arena be themed to match my venue?",
+                              answer: "Yes. We can theme the arena with custom design, lighting, and effects to match your venue's look. We suggest the theming options during the design stage."
+                            },
+                            {
+                              question: "Do you provide staff training?",
+                              answer: "Yes. Before opening day, we train your team to run games, manage sessions, and handle the software confidently, so you're ready from day one."
+                            },
+                            {
+                              question: "What happens if something breaks after installation?",
+                              answer: "Our own team handles all repairs and servicing directly across 50+ cities, you deal with us, not an outside agent or an overseas supplier. Most issues are fixed quickly so your games keep running."
+                            }
+                          ];
+                        currentList[index] = { ...currentList[index], question: e.target.value };
+                        setFormData((prev) => ({ ...prev, lasertagFaqs: currentList }));
+                      }}
+                      style={{ padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '600' }}
+                    />
+                    <textarea
+                      rows={3}
+                      placeholder="Answer"
+                      value={faq.answer || faq.a || ''}
+                      onChange={(e) => {
+                        const currentList = Array.isArray(formData.lasertagFaqs) && formData.lasertagFaqs.length > 0
+                          ? [...formData.lasertagFaqs]
+                          : [
+                            {
+                              question: "What is the laser tag equipment cost in India?",
+                              answer: "The cost depends on your arena size, player count, game types, and theming. We give you a full cost breakdown plus a free ROI report before you order, so you see the exact cost and payback for your venue. Contact us for a quote for your space."
+                            },
+                            {
+                              question: "How long does the setup take?",
+                              answer: "A standard laser tag or laser spy setup takes about 3–7 days, depending on the arena size and design. We give you an exact timeline at the quote stage, covering delivery, building, software, and staff training."
+                            },
+                            {
+                              question: "What ceiling height do I need for laser tag?",
+                              answer: "Laser tag works best with a ceiling of at least 3 metres, which allows proper obstacles and, where space allows, a multi-level layout. We check your ceiling and floor before designing the arena."
+                            },
+                            {
+                              question: "How much maintenance do these games need?",
+                              answer: "Very little. The equipment is built for daily commercial use, and routine upkeep is simple mostly charging, cleaning, and occasional checks. We provide servicing and support whenever you need it."
+                            },
+                            {
+                              question: "Can the arena be themed to match my venue?",
+                              answer: "Yes. We can theme the arena with custom design, lighting, and effects to match your venue's look. We suggest the theming options during the design stage."
+                            },
+                            {
+                              question: "Do you provide staff training?",
+                              answer: "Yes. Before opening day, we train your team to run games, manage sessions, and handle the software confidently, so you're ready from day one."
+                            },
+                            {
+                              question: "What happens if something breaks after installation?",
+                              answer: "Our own team handles all repairs and servicing directly across 50+ cities, you deal with us, not an outside agent or an overseas supplier. Most issues are fixed quickly so your games keep running."
+                            }
+                          ];
+                        currentList[index] = { ...currentList[index], answer: e.target.value };
+                        setFormData((prev) => ({ ...prev, lasertagFaqs: currentList }));
+                      }}
+                      style={{ padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5, resize: 'vertical' }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('lasertagFaqs', formData.lasertagFaqs || [])}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Laser Tag FAQs
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* LASER TAG CTA BANNER FORM */}
+          {activeSection === 'lasertagCta' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Laser Tag CTA Banner Settings</h3>
+
+              {/* Banner Background Image Upload */}
+              <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Banner Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.lasertagCta?.bgUrl, ctaMainBanner)}
+                    alt="Banner Background Preview"
+                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
+                  <label style={{ background: '#38bdf8', color: '#ffffff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Background Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading banner background image...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          const updated = { ...(formData.lasertagCta || {}), bgUrl: res.url };
+                          setFormData(prev => ({ ...prev, lasertagCta: updated }));
+                          await persistSectionToDatabase('lasertagCta', updated);
+                          setStatusMsg('Background image uploaded successfully!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  {formData.lasertagCta?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const updated = { ...(formData.lasertagCta || {}), bgUrl: '' };
+                        setFormData(prev => ({ ...prev, lasertagCta: updated }));
+                        await persistSectionToDatabase('lasertagCta', updated);
+                        setStatusMsg('Banner reset to default successfully!');
+                      }}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset to Default Banner
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Main Title Heading</label>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Use <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>&lt;br/&gt;</code> for line breaks.</p>
+                <input
+                  type="text"
+                  value={formData.lasertagCta?.title !== undefined && formData.lasertagCta.title !== '' ? formData.lasertagCta.title : 'Thinking About Adding Laser Tag<br/>& Laser Spy To Your Venue?'}
+                  onChange={(e) => handleFieldChange('lasertagCta', 'title', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Description Text</label>
+                <textarea
+                  rows={3}
+                  value={formData.lasertagCta?.subtitle !== undefined && formData.lasertagCta.subtitle !== '' ? formData.lasertagCta.subtitle : (formData.lasertagCta?.whiteText || "Book a free call and we'll walk you through with a free ROI report and a plan made for your venue")}
+                  onChange={(e) => {
+                    handleFieldChange('lasertagCta', 'subtitle', e.target.value);
+                    handleFieldChange('lasertagCta', 'whiteText', e.target.value);
+                  }}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
+                  <input
+                    type="text"
+                    value={formData.lasertagCta?.buttonText || 'Get a Quote on WhatsApp'}
+                    onChange={(e) => handleFieldChange('lasertagCta', 'buttonText', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
+                  <input
+                    type="text"
+                    value={formData.lasertagCta?.buttonLink || 'https://wa.me/919428989488'}
+                    onChange={(e) => handleFieldChange('lasertagCta', 'buttonLink', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <button
+                  onClick={() => persistSectionToDatabase('lasertagCta', formData.lasertagCta || {})}
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                >
+                  Save Laser Tag CTA Banner
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* VR GAMING MACHINE SUPPLIER FORM */}
           {activeSection === 'vrSupplier' && (

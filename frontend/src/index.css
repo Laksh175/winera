@@ -16959,7 +16959,11 @@ button[style*="background:transparent"]:hover,
   .winera-bumpercar-page .winera-cta-subtitle,
   .winera-bumpercar-page .winera-cta-description,
   .winera-bumpercar-cta-wrapper .winera-cta-subtitle,
-  .winera-bumpercar-cta-wrapper .winera-cta-description {
+  .winera-bumpercar-cta-wrapper .winera-cta-description,
+  .winera-lasertag-page .winera-cta-subtitle,
+  .winera-lasertag-page .winera-cta-description,
+  .winera-lasertag-cta-wrapper .winera-cta-subtitle,
+  .winera-lasertag-cta-wrapper .winera-cta-description {
     font-size: 16px !important;
     line-height: 1.45 !important;
     max-width: 530px !important;
@@ -16996,17 +17000,21 @@ button[style*="background:transparent"]:hover,
 }
 
 @media (max-width: 768px) {
-  .winera-bumpercar-cta-title-render .winera-cta-desktop-lines {
+  .winera-bumpercar-cta-title-render .winera-cta-desktop-lines,
+  .winera-lasertag-cta-title-render .winera-cta-desktop-lines {
     display: none !important;
   }
 
-  .winera-bumpercar-cta-title-render .winera-cta-mobile-lines {
+  .winera-bumpercar-cta-title-render .winera-cta-mobile-lines,
+  .winera-lasertag-cta-title-render .winera-cta-mobile-lines {
     display: inline !important;
     white-space: normal !important;
   }
 
   .winera-bumpercar-cta-wrapper .winera-cta-title,
-  .winera-bumpercar-page .winera-cta-title {
+  .winera-bumpercar-page .winera-cta-title,
+  .winera-lasertag-cta-wrapper .winera-cta-title,
+  .winera-lasertag-page .winera-cta-title {
     font-size: clamp(21px, 5.8vw, 25px) !important;
     line-height: 1.28 !important;
     max-width: 330px !important;
@@ -17018,7 +17026,9 @@ button[style*="background:transparent"]:hover,
   .winera-cta-content-box .winera-cta-subtitle,
   .winera-cta-banner-container .winera-cta-subtitle,
   .winera-bumpercar-cta-wrapper .winera-cta-subtitle,
-  .winera-bumpercar-page .winera-cta-subtitle {
+  .winera-bumpercar-page .winera-cta-subtitle,
+  .winera-lasertag-cta-wrapper .winera-cta-subtitle,
+  .winera-lasertag-page .winera-cta-subtitle {
     font-weight: 400 !important;
     font-size: clamp(13px, 3.5vw, 14.5px) !important;
     line-height: 1.45 !important;
@@ -18737,4 +18747,8 @@ button[style*="background:transparent"]:hover,
   .winera-about-hero-section .winera-about-hero-breadcrumb * {
     font-size: 14px !important;
   }
+}
+
+.winera-lasertag-roi-p {
+  font-size: 16px !important;
 }

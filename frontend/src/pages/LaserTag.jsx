@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RelatedProductsSection from '../components/RelatedProductsSection';
+import TestimonialsSection from '../components/TestimonialsSection';
+import FaqSection from '../components/FaqSection';
+import CtaBanner from '../components/CtaBanner';
+const ctaMainBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345648/winera_uploads/ei16uczeuelaabtue4bs.jpg";
+const laserTagLeftCta = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791348709/winera_uploads/hzwfj0eti3q15lzthvz5.png";
+const laserTagRightCta = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791348711/winera_uploads/fy9rcztxwdtqhw65ylvo.png";
 const laserTagHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345630/winera_uploads/tj7ke5cpufz9t41c4d7v.png";
 const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
@@ -22,10 +28,14 @@ const laserSpyIcon2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q
 const laserSpyIcon3 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345667/winera_uploads/mu2h9kkyinxiqrpyqu6k.png";
 const laserSpyIcon4 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345667/winera_uploads/a1wa3tttd3lrazhsnxoe.png";
 const laserSpyIcon5 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/wnmzcfjqey2pqy6aotce.png";
+const laserTagImg7 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/c4xhhkjcjwhagwd8drzm.png";
+const laserTagImg7Bg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/b2chyjep2n8etsts6zrh.png";
+const talkToRoiBtn = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345686/winera_uploads/p0ljiyl3jf6r3wvnzch1.png";
 const homePageIcon = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345656/winera_uploads/gp0aisnttd4hpnswmxu4.png";
 const downloadButtonImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345649/winera_uploads/d1xqmhgcvuurvrj8xbvt.png";
 import MobileExpandableText from '../components/MobileExpandableText';
-import { FileText, Shield, Activity, Crosshair, Users, Tv, Sparkles, Sliders, Target } from 'lucide-react';
+import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
+import { FileText, Shield, Activity, Crosshair, Users, Tv, Sparkles, Sliders, Target, ShieldCheck, Settings, Database, Headset, Wrench, Box } from 'lucide-react';
 
 // Helper to resolve valid image URLs or fallback
 const getValidImageUrl = (url, fallback) => {
@@ -852,7 +862,7 @@ export default function LaserTag({ siteData }) {
           boxSizing: 'border-box'
         }}>
           {/* Top Title: Technical Specifications with Yellow Accent Stroke */}
-          <div style={{ position: 'relative', display: 'inline-block', marginBottom: isPhone ? '20px' : '28px' }}>
+          <div style={{ position: 'relative', display: isPhone ? 'flex' : 'inline-block', flexDirection: isPhone ? 'column' : 'initial', alignItems: isPhone ? 'center' : 'flex-start', textAlign: isPhone ? 'center' : 'left', marginBottom: isPhone ? '20px' : '28px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -862,7 +872,9 @@ export default function LaserTag({ siteData }) {
                 width: isPhone ? '220px' : '280px',
                 height: '8px',
                 marginBottom: '10px',
-                objectFit: 'fill'
+                objectFit: 'fill',
+                marginLeft: isPhone ? 'auto' : '0',
+                marginRight: isPhone ? 'auto' : '0'
               }}
             />
             <h2 style={{
@@ -1011,9 +1023,9 @@ export default function LaserTag({ siteData }) {
             alignItems: 'center'
           }}>
             {/* Left Column: Header + Table Card */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: isPhone ? 'center' : 'flex-start', textAlign: isPhone ? 'center' : 'left' }}>
               {/* Top Header with Yellow Stroke */}
-              <div style={{ marginBottom: isPhone ? '20px' : '28px' }}>
+              <div style={{ marginBottom: isPhone ? '20px' : '28px', textAlign: isPhone ? 'center' : 'left', display: 'flex', flexDirection: 'column', alignItems: isPhone ? 'center' : 'flex-start' }}>
                 <img
                   src={yellowStrokeLine}
                   alt=""
@@ -1023,7 +1035,9 @@ export default function LaserTag({ siteData }) {
                     width: isPhone ? '200px' : '240px',
                     height: '8px',
                     marginBottom: '10px',
-                    objectFit: 'fill'
+                    objectFit: 'fill',
+                    marginLeft: isPhone ? 'auto' : '0',
+                    marginRight: isPhone ? 'auto' : '0'
                   }}
                 />
                 <h2 style={{
@@ -1363,7 +1377,8 @@ export default function LaserTag({ siteData }) {
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              textAlign: 'left',
+              textAlign: isPhone ? 'center' : 'left',
+              alignItems: isPhone ? 'center' : 'flex-start',
               order: isPhone ? 1 : 2
             }}>
               {/* Yellow Accent Stroke Line */}
@@ -1375,7 +1390,9 @@ export default function LaserTag({ siteData }) {
                   width: isPhone ? '140px' : '160px',
                   height: '7px',
                   marginBottom: '12px',
-                  objectFit: 'fill'
+                  objectFit: 'fill',
+                  marginLeft: isPhone ? 'auto' : '0',
+                  marginRight: isPhone ? 'auto' : '0'
                 }}
               />
 
@@ -1394,17 +1411,42 @@ export default function LaserTag({ siteData }) {
                 </span>
               </h2>
 
-              {/* Paragraph Description */}
-              <p style={{
-                fontSize: isPhone ? '13px' : '14px',
-                color: '#475569',
-                lineHeight: 1.6,
-                fontWeight: '450',
-                margin: '0 0 20px 0',
-                maxWidth: '600px'
-              }}>
-                {siteData?.lasertagSpy?.desc || "Laser spy is a room full of laser beams. Players have to move through them without touching any. People love it and come back again and again to beat their best score. And it fits in a small room, so you can add it even when you don't have much space. We supply and set up the full game, ready to play."}
-              </p>
+              {/* Paragraph Description with Mobile Expandable Text */}
+              <div style={{ maxWidth: '600px', width: '100%', marginBottom: '20px', textAlign: isPhone ? 'center' : 'left' }}>
+                <MobileExpandableText
+                  preview={
+                    <p style={{
+                      fontSize: isPhone ? '13.5px' : '14px',
+                      color: '#475569',
+                      lineHeight: 1.6,
+                      fontWeight: '450',
+                      margin: 0,
+                      textAlign: isPhone ? 'center' : 'left'
+                    }}>
+                      {siteData?.lasertagSpy?.desc ? (
+                        siteData.lasertagSpy.desc.includes('. ')
+                          ? siteData.lasertagSpy.desc.substring(0, siteData.lasertagSpy.desc.indexOf('. ') + 1)
+                          : siteData.lasertagSpy.desc
+                      ) : "Laser spy is a room full of laser beams. Players have to move through them without touching any."}
+                    </p>
+                  }
+                  expandedContent={
+                    <p style={{
+                      fontSize: isPhone ? '13.5px' : '14px',
+                      color: '#475569',
+                      lineHeight: 1.6,
+                      fontWeight: '450',
+                      marginTop: '8px',
+                      marginBottom: 0,
+                      textAlign: isPhone ? 'center' : 'left'
+                    }}>
+                      {siteData?.lasertagSpy?.desc && siteData.lasertagSpy.desc.includes('. ')
+                        ? siteData.lasertagSpy.desc.substring(siteData.lasertagSpy.desc.indexOf('. ') + 2)
+                        : "People love it and come back again and again to beat their best score. And it fits in a small room, so you can add it even when you don't have much space. We supply and set up the full game, ready to play."}
+                    </p>
+                  }
+                />
+              </div>
 
               {/* Subheading: What you get, fully set up: */}
               <h3 style={{
@@ -1472,7 +1514,7 @@ export default function LaserTag({ siteData }) {
           boxSizing: 'border-box'
         }}>
           {/* Top Title: Technical Specifications with Yellow Accent Stroke */}
-          <div style={{ position: 'relative', display: 'inline-block', marginBottom: isPhone ? '20px' : '28px' }}>
+          <div style={{ position: 'relative', display: isPhone ? 'flex' : 'inline-block', flexDirection: isPhone ? 'column' : 'initial', alignItems: isPhone ? 'center' : 'flex-start', textAlign: isPhone ? 'center' : 'left', marginBottom: isPhone ? '20px' : '28px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
@@ -1482,7 +1524,9 @@ export default function LaserTag({ siteData }) {
                 width: isPhone ? '220px' : '280px',
                 height: '8px',
                 marginBottom: '10px',
-                objectFit: 'fill'
+                objectFit: 'fill',
+                marginLeft: isPhone ? 'auto' : '0',
+                marginRight: isPhone ? 'auto' : '0'
               }}
             />
             <h2 style={{
@@ -1614,7 +1658,7 @@ export default function LaserTag({ siteData }) {
 
       {/* 2.12 WHICH GAME IS RIGHT FOR YOUR VENUE COMPARISON SECTION */}
       <section className="winera-lasertag-comparison-section" style={{
-        padding: isPhone ? '35px 4vw 40px' : '80px 4vw 70px',
+        padding: isPhone ? '30px 4vw 25px' : '50px 4vw 35px',
         background: '#F5F5F9',
         overflow: 'hidden'
       }}>
@@ -1940,16 +1984,533 @@ export default function LaserTag({ siteData }) {
         </div>
       </section>
 
+      {/* 2.13 KNOW YOUR NUMBERS BEFORE YOU SPEND (ROI SECTION) */}
+      <section className="winera-lasertag-roi-section" style={{
+        width: '100%',
+        padding: isPhone ? '15px 16px 20px' : '15px 4vw 20px',
+        background: '#f8fafc',
+        boxSizing: 'border-box'
+      }}>
+        <div className="winera-lasertag-roi-card" style={{
+          maxWidth: '1240px',
+          margin: '0 auto',
+          background: '#ffffff',
+          borderRadius: isPhone ? '16px' : '24px',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05)',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: isPhone ? 'column' : 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          boxSizing: 'border-box'
+        }}>
+          {/* Left Column: Text & CTA */}
+          <div style={{
+            flex: isPhone ? '1 1 100%' : '1 1 46%',
+            padding: isPhone ? '22px 18px 20px' : '24px 24px 24px 42px',
+            boxSizing: 'border-box',
+            textAlign: isPhone ? 'center' : 'left',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: isPhone ? 'center' : 'flex-start'
+          }}>
+            {/* Top Yellow Stroke Accent */}
+            <img
+              src={yellowStrokeLine}
+              alt=""
+              style={{
+                display: 'block',
+                maxWidth: '100%',
+                width: isPhone ? '200px' : '260px',
+                height: '7px',
+                marginBottom: '10px',
+                objectFit: 'fill',
+                marginLeft: isPhone ? 'auto' : '0',
+                marginRight: isPhone ? 'auto' : '0'
+              }}
+            />
+
+            {/* Cyan Bold Heading */}
+            <h2 style={{
+              fontSize: isPhone ? '24px' : '32px',
+              fontWeight: '800',
+              color: '#00a6ff',
+              lineHeight: 1.15,
+              letterSpacing: '-0.5px',
+              margin: '0 0 12px 0',
+              fontFamily: "var(--font-heading, 'Outfit', 'Montserrat', sans-serif)"
+            }}>
+              {renderTitleMarkup(siteData?.lasertagRoi?.title, "Know Your Numbers<br/>Before You Spend", "#00a6ff")}
+            </h2>
+
+            {/* Paragraphs with Mobile Expandable Text */}
+            <div style={{ width: '100%', maxWidth: '95%', margin: '0 0 18px 0', textAlign: isPhone ? 'center' : 'left' }}>
+              <MobileExpandableText
+                preview={
+                  <p className="winera-lasertag-roi-p" style={{
+                    fontSize: '14.5px',
+                    color: '#475569',
+                    lineHeight: 1.55,
+                    fontWeight: '400',
+                    margin: 0,
+                    textAlign: isPhone ? 'center' : 'left'
+                  }}>
+                    {siteData?.lasertagRoi?.paragraph1 || "Buying a laser tag or laser spy setup is a big decision, and you shouldn't have to guess whether it will pay off. That's why every project with Winera starts with a free ROI report built around your venue, not a general estimate copied from a brochure."}
+                  </p>
+                }
+                expandedContent={
+                  <p className="winera-lasertag-roi-p" style={{
+                    fontSize: '14.5px',
+                    color: '#475569',
+                    lineHeight: 1.55,
+                    fontWeight: '400',
+                    marginTop: '10px',
+                    marginBottom: 0,
+                    textAlign: isPhone ? 'center' : 'left'
+                  }}>
+                    {siteData?.lasertagRoi?.paragraph2 || "We work out how many games you can run each day, how much you can earn from them, what upkeep will cost, and how soon you'll make your money back. Both games are strong earners because they pull in groups, parties, office teams, and school outings that book many players at once and with just one staff member running the show, you keep costs low and games flowing. You'll see the full picture first, then decide."}
+                  </p>
+                }
+              />
+            </div>
+
+            {/* ROI WhatsApp CTA Button */}
+            {(() => {
+              const baseLink = siteData?.lasertagRoi?.buttonLink || "https://wa.me/919428989488";
+              const defaultMsg = siteData?.lasertagRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert regarding Laser Tag & Laser Spy setup for my venue.";
+              let hrefLink = baseLink;
+              if (!baseLink.includes('text=')) {
+                const separator = baseLink.includes('?') ? '&' : '?';
+                hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
+              }
+
+              return (
+                <a
+                  href={hrefLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Talk to an ROI Expert on WhatsApp"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '12px',
+                    width: '245px',
+                    height: '56px',
+                    background: `url(${talkToRoiBtn}) center center / 100% 100% no-repeat`,
+                    color: '#091E2B',
+                    fontSize: '14.5px',
+                    fontWeight: '700',
+                    textDecoration: 'none',
+                    border: 'none',
+                    outline: 'none',
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s ease, filter 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+                >
+                  <div style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    background: '#25d366',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 448 512" fill="white">
+                      <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+                    </svg>
+                  </div>
+                  <span>{siteData?.lasertagRoi?.buttonText || "Talk to an ROI Expert"}</span>
+                </a>
+              );
+            })()}
+          </div>
+
+          {/* Right Column: Laser Tag 7 Image with Frame */}
+          <div style={{
+            flex: isPhone ? '1 1 100%' : '1 1 54%',
+            width: '100%',
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            alignSelf: 'stretch'
+          }}>
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end'
+            }}>
+              {/* Angled Border Frame (Behind) */}
+              <img
+                src={getValidImageUrl(siteData?.lasertagRoi?.bgImgUrl, laserTagImg7Bg)}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'fill',
+                  pointerEvents: 'none',
+                  zIndex: 1
+                }}
+              />
+              {/* Main Photo (In Front - slim blue chevron on left, 100% height without top/bottom space) */}
+              <img
+                src={getValidImageUrl(siteData?.lasertagRoi?.mainImgUrl, laserTagImg7)}
+                alt="Know Your Numbers ROI - Laser Tag"
+                loading="lazy"
+                decoding="async"
+                style={{
+                  position: 'relative',
+                  width: isPhone ? '100%' : '98.5%',
+                  height: '100%',
+                  objectFit: 'fill',
+                  display: 'block',
+                  zIndex: 2
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2.14 WHY CHOOSE WINERA INTERNATIONAL SECTION */}
+      <section className="winera-ar-whyus-section" style={{
+        padding: isPhone ? '35px 4vw 40px' : '65px 4vw 75px',
+        background: '#F5F5F9',
+        overflow: 'hidden'
+      }}>
+        <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
+          {/* Section Heading with Yellow Accent Stroke */}
+          <div style={{ textAlign: 'center', marginBottom: isPhone ? '35px' : '50px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img
+              src={yellowStrokeLine}
+              alt=""
+              className="winera-yellow-stroke"
+              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+            />
+            <h2 className="winera-ar-whyus-h2" style={{ fontSize: isPhone ? '26px' : '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              {renderTitleMarkup(siteData?.lasertagWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
+            </h2>
+          </div>
+
+          {/* Cards Grid Container (Dynamic List with Thin Blue Dividers & 3x2 Grid Layout) */}
+          <div style={{ position: 'relative', maxWidth: '1100px', margin: '0 auto' }}>
+            {(() => {
+              const defaultCards = [
+                { title: "Complete Arena Setup", desc: "We handle the equipment, design, setup, and training, not just the supply." },
+                { title: "Revenue Calculated", desc: "We show you the games, monthly income, and payback time before you spend." },
+                { title: "Low Running Cost", desc: "Just one person runs the whole game, less staff, more games." },
+                { title: "Built for Your Space", desc: "We plan the layout and player flow to fit your floor." },
+                { title: "Direct After-Sales Support", desc: "One call reaches the same team that built your game." }
+              ];
+
+              const cards = (Array.isArray(siteData?.lasertagWhyUs?.cardsList) && siteData.lasertagWhyUs.cardsList.length > 0)
+                ? siteData.lasertagWhyUs.cardsList
+                : defaultCards;
+
+              const iconsList = [
+                // 1. Complete Arena Setup (User with stars & experience)
+                <svg key={0} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 2l.6 1.2 1.4.2-1 1 .2 1.4-1.2-.6-1.2.6.2-1.4-1-1 1.4-.2z"/></svg>,
+                // 2. Revenue Calculated (Gear with checkmark)
+                <svg key={1} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><polyline points="9 12 11 14 15 10"/></svg>,
+                // 3. Low Running Cost (Database / Coins stack)
+                <svg key={2} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>,
+                // 4. Built for Your Space (Headset / Support)
+                <svg key={3} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>,
+                // 5. Direct After-Sales Support (Calendar / Maintenance Support)
+                <svg key={4} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>
+              ];
+
+              let topCount = 3;
+              if (cards.length <= 3) {
+                topCount = cards.length;
+              } else if (cards.length === 5) {
+                topCount = 3;
+              } else if (cards.length === 6) {
+                topCount = 3;
+              } else {
+                topCount = Math.ceil(cards.length / 2);
+              }
+
+              const topCards = cards.slice(0, topCount);
+              const bottomCards = cards.slice(topCount);
+
+              return (
+                <>
+                  <div className="winera-ar-whyus-desktop-container" style={{ position: 'relative' }}>
+                    {/* TOP ROW */}
+                    <div className="winera-ar-whyus-row winera-ar-whyus-top-row" style={{
+                      display: 'grid',
+                      gridTemplateColumns: `repeat(${topCards.length}, 1fr)`,
+                      gap: '0px',
+                      position: 'relative',
+                      zIndex: 2
+                    }}>
+                      {topCards.map((card, cIdx) => (
+                        <div
+                          key={cIdx}
+                          className="winera-ar-whyus-card"
+                          style={{
+                            padding: '0 35px 30px',
+                            textAlign: 'center',
+                            position: 'relative',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                          }}
+                        >
+                          {/* Vertical Shade/Gradient Divider Line for Top Row */}
+                          {cIdx < topCards.length - 1 && (
+                            <div className="winera-ar-whyus-vertical-divider" style={{
+                              position: 'absolute',
+                              right: 0,
+                              top: '20px',
+                              bottom: 0,
+                              width: '2px',
+                              background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 100%)',
+                              zIndex: 3
+                            }}></div>
+                          )}
+
+                          {/* Cyan Icon Box */}
+                          <div style={{
+                            width: '48px',
+                            height: '48px',
+                            borderRadius: '14px',
+                            background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
+                            color: '#ffffff',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginBottom: '16px',
+                            boxShadow: 'none'
+                          }}>
+                            {card.iconUrl ? (
+                              <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+                            ) : (
+                              iconsList[cIdx % iconsList.length]
+                            )}
+                          </div>
+                          <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
+                            {card.title}
+                          </h4>
+                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                            {card.desc}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Horizontal Center Cyan Divider Line with Shade Fading */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-ar-whyus-horizontal-divider" style={{
+                        width: '100%',
+                        height: '2px',
+                        background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.08) 0%, #38bdf8 12%, #38bdf8 88%, rgba(56, 189, 248, 0.08) 100%)',
+                        position: 'relative',
+                        zIndex: 3,
+                        margin: '0 0 30px'
+                      }}></div>
+                    )}
+
+                    {/* BOTTOM ROW */}
+                    {bottomCards.length > 0 && (
+                      <div className="winera-ar-whyus-row winera-ar-whyus-bottom-row" style={{
+                        display: 'grid',
+                        gridTemplateColumns: `repeat(${bottomCards.length}, 1fr)`,
+                        maxWidth: bottomCards.length <= 3 ? '780px' : '100%',
+                        margin: '0 auto',
+                        gap: '0px',
+                        position: 'relative',
+                        zIndex: 2
+                      }}>
+                        {bottomCards.map((card, bIdx) => (
+                          <div
+                            key={bIdx}
+                            className="winera-ar-whyus-card"
+                            style={{
+                              padding: '0 35px',
+                              textAlign: 'center',
+                              position: 'relative',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center'
+                            }}
+                          >
+                            {/* Vertical Shade/Gradient Divider Line for Bottom Row */}
+                            {bIdx < bottomCards.length - 1 && (
+                              <div className="winera-ar-whyus-vertical-divider" style={{
+                                position: 'absolute',
+                                right: 0,
+                                top: '-30px',
+                                bottom: '20px',
+                                width: '2px',
+                                background: 'linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.08) 100%)',
+                                zIndex: 3
+                              }}></div>
+                            )}
+
+                            {/* Cyan Icon Box */}
+                            <div style={{
+                              width: '48px',
+                              height: '48px',
+                              borderRadius: '14px',
+                              background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
+                              color: '#ffffff',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              marginBottom: '16px',
+                              boxShadow: 'none'
+                            }}>
+                              {card.iconUrl ? (
+                                <img src={card.iconUrl} alt="" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+                              ) : (
+                                iconsList[(topCards.length + bIdx) % iconsList.length]
+                              )}
+                            </div>
+                            <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
+                              {card.title}
+                            </h4>
+                            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
+                              {card.desc}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Mobile Slider View */}
+                  <WhyChooseUsMobileSlider
+                    items={cards}
+                    renderIcon={(item, idx) =>
+                      item.iconUrl ? (
+                        <img src={item.iconUrl} alt="" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+                      ) : (
+                        iconsList[idx % iconsList.length]
+                      )
+                    }
+                  />
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      </section>
+
       {/* 3. RELATED PRODUCTS CAROUSEL SECTION */}
       <RelatedProductsSection
         sectionData={siteData?.lasertagRelated || siteData?.arcadeRelated}
         accentColor="#38bdf8"
       />
 
-      {/* 4. FOOTER SECTION */}
+      {/* 4. WHAT OUR CLIENTS SAY SECTION (TESTIMONIALS) */}
+      <TestimonialsSection
+        testimonials={siteData?.testimonials}
+        title={siteData?.testimonialsHeader?.title}
+        subtitle={siteData?.testimonialsHeader?.subtitle}
+        highlightColor="#38bdf8"
+      />
+
+      {/* 5. FREQUENTLY ASKED QUESTIONS SECTION */}
+      <FaqSection
+        faqList={(Array.isArray(siteData?.lasertagFaqs) && siteData.lasertagFaqs.length > 0) ? siteData.lasertagFaqs : defaultLaserTagFaqs}
+        title="Frequently Asked *Questions*"
+        highlightColor="#38bdf8"
+      />
+
+      {/* 5.5. CTA BANNER SECTION */}
+      <div className="winera-lasertag-cta-wrapper">
+        <CtaBanner
+          containerPadding="10px 32px"
+          blurBg={true}
+          showOverlay={true}
+          align="center"
+          gradientTitle={true}
+          buttonTheme="yellow"
+          titleFontSize="clamp(20px, 2.2vw, 32px)"
+          titleMaxWidth="880px"
+          contentBoxMaxWidth="880px"
+          leftImgMaxWidth="220px"
+          subtitleFontSize="15px"
+          subtitleFontWeight="400"
+          subtitleMaxWidth="820px"
+          bgUrl={siteData?.lasertagCta?.bgUrl ? getValidImageUrl(siteData.lasertagCta.bgUrl, ctaMainBanner) : null}
+          bg={ctaMainBanner}
+          leftImgUrl={siteData?.lasertagCta?.leftImgUrl}
+          leftImg={laserTagLeftCta}
+          rightImgUrl={siteData?.lasertagCta?.rightImgUrl}
+          rightImg={laserTagRightCta}
+          tagline={null}
+          title={
+            (() => {
+              let t = siteData?.lasertagCta?.title || "Thinking About Adding Laser Tag<br/>& Laser Spy To Your Venue?";
+              if (t.includes("Laser Tag & Laser Spy")) {
+                t = t.replace("Laser Tag & Laser Spy", "Laser Tag<br/>& Laser Spy").replace(/<br\s*\/?>\s*To/i, " To");
+              }
+              return t;
+            })()
+          }
+          subtitle={
+            siteData?.lasertagCta?.subtitle || siteData?.lasertagCta?.whiteText
+              ? siteData?.lasertagCta?.subtitle || siteData?.lasertagCta?.whiteText
+              : "Book a free call and we'll walk you through with a free ROI report and a plan made for your venue"
+          }
+          description={null}
+          buttonText={siteData?.lasertagCta?.buttonText || "Get a Quote on WhatsApp"}
+          buttonLink={siteData?.lasertagCta?.buttonLink || "https://wa.me/919428989488"}
+        />
+      </div>
+
+      {/* 6. FOOTER SECTION */}
       <div style={{ marginTop: 'auto' }}>
         <Footer footerData={footer} />
       </div>
     </div>
   );
 }
+
+const defaultLaserTagFaqs = [
+  {
+    q: "What is the laser tag equipment cost in India?",
+    a: "The cost depends on your arena size, player count, game types, and theming. We give you a full cost breakdown plus a free ROI report before you order, so you see the exact cost and payback for your venue. Contact us for a quote for your space."
+  },
+  {
+    q: "How long does the setup take?",
+    a: "A standard laser tag or laser spy setup takes about 3–7 days, depending on the arena size and design. We give you an exact timeline at the quote stage, covering delivery, building, software, and staff training."
+  },
+  {
+    q: "What ceiling height do I need for laser tag?",
+    a: "Laser tag works best with a ceiling of at least 3 metres, which allows proper obstacles and, where space allows, a multi-level layout. We check your ceiling and floor before designing the arena."
+  },
+  {
+    q: "How much maintenance do these games need?",
+    a: "Very little. The equipment is built for daily commercial use, and routine upkeep is simple mostly charging, cleaning, and occasional checks. We provide servicing and support whenever you need it."
+  },
+  {
+    q: "Can the arena be themed to match my venue?",
+    a: "Yes. We can theme the arena with custom design, lighting, and effects to match your venue's look. We suggest the theming options during the design stage."
+  },
+  {
+    q: "Do you provide staff training?",
+    a: "Yes. Before opening day, we train your team to run games, manage sessions, and handle the software confidently, so you're ready from day one."
+  },
+  {
+    q: "What happens if something breaks after installation?",
+    a: "Our own team handles all repairs and servicing directly across 50+ cities, you deal with us, not an outside agent or an overseas supplier. Most issues are fixed quickly so your games keep running."
+  }
+];

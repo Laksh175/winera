@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { X, CheckCircle2, Phone, User, Globe, Send, Loader2, ChevronDown } from 'lucide-react';
 import { submitLeadApi } from '../services/api';
 
@@ -158,6 +159,16 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (isOpen && typeof document !== 'undefined') {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
@@ -207,18 +218,26 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
     }
   };
 
-  return (
+  const modalContent = (
     <div
       style={{
         position: 'fixed',
-        inset: 0,
-        zIndex: 99999,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 9999999,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         background: 'rgba(15, 23, 42, 0.65)',
-        backdropFilter: 'blur(8px)',
-        padding: '20px'
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        padding: '20px',
+        margin: 0,
+        boxSizing: 'border-box'
       }}
       onClick={onClose}
     >
@@ -505,4 +524,10 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
       </div>
     </div>
   );
+
+  if (typeof document !== 'undefined' && document.body) {
+    return createPortal(modalContent, document.body);
+  }
+
+  return modalContent;
 }

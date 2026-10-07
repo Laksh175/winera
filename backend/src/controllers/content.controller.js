@@ -1804,6 +1804,63 @@ export const defaultSiteData = {
     ],
     note: "Not sure which fits your venue? Our team looks at your space and how you want to run it, then suggests the right game or both, if you have the room."
   },
+  lasertagRoi: {
+    title: "Know Your Numbers *Before You Spend*",
+    paragraph1: "Buying a laser tag or laser spy setup is a big decision, and you shouldn't have to guess whether it will pay off. That's why every project with Winera starts with a free ROI report built around your venue, not a general estimate copied from a brochure.",
+    paragraph2: "We work out how many games you can run each day, how much you can earn from them, what upkeep will cost, and how soon you'll make your money back. Both games are strong earners because they pull in groups, parties, office teams, and school outings that book many players at once and with just one staff member running the show, you keep costs low and games flowing. You'll see the full picture first, then decide.",
+    buttonText: "Talk to an ROI Expert",
+    buttonLink: "https://wa.me/919428989488",
+    waMessage: "Hello Winera International! I want to talk to an ROI Expert regarding Laser Tag and Laser Spy setup for my venue.",
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/c4xhhkjcjwhagwd8drzm.png",
+    bgImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/b2chyjep2n8etsts6zrh.png"
+  },
+  lasertagWhyUs: {
+    title: "Why Choose *Winera International*",
+    cardsList: [
+      { title: "Complete Arena Setup", desc: "We handle the equipment, design, setup, and training, not just the supply." },
+      { title: "Revenue Calculated", desc: "We show you the games, monthly income, and payback time before you spend." },
+      { title: "Low Running Cost", desc: "Just one person runs the whole game, less staff, more games." },
+      { title: "Built for Your Space", desc: "We plan the layout and player flow to fit your floor." },
+      { title: "Direct After-Sales Support", desc: "One call reaches the same team that built your game." }
+    ]
+  },
+  lasertagFaqs: [
+    {
+      question: "What is the laser tag equipment cost in India?",
+      answer: "The cost depends on your arena size, player count, game types, and theming. We give you a full cost breakdown plus a free ROI report before you order, so you see the exact cost and payback for your venue. Contact us for a quote for your space."
+    },
+    {
+      question: "How long does the setup take?",
+      answer: "A standard laser tag or laser spy setup takes about 3–7 days, depending on the arena size and design. We give you an exact timeline at the quote stage, covering delivery, building, software, and staff training."
+    },
+    {
+      question: "What ceiling height do I need for laser tag?",
+      answer: "Laser tag works best with a ceiling of at least 3 metres, which allows proper obstacles and, where space allows, a multi-level layout. We check your ceiling and floor before designing the arena."
+    },
+    {
+      question: "How much maintenance do these games need?",
+      answer: "Very little. The equipment is built for daily commercial use, and routine upkeep is simple mostly charging, cleaning, and occasional checks. We provide servicing and support whenever you need it."
+    },
+    {
+      question: "Can the arena be themed to match my venue?",
+      answer: "Yes. We can theme the arena with custom design, lighting, and effects to match your venue's look. We suggest the theming options during the design stage."
+    },
+    {
+      question: "Do you provide staff training?",
+      answer: "Yes. Before opening day, we train your team to run games, manage sessions, and handle the software confidently, so you're ready from day one."
+    },
+    {
+      question: "What happens if something breaks after installation?",
+      answer: "Our own team handles all repairs and servicing directly across 50+ cities, you deal with us, not an outside agent or an overseas supplier. Most issues are fixed quickly so your games keep running."
+    }
+  ],
+  lasertagCta: {
+    bgUrl: "",
+    title: "Thinking About Adding Laser Tag<br/>& Laser Spy To Your Venue?",
+    subtitle: "Book a free call and we'll walk you through with a free ROI report and a plan made for your venue",
+    buttonText: "Get a Quote on WhatsApp",
+    buttonLink: "https://wa.me/919428989488"
+  },
   safetySeo: {
     pageTitle: "Where Game Zone Safety Comes First | Winera International",
     metaDescription: "Safety comes first at Winera International. Every ride, play structure, and machine we install meets global safety standards, so your venue opens ready to run."

@@ -108,7 +108,8 @@ export default function CtaBanner({
   showTextShadow = true,
   blurBg = false,
   titleMaxWidth = null,
-  subtitleMaxWidth = null
+  subtitleMaxWidth = null,
+  contentBoxMaxWidth = null
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -219,7 +220,7 @@ export default function CtaBanner({
               textAlign: isCentered ? 'center' : 'left',
               margin: isCentered ? '0 auto' : '0',
               width: '100%',
-              maxWidth: isCentered ? (hasSideImages ? '620px' : '860px') : '650px',
+              maxWidth: contentBoxMaxWidth || (titleMaxWidth ? titleMaxWidth : (isCentered ? (hasSideImages ? '620px' : '860px') : '650px')),
               justifyContent: isCustomBgUploaded ? 'flex-end' : 'center',
               padding: contentBoxPadding || (isCustomBgUploaded ? '120px 0 24px' : '24px 0')
             }}>
