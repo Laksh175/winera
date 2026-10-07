@@ -1557,6 +1557,72 @@ export const defaultSiteData = {
     pageTitle: "Bowling Alley Manufacturer in India | Winera International",
     metaDescription: "Looking for a bowling alley manufacturer in India? Winera International supplies premium new and refurbished Brunswick systems, with 15+ years of expertise."
   },
+  bowlingHero: {
+    breadcrumbText: "Bowling",
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344859/winera_uploads/gequjqmthbbzrdzxp4tj.png"
+  },
+  bowlingIntro: {
+    title: "*Bowling Alley*<br/>Manufacturers in India",
+    desc: "India's trusted source for refurbished Brunswick bowling equipment — complete setup, installation, and a free ROI report before you invest.",
+    buttonText: "Get Quote From Expert",
+    buttonLink: "https://wa.me/919428989488",
+    waMessage: "Hello Winera International! I want to get a quote and estimation for a Bowling Alley setup. Please share details. [Ref: Bowling Alley Page]",
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344866/winera_uploads/xrp2eoojjxjr7iiywstj.png",
+    imgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344866/winera_uploads/xrp2eoojjxjr7iiywstj.png"
+  },
+  bowlingManufacturer: {
+    title: "Premium Bowling *Alley Manufacturer in India*",
+    p1: "At Winera International Pvt. Ltd., we are proud to be India's leading bowling alley manufacturer and supplier of refurbished Brunswick bowling equipment. With over 15 years of expertise in the industry, we have built a reputation for delivering top-quality bowling alley equipment and exceptional customer service, tailored to fit the unique needs and budgets of our clients.",
+    p2: "We specialize in providing refurbished Brunswick GS98 & GSX equipment, enhanced with the latest Frameworx or Vector Scoring Systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience.",
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344869/winera_uploads/m1vyuuh5fxio3pz6gwjr.png",
+    imgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344869/winera_uploads/m1vyuuh5fxio3pz6gwjr.png"
+  },
+  bowlingFreeFall: {
+    title: "Commercial-Grade *Free-Fall Bowling Lanes*",
+    p1: "Free-fall bowling is the traditional game you'll find in professional bowling centers worldwide. When the ball hits the pins, they fall freely and naturally, and a pinsetter machine clears and resets them for the next throw. It delivers the true feel of real bowling, the satisfying strike and the competition-grade experience serious players expect.",
+    p2: "We specialise in refurbished Brunswick GS98 and GS-X equipment, restored to perform like new and enhanced with the latest Frameworx or Vector scoring systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience. It's the ideal choice for dedicated bowling centers and premium venues where bowling is the main attraction.",
+    specLaneLength: "89 feet per lane",
+    specLaneWidth: "6 feet per lane",
+    specPinsetter: "Free-fall (gravity-based)",
+    specExperience: "Professional / competition-grade",
+    specBestFor: "Dedicated bowling centers",
+    btnText: "Watch Video",
+    videoBtnBg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344881/winera_uploads/ewj5ey3tdokbhup0caj5.png",
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344870/winera_uploads/pnf8e0ahawocopjhdngw.png",
+    imgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344870/winera_uploads/pnf8e0ahawocopjhdngw.png"
+  },
+  bowlingString: {
+    title: "Cost-Effective *String Bowling System*",
+    p1: "Add a complete, ready-to-play bowling setup to your venue at a lower upfront cost than a traditional free-fall system. We supply and install full string bowling lanes pins, strings, scoring screens, and commissioning so you get a finished attraction, not just a machine.",
+    p2: "String systems have fewer moving parts, which means quieter lanes, easier maintenance your own team can handle, and a compact footprint that fits where a full 89 ft lane won't. That's why family entertainment centers, malls, resorts, and cafés choose them. Lower to set up, lower to run, and quick to start earning.",
+    specPinReset: "Overhead string mechanism",
+    specFootprint: "Shorter than 89 ft lane",
+    specLaneWidth: "6 feet per lane",
+    specMaintenance: "Low — fewer parts",
+    specBestFor: "FECs, malls, resorts",
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344871/winera_uploads/opxt8pajuud7k3xmw9ys.png",
+    imgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344871/winera_uploads/opxt8pajuud7k3xmw9ys.png"
+  },
+  bowlingRoi: {
+    title: "Know Your Returns *Before You Invest*",
+    p1: "A bowling alley is one of the highest-earning attractions in any entertainment venue — but the numbers need to work for your specific location. We calculate your estimated daily bowler count, lane turnover, running costs, and monthly revenue so you know exactly what return to expect before you spend.",
+    btnText: "Talk to an ROI Expert",
+    videoUrl: "https://wa.me/919428989488",
+    btnBg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344887/winera_uploads/kw0kya2v0nvmkmleahtw.png",
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344884/winera_uploads/bazxjkdohyk64kudmqnx.png",
+    imgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344884/winera_uploads/bazxjkdohyk64kudmqnx.png"
+  },
+  bowlingWhyUs: {
+    title: "Why Choose Winera as Your *Bowling Alley Manufacturer?*",
+    mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344872/winera_uploads/laxuqluyfokbestfbbg4.png",
+    graphicUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344872/winera_uploads/laxuqluyfokbestfbbg4.png",
+    imgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344872/winera_uploads/laxuqluyfokbestfbbg4.png"
+  },
+  bowlingCta: {
+    title: "Need Any Consultations?",
+    description: "Invest in our quality bowling equipment and elevate your venue with long-lasting, world-class bowling gear without overspending.",
+    btnBg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344883/winera_uploads/kihjgcddr5pow4cal7hy.png"
+  },
   softplaySeo: {
     pageTitle: "Top Soft Play Equipment Manufacturers in India | Winera International",
     metaDescription: "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget."

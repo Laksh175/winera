@@ -537,7 +537,7 @@ export default function BowlingAlley({ siteData }) {
             <div className="winera-bowling-types-pills-col" style={{ position: 'relative', width: '100%', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {/* Main Oval Free-Fall Pins Image: Mask-group.webp */}
               <img
-                src={siteData?.bowlingFreeFall?.mainImgUrl || siteData?.bowlingFreeFall?.imgUrl || maskGroupImg}
+                src={getValidImageUrl(siteData?.bowlingFreeFall?.mainImgUrl || siteData?.bowlingFreeFall?.imgUrl, maskGroupImg)}
                 alt="Free Fall Bowling Pinsetter"
                 loading="lazy"
                 decoding="async"
@@ -728,7 +728,7 @@ export default function BowlingAlley({ siteData }) {
             <div className="winera-bowling-types-pills-col" style={{ position: 'relative', width: '100%', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {/* Main Friends Bowling Photo: Mask-group-01.webp */}
               <img
-                src={siteData?.bowlingString?.mainImgUrl || siteData?.bowlingString?.imgUrl || maskGroup01Img}
+                src={getValidImageUrl(siteData?.bowlingString?.mainImgUrl || siteData?.bowlingString?.imgUrl, maskGroup01Img)}
                 alt="String Bowling Friends"
                 style={{
                   position: 'absolute',
