@@ -30,19 +30,18 @@ const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
-  const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-
-  if (url.startsWith('http://localhost:5001/uploads/')) {
-    return url.replace('localhost', hostname);
+  if (url.startsWith('https://res.cloudinary.com/') || url.startsWith('https://images.unsplash.com/') || url.startsWith('data:')) {
+    return url;
   }
-  if (url.startsWith('/uploads')) {
-    return `http://${hostname}:5001${url}`;
+  const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  if (url.startsWith('http://localhost:5001/uploads/') || url.startsWith('/uploads') || url.includes('/uploads/')) {
+    if (isLocal) {
+      const uploadPath = url.substring(url.indexOf('/uploads/'));
+      return `http://localhost:5001${uploadPath}`;
+    }
+    return fallback;
   }
-  if (url.includes('/uploads/')) {
-    const uploadPath = url.substring(url.indexOf('/uploads/'));
-    return `http://${hostname}:5001${uploadPath}`;
-  }
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/')) {
+  if (url.startsWith('http://') || url.startsWith('https://')) {
     return url;
   }
   return fallback;
@@ -911,6 +910,10 @@ export default function ProjectDetail({ siteData }) {
             className="winera-project-video-img"
             src={videoImg}
             alt="Project Showcase Video"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = projectSectionVideo;
+            }}
             style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '28px' }}
           />
         </motion.button>
