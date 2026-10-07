@@ -400,7 +400,7 @@ export default function Footer({ footerData }) {
           paddingTop: isMobile ? '8px' : '12px',
           borderTop: '1px solid rgba(15, 23, 42, 0.12)',
           textAlign: 'center',
-          fontSize: '11.5px',
+          fontSize: '13.5px',
           color: '#475569',
           fontWeight: '500',
           display: 'flex',
