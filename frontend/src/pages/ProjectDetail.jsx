@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Play } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RelatedProductsSection from '../components/RelatedProductsSection';
@@ -889,19 +890,20 @@ export default function ProjectDetail({ siteData }) {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
-          whileHover={{ y: -8, scale: 1.025, boxShadow: '0 22px 45px rgba(0,0,0,0.22)' }}
+          whileHover={{ y: -8, scale: 1.02, boxShadow: '0 25px 50px rgba(0,0,0,0.25)' }}
           whileTap={{ scale: 0.98 }}
+          aria-label="Play Project Showcase Video"
           style={{
             display: 'block',
             position: 'relative',
             width: '100%',
             borderRadius: '28px',
             overflow: 'hidden',
-            boxShadow: 'none',
+            boxShadow: '0 12px 35px rgba(0,0,0,0.12)',
             border: 'none',
             padding: 0,
             cursor: 'pointer',
-            background: 'transparent',
+            background: '#0f172a',
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden'
           }}
@@ -916,6 +918,80 @@ export default function ProjectDetail({ siteData }) {
             }}
             style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '28px' }}
           />
+
+          {/* Subtle Video Vignette Overlay for Crisp Contrast */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.45) 100%)',
+              borderRadius: '28px',
+              pointerEvents: 'none'
+            }}
+          />
+
+          {/* Central Pulsing Play Button Badge */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              pointerEvents: 'none',
+              zIndex: 3
+            }}
+          >
+            {/* Outer Expanding Pulse Ring */}
+            <motion.div
+              animate={{
+                scale: [1, 1.45, 1],
+                opacity: [0.7, 0, 0.7]
+              }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                ease: 'easeInOut'
+              }}
+              style={{
+                position: 'absolute',
+                width: isPhone ? '75px' : '96px',
+                height: isPhone ? '75px' : '96px',
+                borderRadius: '50%',
+                background: 'rgba(56, 189, 248, 0.35)',
+                border: '2px solid rgba(56, 189, 248, 0.7)'
+              }}
+            />
+
+            {/* Glowing Brand Play Button */}
+            <div
+              style={{
+                position: 'relative',
+                width: isPhone ? '58px' : '76px',
+                height: isPhone ? '58px' : '76px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
+                boxShadow: '0 8px 30px rgba(56, 189, 248, 0.6), 0 0 25px rgba(255, 255, 255, 0.5)',
+                border: '3px solid #ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'transform 0.3s ease'
+              }}
+            >
+              <Play
+                style={{
+                  width: isPhone ? '24px' : '30px',
+                  height: isPhone ? '24px' : '30px',
+                  color: '#ffffff',
+                  fill: '#ffffff',
+                  marginLeft: '4px'
+                }}
+              />
+            </div>
+          </div>
         </motion.button>
       </section>
 
