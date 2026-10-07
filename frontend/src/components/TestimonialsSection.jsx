@@ -3,9 +3,9 @@ import { ChevronLeft, ChevronRight, Star, Play } from 'lucide-react';
 import { useVideoModal } from '../context/VideoModalContext';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
-import testiOwner from '../assets/testi-owner.webp';
-import projHulaboo from '../assets/proj-hulaboo.webp';
-import projNeon1 from '../assets/proj-neonpanda1.webp';
+const testiOwner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345688/winera_uploads/zginla6nsiaq2avxmot4.jpg";
+const projHulaboo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/a52mbp31belkkslptdal.jpg";
+const projNeon1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg";
 
 const defaultTestimonials = [
   {

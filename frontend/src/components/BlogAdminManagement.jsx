@@ -19,7 +19,7 @@ import {
 import RichTextareaWithEditor from './RichTextareaWithEditor';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 import { sanitizeAndFormatHtml } from '../pages/BlogDetail';
-import blogCardImg from '../assets/blog-images.webp';
+const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 
 const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
   if (url && typeof url === 'string' && !url.includes('/src/assets/') && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:'))) {

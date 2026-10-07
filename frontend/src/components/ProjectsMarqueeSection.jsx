@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
-import projHulaboo from '../assets/proj-hulaboo.webp';
-import projNeon1 from '../assets/proj-neonpanda1.webp';
-import projSoft1 from '../assets/proj-softplay1.webp';
-import projectImage01 from '../assets/project-image01.webp';
-import clientsBg from '../assets/clients-bg.webp';
+const projHulaboo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/a52mbp31belkkslptdal.jpg";
+const projNeon1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg";
+const projSoft1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg";
+const projectImage01 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/igg4yrl7xhnxllqifpj7.jpg";
+const clientsBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345643/winera_uploads/eogrtug3ijxrwz7xbc1y.png";
 
 const defaultProjects = [
   { name: "Hulaboo", title: "Hulaboo", city: "Surat", location: "Surat", slug: "hulaboo", img: projHulaboo },

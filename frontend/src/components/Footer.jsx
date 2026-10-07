@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../assets/logo.webp';
-import footerBg from '../assets/footer-bg.webp';
+const logo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png";
+const footerBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345649/winera_uploads/n3mp0aezxl0lmnwklwti.png";
 import { Phone, Mail, ChevronDown } from 'lucide-react';
 
 const getValidImageUrl = (url, fallback) => {

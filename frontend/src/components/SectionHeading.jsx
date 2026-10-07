@@ -1,5 +1,5 @@
 import React from 'react';
-import yellowStrokeLine from '../assets/yellow-stroke-line.webp';
+const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 
 const ACRONYMS = new Set(['VR', 'AR', 'ROI', 'FAQ', 'FAQS', 'USA', 'UK', '3D', '4D', '5D', '7D', '9D', 'HD', 'AI', 'B2B', 'B2C']);
 

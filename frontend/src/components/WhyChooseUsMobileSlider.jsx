@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import homeLeftArrow from '../assets/home-page-left-arrow.png';
-import homeRightArrow from '../assets/home-page-right-arrow.png';
-import homeRightSign from '../assets/home-right-sign.webp';
+const homeLeftArrow = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345664/winera_uploads/c1v6ksephaop0pt9laxi.png";
+const homeRightArrow = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345665/winera_uploads/irelt5fskkf6fydyofmp.png";
+const homeRightSign = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345665/winera_uploads/bt1fgaurbhpkmfhczato.png";
 
 const renderTextWithBreaks = (text) => {
   if (!text || typeof text !== 'string') return text;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ctaMainBanner from '../assets/cta-main-banner.png';
+const ctaMainBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345648/winera_uploads/ei16uczeuelaabtue4bs.jpg";
 import LeadCaptureModal from './LeadCaptureModal';
 import MotionFadeIn from './MotionFadeIn';
 

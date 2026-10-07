@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import aboutHeroBg from '../assets/about-hero-bg.webp';
-import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
+const aboutHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345516/winera_uploads/c3mm4hffgjiimryiq4et.png";
+const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
 
 export default function TermsAndConditions({ siteData }) {
   const [isPhone, setIsPhone] = useState(

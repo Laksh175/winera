@@ -6,10 +6,10 @@ import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import FaqSection from '../components/FaqSection';
 import { Phone, Mail, Building2, Globe, CheckCircle2, MapPin } from 'lucide-react';
-import contactUsHeroBg from '../assets/contact-us-banner-bg.webp';
-import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
-import aboutHeroBg from '../assets/about-hero-bg.webp';
-import arcadeHeroBg from '../assets/arcade-hero-bg.webp';
+const contactUsHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/z2qo5dtx8u7tyfvzjhmr.png";
+const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const aboutHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345516/winera_uploads/c3mm4hffgjiimryiq4et.png";
+const arcadeHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/rpygauibfzxyouopsc4r.png";
 
 export default function ContactUs({ siteData }) {
   const [formData, setFormData] = useState({

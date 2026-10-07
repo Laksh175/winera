@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { loginAdmin } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { Lock, ShieldCheck, User, Key, Gamepad2, ArrowRight } from 'lucide-react';
-import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
+const yellowBrushAccent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('ravi@wineraindia.com');

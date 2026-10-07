@@ -3,22 +3,22 @@ import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CtaBanner from '../components/CtaBanner';
-import arcadegame1Bg from '../assets/arcadegames-hero-bg.webp';
-import arcadegamesImg from '../assets/arcadegames-img.webp';
-import bikeArcade from '../assets/bike-arcade.webp';
-import yellowBrushAccent from '../assets/yellow-stroke-line.webp';
-import superAirHockeyImg from '../assets/super-air-hockey.webp';
-import puckCarnivalAirHockeyImg from '../assets/puck-carnival-air-hockey.webp';
-import dazzlingAirHockeyImg from '../assets/dazzling-air-hockey.webp';
-import auroraAirHockeyImg from '../assets/aurora-air-hockey.webp';
-import ochaAirHockeyImg from '../assets/ocha-air-hockey.webp';
-import aeroXAirHockeyImg from '../assets/aero-x-air-hockey.webp';
-import arcadeCtaBg from '../assets/arcadegame-cta-bg.webp';
-import ctaArcade from '../assets/cta-arcade.webp';
-import arcadeHall from '../assets/arcade-hall.webp';
-import arcadeBoy from '../assets/arcade-boy.webp';
-import arcadeBtn1 from '../assets/arcadegame-button-1.png';
-import arcadeBtn2 from '../assets/arcadegame-button-2.png';
+const arcadegame1Bg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345630/winera_uploads/uxyfn86dept4hu7geyyq.png";
+const arcadegamesImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345630/winera_uploads/bwrkmv2tzczs7ciayqn5.png";
+const bikeArcade = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345630/winera_uploads/schxkoaxrvkg5cdfqatw.jpg";
+const yellowBrushAccent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
+const superAirHockeyImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345686/winera_uploads/r9ri8fdp1zn23qijsqbb.jpg";
+const puckCarnivalAirHockeyImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345678/winera_uploads/hgufw9unaxafrouason3.jpg";
+const dazzlingAirHockeyImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/powuv61epkppbuxyouph.jpg";
+const auroraAirHockeyImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345631/winera_uploads/dy0jbj6daxse0hxazo8t.jpg";
+const ochaAirHockeyImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/xhpnlwznawws0pul4qqh.jpg";
+const aeroXAirHockeyImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345525/winera_uploads/lchcicvnp2rz8bplwljd.jpg";
+const arcadeCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/gqyx5q0t4y7o8lereesb.png";
+const ctaArcade = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/wrwlxquyxiiygubzvzlx.jpg";
+const arcadeHall = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/ctowdzk3h7ee5rxb2vpn.jpg";
+const arcadeBoy = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/lxgyufz5gdfquteol0qq.jpg";
+const arcadeBtn1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/xtjd65gysrqdivf2r7dr.png";
+const arcadeBtn2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/fodpz7ahy3ykljl8tfy9.png";
 
 import { 
   ChevronUp, ChevronDown, ChevronLeft, ChevronRight, MoveHorizontal, Box, Ruler, MessageCircle, ArrowRight 

@@ -4,9 +4,9 @@ import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 
-import ctaArcade from '../assets/cta-arcade.webp';
-import projNeon1 from '../assets/proj-neonpanda1.webp';
-import projSoft1 from '../assets/proj-softplay1.webp';
+const ctaArcade = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/wrwlxquyxiiygubzvzlx.jpg";
+const projNeon1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg";
+const projSoft1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg";
 
 import WineraImage from './WineraImage';
 

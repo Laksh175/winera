@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import wineraLogo from '../assets/logo.webp';
+const wineraLogo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png";
 import { MessageSquare } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 

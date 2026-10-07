@@ -6,15 +6,15 @@ import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 
-import projectBanner from '../assets/main-project-bg.webp';
-import gameZoneMobileBanner from '../assets/game_zone_mobile_banner.png';
-import projHulaboo from '../assets/proj-hulaboo.webp';
-import projNeon1 from '../assets/proj-neonpanda1.webp';
-import projSoft1 from '../assets/proj-softplay1.webp';
-import projectImage01 from '../assets/project-image01.webp';
-import projectImage3 from '../assets/project-image-3.webp';
-import projectImage4 from '../assets/project-image-4.webp';
-import projectCtaBg from '../assets/project-cta-bg.webp';
+const projectBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/jp7chlrldb0lxltyst5b.png";
+const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const projHulaboo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/a52mbp31belkkslptdal.jpg";
+const projNeon1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg";
+const projSoft1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg";
+const projectImage01 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/igg4yrl7xhnxllqifpj7.jpg";
+const projectImage3 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/hifdo3jiuvbvu4cxkgq4.jpg";
+const projectImage4 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/nt4puaf87gc83fawddbc.jpg";
+const projectCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/jk3i8dno06b01dvjhwvi.png";
 import { ArrowRight, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
 
 const resolveProjectImg = (proj) => {
