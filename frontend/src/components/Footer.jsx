@@ -84,9 +84,9 @@ export default function Footer({ footerData }) {
       position: 'relative',
       width: '100%',
       background: isMobile ? 'linear-gradient(180deg, #F5F5F9 0%, #e2e8f0 40%, #cbd5e1 100%)' : `url(${footerBg}) center/100% 100% no-repeat`,
-      padding: isMobile ? '20px 25px 15px' : '70px 4vw 35px',
+      padding: isMobile ? '20px 25px 12px' : '70px 4vw 20px',
       color: '#0f172a',
-      minHeight: isMobile ? 'auto' : '440px',
+      minHeight: isMobile ? 'auto' : '400px',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between'
@@ -275,7 +275,7 @@ export default function Footer({ footerData }) {
           alignItems: 'center',
           justifyContent: isMobile ? 'center' : 'space-between',
           flexDirection: isMobile ? 'column' : 'row',
-          marginBottom: isMobile ? '12px' : '30px',
+          marginBottom: isMobile ? '10px' : '18px',
           flexWrap: 'wrap',
           gap: isMobile ? '14px' : '20px'
         }}>
@@ -397,14 +397,45 @@ export default function Footer({ footerData }) {
 
         {/* Bottom Copyright Divider & Text */}
         <div style={{
-          paddingTop: isMobile ? '10px' : '20px',
+          paddingTop: isMobile ? '8px' : '12px',
           borderTop: '1px solid rgba(15, 23, 42, 0.12)',
           textAlign: 'center',
           fontSize: '11.5px',
           color: '#475569',
-          fontWeight: '500'
+          fontWeight: '500',
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: isMobile ? '4px' : '8px',
+          flexWrap: 'wrap'
         }}>
-          {copyright}
+          <span>{copyright}</span>
+          {!isMobile && <span style={{ opacity: 0.5 }}>|</span>}
+          <span>
+            Developed by{' '}
+            <a
+              href="https://kurminfotech.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: '#0284c7',
+                fontWeight: '700',
+                textDecoration: 'none',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.textDecoration = 'underline';
+                e.currentTarget.style.color = '#0369a1';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.textDecoration = 'none';
+                e.currentTarget.style.color = '#0284c7';
+              }}
+            >
+              Kurm Infotech
+            </a>
+          </span>
         </div>
       </div>
     </footer>
