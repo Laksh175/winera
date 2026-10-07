@@ -83,14 +83,17 @@ const parseBlogToForm = (post) => {
   }
 
   // Parse from fullContent markdown stream
-  const raw = post.fullContent || post.content || '';
-  if (!raw) {
+  let raw = String(post.fullContent || post.content || '');
+  if (!raw.trim()) {
     return {
       ...post,
       description: post.description || post.excerpt || '',
       sections: [{ title: '', paragraph: '' }]
     };
   }
+
+  // Convert literal string representations of newlines to real newlines
+  raw = raw.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n');
 
   const parts = raw.split(/\n(?=###\s+)/);
   let description = '';

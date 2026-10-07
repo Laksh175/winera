@@ -68,7 +68,8 @@ const formatExcerpt = (text) => {
 // Helper to extract SHORT headings for Table of Contents
 const extractHeadings = (text) => {
   if (!text) return [];
-  const paragraphs = text.split('\n\n');
+  const normalized = normalizeRawContent(text);
+  const paragraphs = normalized.split('\n\n');
   const headings = [];
   paragraphs.forEach((pText) => {
     const trimmed = pText.trim();
@@ -85,7 +86,7 @@ const extractHeadings = (text) => {
       }
     } else {
       const numMatch = trimmed.match(/^(\d+\.\s+[^.\n:]+)/);
-      if (numMatch) {
+      if (numMatch && trimmed.length < 120 && !trimmed.includes('\n')) {
         const titleText = numMatch[1].trim();
         headings.push({
           id: `blog-heading-${headings.length}`,
@@ -120,11 +121,22 @@ export const sanitizeAndFormatHtml = (input) => {
   return html;
 };
 
-const normalizeRawContent = (raw) => {
+export const normalizeRawContent = (raw) => {
   if (!raw) return '';
-  let str = raw;
+  let str = String(raw);
+
+  // 1. Convert literal string representations of newlines ("\\n", "\\r\\n") to real newlines
+  str = str.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n');
+
   // Strip ql-cursor or unwanted meta spans
   str = str.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
+
+  // Convert HTML headings to markdown ###
+  str = str.replace(/<h[1-6][^>]*>([\s\S]*?)<\/h[1-6]>/gi, (match, headingContent) => {
+    const cleanHeading = headingContent.replace(/<[^>]+>/g, '').trim();
+    return cleanHeading ? `\n\n### ${cleanHeading}\n\n` : '';
+  });
+
   // Convert lists
   str = str.replace(/<ul>([\s\S]*?)<\/ul>/gi, (match, listContent) => {
     return '\n' + listContent.replace(/<li>(.*?)<\/li>/gi, '- $1\n').trim() + '\n\n';
@@ -133,10 +145,13 @@ const normalizeRawContent = (raw) => {
     let idx = 1;
     return '\n' + listContent.replace(/<li>(.*?)<\/li>/gi, () => `${idx++}. $1\n`).trim() + '\n\n';
   });
+
   // Replace <p>...</p> blocks with double newlines
   str = str.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '\n\n');
+
   // Replace <br\s*/?> with single newline
   str = str.replace(/<br\s*\/?>/gi, '\n');
+
   // Clean multiple newlines
   str = str.replace(/\n{3,}/g, '\n\n');
   return str.trim();
@@ -153,7 +168,7 @@ const renderFormattedText = (text) => {
     const trimmed = pText.trim();
     if (!trimmed || /^#+\s*$/.test(trimmed)) return;
 
-    // Headings starting with ### or ## (FONT SIZE 22px, FONT WEIGHT 600)
+    // Headings starting with ### or ## or # (FONT SIZE 22px, FONT WEIGHT 700)
     if (trimmed.startsWith('#')) {
       const lines = trimmed.split('\n');
       const headingText = lines[0].replace(/^#+\s*/, '').trim();
@@ -169,7 +184,7 @@ const renderFormattedText = (text) => {
             id={headingId}
             style={{
               fontSize: '22px',
-              fontWeight: '600',
+              fontWeight: '700',
               color: '#0f172a',
               margin: '36px 0 14px',
               lineHeight: 1.35,
@@ -186,7 +201,7 @@ const renderFormattedText = (text) => {
           <p
             key={`h-body-${idx}`}
             style={{
-              fontSize: '17px',
+              fontSize: '16.5px',
               color: '#334155',
               lineHeight: 1.85,
               fontWeight: '400',
@@ -202,7 +217,7 @@ const renderFormattedText = (text) => {
 
     // Numbered headings like "1. Something" or "Step 1: Something"
     const numMatch = trimmed.match(/^(\d+\.\s+[^.\n:]+)(.*)$/s) || trimmed.match(/^(Step\s+\d+:?[^\n]+)(.*)$/s);
-    if (numMatch && trimmed.length < 120) {
+    if (numMatch && trimmed.length < 120 && !trimmed.includes('\n')) {
       const headingId = `blog-heading-${headingCounter}`;
       headingCounter++;
       elements.push(
@@ -211,7 +226,7 @@ const renderFormattedText = (text) => {
           id={headingId}
           style={{
             fontSize: '19px',
-            fontWeight: '600',
+            fontWeight: '700',
             color: '#0f172a',
             margin: '28px 0 10px',
             lineHeight: 1.4,
@@ -232,7 +247,7 @@ const renderFormattedText = (text) => {
           {listItems.map((item, lIdx) => (
             <li
               key={lIdx}
-              style={{ fontSize: '17px', color: '#334155', lineHeight: 1.8, marginBottom: '8px' }}
+              style={{ fontSize: '16.5px', color: '#334155', lineHeight: 1.8, marginBottom: '8px' }}
               dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(item) }}
             />
           ))}
@@ -246,7 +261,7 @@ const renderFormattedText = (text) => {
       <p
         key={`p-${idx}`}
         style={{
-          fontSize: '17px',
+          fontSize: '16.5px',
           color: '#334155',
           lineHeight: 1.85,
           fontWeight: '400',
