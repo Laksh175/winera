@@ -1,0 +1,21 @@
+# Large binary raw spreadsheets
+*.xls
+*.xlsx
+*.csv
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Production builds
+frontend/dist/
+dist/
+
+# Logs & scratch
+*.log
+scratch/

@@ -24,6 +24,7 @@ import {
   ChevronUp, ChevronDown, ChevronLeft, ChevronRight, MoveHorizontal, Box, Ruler, MessageCircle, ArrowRight 
 } from 'lucide-react';
 import allArcadeProducts from '../data/allArcadeProducts.json';
+import allVrGames from '../data/allVrGames.json';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '') {
@@ -646,8 +647,11 @@ export default function ArcadeGameDetail({ siteData }) {
     );
   });
 
-  // Find in master catalog
-  const masterCards = Array.isArray(allArcadeProducts?.cards) ? allArcadeProducts.cards : [];
+  // Find in master catalog (VR prioritized first so accurate Excel VR multi-images and specs take precedence, then Arcade)
+  const masterCards = [
+    ...(Array.isArray(allVrGames?.cards) ? allVrGames.cards : []),
+    ...(Array.isArray(allArcadeProducts?.cards) ? allArcadeProducts.cards : [])
+  ];
   const masterFoundCard = masterCards.find(c => {
     const cardTitleSlug = slugify(c.title || c.name);
     return (
@@ -674,16 +678,19 @@ export default function ArcadeGameDetail({ siteData }) {
     ? {
         name: masterFoundCard.name || masterFoundCard.title,
         category: masterFoundCard.category || 'Arcade Games',
-        tagline: masterFoundCard.desc || `Commercial ${masterFoundCard.category} arcade game machine.`,
-        img: masterFoundCard.img || categoryDefaultImages[masterFoundCard.category] || arcadegamesImg,
+        tagline: masterFoundCard.desc || `Commercial ${masterFoundCard.category} machine.`,
+        img: masterFoundCard.img || masterFoundCard.imageUrl || categoryDefaultImages[masterFoundCard.category] || arcadegamesImg,
         heroBg: arcadegame1Bg,
-        gallery: masterFoundCard.img ? [masterFoundCard.img] : [categoryDefaultImages[masterFoundCard.category] || arcadegamesImg],
+        gallery: (Array.isArray(masterFoundCard.gallery) && masterFoundCard.gallery.length > 0)
+          ? masterFoundCard.gallery
+          : [masterFoundCard.img || masterFoundCard.imageUrl || categoryDefaultImages[masterFoundCard.category] || arcadegamesImg],
         specs: {
           power: masterFoundCard.power || '450 W',
+          weight: masterFoundCard.weight || '',
           voltage: masterFoundCard.voltage || '220v',
           category: masterFoundCard.category || 'Arcade Games',
           players: masterFoundCard.players || '1-2 Players',
-          material: masterFoundCard.material || 'Commercial Steel & Acrylic',
+          material: masterFoundCard.material || 'Commercial Steel & Acrylic Finish',
           width: masterFoundCard.width || '1200 mm',
           depth: masterFoundCard.depth || '1100 mm',
           height: masterFoundCard.height || '2100 mm'
@@ -698,6 +705,7 @@ export default function ArcadeGameDetail({ siteData }) {
         gallery: [arcadegamesImg],
         specs: {
           power: '450 W',
+          weight: '',
           voltage: '220v',
           category: 'Arcade Games',
           players: '1-2 Players',
@@ -716,8 +724,11 @@ export default function ArcadeGameDetail({ siteData }) {
 
   // Collect ONLY uploaded gallery photos
   let customGalleries = [];
-  if (Array.isArray(cmsFoundCard?.gallery) && cmsFoundCard.gallery.length > 0) {
+  if (Array.isArray(cmsFoundCard?.gallery) && cmsFoundCard.gallery.length > 1) {
     customGalleries = cmsFoundCard.gallery.filter(g => typeof g === 'string' && g.trim() !== '');
+  }
+  if (customGalleries.length === 0 && Array.isArray(masterFoundCard?.gallery) && masterFoundCard.gallery.length > 0) {
+    customGalleries = masterFoundCard.gallery.filter(g => typeof g === 'string' && g.trim() !== '');
   }
   if (customGalleries.length === 0) {
     const direct = [
@@ -830,13 +841,22 @@ export default function ArcadeGameDetail({ siteData }) {
     ]
   };
 
+  const isVrProduct = Boolean(
+    masterFoundCard?.isVr ||
+    (allVrGames?.cards && allVrGames.cards.some(c => c.slug === slug || (c.name && slugify(c.name) === slug))) ||
+    ['Bester VR', 'Funin VR', 'Funin R', 'Movie Power', 'Oculeap VR', 'VR Games'].some(cat =>
+      (productCategory || '').toLowerCase().includes(cat.toLowerCase()) ||
+      (masterFoundCard?.category || '').toLowerCase().includes(cat.toLowerCase())
+    )
+  );
+
   const thumbRefs = useRef([]);
   const thumbContainerRef = useRef(null);
 
   useEffect(() => {
-    document.title = `${product.name} | Arcade Game Machine | Winera International`;
+    document.title = `${product.name} | ${isVrProduct ? 'VR Game Machine' : 'Arcade Game Machine'} | Winera International`;
     window.scrollTo(0, 0);
-  }, [product]);
+  }, [product, isVrProduct]);
 
   useEffect(() => {
     if (thumbRefs.current[selectedImageIndex]) {
@@ -888,7 +908,9 @@ export default function ArcadeGameDetail({ siteData }) {
             }}>
               <Link to="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</Link>
               <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
-              <Link to="/product/arcade-games" style={{ color: '#ffffff', textDecoration: 'none' }}>Arcade Games</Link>
+              <Link to={isVrProduct ? "/vr-games" : "/product/arcade-games"} style={{ color: '#ffffff', textDecoration: 'none' }}>
+                {isVrProduct ? "VR Games" : "Arcade Games"}
+              </Link>
               <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
               <span style={{ color: '#ffcd00', fontWeight: '900' }}>
                 {product.name}

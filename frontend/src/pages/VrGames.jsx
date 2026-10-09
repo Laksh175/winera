@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
@@ -7,7 +8,14 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
-import { ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity, Plus, Minus } from 'lucide-react';
+import SectionHeading from '../components/SectionHeading';
+import WineraImage from '../components/WineraImage';
+import allVrGames from '../data/allVrGames.json';
+import { 
+  ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, 
+  Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity, Plus, Minus,
+  Search, X, ChevronDown, ChevronRight, ChevronLeft, ArrowRight, Eye, CheckCheck, MessageCircle, Maximize2
+} from 'lucide-react';
 
 const vrHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345693/winera_uploads/ziinwppnkbtzqzz54raa.png";
 const vrMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345690/winera_uploads/kpty49ky7coh1q3mmylu.png";
@@ -77,51 +85,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
   });
 };
 
-// Helper function to render vector Lucide icons for VR Range items instead of emojis
-const renderRangeIcon = (iconVal, idx, isSelected) => {
-  const iconStyle = {
-    width: '20px',
-    height: '20px',
-    color: isSelected ? '#0284c7' : '#64748b',
-    transition: 'color 0.25s ease'
-  };
 
-  if (typeof iconVal === 'string' && (iconVal.startsWith('http') || iconVal.startsWith('/'))) {
-    return <img src={iconVal} alt="" style={{ width: '20px', height: '20px', objectFit: 'contain' }} />;
-  }
-
-  const iconMap = {
-    plane: <Plane style={iconStyle} />,
-    users: <Users style={iconStyle} />,
-    radio: <Radio style={iconStyle} />,
-    gamepad: <Gamepad2 style={iconStyle} />,
-    zap: <Zap style={iconStyle} />,
-    sparkles: <Sparkles style={iconStyle} />,
-    flame: <Flame style={iconStyle} />,
-    target: <Target style={iconStyle} />,
-    tv: <Tv style={iconStyle} />,
-    layers: <Layers style={iconStyle} />,
-    activity: <Activity style={iconStyle} />
-  };
-
-  const key = typeof iconVal === 'string' ? iconVal.toLowerCase().trim() : '';
-  if (iconMap[key]) {
-    return iconMap[key];
-  }
-
-  const defaultIcons = [
-    <Plane style={iconStyle} />,
-    <Users style={iconStyle} />,
-    <Radio style={iconStyle} />,
-    <Gamepad2 style={iconStyle} />,
-    <Zap style={iconStyle} />,
-    <Sparkles style={iconStyle} />,
-    <Flame style={iconStyle} />,
-    <Target style={iconStyle} />
-  ];
-
-  return defaultIcons[idx % defaultIcons.length];
-};
 
 // Helper to resolve valid image URLs or fallback
 const getValidImageUrl = (url, fallback) => {
@@ -133,9 +97,14 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 export default function VrGames({ siteData }) {
-  const [activeRangeIndex, setActiveRangeIndex] = React.useState(0);
-  const [showAllRangeItems, setShowAllRangeItems] = React.useState(false);
-  const [openReliabilityIndex, setOpenReliabilityIndex] = React.useState(-1);
+  const [activeCategory, setActiveCategory] = useState("All VR Games");
+  const [expandedCat, setExpandedCat] = useState("All VR Games");
+  const [isCatDropdownOpen, setIsCatDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedSpecsProduct, setSelectedSpecsProduct] = useState(null);
+  const [selectedModalImageIdx, setSelectedModalImageIdx] = useState(0);
+  const [openReliabilityIndex, setOpenReliabilityIndex] = useState(-1);
 
   React.useEffect(() => {
     if (!siteData) return;
@@ -160,28 +129,7 @@ export default function VrGames({ siteData }) {
   const { header, footer } = siteData;
   const heroBgImage = getValidImageUrl(siteData?.vrHero?.bgUrl, vrHeroBg);
 
-  const defaultRangeItems = [
-    { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR Wings Experience", img: vrBlock1, status: "ONLINE", latency: "4ms", icon: "plane" },
-    { title: "VR Wings", subtitle: "Immersive Flight", category: "FLIGHT SIMULATION", name: "VR Wings Flight Arena", img: about3, status: "ONLINE", latency: "2ms", icon: "users" },
-    { title: "VR UFO 5 player", subtitle: "Group Pod Ride", category: "THEATER SIMULATION", name: "VR UFO 5 Player Motion Pod", img: arcadeHall, status: "ONLINE", latency: "5ms", icon: "radio" },
-    { title: "VR UFO 4 player", subtitle: "Group Battle", category: "ARCADE SIMULATION", name: "VR UFO 4 Player Battle Station", img: about4, status: "ONLINE", latency: "3ms", icon: "gamepad" },
-    { title: "VR Thunder Dual 360", subtitle: "Combat Station", category: "ACTION SIMULATION", name: "VR Thunder Dual 360 Platform", img: ctaArcade, status: "ONLINE", latency: "4ms", icon: "zap" },
-    { title: "VR small platform", subtitle: "Compact Pod", category: "MOTION CINEMA", name: "VR Small Platform Simulator", img: about3, status: "ONLINE", latency: "3ms", icon: "sparkles" },
-    { title: "VR skyside 2 player", subtitle: "Co-op Flight", category: "ACTIVE SIMULATION", name: "VR Skyside 2 Player Arena", img: about4, status: "ONLINE", latency: "4ms", icon: "target" },
-    { title: "VR Ski Machine 1P", subtitle: "Active Sports", category: "SPORTS SIMULATION", name: "VR Ski Machine Single Player", img: ctaArcade, status: "ONLINE", latency: "2ms", icon: "activity" },
-    { title: "VR Single 360-exclusive", subtitle: "Solo Simulation", category: "360 MOTION EXCLUSIVE", name: "VR Single 360 Exclusive Pod", img: vrImg, status: "ONLINE", latency: "3ms", icon: "layers" },
-    { title: "VR Single 360 Fighter Jet Simulator", subtitle: "Fighter Jet Sim", category: "MILITARY SIMULATION", name: "VR Single 360 Fighter Jet Simulator", img: about3, status: "ONLINE", latency: "5ms", icon: "plane" }
-  ];
 
-  const vrRangeListRaw = (Array.isArray(siteData?.vrRange?.items) && siteData.vrRange.items.length > 0) ? siteData.vrRange.items : defaultRangeItems;
-  const vrRangeList = vrRangeListRaw.map((item, idx) => {
-    let finalImg = item.img || item.imgUrl;
-    if (idx === 0) {
-      finalImg = vrBlock1;
-    }
-    return { ...item, img: finalImg, imgUrl: finalImg };
-  });
-  const displayedRangeItems = showAllRangeItems ? vrRangeList : vrRangeList.slice(0, 5);
 
   const defaultVrFaqs = [
     {
@@ -455,191 +403,883 @@ export default function VrGames({ siteData }) {
         </div>
       </section>
 
-      {/* 5. OUR VR GAMING MACHINE RANGE SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-vr-range-section" style={{ padding: '35px 4vw 35px', background: '#F5F5F9', textAlign: 'center' }}>
+      {/* 5. VR PRODUCTS CATALOG: SIDEBAR & PRODUCT CARDS GRID (1:1 MATCHING ARCADE GAME CATALOG DESIGN) */}
+      <section id="categories" className="winera-categories-section" style={{ padding: '20px 4vw 75px', background: '#F5F5F9' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          {/* Section Heading */}
-          <div style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <img
-              src={yellowStrokeLine}
-              alt=""
-              className="winera-yellow-stroke"
-              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
-            />
-            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: '0 0 12px 0' }}>
-              {renderTitleMarkup(siteData?.vrRange?.title, "*Our VR Gaming* Machine Range", '#38bdf8')}
-            </h2>
-            <p style={{ fontSize: '13.5px', color: '#64748b', fontWeight: '500', maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
-              {siteData?.vrRange?.subtitle || "Every model in our VR gaming set is sourced from established global manufacturers and configured for sustained commercial operation."}
-            </p>
+          {/* Section Heading for Categories */}
+          <SectionHeading marginBottom="32px" accentWidth="400px" accentMaxWidth="400px">
+            Discover our *Products*
+          </SectionHeading>
+
+          {/* Mobile Category Select Dropdown */}
+          <div className="winera-mobile-category-dropdown-container" style={{ display: 'none', marginBottom: '24px', width: '100%', position: 'relative', zIndex: 50 }}>
+            <label style={{ display: 'block', fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px', textAlign: 'left' }}>
+              Select Category:
+            </label>
+
+            {/* Category Toggle Button */}
+            <button
+              type="button"
+              onClick={() => setIsCatDropdownOpen(!isCatDropdownOpen)}
+              style={{
+                width: '100%',
+                padding: '14px 18px',
+                borderRadius: '16px',
+                border: '2px solid #38bdf8',
+                background: '#ffffff',
+                color: '#0f172a',
+                fontSize: '15px',
+                fontWeight: '800',
+                outline: 'none',
+                boxShadow: '0 4px 15px rgba(56, 189, 248, 0.12)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                textAlign: 'left'
+              }}
+            >
+              <span>{activeCategory}</span>
+              <ChevronDown style={{
+                width: '20px',
+                height: '20px',
+                color: '#0284c7',
+                transform: isCatDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.25s ease'
+              }} />
+            </button>
+
+            {/* Custom Dropdown Options Menu */}
+            {isCatDropdownOpen && (
+              <div style={{
+                position: 'absolute',
+                top: 'calc(100% + 6px)',
+                left: 0,
+                right: 0,
+                background: '#ffffff',
+                border: '2px solid #38bdf8',
+                borderRadius: '18px',
+                boxShadow: '0 12px 35px rgba(2, 132, 199, 0.18)',
+                overflow: 'hidden',
+                zIndex: 100,
+                maxHeight: '340px',
+                overflowY: 'auto',
+                padding: '6px'
+              }}>
+                {(allVrGames?.categoriesList || [
+                  "All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"
+                ]).map((cat, cIdx) => {
+                  const isSelected = (activeCategory || "All VR Games") === cat;
+                  return (
+                    <div
+                      key={cIdx}
+                      onClick={() => {
+                        setActiveCategory(cat);
+                        setCurrentPage(1);
+                        setIsCatDropdownOpen(false);
+                      }}
+                      style={{
+                        padding: '13px 16px',
+                        borderRadius: '12px',
+                        fontSize: '15px',
+                        fontWeight: isSelected ? '800' : '600',
+                        color: isSelected ? '#ffffff' : '#0f172a',
+                        background: isSelected ? '#38bdf8' : 'transparent',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '3px',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <span>{cat}</span>
+                      {isSelected && <span style={{ fontSize: '15px', fontWeight: '900' }}>✓</span>}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          {/* Interactive Range Viewer (Left Image Preview Card + Right Model Selector List) */}
-          <div className="winera-vr-range-grid" style={{
+          <div className="winera-categories-grid" style={{
             display: 'grid',
-            gridTemplateColumns: '1.25fr 0.75fr',
-            gap: '30px',
-            alignItems: 'stretch',
-            maxWidth: '1120px',
-            margin: '0 auto'
+            gridTemplateColumns: '260px 1fr',
+            gap: '24px',
+            alignItems: 'stretch'
           }}>
-            {/* Left Big Preview Card */}
-            {(() => {
-              const activeItem = vrRangeList[activeRangeIndex % vrRangeList.length] || vrRangeList[0];
-              return (
-                <div className="winera-vr-preview-card" style={{
-                  position: 'relative',
-                  width: '100%',
-                  minHeight: '440px',
-                  borderRadius: '24px',
-                  overflow: 'hidden',
-                  background: `url(${activeItem.img}) center/cover no-repeat`,
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-end',
-                  padding: '30px',
-                  color: '#ffffff'
-                }}>
-                  {/* Subtle Dark Gradient Overlay */}
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 50%, rgba(0, 0, 0, 0) 100%)',
-                    zIndex: 1
-                  }}></div>
-
-                  {/* Top-Right Telemetry Info */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '30px',
-                    right: '30px',
-                    zIndex: 2,
-                    textAlign: 'right',
-                    fontSize: '11px',
-                    fontWeight: '800',
-                    letterSpacing: '0.5px',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.8)'
-                  }}>
-                    <div>STATUS: <span style={{ color: '#34d399' }}>{activeItem.status || "ONLINE"}</span></div>
-                    <div>LATENCY: <span style={{ color: '#38bdf8' }}>{activeItem.latency || "4ms"}</span></div>
-                  </div>
-
-                  {/* Bottom-Left Card Info */}
-                  <div style={{ position: 'relative', zIndex: 2, textAlign: 'left' }}>
-                    <span style={{
-                      fontSize: '10.5px',
-                      fontWeight: '900',
-                      letterSpacing: '1.2px',
-                      color: '#38bdf8',
-                      textTransform: 'uppercase',
-                      display: 'block',
-                      marginBottom: '4px'
-                    }}>
-                      {activeItem.category || "ACTIVE SIMULATION"}
-                    </span>
-                    <h3 style={{
-                      fontSize: '1.9rem',
-                      fontWeight: '900',
-                      color: '#ffffff',
-                      margin: 0,
-                      lineHeight: 1.2
-                    }}>
-                      {activeItem.name || activeItem.title}
-                    </h3>
-                  </div>
-                </div>
-              );
-            })()}
-
-            {/* Right Interactive Selection Card List */}
-            <div className="winera-vr-range-select-col" style={{
+            {/* LEFT CATEGORY SIDEBAR CARD WITH DARK TO LIGHT GRADIENT */}
+            <div className="winera-categories-sidebar" style={{
+              background: 'linear-gradient(180deg, #b3e5fc 0%, #e8f7fe 100%)',
+              border: '1.5px solid #e8f7fe',
+              borderRadius: '28px',
+              padding: '24px 18px 24px',
+              boxShadow: '0 8px 25px rgba(56, 189, 248, 0.08)',
               display: 'flex',
               flexDirection: 'column',
               gap: '12px',
-              justifyContent: 'space-between'
+              height: '100%'
             }}>
-              {displayedRangeItems.map((item, idx) => {
-                const isSelected = idx === activeRangeIndex;
+              <h3 style={{ fontSize: '17px', fontWeight: '800', color: '#0f172a', marginBottom: '6px', paddingLeft: '4px' }}>
+                Discover our Products
+              </h3>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                {(() => {
+                  const availableCats = allVrGames?.categoriesList || [
+                    "All VR Games",
+                    "Bester VR",
+                    "Funin VR",
+                    "Movie Power",
+                    "Oculeap VR"
+                  ];
+
+                  const topCategory = availableCats[0] || "All VR Games";
+                  const subCategories = availableCats.slice(1);
+                  const isTopSelected = (activeCategory === topCategory || !activeCategory);
+
+                  return (
+                    <>
+                      {/* Parent Category Button: All VR Games */}
+                      <button
+                        onClick={() => {
+                          setActiveCategory(topCategory);
+                          setExpandedCat(expandedCat === topCategory ? null : topCategory);
+                          setCurrentPage(1);
+                        }}
+                        style={{
+                          width: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: isTopSelected ? '10px 14px' : '10px 8px 10px 4px',
+                          borderRadius: isTopSelected ? '10px' : '0px',
+                          border: 'none',
+                          borderBottom: isTopSelected ? 'none' : '1px solid rgba(255, 255, 255, 0.85)',
+                          background: isTopSelected ? '#38bdf8' : 'transparent',
+                          color: isTopSelected ? '#ffffff' : 'rgb(55, 62, 65)',
+                          fontSize: '16px',
+                          fontWeight: isTopSelected ? '700' : '400',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                          marginBottom: '4px',
+                          boxShadow: 'none',
+                          transition: 'all 0.15s ease'
+                        }}
+                      >
+                        <span>{topCategory}</span>
+                        <ChevronDown style={{ width: '14px', height: '14px', color: isTopSelected ? '#ffffff' : '#94a3b8', transform: expandedCat === topCategory ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+                      </button>
+
+                      {/* Subcategories List */}
+                      {subCategories.map((subName, subIdx, array) => {
+                        const isSelected = activeCategory === subName;
+                        const isLast = subIdx === array.length - 1;
+
+                        return (
+                          <button
+                            key={subIdx}
+                            onClick={() => {
+                              setActiveCategory(subName);
+                              setCurrentPage(1);
+                            }}
+                            style={{
+                              width: '100%',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: isSelected ? '10px 14px' : '10px 8px 10px 4px',
+                              borderRadius: isSelected ? '10px' : '0px',
+                              border: 'none',
+                              borderBottom: isSelected ? 'none' : (isLast ? 'none' : '1px solid rgba(255, 255, 255, 0.85)'),
+                              background: isSelected ? '#38bdf8' : 'transparent',
+                              color: isSelected ? '#ffffff' : 'rgb(55, 62, 65)',
+                              fontSize: '16px',
+                              fontWeight: isSelected ? '700' : '400',
+                              cursor: 'pointer',
+                              textAlign: 'left',
+                              transition: 'all 0.15s ease'
+                            }}
+                          >
+                            <span>{subName}</span>
+                            <ChevronRight style={{
+                              width: '12px',
+                              height: '12px',
+                              color: isSelected ? '#ffffff' : '#94a3b8',
+                              opacity: isSelected ? 1 : 0.5
+                            }} />
+                          </button>
+                        );
+                      })}
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+
+            {/* RIGHT DISPLAY AREA: PRODUCT SEARCH BAR + CARDS GRID + PAGINATION */}
+            <div className="winera-products-display-area" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              {(() => {
+                const masterCards = Array.isArray(allVrGames?.cards) ? allVrGames.cards : [];
+
+                // Filter cards by selected activeCategory
+                const isAllCategory = !activeCategory || activeCategory === "All VR Games" || activeCategory === "All";
+                const categoryMatched = isAllCategory
+                  ? masterCards
+                  : masterCards.filter(c => {
+                      const cat = (c.category || c.tag || "").toLowerCase().trim();
+                      const target = activeCategory.toLowerCase().trim();
+                      return cat === target || cat.includes(target) || target.includes(cat);
+                    });
+
+                // Further filter cards by live search query
+                const prodCards = searchQuery.trim()
+                  ? categoryMatched.filter(c => {
+                      const q = searchQuery.toLowerCase().trim();
+                      const name = (c.name || c.title || "").toLowerCase();
+                      const cat = (c.category || c.tag || "").toLowerCase();
+                      const desc = (c.desc || "").toLowerCase();
+                      return name.includes(q) || cat.includes(q) || desc.includes(q);
+                    })
+                  : categoryMatched;
+
+                const itemsPerPage = 6;
+                const totalPages = Math.max(1, Math.ceil(prodCards.length / itemsPerPage));
+                const validPage = Math.min(currentPage, totalPages);
+                const startIndex = (validPage - 1) * itemsPerPage;
+                const visibleCards = prodCards.slice(startIndex, startIndex + itemsPerPage);
+
                 return (
-                  <div
-                    key={idx}
-                    onClick={() => setActiveRangeIndex(idx)}
-                    style={{
-                      background: isSelected
-                        ? 'linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)'
-                        : '#ffffff',
-                      border: isSelected ? '2px solid #38bdf8' : '1px solid #e2e8f0',
-                      borderLeft: isSelected ? '5px solid #0284c7' : '1px solid #e2e8f0',
-                      borderRadius: '16px',
-                      padding: '16px 20px',
-                      cursor: 'pointer',
+                  <>
+                    {/* Top Search Bar & Counter Pill Header */}
+                    <div className="winera-products-search-bar-wrap" style={{
+                      background: '#ffffff',
+                      border: '1.5px solid rgba(56, 189, 248, 0.4)',
+                      borderRadius: '18px',
+                      padding: '10px 16px',
+                      boxShadow: '0 4px 18px rgba(56, 189, 248, 0.08)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      boxShadow: 'none',
-                      transition: 'all 0.25s ease',
-                      textAlign: 'left'
-                    }}
-                  >
-                    <div>
-                      <h4 style={{
-                        fontSize: '1.15rem',
-                        fontWeight: '800',
-                        color: '#0f172a',
-                        margin: '0 0 2px 0'
-                      }}>
-                        {item.title}
-                      </h4>
-                      <p style={{
-                        fontSize: '12px',
-                        color: '#64748b',
-                        fontWeight: '500',
-                        margin: 0
-                      }}>
-                        {item.subtitle}
-                      </p>
-                    </div>
-
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
+                      gap: '12px',
+                      flexWrap: 'wrap'
                     }}>
-                      {renderRangeIcon(item.icon, idx, isSelected)}
-                    </div>
-                  </div>
-                );
-              })}
+                      {/* Search Input Field with Lucide Icon */}
+                      <div style={{
+                        position: 'relative',
+                        flex: '1 1 240px',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}>
+                        <Search style={{
+                          position: 'absolute',
+                          left: '12px',
+                          width: '18px',
+                          height: '18px',
+                          color: '#0284c7',
+                          pointerEvents: 'none'
+                        }} />
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            setCurrentPage(1);
+                          }}
+                          placeholder={`Search ${activeCategory || 'VR games'} (e.g. UFO, Racing, 360, Flight)...`}
+                          style={{
+                            width: '100%',
+                            padding: '10px 36px 10px 38px',
+                            borderRadius: '12px',
+                            border: '1px solid rgba(148, 163, 184, 0.3)',
+                            background: '#f8fafc',
+                            fontSize: '13.5px',
+                            fontWeight: '500',
+                            color: '#0f172a',
+                            outline: 'none',
+                            transition: 'all 0.2s ease',
+                            boxSizing: 'border-box'
+                          }}
+                        />
+                        {searchQuery && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSearchQuery('');
+                              setCurrentPage(1);
+                            }}
+                            style={{
+                              position: 'absolute',
+                              right: '10px',
+                              background: '#e2e8f0',
+                              border: 'none',
+                              borderRadius: '50%',
+                              width: '20px',
+                              height: '20px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer',
+                              color: '#475569',
+                              padding: 0
+                            }}
+                            title="Clear search"
+                          >
+                            <X style={{ width: '12px', height: '12px' }} />
+                          </button>
+                        )}
+                      </div>
 
-              {vrRangeList.length > 5 && (
-                <div style={{ textAlign: 'right', marginTop: '6px' }}>
+                      {/* Filter Count Indicator */}
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontSize: '13px',
+                        color: '#64748b',
+                        fontWeight: '600'
+                      }}>
+                        <span>Showing <strong style={{ color: '#0284c7' }}>{prodCards.length}</strong> {prodCards.length === 1 ? 'game' : 'games'}</span>
+                      </div>
+                    </div>
+
+                    {/* Desktop Product Cards Grid */}
+                    {prodCards.length === 0 ? (
+                      <div style={{
+                        gridColumn: '1 / -1',
+                        background: 'linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%)',
+                        borderRadius: '24px',
+                        padding: '45px 24px',
+                        textAlign: 'center',
+                        border: '1.5px dashed #7dd3fc',
+                        width: '100%',
+                        boxSizing: 'border-box'
+                      }}>
+                        <Search style={{ width: '36px', height: '36px', color: '#38bdf8', margin: '0 auto 12px' }} />
+                        <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px' }}>
+                          {searchQuery ? `No VR machines found matching "${searchQuery}"` : `Custom ${activeCategory} Machines Available`}
+                        </h4>
+                        <p style={{ fontSize: '13.5px', color: '#64748b', maxWidth: '460px', margin: '0 auto 18px', lineHeight: 1.6 }}>
+                          {searchQuery ? `Try searching with another keyword or clear the search filter.` : `We manufacture and supply commercial-grade ${activeCategory} virtual reality machines customized for your space.`}
+                        </p>
+                        {searchQuery ? (
+                          <button
+                            onClick={() => { setSearchQuery(''); setCurrentPage(1); }}
+                            style={{
+                              background: '#38bdf8',
+                              color: '#ffffff',
+                              border: 'none',
+                              padding: '10px 22px',
+                              borderRadius: '12px',
+                              fontWeight: '800',
+                              cursor: 'pointer',
+                              fontSize: '14px'
+                            }}
+                          >
+                            Clear Search
+                          </button>
+                        ) : (
+                          <a
+                            href={`https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera International! I want to inquire about ${activeCategory} catalog and pricing.`)}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                              background: '#38bdf8',
+                              color: '#ffffff',
+                              padding: '11px 22px',
+                              borderRadius: '12px',
+                              fontSize: '14px',
+                              fontWeight: '700',
+                              textDecoration: 'none',
+                              boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)'
+                            }}
+                          >
+                            Request Catalog on WhatsApp
+                          </a>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="winera-desktop-products-grid" style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(3, 1fr)',
+                        gap: '20px'
+                      }}>
+                        {visibleCards.map((card, idx) => {
+                          const cardSlug = card.slug || (card.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                          return (
+                            <Link
+                              key={card.id || idx}
+                              to={`/product/${cardSlug}`}
+                              style={{
+                                textDecoration: 'none',
+                                color: 'inherit',
+                                background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
+                                borderRadius: '24px',
+                                padding: '16px',
+                                boxShadow: '0 10px 25px rgba(56, 189, 248, 0.08)',
+                                border: '1.5px solid #e0f2fe',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                textAlign: 'center',
+                                transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), boxShadow 0.25s',
+                                cursor: 'pointer'
+                              }}
+                              className="winera-cta-btn-hover"
+                            >
+                              <div style={{
+                                width: '100%',
+                                aspectRatio: '1 / 1',
+                                borderRadius: '18px',
+                                overflow: 'hidden',
+                                marginBottom: '16px',
+                                background: '#ffffff',
+                                boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
+                                border: '4px solid #ffffff',
+                                padding: '10px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                position: 'relative'
+                              }}>
+                                <WineraImage
+                                  src={card.imageUrl || card.img}
+                                  alt={card.name}
+                                  style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                  }}
+                                  imgStyle={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'contain'
+                                  }}
+                                />
+                              </div>
+
+                              <h4 style={{
+                                fontSize: '1rem',
+                                fontWeight: '700',
+                                color: '#0f172a',
+                                lineHeight: 1.3,
+                                margin: '4px 0 8px',
+                                minHeight: '42px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}>
+                                {card.name}
+                              </h4>
+
+                              <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '6px',
+                                fontSize: '12px',
+                                color: '#0284c7',
+                                fontWeight: '700',
+                                marginTop: 'auto'
+                              }}>
+                                <span>View Specifications</span>
+                                <ArrowRight style={{ width: '13px', height: '13px' }} />
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+
+          {/* Dynamic Pagination Toolbar (Centered across full section width 1:1 matching Arcade Games) */}
+          {(() => {
+            const masterCards = Array.isArray(allVrGames?.cards) ? allVrGames.cards : [];
+            const isAllCategory = !activeCategory || activeCategory === "All VR Games" || activeCategory === "All";
+            const categoryMatched = isAllCategory
+              ? masterCards
+              : masterCards.filter(c => {
+                  const cat = (c.category || c.tag || "").toLowerCase().trim();
+                  const target = activeCategory.toLowerCase().trim();
+                  return cat === target || cat.includes(target) || target.includes(cat);
+                });
+
+            const filteredCards = searchQuery.trim()
+              ? categoryMatched.filter(c => {
+                  const q = searchQuery.toLowerCase().trim();
+                  const name = (c.name || c.title || "").toLowerCase();
+                  const cat = (c.category || c.tag || "").toLowerCase();
+                  const desc = (c.desc || "").toLowerCase();
+                  return name.includes(q) || cat.includes(q) || desc.includes(q);
+                })
+              : categoryMatched;
+
+            const itemsPerPage = 6;
+            const totalPages = Math.max(1, Math.ceil(filteredCards.length / itemsPerPage));
+            const validPage = Math.min(currentPage, totalPages);
+
+            if (totalPages <= 1) return null;
+
+            const getPaginationRange = (curr, total) => {
+              if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+              if (curr <= 4) return [1, 2, 3, 4, 5, '...', total];
+              if (curr >= total - 3) return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+              return [1, '...', curr - 1, curr, curr + 1, '...', total];
+            };
+
+            const pageRange = getPaginationRange(validPage, totalPages);
+
+            return (
+              <div className="winera-desktop-pagination" style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '32px' }}>
+                <div style={{
+                  background: 'rgba(224, 242, 254, 0.65)',
+                  border: '1.5px solid #7dd3fc',
+                  borderRadius: '16px',
+                  padding: '6px 20px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  boxShadow: 'none'
+                }}>
                   <button
-                    type="button"
-                    onClick={() => setShowAllRangeItems(prev => !prev)}
+                    aria-label="Previous Page"
+                    onClick={() => {
+                      if (validPage > 1) {
+                        setCurrentPage(validPage - 1);
+                        document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    disabled={validPage <= 1}
                     style={{
                       background: 'none',
                       border: 'none',
-                      fontSize: '13.5px',
-                      fontWeight: '800',
-                      color: '#0084ff',
-                      cursor: 'pointer',
-                      padding: '4px 0',
-                      transition: 'all 0.2s ease',
-                      display: 'inline-flex',
+                      color: validPage <= 1 ? '#cbd5e1' : '#475569',
+                      cursor: validPage <= 1 ? 'not-allowed' : 'pointer',
+                      display: 'flex',
                       alignItems: 'center',
-                      gap: '4px'
+                      padding: '4px'
                     }}
                   >
-                    {showAllRangeItems ? "See Less ↑" : "See More →"}
+                    <ChevronLeft style={{ width: '18px', height: '18px' }} />
+                  </button>
+
+                  {pageRange.map((item, idx) => {
+                    if (item === '...') {
+                      return (
+                        <span key={`ellipsis-${idx}`} style={{ padding: '0 4px', color: '#94a3b8', fontWeight: 'bold' }}>
+                          ...
+                        </span>
+                      );
+                    }
+                    const pageNum = item;
+                    const isActive = pageNum === validPage;
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => {
+                          setCurrentPage(pageNum);
+                          document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        style={{
+                          width: '36px',
+                          height: '36px',
+                          borderRadius: '12px',
+                          background: isActive ? '#38bdf8' : 'transparent',
+                          color: isActive ? '#ffffff' : '#475569',
+                          fontSize: '14.5px',
+                          fontWeight: isActive ? '800' : '600',
+                          border: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease'
+                        }}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+
+                  <button
+                    aria-label="Next Page"
+                    onClick={() => {
+                      if (validPage < totalPages) {
+                        setCurrentPage(validPage + 1);
+                        document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    disabled={validPage >= totalPages}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: validPage >= totalPages ? '#cbd5e1' : '#475569',
+                      cursor: validPage >= totalPages ? 'not-allowed' : 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '4px'
+                    }}
+                  >
+                    <ChevronRight style={{ width: '18px', height: '18px' }} />
                   </button>
                 </div>
-              )}
+              </div>
+            );
+          })()}
+        </div>
+      </section>
+
+      {/* RICH SPECIFICATIONS MODAL FOR VR PRODUCTS */}
+      {selectedSpecsProduct && (
+        <div
+          onClick={() => setSelectedSpecsProduct(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9999,
+            background: 'rgba(15, 23, 42, 0.75)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px'
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: '#ffffff',
+              borderRadius: '28px',
+              maxWidth: '860px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.3)',
+              position: 'relative',
+              padding: '32px'
+            }}
+          >
+            {/* Close button */}
+            <button
+              type="button"
+              onClick={() => setSelectedSpecsProduct(null)}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                width: '38px',
+                height: '38px',
+                borderRadius: '50%',
+                border: '1.5px solid #e2e8f0',
+                background: '#f8fafc',
+                color: '#64748b',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                zIndex: 10
+              }}
+            >
+              <X style={{ width: '20px', height: '20px' }} />
+            </button>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1.15fr',
+              gap: '28px',
+              alignItems: 'start'
+            }} className="winera-vr-modal-grid">
+              {/* Left Column: Big Image & Thumbnails */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div style={{
+                  width: '100%',
+                  aspectRatio: '1 / 1',
+                  borderRadius: '20px',
+                  background: 'linear-gradient(180deg, #bae6fd 0%, #ffffff 100%)',
+                  border: '2px solid #e0f2fe',
+                  padding: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 8px 24px rgba(56, 189, 248, 0.12)'
+                }}>
+                  <WineraImage
+                    src={(selectedSpecsProduct.gallery && selectedSpecsProduct.gallery[selectedModalImageIdx]) || selectedSpecsProduct.imageUrl || selectedSpecsProduct.img}
+                    alt={selectedSpecsProduct.name}
+                    style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    imgStyle={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  />
+                </div>
+
+                {/* Thumbnails Gallery */}
+                {Array.isArray(selectedSpecsProduct.gallery) && selectedSpecsProduct.gallery.length > 1 && (
+                  <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '4px' }}>
+                    {selectedSpecsProduct.gallery.map((gImg, gIdx) => (
+                      <button
+                        key={gIdx}
+                        type="button"
+                        onClick={() => setSelectedModalImageIdx(gIdx)}
+                        style={{
+                          width: '60px',
+                          height: '60px',
+                          borderRadius: '12px',
+                          border: selectedModalImageIdx === gIdx ? '2.5px solid #38bdf8' : '1.5px solid #e2e8f0',
+                          padding: '4px',
+                          background: '#ffffff',
+                          cursor: 'pointer',
+                          overflow: 'hidden',
+                          flexShrink: 0
+                        }}
+                      >
+                        <img src={gImg} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column: Title, Category, Specs List, CTA */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', textAlign: 'left' }}>
+                <div>
+                  <span style={{
+                    display: 'inline-block',
+                    background: '#e0f2fe',
+                    color: '#0284c7',
+                    fontSize: '12px',
+                    fontWeight: '800',
+                    padding: '4px 12px',
+                    borderRadius: '20px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    marginBottom: '8px'
+                  }}>
+                    {selectedSpecsProduct.category}
+                  </span>
+                  <h3 style={{
+                    fontSize: '1.6rem',
+                    fontWeight: '900',
+                    color: '#0f172a',
+                    margin: '0 0 6px 0',
+                    lineHeight: 1.2
+                  }}>
+                    {selectedSpecsProduct.name}
+                  </h3>
+                  <p style={{ fontSize: '13px', color: '#64748b', margin: 0, lineHeight: 1.5 }}>
+                    {selectedSpecsProduct.tagline}
+                  </p>
+                </div>
+
+                {/* Technical Specifications Grid */}
+                <div style={{
+                  background: '#f8fafc',
+                  border: '1.5px solid #e2e8f0',
+                  borderRadius: '18px',
+                  padding: '16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px'
+                }}>
+                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', margin: '0 0 4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    Machine Specifications
+                  </h4>
+
+                  {selectedSpecsProduct.dimensions && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                      <span style={{ color: '#64748b', fontWeight: '600' }}>Dimensions</span>
+                      <strong style={{ color: '#0f172a', textAlign: 'right' }}>{selectedSpecsProduct.dimensions}</strong>
+                    </div>
+                  )}
+
+                  {selectedSpecsProduct.power && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                      <span style={{ color: '#64748b', fontWeight: '600' }}>Power</span>
+                      <strong style={{ color: '#0f172a', textAlign: 'right' }}>{selectedSpecsProduct.power}</strong>
+                    </div>
+                  )}
+
+                  {selectedSpecsProduct.weight && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                      <span style={{ color: '#64748b', fontWeight: '600' }}>Weight</span>
+                      <strong style={{ color: '#0f172a', textAlign: 'right' }}>{selectedSpecsProduct.weight}</strong>
+                    </div>
+                  )}
+
+                  {selectedSpecsProduct.maxLoad && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                      <span style={{ color: '#64748b', fontWeight: '600' }}>Max Load</span>
+                      <strong style={{ color: '#0f172a', textAlign: 'right' }}>{selectedSpecsProduct.maxLoad}</strong>
+                    </div>
+                  )}
+
+                  {selectedSpecsProduct.players && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                      <span style={{ color: '#64748b', fontWeight: '600' }}>Players</span>
+                      <strong style={{ color: '#0f172a', textAlign: 'right' }}>{selectedSpecsProduct.players}</strong>
+                    </div>
+                  )}
+
+                  {selectedSpecsProduct.games && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                      <span style={{ color: '#64748b', fontWeight: '600' }}>Games Library</span>
+                      <strong style={{ color: '#0f172a', textAlign: 'right' }}>{selectedSpecsProduct.games}</strong>
+                    </div>
+                  )}
+
+                  {selectedSpecsProduct.helmet && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
+                      <span style={{ color: '#64748b', fontWeight: '600' }}>VR Headset</span>
+                      <strong style={{ color: '#0f172a', textAlign: 'right' }}>{selectedSpecsProduct.helmet}</strong>
+                    </div>
+                  )}
+
+                  {selectedSpecsProduct.voltage && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
+                      <span style={{ color: '#64748b', fontWeight: '600' }}>Voltage</span>
+                      <strong style={{ color: '#0f172a', textAlign: 'right' }}>{selectedSpecsProduct.voltage}</strong>
+                    </div>
+                  )}
+                </div>
+
+                {/* WhatsApp Quote Button */}
+                <a
+                  href={`https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera International! I want to inquire about the quote and specifications for "${selectedSpecsProduct.name}" (${selectedSpecsProduct.category}).`)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '10px',
+                    background: '#22c55e',
+                    color: '#ffffff',
+                    padding: '14px 24px',
+                    borderRadius: '16px',
+                    fontSize: '15px',
+                    fontWeight: '800',
+                    textDecoration: 'none',
+                    boxShadow: '0 6px 20px rgba(34, 197, 94, 0.35)',
+                    transition: 'all 0.2s ease',
+                    marginTop: '4px'
+                  }}
+                >
+                  <MessageCircle style={{ width: '18px', height: '18px' }} />
+                  <span>Get Best Quote on WhatsApp</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      )}
 
       {/* 6. COMMERCIAL-GRADE QUALITY AND RELIABILITY SECTION (MATCHING SCREENSHOT 1:1) */}
       <section className="winera-vr-reliability-section" style={{ padding: '90px 4vw 90px', background: '#F5F5F9', overflow: 'hidden' }}>
