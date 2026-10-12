@@ -260,12 +260,8 @@ for sh in sheets:
             flag = wb_data[off+8]
             val = wb_data[off+9:off+9+cch*2].decode('utf-16le', errors='ignore') if (flag & 1) else wb_data[off+9:off+9+cch].decode('latin1', errors='ignore')
             sheet_cells[(row, col)] = val
-        elif rtype == 0x00EC:
+        elif rtype in [0x00EC, 0x003C]:
             sheet_mso.extend(wb_data[off:off+rlen])
-            k = r_i + 1
-            while k < len(records) and records[k][0] == 0x003C:
-                sheet_mso.extend(wb_data[records[k][1]:records[k][1]+records[k][2]])
-                k += 1
         r_i += 1
 
     shapes = parse_sheet_drawings(sheet_mso)
@@ -277,20 +273,26 @@ for sh in sheets:
         if name and name != 'ITEM NAME':
             product_rows.append((r, name, specs))
 
-    # For each product row r: find all shapes within vertical row distance <= 0.8
+    vis_shapes = sorted([s for s in shapes if s['anchor'] and s['anchor']['col1'] <= 2], key=lambda s: s['anchor']['row1'] + s['anchor']['dy1']/1024.0)
+    gal_shapes = [s for s in shapes if s['anchor'] and s['anchor']['col1'] >= 7]
+
+    # For each product row r: find all shapes
     for p_idx, (r, name, specs_text) in enumerate(product_rows):
-        row_shapes = [s for s in shapes if abs((s['anchor']['row1'] + s['anchor']['row2'])/2.0 - r) <= 0.8]
-        
-        # Deduplicate shapes by pib for this row to preserve unique angle views
-        seen_pib = set()
-        uniq_shapes = []
-        for s in row_shapes:
-            if s['pib'] not in seen_pib:
-                uniq_shapes.append(s)
-                seen_pib.add(s['pib'])
-        
-        # Sort shapes by column (Col 1 first, then Col 7, 8, 9)
-        uniq_shapes.sort(key=lambda s: s['anchor']['col1'])
+        if sh['name'] in ['Bester VR', 'Funin R']:
+            vis_s = vis_shapes[p_idx] if p_idx < len(vis_shapes) else None
+        else:
+            vis_candidates = [s for s in vis_shapes if abs((s['anchor']['row1'] + s['anchor']['dy1']/1024.0) - r) <= 1.0]
+            vis_s = vis_candidates[0] if vis_candidates else (vis_shapes[p_idx] if p_idx < len(vis_shapes) else None)
+
+        g_s = [s for s in gal_shapes if s['anchor']['row1'] == r or (s['anchor']['row1'] <= r <= s['anchor']['row2'] and abs(s['anchor']['row1']-r) <= 1)]
+        seen_g = set()
+        uniq_g = []
+        for s in g_s:
+            if s['pib'] not in seen_g:
+                uniq_g.append(s)
+                seen_g.add(s['pib'])
+        uniq_g.sort(key=lambda s: s['anchor']['col1'])
+        uniq_shapes = ([vis_s] if vis_s else []) + uniq_g
 
         if not uniq_shapes:
             # Skip rows with no corresponding visual shape in Excel
