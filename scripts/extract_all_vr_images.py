@@ -284,6 +284,14 @@ for sh in sheets:
         37: 257, 38: 258, 39: 259, 40: 260, 41: 261
     }
 
+    oc_pib_map = {
+        1: 339, 2: 340, 3: 342, 4: 343, 5: 344, 6: 345, 7: 347, 8: 349, 9: 351, 10: 353,
+        11: 355, 12: 356, 13: 357, 14: 358, 15: 359, 16: 361, 17: 362, 18: 364, 19: 366, 20: 366,
+        21: 368, 22: 368, 23: 370, 24: 373, 25: 375, 26: 376, 27: 378, 28: 380, 29: 382, 30: 383,
+        31: 384, 32: 385, 33: 386, 34: 387, 35: 388, 36: 390, 37: 391, 38: 392, 39: 394, 40: 396,
+        41: 398, 42: 400
+    }
+
     # For each product row r: find all shapes
     for p_idx, (r, name, specs_text) in enumerate(product_rows):
         if sh['name'] in ['Bester VR', 'Funin R']:
@@ -292,10 +300,10 @@ for sh in sheets:
             target_pib = mp_pib_map.get(r)
             vis_s = next((s for s in shapes if s['pib'] == target_pib), None)
         else: # Oculeap VR
-            row_s = [s for s in shapes if s['anchor'] and s['anchor']['col1'] <= 2 and s['anchor']['row1'] == r]
-            if not row_s:
-                row_s = [s for s in shapes if s['anchor'] and s['anchor']['col1'] <= 2 and s['anchor']['row1'] == r - 1]
-            vis_s = min(row_s, key=lambda s: s['anchor']['dy1']) if row_s else None
+            target_pib = oc_pib_map.get(r)
+            vis_s = next((s for s in shapes if s['pib'] == target_pib), None)
+            if not vis_s and target_pib:
+                vis_s = {'pib': target_pib, 'anchor': None}
 
         g_s = [s for s in gal_shapes if s['anchor']['row1'] == r or (s['anchor']['row1'] <= r <= s['anchor']['row2'] and abs(s['anchor']['row1']-r) <= 1)]
         seen_g = set()
@@ -305,6 +313,23 @@ for sh in sheets:
                 uniq_g.append(s)
                 seen_g.add(s['pib'])
         uniq_g.sort(key=lambda s: s['anchor']['col1'])
+
+        extra_gal_pibs = {
+            37: [390],
+            38: [393],
+            39: [395],
+            40: [397],
+            41: [399]
+        }
+        if sh['name'] == 'Oculeap VR' and r in extra_gal_pibs:
+            for extra_pib in extra_gal_pibs[r]:
+                ex_s = next((s for s in shapes if s['pib'] == extra_pib), None)
+                if not ex_s:
+                    ex_s = {'pib': extra_pib, 'anchor': None}
+                if extra_pib not in seen_g and (not vis_s or extra_pib != vis_s['pib']):
+                    uniq_g.append(ex_s)
+                    seen_g.add(extra_pib)
+
         uniq_shapes = ([vis_s] if vis_s else []) + uniq_g
 
         if not uniq_shapes:
