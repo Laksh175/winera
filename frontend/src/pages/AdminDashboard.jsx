@@ -6,7 +6,7 @@ import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 import allArcadeProducts from '../data/allArcadeProducts.json';
-import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, X, Star, Video, Trophy, Sparkles, Calculator, Menu, Target } from 'lucide-react';
+import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, X, Star, Video, Trophy, Sparkles, Calculator, Menu, Target, ChevronDown } from 'lucide-react';
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 const yellowBrushAccent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 const ctaConsultationsBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
@@ -1734,10 +1734,50 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const { admin, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Selected page context in sidebar: 'home' | 'arcade' | 'about' | 'header_footer'
-  const [selectedPage, setSelectedPage] = useState('home');
-  // Selected section tab within the page - default to 'stats' (first available Home section)
-  const [activeSection, setActiveSection] = useState('stats');
+  // Selected page context in sidebar: persisted across page refreshes via localStorage & URL query
+  const [selectedPage, setSelectedPage] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlPage = params.get('page');
+        if (urlPage) return urlPage;
+        const saved = localStorage.getItem('admin_selected_page');
+        if (saved) return saved;
+      } catch (e) {}
+    }
+    return 'home';
+  });
+
+  // Selected section tab within the page: persisted across page refreshes via localStorage & URL query
+  const [activeSection, setActiveSection] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlSection = params.get('section');
+        if (urlSection) return urlSection;
+        const saved = localStorage.getItem('admin_active_section');
+        if (saved) return saved;
+      } catch (e) {}
+    }
+    return 'stats';
+  });
+
+  // Automatically keep localStorage and URL in sync whenever selectedPage or activeSection changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('admin_selected_page', selectedPage);
+        localStorage.setItem('admin_active_section', activeSection);
+
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('page') !== selectedPage || url.searchParams.get('section') !== activeSection) {
+          url.searchParams.set('page', selectedPage);
+          url.searchParams.set('section', activeSection);
+          window.history.replaceState(null, '', url.pathname + url.search);
+        }
+      } catch (e) {}
+    }
+  }, [selectedPage, activeSection]);
 
   const [formData, setFormData] = useState(siteData || {});
   const [statusMsg, setStatusMsg] = useState('');
@@ -1748,6 +1788,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const [newCategoryInput, setNewCategoryInput] = useState('');
   const [adminArcadeSearch, setAdminArcadeSearch] = useState('');
   const [adminArcadePage, setAdminArcadePage] = useState(1);
+  const [openProjectStatusDropdown, setOpenProjectStatusDropdown] = useState(null);
+
+  // Close project status dropdown when clicking outside
+  useEffect(() => {
+    const handleDocumentClick = (e) => {
+      if (!e.target.closest('.project-status-dropdown-wrapper')) {
+        setOpenProjectStatusDropdown(null);
+      }
+    };
+    document.addEventListener('click', handleDocumentClick);
+    return () => document.removeEventListener('click', handleDocumentClick);
+  }, []);
 
   // Modal State for Add / Edit Operations
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19553,6 +19605,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <th style={{ padding: '14px 18px', fontWeight: '800' }}>Location</th>
                         <th style={{ padding: '14px 18px', fontWeight: '800' }}>Total Area</th>
                         <th style={{ padding: '14px 18px', fontWeight: '800' }}>Slug URL</th>
+                        <th style={{ padding: '14px 18px', fontWeight: '800', textAlign: 'center' }}>Status</th>
                         <th style={{ padding: '14px 18px', fontWeight: '800', textAlign: 'right' }}>Actions</th>
                       </tr>
                     </thead>
@@ -19560,6 +19613,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       {filteredDisplayList.map((item, idx) => {
                         const origIndex = currentList.findIndex(x => (x.slug && item.slug && x.slug === item.slug) || (x.id && item.id && x.id === item.id) || (x.name && item.name && x.name === item.name));
                         const targetIdx = origIndex !== -1 ? origIndex : idx;
+                        const isItemActive = item.isActive !== false && item.status !== 'inactive';
                         return (
                           <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
                             <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
@@ -19571,6 +19625,182 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             <td style={{ padding: '14px 18px', fontWeight: '600', color: '#475569' }}>{item.city ? `${item.city}${item.state ? `, ${item.state}` : ''}` : 'N/A'}</td>
                             <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b' }}>{item.area || 'N/A'}</td>
                             <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b', fontSize: '12px' }}>/project/{item.slug || 'detail'}</td>
+                            <td style={{ padding: '14px 18px', textAlign: 'center', position: 'relative' }}>
+                              <div className="project-status-dropdown-wrapper" style={{ position: 'relative', display: 'inline-block' }}>
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setOpenProjectStatusDropdown(openProjectStatusDropdown === targetIdx ? null : targetIdx);
+                                  }}
+                                  style={{
+                                    background: isItemActive ? '#ecfdf5' : '#fef2f2',
+                                    color: isItemActive ? '#059669' : '#dc2626',
+                                    border: `1.5px solid ${isItemActive ? '#a7f3d0' : '#fecaca'}`,
+                                    padding: '6px 14px',
+                                    borderRadius: '20px',
+                                    fontSize: '12px',
+                                    fontWeight: '800',
+                                    cursor: 'pointer',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    transition: 'all 0.2s ease',
+                                    boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+                                  }}
+                                  title="Click to open status options"
+                                >
+                                  <span style={{
+                                    width: '8px',
+                                    height: '8px',
+                                    borderRadius: '50%',
+                                    background: isItemActive ? '#10b981' : '#ef4444'
+                                  }}></span>
+                                  {isItemActive ? 'Active' : 'Inactive'}
+                                  <ChevronDown style={{ width: '13px', height: '13px', marginLeft: '2px', opacity: 0.7 }} />
+                                </button>
+
+                                {openProjectStatusDropdown === targetIdx && (
+                                  <div
+                                    style={{
+                                      position: 'absolute',
+                                      ...(idx >= filteredDisplayList.length - 2 && filteredDisplayList.length > 2
+                                        ? { bottom: 'calc(100% + 6px)' }
+                                        : { top: 'calc(100% + 6px)' }),
+                                      left: '50%',
+                                      transform: 'translateX(-50%)',
+                                      background: '#ffffff',
+                                      borderRadius: '12px',
+                                      border: '1.5px solid #e2e8f0',
+                                      boxShadow: '0 12px 28px rgba(0,0,0,0.18), 0 4px 10px rgba(0,0,0,0.08)',
+                                      padding: '6px',
+                                      minWidth: '135px',
+                                      zIndex: 9999,
+                                      display: 'flex',
+                                      flexDirection: 'column',
+                                      gap: '4px'
+                                    }}
+                                  >
+                                    {/* Option 1: Active */}
+                                    <button
+                                      type="button"
+                                      onClick={async (e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setOpenProjectStatusDropdown(null);
+                                        setSelectedPage('projectPage');
+                                        setActiveSection('projectItems');
+                                        if (typeof window !== 'undefined') {
+                                          try {
+                                            localStorage.setItem('admin_selected_page', 'projectPage');
+                                            localStorage.setItem('admin_active_section', 'projectItems');
+                                          } catch (_) {}
+                                        }
+
+                                        const updatedItem = {
+                                          ...item,
+                                          isActive: true,
+                                          status: 'active'
+                                        };
+                                        const updatedList = [...currentList];
+                                        updatedList[targetIdx] = updatedItem;
+                                        setFormData(prev => ({ ...prev, projectItems: updatedList }));
+
+                                        try {
+                                          await updateSectionContent('projectItems', updatedList, admin.token);
+                                          await refreshContent();
+                                          setStatusMsg(`Project '${item.name || 'item'}' status set to Active!`);
+                                        } catch (err) {
+                                          console.error("Status update error:", err);
+                                          setStatusMsg('Error updating status: ' + (err.response?.data?.message || err.message));
+                                        }
+                                      }}
+                                      style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        padding: '7px 12px',
+                                        borderRadius: '8px',
+                                        border: 'none',
+                                        background: isItemActive ? '#f0fdf4' : 'transparent',
+                                        color: '#059669',
+                                        fontSize: '12px',
+                                        fontWeight: '800',
+                                        cursor: 'pointer',
+                                        textAlign: 'left',
+                                        width: '100%',
+                                        transition: 'background 0.15s ease'
+                                      }}
+                                      onMouseEnter={(e) => { e.currentTarget.style.background = '#f0fdf4'; }}
+                                      onMouseLeave={(e) => { if (!isItemActive) e.currentTarget.style.background = 'transparent'; }}
+                                    >
+                                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
+                                      Active
+                                      {isItemActive && <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#10b981' }}>✓</span>}
+                                    </button>
+
+                                    {/* Option 2: Inactive */}
+                                    <button
+                                      type="button"
+                                      onClick={async (e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setOpenProjectStatusDropdown(null);
+                                        setSelectedPage('projectPage');
+                                        setActiveSection('projectItems');
+                                        if (typeof window !== 'undefined') {
+                                          try {
+                                            localStorage.setItem('admin_selected_page', 'projectPage');
+                                            localStorage.setItem('admin_active_section', 'projectItems');
+                                          } catch (_) {}
+                                        }
+
+                                        const updatedItem = {
+                                          ...item,
+                                          isActive: false,
+                                          status: 'inactive'
+                                        };
+                                        const updatedList = [...currentList];
+                                        updatedList[targetIdx] = updatedItem;
+                                        setFormData(prev => ({ ...prev, projectItems: updatedList }));
+
+                                        try {
+                                          await updateSectionContent('projectItems', updatedList, admin.token);
+                                          await refreshContent();
+                                          setStatusMsg(`Project '${item.name || 'item'}' status set to Inactive!`);
+                                        } catch (err) {
+                                          console.error("Status update error:", err);
+                                          setStatusMsg('Error updating status: ' + (err.response?.data?.message || err.message));
+                                        }
+                                      }}
+                                      style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        padding: '7px 12px',
+                                        borderRadius: '8px',
+                                        border: 'none',
+                                        background: !isItemActive ? '#fef2f2' : 'transparent',
+                                        color: '#dc2626',
+                                        fontSize: '12px',
+                                        fontWeight: '800',
+                                        cursor: 'pointer',
+                                        textAlign: 'left',
+                                        width: '100%',
+                                        transition: 'background 0.15s ease'
+                                      }}
+                                      onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; }}
+                                      onMouseLeave={(e) => { if (isItemActive) e.currentTarget.style.background = 'transparent'; }}
+                                    >
+                                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ef4444' }}></span>
+                                      Inactive
+                                      {!isItemActive && <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#ef4444' }}>✓</span>}
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </td>
                             <td style={{ padding: '14px 18px', textAlign: 'right' }}>
                               <button
                                 onClick={() => openModal('edit', targetIdx, item)}
@@ -24814,15 +25044,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </div>
                     </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Detail Page Slug Link</label>
-                      <input
-                        type="text"
-                        value={modalItemData.slug || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, slug: e.target.value }))}
-                        placeholder="e.g. hulaboo (opens /project/hulaboo)"
-                        style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '14px' }}
-                      />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Detail Page Slug Link</label>
+                        <input
+                          type="text"
+                          value={modalItemData.slug || ''}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, slug: e.target.value }))}
+                          placeholder="e.g. hulaboo (opens /project/hulaboo)"
+                          style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '600', fontSize: '14px' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Project Status</label>
+                        <select
+                          value={(modalItemData.isActive !== false && modalItemData.status !== 'inactive') ? 'active' : 'inactive'}
+                          onChange={(e) => {
+                            const isAct = e.target.value === 'active';
+                            setModalItemData(prev => ({ ...prev, isActive: isAct, status: isAct ? 'active' : 'inactive' }));
+                          }}
+                          style={{
+                            width: '100%',
+                            padding: '12px 14px',
+                            borderRadius: '12px',
+                            border: '1.5px solid #cbd5e1',
+                            fontWeight: '800',
+                            fontSize: '14px',
+                            background: (modalItemData.isActive !== false && modalItemData.status !== 'inactive') ? '#ecfdf5' : '#fef2f2',
+                            color: (modalItemData.isActive !== false && modalItemData.status !== 'inactive') ? '#059669' : '#dc2626'
+                          }}
+                        >
+                          <option value="active">🟢 Active (Visible on Website)</option>
+                          <option value="inactive">🔴 Inactive (Hidden from Website)</option>
+                        </select>
+                      </div>
                     </div>
                     <div>
                       <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>

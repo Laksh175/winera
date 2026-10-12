@@ -291,9 +291,16 @@ export default function Project({ siteData }) {
 
   const normalizeSlug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-  const rawProjectList = ((Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
+  const allRawItems = (Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
     ? siteData.projectItems
-    : allProjects)
+    : allProjects;
+
+  const isFifthAlleyInactive = allRawItems.some(p => 
+    (p.slug === "fifthalley-sport-bowling" || (p.name || "").toLowerCase().includes("fifthalley")) && 
+    (p.isActive === false || p.status === 'inactive')
+  );
+
+  const rawProjectList = allRawItems
     .filter(p => p.isActive !== false && p.status !== 'inactive')
     .map((p, idx) => {
       const cleanSlug = (p.slug && p.slug !== 'new-turnkey-project')
@@ -307,7 +314,7 @@ export default function Project({ siteData }) {
     });
 
   const hasFifthAlley = rawProjectList.some(p => p.slug === "fifthalley-sport-bowling" || (p.name || "").toLowerCase().includes("fifthalley"));
-  const projectList = hasFifthAlley ? rawProjectList : [fifthAlleyObj, ...rawProjectList];
+  const projectList = (hasFifthAlley || isFifthAlleyInactive) ? rawProjectList : [fifthAlleyObj, ...rawProjectList];
 
   const defaultCategories = ["Game Zones", "Bowling", "Soft Play", "Arcade & VR", "Hospitality"];
   const baseCategories = (Array.isArray(siteData?.projectCategories) && siteData.projectCategories.length > 0)
