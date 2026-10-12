@@ -1744,6 +1744,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const [loadingSection, setLoadingSection] = useState('');
   const [adminSelectedCat, setAdminSelectedCat] = useState('Sports Simulators');
   const [adminProjectFilterCat, setAdminProjectFilterCat] = useState('All');
+  const [adminProjectFilterStatus, setAdminProjectFilterStatus] = useState('All');
   const [newCategoryInput, setNewCategoryInput] = useState('');
   const [adminArcadeSearch, setAdminArcadeSearch] = useState('');
   const [adminArcadePage, setAdminArcadePage] = useState(1);
@@ -2536,7 +2537,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         waMessage: currentItem.waMessage || knownProj.waMessage || `Hello Winera International! I want to get a project quote for ${currentItem.name || projTitle || 'this project'}. Please share details. [Ref: Project Detail Page]`
       };
 
-      setModalItemData({ ...defaultProjectItem, ...currentItem });
+      const isCurrentActive = currentItem.isActive !== false && currentItem.status !== 'inactive';
+      setModalItemData({
+        ...defaultProjectItem,
+        ...currentItem,
+        isActive: isCurrentActive,
+        status: isCurrentActive ? 'active' : 'inactive'
+      });
       setIsModalOpen(true);
       return;
     }
@@ -2557,6 +2564,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         state: 'Gujarat',
         area: '5,000 sq. ft.',
         slug: 'new-turnkey-project',
+        isActive: true,
+        status: 'active',
         img: projectImage01,
         titleLine1: 'New Project: A',
         titleLine2: 'Complete ',
@@ -2625,6 +2634,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       modalItemData.name = projName;
       modalItemData.slug = autoSlug;
       modalItemData.id = modalItemData.id && modalItemData.id !== 'new-turnkey-project' ? modalItemData.id : autoSlug;
+
+      const isItemActiveVal = modalItemData.isActive !== false && modalItemData.status !== 'inactive';
+      modalItemData.isActive = isItemActiveVal;
+      modalItemData.status = isItemActiveVal ? 'active' : 'inactive';
 
       if (!modalItemData.titleLine1 || modalItemData.titleLine1.startsWith('New Project')) modalItemData.titleLine1 = `${projName}: A`;
       if (!modalItemData.titleLine2) modalItemData.titleLine2 = 'Complete ';

@@ -293,7 +293,9 @@ export default function Project({ siteData }) {
 
   const rawProjectList = ((Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
     ? siteData.projectItems
-    : allProjects).map((p, idx) => {
+    : allProjects)
+    .filter(p => p.isActive !== false && p.status !== 'inactive')
+    .map((p, idx) => {
       const cleanSlug = (p.slug && p.slug !== 'new-turnkey-project')
         ? normalizeSlug(p.slug)
         : normalizeSlug(p.name || `project-${idx}`);
