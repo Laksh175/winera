@@ -276,13 +276,26 @@ for sh in sheets:
     vis_shapes = sorted([s for s in shapes if s['anchor'] and s['anchor']['col1'] <= 2], key=lambda s: s['anchor']['row1'] + s['anchor']['dy1']/1024.0)
     gal_shapes = [s for s in shapes if s['anchor'] and s['anchor']['col1'] >= 7]
 
+    mp_pib_map = {
+        1: 222, 2: 221, 3: 223, 4: 224, 5: 225, 6: 226,
+        7: 227, 8: 228, 9: 229, 10: 230, 11: 231, 12: 232, 13: 233, 14: 234, 15: 235, 16: 236,
+        17: 237, 18: 238, 19: 239, 20: 240, 21: 241, 22: 242, 23: 243, 24: 244, 25: 245, 26: 246,
+        27: 250, 28: 247, 29: 248, 30: 249, 31: 251, 32: 252, 33: 253, 34: 254, 35: 255, 36: 256,
+        37: 257, 38: 258, 39: 259, 40: 260, 41: 261
+    }
+
     # For each product row r: find all shapes
     for p_idx, (r, name, specs_text) in enumerate(product_rows):
         if sh['name'] in ['Bester VR', 'Funin R']:
             vis_s = vis_shapes[p_idx] if p_idx < len(vis_shapes) else None
-        else:
-            vis_candidates = [s for s in vis_shapes if abs((s['anchor']['row1'] + s['anchor']['dy1']/1024.0) - r) <= 1.0]
-            vis_s = vis_candidates[0] if vis_candidates else (vis_shapes[p_idx] if p_idx < len(vis_shapes) else None)
+        elif sh['name'] == 'Movie Power':
+            target_pib = mp_pib_map.get(r)
+            vis_s = next((s for s in shapes if s['pib'] == target_pib), None)
+        else: # Oculeap VR
+            row_s = [s for s in shapes if s['anchor'] and s['anchor']['col1'] <= 2 and s['anchor']['row1'] == r]
+            if not row_s:
+                row_s = [s for s in shapes if s['anchor'] and s['anchor']['col1'] <= 2 and s['anchor']['row1'] == r - 1]
+            vis_s = min(row_s, key=lambda s: s['anchor']['dy1']) if row_s else None
 
         g_s = [s for s in gal_shapes if s['anchor']['row1'] == r or (s['anchor']['row1'] <= r <= s['anchor']['row2'] and abs(s['anchor']['row1']-r) <= 1)]
         seen_g = set()
