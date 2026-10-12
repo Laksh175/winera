@@ -2033,7 +2033,7 @@ html {
   /* ─── AR Games Page Mobile Responsive Spacing ─── */
 
   .winera-ar-hero-section {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-ar-mobile-bg, url('./assets/ar-mobile-image.png')) !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-ar-mobile-bg, url('https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345484/winera_uploads/cjhcvoxksmptc84yslh2.png')) !important;
     background-size: 100% 100% !important;
     background-position: center top !important;
     background-repeat: no-repeat !important;
