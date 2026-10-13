@@ -10,7 +10,7 @@ const clientsBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_aut
 const defaultProjects = [
   { name: "Hulaboo", title: "Hulaboo", city: "Surat", location: "Surat", slug: "hulaboo", img: projHulaboo },
   { name: "Playzonia", title: "Playzonia", city: "Surat", location: "Surat", slug: "playzonia", img: projSoft1 },
-  { name: "FifthAlley Sport Bowling", title: "FifthAlley Sport Bowling", city: "Surat", location: "Surat", slug: "fifthalley-sport-bowling", img: projectImage01 },
+  { name: "FifthAlley Sport Bowling", title: "FifthAlley Sport Bowling", city: "Surat", location: "Surat", slug: "fifthalley-sport-bowling", img: "/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg" },
   { name: "Nenopanda", title: "Nenopanda", city: "Indore", location: "Indore", slug: "neon-panda", img: projNeon1 },
   { name: "FizzyFox", title: "FizzyFox", city: "Nashik", location: "Nashik", slug: "fizzyfox", img: projSoft1 }
 ];

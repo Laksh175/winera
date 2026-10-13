@@ -22,6 +22,9 @@ const resolveProjectImg = (proj) => {
   const url = proj?.img || proj?.imageUrl || proj?.imgUrl || '';
 
   if (url && typeof url === 'string' && url.trim() !== '' && !url.includes('/src/assets/')) {
+    if (url.startsWith('/assets/') || url.startsWith('assets/')) {
+      return url;
+    }
     if (url.startsWith('https://res.cloudinary.com/') || url.startsWith('https://images.unsplash.com/') || url.startsWith('data:')) {
       return url;
     }
@@ -41,10 +44,11 @@ const resolveProjectImg = (proj) => {
   const name = (proj?.name || '').toLowerCase();
   const category = (proj?.category || '').toLowerCase();
 
+  if (slug.includes('fifthalley') || name.includes('fifthalley')) return "/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg";
   if (slug.includes('hulaboo') || name.includes('hulaboo')) return projHulaboo;
   if (slug.includes('neon') || name.includes('neon')) return projNeon1;
   if (slug.includes('softplay') || slug.includes('playzonia') || name.includes('playzonia') || name.includes('soft play') || name.includes('softplay') || name.includes('hoppers') || name.includes('kidzonation') || name.includes('pepe')) return projSoft1;
-  if (slug.includes('fifthalley') || name.includes('fifthalley') || slug.includes('bowling') || name.includes('bowling') || name.includes('lanex') || name.includes('rock and bowl') || name.includes('funevers')) return projectImage01;
+  if (slug.includes('bowling') || name.includes('bowling') || name.includes('lanex') || name.includes('rock and bowl') || name.includes('funevers')) return projectImage01;
   if (category.includes('bowling')) return projectImage01;
   if (category.includes('soft play') || category.includes('softplay')) return projSoft1;
   if (category.includes('arcade') || category.includes('game zone') || category.includes('gamezone')) return projHulaboo;
@@ -74,6 +78,9 @@ export default function Project({ siteData }) {
   const getValidImageUrl = (url, fallback) => {
     if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
       return fallback;
+    }
+    if (url.startsWith('/assets/') || url.startsWith('assets/')) {
+      return url;
     }
     if (url.startsWith('https://res.cloudinary.com/') || url.startsWith('https://images.unsplash.com/') || url.startsWith('data:')) {
       return url;
@@ -125,7 +132,7 @@ export default function Project({ siteData }) {
     area: "3,000 sq. ft.",
     type: "Bowling Alley Setup",
     slug: "fifthalley-sport-bowling",
-    img: projectImage01
+    img: "/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg"
   };
 
   const normalizeSlug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

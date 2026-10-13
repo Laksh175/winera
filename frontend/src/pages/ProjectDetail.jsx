@@ -32,6 +32,9 @@ const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
+  if (url.startsWith('/assets/') || url.startsWith('assets/')) {
+    return url;
+  }
   if (url.startsWith('https://res.cloudinary.com/') || url.startsWith('https://images.unsplash.com/') || url.startsWith('data:')) {
     return url;
   }
@@ -87,9 +90,18 @@ export default function ProjectDetail({ siteData }) {
       clientWanted2: "They didn't want a supplier who only supplied the equipment. They wanted one partner to handle everything, plan the space, install the lanes, and hand over a venue that was ready for opening day. In short, they needed one team they could trust from start to finish.",
       solution1: "We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue. Across the 3,000 sq. ft. space in Katargam, we planned the layout so the professional lanes had enough room around them for people to walk, sit, and relax.",
       solution2: "The result is a venue that is fun to play in and comfortable to spend time in — just like a good family entertainment center should feel.",
-      mainImg: projectImage01,
-      clientImg: projectImage3,
-      solutionImg: projectImage4
+      mainImg: "/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg",
+      basicInfoBg: "/assets/FifthAlley Sport Bowling/Basic Information.jpg",
+      clientImg: "/assets/FifthAlley Sport Bowling/What the Client Wanted.jpg",
+      solutionImg: "/assets/FifthAlley Sport Bowling/What Solution We Provide.jpg",
+      galleryImages: [
+        "/assets/FifthAlley Sport Bowling/Gallery 1.jpg",
+        "/assets/FifthAlley Sport Bowling/Gallery 2.webp",
+        "/assets/FifthAlley Sport Bowling/Gallery 3.jpg",
+        "/assets/FifthAlley Sport Bowling/Gallery 4.jpg",
+        "/assets/FifthAlley Sport Bowling/Gallery 5.webp",
+        "/assets/FifthAlley Sport Bowling/Gallery 6.webp"
+      ]
     },
     'hulaboo': {
       name: "Hulaboo Game Zone",
