@@ -1911,7 +1911,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     setLoadingSection(sectionKey);
     setStatusMsg('');
     try {
-      await updateSectionContent(sectionKey, formData[sectionKey], admin.token);
+      const token = admin?.token || (() => {
+        try {
+          const stored = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+          return stored?.token || '';
+        } catch { return ''; }
+      })();
+      await updateSectionContent(sectionKey, formData[sectionKey], token);
       await refreshContent();
       setStatusMsg(`'${sectionKey.toUpperCase()}' updated successfully!`);
     } catch (err) {
@@ -1945,7 +1951,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
     setStatusMsg('Uploading file to server...');
     try {
-      const res = await uploadImageFile(file, admin.token);
+      const token = admin?.token || (() => {
+        try {
+          const stored = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+          return stored?.token || '';
+        } catch { return ''; }
+      })();
+      const res = await uploadImageFile(file, token);
       handleArrayFieldChange(section, index, field, res.url);
       setStatusMsg('File uploaded successfully to server!');
     } catch (err) {
@@ -1958,7 +1970,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     setLoadingSection(sectionKey);
     setStatusMsg('');
     try {
-      await updateSectionContent(sectionKey, updatedData, admin.token);
+      const token = admin?.token || (() => {
+        try {
+          const stored = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+          return stored?.token || '';
+        } catch { return ''; }
+      })();
+      await updateSectionContent(sectionKey, updatedData, token);
       await refreshContent();
       setStatusMsg(`Saved directly to MongoDB database!`);
     } catch (err) {
@@ -2006,6 +2024,64 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           { name: "Skadoosh Play Area", city: "Bangalore", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg", slug: "skadoosh-play-area" },
           { name: "VR 360 Game Zone", city: "Gandhidham", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg", slug: "vr-360-game-zone" },
           { name: "Altitude Ball in Ball Out", city: "Mumbai", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg", slug: "altitude-ball-in-ball-out" }
+        ],
+        testimonials: [
+          {
+            gameZoneName: "Rebounce Game Zone",
+            name: "Rebounce Game Zone",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
+            videoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
+            videoImg: "https://img.youtube.com/vi/YNrfGqhhl5w/sddefault.jpg",
+            quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
+          },
+          {
+            gameZoneName: "Fun Houze",
+            name: "Fun Houze",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
+            videoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
+            videoImg: "https://img.youtube.com/vi/YXhUJ1k6pbQ/sddefault.jpg",
+            quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
+          },
+          {
+            gameZoneName: "Hulaboo Game Zone",
+            name: "Hulaboo Game Zone",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
+            videoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
+            videoImg: "https://img.youtube.com/vi/Jvtsn-TxVqE/sddefault.jpg",
+            quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
+          },
+          {
+            gameZoneName: "House of Pepe",
+            name: "House of Pepe",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
+            videoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+            videoImg: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
+            quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally."
+          }
         ]
       };
       currentList = fallbackDefaults[sectionKey] ? [...fallbackDefaults[sectionKey]] : [];
@@ -2397,6 +2473,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         editData.imageUrl = editData.imageUrl || editData.img || '';
         editData.img = editData.imageUrl;
       }
+      if (sec === 'testimonials') {
+        editData.gameZoneName = editData.gameZoneName || editData.name || '';
+        editData.reviewerRole = editData.reviewerRole || editData.role || '';
+        editData.founderImage = editData.founderImage || editData.img || '';
+        editData.starRating = editData.starRating || editData.rating || 5;
+        editData.youtubeVideoUrl = editData.youtubeVideoUrl || editData.videoUrl || '';
+        editData.videoImg = editData.videoImg || editData.videoThumbnail || '';
+        editData.quote = editData.quote || '';
+      }
       setModalItemData(editData);
     } else {
       // Default empty structure based on active section
@@ -2447,7 +2532,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         waMessage: 'Hello Winera International! I want to get a project quote. Please share details. [Ref: Project Detail Page]'
       });
       else if (sec && sec.toLowerCase().includes('faq')) setModalItemData({ q: '', a: '' });
-      else if (sec === 'testimonials') setModalItemData({ founderImage: '', gameZoneName: '', reviewerRole: '', starRating: 5, youtubeVideoUrl: '', quote: '' });
+      else if (sec === 'testimonials') setModalItemData({ founderImage: '', gameZoneName: '', reviewerRole: '', starRating: 5, youtubeVideoUrl: '', videoImg: '', quote: '' });
       else setModalItemData({});
     }
     setIsModalOpen(true);
@@ -2711,34 +2796,62 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       const defaultTestimonialsList = [
         {
           gameZoneName: "Rebounce Game Zone",
+          name: "Rebounce Game Zone",
           reviewerRole: "Surat",
+          role: "Surat",
           starRating: 5,
+          rating: 5,
           youtubeVideoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
+          videoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
           founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
+          videoImg: "https://img.youtube.com/vi/YNrfGqhhl5w/sddefault.jpg",
+          videoThumbnail: "https://img.youtube.com/vi/YNrfGqhhl5w/sddefault.jpg",
           quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
         },
         {
           gameZoneName: "Fun Houze",
+          name: "Fun Houze",
           reviewerRole: "Surat",
+          role: "Surat",
           starRating: 5,
+          rating: 5,
           youtubeVideoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
+          videoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
           founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
+          videoImg: "https://img.youtube.com/vi/YXhUJ1k6pbQ/sddefault.jpg",
+          videoThumbnail: "https://img.youtube.com/vi/YXhUJ1k6pbQ/sddefault.jpg",
           quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
         },
         {
           gameZoneName: "Hulaboo Game Zone",
+          name: "Hulaboo Game Zone",
           reviewerRole: "Surat",
+          role: "Surat",
           starRating: 5,
+          rating: 5,
           youtubeVideoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
-          founderImage: "",
+          videoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
+          videoImg: "https://img.youtube.com/vi/Jvtsn-TxVqE/sddefault.jpg",
+          videoThumbnail: "https://img.youtube.com/vi/Jvtsn-TxVqE/sddefault.jpg",
           quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
         },
         {
           gameZoneName: "House of Pepe",
+          name: "House of Pepe",
           reviewerRole: "Surat",
+          role: "Surat",
           starRating: 5,
+          rating: 5,
           youtubeVideoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
+          videoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
           founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+          videoImg: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
+          videoThumbnail: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
           quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally."
         }
       ];
@@ -2747,6 +2860,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       } else {
         currentList = [...formData.testimonials];
       }
+
+      // Synchronize both sets of field names so user side and admin side always see identical data
+      const gzName = modalItemData.gameZoneName || modalItemData.name || 'Game Zone';
+      const rRole = modalItemData.reviewerRole || modalItemData.role || 'Surat';
+      const fImg = modalItemData.founderImage || modalItemData.img || '';
+      const vUrl = modalItemData.youtubeVideoUrl || modalItemData.videoUrl || '';
+      const sRating = Number(modalItemData.starRating || modalItemData.rating || 5);
+      const qText = modalItemData.quote || '';
+      let vImg = modalItemData.videoImg || modalItemData.videoThumbnail || '';
+      if (!vImg && vUrl) {
+        const match = vUrl.trim().match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/))([^"&?\/\s]{11})/i);
+        if (match && match[1]) {
+          vImg = `https://img.youtube.com/vi/${match[1]}/sddefault.jpg`;
+        }
+      }
+
+      modalItemData.gameZoneName = gzName;
+      modalItemData.name = gzName;
+      modalItemData.reviewerRole = rRole;
+      modalItemData.role = rRole;
+      modalItemData.founderImage = fImg;
+      modalItemData.img = fImg;
+      modalItemData.youtubeVideoUrl = vUrl;
+      modalItemData.videoUrl = vUrl;
+      modalItemData.starRating = sRating;
+      modalItemData.rating = sRating;
+      modalItemData.quote = qText;
+      modalItemData.videoImg = vImg;
+      modalItemData.videoThumbnail = vImg;
     }
 
     if (secKey === 'builtProjects') {
@@ -2780,7 +2922,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
     setStatusMsg('Uploading image to server...');
     try {
-      const res = await uploadImageFile(file, admin.token);
+      const res = await uploadImageFile(file, admin?.token);
       if (typeof index === 'number' && field === 'gallery') {
         setModalItemData(prev => {
           const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
@@ -2796,6 +2938,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           const updated = { ...prev, [field]: res.url };
           if (field === 'img') updated.imageUrl = res.url;
           if (field === 'imageUrl') updated.img = res.url;
+          if (field === 'founderImage') updated.img = res.url;
+          if (field === 'videoImg') updated.videoThumbnail = res.url;
+          if (field === 'videoThumbnail') updated.videoImg = res.url;
           if (field === 'clientImg') updated.clientImageUrl = res.url;
           if (field === 'clientImageUrl') updated.clientImg = res.url;
           if (field === 'solutionImg') updated.solutionImageUrl = res.url;
@@ -5454,12 +5599,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
                   <thead>
                     <tr style={{ background: '#0F172B', color: '#ffffff', borderBottom: '2px solid #1e293b' }}>
-                      <th style={{ padding: '14px 18px', fontWeight: '800' }}>#</th>
-                      <th style={{ padding: '14px 18px', fontWeight: '800' }}>Founder Photo</th>
-                      <th style={{ padding: '14px 18px', fontWeight: '800' }}>Game Zone Name</th>
-                      <th style={{ padding: '14px 18px', fontWeight: '800' }}>Role / Post</th>
-                      <th style={{ padding: '14px 18px', fontWeight: '800' }}>Rating</th>
-                      <th style={{ padding: '14px 18px', fontWeight: '800', textAlign: 'right' }}>Actions</th>
+                      <th style={{ padding: '14px 18px', fontWeight: '800', width: '45px' }}>#</th>
+                      <th style={{ padding: '14px 18px', fontWeight: '800', width: '85px' }}>Photo</th>
+                      <th style={{ padding: '14px 18px', fontWeight: '800', minWidth: '160px' }}>Game Zone Name</th>
+                      <th style={{ padding: '14px 18px', fontWeight: '800', minWidth: '100px' }}>Role / City</th>
+                      <th style={{ padding: '14px 18px', fontWeight: '800', width: '85px' }}>Rating</th>
+                      <th style={{ padding: '14px 18px', fontWeight: '800', minWidth: '150px' }}>Video & Cover</th>
+                      <th style={{ padding: '14px 18px', fontWeight: '800', minWidth: '240px' }}>Review Quote</th>
+                      <th style={{ padding: '14px 18px', fontWeight: '800', textAlign: 'right', width: '160px' }}>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -5468,68 +5615,185 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       : [
                         {
                           gameZoneName: "Rebounce Game Zone",
+                          name: "Rebounce Game Zone",
                           reviewerRole: "Surat",
+                          role: "Surat",
                           starRating: 5,
+                          rating: 5,
                           youtubeVideoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
+                          videoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
                           founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
+                          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
+                          videoImg: "https://img.youtube.com/vi/YNrfGqhhl5w/sddefault.jpg",
+                          videoThumbnail: "https://img.youtube.com/vi/YNrfGqhhl5w/sddefault.jpg",
                           quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
                         },
                         {
                           gameZoneName: "Fun Houze",
+                          name: "Fun Houze",
                           reviewerRole: "Surat",
+                          role: "Surat",
                           starRating: 5,
+                          rating: 5,
                           youtubeVideoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
+                          videoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
                           founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
+                          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
+                          videoImg: "https://img.youtube.com/vi/YXhUJ1k6pbQ/sddefault.jpg",
+                          videoThumbnail: "https://img.youtube.com/vi/YXhUJ1k6pbQ/sddefault.jpg",
                           quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
                         },
                         {
                           gameZoneName: "Hulaboo Game Zone",
+                          name: "Hulaboo Game Zone",
                           reviewerRole: "Surat",
+                          role: "Surat",
                           starRating: 5,
+                          rating: 5,
                           youtubeVideoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
-                          founderImage: "",
+                          videoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
+                          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
+                          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
+                          videoImg: "https://img.youtube.com/vi/Jvtsn-TxVqE/sddefault.jpg",
+                          videoThumbnail: "https://img.youtube.com/vi/Jvtsn-TxVqE/sddefault.jpg",
                           quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
                         },
                         {
                           gameZoneName: "House of Pepe",
+                          name: "House of Pepe",
                           reviewerRole: "Surat",
+                          role: "Surat",
                           starRating: 5,
+                          rating: 5,
                           youtubeVideoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
+                          videoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
                           founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+                          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+                          videoImg: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
+                          videoThumbnail: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
                           quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally."
                         }
                       ]
-                    ).map((item, idx) => (
-                      <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
-                        <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
-                        <td style={{ padding: '14px 18px' }}>
-                          {item.founderImage ? (
-                            <img src={item.founderImage} alt="" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
-                          ) : (
-                            <span style={{ color: '#94a3b8', fontSize: '12px' }}>No photo</span>
-                          )}
-                        </td>
-                        <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.gameZoneName || 'Unnamed Game Zone'}</td>
-                        <td style={{ padding: '14px 18px', color: '#64748b', fontWeight: '600' }}>{item.reviewerRole || 'Reviewer'}</td>
-                        <td style={{ padding: '14px 18px', fontWeight: '900', color: '#ffcd00' }}>
-                          {item.starRating || 5} ★
-                        </td>
-                        <td style={{ padding: '14px 18px', textAlign: 'right' }}>
-                          <button
-                            onClick={() => openModal('edit', idx, item)}
-                            style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
-                          >
-                            <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteItem(activeSection, idx)}
-                            style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
-                          >
-                            <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    ).map((item, idx) => {
+                      const founderImgSrc = item.founderImage || item.img || 'https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp';
+                      const itemVideoUrl = item.youtubeVideoUrl || item.videoUrl || item.videoLink || '';
+                      let itemCoverImg = item.videoImg || item.videoThumbnail || '';
+                      if (!itemCoverImg && itemVideoUrl) {
+                        const m = itemVideoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/))([^"&?\/\s]{11})/i);
+                        if (m && m[1]) itemCoverImg = `https://img.youtube.com/vi/${m[1]}/sddefault.jpg`;
+                      }
+                      if (!itemCoverImg) itemCoverImg = founderImgSrc;
+
+                      return (
+                        <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
+                          <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
+                          <td style={{ padding: '14px 18px' }}>
+                            <img
+                              src={founderImgSrc}
+                              alt=""
+                              style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0' }}
+                              onError={(e) => {
+                                e.target.src = 'https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp';
+                              }}
+                            />
+                          </td>
+                          <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <span>{item.gameZoneName || item.name || 'Unnamed Game Zone'}</span>
+                              <span style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '13px',
+                                height: '13px',
+                                borderRadius: '50%',
+                                background: '#000000',
+                                color: '#ffffff',
+                                fontSize: '8px',
+                                fontWeight: '900'
+                              }}>✓</span>
+                            </div>
+                          </td>
+                          <td style={{ padding: '14px 18px', color: '#64748b', fontWeight: '600' }}>
+                            {item.reviewerRole || item.role || 'Surat'}
+                          </td>
+                          <td style={{ padding: '14px 18px', fontWeight: '900', color: '#ffcd00', whiteSpace: 'nowrap' }}>
+                            {item.starRating || item.rating || 5} ★
+                          </td>
+                          <td style={{ padding: '14px 18px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              {itemCoverImg && (
+                                <img
+                                  src={itemCoverImg}
+                                  alt=""
+                                  style={{ width: '40px', height: '40px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+                                />
+                              )}
+                              <div>
+                                {itemVideoUrl ? (
+                                  <a
+                                    href={itemVideoUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    style={{
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: '4px',
+                                      fontSize: '11px',
+                                      color: '#dc2626',
+                                      background: '#fee2e2',
+                                      padding: '3px 8px',
+                                      borderRadius: '6px',
+                                      fontWeight: '700',
+                                      textDecoration: 'none'
+                                    }}
+                                  >
+                                    ▶ YouTube
+                                  </a>
+                                ) : (
+                                  <span style={{ fontSize: '11px', color: '#94a3b8' }}>No video URL</span>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+                          <td style={{ padding: '14px 18px', color: '#475569', fontSize: '12.5px', lineHeight: '1.45', maxWidth: '320px' }}>
+                            <p style={{
+                              margin: 0,
+                              display: '-webkit-box',
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden',
+                              fontStyle: 'italic'
+                            }}>
+                              “{item.quote || 'No quote provided'}”
+                            </p>
+                          </td>
+                          <td style={{ padding: '14px 18px', textAlign: 'right', whiteSpace: 'nowrap' }}>
+                            <button
+                              onClick={() => openModal('edit', idx, {
+                                ...item,
+                                gameZoneName: item.gameZoneName || item.name || '',
+                                reviewerRole: item.reviewerRole || item.role || '',
+                                founderImage: item.founderImage || item.img || '',
+                                starRating: item.starRating || item.rating || 5,
+                                youtubeVideoUrl: item.youtubeVideoUrl || item.videoUrl || '',
+                                videoImg: item.videoImg || item.videoThumbnail || '',
+                                quote: item.quote || ''
+                              })}
+                              style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
+                            >
+                              <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteItem(activeSection, idx)}
+                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '12px' }}
+                            >
+                              <Trash2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -25836,8 +26100,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Game Zone Name</label>
                       <input
                         type="text"
-                        value={modalItemData.gameZoneName || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, gameZoneName: e.target.value }))}
+                        value={modalItemData.gameZoneName || modalItemData.name || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, gameZoneName: e.target.value, name: e.target.value }))}
                         placeholder="e.g. Hulaboo Game Zone"
                         style={{ width: '100%', boxSizing: 'border-box', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '13px' }}
                       />
@@ -25846,8 +26110,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Reviewer Role / Location</label>
                       <input
                         type="text"
-                        value={modalItemData.reviewerRole || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, reviewerRole: e.target.value }))}
+                        value={modalItemData.reviewerRole || modalItemData.role || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, reviewerRole: e.target.value, role: e.target.value }))}
                         placeholder="e.g. Surat"
                         style={{ width: '100%', boxSizing: 'border-box', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                       />
@@ -25855,15 +26119,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
 
                   <div style={{ marginBottom: '12px' }}>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Star Rating ({modalItemData.starRating || 5} Stars)</label>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Star Rating ({modalItemData.starRating || modalItemData.rating || 5} Stars)</label>
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 0' }}>
                       {[1, 2, 3, 4, 5].map((starVal) => {
-                        const isFilled = starVal <= (modalItemData.starRating || 5);
+                        const isFilled = starVal <= (modalItemData.starRating || modalItemData.rating || 5);
                         return (
                           <button
                             key={starVal}
                             type="button"
-                            onClick={() => setModalItemData(prev => ({ ...prev, starRating: starVal }))}
+                            onClick={() => setModalItemData(prev => ({ ...prev, starRating: starVal, rating: starVal }))}
                             style={{
                               background: 'none',
                               border: 'none',
@@ -25887,47 +26151,117 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
 
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '14px' }}>
                     <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
-                      YouTube Link <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '1px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '4px' }}>🎬 Video Ratio: 16:9</span>
+                      YouTube Video Link <span style={{ fontSize: '10.5px', color: '#0284c7', background: '#e0f2fe', padding: '1px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '4px' }}>🎬 Video / Shorts URL</span>
                     </label>
                     <input
                       type="text"
-                      value={modalItemData.youtubeVideoUrl || ''}
-                      onChange={(e) => setModalItemData(prev => ({ ...prev, youtubeVideoUrl: e.target.value }))}
-                      placeholder="https://www.youtube.com/watch?v=..."
+                      value={modalItemData.youtubeVideoUrl || modalItemData.videoUrl || ''}
+                      onChange={(e) => {
+                        const urlVal = e.target.value;
+                        setModalItemData(prev => {
+                          const updated = { ...prev, youtubeVideoUrl: urlVal, videoUrl: urlVal };
+                          if (!prev.videoImg && urlVal) {
+                            const match = urlVal.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/))([^"&?\/\s]{11})/i);
+                            if (match && match[1]) {
+                              updated.videoImg = `https://img.youtube.com/vi/${match[1]}/sddefault.jpg`;
+                              updated.videoThumbnail = updated.videoImg;
+                            }
+                          }
+                          return updated;
+                        });
+                      }}
+                      placeholder="https://www.youtube.com/shorts/... or https://www.youtube.com/watch?v=..."
                       style={{ width: '100%', boxSizing: 'border-box', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                     />
                   </div>
 
-                  <div style={{ marginBottom: '12px' }}>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>
-                      Upload Founder Photo <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 300 × 300 px (Square 1:1)</span>
-                    </label>
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                      <label style={{
-                        background: '#38bdf8',
-                        color: '#fff',
-                        padding: '8px 14px',
-                        borderRadius: '10px',
-                        fontWeight: '800',
-                        fontSize: '12px',
-                        cursor: 'pointer',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px'
-                      }}>
-                        <Upload style={{ width: '14px', height: '14px' }} /> Upload Photo
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleModalFileUpload(e, 'founderImage')}
-                          style={{ display: 'none' }}
-                        />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '14px' }}>
+                    {/* Founder Photo */}
+                    <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
+                        Founder / Client Photo <span style={{ fontSize: '10px', color: '#64748b' }}>(Square 1:1)</span>
                       </label>
-                      {modalItemData.founderImage && (
-                        <img src={modalItemData.founderImage} alt="" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
-                      )}
+                      <input
+                        type="text"
+                        value={modalItemData.founderImage || modalItemData.img || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, founderImage: e.target.value, img: e.target.value }))}
+                        placeholder="Image URL or upload below..."
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px', marginBottom: '8px' }}
+                      />
+                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <label style={{
+                          background: '#38bdf8',
+                          color: '#fff',
+                          padding: '7px 12px',
+                          borderRadius: '8px',
+                          fontWeight: '800',
+                          fontSize: '11.5px',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}>
+                          <Upload style={{ width: '13px', height: '13px' }} /> Upload
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleModalFileUpload(e, 'founderImage')}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                        {(modalItemData.founderImage || modalItemData.img) && (
+                          <img
+                            src={modalItemData.founderImage || modalItemData.img}
+                            alt=""
+                            style={{ width: '38px', height: '38px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #cbd5e1' }}
+                          />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Video Cover / Thumbnail Photo */}
+                    <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
+                        Video Cover Photo <span style={{ fontSize: '10px', color: '#64748b' }}>(Right side frame)</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={modalItemData.videoImg || modalItemData.videoThumbnail || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, videoImg: e.target.value, videoThumbnail: e.target.value }))}
+                        placeholder="Thumbnail URL or upload..."
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px', marginBottom: '8px' }}
+                      />
+                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <label style={{
+                          background: '#0284c7',
+                          color: '#fff',
+                          padding: '7px 12px',
+                          borderRadius: '8px',
+                          fontWeight: '800',
+                          fontSize: '11.5px',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}>
+                          <Upload style={{ width: '13px', height: '13px' }} /> Upload
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleModalFileUpload(e, 'videoImg')}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                        {(modalItemData.videoImg || modalItemData.videoThumbnail) && (
+                          <img
+                            src={modalItemData.videoImg || modalItemData.videoThumbnail}
+                            alt=""
+                            style={{ width: '38px', height: '38px', borderRadius: '8px', objectFit: 'cover', border: '2px solid #cbd5e1' }}
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
 

@@ -7,6 +7,9 @@ const getApiBaseUrl = () => {
     return envUrl.endsWith('/api') ? envUrl : `${envUrl.replace(/\/$/, '')}/api`;
   }
   const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+  if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+    return 'https://winera-backend.onrender.com/api';
+  }
   return `http://${hostname}:5001/api`;
 };
 

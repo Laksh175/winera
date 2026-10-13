@@ -11,26 +11,58 @@ const defaultTestimonials = [
   {
     quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back.",
     name: "Rebounce Game Zone",
+    gameZoneName: "Rebounce Game Zone",
     role: "Surat",
-    img: testiOwner,
-    videoImg: testiOwner,
-    rating: 5
+    reviewerRole: "Surat",
+    img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
+    founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
+    youtubeVideoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
+    videoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
+    videoImg: "https://img.youtube.com/vi/YNrfGqhhl5w/sddefault.jpg",
+    rating: 5,
+    starRating: 5
   },
   {
     quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed.",
     name: "Fun Houze",
+    gameZoneName: "Fun Houze",
     role: "Surat",
-    img: projHulaboo,
-    videoImg: projHulaboo,
-    rating: 5
+    reviewerRole: "Surat",
+    img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
+    founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
+    youtubeVideoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
+    videoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
+    videoImg: "https://img.youtube.com/vi/YXhUJ1k6pbQ/sddefault.jpg",
+    rating: 5,
+    starRating: 5
   },
   {
     quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised.",
     name: "Hulaboo Family Fun Zone",
+    gameZoneName: "Hulaboo Game Zone",
     role: "Surat",
-    img: projNeon1,
-    videoImg: projNeon1,
-    rating: 5
+    reviewerRole: "Surat",
+    img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
+    founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
+    youtubeVideoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
+    videoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
+    videoImg: "https://img.youtube.com/vi/Jvtsn-TxVqE/sddefault.jpg",
+    rating: 5,
+    starRating: 5
+  },
+  {
+    quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally.",
+    name: "House of Pepe",
+    gameZoneName: "House of Pepe",
+    role: "Surat",
+    reviewerRole: "Surat",
+    img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+    founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+    youtubeVideoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
+    videoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
+    videoImg: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
+    rating: 5,
+    starRating: 5
   }
 ];
 
@@ -70,7 +102,7 @@ export default function TestimonialsSection({
   };
 
   const activeVideoUrl = currentItem?.youtubeVideoUrl || currentItem?.videoUrl || currentItem?.videoLink || '';
-  const videoThumbnail = getYouTubeThumbnail(activeVideoUrl, currentItem?.founderImage || currentItem?.videoImg || currentItem?.img || testiOwner);
+  const videoThumbnail = currentItem?.videoImg || currentItem?.videoThumbnail || getYouTubeThumbnail(activeVideoUrl, currentItem?.founderImage || currentItem?.img || testiOwner);
 
   const goNext = () => {
     setIsExpanded(false);
