@@ -150,6 +150,26 @@ const getValidImageUrl = (url, fallback) => {
     }
     return '/assets/Rock And Bowl ( Vapi )/1st Image.jpg';
   }
+  if (url.includes('Level Up') || url.includes('level-up') || url.includes('level up') || url.includes('Morbi') || url.includes('morbi')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('information')) {
+      return '/assets/Level Up ( Morbi )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Level Up ( Morbi )/What the Client Wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Level Up ( Morbi )/What Solution We Provide.webp';
+    }
+    const galMatch = url.match(/gall?e?ry[-_\s]*(\d)\.(jpg|webp)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      if (idx === '1') return '/assets/Level Up ( Morbi )/gallery 1.jpg';
+      if (idx === '2') return '/assets/Level Up ( Morbi )/Gallery 2.jpg';
+      return `/assets/Level Up ( Morbi )/Gallery ${idx}.webp`;
+    }
+    return '/assets/Level Up ( Morbi )/1st Image.jpg';
+  }
   if (url.startsWith('/assets/') || url.startsWith('assets/')) {
     return url;
   }
@@ -340,6 +360,36 @@ export default function ProjectDetail({ siteData }) {
         "/assets/Rock And Bowl ( Vapi )/Gallery 5.jpg",
         "/assets/Rock And Bowl ( Vapi )/Gallery 6.webp",
         "/assets/Rock And Bowl ( Vapi )/galley 7.jpg"
+      ]
+    },
+    'level-up': {
+      name: "Level Up Game Zone",
+      titleLine1: "Level Up: Every Visit Feels",
+      titleLine2: "Like a New High ",
+      titleLine2Black: "Score in Morbi",
+      titleLine3: "Across 15,000 Sq. Ft.",
+      description: "We took a 15,000 sq. ft. space in Morbi and built Level Up from the ground up. Today it’s a go-to game zone for kids, teens and families looking for a fun day out.",
+      metaTitle: "Level Up Game Zone Setup in Morbi | Winera International",
+      metaDescription: "Turnkey game zone setup at Level Up in Morbi across 15,000 sq. ft. designed and installed by Winera International.",
+      type: "Game Zone",
+      location: "Morbi, Gujarat",
+      area: "15,000 sq. ft.",
+      clientWanted1: "The client saw that Morbi needed a proper place for families to spend their free time. They wanted a game zone where children, teenagers and parents could all find something they enjoy, so no one in the group feels left out. Most of all, they wanted guests to walk out already planning their next visit.",
+      clientWanted2: "Instead of hiring separate vendors for design, equipment and installation, the client wanted a single partner. One team to plan the space, manage the setup and hand over a venue ready for opening day. That way, every decision stayed in one place and nothing slipped through the cracks.",
+      solution1: "At Winera International, we began by studying how people would move across the 15,000 sq. ft. floor. For this game zone setup in Morbi, we divided the venue into clear zones. Faster, louder games sit together on one side, where players can enjoy the action without disturbing others. Softer play spots for little ones sit in a quieter corner, with seating close by so parents can keep an eye on them.",
+      solution2: "Between these zones, we kept walkways wide and left open pockets where friends and families can pause and regroup. Every part of the floor has a purpose, so the space feels full of life but never crowded. The result is a game zone that guests find easy to enjoy and keep returning to.",
+      mainImg: "/assets/Level Up ( Morbi )/1st Image.jpg",
+      bannerImg: "/assets/Level Up ( Morbi )/1st Image.jpg",
+      basicInfoBg: "/assets/Level Up ( Morbi )/Basic Information.jpg",
+      clientImg: "/assets/Level Up ( Morbi )/What the Client Wanted.jpg",
+      solutionImg: "/assets/Level Up ( Morbi )/What Solution We Provide.webp",
+      galleryImages: [
+        "/assets/Level Up ( Morbi )/gallery 1.jpg",
+        "/assets/Level Up ( Morbi )/Gallery 2.jpg",
+        "/assets/Level Up ( Morbi )/Gallery 3.webp",
+        "/assets/Level Up ( Morbi )/Gallery 4.webp",
+        "/assets/Level Up ( Morbi )/Gallery 5.webp",
+        "/assets/Level Up ( Morbi )/Gallery 6.webp"
       ]
     }
   };

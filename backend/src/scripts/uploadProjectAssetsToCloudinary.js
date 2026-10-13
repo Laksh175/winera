@@ -116,6 +116,22 @@ const projectsMapping = [
       'Gallery 6.webp',
       'galley 7.jpg'
     ]
+  },
+  {
+    slug: 'level-up',
+    folder: 'Level Up ( Morbi )',
+    mainImg: '1st Image.jpg',
+    basicInfoBg: 'Basic Information.jpg',
+    clientImg: 'What the Client Wanted.jpg',
+    solutionImg: 'What Solution We Provide.webp',
+    gallery: [
+      'gallery 1.jpg',
+      'Gallery 2.jpg',
+      'Gallery 3.webp',
+      'Gallery 4.webp',
+      'Gallery 5.webp',
+      'Gallery 6.webp'
+    ]
   }
 ];
 
