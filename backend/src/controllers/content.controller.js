@@ -5,15 +5,16 @@ import sharp from 'sharp';
 import { v2 as cloudinary } from 'cloudinary';
 import Admin from '../models/Admin.js';
 import Content from '../models/Content.js';
+import Project from '../models/Project.js';
 import jwt from 'jsonwebtoken';
 
 const projectsData = JSON.parse(fs.readFileSync(new URL('../data/projectsData.json', import.meta.url), 'utf-8'));
 
-// Configure Cloudinary from environment variables
+// Configure Cloudinary from environment variables with safe defaults
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'achfsmlm',
+  api_key: process.env.CLOUDINARY_API_KEY || '753149659957868',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'eWxHZbi60csujh5_BpDln8qIQmA'
 });
 
 if (!fs.existsSync('uploads')) {
@@ -214,19 +215,19 @@ export const defaultSiteData = {
   ],
   testimonials: [
     {
-      founderImage: "",
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
       gameZoneName: "Rebounce Game Zone",
       reviewerRole: "Surat",
       starRating: 5,
-      youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      youtubeVideoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
       quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
     },
     {
-      founderImage: "",
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
       gameZoneName: "Fun Houze",
       reviewerRole: "Surat",
       starRating: 5,
-      youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      youtubeVideoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
       quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
     },
     {
@@ -234,8 +235,16 @@ export const defaultSiteData = {
       gameZoneName: "Hulaboo Game Zone",
       reviewerRole: "Surat",
       starRating: 5,
-      youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      youtubeVideoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
       quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+      gameZoneName: "House of Pepe",
+      reviewerRole: "Surat",
+      starRating: 5,
+      youtubeVideoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
+      quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally."
     }
   ],
   processHome: {
@@ -1994,14 +2003,14 @@ export const getContent = async (req, res) => {
       delete siteData.blogPosts;
     }
 
-    // Auto-ensure all 15 detailed case study projects from docx are present in MongoDB if empty
+    // Auto-ensure detailed case study projects from docx are present in MongoDB if empty
     if (!Array.isArray(siteData.projectItems) || siteData.projectItems.length === 0) {
       await Content.findOneAndUpdate(
         { sectionKey: 'projectItems' },
-        { sectionKey: 'projectItems', data: projectsData.slice(0, 15) },
+        { sectionKey: 'projectItems', data: projectsData },
         { upsert: true, new: true }
       );
-      siteData.projectItems = projectsData.slice(0, 15);
+      siteData.projectItems = projectsData;
     }
 
     // Auto-ensure showcase builtProjects are populated if empty
@@ -2124,27 +2133,31 @@ export const uploadImage = async (req, res) => {
     return res.status(400).json({ message: 'No file uploaded' });
   }
 
-  // Attempt upload to Cloudinary if credentials are configured
-  if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
-    try {
-      const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'winera_uploads',
-        transformation: [
-          { quality: 'auto', fetch_format: 'auto' }
-        ]
-      });
-      // Remove temporary local file after Cloudinary upload
-      if (fs.existsSync(req.file.path)) {
-        fs.unlinkSync(req.file.path);
-      }
-      let optUrl = result.secure_url;
-      if (optUrl && optUrl.includes('/upload/') && !optUrl.includes('/f_auto,q_auto/')) {
-        optUrl = optUrl.replace('/upload/', '/upload/f_auto,q_auto/');
-      }
-      return res.json({ url: optUrl, filename: result.public_id });
-    } catch (err) {
-      console.error('Cloudinary upload error, falling back to local storage:', err);
+  // Ensure Cloudinary is configured
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'achfsmlm',
+    api_key: process.env.CLOUDINARY_API_KEY || '753149659957868',
+    api_secret: process.env.CLOUDINARY_API_SECRET || 'eWxHZbi60csujh5_BpDln8qIQmA'
+  });
+
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'winera_uploads',
+      transformation: [
+        { quality: 'auto', fetch_format: 'auto' }
+      ]
+    });
+    // Remove temporary local file after Cloudinary upload
+    if (fs.existsSync(req.file.path)) {
+      try { fs.unlinkSync(req.file.path); } catch (e) {}
     }
+    let optUrl = result.secure_url;
+    if (optUrl && optUrl.includes('/upload/') && !optUrl.includes('/f_auto,q_auto/')) {
+      optUrl = optUrl.replace('/upload/', '/upload/f_auto,q_auto/');
+    }
+    return res.json({ url: optUrl, filename: result.public_id });
+  } catch (err) {
+    console.error('Cloudinary upload error, falling back to local storage:', err);
   }
 
   // Local fallback: auto-convert image to .webp format via sharp

@@ -2674,6 +2674,48 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       }
     }
 
+    if (secKey === 'testimonials') {
+      const defaultTestimonialsList = [
+        {
+          gameZoneName: "Rebounce Game Zone",
+          reviewerRole: "Surat",
+          starRating: 5,
+          youtubeVideoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
+          quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
+        },
+        {
+          gameZoneName: "Fun Houze",
+          reviewerRole: "Surat",
+          starRating: 5,
+          youtubeVideoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
+          quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
+        },
+        {
+          gameZoneName: "Hulaboo Game Zone",
+          reviewerRole: "Surat",
+          starRating: 5,
+          youtubeVideoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
+          founderImage: "",
+          quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
+        },
+        {
+          gameZoneName: "House of Pepe",
+          reviewerRole: "Surat",
+          starRating: 5,
+          youtubeVideoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+          quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally."
+        }
+      ];
+      if (!Array.isArray(formData.testimonials) || formData.testimonials.length === 0) {
+        currentList = [...defaultTestimonialsList];
+      } else {
+        currentList = [...formData.testimonials];
+      }
+    }
+
     if (modalMode === 'add') {
       currentList.push(modalItemData);
     } else if (modalMode === 'edit' && editingIndex !== null) {
@@ -2704,7 +2746,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           };
         });
       } else {
-        setModalItemData(prev => ({ ...prev, [field]: res.url }));
+        setModalItemData(prev => {
+          const updated = { ...prev, [field]: res.url };
+          if (field === 'img') updated.imageUrl = res.url;
+          if (field === 'imageUrl') updated.img = res.url;
+          if (field === 'clientImg') updated.clientImageUrl = res.url;
+          if (field === 'clientImageUrl') updated.clientImg = res.url;
+          if (field === 'solutionImg') updated.solutionImageUrl = res.url;
+          if (field === 'solutionImageUrl') updated.solutionImg = res.url;
+          return updated;
+        });
       }
       setStatusMsg('Image uploaded successfully to server!');
     } catch (err) {
@@ -5155,22 +5206,33 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           gameZoneName: "Rebounce Game Zone",
                           reviewerRole: "Surat",
                           starRating: 5,
-                          youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                          youtubeVideoUrl: "https://www.youtube.com/shorts/YNrfGqhhl5w",
+                          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
                           quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
                         },
                         {
                           gameZoneName: "Fun Houze",
                           reviewerRole: "Surat",
                           starRating: 5,
-                          youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                          youtubeVideoUrl: "https://youtube.com/shorts/YXhUJ1k6pbQ",
+                          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
                           quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
                         },
                         {
                           gameZoneName: "Hulaboo Game Zone",
                           reviewerRole: "Surat",
                           starRating: 5,
-                          youtubeVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                          youtubeVideoUrl: "https://youtube.com/shorts/Jvtsn-TxVqE",
+                          founderImage: "",
                           quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
+                        },
+                        {
+                          gameZoneName: "House of Pepe",
+                          reviewerRole: "Surat",
+                          starRating: 5,
+                          youtubeVideoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
+                          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
+                          quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally."
                         }
                       ]
                     ).map((item, idx) => (

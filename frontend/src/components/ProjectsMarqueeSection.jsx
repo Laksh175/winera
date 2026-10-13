@@ -293,9 +293,10 @@ export default function ProjectsMarqueeSection({
                   const href = cardSlug ? `/project/${cardSlug}` : '/project';
 
                   const isHulabooCard = (proj.slug === 'hulaboo' || (proj.name && proj.name.toLowerCase().includes('hulaboo')) || (proj.title && proj.title.toLowerCase().includes('hulaboo')));
-                  const imgSrc = isHulabooCard
-                    ? "/assets/Hulaboo ( Surat )/1st Image.jpg"
-                    : (proj.img || proj.imageUrl || proj.imgUrl || projHulaboo);
+                  const existingImg = proj.img || proj.imageUrl || proj.imgUrl;
+                  const imgSrc = (existingImg && typeof existingImg === 'string' && existingImg.trim() !== '')
+                    ? existingImg
+                    : (isHulabooCard ? "/assets/Hulaboo ( Surat )/1st Image.jpg" : projHulaboo);
                   const finalImgSrc = (typeof imgSrc === 'string' && imgSrc.includes('/uploads/'))
                     ? imgSrc.replace(/\.(png|jpg|jpeg)$/i, '.webp')
                     : imgSrc;

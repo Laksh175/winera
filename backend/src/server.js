@@ -1,14 +1,12 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import compression from 'compression';
-import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import apiRoutes from './routes/api.routes.js';
 
 import fs from 'fs';
 import path from 'path';
-
-dotenv.config();
 
 connectDB();
 

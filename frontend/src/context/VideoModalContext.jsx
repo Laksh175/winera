@@ -75,8 +75,8 @@ function VideoModalDialog({ videoUrl, title, onClose }) {
       return { type: 'direct', url: trimmed };
     }
 
-    // YouTube regex patterns
-    const ytReg = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+    // YouTube regex patterns (supports standard, shorts, embed, youtu.be, and query parameters)
+    const ytReg = /(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/))([^"&?\/\s]{11})/i;
     const match = trimmed.match(ytReg);
 
     if (match && match[1]) {

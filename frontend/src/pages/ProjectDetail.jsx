@@ -32,6 +32,9 @@ const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
+  if (url.startsWith('https://res.cloudinary.com/') || url.startsWith('https://images.unsplash.com/') || url.startsWith('data:')) {
+    return url;
+  }
   if (url.includes('FifthAlley') || url.includes('fifthalley')) {
     const lower = url.toLowerCase();
     if (lower.includes('basic') || lower.includes('information')) {
@@ -66,6 +69,64 @@ const getValidImageUrl = (url, fallback) => {
       return `/assets/Hulaboo ( Surat )/Gallery ${galMatch[1]}.${ext}`;
     }
     return '/assets/Hulaboo ( Surat )/1st Image.jpg';
+  }
+  if (url.includes('LaneX') || url.includes('lanex')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('information')) {
+      return '/assets/LaneX Bowling Alley ( Surat )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/LaneX Bowling Alley ( Surat )/What the Client Wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/LaneX Bowling Alley ( Surat )/What Solution We Provide.webp';
+    }
+    const galMatch = url.match(/gallery[-_\s]*(\d)\.(jpg|webp)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      const ext = ['2', '3', '4', '5', '6'].includes(idx) ? 'webp' : 'jpg';
+      const spaces = ['2', '3'].includes(idx) ? '  ' : ' ';
+      return `/assets/LaneX Bowling Alley ( Surat )/Gallery${spaces}${idx}.${ext}`;
+    }
+    return '/assets/LaneX Bowling Alley ( Surat )/1st Image.jpg';
+  }
+  if (url.includes('Playzonia') || url.includes('playzonia')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('information')) {
+      return '/assets/Playzonia Kids Play Area ( Surat )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Playzonia Kids Play Area ( Surat )/What the Client Wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Playzonia Kids Play Area ( Surat )/What Solution We Provide.jpg';
+    }
+    const galMatch = url.match(/gallery[-_\s]*(\d)\.(jpg|webp)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      const spaces = ['2', '3', '4', '6'].includes(idx) ? '  ' : ' ';
+      return `/assets/Playzonia Kids Play Area ( Surat )/Gallery${spaces}${idx}.jpg`;
+    }
+    return '/assets/Playzonia Kids Play Area ( Surat )/1st Image.jpg';
+  }
+  if (url.includes('Rebounce') || url.includes('rebounce')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('information')) {
+      return '/assets/Rebounce Game Zone ( Surat )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Rebounce Game Zone ( Surat )/What the Client Wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Rebounce Game Zone ( Surat )/What Solution We Provide.jpg';
+    }
+    const galMatch = url.match(/gallery[-_\s]*(\d)\.(jpg|webp)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      const ext = idx === '6' ? 'webp' : 'jpg';
+      return `/assets/Rebounce Game Zone ( Surat )/Gallery ${idx}.${ext}`;
+    }
+    return '/assets/Rebounce Game Zone ( Surat )/1st Image.jpg';
   }
   if (url.startsWith('/assets/') || url.startsWith('assets/')) {
     return url;
@@ -379,6 +440,9 @@ export default function ProjectDetail({ siteData }) {
 
   const isFifthAlley = targetSlug === 'fifthalley-sport-bowling' || cleanAlpha(currentProject?.name || '').includes('fifthalley');
   const isHulaboo = targetSlug === 'hulaboo' || cleanAlpha(currentProject?.name || '').includes('hulaboo');
+  const isLaneX = targetSlug === 'lanex-bowling-alley' || cleanAlpha(currentProject?.name || '').includes('lanex');
+  const isPlayzonia = targetSlug === 'playzonia' || cleanAlpha(currentProject?.name || '').includes('playzonia');
+  const isRebounce = targetSlug === 'rebounce' || cleanAlpha(currentProject?.name || '').includes('rebounce');
   const bannerImg = getValidImageUrl(heroData.bannerImg, projectBanner);
   const breadcrumbHome = heroData.breadcrumbHome || 'Home';
 
@@ -414,13 +478,27 @@ export default function ProjectDetail({ siteData }) {
   }
 
   const buttonLink = `${baseLink}?text=${encodeURIComponent(waMsg)}`;
-  const mainImage = isHulaboo ? "/assets/Hulaboo ( Surat )/1st Image.jpg" : currentProject.mainImg;
+  const mainImage = isHulaboo
+    ? "/assets/Hulaboo ( Surat )/1st Image.jpg"
+    : (isLaneX
+        ? (currentProject.mainImg && !currentProject.mainImg.includes('ix7eepjul52fmdfii3nf') ? currentProject.mainImg : "/assets/LaneX Bowling Alley ( Surat )/1st Image.jpg")
+        : (isPlayzonia
+            ? (currentProject.mainImg && !currentProject.mainImg.includes('ymswdjzfwqi5z7ksv7zd') ? currentProject.mainImg : "/assets/Playzonia Kids Play Area ( Surat )/1st Image.jpg")
+            : (isRebounce
+                ? (currentProject.mainImg && !currentProject.mainImg.includes('nri2vtjcndonajowvvqw') ? currentProject.mainImg : "/assets/Rebounce Game Zone ( Surat )/1st Image.jpg")
+                : currentProject.mainImg)));
 
   const basicBg = isFifthAlley
     ? "/assets/FifthAlley-Sport-Bowling/basic-information.jpg"
     : (isHulaboo
         ? "/assets/Hulaboo ( Surat )/Basic Information.jpg"
-        : getValidImageUrl(currentProject.basicInfoBg || basicData.bgImg, projectImage2Bg));
+        : (isLaneX
+            ? "/assets/LaneX Bowling Alley ( Surat )/Basic Information.jpg"
+            : (isPlayzonia
+                ? "/assets/Playzonia Kids Play Area ( Surat )/Basic Information.jpg"
+                : (isRebounce
+                    ? "/assets/Rebounce Game Zone ( Surat )/Basic Information.jpg"
+                    : getValidImageUrl(currentProject.basicInfoBg || basicData.bgImg, projectImage2Bg)))));
   const basicRows = [
     { label: 'Project Name', val: currentProject.name },
     { label: 'Project Type', val: currentProject.type },
@@ -432,13 +510,29 @@ export default function ProjectDetail({ siteData }) {
   const clientTitleCyan = 'Client Wanted';
   const clientP1 = currentProject.clientWanted1;
   const clientP2 = currentProject.clientWanted2;
-  const clientImg = isHulaboo ? "/assets/Hulaboo ( Surat )/What the Client Wanted.jpg" : currentProject.clientImg;
+  const clientImg = isHulaboo
+    ? "/assets/Hulaboo ( Surat )/What the Client Wanted.jpg"
+    : (isLaneX
+        ? (currentProject.clientImg && !currentProject.clientImg.includes('igg4yrl7xhnxllqifpj7') ? currentProject.clientImg : "/assets/LaneX Bowling Alley ( Surat )/What the Client Wanted.jpg")
+        : (isPlayzonia
+            ? (currentProject.clientImg && !currentProject.clientImg.includes('olzpipldgl4mnb7c1y5q') ? currentProject.clientImg : "/assets/Playzonia Kids Play Area ( Surat )/What the Client Wanted.jpg")
+            : (isRebounce
+                ? (currentProject.clientImg && !currentProject.clientImg.includes('gy34ivaldlm7ia55iwci') ? currentProject.clientImg : "/assets/Rebounce Game Zone ( Surat )/What the Client Wanted.jpg")
+                : currentProject.clientImg)));
 
   const solutionTitleCyan = 'What Solution ';
   const solutionTitleSuffix = 'We Provide';
   const solutionP1 = currentProject.solution1;
   const solutionP2 = currentProject.solution2;
-  const solutionImg = isHulaboo ? "/assets/Hulaboo ( Surat )/What Solution We Provide.webp" : currentProject.solutionImg;
+  const solutionImg = isHulaboo
+    ? "/assets/Hulaboo ( Surat )/What Solution We Provide.webp"
+    : (isLaneX
+        ? (currentProject.solutionImg && !currentProject.solutionImg.includes('hifdo3jiuvbvu4cxkgq4') ? currentProject.solutionImg : "/assets/LaneX Bowling Alley ( Surat )/What Solution We Provide.webp")
+        : (isPlayzonia
+            ? (currentProject.solutionImg && !currentProject.solutionImg.includes('vxfee3fxtxt09nu04bd8') ? currentProject.solutionImg : "/assets/Playzonia Kids Play Area ( Surat )/What Solution We Provide.jpg")
+            : (isRebounce
+                ? (currentProject.solutionImg && !currentProject.solutionImg.includes('za8k8euyryqqt3r7xsbw') ? currentProject.solutionImg : "/assets/Rebounce Game Zone ( Surat )/What Solution We Provide.jpg")
+                : currentProject.solutionImg)));
 
   const galleryTitleCyan = 'Project ';
   const galleryTitleDark = 'Gallery';
@@ -461,9 +555,36 @@ export default function ProjectDetail({ siteData }) {
         "/assets/Hulaboo ( Surat )/Gallery 5.jpg",
         "/assets/Hulaboo ( Surat )/Gallery 6.jpg"
       ]
-    : ((Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0)
-        ? currentProject.galleryImages
-        : (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : defaultGalleryList));
+    : (isLaneX
+        ? [
+            "/assets/LaneX Bowling Alley ( Surat )/Gallery 1.jpg",
+            "/assets/LaneX Bowling Alley ( Surat )/Gallery  2.webp",
+            "/assets/LaneX Bowling Alley ( Surat )/Gallery  3.webp",
+            "/assets/LaneX Bowling Alley ( Surat )/Gallery 4.webp",
+            "/assets/LaneX Bowling Alley ( Surat )/Gallery 5.webp",
+            "/assets/LaneX Bowling Alley ( Surat )/Gallery 6.webp"
+          ]
+        : (isPlayzonia
+            ? [
+                "/assets/Playzonia Kids Play Area ( Surat )/Gallery 1.jpg",
+                "/assets/Playzonia Kids Play Area ( Surat )/Gallery  2.jpg",
+                "/assets/Playzonia Kids Play Area ( Surat )/Gallery  3.jpg",
+                "/assets/Playzonia Kids Play Area ( Surat )/Gallery  4.jpg",
+                "/assets/Playzonia Kids Play Area ( Surat )/Gallery 5.jpg",
+                "/assets/Playzonia Kids Play Area ( Surat )/Gallery  6.jpg"
+              ]
+            : (isRebounce
+                ? [
+                    "/assets/Rebounce Game Zone ( Surat )/Gallery 1.jpg",
+                    "/assets/Rebounce Game Zone ( Surat )/Gallery 2.jpg",
+                    "/assets/Rebounce Game Zone ( Surat )/Gallery 3.jpg",
+                    "/assets/Rebounce Game Zone ( Surat )/Gallery 4.jpg",
+                    "/assets/Rebounce Game Zone ( Surat )/Gallery 5.jpg",
+                    "/assets/Rebounce Game Zone ( Surat )/Gallery 6.webp"
+                  ]
+                : ((Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0)
+                    ? currentProject.galleryImages
+                    : (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : defaultGalleryList)))));
 
   const galleryImages = cmsGalleryImages.map((imgUrl, idx) => {
     return getValidImageUrl(imgUrl, defaultGalleryList[idx % defaultGalleryList.length]);

@@ -19,30 +19,14 @@ const projectCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_
 import { ArrowRight, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
 
 const resolveProjectImg = (proj) => {
-  const slug = (proj?.slug || '').toLowerCase();
-  const name = (proj?.name || '').toLowerCase();
-  const category = (proj?.category || '').toLowerCase();
-
-  if (slug.includes('fifthalley') || name.includes('fifthalley')) {
-    return "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg";
-  }
-  if (slug.includes('hulaboo') || name.includes('hulaboo')) {
-    return "/assets/Hulaboo ( Surat )/1st Image.jpg";
-  }
-
   const url = proj?.img || proj?.imageUrl || proj?.imgUrl || '';
 
+  // 1. If valid Cloudinary / external / valid asset URL already exists, use it directly
   if (url && typeof url === 'string' && url.trim() !== '' && !url.includes('/src/assets/')) {
-    if (url.includes('FifthAlley') || url.includes('fifthalley')) {
-      return "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg";
-    }
-    if (url.includes('Hulaboo') || url.includes('hulaboo')) {
-      return "/assets/Hulaboo ( Surat )/1st Image.jpg";
-    }
-    if (url.startsWith('/assets/') || url.startsWith('assets/')) {
+    if (url.startsWith('https://res.cloudinary.com/') || url.startsWith('https://images.unsplash.com/') || url.startsWith('data:')) {
       return url;
     }
-    if (url.startsWith('https://res.cloudinary.com/') || url.startsWith('https://images.unsplash.com/') || url.startsWith('data:')) {
+    if (url.startsWith('/assets/') || url.startsWith('assets/')) {
       return url;
     }
     const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
@@ -54,6 +38,17 @@ const resolveProjectImg = (proj) => {
     } else if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
+  }
+
+  const slug = (proj?.slug || '').toLowerCase();
+  const name = (proj?.name || '').toLowerCase();
+  const category = (proj?.category || '').toLowerCase();
+
+  if (slug.includes('fifthalley') || name.includes('fifthalley')) {
+    return "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg";
+  }
+  if (slug.includes('hulaboo') || name.includes('hulaboo')) {
+    return "/assets/Hulaboo ( Surat )/1st Image.jpg";
   }
 
   if (slug.includes('hulaboo') || name.includes('hulaboo')) return "/assets/Hulaboo ( Surat )/1st Image.jpg";

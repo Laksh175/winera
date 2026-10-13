@@ -60,15 +60,17 @@ export default function TestimonialsSection({
   const currentItem = list[activeIndex % list.length] || defaultTestimonials[0];
 
   const getYouTubeThumbnail = (url, fallbackImg) => {
-    if (!url) return fallbackImg;
-    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+    if (!url || typeof url !== 'string') return fallbackImg;
+    const trimmed = url.trim();
+    const match = trimmed.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/))([^"&?\/\s]{11})/i);
     if (match && match[1]) {
       return `https://img.youtube.com/vi/${match[1]}/sddefault.jpg`;
     }
     return fallbackImg;
   };
 
-  const videoThumbnail = getYouTubeThumbnail(currentItem?.youtubeVideoUrl, currentItem?.founderImage || currentItem?.videoImg || currentItem?.img || testiOwner);
+  const activeVideoUrl = currentItem?.youtubeVideoUrl || currentItem?.videoUrl || currentItem?.videoLink || '';
+  const videoThumbnail = getYouTubeThumbnail(activeVideoUrl, currentItem?.founderImage || currentItem?.videoImg || currentItem?.img || testiOwner);
 
   const goNext = () => {
     setIsExpanded(false);
@@ -319,9 +321,9 @@ export default function TestimonialsSection({
                       }
                     }}
                   />
-                  {Boolean(currentItem.youtubeVideoUrl && String(currentItem.youtubeVideoUrl).trim()) && (
+                  {Boolean(activeVideoUrl && String(activeVideoUrl).trim()) && (
                     <button
-                      onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}
+                      onClick={() => openVideoModal(activeVideoUrl, `${currentItem.gameZoneName || currentItem.name || 'Client'} - Video Review`)}
                       aria-label="Watch Review Video"
                       title="Watch Review Video"
                       style={{
