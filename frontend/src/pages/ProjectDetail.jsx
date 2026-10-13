@@ -128,6 +128,28 @@ const getValidImageUrl = (url, fallback) => {
     }
     return '/assets/Rebounce Game Zone ( Surat )/1st Image.jpg';
   }
+  if (url.includes('Rock And Bowl') || url.includes('rock-and-bowl') || url.includes('rock and bowl')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('information')) {
+      return '/assets/Rock And Bowl ( Vapi )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Rock And Bowl ( Vapi )/What the Client Wanted.webp';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Rock And Bowl ( Vapi )/What Solution We Provide.jpg';
+    }
+    const galMatch = url.match(/gall?e?ry[-_\s]*(\d)\.(jpg|webp)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      if (idx === '2') return '/assets/Rock And Bowl ( Vapi )/Gallery 2.webp';
+      if (idx === '3') return '/assets/Rock And Bowl ( Vapi )/Galley 3.jpg';
+      if (idx === '6') return '/assets/Rock And Bowl ( Vapi )/Gallery 6.webp';
+      if (idx === '7') return '/assets/Rock And Bowl ( Vapi )/galley 7.jpg';
+      return `/assets/Rock And Bowl ( Vapi )/Gallery ${idx}.jpg`;
+    }
+    return '/assets/Rock And Bowl ( Vapi )/1st Image.jpg';
+  }
   if (url.startsWith('/assets/') || url.startsWith('assets/')) {
     return url;
   }
@@ -288,6 +310,37 @@ export default function ProjectDetail({ siteData }) {
       mainImg: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
       clientImg: projNeon1,
       solutionImg: projectImage4
+    },
+    'rock-and-bowl': {
+      name: "Rock and Bowl",
+      titleLine1: "Rock and Bowl: Strikes, Games",
+      titleLine2: "and Good Times ",
+      titleLine2Black: "in Vapi",
+      titleLine3: "Across 6,000 Sq. Ft.",
+      description: "We took a compact 6,000 sq. ft. space in Vapi and filled it with bowling, gaming and a cosy cafe. Rock and Bowl is now a favourite hangout for families, friends and kids alike.",
+      metaTitle: "Rock and Bowl Game Zone Setup in Vapi | Winera International",
+      metaDescription: "See how Winera International designed and installed Rock and Bowl in Vapi across 6,000 sq. ft. Turnkey bowling alley and game zone.",
+      type: "Game Zone & Bowling Setup",
+      location: "Vapi, Gujarat",
+      area: "6,000 sq. ft.",
+      clientWanted1: "The client wanted to give Vapi a place with more than one reason to visit. Bowling for groups of friends, games for teens, a safe play spot for young children and a cafe where everyone could sit together. With so much on offer, every outing could feel a little different, and that would keep people coming back.",
+      clientWanted2: "Fitting all of this into one venue needed careful planning. The client wanted a single team to own the whole job, from the first layout drawing to installing the last machine, and hand over a venue ready to welcome guests.",
+      solution1: "At Winera International, we knew every part of the 6,000 sq. ft. floor had to work hard to hold this many attractions. For this game zone setup in Vapi, we gave the bowling area its own stretch of the floor, since it needs length and space to play well. The arcade, VR and pool table sit close by, creating one lively zone for teens and young adults.",
+      solution2: "The kids' soft play area sits away from the action, so little ones can play safely while parents relax at the cafe nearby. We kept walkways clear between each zone and added enough seating for groups to take a break. The result is a compact venue that never feels cramped and keeps guests returning.",
+      mainImg: "/assets/Rock And Bowl ( Vapi )/1st Image.jpg",
+      bannerImg: "/assets/Rock And Bowl ( Vapi )/1st Image.jpg",
+      basicInfoBg: "/assets/Rock And Bowl ( Vapi )/Basic Information.jpg",
+      clientImg: "/assets/Rock And Bowl ( Vapi )/What the Client Wanted.webp",
+      solutionImg: "/assets/Rock And Bowl ( Vapi )/What Solution We Provide.jpg",
+      galleryImages: [
+        "/assets/Rock And Bowl ( Vapi )/Gallery 1.jpg",
+        "/assets/Rock And Bowl ( Vapi )/Gallery 2.webp",
+        "/assets/Rock And Bowl ( Vapi )/Galley 3.jpg",
+        "/assets/Rock And Bowl ( Vapi )/Gallery 4.jpg",
+        "/assets/Rock And Bowl ( Vapi )/Gallery 5.jpg",
+        "/assets/Rock And Bowl ( Vapi )/Gallery 6.webp",
+        "/assets/Rock And Bowl ( Vapi )/galley 7.jpg"
+      ]
     }
   };
 

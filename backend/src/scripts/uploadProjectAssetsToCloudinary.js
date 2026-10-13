@@ -99,6 +99,23 @@ const projectsMapping = [
       'Gallery 5.jpg',
       'Gallery 6.webp'
     ]
+  },
+  {
+    slug: 'rock-and-bowl',
+    folder: 'Rock And Bowl ( Vapi )',
+    mainImg: '1st Image.jpg',
+    basicInfoBg: 'Basic Information.jpg',
+    clientImg: 'What the Client Wanted.webp',
+    solutionImg: 'What Solution We Provide.jpg',
+    gallery: [
+      'Gallery 1.jpg',
+      'Gallery 2.webp',
+      'Galley 3.jpg',
+      'Gallery 4.jpg',
+      'Gallery 5.jpg',
+      'Gallery 6.webp',
+      'galley 7.jpg'
+    ]
   }
 ];
 

@@ -50,6 +50,9 @@ const resolveProjectImg = (proj) => {
   if (slug.includes('hulaboo') || name.includes('hulaboo')) {
     return "/assets/Hulaboo ( Surat )/1st Image.jpg";
   }
+  if (slug.includes('rock') || name.includes('rock') || slug.includes('rock-and-bowl')) {
+    return "/assets/Rock And Bowl ( Vapi )/1st Image.jpg";
+  }
 
   if (slug.includes('hulaboo') || name.includes('hulaboo')) return "/assets/Hulaboo ( Surat )/1st Image.jpg";
   if (slug.includes('neon') || name.includes('neon')) return projNeon1;
