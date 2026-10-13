@@ -6,8 +6,9 @@ import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 import allArcadeProducts from '../data/allArcadeProducts.json';
+import allVrGames from '../data/allVrGames.json';
 import projectsData from '../data/projectsData.json';
-import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, X, Star, Video, Trophy, Sparkles, Calculator, Menu, Target, ChevronDown } from 'lucide-react';
+import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, Edit3, X, Star, Video, Trophy, Sparkles, Calculator, Menu, Target, ChevronDown } from 'lucide-react';
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 const yellowBrushAccent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 const ctaConsultationsBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
@@ -1554,6 +1555,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const [newCategoryInput, setNewCategoryInput] = useState('');
   const [adminArcadeSearch, setAdminArcadeSearch] = useState('');
   const [adminArcadePage, setAdminArcadePage] = useState(1);
+  const [adminVrSearch, setAdminVrSearch] = useState('');
+  const [adminVrFilterCat, setAdminVrFilterCat] = useState('All');
+  const [adminVrPage, setAdminVrPage] = useState(1);
+  const [newVrCategoryInput, setNewVrCategoryInput] = useState('');
   const [openProjectStatusDropdown, setOpenProjectStatusDropdown] = useState(null);
 
   // Close project status dropdown when clicking outside
@@ -1756,7 +1761,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'vrHero', name: 'VR Games Hero Banner' },
         { id: 'vrSupplier', name: 'VR Gaming Machine Supplier' },
         { id: 'vrMatchedVenue', name: 'Commercial VR Machines Matched Venue' },
-        { id: 'vrRange', name: 'Our VR Gaming Machine Range' },
+        { id: 'vrCategories', name: 'Game Categories & Cards' },
         { id: 'vrReliability', name: 'Commercial-Grade Quality & Reliability' },
         { id: 'vrEarn', name: 'What Will Your VR Zone Earn' },
         { id: 'vrWhyUs', name: 'Why Choose Winera Section' },
@@ -2285,6 +2290,52 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       return;
     }
 
+    if (sec === 'vrCategories' || sec === 'vrRange') {
+      const slugifyText = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      const cardTitle = item.title || item.name || (mode === 'add' ? '' : 'New VR Game');
+      const cardSlug = (item.slug && item.slug !== 'new-vr-game') ? item.slug : slugifyText(cardTitle);
+
+      const defaultVrItem = {
+        name: cardTitle,
+        title: cardTitle,
+        nameBase: item.nameBase !== undefined ? item.nameBase : cardTitle,
+        nameHighlight: item.nameHighlight || '',
+        category: item.category || 'Bester VR',
+        tag: item.tag || item.category || 'Bester VR',
+        slug: cardSlug,
+        tagline: item.tagline || 'Commercial VR virtual reality simulation system designed for maximum guest throughput.',
+        desc: item.desc || '',
+        img: item.img || item.imageUrl || '',
+        imageUrl: item.img || item.imageUrl || '',
+        power: item.power || '',
+        voltage: item.voltage || '220V / 110V',
+        specsCategory: item.specsCategory || item.category || 'VR Game',
+        players: item.players || '1',
+        weight: item.weight || '',
+        maxLoad: item.maxLoad || '',
+        games: item.games || '',
+        helmet: item.helmet || 'DP',
+        material: item.material || 'Commercial Heavy-Duty Steel & High-Gloss Fiberglass',
+        dimensions: item.dimensions || '',
+        width: item.width || '',
+        depth: item.depth || '',
+        height: item.height || '',
+        gallery: (Array.isArray(item.gallery) && item.gallery.length > 0)
+          ? item.gallery.filter(Boolean)
+          : [item.gallery1, item.gallery2, item.gallery3, item.gallery4].filter(Boolean),
+        gallery1: item.gallery1 || (Array.isArray(item.gallery) ? item.gallery[0] : '') || '',
+        gallery2: item.gallery2 || (Array.isArray(item.gallery) ? item.gallery[1] : '') || '',
+        gallery3: item.gallery3 || (Array.isArray(item.gallery) ? item.gallery[2] : '') || '',
+        gallery4: item.gallery4 || (Array.isArray(item.gallery) ? item.gallery[3] : '') || '',
+        videoUrl: item.videoUrl || '',
+        quoteUrl: item.quoteUrl || `https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`
+      };
+
+      setModalItemData({ ...defaultVrItem, ...item });
+      setIsModalOpen(true);
+      return;
+    }
+
     if (sec === 'projectItems') {
       const slugifyText = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       const projTitle = currentItem.name || currentItem.title || (mode === 'add' ? '' : 'FifthAlley Sport Bowling');
@@ -2768,6 +2819,137 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           }
         }
         setStatusMsg('Database Save Error: ' + (err.response?.data?.message || err.message));
+      } finally {
+        setLoadingSection('');
+      }
+      return;
+    }
+
+    if (secKey === 'vrCategories' || secKey === 'vrRange') {
+      const defaultVrCats = allVrGames?.categoriesList || [
+        "All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"
+      ];
+      const masterCards = allVrGames?.cards || [];
+
+      let categoriesList = defaultVrCats;
+      let cardsList = [...masterCards];
+
+      const vrSource = formData.vrCategories || formData.vrRange;
+      if (vrSource) {
+        if (Array.isArray(vrSource.cards) && vrSource.cards.length > 0) {
+          const cmsMap = new Map();
+          vrSource.cards.forEach(c => {
+            const k = (c.slug || c.name || c.title || '').toLowerCase().trim();
+            if (k) cmsMap.set(k, c);
+          });
+          cardsList = cardsList.map(mc => {
+            const k = (mc.slug || mc.name || mc.title || '').toLowerCase().trim();
+            return cmsMap.has(k) ? { ...mc, ...cmsMap.get(k) } : mc;
+          });
+          vrSource.cards.forEach(cc => {
+            if (cc.isUserCreated) cardsList.unshift(cc);
+          });
+        }
+        if (Array.isArray(vrSource.categoriesList) && vrSource.categoriesList.length > 0) {
+          categoriesList = [...vrSource.categoriesList];
+        }
+      }
+
+      const slugifyText = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      const cardTitle = modalItemData.title || modalItemData.name || 'New VR Game';
+      const cleanSlug = (modalItemData.slug && modalItemData.slug !== 'new-vr-game') ? modalItemData.slug : (slugifyText(cardTitle) || 'vr-game');
+
+      const cardItem = {
+        ...modalItemData,
+        isUserCreated: modalMode === 'add' ? true : Boolean(modalItemData.isUserCreated),
+        name: cardTitle,
+        title: cardTitle,
+        slug: cleanSlug,
+        nameBase: modalItemData.nameBase !== undefined ? modalItemData.nameBase : cardTitle,
+        nameHighlight: modalItemData.nameHighlight || '',
+        category: modalItemData.category || 'Bester VR',
+        tag: modalItemData.tag || modalItemData.category || 'Bester VR',
+        tagline: modalItemData.tagline || '',
+        desc: modalItemData.desc || '',
+        img: modalItemData.img || modalItemData.imageUrl || '',
+        imageUrl: modalItemData.img || modalItemData.imageUrl || '',
+        gallery: (Array.isArray(modalItemData.gallery)
+          ? modalItemData.gallery
+          : [
+              modalItemData.gallery1,
+              modalItemData.gallery2,
+              modalItemData.gallery3,
+              modalItemData.gallery4
+            ]
+        ).map(s => (typeof s === 'string' ? s.trim() : '')).filter(Boolean),
+        gallery1: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[0] : modalItemData.gallery1) || '',
+        gallery2: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[1] : modalItemData.gallery2) || '',
+        gallery3: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[2] : modalItemData.gallery3) || '',
+        gallery4: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[3] : modalItemData.gallery4) || '',
+        power: modalItemData.power || '',
+        voltage: modalItemData.voltage || '220V / 110V',
+        specsCategory: modalItemData.specsCategory || modalItemData.category || 'VR Game',
+        players: modalItemData.players || '1',
+        weight: modalItemData.weight || '',
+        maxLoad: modalItemData.maxLoad || '',
+        games: modalItemData.games || '',
+        helmet: modalItemData.helmet || 'DP',
+        material: modalItemData.material || 'Commercial Heavy-Duty Steel & High-Gloss Fiberglass',
+        dimensions: modalItemData.dimensions || '',
+        width: modalItemData.width || '',
+        depth: modalItemData.depth || '',
+        height: modalItemData.height || '',
+        videoUrl: modalItemData.videoUrl || '',
+        quoteUrl: modalItemData.quoteUrl || `https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`
+      };
+
+      if (modalMode === 'add') {
+        cardsList.unshift(cardItem);
+      } else if (modalMode === 'edit' && editingIndex !== null) {
+        cardsList[editingIndex] = cardItem;
+      }
+
+      if (cardItem.category && !categoriesList.includes(cardItem.category)) {
+        categoriesList.push(cardItem.category);
+      }
+
+      setAdminVrFilterCat("All");
+      const cleanedCards = cardsList.map(c => ({
+        ...c,
+        slug: (c.slug && c.slug !== 'new-vr-game') ? c.slug : (slugifyText(c.title || c.name) || 'vr-game')
+      }));
+      const updated = { categoriesList, cards: cleanedCards };
+      setFormData(prev => ({ ...prev, vrCategories: updated, vrRange: updated }));
+      closeModal();
+
+      const token = admin?.token || (() => {
+        try {
+          const stored = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+          return stored?.token || '';
+        } catch { return ''; }
+      })();
+
+      setLoadingSection(secKey);
+      try {
+        await mutateContentItem({
+          sectionKey: secKey,
+          action: modalMode === 'add' ? 'add' : 'update',
+          item: cardItem,
+          matchKey: 'slug',
+          matchValue: cleanSlug,
+          index: editingIndex
+        }, token);
+        await refreshContent();
+        setStatusMsg(`VR Product '${cardTitle}' saved directly to database!`);
+      } catch (err) {
+        console.error("Single VR card save error:", err);
+        try {
+          await persistSectionToDatabase(secKey, updated);
+          await refreshContent();
+          setStatusMsg(`VR Product '${cardTitle}' saved directly to database!`);
+        } catch (fbErr) {
+          setStatusMsg('Database Save Error: ' + (fbErr.response?.data?.message || fbErr.message));
+        }
       } finally {
         setLoadingSection('');
       }
@@ -16467,201 +16649,506 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-          {/* OUR VR GAMING MACHINE RANGE FORM */}
-          {activeSection === 'vrRange' && (() => {
-            const defaultVrRangeItems = [
-              { title: "VR4 Seated", subtitle: "Multiplayer Ride", category: "ACTIVE SIMULATION", name: "VR Wings Experience", img: "/src/assets/vr-block-1.webp", status: "ONLINE", latency: "4ms", icon: "plane" },
-              { title: "VR Wings", subtitle: "Immersive Flight", category: "FLIGHT SIMULATION", name: "VR Wings Flight Arena", img: "/src/assets/about-3.webp", status: "ONLINE", latency: "2ms", icon: "users" },
-              { title: "VR UFO 5 player", subtitle: "Group Pod Ride", category: "THEATER SIMULATION", name: "VR UFO 5 Player Motion Pod", img: "/src/assets/arcade-hall.webp", status: "ONLINE", latency: "5ms", icon: "radio" },
-              { title: "VR UFO 4 player", subtitle: "Group Battle", category: "ARCADE SIMULATION", name: "VR UFO 4 Player Battle Station", img: "/src/assets/about-4.webp", status: "ONLINE", latency: "3ms", icon: "gamepad" },
-              { title: "VR Thunder Dual 360", subtitle: "Combat Station", category: "ACTION SIMULATION", name: "VR Thunder Dual 360 Platform", img: "/src/assets/cta-arcade.webp", status: "ONLINE", latency: "4ms", icon: "zap" },
-              { title: "VR small platform", subtitle: "Compact Pod", category: "MOTION CINEMA", name: "VR Small Platform Simulator", img: "/src/assets/about-3.webp", status: "ONLINE", latency: "3ms", icon: "sparkles" },
-              { title: "VR skyside 2 player", subtitle: "Co-op Flight", category: "ACTIVE SIMULATION", name: "VR Skyside 2 Player Arena", img: "/src/assets/about-4.webp", status: "ONLINE", latency: "4ms", icon: "target" },
-              { title: "VR Ski Machine 1P", subtitle: "Active Sports", category: "SPORTS SIMULATION", name: "VR Ski Machine Single Player", img: "/src/assets/cta-arcade.webp", status: "ONLINE", latency: "2ms", icon: "activity" },
-              { title: "VR Single 360-exclusive", subtitle: "Solo Simulation", category: "360 MOTION EXCLUSIVE", name: "VR Single 360 Exclusive Pod", img: "/src/assets/VR.webp", status: "ONLINE", latency: "3ms", icon: "layers" },
-              { title: "VR Single 360 Fighter Jet Simulator", subtitle: "Fighter Jet Sim", category: "MILITARY SIMULATION", name: "VR Single 360 Fighter Jet Simulator", img: "/src/assets/about-3.webp", status: "ONLINE", latency: "5ms", icon: "plane" }
+          {/* VR GAME CATEGORIES & CARDS MANAGEMENT */}
+          {(activeSection === 'vrCategories' || activeSection === 'vrRange') && (() => {
+            const defaultVrCategories = allVrGames?.categoriesList || [
+              "All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"
             ];
 
-            const currentSec = formData.vrRange || {};
-            const vrItemsList = Array.isArray(currentSec.items)
-              ? currentSec.items
-              : defaultVrRangeItems;
+            const masterCards = allVrGames?.cards || [];
+
+            const vrSource = formData.vrCategories || formData.vrRange;
+            const deletedSlugs = new Set((formData?.vrCategories?.deletedSlugs || formData?.vrRange?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
+
+            let categoriesList = defaultVrCategories;
+            let cardsList = masterCards.filter(mc => {
+              const k1 = (mc.slug || '').toLowerCase().trim();
+              const k2 = (mc.name || mc.title || '').toLowerCase().trim();
+              return !deletedSlugs.has(k1) && !deletedSlugs.has(k2);
+            });
+
+            if (vrSource) {
+              let rawCards = null;
+              if (Array.isArray(vrSource.cards) && vrSource.cards.length > 0) {
+                rawCards = vrSource.cards;
+              } else if (Array.isArray(vrSource) && vrSource.length > 0) {
+                rawCards = vrSource;
+              }
+
+              if (rawCards) {
+                const cmsMap = new Map();
+                rawCards.forEach(c => {
+                  const k1 = (c.slug || '').toLowerCase().trim();
+                  const k2 = (c.name || c.title || '').toLowerCase().trim();
+                  if (k1 && !deletedSlugs.has(k1)) cmsMap.set(k1, c);
+                  if (k2 && !deletedSlugs.has(k2)) cmsMap.set(k2, c);
+                });
+                cardsList = cardsList.map(mc => {
+                  const k1 = (mc.slug || '').toLowerCase().trim();
+                  const k2 = (mc.name || mc.title || '').toLowerCase().trim();
+                  const override = cmsMap.get(k1) || cmsMap.get(k2);
+                  return override ? { ...mc, ...override } : mc;
+                });
+                rawCards.forEach(cc => {
+                  const k1 = (cc.slug || '').toLowerCase().trim();
+                  const k2 = (cc.name || cc.title || '').toLowerCase().trim();
+                  if (cc.isUserCreated && !deletedSlugs.has(k1) && !deletedSlugs.has(k2) && !cardsList.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
+                    cardsList.unshift(cc);
+                  }
+                });
+              }
+
+              if (Array.isArray(vrSource.categoriesList) && vrSource.categoriesList.length > 0) {
+                categoriesList = vrSource.categoriesList;
+              }
+            }
+
+            const activeFilterCat = adminVrFilterCat || "All";
+            const categoryFiltered = activeFilterCat === "All" || activeFilterCat === "All VR Games"
+              ? cardsList
+              : cardsList.filter(item => (item.category || item.tag || "").toLowerCase().includes(activeFilterCat.toLowerCase()));
+
+            const searchFiltered = adminVrSearch.trim()
+              ? categoryFiltered.filter(item => {
+                  const q = adminVrSearch.toLowerCase().trim();
+                  const name = (item.name || item.title || "").toLowerCase();
+                  const cat = (item.category || item.tag || "").toLowerCase();
+                  return name.includes(q) || cat.includes(q);
+                })
+              : categoryFiltered;
+
+            const adminItemsPerPage = 24;
+            const adminTotalPages = Math.max(1, Math.ceil(searchFiltered.length / adminItemsPerPage));
+            const validAdminPage = Math.min(adminVrPage, adminTotalPages);
+            const startAdminIdx = (validAdminPage - 1) * adminItemsPerPage;
+            const filteredCards = searchFiltered.slice(startAdminIdx, startAdminIdx + adminItemsPerPage);
+
+            const handleAddVrCategory = async () => {
+              let val = (newVrCategoryInput || '').trim();
+              if (!val) {
+                const promptVal = window.prompt('Enter new VR category brand name:');
+                if (!promptVal || !promptVal.trim()) return;
+                val = promptVal.trim();
+              }
+              if (categoriesList.some(c => c.toLowerCase() === val.toLowerCase())) {
+                alert(`Category "${val}" already exists.`);
+                return;
+              }
+              const newCats = [...categoriesList, val];
+              const updated = { categoriesList: newCats, cards: cardsList };
+              setFormData(prev => ({ ...prev, vrCategories: updated, vrRange: updated }));
+              await persistSectionToDatabase('vrCategories', updated);
+              setStatusMsg(`Category "${val}" added successfully!`);
+              setNewVrCategoryInput('');
+            };
 
             return (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Our VR Gaming Machine Range Section</h3>
+              <div className="winera-admin-card" style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>Section Heading Title</label>
-                  <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px 0' }}>Tip: Wrap words with <code style={{ background: '#e2e8f0', padding: '2px 5px', borderRadius: '4px' }}>*word*</code> to make them Cyan blue.</p>
-                  <input
-                    type="text"
-                    value={currentSec.title !== undefined ? currentSec.title : '*Our VR Gaming* Machine Range'}
-                    onChange={(e) => {
-                      const updatedSec = { ...currentSec, title: e.target.value };
-                      setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                    }}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
+                {/* Header & Add VR Product Button */}
+                <div className="winera-admin-flex-header" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
+                  <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>VR Game Machines (Categories & Cards Manager)</h3>
+                    <p style={{ fontSize: '12.5px', color: '#64748b', margin: '4px 0 0' }}>Manage brand category tabs, add new VR simulator cards, edit technical specifications & photos across all {cardsList.length} VR machines.</p>
+                  </div>
+                  <button
+                    onClick={() => openModal('add', null, null, 'vrCategories')}
+                    style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '14px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.3)' }}
+                  >
+                    <Plus style={{ width: '16px', height: '16px' }} /> Add New VR Product Card
+                  </button>
                 </div>
 
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Section Subtitle Paragraph</label>
-                  <textarea
-                    rows={2}
-                    value={currentSec.subtitle !== undefined ? currentSec.subtitle : "Every model in our VR gaming set is sourced from established global manufacturers and configured for sustained commercial operation."}
-                    onChange={(e) => {
-                      const updatedSec = { ...currentSec, subtitle: e.target.value };
-                      setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                    }}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
-                  />
-                </div>
+                {/* CATEGORY TABS, SEARCH & MANAGEMENT BAR */}
+                <div style={{ background: '#f8fafc', padding: '18px 22px', borderRadius: '20px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '14px' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
+                      <label style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Filter Category:</label>
+                      <select
+                        value={activeFilterCat}
+                        onChange={(e) => {
+                          setAdminVrFilterCat(e.target.value);
+                          setAdminVrPage(1);
+                        }}
+                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700', background: '#ffffff', color: '#0284c7', maxWidth: '100%' }}
+                      >
+                        <option value="All">All Categories ({cardsList.length})</option>
+                        {categoriesList.filter(c => c !== "All VR Games").map((cat, idx) => {
+                          const count = cardsList.filter(item => (item.category || "").toLowerCase().includes(cat.toLowerCase())).length;
+                          return (
+                            <option key={idx} value={cat}>{cat} ({count})</option>
+                          );
+                        })}
+                      </select>
 
-                {/* Range Items Manager */}
-                <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                    <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>VR Range Machine Models ({vrItemsList.length} items)</h4>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const updated = [...vrItemsList, { title: 'New VR Model', subtitle: 'Category', category: 'SIMULATION', name: 'VR Model Name', img: '', status: 'ONLINE', latency: '4ms', icon: 'gamepad' }];
-                        const updatedSec = { ...currentSec, items: updated };
-                        setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                      }}
-                      style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}
-                    >
-                      + Add VR Model
-                    </button>
+                      {/* Search in Admin */}
+                      <input
+                        type="text"
+                        placeholder="Search by VR game name..."
+                        value={adminVrSearch}
+                        onChange={(e) => {
+                          setAdminVrSearch(e.target.value);
+                          setAdminVrPage(1);
+                        }}
+                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', width: '220px', maxWidth: '100%' }}
+                      />
+                    </div>
+
+                    {/* Add New Category Brand */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>
+                      <input
+                        type="text"
+                        placeholder="Type new VR brand..."
+                        value={newVrCategoryInput}
+                        onChange={(e) => setNewVrCategoryInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddVrCategory();
+                          }
+                        }}
+                        style={{ padding: '8px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', width: '190px', maxWidth: '100%' }}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddVrCategory}
+                        style={{ background: '#0F172B', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '10px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        <Plus style={{ width: '15px', height: '15px' }} /> Add Brand
+                      </button>
+                    </div>
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                    {vrItemsList.map((item, idx) => (
-                      <div key={idx} style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>VR Model #{idx + 1}: {item.title}</span>
-                          <button
-                            type="button"
-                            onClick={async () => {
-                              const updated = vrItemsList.filter((_, i) => i !== idx);
-                              const updatedSec = { ...currentSec, items: updated };
-                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                              await persistSectionToDatabase('vrRange', updatedSec);
+                  {/* Category Pills List */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', paddingTop: '4px' }}>
+                    <span style={{ fontSize: '12px', fontWeight: '800', color: '#64748b', alignSelf: 'center', marginRight: '4px' }}>Category Tabs:</span>
+                    <span
+                      style={{
+                        background: (activeFilterCat === 'All' || activeFilterCat === 'All VR Games') ? '#38bdf8' : '#e0f2fe',
+                        color: (activeFilterCat === 'All' || activeFilterCat === 'All VR Games') ? '#ffffff' : '#0284c7',
+                        padding: '5px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '800',
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => {
+                        setAdminVrFilterCat('All');
+                        setAdminVrPage(1);
+                      }}
+                    >
+                      All ({cardsList.length})
+                    </span>
+                    {categoriesList.filter(c => c !== "All VR Games").map((cat, idx) => (
+                      <span key={idx} style={{
+                        background: activeFilterCat === cat ? '#38bdf8' : '#e0f2fe',
+                        color: activeFilterCat === cat ? '#ffffff' : '#0284c7',
+                        padding: '5px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '800',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        cursor: 'pointer'
+                      }}
+                        onClick={() => {
+                          setAdminVrFilterCat(cat);
+                          setAdminVrPage(1);
+                        }}
+                      >
+                        {cat}
+                        {categoriesList.length > 1 && (
+                          <span
+                            title="Remove Category"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const newCats = categoriesList.filter((_, i) => i !== idx);
+                              const updated = { categoriesList: newCats, cards: cardsList };
+                              setFormData(prev => ({ ...prev, vrCategories: updated, vrRange: updated }));
+                              persistSectionToDatabase('vrCategories', updated);
                             }}
-                            style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
+                            style={{ cursor: 'pointer', opacity: 0.7, fontWeight: '900', marginLeft: '2px' }}
                           >
-                            Delete Model
-                          </button>
-                        </div>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                          <input
-                            type="text"
-                            placeholder="Tab Title (e.g. VR4 Seated)"
-                            value={item.title || ''}
-                            onChange={(e) => {
-                              const updated = [...vrItemsList];
-                              updated[idx] = { ...updated[idx], title: e.target.value };
-                              const updatedSec = { ...currentSec, items: updated };
-                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                            }}
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                          />
-                          <input
-                            type="text"
-                            placeholder="Tab Subtitle (e.g. Multiplayer Ride)"
-                            value={item.subtitle || ''}
-                            onChange={(e) => {
-                              const updated = [...vrItemsList];
-                              updated[idx] = { ...updated[idx], subtitle: e.target.value };
-                              const updatedSec = { ...currentSec, items: updated };
-                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                            }}
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                          />
-                        </div>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px' }}>
-                          <input
-                            type="text"
-                            placeholder="Category Badge (e.g. ACTIVE SIMULATION)"
-                            value={item.category || ''}
-                            onChange={(e) => {
-                              const updated = [...vrItemsList];
-                              updated[idx] = { ...updated[idx], category: e.target.value };
-                              const updatedSec = { ...currentSec, items: updated };
-                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                            }}
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                          />
-                          <input
-                            type="text"
-                            placeholder="Full Machine Name"
-                            value={item.name || ''}
-                            onChange={(e) => {
-                              const updated = [...vrItemsList];
-                              updated[idx] = { ...updated[idx], name: e.target.value };
-                              const updatedSec = { ...currentSec, items: updated };
-                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                            }}
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                          />
-                          <input
-                            type="text"
-                            placeholder="Icon (plane, users, radio, gamepad, zap, sparkles, flame, target)"
-                            value={item.icon || 'gamepad'}
-                            onChange={(e) => {
-                              const updated = [...vrItemsList];
-                              updated[idx] = { ...updated[idx], icon: e.target.value };
-                              const updatedSec = { ...currentSec, items: updated };
-                              setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                            }}
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                          />
-                        </div>
-
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
-                            Machine Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1670 × 940 px (16:9 Widescreen)</span>
-                          </label>
-                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            <img src={getAdminValidImageUrl(item.img, idx === 0 ? vrBlock1 : (item.img || '/src/assets/about-3.webp'))} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={async (e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                  try {
-                                    const res = await uploadImageFile(file, admin.token);
-                                    if (res.url) {
-                                      const updated = [...vrItemsList];
-                                      updated[idx] = { ...updated[idx], img: res.url, imgUrl: res.url };
-                                      const updatedSec = { ...currentSec, items: updated };
-                                      setFormData(prev => ({ ...prev, vrRange: updatedSec }));
-                                      await persistSectionToDatabase('vrRange', updatedSec);
-                                    }
-                                  } catch (err) {
-                                    console.error(err);
-                                  }
-                                }
-                              }}
-                              style={{ fontSize: '12px' }}
-                            />
-                          </div>
-                        </div>
-                      </div>
+                            &times;
+                          </span>
+                        )}
+                      </span>
                     ))}
                   </div>
                 </div>
 
-                <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                  <button
-                    onClick={() => persistSectionToDatabase('vrRange', { ...currentSec, items: vrItemsList })}
-                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                  >
-                    Save Range Section
-                  </button>
+                {/* 3-COLUMN VISUAL CARDS GRID */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                      VR Game Cards Grid ({searchFiltered.length} Total Matching) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Card Image: 1:1 Isolated Product</span>
+                    </h4>
+                    <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '600' }}>
+                      Showing {searchFiltered.length === 0 ? 0 : startAdminIdx + 1}-{Math.min(startAdminIdx + adminItemsPerPage, searchFiltered.length)} of {searchFiltered.length}
+                    </span>
+                  </div>
+
+                  {filteredCards.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '40px', background: '#f8fafc', borderRadius: '16px', border: '1px dashed #cbd5e1' }}>
+                      <p style={{ margin: 0, fontWeight: '700', color: '#64748b' }}>No VR products found matching current filter or search criteria.</p>
+                    </div>
+                  ) : (
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                      gap: '18px'
+                    }}>
+                      {filteredCards.map((card, idx) => {
+                        const realIdx = cardsList.findIndex(c => (c.slug || c.name || c.title) === (card.slug || card.name || card.title));
+                        const resolvedImg = getAdminValidImageUrl(
+                          card.img || card.imageUrl,
+                          '/assets/vr-game-images/bester-vr/1.png'
+                        );
+
+                        return (
+                          <div
+                            key={card.slug || card.name || idx}
+                            style={{
+                              background: '#ffffff',
+                              border: '1.5px solid #e2e8f0',
+                              borderRadius: '16px',
+                              padding: '14px',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              gap: '12px',
+                              position: 'relative',
+                              boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+                              transition: 'transform 0.15s ease, box-shadow 0.15s ease'
+                            }}
+                          >
+                            {/* Card Image Thumbnail */}
+                            <div style={{
+                              width: '100%',
+                              height: '180px',
+                              borderRadius: '12px',
+                              overflow: 'hidden',
+                              background: '#f8fafc',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              border: '1px solid #f1f5f9',
+                              position: 'relative'
+                            }}>
+                              <img
+                                src={resolvedImg}
+                                alt={card.title || card.name}
+                                style={{ maxWidth: '90%', maxHeight: '90%', objectFit: 'contain' }}
+                                onError={(e) => { e.currentTarget.src = '/assets/vr-game-images/bester-vr/1.png'; }}
+                              />
+                              <span style={{
+                                position: 'absolute',
+                                top: '8px',
+                                right: '8px',
+                                background: 'rgba(15, 23, 42, 0.85)',
+                                color: '#38bdf8',
+                                padding: '3px 8px',
+                                borderRadius: '6px',
+                                fontSize: '10.5px',
+                                fontWeight: '800',
+                                letterSpacing: '0.04em'
+                              }}>
+                                {card.category || card.tag || 'VR Game'}
+                              </span>
+                            </div>
+
+                            {/* Card Info */}
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                              <h5 style={{
+                                margin: 0,
+                                fontSize: '14px',
+                                fontWeight: '800',
+                                color: '#0f172a',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap'
+                              }}>
+                                {card.name || card.title}
+                              </h5>
+                              {card.tagline && (
+                                <p style={{
+                                  margin: 0,
+                                  fontSize: '11.5px',
+                                  color: '#64748b',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  whiteSpace: 'nowrap'
+                                }}>
+                                  {card.tagline}
+                                </p>
+                              )}
+                              {/* Quick Specs Badges */}
+                              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '6px' }}>
+                                {card.players && (
+                                  <span style={{ background: '#f0fdf4', color: '#16a34a', border: '1px solid #bbf7d0', padding: '2px 6px', borderRadius: '5px', fontSize: '10px', fontWeight: '800' }}>
+                                    👥 {card.players}P
+                                  </span>
+                                )}
+                                {card.voltage && (
+                                  <span style={{ background: '#fef3c7', color: '#d97706', border: '1px solid #fde68a', padding: '2px 6px', borderRadius: '5px', fontSize: '10px', fontWeight: '800' }}>
+                                    ⚡ {card.voltage}
+                                  </span>
+                                )}
+                                {card.power && (
+                                  <span style={{ background: '#e0f2fe', color: '#0284c7', border: '1px solid #bae6fd', padding: '2px 6px', borderRadius: '5px', fontSize: '10px', fontWeight: '800' }}>
+                                    🔌 {card.power}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Actions (Edit / Delete) */}
+                            <div style={{ display: 'flex', gap: '8px', paddingTop: '6px', borderTop: '1px solid #f1f5f9' }}>
+                              <button
+                                type="button"
+                                onClick={() => openModal('edit', realIdx !== -1 ? realIdx : idx, card, 'vrCategories')}
+                                style={{
+                                  flex: 1,
+                                  background: '#0284c7',
+                                  color: '#ffffff',
+                                  border: 'none',
+                                  padding: '8px 12px',
+                                  borderRadius: '8px',
+                                  fontSize: '12px',
+                                  fontWeight: '800',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  gap: '5px'
+                                }}
+                              >
+                                <Edit3 style={{ width: '13px', height: '13px' }} /> Edit Details
+                              </button>
+                              <button
+                                type="button"
+                                onClick={async () => {
+                                  const cardName = card.title || card.name || 'this VR game';
+                                  if (!window.confirm(`Are you sure you want to permanently delete '${cardName}'?`)) return;
+
+                                  const cardSlug = (card.slug || '').toLowerCase().trim();
+                                  const cardTitleKey = (card.name || card.title || '').toLowerCase().trim();
+                                  const currentDeleted = Array.isArray(formData?.vrCategories?.deletedSlugs)
+                                    ? formData.vrCategories.deletedSlugs
+                                    : (Array.isArray(formData?.vrRange?.deletedSlugs) ? formData.vrRange.deletedSlugs : []);
+                                  const newDeleted = Array.from(new Set([...currentDeleted, cardSlug, cardTitleKey].filter(Boolean)));
+
+                                  const updatedCards = cardsList.filter((_, i) => i !== (realIdx !== -1 ? realIdx : idx));
+                                  const updated = {
+                                    categoriesList,
+                                    cards: updatedCards,
+                                    deletedSlugs: newDeleted
+                                  };
+
+                                  setFormData(prev => ({ ...prev, vrCategories: updated, vrRange: updated }));
+                                  setLoadingSection('vrCategories');
+                                  try {
+                                    await persistSectionToDatabase('vrCategories', updated);
+                                    await refreshContent();
+                                    setStatusMsg(`VR Product '${cardName}' deleted successfully!`);
+                                  } catch (delErr) {
+                                    setStatusMsg('Delete Error: ' + (delErr.response?.data?.message || delErr.message));
+                                  } finally {
+                                    setLoadingSection('');
+                                  }
+                                }}
+                                style={{
+                                  background: '#fee2e2',
+                                  color: '#ef4444',
+                                  border: 'none',
+                                  padding: '8px 10px',
+                                  borderRadius: '8px',
+                                  fontSize: '12px',
+                                  fontWeight: '800',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center'
+                                }}
+                                title="Delete Product"
+                              >
+                                <Trash2 style={{ width: '13px', height: '13px' }} />
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* PAGINATION CONTROLS */}
+                  {adminTotalPages > 1 && (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '16px', flexWrap: 'wrap' }}>
+                      <button
+                        type="button"
+                        disabled={validAdminPage <= 1}
+                        onClick={() => setAdminVrPage(p => Math.max(1, p - 1))}
+                        style={{
+                          background: validAdminPage <= 1 ? '#f1f5f9' : '#0F172B',
+                          color: validAdminPage <= 1 ? '#94a3b8' : '#ffffff',
+                          border: 'none',
+                          padding: '6px 14px',
+                          borderRadius: '8px',
+                          fontSize: '12px',
+                          fontWeight: '800',
+                          cursor: validAdminPage <= 1 ? 'not-allowed' : 'pointer'
+                        }}
+                      >
+                        Previous
+                      </button>
+
+                      {Array.from({ length: adminTotalPages }, (_, i) => i + 1)
+                        .filter(pageNum => pageNum === 1 || pageNum === adminTotalPages || Math.abs(pageNum - validAdminPage) <= 2)
+                        .map((pageNum, pIdx, arr) => {
+                          const prevPage = arr[pIdx - 1];
+                          const showEllipsis = prevPage && pageNum - prevPage > 1;
+                          return (
+                            <React.Fragment key={pageNum}>
+                              {showEllipsis && <span style={{ color: '#94a3b8', fontSize: '12px' }}>...</span>}
+                              <button
+                                type="button"
+                                onClick={() => setAdminVrPage(pageNum)}
+                                style={{
+                                  background: validAdminPage === pageNum ? '#38bdf8' : '#f1f5f9',
+                                  color: validAdminPage === pageNum ? '#ffffff' : '#0f172a',
+                                  border: 'none',
+                                  padding: '6px 12px',
+                                  borderRadius: '8px',
+                                  fontSize: '12px',
+                                  fontWeight: '800',
+                                  cursor: 'pointer'
+                                }}
+                              >
+                                {pageNum}
+                              </button>
+                            </React.Fragment>
+                          );
+                        })}
+
+                      <button
+                        type="button"
+                        disabled={validAdminPage >= adminTotalPages}
+                        onClick={() => setAdminVrPage(p => Math.min(adminTotalPages, p + 1))}
+                        style={{
+                          background: validAdminPage >= adminTotalPages ? '#f1f5f9' : '#0F172B',
+                          color: validAdminPage >= adminTotalPages ? '#94a3b8' : '#ffffff',
+                          border: 'none',
+                          padding: '6px 14px',
+                          borderRadius: '8px',
+                          fontSize: '12px',
+                          fontWeight: '800',
+                          cursor: validAdminPage >= adminTotalPages ? 'not-allowed' : 'pointer'
+                        }}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             );
@@ -24748,7 +25235,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             background: '#ffffff',
             borderRadius: '24px',
             width: '100%',
-            maxWidth: activeSection === 'arcadeCategories' ? '760px' : activeSection === 'projectItems' ? '720px' : '560px',
+            maxWidth: (activeSection === 'arcadeCategories' || activeSection === 'vrCategories' || activeSection === 'vrRange' || modalTargetSection === 'vrCategories' || modalTargetSection === 'vrRange') ? '760px' : activeSection === 'projectItems' ? '720px' : '560px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             border: '1px solid #e2e8f0',
             overflow: 'hidden',
@@ -25409,6 +25896,375 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   ))}
+                </>
+              )}
+
+              {/* VR GAME CATEGORIES & PRODUCT DETAIL FIELDS */}
+              {(activeSection === 'vrCategories' || activeSection === 'vrRange' || modalTargetSection === 'vrCategories' || modalTargetSection === 'vrRange') && (
+                <>
+                  <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', marginBottom: '8px' }}>
+                    <h4 style={{ margin: 0, color: '#0284c7', fontSize: '15px', fontWeight: '800' }}>1. Basic VR Product Info & Title</h4>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>VR Game Full Title / Name</label>
+                    <input
+                      type="text"
+                      value={modalItemData.title || modalItemData.name || ''}
+                      onChange={(e) => {
+                        const newTitle = e.target.value;
+                        setModalItemData(prev => {
+                          const slugify = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                          const oldSlug = prev.slug || '';
+                          const oldAutoSlug = slugify(prev.title || prev.name || '');
+                          const isAuto = !oldSlug || oldSlug === 'new-vr-game' || oldSlug === oldAutoSlug;
+                          return {
+                            ...prev,
+                            title: newTitle,
+                            name: newTitle,
+                            slug: isAuto ? slugify(newTitle) : prev.slug
+                          };
+                        });
+                      }}
+                      placeholder="e.g. VR UFO 5 Player Motion Pod"
+                      style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontWeight: '700', fontSize: '14px' }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Title Base Text (Black)</label>
+                      <input
+                        type="text"
+                        value={modalItemData.nameBase !== undefined ? modalItemData.nameBase : (modalItemData.title || '')}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, nameBase: e.target.value }))}
+                        placeholder="e.g. VR UFO "
+                        style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Title Highlight (Cyan)</label>
+                      <input
+                        type="text"
+                        value={modalItemData.nameHighlight || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, nameHighlight: e.target.value }))}
+                        placeholder="e.g. 5 Player"
+                        style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>VR Category Tab</label>
+                      <select
+                        value={modalItemData.category || 'Bester VR'}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, category: e.target.value, tag: e.target.value, specsCategory: e.target.value }))}
+                        style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '700', background: '#ffffff', color: '#0284c7' }}
+                      >
+                        {((Array.isArray(formData.vrCategories?.categoriesList) && formData.vrCategories.categoriesList.length > 0)
+                          ? formData.vrCategories.categoriesList
+                          : ((Array.isArray(formData.vrRange?.categoriesList) && formData.vrRange.categoriesList.length > 0)
+                            ? formData.vrRange.categoriesList
+                            : (allVrGames?.categoriesList || ["All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"]))
+                        ).map((catName, cIdx) => (
+                          <option key={cIdx} value={catName}>{catName}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Badge Tag</label>
+                      <input
+                        type="text"
+                        value={modalItemData.tag || modalItemData.category || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, tag: e.target.value }))}
+                        placeholder="e.g. Bester VR"
+                        style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Product URL Slug</label>
+                      <input
+                        type="text"
+                        value={modalItemData.slug || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, slug: e.target.value }))}
+                        placeholder="e.g. vr-ufo-5-player"
+                        style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px', fontFamily: 'monospace' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Short Tagline / Subtitle</label>
+                    <input
+                      type="text"
+                      value={modalItemData.tagline || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, tagline: e.target.value }))}
+                      placeholder="e.g. 5-Player High-Capacity 360 Degree Motion VR Flight Simulator"
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Product Description / Overview</label>
+                    <textarea
+                      rows={3}
+                      value={modalItemData.desc || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, desc: e.target.value }))}
+                      placeholder="Commercial description explaining simulator dynamics, motion freedom, guest excitement..."
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                    />
+                  </div>
+
+                  <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', margin: '14px 0 8px 0' }}>
+                    <h4 style={{ margin: 0, color: '#0284c7', fontSize: '15px', fontWeight: '800' }}>2. Technical Specifications</h4>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Power</label>
+                      <input
+                        type="text"
+                        value={modalItemData.power || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, power: e.target.value }))}
+                        placeholder="e.g. 1.8 KW"
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Voltage</label>
+                      <input
+                        type="text"
+                        value={modalItemData.voltage || '220V'}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, voltage: e.target.value }))}
+                        placeholder="e.g. 220V"
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Players Capacity</label>
+                      <input
+                        type="text"
+                        value={modalItemData.players || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, players: e.target.value }))}
+                        placeholder="e.g. 1 / 2 / 5"
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Weight</label>
+                      <input
+                        type="text"
+                        value={modalItemData.weight || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, weight: e.target.value }))}
+                        placeholder="e.g. 350 KG"
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Max Load</label>
+                      <input
+                        type="text"
+                        value={modalItemData.maxLoad || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, maxLoad: e.target.value }))}
+                        placeholder="e.g. 200 KG"
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Games Library</label>
+                      <input
+                        type="text"
+                        value={modalItemData.games || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, games: e.target.value }))}
+                        placeholder="e.g. 50+ Games"
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>VR Helmet / Headset</label>
+                      <input
+                        type="text"
+                        value={modalItemData.helmet || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, helmet: e.target.value }))}
+                        placeholder="e.g. DP / Pico"
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Dimensions (L × W × H)</label>
+                      <input
+                        type="text"
+                        value={modalItemData.dimensions || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, dimensions: e.target.value }))}
+                        placeholder="e.g. 2100 x 1400 x 1950 mm"
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', margin: '14px 0 8px 0' }}>
+                    <h4 style={{ margin: 0, color: '#0284c7', fontSize: '15px', fontWeight: '800' }}>3. Product Image & Gallery</h4>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
+                      Main Showcase Image <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📐 Clean Isolated Image</span>
+                    </label>
+                    {(() => {
+                      const resolvedMainImg = getAdminValidImageUrl(
+                        modalItemData.img || modalItemData.imageUrl,
+                        '/assets/vr-game-images/bester-vr/1.png'
+                      );
+                      return (
+                        <div style={{ width: '100%', height: '160px', borderRadius: '10px', overflow: 'hidden', border: '2px solid #38bdf8', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
+                          <img
+                            src={resolvedMainImg}
+                            alt="VR Product Preview"
+                            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                          />
+                        </div>
+                      );
+                    })()}
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <label style={{ background: '#0284c7', color: '#fff', padding: '9px 14px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                        <Upload style={{ width: '13px', height: '13px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleModalFileUpload(e, 'img')}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                      <input
+                        type="text"
+                        value={typeof modalItemData.img === 'string' ? modalItemData.img : ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, img: e.target.value, imageUrl: e.target.value }))}
+                        placeholder="Paste image URL here..."
+                        style={{ flex: 1, padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px', minWidth: 0 }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Dynamic Gallery Thumbnails */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                        Additional Angle Photos <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '600' }}>(Optional — gallery thumbnails)</span>
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setModalItemData(prev => {
+                            const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
+                            return { ...prev, gallery: [...list, ''] };
+                          });
+                        }}
+                        style={{ background: '#e0f2fe', color: '#0284c7', border: '1px solid #bae6fd', padding: '4px 10px', borderRadius: '6px', fontSize: '11.5px', fontWeight: '700', cursor: 'pointer' }}
+                      >
+                        + Add Photo
+                      </button>
+                    </div>
+
+                    {(Array.isArray(modalItemData.gallery) ? modalItemData.gallery : []).map((thumb, thumbIdx) => {
+                      const thumbStr = typeof thumb === 'string' ? thumb : '';
+                      return (
+                        <div key={thumbIdx} style={{ background: '#f8fafc', padding: '8px 12px', borderRadius: '10px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#475569' }}>Photo #{thumbIdx + 1}</span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setModalItemData(prev => {
+                                  const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
+                                  list.splice(thumbIdx, 1);
+                                  return { ...prev, gallery: list };
+                                });
+                              }}
+                              style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}
+                            >
+                              ✕ Remove
+                            </button>
+                          </div>
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <label style={{ background: '#0284c7', color: '#fff', padding: '7px 11px', borderRadius: '8px', fontWeight: '800', fontSize: '11px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                              <Upload style={{ width: '11px', height: '11px' }} /> Upload
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleModalFileUpload(e, 'gallery', thumbIdx)}
+                                style={{ display: 'none' }}
+                              />
+                            </label>
+                            <input
+                              type="text"
+                              value={thumbStr}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setModalItemData(prev => {
+                                  const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
+                                  list[thumbIdx] = val;
+                                  return { ...prev, gallery: list };
+                                });
+                              }}
+                              placeholder="Paste image URL..."
+                              style={{ flex: 1, padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px', minWidth: 0 }}
+                            />
+                            {thumbStr && (
+                              <div style={{ width: '44px', height: '36px', borderRadius: '6px', overflow: 'hidden', border: '1.5px solid #38bdf8', flexShrink: 0, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <img
+                                  src={getAdminValidImageUrl(thumbStr)}
+                                  alt=""
+                                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', margin: '14px 0 8px 0' }}>
+                    <h4 style={{ margin: 0, color: '#0284c7', fontSize: '15px', fontWeight: '800' }}>4. Video & Interactive Quotation</h4>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Watch Video URL (YouTube)</label>
+                      <input
+                        type="text"
+                        value={modalItemData.videoUrl || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, videoUrl: e.target.value }))}
+                        placeholder="https://youtube.com/watch?v=..."
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Base WhatsApp Link</label>
+                      <input
+                        type="text"
+                        value={(modalItemData.quoteUrl && modalItemData.quoteUrl.split('?')[0]) || 'https://wa.me/919428989488'}
+                        onChange={(e) => {
+                          const newBase = e.target.value;
+                          setModalItemData(prev => {
+                            const msg = prev.name ? `Hello Winera International! I want to get a quote for ${prev.name}. Please share price and details.` : '';
+                            const updatedUrl = msg ? `${newBase.split('?')[0]}?text=${encodeURIComponent(msg)}` : newBase;
+                            return { ...prev, quoteUrl: updatedUrl };
+                          });
+                        }}
+                        placeholder="https://wa.me/919428989488"
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
                 </>
               )}
 

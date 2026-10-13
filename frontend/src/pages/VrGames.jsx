@@ -466,7 +466,7 @@ export default function VrGames({ siteData }) {
                 overflowY: 'auto',
                 padding: '6px'
               }}>
-                {(allVrGames?.categoriesList || [
+                {(siteData?.vrCategories?.categoriesList || siteData?.vrRange?.categoriesList || allVrGames?.categoriesList || [
                   "All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"
                 ]).map((cat, cIdx) => {
                   const isSelected = (activeCategory || "All VR Games") === cat;
@@ -526,7 +526,7 @@ export default function VrGames({ siteData }) {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {(() => {
-                  const availableCats = siteData?.vrCategoriesData?.categoriesList || allVrGames?.categoriesList || [
+                  const availableCats = siteData?.vrCategories?.categoriesList || siteData?.vrRange?.categoriesList || siteData?.vrCategoriesData?.categoriesList || allVrGames?.categoriesList || [
                     "All VR Games",
                     "Bester VR",
                     "Funin VR",
@@ -620,9 +620,36 @@ export default function VrGames({ siteData }) {
             {/* RIGHT DISPLAY AREA: PRODUCT SEARCH BAR + CARDS GRID + PAGINATION */}
             <div className="winera-products-display-area" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               {(() => {
-                const masterCards = (Array.isArray(siteData?.vrCategoriesData?.cards) && siteData.vrCategoriesData.cards.length > 0)
-                  ? siteData.vrCategoriesData.cards
-                  : (Array.isArray(allVrGames?.cards) ? allVrGames.cards : []);
+                const vrSource = siteData?.vrCategories || siteData?.vrRange || siteData?.vrCategoriesData;
+                const deletedSlugs = new Set((vrSource?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
+                const baseCards = Array.isArray(allVrGames?.cards) ? allVrGames.cards : [];
+                let masterCards = baseCards.filter(mc => {
+                  const k1 = (mc.slug || '').toLowerCase().trim();
+                  const k2 = (mc.name || mc.title || '').toLowerCase().trim();
+                  return !deletedSlugs.has(k1) && !deletedSlugs.has(k2);
+                });
+
+                if (Array.isArray(vrSource?.cards) && vrSource.cards.length > 0) {
+                  const cmsMap = new Map();
+                  vrSource.cards.forEach(c => {
+                    const k1 = (c.slug || '').toLowerCase().trim();
+                    const k2 = (c.name || c.title || '').toLowerCase().trim();
+                    if (k1 && !deletedSlugs.has(k1)) cmsMap.set(k1, c);
+                    else if (k2 && !deletedSlugs.has(k2)) cmsMap.set(k2, c);
+                  });
+                  masterCards = masterCards.map(mc => {
+                    const k1 = (mc.slug || '').toLowerCase().trim();
+                    const k2 = (mc.name || mc.title || '').toLowerCase().trim();
+                    return cmsMap.has(k1) ? { ...mc, ...cmsMap.get(k1) } : cmsMap.has(k2) ? { ...mc, ...cmsMap.get(k2) } : mc;
+                  });
+                  vrSource.cards.forEach(cc => {
+                    const k1 = (cc.slug || '').toLowerCase().trim();
+                    const k2 = (cc.name || cc.title || '').toLowerCase().trim();
+                    if (cc.isUserCreated && !deletedSlugs.has(k1) && !deletedSlugs.has(k2) && !masterCards.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
+                      masterCards.unshift(cc);
+                    }
+                  });
+                }
 
                 // Filter cards by selected activeCategory
                 const isAllCategory = !activeCategory || activeCategory === "All VR Games" || activeCategory === "All";

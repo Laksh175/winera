@@ -80,9 +80,15 @@ export default function TestimonialsSection({
   accentMarginBottom = '8px',
   accentAlign = 'center'
 }) {
-  const actualTestimonials = (Array.isArray(siteData?.testimonials) && siteData.testimonials.length > 0)
-    ? siteData.testimonials
-    : testimonials;
+  const actualTestimonials = (() => {
+    if (Array.isArray(siteData?.testimonials) && siteData.testimonials.length > 0) return siteData.testimonials;
+    if (Array.isArray(testimonials) && testimonials.length > 0) return testimonials;
+    try {
+      const cached = JSON.parse(localStorage.getItem('winera_cached_testimonials') || '[]');
+      if (Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (e) {}
+    return defaultTestimonials;
+  })();
   const list = Array.isArray(actualTestimonials) && actualTestimonials.length > 0 ? actualTestimonials : defaultTestimonials;
   const actualTitle = siteData?.testimonialsHeader?.title || title;
   const actualSubtitle = siteData?.testimonialsHeader?.subtitle || subtitle;

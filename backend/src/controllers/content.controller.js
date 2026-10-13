@@ -1043,6 +1043,16 @@ export const defaultSiteData = {
     pageTitle: "Bumper Car Manufacturer in India | Electric & Battery Cars | Winera International",
     metaDescription: "As a leading Bumper Car Manufacturer in India, Winera International Pvt Ltd crafts exhilarating, safe, and durable bumper cars that are a favorite at amusement parks."
   },
+  vrCategories: {
+    categoriesList: [
+      "All VR Games",
+      "Bester VR",
+      "Funin VR",
+      "Movie Power",
+      "Oculeap VR"
+    ],
+    cards: []
+  },
   vrRange: {
     title: "*Our VR Gaming* Machine Range",
     subtitle: "Every model in our VR gaming set is sourced from established global manufacturers and configured for sustained commercial operation.",
@@ -2282,7 +2292,7 @@ export const mutateContentItem = async (req, res) => {
     let contentDoc = await Content.findOne({ sectionKey });
     let existingData = contentDoc ? contentDoc.data : null;
 
-    if (sectionKey === 'arcadeCategories') {
+    if (sectionKey === 'arcadeCategories' || sectionKey === 'vrCategories' || sectionKey === 'vrRange') {
       let catData = existingData || { categoriesList: [], cards: [] };
       if (!Array.isArray(catData.cards)) catData.cards = [];
       if (!Array.isArray(catData.categoriesList)) catData.categoriesList = [];
@@ -2333,7 +2343,7 @@ export const mutateContentItem = async (req, res) => {
 
       return res.json({
         success: true,
-        message: `Arcade item ${action}ed successfully`,
+        message: `${sectionKey} item ${action}ed successfully`,
         data: catData
       });
     }
