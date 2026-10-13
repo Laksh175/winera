@@ -335,12 +335,9 @@ export default function Project({ siteData }) {
     ? projectList
     : projectList.filter(p => (p.category || "").toLowerCase().includes(activeCategory.toLowerCase()));
 
-  // Responsive initial load limit: 3 on mobile (<768px), 6 on desktop
+  // Show the first 15 projects immediately on every screen size.
   const getInitialLimit = () => {
-    if (typeof window !== 'undefined' && window.innerWidth < 768) {
-      return 3;
-    }
-    return 6;
+    return 15;
   };
 
   const [visibleCount, setVisibleCount] = useState(getInitialLimit);
