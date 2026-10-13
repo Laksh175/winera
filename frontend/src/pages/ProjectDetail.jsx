@@ -32,6 +32,41 @@ const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
+  if (url.includes('FifthAlley') || url.includes('fifthalley')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('information')) {
+      return '/assets/FifthAlley-Sport-Bowling/basic-information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/FifthAlley-Sport-Bowling/what-the-client-wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/FifthAlley-Sport-Bowling/what-solution-we-provide.jpg';
+    }
+    const galMatch = url.match(/gallery[-_\s]*(\d)\.(jpg|webp)/i);
+    if (galMatch) {
+      return `/assets/FifthAlley-Sport-Bowling/gallery-${galMatch[1]}.${galMatch[2].toLowerCase()}`;
+    }
+    return '/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg';
+  }
+  if (url.includes('Hulaboo') || url.includes('hulaboo')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('information')) {
+      return '/assets/Hulaboo ( Surat )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Hulaboo ( Surat )/What the Client Wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Hulaboo ( Surat )/What Solution We Provide.webp';
+    }
+    const galMatch = url.match(/gallery[-_\s]*(\d)\.(jpg|webp)/i);
+    if (galMatch) {
+      const ext = galMatch[1] === '2' ? 'webp' : 'jpg';
+      return `/assets/Hulaboo ( Surat )/Gallery ${galMatch[1]}.${ext}`;
+    }
+    return '/assets/Hulaboo ( Surat )/1st Image.jpg';
+  }
   if (url.startsWith('/assets/') || url.startsWith('assets/')) {
     return url;
   }
@@ -90,38 +125,48 @@ export default function ProjectDetail({ siteData }) {
       clientWanted2: "They didn't want a supplier who only supplied the equipment. They wanted one partner to handle everything, plan the space, install the lanes, and hand over a venue that was ready for opening day. In short, they needed one team they could trust from start to finish.",
       solution1: "We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue. Across the 3,000 sq. ft. space in Katargam, we planned the layout so the professional lanes had enough room around them for people to walk, sit, and relax.",
       solution2: "The result is a venue that is fun to play in and comfortable to spend time in — just like a good family entertainment center should feel.",
-      mainImg: "/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg",
-      basicInfoBg: "/assets/FifthAlley Sport Bowling/Basic Information.jpg",
-      clientImg: "/assets/FifthAlley Sport Bowling/What the Client Wanted.jpg",
-      solutionImg: "/assets/FifthAlley Sport Bowling/What Solution We Provide.jpg",
+      mainImg: "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg",
+      bannerImg: "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg",
+      basicInfoBg: "/assets/FifthAlley-Sport-Bowling/basic-information.jpg",
+      clientImg: "/assets/FifthAlley-Sport-Bowling/what-the-client-wanted.jpg",
+      solutionImg: "/assets/FifthAlley-Sport-Bowling/what-solution-we-provide.jpg",
       galleryImages: [
-        "/assets/FifthAlley Sport Bowling/Gallery 1.jpg",
-        "/assets/FifthAlley Sport Bowling/Gallery 2.webp",
-        "/assets/FifthAlley Sport Bowling/Gallery 3.jpg",
-        "/assets/FifthAlley Sport Bowling/Gallery 4.jpg",
-        "/assets/FifthAlley Sport Bowling/Gallery 5.webp",
-        "/assets/FifthAlley Sport Bowling/Gallery 6.webp"
+        "/assets/FifthAlley-Sport-Bowling/gallery-1.jpg",
+        "/assets/FifthAlley-Sport-Bowling/gallery-2.webp",
+        "/assets/FifthAlley-Sport-Bowling/gallery-3.jpg",
+        "/assets/FifthAlley-Sport-Bowling/gallery-4.jpg",
+        "/assets/FifthAlley-Sport-Bowling/gallery-5.webp",
+        "/assets/FifthAlley-Sport-Bowling/gallery-6.webp"
       ]
     },
     'hulaboo': {
       name: "Hulaboo Game Zone",
-      titleLine1: "Hulaboo: How We Turned",
-      titleLine2: "An Empty Space Into ",
-      titleLine2Black: "Surat's",
-      titleLine3: "Buzziest Game Zone Destination",
-      description: "We turned a large empty space in Surat into one of the city's biggest indoor game zones — packed with games for every age, all under one roof.",
+      titleLine1: "Hulaboo: How We Turned an Empty",
+      titleLine2: "Space Into Surat's ",
+      titleLine2Black: "Buzziest Game Zone",
+      titleLine3: "for Families",
+      description: "From a vacant commercial floor to a high-energy family entertainment center featuring redemption arcades, VR simulators, and kiddy rides.",
       metaTitle: "Hulaboo Game Zone Setup in Surat | Winera International",
-      metaDescription: "Discover how Winera International built Hulaboo, a 27,000 sq. ft. indoor game zone setup in Surat with multi-age attractions and turnkey execution.",
+      metaDescription: "Discover Hulaboo Game Zone in Surat built by Winera International across 7,000 sq. ft. Complete turnkey arcade and FEC design.",
       type: "Game Zone Setup",
       location: "Surat, Gujarat",
-      area: "27,000 sq. ft.",
-      clientWanted1: "The client had a large space in Surat and a clear idea in mind. They didn't just want a few games, they wanted a place that people would remember. Somewhere a small kid, a group of friends, and a whole family could all come and have fun.",
-      clientWanted2: "Most importantly, they wanted the whole process to be easy. Instead of dealing with many different suppliers, they wanted just one team to manage everything from planning and design to installation and hand over a game zone that was completely ready to open.",
-      solution1: "At Winera International, we handled the complete game zone setup from start to finish — planning the layout, installing every attraction, and getting the venue ready to open.",
-      solution2: "A 27,000 sq. ft. space gives you plenty of room, but the real work is in the planning. You can't just line up machines; the layout has to move people smoothly from one experience to the next. So we mapped out the space around how visitors actually move and spend their time. The high-energy attractions were placed where the noise and action wouldn't clash, while the quieter games and kids' zones were set up in calmer, safer areas. We also planned proper room for walkways, seating, and open space so no part of the venue ever felt tight or crowded. The result is one smooth experience where families, friends, and serious gamers can all visit and each find their own kind of fun.",
-      mainImg: projHulaboo,
-      clientImg: projNeon1,
-      solutionImg: projSoft1
+      area: "7,000 sq. ft.",
+      clientWanted1: "The client wanted to create an unforgettable family game zone in Surat that attracts repeat visits from youngsters and families. They needed a high-earning attraction mix with strong commercial reliability.",
+      clientWanted2: "They trusted Winera International as their single turnkey developer to handle architectural layout planning, equipment sourcing, installation, and staff operation training.",
+      solution1: "We zoned the 7,000 sq. ft. area into high-intensity arcade racing, VR motion pods, interactive claw machines, and a dedicated redemption counter that drives player excitement.",
+      solution2: "Clear navigational aisles and vibrant LED aesthetic treatments created an unforgettable guest experience, resulting in high daily footfall from day one.",
+      mainImg: "/assets/Hulaboo ( Surat )/1st Image.jpg",
+      basicInfoBg: "/assets/Hulaboo ( Surat )/Basic Information.jpg",
+      clientImg: "/assets/Hulaboo ( Surat )/What the Client Wanted.jpg",
+      solutionImg: "/assets/Hulaboo ( Surat )/What Solution We Provide.webp",
+      galleryImages: [
+        "/assets/Hulaboo ( Surat )/Gallery 1.jpg",
+        "/assets/Hulaboo ( Surat )/Gallery 2.webp",
+        "/assets/Hulaboo ( Surat )/Gallery 3.jpg",
+        "/assets/Hulaboo ( Surat )/Gallery 4.jpg",
+        "/assets/Hulaboo ( Surat )/Gallery 5.jpg",
+        "/assets/Hulaboo ( Surat )/Gallery 6.jpg"
+      ]
     },
     'playzonia': {
       name: "Playzonia Kids Play Area",
@@ -280,8 +325,10 @@ export default function ProjectDetail({ siteData }) {
     solution1: "Winera International executed the end-to-end setup — organizing high-energy attractions, VR simulators, and comfortable visitor areas for maximum footfall and smooth flow.",
     solution2: "The resulting venue delivers top-tier entertainment and strong revenue performance from day one.",
     mainImg: projHulaboo,
+    bannerImg: projectBanner,
     clientImg: projectImage3,
-    solutionImg: projectImage4
+    solutionImg: projectImage4,
+    basicInfoBg: projectImage2Bg
   };
 
   const currentProject = resolvedItem ? {
@@ -301,21 +348,24 @@ export default function ProjectDetail({ siteData }) {
     solution1: resolvedItem.solution1 || defaultProject.solution1,
     solution2: resolvedItem.solution2 || defaultProject.solution2,
     mainImg: getValidImageUrl(resolvedItem.img || resolvedItem.imageUrl, defaultProject.mainImg),
+    bannerImg: getValidImageUrl(resolvedItem.bannerImg || resolvedItem.coverImg, defaultProject.bannerImg || defaultProject.mainImg),
     clientImg: getValidImageUrl(resolvedItem.clientImg || resolvedItem.clientImageUrl, defaultProject.clientImg),
     solutionImg: getValidImageUrl(resolvedItem.solutionImg || resolvedItem.solutionImageUrl, defaultProject.solutionImg),
     galleryImages: (Array.isArray(resolvedItem.galleryImages) && resolvedItem.galleryImages.length > 0)
-      ? resolvedItem.galleryImages
-      : [
-        resolvedItem.galleryImage1,
-        resolvedItem.galleryImage2,
-        resolvedItem.galleryImage3,
-        resolvedItem.galleryImage4,
-        resolvedItem.galleryImage5,
-        resolvedItem.galleryImage6
-      ].filter(Boolean),
+      ? resolvedItem.galleryImages.map(img => getValidImageUrl(img, img))
+      : (Array.isArray(defaultProject.galleryImages) && defaultProject.galleryImages.length > 0)
+        ? defaultProject.galleryImages
+        : [
+          resolvedItem.galleryImage1,
+          resolvedItem.galleryImage2,
+          resolvedItem.galleryImage3,
+          resolvedItem.galleryImage4,
+          resolvedItem.galleryImage5,
+          resolvedItem.galleryImage6
+        ].filter(Boolean),
     videoImg: resolvedItem.videoImg || resolvedItem.videoCoverUrl || defaultProject.videoImg,
     videoUrl: resolvedItem.videoUrl || resolvedItem.videoLink || defaultProject.videoUrl,
-    basicInfoBg: resolvedItem.basicInfoBg || resolvedItem.basicBg || '',
+    basicInfoBg: getValidImageUrl(resolvedItem.basicInfoBg || resolvedItem.basicBg, defaultProject.basicInfoBg || ''),
     buttonText: resolvedItem.buttonText,
     buttonLink: resolvedItem.buttonLink,
     waMessage: resolvedItem.waMessage
@@ -327,6 +377,8 @@ export default function ProjectDetail({ siteData }) {
   const galleryData = siteData?.projectGallery || {};
   const videoData = siteData?.projectVideo || {};
 
+  const isFifthAlley = targetSlug === 'fifthalley-sport-bowling' || cleanAlpha(currentProject?.name || '').includes('fifthalley');
+  const isHulaboo = targetSlug === 'hulaboo' || cleanAlpha(currentProject?.name || '').includes('hulaboo');
   const bannerImg = getValidImageUrl(heroData.bannerImg, projectBanner);
   const breadcrumbHome = heroData.breadcrumbHome || 'Home';
 
@@ -362,9 +414,13 @@ export default function ProjectDetail({ siteData }) {
   }
 
   const buttonLink = `${baseLink}?text=${encodeURIComponent(waMsg)}`;
-  const mainImage = currentProject.mainImg;
+  const mainImage = isHulaboo ? "/assets/Hulaboo ( Surat )/1st Image.jpg" : currentProject.mainImg;
 
-  const basicBg = getValidImageUrl(currentProject.basicInfoBg || basicData.bgImg, projectImage2Bg);
+  const basicBg = isFifthAlley
+    ? "/assets/FifthAlley-Sport-Bowling/basic-information.jpg"
+    : (isHulaboo
+        ? "/assets/Hulaboo ( Surat )/Basic Information.jpg"
+        : getValidImageUrl(currentProject.basicInfoBg || basicData.bgImg, projectImage2Bg));
   const basicRows = [
     { label: 'Project Name', val: currentProject.name },
     { label: 'Project Type', val: currentProject.type },
@@ -376,13 +432,13 @@ export default function ProjectDetail({ siteData }) {
   const clientTitleCyan = 'Client Wanted';
   const clientP1 = currentProject.clientWanted1;
   const clientP2 = currentProject.clientWanted2;
-  const clientImg = currentProject.clientImg;
+  const clientImg = isHulaboo ? "/assets/Hulaboo ( Surat )/What the Client Wanted.jpg" : currentProject.clientImg;
 
   const solutionTitleCyan = 'What Solution ';
   const solutionTitleSuffix = 'We Provide';
   const solutionP1 = currentProject.solution1;
   const solutionP2 = currentProject.solution2;
-  const solutionImg = currentProject.solutionImg;
+  const solutionImg = isHulaboo ? "/assets/Hulaboo ( Surat )/What Solution We Provide.webp" : currentProject.solutionImg;
 
   const galleryTitleCyan = 'Project ';
   const galleryTitleDark = 'Gallery';
@@ -396,9 +452,18 @@ export default function ProjectDetail({ siteData }) {
     projectBlock3
   ];
 
-  const cmsGalleryImages = Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0
-    ? currentProject.galleryImages
-    : (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : defaultGalleryList);
+  const cmsGalleryImages = isHulaboo
+    ? [
+        "/assets/Hulaboo ( Surat )/Gallery 1.jpg",
+        "/assets/Hulaboo ( Surat )/Gallery 2.webp",
+        "/assets/Hulaboo ( Surat )/Gallery 3.jpg",
+        "/assets/Hulaboo ( Surat )/Gallery 4.jpg",
+        "/assets/Hulaboo ( Surat )/Gallery 5.jpg",
+        "/assets/Hulaboo ( Surat )/Gallery 6.jpg"
+      ]
+    : ((Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0)
+        ? currentProject.galleryImages
+        : (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : defaultGalleryList));
 
   const galleryImages = cmsGalleryImages.map((imgUrl, idx) => {
     return getValidImageUrl(imgUrl, defaultGalleryList[idx % defaultGalleryList.length]);
@@ -574,7 +639,7 @@ export default function ProjectDetail({ siteData }) {
         <div className="winera-project-basic-card" style={{
           position: 'relative',
           width: '100%',
-          backgroundImage: `url(${basicBg})`,
+          backgroundImage: `url("${basicBg}")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           borderRadius: '50px',

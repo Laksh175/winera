@@ -1175,10 +1175,10 @@ export const defaultSiteData = {
     description: "How we designed and installed a professional-grade bowling alley across 3,000 sq. ft., transforming an empty space in Katargam into a destination entertainment venue in Surat.",
     buttonText: "Get A Quote",
     buttonLink: "https://wa.me/919428989488",
-    image: "/src/assets/project-image01.png"
+    image: "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg"
   },
   projectBasicInfo: {
-    bgImg: "/src/assets/project-image2-bg.png",
+    bgImg: "/assets/FifthAlley-Sport-Bowling/basic-information.jpg",
     yellowTitle: "Basic ",
     whiteTitle: "Information",
     rows: [
@@ -1193,26 +1193,26 @@ export const defaultSiteData = {
     titleCyan: "Client Wanted",
     paragraph1: "The client had an empty 3,000 sq. ft. space in Katargam and a clear goal: to open a professional bowling venue.",
     paragraph2: "They didn't want a supplier who only supplied the equipment. They wanted one partner to handle everything, plan the space, install the lanes, and hand over a venue that was ready for opening day. In short, they needed one team they could trust from start to finish.",
-    image: "/src/assets/project-image-3.png"
+    image: "/assets/FifthAlley-Sport-Bowling/what-the-client-wanted.jpg"
   },
   projectSolution: {
     titleCyan: "What Solution ",
     titleSuffix: "We Provide",
     paragraph1: "We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue. Across the 3,000 sq. ft. space in Katargam, we planned the layout so the professional lanes had enough room around them for people to walk, sit, and relax.",
     paragraph2: "The result is a venue that is fun to play in and comfortable to spend time in — just like a good family entertainment center should feel.",
-    image: "/src/assets/project-image-4.png"
+    image: "/assets/FifthAlley-Sport-Bowling/what-solution-we-provide.jpg"
   },
   projectGallery: {
     titleCyan: "Project ",
     titleDark: "Gallery",
     bgImg: "/src/assets/project-images-bg.png",
     images: [
-      "/src/assets/project-block1.png",
-      "/src/assets/project-block2.png",
-      "/src/assets/project-block3.png",
-      "/src/assets/project-block1.png",
-      "/src/assets/project-block2.png",
-      "/src/assets/project-block3.png"
+      "/assets/FifthAlley-Sport-Bowling/gallery-1.jpg",
+      "/assets/FifthAlley-Sport-Bowling/gallery-2.webp",
+      "/assets/FifthAlley-Sport-Bowling/gallery-3.jpg",
+      "/assets/FifthAlley-Sport-Bowling/gallery-4.jpg",
+      "/assets/FifthAlley-Sport-Bowling/gallery-5.webp",
+      "/assets/FifthAlley-Sport-Bowling/gallery-6.webp"
     ]
   },
   projectVideo: {
@@ -1994,8 +1994,8 @@ export const getContent = async (req, res) => {
       delete siteData.blogPosts;
     }
 
-    // Auto-ensure all 15 detailed case study projects from docx are present in MongoDB
-    if (!Array.isArray(siteData.projectItems) || siteData.projectItems.length !== 15 || siteData.projectItems.some(p => p.id === 'houseofpepe' || p.id === 'kidzania')) {
+    // Auto-ensure all 15 detailed case study projects from docx are present in MongoDB if empty
+    if (!Array.isArray(siteData.projectItems) || siteData.projectItems.length === 0) {
       await Content.findOneAndUpdate(
         { sectionKey: 'projectItems' },
         { sectionKey: 'projectItems', data: projectsData.slice(0, 15) },
@@ -2004,8 +2004,8 @@ export const getContent = async (req, res) => {
       siteData.projectItems = projectsData.slice(0, 15);
     }
 
-    // Auto-ensure showcase builtProjects are populated with real doc projects
-    if (!Array.isArray(siteData.builtProjects) || siteData.builtProjects.length < 4 || !siteData.builtProjects[0]?.img) {
+    // Auto-ensure showcase builtProjects are populated if empty
+    if (!Array.isArray(siteData.builtProjects) || siteData.builtProjects.length === 0) {
       const showcaseBuiltProjects = projectsData.slice(0, 8).map(p => ({
         title: p.name,
         name: p.name,

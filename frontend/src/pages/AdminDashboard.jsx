@@ -567,11 +567,11 @@ const defaultProjectBlock = {
   description: 'How we designed and installed a professional-grade bowling alley across 3,000 sq. ft., transforming an empty space in Katargam into a destination entertainment venue in Surat.',
   buttonText: 'Get A Quote',
   buttonLink: 'https://wa.me/919428989488',
-  image: '/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg'
+  image: '/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg'
 };
 
 const defaultProjectBasicInfo = {
-  bgImg: '/assets/FifthAlley Sport Bowling/Basic Information.jpg',
+  bgImg: '/assets/FifthAlley-Sport-Bowling/basic-information.jpg',
   yellowTitle: 'Basic ',
   whiteTitle: 'Information',
   rows: [
@@ -587,7 +587,7 @@ const defaultProjectClientWanted = {
   titleCyan: 'Client Wanted',
   paragraph1: 'The client had an empty 3,000 sq. ft. space in Katargam and a clear goal: to open a professional bowling venue.',
   paragraph2: "They didn't want a supplier who only supplied the equipment. They wanted one partner to handle everything, plan the space, install the lanes, and hand over a venue that was ready for opening day. In short, they needed one team they could trust from start to finish.",
-  image: '/assets/FifthAlley Sport Bowling/What the Client Wanted.jpg'
+  image: '/assets/FifthAlley-Sport-Bowling/what-the-client-wanted.jpg'
 };
 
 const defaultProjectSolution = {
@@ -595,7 +595,7 @@ const defaultProjectSolution = {
   titleSuffix: 'We Provide',
   paragraph1: 'We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue. Across the 3,000 sq. ft. space in Katargam, we planned the layout so the professional lanes had enough room around them for people to walk, sit, and relax.',
   paragraph2: 'The result is a venue that is fun to play in and comfortable to spend time in — just like a good family entertainment center should feel.',
-  image: '/assets/FifthAlley Sport Bowling/What Solution We Provide.jpg'
+  image: '/assets/FifthAlley-Sport-Bowling/what-solution-we-provide.jpg'
 };
 
 const defaultProjectGallery = {
@@ -603,12 +603,12 @@ const defaultProjectGallery = {
   titleDark: 'Gallery',
   bgImg: projectImagesBg,
   images: [
-    "/assets/FifthAlley Sport Bowling/Gallery 1.jpg",
-    "/assets/FifthAlley Sport Bowling/Gallery 2.webp",
-    "/assets/FifthAlley Sport Bowling/Gallery 3.jpg",
-    "/assets/FifthAlley Sport Bowling/Gallery 4.jpg",
-    "/assets/FifthAlley Sport Bowling/Gallery 5.webp",
-    "/assets/FifthAlley Sport Bowling/Gallery 6.webp"
+    "/assets/FifthAlley-Sport-Bowling/gallery-1.jpg",
+    "/assets/FifthAlley-Sport-Bowling/gallery-2.webp",
+    "/assets/FifthAlley-Sport-Bowling/gallery-3.jpg",
+    "/assets/FifthAlley-Sport-Bowling/gallery-4.jpg",
+    "/assets/FifthAlley-Sport-Bowling/gallery-5.webp",
+    "/assets/FifthAlley-Sport-Bowling/gallery-6.webp"
   ]
 };
 
@@ -1993,7 +1993,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           { name: "Partner 3", logoUrl: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=300&q=80" }
         ],
         builtProjects: [
-          { name: "Hulaboo", city: "Surat", imageUrl: "" },
+          { name: "Hulaboo", city: "Surat", imageUrl: "/assets/Hulaboo ( Surat )/1st Image.jpg" },
           { name: "Nenopanda", city: "Indore", imageUrl: "" },
           { name: "FizzyFox", city: "Nashik", imageUrl: "" },
           { name: "Playzonia", city: "Surat", imageUrl: "" }
@@ -2224,30 +2224,45 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           clientWanted2: "They didn't want a supplier who only supplied the equipment. They wanted one partner to handle everything, plan the space, install the lanes, and hand over a venue that was ready for opening day. In short, they needed one team they could trust from start to finish.",
           solution1: "We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue. Across the 3,000 sq. ft. space in Katargam, we planned the layout so the professional lanes had enough room around them for people to walk, sit, and relax.",
           solution2: "The result is a venue that is fun to play in and comfortable to spend time in — just like a good family entertainment center should feel.",
-          img: '/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg',
-          clientImg: '/assets/FifthAlley Sport Bowling/What the Client Wanted.jpg',
-          solutionImg: '/assets/FifthAlley Sport Bowling/What Solution We Provide.jpg',
-          basicInfoBg: '/assets/FifthAlley Sport Bowling/Basic Information.jpg'
+          img: '/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg',
+          clientImg: '/assets/FifthAlley-Sport-Bowling/what-the-client-wanted.jpg',
+          solutionImg: '/assets/FifthAlley-Sport-Bowling/what-solution-we-provide.jpg',
+          basicInfoBg: '/assets/FifthAlley-Sport-Bowling/basic-information.jpg'
         },
         'hulaboo': {
           name: "Hulaboo Game Zone",
-          titleLine1: "Hulaboo: How We Turned",
-          titleLine2: "An Empty Space Into ",
-          titleLine2Black: "Surat's",
-          titleLine3: "Buzziest Game Zone Destination",
-          description: "We turned a large empty space in Surat into one of the city's biggest indoor game zones — packed with games for every age, all under one roof.",
+          titleLine1: "Hulaboo: How We Turned an Empty",
+          titleLine2: "Space Into Surat's ",
+          titleLine2Black: "Buzziest Game Zone",
+          titleLine3: "for Families",
+          description: "From a vacant commercial floor to a high-energy family entertainment center featuring redemption arcades, VR simulators, and kiddy rides.",
           type: "Game Zone Setup",
           category: "Game Zones",
           city: "Surat",
           state: "Gujarat",
-          area: "27,000 sq. ft.",
-          clientWanted1: "The client had a large space in Surat and a clear idea in mind. They didn't just want a few games, they wanted a place that people would remember. Somewhere a small kid, a group of friends, and a whole family could all come and have fun.",
-          clientWanted2: "Most importantly, they wanted the whole process to be easy. Instead of dealing with many different suppliers, they wanted just one team to manage everything from planning and design to installation and hand over a game zone that was completely ready to open.",
-          solution1: "At Winera International, we handled the complete game zone setup from start to finish — planning the layout, installing every attraction, and getting the venue ready to open.",
-          solution2: "A 27,000 sq. ft. space gives you plenty of room, but the real work is in the planning. You can't just line up machines; the layout has to move people smoothly from one experience to the next. So we mapped out the space around how visitors actually move and spend their time. The high-energy attractions were placed where the noise and action wouldn't clash, while the quieter games and kids' zones were set up in calmer, safer areas. We also planned proper room for walkways, seating, and open space so no part of the venue ever felt tight or crowded. The result is one smooth experience where families, friends, and serious gamers can all visit and each find their own kind of fun.",
-          img: projHulaboo,
-          clientImg: projNeon1,
-          solutionImg: projSoft1
+          area: "7,000 sq. ft.",
+          clientWanted1: "The client wanted to create an unforgettable family game zone in Surat that attracts repeat visits from youngsters and families. They needed a high-earning attraction mix with strong commercial reliability.",
+          clientWanted2: "They trusted Winera International as their single turnkey developer to handle architectural layout planning, equipment sourcing, installation, and staff operation training.",
+          solution1: "We zoned the 7,000 sq. ft. area into high-intensity arcade racing, VR motion pods, interactive claw machines, and a dedicated redemption counter that drives player excitement.",
+          solution2: "Clear navigational aisles and vibrant LED aesthetic treatments created an unforgettable guest experience, resulting in high daily footfall from day one.",
+          img: "/assets/Hulaboo ( Surat )/1st Image.jpg",
+          basicInfoBg: "/assets/Hulaboo ( Surat )/Basic Information.jpg",
+          clientImg: "/assets/Hulaboo ( Surat )/What the Client Wanted.jpg",
+          solutionImg: "/assets/Hulaboo ( Surat )/What Solution We Provide.webp",
+          galleryImages: [
+            "/assets/Hulaboo ( Surat )/Gallery 1.jpg",
+            "/assets/Hulaboo ( Surat )/Gallery 2.webp",
+            "/assets/Hulaboo ( Surat )/Gallery 3.jpg",
+            "/assets/Hulaboo ( Surat )/Gallery 4.jpg",
+            "/assets/Hulaboo ( Surat )/Gallery 5.jpg",
+            "/assets/Hulaboo ( Surat )/Gallery 6.jpg"
+          ],
+          galleryImage1: "/assets/Hulaboo ( Surat )/Gallery 1.jpg",
+          galleryImage2: "/assets/Hulaboo ( Surat )/Gallery 2.webp",
+          galleryImage3: "/assets/Hulaboo ( Surat )/Gallery 3.jpg",
+          galleryImage4: "/assets/Hulaboo ( Surat )/Gallery 4.jpg",
+          galleryImage5: "/assets/Hulaboo ( Surat )/Gallery 5.jpg",
+          galleryImage6: "/assets/Hulaboo ( Surat )/Gallery 6.jpg"
         },
         'playzonia': {
           name: "Playzonia Kids Play Area",
@@ -19236,7 +19251,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
             const rawList = Array.isArray(formData.projectItems) && formData.projectItems.length > 0 ? formData.projectItems : defaultProjectItemsList;
 
-            const fifthAlleyItem = { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: '/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg' };
+            const fifthAlleyItem = { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: '/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg' };
             const hasFA = rawList.some(p => p.slug === "fifthalley-sport-bowling" || (p.name || "").toLowerCase().includes("fifthalley"));
             const currentList = hasFA ? rawList : [fifthAlleyItem, ...rawList];
 

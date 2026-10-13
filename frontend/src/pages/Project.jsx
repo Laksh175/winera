@@ -19,9 +19,26 @@ const projectCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_
 import { ArrowRight, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
 
 const resolveProjectImg = (proj) => {
+  const slug = (proj?.slug || '').toLowerCase();
+  const name = (proj?.name || '').toLowerCase();
+  const category = (proj?.category || '').toLowerCase();
+
+  if (slug.includes('fifthalley') || name.includes('fifthalley')) {
+    return "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg";
+  }
+  if (slug.includes('hulaboo') || name.includes('hulaboo')) {
+    return "/assets/Hulaboo ( Surat )/1st Image.jpg";
+  }
+
   const url = proj?.img || proj?.imageUrl || proj?.imgUrl || '';
 
   if (url && typeof url === 'string' && url.trim() !== '' && !url.includes('/src/assets/')) {
+    if (url.includes('FifthAlley') || url.includes('fifthalley')) {
+      return "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg";
+    }
+    if (url.includes('Hulaboo') || url.includes('hulaboo')) {
+      return "/assets/Hulaboo ( Surat )/1st Image.jpg";
+    }
     if (url.startsWith('/assets/') || url.startsWith('assets/')) {
       return url;
     }
@@ -34,18 +51,12 @@ const resolveProjectImg = (proj) => {
         const uploadPath = url.substring(url.indexOf('/uploads/'));
         return `http://localhost:5001${uploadPath}`;
       }
-      // fallback to category-based image below
     } else if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
   }
 
-  const slug = (proj?.slug || '').toLowerCase();
-  const name = (proj?.name || '').toLowerCase();
-  const category = (proj?.category || '').toLowerCase();
-
-  if (slug.includes('fifthalley') || name.includes('fifthalley')) return "/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg";
-  if (slug.includes('hulaboo') || name.includes('hulaboo')) return projHulaboo;
+  if (slug.includes('hulaboo') || name.includes('hulaboo')) return "/assets/Hulaboo ( Surat )/1st Image.jpg";
   if (slug.includes('neon') || name.includes('neon')) return projNeon1;
   if (slug.includes('softplay') || slug.includes('playzonia') || name.includes('playzonia') || name.includes('soft play') || name.includes('softplay') || name.includes('hoppers') || name.includes('kidzonation') || name.includes('pepe')) return projSoft1;
   if (slug.includes('bowling') || name.includes('bowling') || name.includes('lanex') || name.includes('rock and bowl') || name.includes('funevers')) return projectImage01;
@@ -132,7 +143,7 @@ export default function Project({ siteData }) {
     area: "3,000 sq. ft.",
     type: "Bowling Alley Setup",
     slug: "fifthalley-sport-bowling",
-    img: "/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg"
+    img: "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg"
   };
 
   const normalizeSlug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -439,7 +450,7 @@ export default function Project({ siteData }) {
                     position: 'relative',
                     height: '360px',
                     boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                    background: `url(${resolveProjectImg(proj)}) center/cover no-repeat`,
+                    background: `url("${resolveProjectImg(proj)}") center/cover no-repeat`,
                     cursor: 'pointer',
                     backfaceVisibility: 'hidden',
                     WebkitFontSmoothing: 'subpixel-antialiased',

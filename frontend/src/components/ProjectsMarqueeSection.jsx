@@ -8,9 +8,9 @@ const projectImage01 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,
 const clientsBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345643/winera_uploads/eogrtug3ijxrwz7xbc1y.png";
 
 const defaultProjects = [
-  { name: "Hulaboo", title: "Hulaboo", city: "Surat", location: "Surat", slug: "hulaboo", img: projHulaboo },
+  { name: "Hulaboo", title: "Hulaboo", city: "Surat", location: "Surat", slug: "hulaboo", img: "/assets/Hulaboo ( Surat )/1st Image.jpg" },
   { name: "Playzonia", title: "Playzonia", city: "Surat", location: "Surat", slug: "playzonia", img: projSoft1 },
-  { name: "FifthAlley Sport Bowling", title: "FifthAlley Sport Bowling", city: "Surat", location: "Surat", slug: "fifthalley-sport-bowling", img: "/assets/FifthAlley Sport Bowling/FifthAlley Sport Bowling.jpg" },
+  { name: "FifthAlley Sport Bowling", title: "FifthAlley Sport Bowling", city: "Surat", location: "Surat", slug: "fifthalley-sport-bowling", img: "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg" },
   { name: "Nenopanda", title: "Nenopanda", city: "Indore", location: "Indore", slug: "neon-panda", img: projNeon1 },
   { name: "FizzyFox", title: "FizzyFox", city: "Nashik", location: "Nashik", slug: "fizzyfox", img: projSoft1 }
 ];
@@ -292,7 +292,10 @@ export default function ProjectsMarqueeSection({
                   const cardSlug = matchedCmsItem?.slug || proj.slug || (proj.name || proj.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                   const href = cardSlug ? `/project/${cardSlug}` : '/project';
 
-                  const imgSrc = proj.img || proj.imageUrl || proj.imgUrl || projHulaboo;
+                  const isHulabooCard = (proj.slug === 'hulaboo' || (proj.name && proj.name.toLowerCase().includes('hulaboo')) || (proj.title && proj.title.toLowerCase().includes('hulaboo')));
+                  const imgSrc = isHulabooCard
+                    ? "/assets/Hulaboo ( Surat )/1st Image.jpg"
+                    : (proj.img || proj.imageUrl || proj.imgUrl || projHulaboo);
                   const finalImgSrc = (typeof imgSrc === 'string' && imgSrc.includes('/uploads/'))
                     ? imgSrc.replace(/\.(png|jpg|jpeg)$/i, '.webp')
                     : imgSrc;
