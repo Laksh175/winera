@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import Content from '../models/Content.js';
+import Project from '../models/Project.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -646,7 +648,12 @@ const seedOnly15Projects = async () => {
 
     console.log(`📦 Setting EXACT ${doc15DetailedProjects.length} detailed projects from Website Structure .docx...`);
 
-    // 1. Overwrite projectItems in Content collection
+    // 1. Overwrite Project collection (dedicated projects collection)
+    await Project.deleteMany({});
+    await Project.insertMany(doc15DetailedProjects);
+    console.log(`✅ Project collection successfully populated with exactly ${doc15DetailedProjects.length} projects!`);
+
+    // 2. Overwrite projectItems in Content collection
     await Content.findOneAndUpdate(
       { sectionKey: 'projectItems' },
       { sectionKey: 'projectItems', data: doc15DetailedProjects },
@@ -654,14 +661,16 @@ const seedOnly15Projects = async () => {
     );
     console.log(`✅ Content.projectItems successfully set to exactly ${doc15DetailedProjects.length} projects!`);
 
-    // 2. Also set builtProjects (Home Page Showcase) with top projects from these 15
+    // 3. Also set builtProjects (Home Page Showcase) with top projects from these 15
     const showcaseBuiltProjects = doc15DetailedProjects.slice(0, 8).map(p => ({
       title: p.name,
-      category: p.type,
+      name: p.name,
+      category: p.type || p.category,
       location: `${p.city}, ${p.state}`,
       area: p.area,
       slug: p.slug,
-      img: p.img
+      img: p.img,
+      imageUrl: p.img
     }));
 
     await Content.findOneAndUpdate(
@@ -671,7 +680,14 @@ const seedOnly15Projects = async () => {
     );
     console.log(`✅ Content.builtProjects successfully updated with showcase projects!`);
 
-    console.log('🎉 Successfully saved exactly the 15 projects with full doc details into MongoDB!');
+    // 4. Also write static json data files for offline / production fallback
+    const backendDataPath = path.resolve(__dirname, '../data/projectsData.json');
+    const frontendDataPath = path.resolve(__dirname, '../../../frontend/src/data/projectsData.json');
+    fs.writeFileSync(backendDataPath, JSON.stringify(doc15DetailedProjects, null, 2), 'utf8');
+    fs.writeFileSync(frontendDataPath, JSON.stringify(doc15DetailedProjects, null, 2), 'utf8');
+    console.log(`✅ Static JSON data files synced for backend and frontend!`);
+
+    console.log('🎉 Successfully saved exactly the 15 projects with full doc details into MongoDB and static data!');
     process.exit(0);
   } catch (err) {
     console.error('❌ Error seeding projects:', err);
@@ -679,4 +695,6 @@ const seedOnly15Projects = async () => {
   }
 };
 
-seedOnly15Projects();
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  seedOnly15Projects();
+}

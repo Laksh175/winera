@@ -1,0 +1,44 @@
+import mongoose from 'mongoose';
+
+const projectSchema = new mongoose.Schema({
+  id: { type: String },
+  slug: { type: String, required: true, unique: true, index: true },
+  name: { type: String, required: true },
+  category: { type: String, default: 'Game Zones', index: true },
+  type: { type: String, default: '' },
+  city: { type: String, default: '' },
+  state: { type: String, default: '' },
+  area: { type: String, default: '' },
+  titleLine1: { type: String, default: '' },
+  titleLine2: { type: String, default: '' },
+  titleLine2Black: { type: String, default: '' },
+  titleLine3: { type: String, default: '' },
+  description: { type: String, default: '' },
+  clientWanted1: { type: String, default: '' },
+  clientWanted2: { type: String, default: '' },
+  clientImg: { type: String, default: '' },
+  solution1: { type: String, default: '' },
+  solution2: { type: String, default: '' },
+  solutionImg: { type: String, default: '' },
+  img: { type: String, default: '' },
+  galleryImages: [{ type: String }],
+  galleryImage1: { type: String, default: '' },
+  galleryImage2: { type: String, default: '' },
+  galleryImage3: { type: String, default: '' },
+  galleryImage4: { type: String, default: '' },
+  galleryImage5: { type: String, default: '' },
+  galleryImage6: { type: String, default: '' },
+  videoImg: { type: String, default: '' },
+  videoUrl: { type: String, default: '' },
+  videoLink: { type: String, default: '' },
+  buttonText: { type: String, default: 'Get A Quote' },
+  buttonLink: { type: String, default: 'https://wa.me/919428989488' },
+  waMessage: { type: String, default: '' },
+  metaTitle: { type: String, default: '' },
+  metaDescription: { type: String, default: '' },
+  isActive: { type: Boolean, default: true },
+  status: { type: String, default: 'active' }
+}, { timestamps: true });
+
+const Project = mongoose.model('Project', projectSchema);
+export default Project;

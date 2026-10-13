@@ -22,6 +22,7 @@ const projectBlock3 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q
 const projectSectionVideo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/nd79kzv2qshsmkkeeun3.png";
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 import CtaBanner from '../components/CtaBanner';
+import projectsData from '../data/projectsData.json';
 const bumpercarCtaBannerBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
 const projHulaboo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/a52mbp31belkkslptdal.jpg";
 const projNeon1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg";
@@ -178,8 +179,11 @@ export default function ProjectDetail({ siteData }) {
   const targetSlug = normalizeSlug(slug);
   const targetAlpha = cleanAlpha(slug);
 
-  const cmsItem = Array.isArray(siteData?.projectItems)
-    ? siteData.projectItems.find(p => {
+  const allProjectsList = (Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
+    ? siteData.projectItems
+    : projectsData;
+
+  const cmsItem = allProjectsList.find(p => {
         const itemSlug = (p.slug && p.slug !== 'new-turnkey-project') ? normalizeSlug(p.slug) : normalizeSlug(p.name);
         const itemAlpha = cleanAlpha(p.slug || p.name);
         const nameAlpha = cleanAlpha(p.name);
@@ -207,8 +211,7 @@ export default function ProjectDetail({ siteData }) {
           return true;
         }
         return false;
-      })
-    : null;
+      }) || null;
 
   const builtItem = Array.isArray(siteData?.builtProjects)
     ? siteData.builtProjects.find(p => {
@@ -242,7 +245,13 @@ export default function ProjectDetail({ siteData }) {
     solutionImg: builtItem.solutionImg || builtItem.imageUrl || builtItem.img
   } : null);
 
-  const defaultProject = caseStudies[slug] || {
+  const staticDocProject = projectsData.find(p => {
+    const itemSlug = normalizeSlug(p.slug || p.name);
+    const itemAlpha = cleanAlpha(p.slug || p.name);
+    return itemSlug === targetSlug || itemAlpha === targetAlpha;
+  });
+
+  const defaultProject = staticDocProject || caseStudies[slug] || {
     name: slug ? slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Featured Winera Project",
     titleLine1: `${slug ? slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Winera Project"}: A`,
     titleLine2: "Turnkey ",

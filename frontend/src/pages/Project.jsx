@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
+import projectsData from '../data/projectsData.json';
 
 const projectBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/jp7chlrldb0lxltyst5b.png";
 const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
@@ -111,171 +112,9 @@ export default function Project({ siteData }) {
 
   const [activeCategory, setActiveCategory] = useState("All");
 
-  // Complete List of All 40+ Projects with categories & images
-  const allProjects = [
-    {
-      id: "fifthalley",
-      name: "FifthAlley Sport Bowling",
-      category: "Bowling",
-      city: "Surat",
-      state: "Gujarat",
-      slug: "fifthalley-sport-bowling",
-      img: projectImage01
-    },
-    {
-      id: "hulaboo",
-      name: "Hulaboo Game Zone",
-      category: "Game Zones",
-      city: "Surat",
-      state: "Gujarat",
-      slug: "hulaboo",
-      img: projHulaboo
-    },
-    {
-      id: "playzonia",
-      name: "Playzonia Kids Play Area",
-      category: "Soft Play",
-      city: "Surat",
-      state: "Gujarat",
-      slug: "playzonia",
-      img: projSoft1
-    },
-    {
-      id: "lanex",
-      name: "LaneX Bowling Alley by Rajhans",
-      category: "Bowling",
-      city: "Surat",
-      state: "Gujarat",
-      slug: "lanex-bowling-alley",
-      img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "funfair",
-      name: "Funfair Game Zone",
-      category: "Game Zones",
-      city: "Surat",
-      state: "Gujarat",
-      slug: "funfair",
-      img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "neonpanda",
-      name: "Neon Panda Trampoline & Gamezone",
-      category: "Game Zones",
-      city: "Indore",
-      state: "Madhya Pradesh",
-      slug: "neon-panda",
-      img: projNeon1
-    },
-    {
-      id: "rebounce",
-      name: "Rebounce Game Zone",
-      category: "Game Zones",
-      city: "Surat",
-      state: "Gujarat",
-      slug: "rebounce",
-      img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "kingsman",
-      name: "Kingsman Arcade & VR",
-      category: "Arcade & VR",
-      city: "Navi Mumbai",
-      state: "Maharashtra",
-      slug: "kingsman-arcade-vr",
-      img: "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "houseofpepe",
-      name: "House of Pepe Softplay & Arcade",
-      category: "Soft Play",
-      city: "Kolkata",
-      state: "West Bengal",
-      slug: "house-of-pepe",
-      img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "oneup",
-      name: "1 Up Game Zone",
-      category: "Game Zones",
-      city: "Gauhati",
-      state: "Assam",
-      slug: "1-up-game-zone",
-      img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "happyhoppers",
-      name: "Happy Hoppers Soft Play",
-      category: "Soft Play",
-      city: "Kolkata",
-      state: "West Bengal",
-      slug: "happy-hoppers",
-      img: projSoft1
-    },
-    {
-      id: "kidzania",
-      name: "Kidzania Arcade Games",
-      category: "Arcade & VR",
-      city: "Delhi",
-      state: "Delhi",
-      slug: "kidzania-delhi",
-      img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "funevers",
-      name: "Funevers Bowling",
-      category: "Bowling",
-      city: "Bhopal",
-      state: "Madhya Pradesh",
-      slug: "funevers-bowling",
-      img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "kidzonation",
-      name: "Kidzonation Softplay",
-      category: "Soft Play",
-      city: "Bhopal",
-      state: "Madhya Pradesh",
-      slug: "kidzonation",
-      img: projSoft1
-    },
-    {
-      id: "rockandbowl",
-      name: "Rock and Bowl Vapi",
-      category: "Bowling",
-      city: "Vapi",
-      state: "Gujarat",
-      slug: "rock-and-bowl-vapi",
-      img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "zestopia",
-      name: "Zestopia Game Zone",
-      category: "Game Zones",
-      city: "Surat",
-      state: "Gujarat",
-      slug: "zestopia",
-      img: projHulaboo
-    },
-    {
-      id: "redisson",
-      name: "Hotel Redisson & Marriot Resort",
-      category: "Hospitality",
-      city: "Kamrej, Surat",
-      state: "Gujarat",
-      slug: "hotel-redisson-marriott",
-      img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "kkbrio",
-      name: "KKB Rio Colina - Club & Villa",
-      category: "Hospitality",
-      city: "Surat",
-      state: "Gujarat",
-      slug: "kkb-rio-colina",
-      img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
-    }
-  ];
+  // Canonical 15 detailed projects from Website Structure .docx
+  const allProjects = projectsData;
+
 
   const fifthAlleyObj = {
     id: "fifthalley",
@@ -335,9 +174,12 @@ export default function Project({ siteData }) {
     ? projectList
     : projectList.filter(p => (p.category || "").toLowerCase().includes(activeCategory.toLowerCase()));
 
-  // Show the first 15 projects immediately on every screen size.
+  // Responsive initial load limit: 3 on mobile (<768px), 6 on desktop
   const getInitialLimit = () => {
-    return 15;
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      return 3;
+    }
+    return 6;
   };
 
   const [visibleCount, setVisibleCount] = useState(getInitialLimit);

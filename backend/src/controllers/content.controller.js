@@ -6,6 +6,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import Admin from '../models/Admin.js';
 import Content from '../models/Content.js';
 import jwt from 'jsonwebtoken';
+import projectsData from '../data/projectsData.json' with { type: 'json' };
 
 // Configure Cloudinary from environment variables
 cloudinary.config({
@@ -129,12 +130,33 @@ export const defaultSiteData = {
     { name: "Partner 2", logoUrl: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=300&q=80" },
     { name: "Partner 3", logoUrl: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=300&q=80" }
   ],
-  builtProjects: [
-    { name: "Hulaboo", city: "Surat", imageUrl: "" },
-    { name: "Nenopanda", city: "Indore", imageUrl: "" },
-    { name: "FizzyFox", city: "Nashik", imageUrl: "" },
-    { name: "Playzonia", city: "Surat", imageUrl: "" }
-  ],
+  builtProjects: projectsData.slice(0, 8).map(p => ({
+    title: p.name,
+    name: p.name,
+    category: p.type || p.category,
+    location: `${p.city}, ${p.state}`,
+    area: p.area,
+    slug: p.slug,
+    img: p.img,
+    imageUrl: p.img
+  })),
+  projectItems: projectsData,
+  productsHome: {
+    title: "Take a look At *Our Best Products*",
+    subtitle: "Our Complete Game Zone Equipment & Setup Solutions",
+    cardsList: [
+      { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "/assets/product-images/Arcade.webp", link: "/products/arcade-games" },
+      { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "/assets/product-images/VR Game.webp", link: "/products/vr-games" },
+      { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "/assets/product-images/AR Games.jpg", link: "/products/ar-games" },
+      { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "/assets/product-images/Bowling.jpg", link: "/products/bowling-alley" },
+      { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "/assets/product-images/Softplay.webp", link: "/products/soft-play" },
+      { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "/assets/product-images/Trampoline Prk.webp", link: "/products/trampoline-park" },
+      { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "/assets/product-images/Hypergrid.jpg", link: "/products/hypergrid" },
+      { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "/assets/product-images/Amusment ride.jpg", link: "/products/amusement-park" },
+      { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "/assets/product-images/bumper-car.webp", link: "/products/bumper-car" },
+      { id: "lasertag", title: "Laser Tag", desc: "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.", img: "/assets/product-images/LaserTag.webp", link: "/products/laser-tag" }
+    ]
+  },
   industriesHeader: {
     title: "Industries *We Serve*",
     subtitle: "We deliver complete game zone setup solutions for businesses across India",
@@ -1969,6 +1991,86 @@ export const getContent = async (req, res) => {
     )) {
       await Content.deleteOne({ sectionKey: 'blogPosts' });
       delete siteData.blogPosts;
+    }
+
+    // Auto-ensure all 15 detailed case study projects from docx are present in MongoDB
+    if (!Array.isArray(siteData.projectItems) || siteData.projectItems.length < 15) {
+      await Content.findOneAndUpdate(
+        { sectionKey: 'projectItems' },
+        { sectionKey: 'projectItems', data: projectsData },
+        { upsert: true, new: true }
+      );
+      siteData.projectItems = projectsData;
+    }
+
+    // Auto-ensure showcase builtProjects are populated with real doc projects
+    if (!Array.isArray(siteData.builtProjects) || siteData.builtProjects.length < 4 || !siteData.builtProjects[0]?.img) {
+      const showcaseBuiltProjects = projectsData.slice(0, 8).map(p => ({
+        title: p.name,
+        name: p.name,
+        category: p.type || p.category,
+        location: `${p.city}, ${p.state}`,
+        area: p.area,
+        slug: p.slug,
+        img: p.img,
+        imageUrl: p.img
+      }));
+      await Content.findOneAndUpdate(
+        { sectionKey: 'builtProjects' },
+        { sectionKey: 'builtProjects', data: showcaseBuiltProjects },
+        { upsert: true, new: true }
+      );
+      siteData.builtProjects = showcaseBuiltProjects;
+    }
+
+    // Auto-sync productsHome cards to use local product-images
+    if (siteData.productsHome && Array.isArray(siteData.productsHome.cardsList)) {
+      const getProdImg = (prod) => {
+        const text = `${prod?.id || ''} ${prod?.title || ''}`.toLowerCase();
+        if (text.includes('arcade')) return "/assets/product-images/Arcade.webp";
+        if (text.includes('vr') || text.includes('virtual')) return "/assets/product-images/VR Game.webp";
+        if (text.includes('bowling')) return "/assets/product-images/Bowling.jpg";
+        if (text.includes('soft') || text.includes('play')) return "/assets/product-images/Softplay.webp";
+        if (text.includes('trampoline')) return "/assets/product-images/Trampoline Prk.webp";
+        if (text.includes('hyper')) return "/assets/product-images/Hypergrid.jpg";
+        if (text.includes('amusement') || text.includes('ride')) return "/assets/product-images/Amusment ride.jpg";
+        if (text.includes('bumper')) return "/assets/product-images/bumper-car.webp";
+        if (text.includes('laser')) return "/assets/product-images/LaserTag.webp";
+        if (text.includes('augmented') || text.includes('ar game') || /\bar\b/.test(text)) return "/assets/product-images/AR Games.jpg";
+        return prod?.img || '';
+      };
+
+      let needsUpdate = false;
+      const updatedCards = siteData.productsHome.cardsList.map(prod => {
+        const expectedImg = getProdImg(prod);
+        if (expectedImg && prod.img !== expectedImg) {
+          needsUpdate = true;
+          return { ...prod, img: expectedImg };
+        }
+        return prod;
+      });
+
+      if (needsUpdate || siteData.productsHome.cardsList.length < 10) {
+        const completeCards = defaultSiteData.productsHome.cardsList.map(defCard => {
+          const existing = siteData.productsHome.cardsList.find(p =>
+            (p.id && p.id === defCard.id) ||
+            (p.title && p.title.toLowerCase().includes(defCard.title.toLowerCase()))
+          );
+          return existing ? { ...existing, img: getProdImg(existing) } : defCard;
+        });
+
+        const newProductsHome = {
+          ...siteData.productsHome,
+          cardsList: completeCards
+        };
+
+        await Content.findOneAndUpdate(
+          { sectionKey: 'productsHome' },
+          { sectionKey: 'productsHome', data: newProductsHome },
+          { upsert: true, new: true }
+        );
+        siteData.productsHome = newProductsHome;
+      }
     }
 
     res.json(siteData);

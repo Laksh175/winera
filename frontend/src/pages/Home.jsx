@@ -911,25 +911,28 @@ export default function Home({ siteData }) {
                   return { padding: '0 0 120px 0', fontSize: '30px', letterSpacing: '2px' };
                 };
 
-                const productImageOverrides = {
-                  arcade: "/assets/product-images/Arcade.webp",
-                  vr: "/assets/product-images/VR Game.webp",
-                  ar: "/assets/product-images/AR Games.jpg",
-                  bowling: "/assets/product-images/Bowling.jpg",
-                  softplay: "/assets/product-images/Softplay.webp",
-                  trampoline: "/assets/product-images/Trampoline Prk.webp",
-                  hypergrid: "/assets/product-images/Hypergrid.jpg",
-                  amusement: "/assets/product-images/Amusment ride.jpg",
-                  bumpercar: "/assets/product-images/bumper-car.webp",
-                  lasertag: "/assets/product-images/LaserTag.webp",
+                const getProductImage = (prod) => {
+                  const text = `${prod?.id || ''} ${prod?.title || ''}`.toLowerCase();
+                  if (text.includes('arcade')) return "/assets/product-images/Arcade.webp";
+                  if (text.includes('vr') || text.includes('virtual')) return "/assets/product-images/VR Game.webp";
+                  if (text.includes('bowling')) return "/assets/product-images/Bowling.jpg";
+                  if (text.includes('soft') || text.includes('play')) return "/assets/product-images/Softplay.webp";
+                  if (text.includes('trampoline')) return "/assets/product-images/Trampoline Prk.webp";
+                  if (text.includes('hyper')) return "/assets/product-images/Hypergrid.jpg";
+                  if (text.includes('amusement') || text.includes('ride')) return "/assets/product-images/Amusment ride.jpg";
+                  if (text.includes('bumper')) return "/assets/product-images/bumper-car.webp";
+                  if (text.includes('laser')) return "/assets/product-images/LaserTag.webp";
+                  if (text.includes('augmented') || text.includes('ar game') || /\bar\b/.test(text)) return "/assets/product-images/AR Games.jpg";
+                  return prod?.img || '';
                 };
+
                 const cards = ((Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
                   ? siteData.productsHome.cardsList
                   : defaultProductsCards
-                ).map(prod => {
-                  const key = (prod.id || '').toLowerCase().replace(/[^a-z]/g, '');
-                  return productImageOverrides[key] ? { ...prod, img: productImageOverrides[key] } : prod;
-                });
+                ).map(prod => ({
+                  ...prod,
+                  img: getProductImage(prod)
+                }));
 
                 return cards.map((prod, idx) => {
                   const isExpanded = activeProductIndex === idx;

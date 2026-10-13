@@ -6,6 +6,7 @@ import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
 import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 import allArcadeProducts from '../data/allArcadeProducts.json';
+import projectsData from '../data/projectsData.json';
 import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, X, Star, Video, Trophy, Sparkles, Calculator, Menu, Target, ChevronDown } from 'lucide-react';
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 const yellowBrushAccent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
@@ -554,243 +555,8 @@ const defaultProjectHero = {
   breadcrumbHome: 'Home',
   breadcrumbPage: 'Project'
 };
+const defaultProjectItemsList = projectsData;
 
-const defaultProjectItemsList = [
-  {
-    id: "fifthalley",
-    name: "FifthAlley Sport Bowling",
-    category: "Bowling",
-    city: "Surat",
-    state: "Gujarat",
-    area: "3,000 sq. ft.",
-    type: "Bowling Alley Setup",
-    slug: "fifthalley-sport-bowling",
-    img: projectImage01,
-    metaTitle: "FifthAlley Sport Bowling Setup in Surat | Winera International",
-    metaDescription: "Explore FifthAlley Sport Bowling in Surat by Winera International — a 3,000 sq. ft. complete bowling alley setup delivered from empty space to ready venue."
-  },
-  {
-    id: "hulaboo",
-    name: "Hulaboo Game Zone",
-    category: "Game Zones",
-    city: "Surat",
-    state: "Gujarat",
-    area: "27,000 sq. ft.",
-    type: "Game Zone Setup",
-    slug: "hulaboo",
-    img: projHulaboo,
-    metaTitle: "Hulaboo Game Zone Setup in Surat | Winera International",
-    metaDescription: "Discover how Winera International built Hulaboo, a 27,000 sq. ft. indoor game zone setup in Surat with multi-age attractions and turnkey execution."
-  },
-  {
-    id: "playzonia",
-    name: "Playzonia Kids Play Area",
-    category: "Soft Play",
-    city: "Surat",
-    state: "Gujarat",
-    area: "1,500 sq. ft.",
-    type: "Soft Play Area",
-    slug: "playzonia",
-    img: projSoft1,
-    metaTitle: "Playzonia Kids Soft Play Area in Surat | Winera International",
-    metaDescription: "See how Winera International designed & installed Playzonia, a 1,500 sq. ft. safe and playful soft play area for young children in Surat."
-  },
-  {
-    id: "lanex",
-    name: "LaneX Bowling Alley by Rajhans",
-    category: "Bowling",
-    city: "Surat",
-    state: "Gujarat",
-    area: "4,800 sq. ft.",
-    type: "Bowling Alley",
-    slug: "lanex-bowling-alley",
-    img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "Bowling Alley Setup in Surat – LaneX at AR Mall | Winera International",
-    metaDescription: "See how Winera International built LaneX Bowling Alley in Surat. A Complete 4,800 sq. ft. bowling setup, planned and installed from empty floor to opening day."
-  },
-  {
-    id: "funfair",
-    name: "Funfair Game Zone",
-    category: "Game Zones",
-    city: "Surat",
-    state: "Gujarat",
-    area: "10,000 sq. ft.",
-    type: "Game Zone",
-    slug: "funfair",
-    img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "Funfair Game Zone Setup in Surat | Winera International",
-    metaDescription: "See how Winera International built Funfair a complete 10,000 sq. ft. game zone in Surat, planned and set up from start to finish, ready to welcome families."
-  },
-  {
-    id: "neonpanda",
-    name: "Neon Panda Trampoline & Gamezone",
-    category: "Game Zones",
-    city: "Indore",
-    state: "Madhya Pradesh",
-    area: "8,500 sq. ft.",
-    type: "Trampoline & Game Zone",
-    slug: "neon-panda",
-    img: projNeon1,
-    metaTitle: "Neon Panda Trampoline & Gamezone Setup in Indore | Winera International",
-    metaDescription: "Explore Neon Panda in Indore — an 8,500 sq. ft. trampoline park and indoor game zone setup executed turnkey by Winera International."
-  },
-  {
-    id: "rebounce",
-    name: "Rebounce Game Zone",
-    category: "Game Zones",
-    city: "Surat",
-    state: "Gujarat",
-    area: "12,000 sq. ft.",
-    type: "Game Zone",
-    slug: "rebounce",
-    img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "Rebounce Game Zone Setup in Surat | Winera International",
-    metaDescription: "See how Winera International designed & equipped Rebounce Game Zone in Surat with high-energy arcade and VR attractions."
-  },
-  {
-    id: "kingsman",
-    name: "Kingsman Arcade & VR",
-    category: "Arcade & VR",
-    city: "Navi Mumbai",
-    state: "Maharashtra",
-    area: "4,000 sq. ft.",
-    type: "Arcade & VR Center",
-    slug: "kingsman-arcade-vr",
-    img: "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "Kingsman Arcade & VR Setup in Navi Mumbai | Winera International",
-    metaDescription: "Discover Kingsman Arcade & VR setup in Navi Mumbai featuring premier VR motion simulators and arcade games by Winera International."
-  },
-  {
-    id: "houseofpepe",
-    name: "House of Pepe Softplay & Arcade",
-    category: "Soft Play",
-    city: "Kolkata",
-    state: "West Bengal",
-    area: "6,000 sq. ft.",
-    type: "Softplay & Arcade",
-    slug: "house-of-pepe",
-    img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "House of Pepe Softplay & Arcade in Kolkata | Winera International",
-    metaDescription: "Turnkey design and installation of House of Pepe in Kolkata combining safe indoor soft play with family arcade games by Winera."
-  },
-  {
-    id: "oneup",
-    name: "1 Up Game Zone",
-    category: "Game Zones",
-    city: "Gauhati",
-    state: "Assam",
-    area: "5,500 sq. ft.",
-    type: "Game Zone",
-    slug: "1-up-game-zone",
-    img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "1 Up Game Zone Setup in Gauhati | Winera International",
-    metaDescription: "Complete game zone planning and turnkey equipment supply for 1 Up Game Zone in Gauhati, Assam by Winera International."
-  },
-  {
-    id: "happyhoppers",
-    name: "Happy Hoppers Soft Play",
-    category: "Soft Play",
-    city: "Kolkata",
-    state: "West Bengal",
-    area: "3,200 sq. ft.",
-    type: "Kids Soft Play",
-    slug: "happy-hoppers",
-    img: projSoft1,
-    metaTitle: "Happy Hoppers Kids Soft Play in Kolkata | Winera International",
-    metaDescription: "Safe, colorful and interactive soft play equipment setup for Happy Hoppers in Kolkata by Winera International."
-  },
-  {
-    id: "kidzania",
-    name: "Kidzania Arcade Games",
-    category: "Arcade & VR",
-    city: "Delhi",
-    state: "Delhi",
-    area: "7,000 sq. ft.",
-    type: "Arcade Zone",
-    slug: "kidzania-delhi",
-    img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "Kidzania Arcade Games Setup in Delhi | Winera International",
-    metaDescription: "Commercial arcade games and motion simulators installed at Kidzania Delhi by Winera International."
-  },
-  {
-    id: "funevers",
-    name: "Funevers Bowling",
-    category: "Bowling",
-    city: "Bhopal",
-    state: "Madhya Pradesh",
-    area: "4,200 sq. ft.",
-    type: "Bowling Alley",
-    slug: "funevers-bowling",
-    img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "Funevers Bowling Setup in Bhopal | Winera International",
-    metaDescription: "Professional bowling alley installation with automated scoring and modern lane furniture for Funevers in Bhopal by Winera."
-  },
-  {
-    id: "kidzonation",
-    name: "Kidzonation Softplay",
-    category: "Soft Play",
-    city: "Bhopal",
-    state: "Madhya Pradesh",
-    area: "2,800 sq. ft.",
-    type: "Soft Play Center",
-    slug: "kidzonation",
-    img: projSoft1,
-    metaTitle: "Kidzonation Soft Play Setup in Bhopal | Winera International",
-    metaDescription: "Custom multi-level indoor playground and soft play structure installed for Kidzonation in Bhopal by Winera."
-  },
-  {
-    id: "rockandbowl",
-    name: "Rock and Bowl Vapi",
-    category: "Bowling",
-    city: "Vapi",
-    state: "Gujarat",
-    area: "3,600 sq. ft.",
-    type: "Bowling Alley",
-    slug: "rock-and-bowl-vapi",
-    img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "Rock and Bowl Bowling Alley Setup in Vapi | Winera International",
-    metaDescription: "Turnkey bowling alley setup in Vapi with LED lanes, pinsetters, and player seating installed by Winera International."
-  },
-  {
-    id: "zestopia",
-    name: "Zestopia Game Zone",
-    category: "Game Zones",
-    city: "Surat",
-    state: "Gujarat",
-    area: "9,000 sq. ft.",
-    type: "Game Zone",
-    slug: "zestopia",
-    img: projHulaboo,
-    metaTitle: "Zestopia Game Zone Setup in Surat | Winera International",
-    metaDescription: "Turnkey family entertainment center setup for Zestopia Game Zone in Surat with mixed arcade, VR and redemption games."
-  },
-  {
-    id: "redisson",
-    name: "Hotel Redisson & Marriot Resort",
-    category: "Hospitality",
-    city: "Kamrej, Surat",
-    state: "Gujarat",
-    area: "5,000 sq. ft.",
-    type: "Resort Entertainment Zone",
-    slug: "hotel-redisson-marriott",
-    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "Hotel Redisson & Marriott Resort Play Zone Setup | Winera International",
-    metaDescription: "Premium recreation and entertainment zone setup for Hotel Redisson & Marriott Resort in Kamrej, Surat by Winera."
-  },
-  {
-    id: "kkbrio",
-    name: "KKB Rio Colina - Club & Villa",
-    category: "Hospitality",
-    city: "Surat",
-    state: "Gujarat",
-    area: "4,500 sq. ft.",
-    type: "Club & Villa Amenities",
-    slug: "kkb-rio-colina",
-    img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
-    metaTitle: "KKB Rio Colina Club & Villa Entertainment Setup | Winera International",
-    metaDescription: "Boutique entertainment and leisure amenities setup for KKB Rio Colina Club & Villa in Surat by Winera International."
-  }
-];
 
 const defaultProjectBlock = {
   strokeImg: yellowStrokeLine,
@@ -2544,7 +2310,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         }
       };
 
-      const knownProj = projectCaseStudiesDefaults[projSlug] || {};
+      const knownProj = projectsData.find(p => p.slug === projSlug || p.id === projSlug) || projectCaseStudiesDefaults[projSlug] || {};
 
       const defaultProjectItem = {
         name: projTitle,
@@ -3866,15 +3632,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   {(() => {
                     const defaultCardsList = [
-                      { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
-                      { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
-                      { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
-                      { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
-                      { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
-                      { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
-                      { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
-                      { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
-                      { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" }
+                      { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "/assets/product-images/Arcade.webp", link: "/products/arcade-games" },
+                      { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "/assets/product-images/VR Game.webp", link: "/products/vr-games" },
+                      { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "/assets/product-images/AR Games.jpg", link: "/products/ar-games" },
+                      { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "/assets/product-images/Bowling.jpg", link: "/products/bowling-alley" },
+                      { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "/assets/product-images/Softplay.webp", link: "/products/soft-play" },
+                      { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "/assets/product-images/Trampoline Prk.webp", link: "/products/trampoline-park" },
+                      { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "/assets/product-images/Hypergrid.jpg", link: "/products/hypergrid" },
+                      { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "/assets/product-images/Amusment ride.jpg", link: "/products/amusement-park" },
+                      { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "/assets/product-images/bumper-car.webp", link: "/products/bumper-car" },
+                      { id: "lasertag", title: "Laser Tag", desc: "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.", img: "/assets/product-images/LaserTag.webp", link: "/products/laser-tag" }
                     ];
 
                     const displayCards = (Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)

@@ -6,11 +6,14 @@ import leadRoutes from './lead.routes.js';
 import { getArcadeProducts, getArcadeProductBySlug } from '../controllers/arcadeProduct.controller.js';
 import { getVrGames, getVrGameBySlug } from '../controllers/vrGame.controller.js';
 import { getBlogs, getBlogBySlug } from '../controllers/blog.controller.js';
+import { getProjects, getProjectBySlug } from '../controllers/project.controller.js';
 
 const router = express.Router();
 
 // Public routes
 router.get('/content', getContent);
+router.get('/projects', getProjects);
+router.get('/projects/:slug', getProjectBySlug);
 router.get('/arcade-products', getArcadeProducts);
 router.get('/arcade-products/:slug', getArcadeProductBySlug);
 router.get('/vr-games', getVrGames);

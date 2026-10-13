@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+.DS_Store
+
+# Archives and large documents
+*.rar
+*.zip
+*.7z
+*.tar.gz
+*.docx
+*.pdf
+
+# Environment files
+.env
+backend/.env
+frontend/.env
+*.local
+
+# Build output
+dist
+dist-ssr
+build

@@ -22,6 +22,26 @@ export const fetchSiteContent = async () => {
   }
 };
 
+export const fetchProjects = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/projects`, { timeout: 8000 });
+    return response.data;
+  } catch (err) {
+    console.warn('Backend projects endpoint timeout/unavailable:', err?.message);
+    return null;
+  }
+};
+
+export const fetchProjectBySlug = async (slug) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/projects/${slug}`, { timeout: 8000 });
+    return response.data;
+  } catch (err) {
+    console.warn(`Backend project by slug (${slug}) endpoint timeout/unavailable:`, err?.message);
+    return null;
+  }
+};
+
 export const loginAdmin = async (credentials) => {
   const response = await axios.post(`${API_BASE_URL}/admin/login`, credentials);
   return response.data;
