@@ -132,6 +132,114 @@ const projectsMapping = [
       'Gallery 5.webp',
       'Gallery 6.webp'
     ]
+  },
+  {
+    slug: 'rumble-zone',
+    folder: 'Rumble Zone ( Gurugram )',
+    mainImg: '1st Image.jpg',
+    basicInfoBg: 'Basic information.jpg',
+    clientImg: 'What the Client Wanted.jpg',
+    solutionImg: 'What Solution We Provide.jpg',
+    gallery: [
+      'gallery 1.webp',
+      'gallery 2.webp',
+      'Gallery 3.webp',
+      'gallery 4.webp',
+      'Gallery 5.webp',
+      'Gallery 6.webp'
+    ]
+  },
+  {
+    slug: 'the-fun-factory',
+    folder: 'The Fun Factory ( Nalasopara )',
+    mainImg: '1st image.jpg',
+    basicInfoBg: 'Basic Information.jpg',
+    clientImg: 'what the client wanted.jpg',
+    solutionImg: 'What Solution We Provide.jpg',
+    gallery: [
+      'Gallery 1.jpg',
+      'Gallery 2.jpeg',
+      'Gallery 3.jpg',
+      'Gallery 4.jpg',
+      'Gallery 5.jpg',
+      'Gallery 6.jpg'
+    ]
+  },
+  {
+    slug: 'pop-a-puddle',
+    folder: 'Pop A Puddle ( Bengaluru )',
+    mainImg: '1st image.jpg',
+    basicInfoBg: 'Basic Detail.jpg',
+    clientImg: 'What the client Wanted.webp',
+    solutionImg: 'What Solution We Provide.jpg',
+    gallery: [
+      'Gallery 1.webp',
+      'Gallery 2.jpg',
+      'gallery 3.jpg',
+      'Gallery 4.jpg',
+      'Gallery 5.jpg',
+      'gallery 6.jpg',
+      'Gallery 7.webp',
+      'Gallary 8.webp',
+      'Gallery 9.webp',
+      'Gallery 10.webp',
+      'gallery 11.webp'
+    ]
+  },
+  {
+    slug: 'skadoosh-play-area',
+    folder: 'Skadoosh ( Bengaluru )',
+    mainImg: '1st image.jpg',
+    basicInfoBg: 'Basic Information.jpg',
+    clientImg: 'What the Client Wanted.jpg',
+    solutionImg: 'What Solution We Provide.webp',
+    gallery: [
+      'Gallery 1.jpg',
+      'Gallery 2.jpg',
+      'Gallery 3.jpg',
+      'Gallery 4.webp',
+      'Gallery 5.jpg',
+      'Gallery 6.jpg',
+      'Gallery 7.webp',
+      'Gallery 8.webp',
+      'Gallery 9.webp',
+      'Gallery 10.webp',
+      'Gallery 11.webp',
+      'Gallery 12.webp'
+    ]
+  },
+  {
+    slug: 'vr-360-game-zone',
+    folder: 'VR 360 Game  Zone ( Gandhidham )',
+    mainImg: '1st image.png',
+    basicInfoBg: 'Basic Information.jpg',
+    clientImg: 'What the Client Wanted.webp',
+    solutionImg: 'What Solution We Provide.jpg',
+    gallery: [
+      'Gallery 1.jpg',
+      'Gallery 2.webp',
+      'Gallery 3.webp',
+      'Gallery 4.webp',
+      'Gallery 5.webp',
+      'Gallery 6.jpg'
+    ]
+  },
+  {
+    slug: 'altitude-ball-in-ball-out',
+    folder: 'Altitude ball in ball out ( Mumbai )',
+    mainImg: '1st Image.png',
+    basicInfoBg: 'Basic Information.jpg',
+    clientImg: 'What the Client Wanted.jpg',
+    solutionImg: 'What Solution We Provide.jpg',
+    gallery: [
+      'Gallery 1.jpg',
+      'Gallery 2.jpg',
+      'Gallery 3.jpg',
+      'Gallery 4.webp',
+      'Gallery 5.webp',
+      'Gallery 6.jpg',
+      'Gallery 7.webp'
+    ]
   }
 ];
 

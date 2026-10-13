@@ -56,6 +56,24 @@ const resolveProjectImg = (proj) => {
   if (slug.includes('level') || name.includes('level') || slug.includes('morbi')) {
     return "/assets/Level Up ( Morbi )/1st Image.jpg";
   }
+  if (slug.includes('rumble') || name.includes('rumble') || slug.includes('gurugram')) {
+    return "/assets/Rumble Zone ( Gurugram )/1st Image.jpg";
+  }
+  if (slug.includes('factory') || name.includes('factory') || slug.includes('nalasopara')) {
+    return "/assets/The Fun Factory ( Nalasopara )/1st image.jpg";
+  }
+  if (slug.includes('puddle') || name.includes('puddle') || slug.includes('pop-a-puddle') || slug.includes('bengaluru') || slug.includes('bangalore')) {
+    return "/assets/Pop A Puddle ( Bengaluru )/1st image.jpg";
+  }
+  if (slug.includes('skadoosh') || name.includes('skadoosh')) {
+    return "/assets/Skadoosh ( Bengaluru )/1st image.jpg";
+  }
+  if (slug.includes('vr-360') || slug.includes('vr 360') || name.includes('vr 360') || slug.includes('gandhidham')) {
+    return "/assets/VR 360 Game  Zone ( Gandhidham )/1st image.png";
+  }
+  if (slug.includes('altitude') || name.includes('altitude') || slug.includes('ball in ball out') || slug.includes('ball-in-ball-out')) {
+    return "/assets/Altitude ball in ball out ( Mumbai )/1st Image.png";
+  }
 
   if (slug.includes('hulaboo') || name.includes('hulaboo')) return "/assets/Hulaboo ( Surat )/1st Image.jpg";
   if (slug.includes('neon') || name.includes('neon')) return projNeon1;

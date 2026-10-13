@@ -170,6 +170,130 @@ const getValidImageUrl = (url, fallback) => {
     }
     return '/assets/Level Up ( Morbi )/1st Image.jpg';
   }
+  if (url.includes('Rumble Zone') || url.includes('rumble-zone') || url.includes('rumble zone') || url.includes('Gurugram') || url.includes('gurugram')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('information')) {
+      return '/assets/Rumble Zone ( Gurugram )/Basic information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Rumble Zone ( Gurugram )/What the Client Wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Rumble Zone ( Gurugram )/What Solution We Provide.jpg';
+    }
+    const galMatch = url.match(/gall?e?ry[-_\s]*(\d)\.(jpg|webp)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      if (['1', '2', '4'].includes(idx)) return `/assets/Rumble Zone ( Gurugram )/gallery ${idx}.webp`;
+      return `/assets/Rumble Zone ( Gurugram )/Gallery ${idx}.webp`;
+    }
+    return '/assets/Rumble Zone ( Gurugram )/1st Image.jpg';
+  }
+  if (url.includes('Fun Factory') || url.includes('the-fun-factory') || url.includes('fun-factory') || url.includes('Nallasopara') || url.includes('Nalasopara') || url.includes('nalasopara')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('information')) {
+      return '/assets/The Fun Factory ( Nalasopara )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/The Fun Factory ( Nalasopara )/what the client wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/The Fun Factory ( Nalasopara )/What Solution We Provide.jpg';
+    }
+    const galMatch = url.match(/gall?e?ry[-_\s]*(\d)\.(jpg|webp|jpeg)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      if (idx === '2') return '/assets/The Fun Factory ( Nalasopara )/Gallery 2.jpeg';
+      return `/assets/The Fun Factory ( Nalasopara )/Gallery ${idx}.jpg`;
+    }
+    return '/assets/The Fun Factory ( Nalasopara )/1st image.jpg';
+  }
+  if (url.includes('Pop A Puddle') || url.includes('pop-a-puddle') || url.includes('pop a puddle') || url.includes('Bengaluru') || url.includes('bengaluru') || url.includes('Bangalore') || url.includes('bangalore')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('detail') || lower.includes('information')) {
+      return '/assets/Pop A Puddle ( Bengaluru )/Basic Detail.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Pop A Puddle ( Bengaluru )/What the client Wanted.webp';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Pop A Puddle ( Bengaluru )/What Solution We Provide.jpg';
+    }
+    const galMatch = url.match(/gall?[ea]ry[-_\s]*(\d+)\.(jpg|webp|jpeg)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      if (idx === '1') return '/assets/Pop A Puddle ( Bengaluru )/Gallery 1.webp';
+      if (idx === '2') return '/assets/Pop A Puddle ( Bengaluru )/Gallery 2.jpg';
+      if (idx === '3') return '/assets/Pop A Puddle ( Bengaluru )/gallery 3.jpg';
+      if (idx === '4') return '/assets/Pop A Puddle ( Bengaluru )/Gallery 4.jpg';
+      if (idx === '5') return '/assets/Pop A Puddle ( Bengaluru )/Gallery 5.jpg';
+      if (idx === '6') return '/assets/Pop A Puddle ( Bengaluru )/gallery 6.jpg';
+      if (idx === '7') return '/assets/Pop A Puddle ( Bengaluru )/Gallery 7.webp';
+      if (idx === '8') return '/assets/Pop A Puddle ( Bengaluru )/Gallary 8.webp';
+      if (idx === '9') return '/assets/Pop A Puddle ( Bengaluru )/Gallery 9.webp';
+      if (idx === '10') return '/assets/Pop A Puddle ( Bengaluru )/Gallery 10.webp';
+      if (idx === '11') return '/assets/Pop A Puddle ( Bengaluru )/gallery 11.webp';
+      return `/assets/Pop A Puddle ( Bengaluru )/Gallery ${idx}.webp`;
+    }
+    return '/assets/Pop A Puddle ( Bengaluru )/1st image.jpg';
+  }
+  if (url.includes('Skadoosh') || url.includes('skadoosh-play-area') || url.includes('skadoosh')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('detail') || lower.includes('information')) {
+      return '/assets/Skadoosh ( Bengaluru )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Skadoosh ( Bengaluru )/What the Client Wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Skadoosh ( Bengaluru )/What Solution We Provide.webp';
+    }
+    const galMatch = url.match(/gall?[ea]ry[-_\s]*(\d+)\.(jpg|webp|jpeg)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      if (['1', '2', '3', '5', '6'].includes(idx)) return `/assets/Skadoosh ( Bengaluru )/Gallery ${idx}.jpg`;
+      return `/assets/Skadoosh ( Bengaluru )/Gallery ${idx}.webp`;
+    }
+    return '/assets/Skadoosh ( Bengaluru )/1st image.jpg';
+  }
+  if (url.includes('VR 360') || url.includes('vr-360') || url.includes('vr 360') || url.includes('Gandhidham') || url.includes('gandhidham')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('detail') || lower.includes('information')) {
+      return '/assets/VR 360 Game  Zone ( Gandhidham )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/VR 360 Game  Zone ( Gandhidham )/What the Client Wanted.webp';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/VR 360 Game  Zone ( Gandhidham )/What Solution We Provide.jpg';
+    }
+    const galMatch = url.match(/gall?[ea]ry[-_\s]*(\d+)\.(jpg|webp|jpeg)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      if (idx === '1' || idx === '6') return `/assets/VR 360 Game  Zone ( Gandhidham )/Gallery ${idx}.jpg`;
+      return `/assets/VR 360 Game  Zone ( Gandhidham )/Gallery ${idx}.webp`;
+    }
+    return '/assets/VR 360 Game  Zone ( Gandhidham )/1st image.png';
+  }
+  if (url.includes('Altitude') || url.includes('altitude') || url.includes('ball in ball out') || url.includes('ball-in-ball-out')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('detail') || lower.includes('information')) {
+      return '/assets/Altitude ball in ball out ( Mumbai )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Altitude ball in ball out ( Mumbai )/What the Client Wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Altitude ball in ball out ( Mumbai )/What Solution We Provide.jpg';
+    }
+    const galMatch = url.match(/gall?[ea]ry[-_\s]*(\d+)\.(jpg|webp|jpeg)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      if (['4', '5', '7'].includes(idx)) return `/assets/Altitude ball in ball out ( Mumbai )/Gallery ${idx}.webp`;
+      return `/assets/Altitude ball in ball out ( Mumbai )/Gallery ${idx}.jpg`;
+    }
+    return '/assets/Altitude ball in ball out ( Mumbai )/1st Image.png';
+  }
   if (url.startsWith('/assets/') || url.startsWith('assets/')) {
     return url;
   }
@@ -391,6 +515,198 @@ export default function ProjectDetail({ siteData }) {
         "/assets/Level Up ( Morbi )/Gallery 5.webp",
         "/assets/Level Up ( Morbi )/Gallery 6.webp"
       ]
+    },
+    'rumble-zone': {
+      name: "Rumble Zone",
+      titleLine1: "Rumble Zone: Big Energy, Bold",
+      titleLine2: "Games and Loud ",
+      titleLine2Black: "Cheers in Gurugram",
+      titleLine3: "Across 15,000 Sq. Ft.",
+      description: "We turned a 15,000 sq. ft. space in Gurugram into Rumble Zone. It’s an action-filled game zone where kids, teens and families come to switch off and play.",
+      metaTitle: "Rumble Zone Game Zone in Gurugram | Winera International",
+      metaDescription: "See how Winera International designed and installed Rumble Zone in Gurugram across 15,000 sq. ft. Turnkey game zone setup.",
+      type: "Game Zone",
+      location: "Gurugram, Haryana",
+      area: "15,000 sq. ft.",
+      clientWanted1: "The client wanted to bring Gurugram a game zone with real energy. Somewhere friends could meet after a long week, kids could burn off steam, and families could plan a full outing without going anywhere else. The aim was a venue that feels exciting every single time, not just on the first visit.",
+      clientWanted2: "With a project of this scale, the client did not want to juggle designers, suppliers and installers separately. They asked for one partner to take full responsibility, from shaping the layout to setting up every zone, so they could focus on opening day.",
+      solution1: "At Winera International, we planned the 15,000 sq. ft. floor around one idea: let the excitement build as guests walk in. Our game zone setup in Gurugram places the most action-packed games deeper inside the venue, drawing people forward and keeping the noise contained. Areas for younger children sit nearer the entrance, in a calmer part of the floor with comfortable seating for parents.",
+      solution2: "We also gave the venue enough breathing room. Walkways are wide enough for busy weekends, and there are spots to sit, chat and cheer on friends between games. The result is a game zone that is easy to explore and gives every visitor a reason to plan the next trip.",
+      mainImg: "/assets/Rumble Zone ( Gurugram )/1st Image.jpg",
+      bannerImg: "/assets/Rumble Zone ( Gurugram )/1st Image.jpg",
+      basicInfoBg: "/assets/Rumble Zone ( Gurugram )/Basic information.jpg",
+      clientImg: "/assets/Rumble Zone ( Gurugram )/What the Client Wanted.jpg",
+      solutionImg: "/assets/Rumble Zone ( Gurugram )/What Solution We Provide.jpg",
+      galleryImages: [
+        "/assets/Rumble Zone ( Gurugram )/gallery 1.webp",
+        "/assets/Rumble Zone ( Gurugram )/gallery 2.webp",
+        "/assets/Rumble Zone ( Gurugram )/Gallery 3.webp",
+        "/assets/Rumble Zone ( Gurugram )/gallery 4.webp",
+        "/assets/Rumble Zone ( Gurugram )/Gallery 5.webp",
+        "/assets/Rumble Zone ( Gurugram )/Gallery 6.webp"
+      ]
+    },
+    'the-fun-factory': {
+      name: "The Fun Factory",
+      titleLine1: "The Fun Factory: Big Smiles",
+      titleLine2: "for Little Ones in ",
+      titleLine2Black: "Vasai-Virar & Badlapur",
+      titleLine3: "Across 2,400 Sq. Ft.",
+      description: "We took a 2,400 sq. ft. space in Nallasopara West and turned it into The Fun Factory. A lively, safe play venue made for children aged 2 to 10 and their families.",
+      metaTitle: "The Fun Factory Soft Play Setup in Nallasopara | Winera International",
+      metaDescription: "See how Winera International designed and installed The Fun Factory in Nallasopara across 2,400 sq. ft. Turnkey indoor playground.",
+      type: "Soft Play",
+      location: "Nallasopara, Maharashtra",
+      area: "2,400 sq. ft.",
+      clientWanted1: "The client wanted a play area where families in Vasai-Virar and Badlapur could bring their young children without having to travel into central Mumbai. The space had to be safe, colourful and packed with enough variety that kids aged 2 to 10 would stay happily busy for hours.",
+      clientWanted2: "The client also wanted an easy journey from idea to opening. Instead of talking to different people for design, equipment and fitting, they chose one team to manage everything and hand over a play area ready for kids on day one.",
+      solution1: "At Winera International, we planned every part of the 2,400 sq. ft. floor so no space was wasted. For this soft play setup in Vasai-Virar and Badlapur, we gave the soft play zone the biggest share of the room. Kids get lots of space to climb, jump and explore, and padded surfaces keep them safe while they play.",
+      solution2: "We placed parent seating where they can see the whole play area at a glance, so they can relax without worry. Paths around the zone are kept open, making it easy for kids and parents to move in and out. The result is a happy, easy-to-use play space that families keep visiting.",
+      mainImg: "/assets/The Fun Factory ( Nalasopara )/1st image.jpg",
+      bannerImg: "/assets/The Fun Factory ( Nalasopara )/1st image.jpg",
+      basicInfoBg: "/assets/The Fun Factory ( Nalasopara )/Basic Information.jpg",
+      clientImg: "/assets/The Fun Factory ( Nalasopara )/what the client wanted.jpg",
+      solutionImg: "/assets/The Fun Factory ( Nalasopara )/What Solution We Provide.jpg",
+      galleryImages: [
+        "/assets/The Fun Factory ( Nalasopara )/Gallery 1.jpg",
+        "/assets/The Fun Factory ( Nalasopara )/Gallery 2.jpeg",
+        "/assets/The Fun Factory ( Nalasopara )/Gallery 3.jpg",
+        "/assets/The Fun Factory ( Nalasopara )/Gallery 4.jpg",
+        "/assets/The Fun Factory ( Nalasopara )/Gallery 5.jpg",
+        "/assets/The Fun Factory ( Nalasopara )/Gallery 6.jpg"
+      ]
+    },
+    'pop-a-puddle': {
+      name: "Pop A Puddle",
+      titleLine1: "Pop A Puddle: Where Kids",
+      titleLine2: "Play and Parents Sip ",
+      titleLine2Black: "in Bangalore",
+      titleLine3: "Across 4,800 Sq. Ft.",
+      description: "We took a 4,800 sq. ft. space in Bangalore and turned it into Pop A Puddle, a soft play area with a family café. Kids aged 3 to 12 play freely, while parents relax at the café close by.",
+      metaTitle: "Pop A Puddle Play Area and Café in Bangalore | Winera International",
+      metaDescription: "See how Winera International designed and built Pop A Puddle in Bangalore across 4,800 sq. ft. Soft play and family play café setup.",
+      type: "Soft Play / Family Play Café",
+      location: "Bangalore, Karnataka",
+      area: "4,800 sq. ft.",
+      clientWanted1: "The client wanted a place where the whole family could spend time together, not just the kids. Children aged 3 to 12 needed a safe and exciting soft play area, and parents needed a comfortable café where they could sit, chat and unwind. When both kids and parents enjoy the visit, they naturally want to come back.",
+      clientWanted2: "Building a play area and a café together means many moving parts. So the client wanted one team to handle it all, from planning the layout to fitting the equipment, and handing over a space that was ready to open.",
+      solution1: "At Winera International, we used the 4,800 sq. ft. floor to bring play and rest together in one space. For this play café setup in Bangalore, we gave the soft play zone a large, open area where kids can climb, slide and explore. The padded play setup keeps every jump and tumble safe.",
+      solution2: "We placed the café right next to the play area, so parents can enjoy their time while still keeping an eye on their children. Clear walkways connect both spaces, and seating is spread out so families never feel squeezed. The result is a warm, easy-going venue where kids play happily and parents feel at home.",
+      mainImg: "/assets/Pop A Puddle ( Bengaluru )/1st image.jpg",
+      bannerImg: "/assets/Pop A Puddle ( Bengaluru )/1st image.jpg",
+      basicInfoBg: "/assets/Pop A Puddle ( Bengaluru )/Basic Detail.jpg",
+      clientImg: "/assets/Pop A Puddle ( Bengaluru )/What the client Wanted.webp",
+      solutionImg: "/assets/Pop A Puddle ( Bengaluru )/What Solution We Provide.jpg",
+      galleryImages: [
+        "/assets/Pop A Puddle ( Bengaluru )/Gallery 1.webp",
+        "/assets/Pop A Puddle ( Bengaluru )/Gallery 2.jpg",
+        "/assets/Pop A Puddle ( Bengaluru )/gallery 3.jpg",
+        "/assets/Pop A Puddle ( Bengaluru )/Gallery 4.jpg",
+        "/assets/Pop A Puddle ( Bengaluru )/Gallery 5.jpg",
+        "/assets/Pop A Puddle ( Bengaluru )/gallery 6.jpg",
+        "/assets/Pop A Puddle ( Bengaluru )/Gallery 7.webp",
+        "/assets/Pop A Puddle ( Bengaluru )/Gallary 8.webp",
+        "/assets/Pop A Puddle ( Bengaluru )/Gallery 9.webp",
+        "/assets/Pop A Puddle ( Bengaluru )/Gallery 10.webp",
+        "/assets/Pop A Puddle ( Bengaluru )/gallery 11.webp"
+      ]
+    },
+    'skadoosh-play-area': {
+      name: "Skadoosh Play Area",
+      titleLine1: "Skadoosh Play Area: Endless",
+      titleLine2: "Giggles and Adventures in ",
+      titleLine2Black: "Haralur & Varthur",
+      titleLine3: "Across 7,000 Sq. Ft.",
+      description: "We took a 7,000 sq. ft. space and turned it into Skadoosh Play Area, a fun-filled kids play area in Bangalore. It’s made for children aged 3 to 12 and for parents in Haralur and Varthur who want a safe place to play nearby.",
+      metaTitle: "Skadoosh Kids Play Area in Bangalore | Winera International",
+      metaDescription: "See how Winera International built Skadoosh Play Area across 7,000 sq. ft. in Haralur and Varthur, Bangalore. Turnkey play area setup.",
+      type: "Kids Play Area",
+      location: "Bangalore, Karnataka",
+      area: "7,000 sq. ft.",
+      clientWanted1: "The client wanted a play area that kids would beg to visit. A cheerful, safe space in Haralur and Varthur where children aged 3 to 12 could spend hours playing, and where parents could feel at ease the whole time. They wanted every visit to be full of fun, so families would make it part of their routine.",
+      clientWanted2: "To get there, the client needed a partner who could take care of the full project. They wanted one team to plan the layout, source and install the play equipment, and hand over a play area ready for its first little visitors.",
+      solution1: "At Winera International, we saw the 7,000 sq. ft. floor as one big playground waiting to happen. For this kids play area in Bangalore, we kept the busiest, most active play sections in the centre, where kids can run, climb and jump freely. Gentler spots for the youngest children sit to the side, away from the rush, so they can play at their own pace.",
+      solution2: "Parent seating wraps around the play area, giving a clear view from every seat. We kept the walkways wide and the open areas free, so kids can move from one section to another without bumping into each other. The result is a happy, well-organised play area that families in Haralur and Varthur love to visit again.",
+      mainImg: "/assets/Skadoosh ( Bengaluru )/1st image.jpg",
+      bannerImg: "/assets/Skadoosh ( Bengaluru )/1st image.jpg",
+      basicInfoBg: "/assets/Skadoosh ( Bengaluru )/Basic Information.jpg",
+      clientImg: "/assets/Skadoosh ( Bengaluru )/What the Client Wanted.jpg",
+      solutionImg: "/assets/Skadoosh ( Bengaluru )/What Solution We Provide.webp",
+      galleryImages: [
+        "/assets/Skadoosh ( Bengaluru )/Gallery 1.jpg",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 2.jpg",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 3.jpg",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 4.webp",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 5.jpg",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 6.jpg",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 7.webp",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 8.webp",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 9.webp",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 10.webp",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 11.webp",
+        "/assets/Skadoosh ( Bengaluru )/Gallery 12.webp"
+      ]
+    },
+    'vr-360-game-zone': {
+      name: "VR 360 Game Zone",
+      titleLine1: "VR 360 Game Zone: Step Into",
+      titleLine2: "New Worlds Right ",
+      titleLine2Black: "Here in Gandhidham",
+      titleLine3: "Across 2,000 Sq. Ft.",
+      description: "We took a 2,000 sq. ft. space in Gandhidham and turned it into VR 360 Game Zone. It’s a fun, modern hangout where teens, young adults and families can try virtual reality and play together.",
+      metaTitle: "VR 360 Game Zone in Gandhidham | Winera International",
+      metaDescription: "See how Winera International designed and installed VR 360 Game Zone across 2,000 sq. ft. in Gandhidham. Turnkey virtual reality setup.",
+      type: "Game Zone",
+      location: "Gandhidham, Gujarat",
+      area: "2,000 sq. ft.",
+      clientWanted1: "The client wanted to bring something fresh to Gandhidham. A game zone built around virtual reality, where teens and young adults could hang out with friends, and families could try something new together. They wanted a place exciting enough that guests would keep coming back with their friends.",
+      clientWanted2: "Virtual reality equipment needs careful layout and the right technical setup to run well. The client wanted one experienced partner to design the floor, source and install the machines, and hand over a space that was ready to welcome visitors on day one.",
+      solution1: "At Winera International, we used every foot of the 2,000 sq. ft. floor to create an immersive experience. For this game zone setup in Gandhidham, we gave each VR attraction its own designated space so players can move and enjoy the action safely without crowding each other.",
+      solution2: "We set up clear walking paths and added seating where friends can watch each other play and wait for their turn. The result is a sleek, modern game zone that draws regular crowds and keeps players coming back for another round.",
+      mainImg: "/assets/VR 360 Game  Zone ( Gandhidham )/1st image.png",
+      bannerImg: "/assets/VR 360 Game  Zone ( Gandhidham )/1st image.png",
+      basicInfoBg: "/assets/VR 360 Game  Zone ( Gandhidham )/Basic Information.jpg",
+      clientImg: "/assets/VR 360 Game  Zone ( Gandhidham )/What the Client Wanted.webp",
+      solutionImg: "/assets/VR 360 Game  Zone ( Gandhidham )/What Solution We Provide.jpg",
+      galleryImages: [
+        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 1.jpg",
+        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 2.webp",
+        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 3.webp",
+        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 4.webp",
+        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 5.webp",
+        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 6.jpg"
+      ]
+    },
+    'altitude-ball-in-ball-out': {
+      name: "Altitude Ball in Ball Out",
+      titleLine1: "Altitude Ball in Ball Out: Every",
+      titleLine2: "Roll Brings Friends ",
+      titleLine2Black: "Closer in Mumbai",
+      titleLine3: "Across 8,000 Sq. Ft.",
+      description: "We took an 8,000 sq. ft. space in Mumbai and turned it into Altitude Ball in Ball Out, a lively bowling alley. It’s a place where teens, young adults and families come to play, compete and spend good time together.",
+      metaTitle: "Altitude Ball in Ball Out Bowling Alley in Mumbai | Winera International",
+      metaDescription: "See how Winera International designed and installed Altitude Ball in Ball Out across 8,000 sq. ft. in Mumbai. Turnkey bowling alley setup.",
+      type: "Bowling Alley",
+      location: "Mumbai, Maharashtra",
+      area: "8,000 sq. ft.",
+      clientWanted1: "The client wanted a bowling alley in Mumbai that feels fun as soon as people walk in. A place where friends can play against each other and families can laugh and enjoy a game together. They wanted guests to go home and plan their next visit right away.",
+      clientWanted2: "A bowling alley needs exact planning, from the lane area to the seating around it. The client wanted one team to manage the whole project, from layout and installation to the final handover, so they did not have to deal with several suppliers at once.",
+      solution1: "At Winera International, we started by giving the bowling lanes the space they need. Lanes need length, so we planned the 8,000 sq. ft. floor with the bowling area as its main feature. For this bowling alley setup in Mumbai, we made sure every lane is easy to see and reach, so the whole venue feels connected to the action.",
+      solution2: "Behind the lanes, we added comfortable seating where players can relax, keep score and cheer each other on. Clear walkways let guests move around without crossing into the play area, and open spaces give groups room to gather between games. The result is an easy-to-enjoy bowling alley that brings friends and families back for one more game.",
+      mainImg: "/assets/Altitude ball in ball out ( Mumbai )/1st Image.png",
+      bannerImg: "/assets/Altitude ball in ball out ( Mumbai )/1st Image.png",
+      basicInfoBg: "/assets/Altitude ball in ball out ( Mumbai )/Basic Information.jpg",
+      clientImg: "/assets/Altitude ball in ball out ( Mumbai )/What the Client Wanted.jpg",
+      solutionImg: "/assets/Altitude ball in ball out ( Mumbai )/What Solution We Provide.jpg",
+      galleryImages: [
+        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 1.jpg",
+        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 2.jpg",
+        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 3.jpg",
+        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 4.webp",
+        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 5.webp",
+        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 6.jpg",
+        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 7.webp"
+      ]
     }
   };
 
@@ -581,6 +897,13 @@ export default function ProjectDetail({ siteData }) {
   }
 
   const buttonLink = `${baseLink}?text=${encodeURIComponent(waMsg)}`;
+  const caseStudy = caseStudies[slug] || caseStudies[targetSlug]
+    || Object.entries(caseStudies).find(([k]) => {
+      const cleanK = cleanAlpha(k);
+      return cleanK === targetAlpha || (targetAlpha.length >= 4 && (cleanK.includes(targetAlpha) || targetAlpha.includes(cleanK)));
+    })?.[1]
+    || null;
+
   const mainImage = isHulaboo
     ? "/assets/Hulaboo ( Surat )/1st Image.jpg"
     : (isLaneX
@@ -589,7 +912,7 @@ export default function ProjectDetail({ siteData }) {
             ? (currentProject.mainImg && !currentProject.mainImg.includes('ymswdjzfwqi5z7ksv7zd') ? currentProject.mainImg : "/assets/Playzonia Kids Play Area ( Surat )/1st Image.jpg")
             : (isRebounce
                 ? (currentProject.mainImg && !currentProject.mainImg.includes('nri2vtjcndonajowvvqw') ? currentProject.mainImg : "/assets/Rebounce Game Zone ( Surat )/1st Image.jpg")
-                : currentProject.mainImg)));
+                : (caseStudy?.mainImg || currentProject.mainImg))));
 
   const basicBg = isFifthAlley
     ? "/assets/FifthAlley-Sport-Bowling/basic-information.jpg"
@@ -601,7 +924,7 @@ export default function ProjectDetail({ siteData }) {
                 ? "/assets/Playzonia Kids Play Area ( Surat )/Basic Information.jpg"
                 : (isRebounce
                     ? "/assets/Rebounce Game Zone ( Surat )/Basic Information.jpg"
-                    : getValidImageUrl(currentProject.basicInfoBg || basicData.bgImg, projectImage2Bg)))));
+                    : (caseStudy?.basicInfoBg || getValidImageUrl(currentProject.basicInfoBg || basicData.bgImg, projectImage2Bg))))));
   const basicRows = [
     { label: 'Project Name', val: currentProject.name },
     { label: 'Project Type', val: currentProject.type },
@@ -621,7 +944,7 @@ export default function ProjectDetail({ siteData }) {
             ? (currentProject.clientImg && !currentProject.clientImg.includes('olzpipldgl4mnb7c1y5q') ? currentProject.clientImg : "/assets/Playzonia Kids Play Area ( Surat )/What the Client Wanted.jpg")
             : (isRebounce
                 ? (currentProject.clientImg && !currentProject.clientImg.includes('gy34ivaldlm7ia55iwci') ? currentProject.clientImg : "/assets/Rebounce Game Zone ( Surat )/What the Client Wanted.jpg")
-                : currentProject.clientImg)));
+                : (caseStudy?.clientImg || currentProject.clientImg))));
 
   const solutionTitleCyan = 'What Solution ';
   const solutionTitleSuffix = 'We Provide';
@@ -635,7 +958,7 @@ export default function ProjectDetail({ siteData }) {
             ? (currentProject.solutionImg && !currentProject.solutionImg.includes('vxfee3fxtxt09nu04bd8') ? currentProject.solutionImg : "/assets/Playzonia Kids Play Area ( Surat )/What Solution We Provide.jpg")
             : (isRebounce
                 ? (currentProject.solutionImg && !currentProject.solutionImg.includes('za8k8euyryqqt3r7xsbw') ? currentProject.solutionImg : "/assets/Rebounce Game Zone ( Surat )/What Solution We Provide.jpg")
-                : currentProject.solutionImg)));
+                : (caseStudy?.solutionImg || currentProject.solutionImg))));
 
   const galleryTitleCyan = 'Project ';
   const galleryTitleDark = 'Gallery';
@@ -685,9 +1008,11 @@ export default function ProjectDetail({ siteData }) {
                     "/assets/Rebounce Game Zone ( Surat )/Gallery 5.jpg",
                     "/assets/Rebounce Game Zone ( Surat )/Gallery 6.webp"
                   ]
-                : ((Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0)
-                    ? currentProject.galleryImages
-                    : (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : defaultGalleryList)))));
+                : ((caseStudy?.galleryImages && caseStudy.galleryImages.length > 0)
+                    ? caseStudy.galleryImages
+                    : ((Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0)
+                        ? currentProject.galleryImages
+                        : (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : defaultGalleryList))))));
 
   const galleryImages = cmsGalleryImages.map((imgUrl, idx) => {
     return getValidImageUrl(imgUrl, defaultGalleryList[idx % defaultGalleryList.length]);
