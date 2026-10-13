@@ -1,0 +1,21 @@
+{
+  "bestProductsUrls": {
+    "arcade": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+    "vr": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
+    "bowling": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
+    "softplay": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+    "bumpercar": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
+    "amusement": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
+    "ar": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
+    "trampoline": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+    "hypergrid": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
+    "lasertag": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp"
+  },
+  "industriesUrls": {
+    "Airports & Terminals": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885838/winera_uploads/vlznxp5vpxt5nxrorrzw.webp",
+    "Hospitals & Clinics": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/vbmyhwwywzwqzclv0a5u.jpg",
+    "Hotels & Resorts": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg",
+    "Schools & Academies": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885840/winera_uploads/l5jhtvihkadehhnkgjmc.jpg",
+    "Shopping Malls": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885841/winera_uploads/qrhgcb1f1ovtfcxljjhp.jpg"
+  }
+}

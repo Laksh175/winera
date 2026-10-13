@@ -2050,28 +2050,23 @@ export const getContent = async (req, res) => {
         return prod?.img || '';
       };
 
+      // Only set fallback image if prod.img is completely missing or empty, preserving admin edits
       let needsUpdate = false;
       const updatedCards = siteData.productsHome.cardsList.map(prod => {
-        const expectedImg = getProdImg(prod);
-        if (expectedImg && prod.img !== expectedImg) {
-          needsUpdate = true;
-          return { ...prod, img: expectedImg };
+        if (!prod.img || typeof prod.img !== 'string' || prod.img.trim() === '') {
+          const expectedImg = getProdImg(prod);
+          if (expectedImg) {
+            needsUpdate = true;
+            return { ...prod, img: expectedImg };
+          }
         }
         return prod;
       });
 
-      if (needsUpdate || siteData.productsHome.cardsList.length < 10) {
-        const completeCards = defaultSiteData.productsHome.cardsList.map(defCard => {
-          const existing = siteData.productsHome.cardsList.find(p =>
-            (p.id && p.id === defCard.id) ||
-            (p.title && p.title.toLowerCase().includes(defCard.title.toLowerCase()))
-          );
-          return existing ? { ...existing, img: getProdImg(existing) } : defCard;
-        });
-
+      if (needsUpdate) {
         const newProductsHome = {
           ...siteData.productsHome,
-          cardsList: completeCards
+          cardsList: updatedCards
         };
 
         await Content.findOneAndUpdate(

@@ -3672,16 +3672,77 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <button
                     onClick={async () => {
                       const defaultCards = [
-                        { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
-                        { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
-                        { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
-                        { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
-                        { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
-                        { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
-                        { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
-                        { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
-                        { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" }
-                      ];
+          {
+                    "id": "arcade",
+                    "title": "Arcade Game",
+                    "desc": "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+                    "link": "/products/arcade-games"
+          },
+          {
+                    "id": "vr",
+                    "title": "VR GAME",
+                    "desc": "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
+                    "link": "/products/vr-games"
+          },
+          {
+                    "id": "ar",
+                    "title": "AR GAME",
+                    "desc": "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
+                    "link": "/products/ar-games"
+          },
+          {
+                    "id": "bowling",
+                    "title": "Bowling Alley",
+                    "desc": "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
+                    "link": "/products/bowling-alley"
+          },
+          {
+                    "id": "softplay",
+                    "title": "Soft Play",
+                    "desc": "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+                    "link": "/products/soft-play"
+          },
+          {
+                    "id": "trampoline",
+                    "title": "Trampoline Park",
+                    "desc": "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+                    "link": "/products/trampoline-park"
+          },
+          {
+                    "id": "hypergrid",
+                    "title": "Hyper Grid",
+                    "desc": "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
+                    "link": "/products/hypergrid"
+          },
+          {
+                    "id": "amusement",
+                    "title": "Amusement Park",
+                    "desc": "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
+                    "link": "/products/amusement-park"
+          },
+          {
+                    "id": "bumpercar",
+                    "title": "Bumper Cars",
+                    "desc": "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
+                    "link": "/products/bumper-car"
+          },
+          {
+                    "id": "lasertag",
+                    "title": "Laser Tag",
+                    "desc": "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp",
+                    "link": "/products/laser-tag"
+          }
+];
                       const cur = (Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)
                         ? formData.productsHome.cardsList
                         : defaultCards;
@@ -3699,17 +3760,77 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   {(() => {
                     const defaultCardsList = [
-                      { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "/assets/product-images/Arcade.webp", link: "/products/arcade-games" },
-                      { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "/assets/product-images/VR Game.webp", link: "/products/vr-games" },
-                      { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "/assets/product-images/AR Games.jpg", link: "/products/ar-games" },
-                      { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "/assets/product-images/Bowling.jpg", link: "/products/bowling-alley" },
-                      { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "/assets/product-images/Softplay.webp", link: "/products/soft-play" },
-                      { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "/assets/product-images/Trampoline Prk.webp", link: "/products/trampoline-park" },
-                      { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "/assets/product-images/Hypergrid.jpg", link: "/products/hypergrid" },
-                      { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "/assets/product-images/Amusment ride.jpg", link: "/products/amusement-park" },
-                      { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "/assets/product-images/bumper-car.webp", link: "/products/bumper-car" },
-                      { id: "lasertag", title: "Laser Tag", desc: "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.", img: "/assets/product-images/LaserTag.webp", link: "/products/laser-tag" }
-                    ];
+          {
+                    "id": "arcade",
+                    "title": "Arcade Game",
+                    "desc": "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+                    "link": "/products/arcade-games"
+          },
+          {
+                    "id": "vr",
+                    "title": "VR GAME",
+                    "desc": "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
+                    "link": "/products/vr-games"
+          },
+          {
+                    "id": "ar",
+                    "title": "AR GAME",
+                    "desc": "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
+                    "link": "/products/ar-games"
+          },
+          {
+                    "id": "bowling",
+                    "title": "Bowling Alley",
+                    "desc": "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
+                    "link": "/products/bowling-alley"
+          },
+          {
+                    "id": "softplay",
+                    "title": "Soft Play",
+                    "desc": "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+                    "link": "/products/soft-play"
+          },
+          {
+                    "id": "trampoline",
+                    "title": "Trampoline Park",
+                    "desc": "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+                    "link": "/products/trampoline-park"
+          },
+          {
+                    "id": "hypergrid",
+                    "title": "Hyper Grid",
+                    "desc": "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
+                    "link": "/products/hypergrid"
+          },
+          {
+                    "id": "amusement",
+                    "title": "Amusement Park",
+                    "desc": "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
+                    "link": "/products/amusement-park"
+          },
+          {
+                    "id": "bumpercar",
+                    "title": "Bumper Cars",
+                    "desc": "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
+                    "link": "/products/bumper-car"
+          },
+          {
+                    "id": "lasertag",
+                    "title": "Laser Tag",
+                    "desc": "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp",
+                    "link": "/products/laser-tag"
+          }
+];
 
                     const displayCards = (Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)
                       ? formData.productsHome.cardsList
@@ -3786,13 +3907,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               Card Image <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 600 × 600 px (Square 1:1)</span>
                             </label>
                             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                              {card.img && (
-                                <img
-                                  src={card.img}
-                                  alt="Card Preview"
-                                  style={{ width: '80px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
-                                />
-                              )}
+                              {(() => {
+                                const displayImg = card.img || defaultCardsList.find(d => d.id === card.id || d.title?.toLowerCase().includes((card.title || '').toLowerCase()))?.img;
+                                return displayImg ? (
+                                  <img
+                                    src={displayImg}
+                                    alt="Card Preview"
+                                    style={{ width: '80px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+                                  />
+                                ) : null;
+                              })()}
                               <input
                                 type="file"
                                 accept="image/*"
@@ -3826,16 +3950,77 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <button
                   onClick={() => {
                     const defaultCardsList = [
-                      { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80", link: "/products/arcade-games" },
-                      { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80", link: "/products/vr-games" },
-                      { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80", link: "/products/ar-games" },
-                      { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=800&q=80", link: "/products/bowling-alley" },
-                      { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=800&q=80", link: "/products/soft-play" },
-                      { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=800&q=80", link: "/products/trampoline-park" },
-                      { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", link: "/products/hypergrid" },
-                      { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?auto=format&fit=crop&w=800&q=80", link: "/products/amusement-park" },
-                      { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80", link: "/products/bumper-car" }
-                    ];
+          {
+                    "id": "arcade",
+                    "title": "Arcade Game",
+                    "desc": "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+                    "link": "/products/arcade-games"
+          },
+          {
+                    "id": "vr",
+                    "title": "VR GAME",
+                    "desc": "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
+                    "link": "/products/vr-games"
+          },
+          {
+                    "id": "ar",
+                    "title": "AR GAME",
+                    "desc": "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
+                    "link": "/products/ar-games"
+          },
+          {
+                    "id": "bowling",
+                    "title": "Bowling Alley",
+                    "desc": "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
+                    "link": "/products/bowling-alley"
+          },
+          {
+                    "id": "softplay",
+                    "title": "Soft Play",
+                    "desc": "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+                    "link": "/products/soft-play"
+          },
+          {
+                    "id": "trampoline",
+                    "title": "Trampoline Park",
+                    "desc": "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+                    "link": "/products/trampoline-park"
+          },
+          {
+                    "id": "hypergrid",
+                    "title": "Hyper Grid",
+                    "desc": "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
+                    "link": "/products/hypergrid"
+          },
+          {
+                    "id": "amusement",
+                    "title": "Amusement Park",
+                    "desc": "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
+                    "link": "/products/amusement-park"
+          },
+          {
+                    "id": "bumpercar",
+                    "title": "Bumper Cars",
+                    "desc": "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
+                    "link": "/products/bumper-car"
+          },
+          {
+                    "id": "lasertag",
+                    "title": "Laser Tag",
+                    "desc": "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp",
+                    "link": "/products/laser-tag"
+          }
+];
                     const dataToSave = {
                       title: formData.productsHome?.title || "Take a look At *Our Best Products*",
                       subtitle: formData.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions",
@@ -4016,17 +4201,47 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                 {(() => {
                   const defaultItems = [
-                    { title: "Shopping Malls", img: "" },
-                    { title: "Hotels & Resorts", img: "" },
-                    { title: "Schools & Academies", img: "" },
-                    { title: "Commercial Spaces", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
-                    { title: "Residential Projects", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
-                    { title: "Sports Centres", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
-                    { title: "Entertainment Hubs", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-                    { title: "Airports & Terminals", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" },
-                    { title: "Hospitals & Clinics", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" },
-                    { title: "Food and Beverage", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" }
-                  ];
+          {
+                    "title": "Shopping Malls",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885841/winera_uploads/qrhgcb1f1ovtfcxljjhp.jpg"
+          },
+          {
+                    "title": "Hotels & Resorts",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg"
+          },
+          {
+                    "title": "Schools & Academies",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885840/winera_uploads/l5jhtvihkadehhnkgjmc.jpg"
+          },
+          {
+                    "title": "Commercial Spaces",
+                    "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
+          },
+          {
+                    "title": "Residential Projects",
+                    "img": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80"
+          },
+          {
+                    "title": "Sports Centres",
+                    "img": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80"
+          },
+          {
+                    "title": "Entertainment Hubs",
+                    "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+          },
+          {
+                    "title": "Airports & Terminals",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885838/winera_uploads/vlznxp5vpxt5nxrorrzw.webp"
+          },
+          {
+                    "title": "Hospitals & Clinics",
+                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/vbmyhwwywzwqzclv0a5u.jpg"
+          },
+          {
+                    "title": "Food and Beverage",
+                    "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+          }
+];
 
                   const getList = () => Array.isArray(formData.industriesHeader?.items)
                     ? formData.industriesHeader.items
@@ -4092,13 +4307,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 Industry Image <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 800 × 600 px (4:3)</span>
                               </label>
                               <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                                {item.img && (
-                                  <img
-                                    src={item.img}
-                                    alt="Industry Preview"
-                                    style={{ width: '80px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
-                                  />
-                                )}
+                                {(() => {
+                                  const displayImg = item.img || defaultItems.find(d => d.title.toLowerCase() === (item.title || '').trim().toLowerCase())?.img;
+                                  return displayImg ? (
+                                    <img
+                                      src={displayImg}
+                                      alt="Industry Preview"
+                                      style={{ width: '80px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+                                    />
+                                  ) : null;
+                                })()}
                                 <input
                                   type="file"
                                   accept="image/*"
