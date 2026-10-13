@@ -1993,10 +1993,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           { name: "Partner 3", logoUrl: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=300&q=80" }
         ],
         builtProjects: [
-          { name: "Hulaboo", city: "Surat", imageUrl: "/assets/Hulaboo ( Surat )/1st Image.jpg" },
-          { name: "Nenopanda", city: "Indore", imageUrl: "" },
-          { name: "FizzyFox", city: "Nashik", imageUrl: "" },
-          { name: "Playzonia", city: "Surat", imageUrl: "" }
+          { name: "FifthAlley Sport Bowling", city: "Surat", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877018/winera_uploads/projects/lf45hnr7l9jwbij9gh4q.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877018/winera_uploads/projects/lf45hnr7l9jwbij9gh4q.jpg", slug: "fifthalley-sport-bowling" },
+          { name: "Hulaboo", city: "Surat", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg", slug: "hulaboo" },
+          { name: "Playzonia", city: "Surat", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg", slug: "playzonia" },
+          { name: "LaneX Bowling Alley", city: "Surat", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877047/winera_uploads/projects/ax4fuat1a1uf3l7ex1he.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877047/winera_uploads/projects/ax4fuat1a1uf3l7ex1he.jpg", slug: "lanex-bowling-alley" },
+          { name: "Rebounce", city: "Surat", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877065/winera_uploads/projects/ulhoypau8uifcunj9ogn.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877065/winera_uploads/projects/ulhoypau8uifcunj9ogn.jpg", slug: "rebounce" },
+          { name: "Level Up", city: "Morbi", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880283/winera_uploads/pskx11h3zysrl8yrx0te.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880283/winera_uploads/pskx11h3zysrl8yrx0te.jpg", slug: "level-up" },
+          { name: "Rock and Bowl", city: "Vapi", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877846/winera_uploads/ebko4as1kehon9gbnkg7.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877846/winera_uploads/ebko4as1kehon9gbnkg7.jpg", slug: "rock-and-bowl" },
+          { name: "Rumble Zone", city: "Gurugram", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880685/winera_uploads/ts0qlqlxigm1vfl1qp9s.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880685/winera_uploads/ts0qlqlxigm1vfl1qp9s.jpg", slug: "rumble-zone" },
+          { name: "The Fun Factory", city: "Nallasopara", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881209/winera_uploads/b9jr71otq8j24u3ugqid.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881209/winera_uploads/b9jr71otq8j24u3ugqid.jpg", slug: "the-fun-factory" },
+          { name: "Pop A Puddle", city: "Bangalore", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882402/winera_uploads/wikn3ojponc3myqreve9.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882402/winera_uploads/wikn3ojponc3myqreve9.jpg", slug: "pop-a-puddle" },
+          { name: "Skadoosh Play Area", city: "Bangalore", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg", slug: "skadoosh-play-area" },
+          { name: "VR 360 Game Zone", city: "Gandhidham", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg", slug: "vr-360-game-zone" },
+          { name: "Altitude Ball in Ball Out", city: "Mumbai", imageUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg", slug: "altitude-ball-in-ball-out" }
         ]
       };
       currentList = fallbackDefaults[sectionKey] ? [...fallbackDefaults[sectionKey]] : [];
@@ -2383,13 +2392,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     }
 
     if (mode === 'edit') {
-      setModalItemData({ ...currentItem });
+      const editData = { ...currentItem };
+      if (sec === 'builtProjects') {
+        editData.imageUrl = editData.imageUrl || editData.img || '';
+        editData.img = editData.imageUrl;
+      }
+      setModalItemData(editData);
     } else {
       // Default empty structure based on active section
       if (sec === 'stats') setModalItemData({ number: '', label: '' });
       else if (sec === 'clientLogos') setModalItemData({ name: '', logoUrl: '' });
       else if (sec === 'channelPartners') setModalItemData({ name: '', logoUrl: '' });
-      else if (sec === 'builtProjects') setModalItemData({ name: '', city: '', imageUrl: '' });
+      else if (sec === 'builtProjects') setModalItemData({ name: '', city: '', imageUrl: '', img: '' });
       else if (sec === 'projectItems') setModalItemData({
         name: 'New Turnkey Project',
         category: 'Game Zones',
@@ -2483,10 +2497,29 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       // Update local state for immediate UI feedback
       if (modalMode === 'add') {
         currentList.push(modalItemData);
-      } else if (modalMode === 'edit' && editingIndex !== null) {
-        currentList[editingIndex] = modalItemData;
+      } else if (modalMode === 'edit') {
+        const foundIdx = currentList.findIndex(x => x && (x.slug === autoSlug || x.id === autoSlug || (x.name && x.name.toLowerCase() === projName.toLowerCase())));
+        if (foundIdx !== -1) {
+          currentList[foundIdx] = modalItemData;
+        } else if (editingIndex !== null && editingIndex >= 0 && editingIndex < currentList.length) {
+          currentList[editingIndex] = modalItemData;
+        } else {
+          currentList.push(modalItemData);
+        }
       }
-      setFormData(prev => ({ ...prev, projectItems: currentList }));
+
+      let updatedBuiltProjects = Array.isArray(formData.builtProjects) ? [...formData.builtProjects] : [];
+      const bpIdx = updatedBuiltProjects.findIndex(b => (b.slug && (b.slug === autoSlug || b.slug === modalItemData.id)) || (b.name && b.name.toLowerCase() === projName.toLowerCase()));
+      if (bpIdx !== -1) {
+        updatedBuiltProjects[bpIdx] = {
+          ...updatedBuiltProjects[bpIdx],
+          img: modalItemData.img || modalItemData.imageUrl || updatedBuiltProjects[bpIdx].img,
+          imageUrl: modalItemData.imageUrl || modalItemData.img || updatedBuiltProjects[bpIdx].imageUrl,
+          isActive: isItemActiveVal,
+          status: isItemActiveVal ? 'active' : 'inactive'
+        };
+      }
+      setFormData(prev => ({ ...prev, projectItems: currentList, builtProjects: updatedBuiltProjects }));
       closeModal();
 
       // Send ONLY THIS SINGLE PROJECT to backend payload!
@@ -2714,6 +2747,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       } else {
         currentList = [...formData.testimonials];
       }
+    }
+
+    if (secKey === 'builtProjects') {
+      const pImg = modalItemData.imageUrl || modalItemData.img || '';
+      const pName = modalItemData.name || modalItemData.title || 'New Game Zone';
+      const pCity = modalItemData.city || '';
+      modalItemData.name = pName;
+      modalItemData.title = pName;
+      modalItemData.city = pCity;
+      modalItemData.location = modalItemData.location || (pCity ? `${pCity}` : '');
+      modalItemData.imageUrl = pImg;
+      modalItemData.img = pImg;
+      modalItemData.slug = modalItemData.slug || pName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }
 
     if (modalMode === 'add') {
@@ -5170,17 +5216,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
                         <td style={{ padding: '14px 18px', fontWeight: '700', color: '#64748b' }}>{idx + 1}</td>
                         <td style={{ padding: '14px 18px' }}>
-                          {item.imageUrl ? (
-                            <img src={item.imageUrl} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
+                          {(item.imageUrl || item.img) ? (
+                            <img src={item.imageUrl || item.img} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
                           ) : (
                             <span style={{ color: '#94a3b8', fontSize: '12px' }}>No image</span>
                           )}
                         </td>
-                        <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.name || 'Unnamed Game Zone'}</td>
-                        <td style={{ padding: '14px 18px', fontWeight: '700', color: '#38bdf8' }}>{item.city || 'N/A'}</td>
+                        <td style={{ padding: '14px 18px', fontWeight: '800', color: '#0f172a' }}>{item.name || item.title || 'Unnamed Game Zone'}</td>
+                        <td style={{ padding: '14px 18px', fontWeight: '700', color: '#38bdf8' }}>{item.city || item.location || 'N/A'}</td>
                         <td style={{ padding: '14px 18px', textAlign: 'right' }}>
                           <button
-                            onClick={() => openModal('edit', idx, item)}
+                            onClick={() => openModal('edit', idx, { ...item, imageUrl: item.imageUrl || item.img, img: item.img || item.imageUrl })}
                             style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
                           >
                             <Edit2 style={{ width: '14px', height: '14px', verticalAlign: 'middle', marginRight: '4px' }} /> Edit
@@ -6585,7 +6631,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.arcadeWhyUs?.title || 'Why Choose *Winera International*'}
+                  value={formData.arcadeWhyUs?.title !== undefined ? formData.arcadeWhyUs.title : 'Why Choose *Winera International*'}
                   onChange={(e) => handleFieldChange('arcadeWhyUs', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -6622,7 +6668,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         : defaultItems;
 
                       const updatedItems = [...currentItems, { title: "New Feature Title", desc: "Description text..." }];
-                      const updatedSection = { ...(formData.arcadeWhyUs || {}), items: updatedItems };
+                      const currentTitle = (formData.arcadeWhyUs?.title !== undefined && formData.arcadeWhyUs?.title !== null && formData.arcadeWhyUs.title.trim() !== '')
+                        ? formData.arcadeWhyUs.title
+                        : 'Why Choose *Winera International*';
+                      const updatedSection = {
+                        ...(formData.arcadeWhyUs || {}),
+                        title: currentTitle,
+                        items: updatedItems
+                      };
                       setFormData(prev => ({
                         ...prev,
                         arcadeWhyUs: updatedSection
@@ -6673,7 +6726,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             type="button"
                             onClick={async () => {
                               const updated = itemsList.filter((_, i) => i !== idx);
-                              const updatedSection = { ...(formData.arcadeWhyUs || {}), items: updated };
+                              const currentTitle = (formData.arcadeWhyUs?.title !== undefined && formData.arcadeWhyUs?.title !== null && formData.arcadeWhyUs.title.trim() !== '')
+                                ? formData.arcadeWhyUs.title
+                                : 'Why Choose *Winera International*';
+                              const updatedSection = {
+                                ...(formData.arcadeWhyUs || {}),
+                                title: currentTitle,
+                                items: updated
+                              };
                               setFormData(prev => ({
                                 ...prev,
                                 arcadeWhyUs: updatedSection
@@ -6730,11 +6790,33 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <button
                   type="button"
                   onClick={() => {
+                    const currentTitle = (formData.arcadeWhyUs?.title !== undefined && formData.arcadeWhyUs?.title !== null && formData.arcadeWhyUs.title.trim() !== '')
+                      ? formData.arcadeWhyUs.title
+                      : 'Why Choose *Winera International*';
+                    const defaultItems = [
+                      { title: "15+ Years In The Industry", desc: "Supplying And Supporting Indoor Amusement Equipment Across India" },
+                      { title: "Successful Installations", desc: "From Malls To Resorts, Our Track Record Speaks Through Completed Projects, Not Just Promises." },
+                      { title: "Direct Sourcing", desc: "We Work Straight With Global Manufacturers — Consistent Quality, No Unnecessary Markup." },
+                      { title: "Pricing That Makes Sense", desc: "No Hidden Costs, No Inflated Resale Pricing — Fair Rates Backed By Direct Sourcing" },
+                      { title: "Local Support In 50+ Cities", desc: "Our Own Technicians Install And Service Every Machine — No Waiting On Overseas Suppliers." },
+                      { title: "Easy To Maintain", desc: "Equipment Rated For Heavy Daily Commercial Use — Fewer Breakdowns, More Consistent Revenue" },
+                      { title: "Solutions That Fit Your Space", desc: "Every Recommendation Based On Your Venue Size, Footfall, And Budget — Never One-Size-Fits-All." }
+                    ];
+                    const itemsToSave = (Array.isArray(formData.arcadeWhyUs?.items) && formData.arcadeWhyUs.items.length > 0)
+                      ? formData.arcadeWhyUs.items
+                      : (Array.isArray(formData.arcadeWhyUs?.topItems) && formData.arcadeWhyUs.topItems.length > 0)
+                        ? [...formData.arcadeWhyUs.topItems, ...(formData.arcadeWhyUs.bottomItems || [])]
+                        : defaultItems;
+
                     const dataToSave = {
-                      title: formData.arcadeWhyUs?.title || "Why Buy Arcade Games *From Winera International?*",
+                      title: currentTitle,
                       subtitle: formData.arcadeWhyUs?.subtitle || "We are direct arcade game machines manufacturer and supplier...",
-                      items: (Array.isArray(formData.arcadeWhyUs?.items) && formData.arcadeWhyUs.items.length > 0) ? formData.arcadeWhyUs.items : undefined
+                      items: itemsToSave
                     };
+                    setFormData(prev => ({
+                      ...prev,
+                      arcadeWhyUs: dataToSave
+                    }));
                     persistSectionToDatabase('arcadeWhyUs', dataToSave);
                   }}
                   style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
@@ -6893,7 +6975,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>
                             Category Cover Photo <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', fontWeight: '700', marginLeft: '6px' }}>📐 Recommended: 600 × 600 px (Square 1:1)</span>
                           </label>
-                          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
                             <label style={{
                               background: '#38bdf8',
                               color: '#fff',
@@ -6916,11 +6998,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                   setStatusMsg(`Uploading photo for ${item.title}...`);
                                   try {
                                     const res = await uploadImageFile(file, admin.token);
-                                    const updated = [...itemsList];
-                                    updated[idx] = { ...updated[idx], img: res.url };
+                                    const updated = itemsList.map((it, i) => i === idx ? { ...it, img: res.url } : it);
                                     const updatedSection = { ...(formData[activeSection] || {}), items: updated };
                                     setFormData(prev => ({ ...prev, [activeSection]: updatedSection }));
                                     await persistSectionToDatabase(activeSection, updatedSection);
+                                    setStatusMsg(`Cover photo for ${item.title} updated and saved!`);
                                   } catch (err) {
                                     setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
                                   }
@@ -6928,10 +7010,23 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 style={{ display: 'none' }}
                               />
                             </label>
+                            <input
+                              type="text"
+                              value={item.img || ''}
+                              placeholder="Or paste image URL"
+                              onChange={(e) => {
+                                const updated = itemsList.map((it, i) => i === idx ? { ...it, img: e.target.value } : it);
+                                setFormData(prev => ({
+                                  ...prev,
+                                  [activeSection]: { ...(prev[activeSection] || {}), items: updated }
+                                }));
+                              }}
+                              style={{ flex: '1 1 200px', minWidth: '180px', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px', color: '#334155' }}
+                            />
                             {(() => {
-                              const displayImg = item.img || defaultList.find(c => c.title.toLowerCase() === (item.title || '').trim().toLowerCase())?.img;
+                              const displayImg = item.img || defaultList.find(c => c.title.toLowerCase() === (item.title || '').trim().toLowerCase())?.img || defaultList[idx]?.img;
                               return displayImg ? (
-                                <img src={displayImg} alt="" style={{ width: '50px', height: '36px', borderRadius: '6px', objectFit: 'cover', border: '1.5px solid #38bdf8' }} />
+                                <img src={displayImg} alt="" style={{ width: '54px', height: '40px', borderRadius: '6px', objectFit: 'cover', border: '1.5px solid #38bdf8' }} />
                               ) : null;
                             })()}
                           </div>
@@ -6943,7 +7038,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                 <div style={{ textAlign: 'right', marginTop: '10px' }}>
                   <button
-                    onClick={() => persistSectionToDatabase(activeSection, { ...(formData[activeSection] || {}), items: itemsList })}
+                    onClick={() => {
+                      const finalItems = itemsList.map((it, i) => ({
+                        ...it,
+                        img: it.img || defaultList.find(c => c.title.toLowerCase() === (it.title || '').trim().toLowerCase())?.img || defaultList[i]?.img || ''
+                      }));
+                      persistSectionToDatabase(activeSection, { ...(formData[activeSection] || {}), items: finalItems });
+                    }}
                     style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
                     Save Related Products Section
@@ -19770,7 +19871,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                         };
                                         const updatedList = [...currentList];
                                         updatedList[targetIdx] = updatedItem;
-                                        setFormData(prev => ({ ...prev, projectItems: updatedList }));
+                                        let updatedBuilt = Array.isArray(formData.builtProjects) ? [...formData.builtProjects] : [];
+                                        const bpMatchIdx = updatedBuilt.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
+                                        if (bpMatchIdx !== -1) {
+                                          updatedBuilt[bpMatchIdx] = { ...updatedBuilt[bpMatchIdx], isActive: true, status: 'active' };
+                                        }
+                                        setFormData(prev => ({ ...prev, projectItems: updatedList, builtProjects: updatedBuilt }));
 
                                         try {
                                           await updateSectionContent('projectItems', updatedList, admin.token);
@@ -19828,7 +19934,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                         };
                                         const updatedList = [...currentList];
                                         updatedList[targetIdx] = updatedItem;
-                                        setFormData(prev => ({ ...prev, projectItems: updatedList }));
+                                        let updatedBuilt = Array.isArray(formData.builtProjects) ? [...formData.builtProjects] : [];
+                                        const bpMatchIdx = updatedBuilt.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
+                                        if (bpMatchIdx !== -1) {
+                                          updatedBuilt[bpMatchIdx] = { ...updatedBuilt[bpMatchIdx], isActive: false, status: 'inactive' };
+                                        }
+                                        setFormData(prev => ({ ...prev, projectItems: updatedList, builtProjects: updatedBuilt }));
 
                                         try {
                                           await updateSectionContent('projectItems', updatedList, admin.token);
@@ -24522,8 +24633,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           style={{ display: 'none' }}
                         />
                       </label>
-                      {modalItemData.imageUrl && (
-                        <img src={modalItemData.imageUrl} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
+                      {(modalItemData.imageUrl || modalItemData.img) && (
+                        <img src={modalItemData.imageUrl || modalItemData.img} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #38bdf8' }} />
                       )}
                     </div>
                   </div>

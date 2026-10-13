@@ -526,7 +526,7 @@ export default function VrGames({ siteData }) {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {(() => {
-                  const availableCats = allVrGames?.categoriesList || [
+                  const availableCats = siteData?.vrCategoriesData?.categoriesList || allVrGames?.categoriesList || [
                     "All VR Games",
                     "Bester VR",
                     "Funin VR",
@@ -620,7 +620,9 @@ export default function VrGames({ siteData }) {
             {/* RIGHT DISPLAY AREA: PRODUCT SEARCH BAR + CARDS GRID + PAGINATION */}
             <div className="winera-products-display-area" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               {(() => {
-                const masterCards = Array.isArray(allVrGames?.cards) ? allVrGames.cards : [];
+                const masterCards = (Array.isArray(siteData?.vrCategoriesData?.cards) && siteData.vrCategoriesData.cards.length > 0)
+                  ? siteData.vrCategoriesData.cards
+                  : (Array.isArray(allVrGames?.cards) ? allVrGames.cards : []);
 
                 // Filter cards by selected activeCategory
                 const isAllCategory = !activeCategory || activeCategory === "All VR Games" || activeCategory === "All";
@@ -903,7 +905,9 @@ export default function VrGames({ siteData }) {
 
           {/* Dynamic Pagination Toolbar (Centered across full section width 1:1 matching Arcade Games) */}
           {(() => {
-            const masterCards = Array.isArray(allVrGames?.cards) ? allVrGames.cards : [];
+            const masterCards = (Array.isArray(siteData?.vrCategoriesData?.cards) && siteData.vrCategoriesData.cards.length > 0)
+              ? siteData.vrCategoriesData.cards
+              : (Array.isArray(allVrGames?.cards) ? allVrGames.cards : []);
             const isAllCategory = !activeCategory || activeCategory === "All VR Games" || activeCategory === "All";
             const categoryMatched = isAllCategory
               ? masterCards

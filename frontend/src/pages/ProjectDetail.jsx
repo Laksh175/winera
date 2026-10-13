@@ -35,6 +35,12 @@ const getValidImageUrl = (url, fallback) => {
   if (url.startsWith('https://res.cloudinary.com/') || url.startsWith('https://images.unsplash.com/') || url.startsWith('data:')) {
     return url;
   }
+  if (url.startsWith('/assets/Skadoosh ( Bengaluru )/')) {
+    return url;
+  }
+  if (url.startsWith('/assets/Pop A Puddle ( Bengaluru )/')) {
+    return url;
+  }
   if (url.includes('FifthAlley') || url.includes('fifthalley')) {
     const lower = url.toLowerCase();
     if (lower.includes('basic') || lower.includes('information')) {
@@ -208,7 +214,26 @@ const getValidImageUrl = (url, fallback) => {
     }
     return '/assets/The Fun Factory ( Nalasopara )/1st image.jpg';
   }
-  if (url.includes('Pop A Puddle') || url.includes('pop-a-puddle') || url.includes('pop a puddle') || url.includes('Bengaluru') || url.includes('bengaluru') || url.includes('Bangalore') || url.includes('bangalore')) {
+  if (url.includes('Skadoosh') || url.includes('skadoosh-play-area') || url.includes('skadoosh')) {
+    const lower = url.toLowerCase();
+    if (lower.includes('basic') || lower.includes('detail') || lower.includes('information')) {
+      return '/assets/Skadoosh ( Bengaluru )/Basic Information.jpg';
+    }
+    if (lower.includes('client') || lower.includes('wanted')) {
+      return '/assets/Skadoosh ( Bengaluru )/What the Client Wanted.jpg';
+    }
+    if (lower.includes('solution') || lower.includes('provide')) {
+      return '/assets/Skadoosh ( Bengaluru )/What Solution We Provide.webp';
+    }
+    const galMatch = url.match(/gall?[ea]ry[-_\s]*(\d+)\.(jpg|webp|jpeg)/i);
+    if (galMatch) {
+      const idx = galMatch[1];
+      if (['1', '2', '3', '5', '6'].includes(idx)) return `/assets/Skadoosh ( Bengaluru )/Gallery ${idx}.jpg`;
+      return `/assets/Skadoosh ( Bengaluru )/Gallery ${idx}.webp`;
+    }
+    return '/assets/Skadoosh ( Bengaluru )/1st image.jpg';
+  }
+  if (url.includes('Pop A Puddle') || url.includes('pop-a-puddle') || url.includes('pop a puddle')) {
     const lower = url.toLowerCase();
     if (lower.includes('basic') || lower.includes('detail') || lower.includes('information')) {
       return '/assets/Pop A Puddle ( Bengaluru )/Basic Detail.jpg';
@@ -236,25 +261,6 @@ const getValidImageUrl = (url, fallback) => {
       return `/assets/Pop A Puddle ( Bengaluru )/Gallery ${idx}.webp`;
     }
     return '/assets/Pop A Puddle ( Bengaluru )/1st image.jpg';
-  }
-  if (url.includes('Skadoosh') || url.includes('skadoosh-play-area') || url.includes('skadoosh')) {
-    const lower = url.toLowerCase();
-    if (lower.includes('basic') || lower.includes('detail') || lower.includes('information')) {
-      return '/assets/Skadoosh ( Bengaluru )/Basic Information.jpg';
-    }
-    if (lower.includes('client') || lower.includes('wanted')) {
-      return '/assets/Skadoosh ( Bengaluru )/What the Client Wanted.jpg';
-    }
-    if (lower.includes('solution') || lower.includes('provide')) {
-      return '/assets/Skadoosh ( Bengaluru )/What Solution We Provide.webp';
-    }
-    const galMatch = url.match(/gall?[ea]ry[-_\s]*(\d+)\.(jpg|webp|jpeg)/i);
-    if (galMatch) {
-      const idx = galMatch[1];
-      if (['1', '2', '3', '5', '6'].includes(idx)) return `/assets/Skadoosh ( Bengaluru )/Gallery ${idx}.jpg`;
-      return `/assets/Skadoosh ( Bengaluru )/Gallery ${idx}.webp`;
-    }
-    return '/assets/Skadoosh ( Bengaluru )/1st image.jpg';
   }
   if (url.includes('VR 360') || url.includes('vr-360') || url.includes('vr 360') || url.includes('Gandhidham') || url.includes('gandhidham')) {
     const lower = url.toLowerCase();
@@ -862,6 +868,8 @@ export default function ProjectDetail({ siteData }) {
   const isLaneX = targetSlug === 'lanex-bowling-alley' || cleanAlpha(currentProject?.name || '').includes('lanex');
   const isPlayzonia = targetSlug === 'playzonia' || cleanAlpha(currentProject?.name || '').includes('playzonia');
   const isRebounce = targetSlug === 'rebounce' || cleanAlpha(currentProject?.name || '').includes('rebounce');
+  const isSkadoosh = targetSlug === 'skadoosh-play-area' || cleanAlpha(currentProject?.name || '').includes('skadoosh');
+  const isPopAPuddle = targetSlug === 'pop-a-puddle' || cleanAlpha(currentProject?.name || '').includes('popapuddle') || cleanAlpha(currentProject?.name || '').includes('pop a puddle');
   const bannerImg = getValidImageUrl(heroData.bannerImg, projectBanner);
   const breadcrumbHome = heroData.breadcrumbHome || 'Home';
 
@@ -912,7 +920,11 @@ export default function ProjectDetail({ siteData }) {
             ? (currentProject.mainImg && !currentProject.mainImg.includes('ymswdjzfwqi5z7ksv7zd') ? currentProject.mainImg : "/assets/Playzonia Kids Play Area ( Surat )/1st Image.jpg")
             : (isRebounce
                 ? (currentProject.mainImg && !currentProject.mainImg.includes('nri2vtjcndonajowvvqw') ? currentProject.mainImg : "/assets/Rebounce Game Zone ( Surat )/1st Image.jpg")
-                : (caseStudy?.mainImg || currentProject.mainImg))));
+                : (isSkadoosh
+                    ? (currentProject.mainImg || caseStudy?.mainImg || "/assets/Skadoosh ( Bengaluru )/1st image.jpg")
+                    : (isPopAPuddle
+                        ? (currentProject.mainImg || caseStudy?.mainImg || "/assets/Pop A Puddle ( Bengaluru )/1st image.jpg")
+                        : (currentProject.mainImg || caseStudy?.mainImg))))));
 
   const basicBg = isFifthAlley
     ? "/assets/FifthAlley-Sport-Bowling/basic-information.jpg"
@@ -924,7 +936,11 @@ export default function ProjectDetail({ siteData }) {
                 ? "/assets/Playzonia Kids Play Area ( Surat )/Basic Information.jpg"
                 : (isRebounce
                     ? "/assets/Rebounce Game Zone ( Surat )/Basic Information.jpg"
-                    : (caseStudy?.basicInfoBg || getValidImageUrl(currentProject.basicInfoBg || basicData.bgImg, projectImage2Bg))))));
+                    : (isSkadoosh
+                        ? (currentProject.basicInfoBg || caseStudy?.basicInfoBg || "/assets/Skadoosh ( Bengaluru )/Basic Information.jpg")
+                        : (isPopAPuddle
+                            ? (currentProject.basicInfoBg || caseStudy?.basicInfoBg || "/assets/Pop A Puddle ( Bengaluru )/Basic Detail.jpg")
+                            : (currentProject.basicInfoBg || caseStudy?.basicInfoBg || getValidImageUrl(basicData.bgImg, projectImage2Bg))))))));
   const basicRows = [
     { label: 'Project Name', val: currentProject.name },
     { label: 'Project Type', val: currentProject.type },
@@ -944,7 +960,11 @@ export default function ProjectDetail({ siteData }) {
             ? (currentProject.clientImg && !currentProject.clientImg.includes('olzpipldgl4mnb7c1y5q') ? currentProject.clientImg : "/assets/Playzonia Kids Play Area ( Surat )/What the Client Wanted.jpg")
             : (isRebounce
                 ? (currentProject.clientImg && !currentProject.clientImg.includes('gy34ivaldlm7ia55iwci') ? currentProject.clientImg : "/assets/Rebounce Game Zone ( Surat )/What the Client Wanted.jpg")
-                : (caseStudy?.clientImg || currentProject.clientImg))));
+                : (isSkadoosh
+                    ? (currentProject.clientImg || caseStudy?.clientImg || "/assets/Skadoosh ( Bengaluru )/What the Client Wanted.jpg")
+                    : (isPopAPuddle
+                        ? (currentProject.clientImg || caseStudy?.clientImg || "/assets/Pop A Puddle ( Bengaluru )/What the client Wanted.webp")
+                        : (currentProject.clientImg || caseStudy?.clientImg))))));
 
   const solutionTitleCyan = 'What Solution ';
   const solutionTitleSuffix = 'We Provide';
@@ -958,7 +978,11 @@ export default function ProjectDetail({ siteData }) {
             ? (currentProject.solutionImg && !currentProject.solutionImg.includes('vxfee3fxtxt09nu04bd8') ? currentProject.solutionImg : "/assets/Playzonia Kids Play Area ( Surat )/What Solution We Provide.jpg")
             : (isRebounce
                 ? (currentProject.solutionImg && !currentProject.solutionImg.includes('za8k8euyryqqt3r7xsbw') ? currentProject.solutionImg : "/assets/Rebounce Game Zone ( Surat )/What Solution We Provide.jpg")
-                : (caseStudy?.solutionImg || currentProject.solutionImg))));
+                : (isSkadoosh
+                    ? (currentProject.solutionImg || caseStudy?.solutionImg || "/assets/Skadoosh ( Bengaluru )/What Solution We Provide.webp")
+                    : (isPopAPuddle
+                        ? (currentProject.solutionImg || caseStudy?.solutionImg || "/assets/Pop A Puddle ( Bengaluru )/What Solution We Provide.jpg")
+                        : (currentProject.solutionImg || caseStudy?.solutionImg))))));
 
   const galleryTitleCyan = 'Project ';
   const galleryTitleDark = 'Gallery';
@@ -1008,11 +1032,44 @@ export default function ProjectDetail({ siteData }) {
                     "/assets/Rebounce Game Zone ( Surat )/Gallery 5.jpg",
                     "/assets/Rebounce Game Zone ( Surat )/Gallery 6.webp"
                   ]
-                : ((caseStudy?.galleryImages && caseStudy.galleryImages.length > 0)
-                    ? caseStudy.galleryImages
-                    : ((Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0)
+                : (isSkadoosh
+                    ? ((Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0)
                         ? currentProject.galleryImages
-                        : (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : defaultGalleryList))))));
+                        : (caseStudy?.galleryImages || [
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 1.jpg",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 2.jpg",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 3.jpg",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 4.webp",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 5.jpg",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 6.jpg",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 7.webp",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 8.webp",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 9.webp",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 10.webp",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 11.webp",
+                            "/assets/Skadoosh ( Bengaluru )/Gallery 12.webp"
+                          ]))
+                    : (isPopAPuddle
+                        ? ((Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0)
+                            ? currentProject.galleryImages
+                            : (caseStudy?.galleryImages || [
+                                "/assets/Pop A Puddle ( Bengaluru )/Gallery 1.webp",
+                                "/assets/Pop A Puddle ( Bengaluru )/Gallery 2.jpg",
+                                "/assets/Pop A Puddle ( Bengaluru )/gallery 3.jpg",
+                                "/assets/Pop A Puddle ( Bengaluru )/Gallery 4.jpg",
+                                "/assets/Pop A Puddle ( Bengaluru )/Gallery 5.jpg",
+                                "/assets/Pop A Puddle ( Bengaluru )/gallery 6.jpg",
+                                "/assets/Pop A Puddle ( Bengaluru )/Gallery 7.webp",
+                                "/assets/Pop A Puddle ( Bengaluru )/Gallary 8.webp",
+                                "/assets/Pop A Puddle ( Bengaluru )/Gallery 9.webp",
+                                "/assets/Pop A Puddle ( Bengaluru )/Gallery 10.webp",
+                                "/assets/Pop A Puddle ( Bengaluru )/gallery 11.webp"
+                              ]))
+                        : ((Array.isArray(currentProject.galleryImages) && currentProject.galleryImages.length > 0)
+                            ? currentProject.galleryImages
+                            : ((caseStudy?.galleryImages && caseStudy.galleryImages.length > 0)
+                                ? caseStudy.galleryImages
+                                : (Array.isArray(galleryData.images) && galleryData.images.length > 0 ? galleryData.images : defaultGalleryList))))))));
 
   const galleryImages = cmsGalleryImages.map((imgUrl, idx) => {
     return getValidImageUrl(imgUrl, defaultGalleryList[idx % defaultGalleryList.length]);

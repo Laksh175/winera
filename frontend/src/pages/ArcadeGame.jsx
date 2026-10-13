@@ -61,6 +61,11 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
   let text = rawText || defaultText;
   if (!text) return null;
 
+  // Auto-accent "Winera International" if user entered plain text without asterisks
+  if (!text.includes('*') && text.includes('Winera International')) {
+    text = text.replace(/Winera International/g, '*Winera International*');
+  }
+
   // Ensure spacing around <br/> tags so words never stick together if line breaks are hidden on mobile
   text = text.replace(/([^\s>])(<br\s*\/?>)/gi, '$1 $2').replace(/(<br\s*\/?>)([^\s<])/gi, '$1 $2');
 

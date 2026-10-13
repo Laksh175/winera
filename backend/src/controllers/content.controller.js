@@ -132,11 +132,13 @@ export const defaultSiteData = {
     { name: "Partner 2", logoUrl: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=300&q=80" },
     { name: "Partner 3", logoUrl: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=300&q=80" }
   ],
-  builtProjects: projectsData.slice(0, 8).map(p => ({
+  builtProjects: projectsData.map(p => ({
     title: p.name,
     name: p.name,
     category: p.type || p.category,
+    city: p.city,
     location: `${p.city}, ${p.state}`,
+    state: p.state,
     area: p.area,
     slug: p.slug,
     img: p.img,
@@ -2011,26 +2013,53 @@ export const getContent = async (req, res) => {
         { upsert: true, new: true }
       );
       siteData.projectItems = projectsData;
-    }
-
-    // Auto-ensure showcase builtProjects are populated if empty
-    if (!Array.isArray(siteData.builtProjects) || siteData.builtProjects.length === 0) {
-      const showcaseBuiltProjects = projectsData.slice(0, 8).map(p => ({
-        title: p.name,
-        name: p.name,
-        category: p.type || p.category,
-        location: `${p.city}, ${p.state}`,
-        area: p.area,
-        slug: p.slug,
-        img: p.img,
-        imageUrl: p.img
-      }));
+    } else if (Array.isArray(siteData.projectItems) && siteData.projectItems.some(p => p.slug === 'funfair' || p.slug === 'skidz-play-spaces')) {
+      const cleanedProjects = siteData.projectItems.filter(p => p.slug !== 'funfair' && p.slug !== 'skidz-play-spaces');
       await Content.findOneAndUpdate(
-        { sectionKey: 'builtProjects' },
-        { sectionKey: 'builtProjects', data: showcaseBuiltProjects },
+        { sectionKey: 'projectItems' },
+        { sectionKey: 'projectItems', data: cleanedProjects },
         { upsert: true, new: true }
       );
-      siteData.builtProjects = showcaseBuiltProjects;
+      siteData.projectItems = cleanedProjects;
+    }
+
+    // Auto-ensure showcase builtProjects are populated with the 13 canonical projects
+    const needsBuiltProjectsSync = !Array.isArray(siteData.builtProjects) ||
+      siteData.builtProjects.length < 13 ||
+      siteData.builtProjects.some(p => p.slug === 'funfair' || p.slug === 'skidz-play-spaces');
+
+    if (needsBuiltProjectsSync) {
+      const canonicalMap = new Map();
+      projectsData.forEach(p => canonicalMap.set(p.slug, p));
+
+      // Build updated list preserving any custom modifications but fixing images and removing dummy items
+      const existingList = Array.isArray(siteData.builtProjects) ? siteData.builtProjects : [];
+      const updatedBuiltProjects = projectsData.map(p => {
+        const existing = existingList.find(e => e.slug === p.slug || (e.name && e.name.toLowerCase() === p.name.toLowerCase()));
+        const projItem = (Array.isArray(siteData.projectItems) ? siteData.projectItems : []).find(pi => pi.slug === p.slug || (pi.name && pi.name.toLowerCase() === p.name.toLowerCase()));
+        const isItemActive = projItem ? (projItem.isActive !== false && projItem.status !== 'inactive') : (existing ? (existing.isActive !== false && existing.status !== 'inactive') : (p.isActive !== false && p.status !== 'inactive'));
+        return {
+          title: existing?.title || projItem?.name || p.name,
+          name: existing?.name || projItem?.name || p.name,
+          category: existing?.category || projItem?.type || projItem?.category || p.type || p.category,
+          city: existing?.city || projItem?.city || p.city,
+          location: existing?.location || `${p.city}, ${p.state}`,
+          state: existing?.state || projItem?.state || p.state,
+          area: existing?.area || projItem?.area || p.area,
+          slug: p.slug,
+          img: projItem?.img || projItem?.imageUrl || existing?.img || existing?.imageUrl || p.img,
+          imageUrl: projItem?.imageUrl || projItem?.img || existing?.imageUrl || existing?.img || p.img,
+          isActive: isItemActive,
+          status: isItemActive ? 'active' : 'inactive'
+        };
+      });
+
+      await Content.findOneAndUpdate(
+        { sectionKey: 'builtProjects' },
+        { sectionKey: 'builtProjects', data: updatedBuiltProjects },
+        { upsert: true, new: true }
+      );
+      siteData.builtProjects = updatedBuiltProjects;
     }
 
     // Auto-sync productsHome cards to use local product-images
@@ -2111,6 +2140,35 @@ export const updateContent = async (req, res) => {
             { $set: { ...projItem, slug: itemSlug } },
             { upsert: true }
           );
+        }
+
+        // Also sync builtProjects collection with updated project active status and images
+        const builtDoc = await Content.findOne({ sectionKey: 'builtProjects' });
+        if (builtDoc && Array.isArray(builtDoc.data)) {
+          let modified = false;
+          const updatedBuilt = builtDoc.data.map(b => {
+            const match = data.find(p => (p.slug && b.slug && p.slug === b.slug) || (p.name && b.name && p.name.toLowerCase() === b.name.toLowerCase()));
+            if (match) {
+              const matchActive = match.isActive !== false && match.status !== 'inactive';
+              const newImg = match.img || match.imageUrl || b.img;
+              if (b.isActive !== matchActive || b.status !== (matchActive ? 'active' : 'inactive') || b.img !== newImg) {
+                modified = true;
+                return {
+                  ...b,
+                  img: newImg,
+                  imageUrl: newImg,
+                  isActive: matchActive,
+                  status: matchActive ? 'active' : 'inactive'
+                };
+              }
+            }
+            return b;
+          });
+          if (modified) {
+            builtDoc.data = updatedBuilt;
+            builtDoc.markModified('data');
+            await builtDoc.save();
+          }
         }
       } catch (err) {
         console.warn('Error syncing Project collection in updateContent:', err?.message);
@@ -2313,6 +2371,25 @@ export const mutateContentItem = async (req, res) => {
             { $set: { ...item, slug: itemSlug } },
             { upsert: true }
           );
+        }
+
+        // Also sync builtProjects item status and image
+        const builtDoc = await Content.findOne({ sectionKey: 'builtProjects' });
+        if (builtDoc && Array.isArray(builtDoc.data)) {
+          const bIdx = builtDoc.data.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
+          if (bIdx !== -1) {
+            const isItemActive = item.isActive !== false && item.status !== 'inactive';
+            const newImg = item.img || item.imageUrl || builtDoc.data[bIdx].img;
+            builtDoc.data[bIdx] = {
+              ...builtDoc.data[bIdx],
+              img: newImg,
+              imageUrl: newImg,
+              isActive: isItemActive,
+              status: isItemActive ? 'active' : 'inactive'
+            };
+            builtDoc.markModified('data');
+            await builtDoc.save();
+          }
         }
       } catch (err) {
         console.warn('Error syncing Project model in mutateContentItem:', err?.message);

@@ -62,11 +62,11 @@ const resolveProjectImg = (proj) => {
   if (slug.includes('factory') || name.includes('factory') || slug.includes('nalasopara')) {
     return "/assets/The Fun Factory ( Nalasopara )/1st image.jpg";
   }
-  if (slug.includes('puddle') || name.includes('puddle') || slug.includes('pop-a-puddle') || slug.includes('bengaluru') || slug.includes('bangalore')) {
-    return "/assets/Pop A Puddle ( Bengaluru )/1st image.jpg";
-  }
   if (slug.includes('skadoosh') || name.includes('skadoosh')) {
     return "/assets/Skadoosh ( Bengaluru )/1st image.jpg";
+  }
+  if (slug.includes('puddle') || name.includes('puddle') || slug.includes('pop-a-puddle')) {
+    return "/assets/Pop A Puddle ( Bengaluru )/1st image.jpg";
   }
   if (slug.includes('vr-360') || slug.includes('vr 360') || name.includes('vr 360') || slug.includes('gandhidham')) {
     return "/assets/VR 360 Game  Zone ( Gandhidham )/1st image.png";

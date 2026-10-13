@@ -8,11 +8,19 @@ const projectImage01 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,
 const clientsBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345643/winera_uploads/eogrtug3ijxrwz7xbc1y.png";
 
 const defaultProjects = [
-  { name: "Hulaboo", title: "Hulaboo", city: "Surat", location: "Surat", slug: "hulaboo", img: "/assets/Hulaboo ( Surat )/1st Image.jpg" },
-  { name: "Playzonia", title: "Playzonia", city: "Surat", location: "Surat", slug: "playzonia", img: projSoft1 },
-  { name: "FifthAlley Sport Bowling", title: "FifthAlley Sport Bowling", city: "Surat", location: "Surat", slug: "fifthalley-sport-bowling", img: "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg" },
-  { name: "Nenopanda", title: "Nenopanda", city: "Indore", location: "Indore", slug: "neon-panda", img: projNeon1 },
-  { name: "FizzyFox", title: "FizzyFox", city: "Nashik", location: "Nashik", slug: "fizzyfox", img: projSoft1 }
+  { name: "FifthAlley Sport Bowling", title: "FifthAlley Sport Bowling", city: "Surat", location: "Surat, Gujarat", slug: "fifthalley-sport-bowling", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877018/winera_uploads/projects/lf45hnr7l9jwbij9gh4q.jpg" },
+  { name: "Hulaboo", title: "Hulaboo", city: "Surat", location: "Surat, Gujarat", slug: "hulaboo", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg" },
+  { name: "Playzonia", title: "Playzonia", city: "Surat", location: "Surat, Gujarat", slug: "playzonia", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg" },
+  { name: "LaneX Bowling Alley", title: "LaneX Bowling Alley", city: "Surat", location: "Surat, Gujarat", slug: "lanex-bowling-alley", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877047/winera_uploads/projects/ax4fuat1a1uf3l7ex1he.jpg" },
+  { name: "Rebounce", title: "Rebounce", city: "Surat", location: "Surat, Gujarat", slug: "rebounce", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877065/winera_uploads/projects/ulhoypau8uifcunj9ogn.jpg" },
+  { name: "Level Up", title: "Level Up", city: "Morbi", location: "Morbi, Gujarat", slug: "level-up", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880283/winera_uploads/pskx11h3zysrl8yrx0te.jpg" },
+  { name: "Rock and Bowl", title: "Rock and Bowl", city: "Vapi", location: "Vapi, Gujarat", slug: "rock-and-bowl", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877846/winera_uploads/ebko4as1kehon9gbnkg7.jpg" },
+  { name: "Rumble Zone", title: "Rumble Zone", city: "Gurugram", location: "Gurugram, Haryana", slug: "rumble-zone", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880685/winera_uploads/ts0qlqlxigm1vfl1qp9s.jpg" },
+  { name: "The Fun Factory", title: "The Fun Factory", city: "Nallasopara", location: "Nallasopara, Maharashtra", slug: "the-fun-factory", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881209/winera_uploads/b9jr71otq8j24u3ugqid.jpg" },
+  { name: "Pop A Puddle", title: "Pop A Puddle", city: "Bangalore", location: "Bangalore, Karnataka", slug: "pop-a-puddle", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882402/winera_uploads/wikn3ojponc3myqreve9.jpg" },
+  { name: "Skadoosh Play Area", title: "Skadoosh Play Area", city: "Bangalore", location: "Bangalore, Karnataka", slug: "skadoosh-play-area", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg" },
+  { name: "VR 360 Game Zone", title: "VR 360 Game Zone", city: "Gandhidham", location: "Gandhidham, Gujarat", slug: "vr-360-game-zone", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg" },
+  { name: "Altitude Ball in Ball Out", title: "Altitude Ball in Ball Out", city: "Mumbai", location: "Mumbai, Maharashtra", slug: "altitude-ball-in-ball-out", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg" }
 ];
 
 export default function ProjectsMarqueeSection({
@@ -32,11 +40,26 @@ export default function ProjectsMarqueeSection({
   accentMarginBottom = '8px',
   accentAlign = 'left'
 }) {
+  const inactiveSlugs = new Set(
+    (Array.isArray(siteData?.projectItems) ? siteData.projectItems : [])
+      .filter(p => p.isActive === false || p.status === 'inactive')
+      .map(p => (p.slug || '').toLowerCase())
+  );
+
+  const isProjectActive = (p) => {
+    if (!p) return false;
+    if (p.slug === 'funfair' || p.slug === 'skidz-play-spaces') return false;
+    if (p.isActive === false || p.status === 'inactive') return false;
+    const cleanSlug = (p.slug || '').toLowerCase();
+    if (cleanSlug && inactiveSlugs.has(cleanSlug)) return false;
+    return true;
+  };
+
   const dynamicProjects = (Array.isArray(projects) && projects.length > 0)
-    ? projects
+    ? projects.filter(isProjectActive)
     : (Array.isArray(siteData?.builtProjects) && siteData.builtProjects.length > 0)
-      ? siteData.builtProjects
-      : defaultProjects;
+      ? siteData.builtProjects.filter(isProjectActive)
+      : defaultProjects.filter(isProjectActive);
 
   const items = dynamicProjects;
   const isImageBg = bg && (typeof bg === 'string' && (bg.includes('.webp') || bg.includes('.png') || bg.includes('.jpg') || bg.startsWith('/')) || typeof bg === 'object');
@@ -293,7 +316,7 @@ export default function ProjectsMarqueeSection({
                   const href = cardSlug ? `/project/${cardSlug}` : '/project';
 
                   const isHulabooCard = (proj.slug === 'hulaboo' || (proj.name && proj.name.toLowerCase().includes('hulaboo')) || (proj.title && proj.title.toLowerCase().includes('hulaboo')));
-                  const existingImg = proj.img || proj.imageUrl || proj.imgUrl;
+                  const existingImg = proj.img || proj.imageUrl || proj.imgUrl || matchedCmsItem?.img || matchedCmsItem?.imageUrl;
                   const imgSrc = (existingImg && typeof existingImg === 'string' && existingImg.trim() !== '')
                     ? existingImg
                     : (isHulabooCard ? "/assets/Hulaboo ( Surat )/1st Image.jpg" : projHulaboo);
