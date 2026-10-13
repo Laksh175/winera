@@ -9,6 +9,8 @@ node_modules
 *.tar.gz
 *.docx
 *.pdf
+*.xls
+*.xlsx
 
 # Environment files
 .env
