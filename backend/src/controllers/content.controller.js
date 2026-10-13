@@ -1994,13 +1994,13 @@ export const getContent = async (req, res) => {
     }
 
     // Auto-ensure all 15 detailed case study projects from docx are present in MongoDB
-    if (!Array.isArray(siteData.projectItems) || siteData.projectItems.length < 15) {
+    if (!Array.isArray(siteData.projectItems) || siteData.projectItems.length !== 15 || siteData.projectItems.some(p => p.id === 'houseofpepe' || p.id === 'kidzania')) {
       await Content.findOneAndUpdate(
         { sectionKey: 'projectItems' },
-        { sectionKey: 'projectItems', data: projectsData },
+        { sectionKey: 'projectItems', data: projectsData.slice(0, 15) },
         { upsert: true, new: true }
       );
-      siteData.projectItems = projectsData;
+      siteData.projectItems = projectsData.slice(0, 15);
     }
 
     // Auto-ensure showcase builtProjects are populated with real doc projects
@@ -2091,9 +2091,25 @@ export const updateContent = async (req, res) => {
 
     if (content) {
       content.data = data;
+      content.markModified('data');
       await content.save();
     } else {
       content = await Content.create({ sectionKey, data });
+    }
+
+    if (sectionKey === 'projectItems' && Array.isArray(data)) {
+      try {
+        for (const projItem of data) {
+          const itemSlug = projItem.slug || (projItem.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          await Project.findOneAndUpdate(
+            { $or: [{ slug: itemSlug }, { id: projItem.id || itemSlug }] },
+            { $set: { ...projItem, slug: itemSlug } },
+            { upsert: true }
+          );
+        }
+      } catch (err) {
+        console.warn('Error syncing Project collection in updateContent:', err?.message);
+      }
     }
 
     res.json({ message: `Section '${sectionKey}' updated successfully`, content });
@@ -2275,6 +2291,23 @@ export const mutateContentItem = async (req, res) => {
       await contentDoc.save();
     } else {
       contentDoc = await Content.create({ sectionKey, data: list });
+    }
+
+    if (sectionKey === 'projectItems' && item) {
+      try {
+        const itemSlug = item.slug || (item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        if (action === 'delete') {
+          await Project.deleteOne({ $or: [{ slug: itemSlug }, { id: item.id || itemSlug }] });
+        } else {
+          await Project.findOneAndUpdate(
+            { $or: [{ slug: itemSlug }, { id: item.id || itemSlug }] },
+            { $set: { ...item, slug: itemSlug } },
+            { upsert: true }
+          );
+        }
+      } catch (err) {
+        console.warn('Error syncing Project model in mutateContentItem:', err?.message);
+      }
     }
 
     return res.json({
