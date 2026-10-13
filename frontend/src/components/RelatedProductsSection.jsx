@@ -35,31 +35,42 @@ export default function RelatedProductsSection({
   accentStyle = {}
 }) {
   const defaultCategories = [
-    { title: "Arcade Games", link: "/products/arcade-games", img: ctaArcade },
-    { title: "VR Games", link: "/products/vr-games", img: "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80" },
-    { title: "AR Games", link: "/products/ar-games", img: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80" },
-    { title: "Bowling Alley", link: "/products/bowling-alley", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" },
-    { title: "Trampoline Park", link: "/products/trampoline-park", img: projNeon1 },
-    { title: "Soft Play", link: "/products/soft-play", img: projSoft1 },
-    { title: "Bumper Cars", link: "/products/bumper-cars", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-    { title: "Hypergrid", link: "/products/hypergrid", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" },
-    { title: "Laser Tag", link: "/products/laser-tag", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
-    { title: "Amusement Park", link: "/products/amusement-park", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" },
+    { title: "Arcade Games", link: "/products/arcade-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882222/winera_uploads/psq0lwhhp7kdasz18mhg.jpg" },
+    { title: "VR Games", link: "/products/vr-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881945/winera_uploads/ciltspbpf3nwcvcbu16m.jpg" },
+    { title: "AR Games", link: "/products/ar-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881961/winera_uploads/ucij9ckzxnlpskx6n0hj.png" },
+    { title: "Bowling Alley", link: "/products/bowling-alley", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881975/winera_uploads/bj0fjmjyi9ogxwme3hqc.jpg" },
+    { title: "Trampoline Park", link: "/products/trampoline-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881999/winera_uploads/yx5bfvbaexcazrkt331g.jpg" },
+    { title: "Soft Play", link: "/products/soft-play", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882021/winera_uploads/sxlzfslbp7mmm3avg0vq.jpg" },
+    { title: "Bumper Cars", link: "/products/bumper-cars", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882033/winera_uploads/goun29t9b7kopvwkfze9.jpg" },
+    { title: "Hypergrid", link: "/products/hypergrid", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882049/winera_uploads/jxgltybqdkbolwzlzcar.jpg" },
+    { title: "Laser Tag", link: "/products/laser-tag", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882062/winera_uploads/y7nkbq60c8siqqatkr36.jpg" },
+    { title: "Amusement Park", link: "/products/amusement-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882084/winera_uploads/tgofoefcimwe14lmqrso.jpg" },
     { title: "Lights", link: "/products/lights", img: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80" },
-    { title: "Sculpture", link: "/products/sculpture", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80" },
-    { title: "Reception Table", link: "/products/reception-table", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
-    { title: "Other Furniture", link: "/products/other-furniture", img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80" }
+    { title: "Sculpture", link: "/products/sculpture", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751076/winera_uploads/r9m4zijctdjvzmbueeze.png" },
+    { title: "Reception Table", link: "/products/reception-table", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" }
   ];
+
+  const getFallbackImg = (item, idx) => {
+    if (!item) return defaultCategories[0]?.img || '';
+    const cleanTitle = (item.title || '').trim().toLowerCase();
+    const matched = defaultCategories.find(c => c.title.toLowerCase() === cleanTitle);
+    if (matched && matched.img) return matched.img;
+    return defaultCategories[idx % defaultCategories.length]?.img || '';
+  };
 
   const rawItems = (Array.isArray(sectionData?.items) && sectionData.items.length > 0)
     ? sectionData.items
     : defaultCategories;
 
-  const baseCategories = rawItems.map((item, idx) => ({
-    title: item.title,
-    link: item.link || `/products/${(item.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-    img: resolveImgUrl(item.img || item.image || item.imgUrl, defaultCategories[idx % defaultCategories.length]?.img)
-  }));
+  const baseCategories = rawItems.map((item, idx) => {
+    const fallback = getFallbackImg(item, idx);
+    const resolved = resolveImgUrl(item.img || item.image || item.imgUrl, fallback);
+    return {
+      title: item.title,
+      link: item.link || `/products/${(item.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+      img: (resolved && resolved.trim() !== '') ? resolved : fallback
+    };
+  });
 
   const N = baseCategories.length;
   // Repeat baseCategories enough times so track is always full
