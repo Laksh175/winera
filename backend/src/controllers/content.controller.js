@@ -6,7 +6,8 @@ import { v2 as cloudinary } from 'cloudinary';
 import Admin from '../models/Admin.js';
 import Content from '../models/Content.js';
 import jwt from 'jsonwebtoken';
-import projectsData from '../data/projectsData.json' with { type: 'json' };
+
+const projectsData = JSON.parse(fs.readFileSync(new URL('../data/projectsData.json', import.meta.url), 'utf-8'));
 
 // Configure Cloudinary from environment variables
 cloudinary.config({

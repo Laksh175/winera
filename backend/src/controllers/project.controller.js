@@ -1,6 +1,8 @@
+import fs from 'fs';
 import Project from '../models/Project.js';
 import Content from '../models/Content.js';
-import projectsData from '../data/projectsData.json' with { type: 'json' };
+
+const projectsData = JSON.parse(fs.readFileSync(new URL('../data/projectsData.json', import.meta.url), 'utf-8'));
 
 export const getProjects = async (req, res) => {
   try {
