@@ -71,7 +71,7 @@ export default function TestimonialsSection({
   siteData = null,
   testimonials = defaultTestimonials,
   title = '*What Our* Clients Say',
-  subtitle = "We are proud to have helped businesses across India build successful game zones. Here's what our clients say about our quality, service, and support.\n\nWhen we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back.",
+  subtitle = "We are proud to have helped businesses across India build successful game zones. Here's what our clients say about our quality, service, and support.",
   highlightColor = '#00a8ff',
   bg = '#F5F5F9',
   accentWidth = '465px',
@@ -91,7 +91,10 @@ export default function TestimonialsSection({
   })();
   const list = Array.isArray(actualTestimonials) && actualTestimonials.length > 0 ? actualTestimonials : defaultTestimonials;
   const actualTitle = siteData?.testimonialsHeader?.title || title;
-  const actualSubtitle = siteData?.testimonialsHeader?.subtitle || subtitle;
+  let actualSubtitle = siteData?.testimonialsHeader?.subtitle || subtitle;
+  if (typeof actualSubtitle === 'string' && actualSubtitle.includes('When we were planning Rebounce')) {
+    actualSubtitle = actualSubtitle.replace(/\n*When we were planning Rebounce[\s\S]*$/, '').trim();
+  }
   const [activeIndex, setActiveIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const { openVideoModal } = useVideoModal();
