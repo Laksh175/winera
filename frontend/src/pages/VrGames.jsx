@@ -10,6 +10,7 @@ import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
 import SectionHeading from '../components/SectionHeading';
 import WineraImage from '../components/WineraImage';
+import ArcadeSwipeCardDeck from '../components/ArcadeSwipeCardDeck';
 import allVrGames from '../data/allVrGames.json';
 import { 
   ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, 
@@ -466,7 +467,7 @@ export default function VrGames({ siteData }) {
                 overflowY: 'auto',
                 padding: '6px'
               }}>
-                {(siteData?.vrCategories?.categoriesList || siteData?.vrRange?.categoriesList || allVrGames?.categoriesList || [
+                {(siteData?.vrCategories?.categoriesList || siteData?.vrRange?.categoriesList || siteData?.vrCategoriesData?.categoriesList || allVrGames?.categoriesList || [
                   "All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"
                 ]).map((cat, cIdx) => {
                   const isSelected = (activeCategory || "All VR Games") === cat;
@@ -672,6 +673,13 @@ export default function VrGames({ siteData }) {
                     })
                   : categoryMatched;
 
+                const slugifyText = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                const getCardSlug = (card) => {
+                  if (card.slug && card.slug !== 'new-vr-game' && card.slug !== 'new-arcade-game') return card.slug;
+                  const title = card.name || card.title || '';
+                  return slugifyText(title);
+                };
+
                 const itemsPerPage = 6;
                 const totalPages = Math.max(1, Math.ceil(prodCards.length / itemsPerPage));
                 const validPage = Math.min(currentPage, totalPages);
@@ -837,7 +845,7 @@ export default function VrGames({ siteData }) {
                         gap: '20px'
                       }}>
                         {visibleCards.map((card, idx) => {
-                          const cardSlug = card.slug || (card.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                          const cardSlug = getCardSlug(card);
                           return (
                             <Link
                               key={card.id || idx}
@@ -923,6 +931,17 @@ export default function VrGames({ siteData }) {
                           );
                         })}
                       </div>
+                    )}
+
+                    {/* Mobile Stacked Swipe Cards Deck (Interactive Animation) */}
+                    {prodCards.length > 0 && (
+                      <ArcadeSwipeCardDeck
+                        cards={prodCards.map(c => ({
+                          ...c,
+                          category: c.category || (activeCategory && activeCategory !== 'All VR Games' ? activeCategory : 'VR Game')
+                        }))}
+                        getCardSlug={getCardSlug}
+                      />
                     )}
                   </>
                 );
