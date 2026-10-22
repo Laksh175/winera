@@ -25,7 +25,7 @@ const defaultProjects = [
 
 export default function ProjectsMarqueeSection({
   id = 'projects',
-  title = <><span>GAME ZONES WE HAVE</span><br /><span>BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span></span></>,
+  title = <><span>GAME ZONES WE HAVE</span><br /><span>BUILT <span style={{ color: '#0072b8' }}>ACROSS INDIA</span></span></>,
   simpleTitle = null,
   showTopHeader = true,
   subtext = "Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers.",
@@ -77,10 +77,21 @@ export default function ProjectsMarqueeSection({
   const resumeTimeoutRef = useRef(null);
   const animFrameIdRef = useRef(null);
   const [isGrabbing, setIsGrabbing] = useState(false);
+  const setWidthRef = useRef(1695);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+
+    // Cache setWidth on mount and resize to avoid forced reflow in requestAnimationFrame
+    const updateWidth = () => {
+      const firstSet = track.children[0];
+      if (firstSet && firstSet.offsetWidth > 0) {
+        setWidthRef.current = firstSet.offsetWidth;
+      }
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth, { passive: true });
 
     let lastTime = performance.now();
     const baseSpeed = 38; // px per second
@@ -89,8 +100,7 @@ export default function ProjectsMarqueeSection({
       const dt = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
 
-      const firstSet = track.children[0];
-      const setWidth = firstSet ? firstSet.offsetWidth : 1695;
+      const setWidth = setWidthRef.current;
 
       if (!isInteractingRef.current) {
         if (Math.abs(velocityRef.current) > 0.5) {
@@ -119,6 +129,7 @@ export default function ProjectsMarqueeSection({
     animFrameIdRef.current = requestAnimationFrame(loop);
 
     return () => {
+      window.removeEventListener('resize', updateWidth);
       if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
       if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     };
@@ -220,7 +231,7 @@ export default function ProjectsMarqueeSection({
                           <span>Game Zones We Have</span>
                           <br />
                           <span>
-                            Built <span style={{ color: '#38bdf8' }}>Across India</span>
+                            Built <span style={{ color: '#0072b8' }}>Across India</span>
                           </span>
                         </>
                       );
@@ -229,7 +240,7 @@ export default function ProjectsMarqueeSection({
                     return parts.map((part, index) => {
                       if (index % 2 === 1) {
                         return (
-                          <span key={index} style={{ color: '#38bdf8' }}>
+                          <span key={index} style={{ color: '#0072b8' }}>
                             {part}
                           </span>
                         );
@@ -291,7 +302,7 @@ export default function ProjectsMarqueeSection({
               willChange: 'transform'
             }}
           >
-            {[...Array(4)].map((_, setIdx) => (
+            {[...Array(2)].map((_, setIdx) => (
               <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingRight: '14px' }}>
                 {items.map((proj, idx) => {
                   const matchedCmsItem = Array.isArray(siteData?.projectItems)
@@ -324,6 +335,16 @@ export default function ProjectsMarqueeSection({
                     ? imgSrc.replace(/\.(png|jpg|jpeg)$/i, '.webp')
                     : imgSrc;
 
+                  const optimizedProjectSrc = (() => {
+                    if (!finalImgSrc || typeof finalImgSrc !== 'string') return finalImgSrc;
+                    if (finalImgSrc.includes('res.cloudinary.com') && finalImgSrc.includes('/upload/')) {
+                      if (finalImgSrc.includes('/f_auto,q_auto,w_')) return finalImgSrc.replace(/\/f_auto,q_auto,w_\d+\//, '/f_auto,q_auto:eco,w_325/');
+                      if (finalImgSrc.includes('/f_auto,q_auto/')) return finalImgSrc.replace('/upload/f_auto,q_auto/', '/upload/f_auto,q_auto:eco,w_325/');
+                      return finalImgSrc.replace('/upload/', '/upload/f_auto,q_auto:eco,w_325/');
+                    }
+                    return finalImgSrc;
+                  })();
+
                   return (
                     <a
                       key={idx}
@@ -346,11 +367,13 @@ export default function ProjectsMarqueeSection({
                       }}
                     >
                       <img
-                        src={finalImgSrc}
-                        alt={proj.name || proj.title || "Built Game Zone"}
-                        loading="eager"
+                        src={optimizedProjectSrc}
+                        alt={proj.imgAlt || matchedCmsItem?.imgAlt || `${proj.name || proj.title || "Commercial Game Zone Setup"} - Winera International`}
+                        loading="lazy"
                         decoding="async"
                         draggable="false"
+                        width="325"
+                        height="325"
                         onError={(e) => {
                           e.currentTarget.onerror = null;
                           e.currentTarget.src = projHulaboo;

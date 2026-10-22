@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
@@ -7,8 +7,9 @@ import Footer from '../components/Footer';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
 import MobileExpandableText from '../components/MobileExpandableText';
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 const projectBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/pdvhuaaasj3iyex07yql.png";
-const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const gameZoneMobileBanner = projectPageMobileBanner;
 const projectImage01 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/igg4yrl7xhnxllqifpj7.jpg";
 const projectImage2Bg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/hjfo9tsk0tmkxgz1x2ab.png";
 const projectImage3 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/hifdo3jiuvbvu4cxkgq4.jpg";
@@ -22,14 +23,15 @@ const projectBlock3 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q
 const projectSectionVideo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/nd79kzv2qshsmkkeeun3.png";
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 import CtaBanner from '../components/CtaBanner';
-import projectsData from '../data/projectsData.json';
+import { fetchProjectBySlug, fetchProjects } from '../services/api';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 const bumpercarCtaBannerBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
 const projHulaboo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/a52mbp31belkkslptdal.jpg";
 const projNeon1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg";
 const projSoft1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg";
 
 const getValidImageUrl = (url, fallback) => {
-  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/') || url.includes('eqjkboeokagpaus2ifxa')) {
     return fallback;
   }
   if (url.startsWith('https://res.cloudinary.com/') || url.startsWith('https://images.unsplash.com/') || url.startsWith('data:')) {
@@ -308,11 +310,13 @@ const getValidImageUrl = (url, fallback) => {
   }
   const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
   if (url.startsWith('http://localhost:5001/uploads/') || url.startsWith('/uploads') || url.includes('/uploads/')) {
+    const uploadPath = url.substring(url.indexOf('/uploads/'));
     if (isLocal) {
-      const uploadPath = url.substring(url.indexOf('/uploads/'));
       return `http://localhost:5001${uploadPath}`;
     }
-    return fallback;
+    const apiUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '').replace(/\/$/, '') : '';
+    if (apiUrl) return `${apiUrl}${uploadPath}`;
+    return typeof window !== 'undefined' ? `${window.location.origin}${uploadPath}` : uploadPath;
   }
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return url;
@@ -337,6 +341,37 @@ export default function ProjectDetail({ siteData }) {
 
   const { openVideoModal } = useVideoModal();
   const { slug } = useParams();
+  const [apiProject, setApiProject] = useState(null);
+  const [dynamicProjects, setDynamicProjects] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (slug) {
+      fetchProjectBySlug(slug)
+        .then(res => {
+          const proj = res?.project || res;
+          if (isMounted && proj && (proj.name || proj.slug)) {
+            setApiProject(proj);
+          }
+        })
+        .catch(err => console.warn('Dynamic project by slug fetch notice:', err));
+    }
+    return () => { isMounted = false; };
+  }, [slug]);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchProjects()
+      .then(res => {
+        const list = Array.isArray(res) ? res : (res?.projects || res?.data || []);
+        if (isMounted && list.length > 0) {
+          setDynamicProjects(list);
+        }
+      })
+      .catch(err => console.warn('Dynamic projects fetch notice:', err));
+    return () => { isMounted = false; };
+  }, []);
+
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
 
@@ -722,9 +757,11 @@ export default function ProjectDetail({ siteData }) {
   const targetSlug = normalizeSlug(slug);
   const targetAlpha = cleanAlpha(slug);
 
-  const allProjectsList = (Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
-    ? siteData.projectItems
-    : projectsData;
+  const allProjectsList = (dynamicProjects.length > 0)
+    ? dynamicProjects
+    : (Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
+      ? siteData.projectItems
+      : [];
 
   const cmsItem = allProjectsList.find(p => {
         const itemSlug = (p.slug && p.slug !== 'new-turnkey-project') ? normalizeSlug(p.slug) : normalizeSlug(p.name);
@@ -766,7 +803,7 @@ export default function ProjectDetail({ siteData }) {
       })
     : null;
 
-  const resolvedItem = cmsItem || (builtItem ? {
+  const resolvedItem = apiProject || cmsItem || (builtItem ? {
     name: builtItem.name,
     titleLine1: `${builtItem.name}: A`,
     titleLine2: "Turnkey ",
@@ -788,7 +825,7 @@ export default function ProjectDetail({ siteData }) {
     solutionImg: builtItem.solutionImg || builtItem.imageUrl || builtItem.img
   } : null);
 
-  const staticDocProject = projectsData.find(p => {
+  const staticDocProject = allProjectsList.find(p => {
     const itemSlug = normalizeSlug(p.slug || p.name);
     const itemAlpha = cleanAlpha(p.slug || p.name);
     return itemSlug === targetSlug || itemAlpha === targetAlpha;
@@ -871,6 +908,7 @@ export default function ProjectDetail({ siteData }) {
   const isSkadoosh = targetSlug === 'skadoosh-play-area' || cleanAlpha(currentProject?.name || '').includes('skadoosh');
   const isPopAPuddle = targetSlug === 'pop-a-puddle' || cleanAlpha(currentProject?.name || '').includes('popapuddle') || cleanAlpha(currentProject?.name || '').includes('pop a puddle');
   const bannerImg = getValidImageUrl(heroData.bannerImg, projectBanner);
+  const mobileBannerImg = getValidImageUrl(heroData.mobileBgUrl, gameZoneMobileBanner);
   const breadcrumbHome = heroData.breadcrumbHome || 'Home';
 
   const strokeImg = yellowStrokeLine;
@@ -882,7 +920,7 @@ export default function ProjectDetail({ siteData }) {
 
   const buttonText = currentProject?.buttonText || siteData?.projectBlock?.buttonText || 'Get A Quote';
 
-  let rawLink = currentProject?.buttonLink || siteData?.projectBlock?.buttonLink || 'https://wa.me/919428989488';
+  let rawLink = currentProject?.buttonLink || siteData?.projectBlock?.buttonLink || 'https://wa.me/919157873576';
   let waMsg = currentProject?.waMessage || siteData?.projectBlock?.waMessage;
 
   // Extract base WhatsApp URL
@@ -1076,7 +1114,7 @@ export default function ProjectDetail({ siteData }) {
   });
 
   const videoImg = getValidImageUrl(currentProject.videoImg || videoData.image, projectSectionVideo);
-  const videoLink = currentProject.videoUrl || videoData.videoUrl || siteData?.header?.whatsAppUrl || 'https://wa.me/919428989488';
+  const videoLink = currentProject.videoUrl || videoData.videoUrl || siteData?.header?.whatsAppUrl || 'https://wa.me/919157873576';
 
   // Set page title and meta description for SEO
   useEffect(() => {
@@ -1107,7 +1145,7 @@ export default function ProjectDetail({ siteData }) {
         paddingTop: isPhone ? '55px' : '175px',
         paddingBottom: isPhone ? '0px' : '95px',
         aspectRatio: isPhone ? '941 / 550' : 'auto',
-        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${bannerImg}) center top / 100% 100% no-repeat`,
+        background: isPhone ? `url(${mobileBannerImg}) center top / 100% 100% no-repeat` : `url(${bannerImg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -1116,6 +1154,14 @@ export default function ProjectDetail({ siteData }) {
         color: '#ffffff',
         overflow: 'hidden'
       }}>
+        {/* SEO crawler discoverable image with alt text */}
+        <img
+          src={isPhone ? mobileBannerImg : bannerImg}
+          alt={isPhone ? (heroData.mobileBgAlt || heroData.bannerImgAlt || heroData.bgAlt || `${currentProject?.name || 'Commercial Game Zone Project'} - Winera International`) : (heroData.bannerImgAlt || heroData.bgAlt || `${currentProject?.name || 'Commercial Game Zone Project'} - Winera International`)}
+          style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}
+          loading="lazy"
+          decoding="async"
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Breadcrumb: Home › Project › Name */}
           <h1 className="winera-project-hero-h1" style={{
@@ -1173,23 +1219,24 @@ export default function ProjectDetail({ siteData }) {
                 const blackPart = [titleLine2Black, titleLine3].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
                 return (
                   <>
-                    <span style={{ color: '#38bdf8' }}>{cyanPart} </span>
+                    <span style={{ color: '#0072b8' }}>{cyanPart} </span>
                     <span style={{ color: '#0f172a' }}>{blackPart}</span>
                   </>
                 );
               })()}
             </h2>
 
-            <p style={{
-              fontSize: '15px',
-              color: '#475569',
-              lineHeight: 1.65,
-              fontWeight: '500',
-              marginBottom: '16px',
-              maxWidth: '700px'
-            }}>
-              {description}
-            </p>
+            <p
+              style={{
+                fontSize: '15px',
+                color: '#475569',
+                lineHeight: 1.65,
+                fontWeight: '500',
+                marginBottom: '16px',
+                maxWidth: '700px'
+              }}
+              dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((description || '').replace(/\n/g, '<br/>')) }}
+            />
 
             {/* Offset Yellow Backing + Cyan Pill Button */}
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
@@ -1223,7 +1270,7 @@ export default function ProjectDetail({ siteData }) {
 
               <img
                 src={mainImage}
-                alt="Project Main Card"
+                alt={currentProject?.imgAlt || `${currentProject?.name || 'Commercial Game Zone Project'} Setup & Installation - Winera International`}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -1326,7 +1373,7 @@ export default function ProjectDetail({ siteData }) {
             lineHeight: 1.15
           }}>
             <span>{clientTitlePrefix}</span>
-            <span style={{ color: '#38bdf8' }}>{clientTitleCyan}</span>
+            <span style={{ color: '#0072b8' }}>{clientTitleCyan}</span>
           </h2>
         </div>
 
@@ -1340,20 +1387,23 @@ export default function ProjectDetail({ siteData }) {
             {clientP2 ? (
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}>
-                    {clientP1}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((clientP1 || '').replace(/\n/g, '<br/>')) }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                    {clientP2}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((clientP2 || '').replace(/\n/g, '<br/>')) }}
+                  />
                 }
               />
             ) : (
-              <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {clientP1}
-              </p>
+              <p
+                style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((clientP1 || '').replace(/\n/g, '<br/>')) }}
+              />
             )}
           </div>
 
@@ -1368,7 +1418,7 @@ export default function ProjectDetail({ siteData }) {
               }}></div>
               <img
                 src={clientImg}
-                alt="What the Client Wanted"
+                alt={currentProject?.clientImgAlt || `${currentProject?.name || 'Game Zone'} Client Requirements & Space Planning - Winera`}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -1400,7 +1450,7 @@ export default function ProjectDetail({ siteData }) {
             margin: 0,
             lineHeight: 1.15
           }}>
-            <span style={{ color: '#38bdf8' }}>{solutionTitleCyan}</span>
+            <span style={{ color: '#0072b8' }}>{solutionTitleCyan}</span>
             <span>{solutionTitleSuffix}</span>
           </h2>
         </div>
@@ -1422,7 +1472,7 @@ export default function ProjectDetail({ siteData }) {
               }}></div>
               <img
                 src={solutionImg}
-                alt="What Solution We Provide"
+                alt={currentProject?.solutionImgAlt || `${currentProject?.name || 'Game Zone'} Turnkey Setup Solution & Execution - Winera International`}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -1441,20 +1491,23 @@ export default function ProjectDetail({ siteData }) {
             {solutionP2 ? (
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}>
-                    {solutionP1}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((solutionP1 || '').replace(/\n/g, '<br/>')) }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                    {solutionP2}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((solutionP2 || '').replace(/\n/g, '<br/>')) }}
+                  />
                 }
               />
             ) : (
-              <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                {solutionP1}
-              </p>
+              <p
+                style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((solutionP1 || '').replace(/\n/g, '<br/>')) }}
+              />
             )}
           </div>
         </div>
@@ -1516,7 +1569,7 @@ export default function ProjectDetail({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
-              <span style={{ color: '#38bdf8' }}>{galleryTitleCyan}</span>
+              <span style={{ color: '#0072b8' }}>{galleryTitleCyan}</span>
               <span>{galleryTitleDark}</span>
             </h2>
           </motion.div>
@@ -1558,7 +1611,7 @@ export default function ProjectDetail({ siteData }) {
               >
                 <img
                   src={imgSrc}
-                  alt={`Project Gallery ${idx + 1}`}
+                  alt={Array.isArray(currentProject?.galleryImagesAlt) && currentProject.galleryImagesAlt[idx] ? currentProject.galleryImagesAlt[idx] : `${currentProject?.name || 'Commercial Game Zone'} Installation Gallery Photo ${idx + 1} - Winera`}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -1603,7 +1656,7 @@ export default function ProjectDetail({ siteData }) {
           <img
             className="winera-project-video-img"
             src={videoImg}
-            alt="Project Showcase Video"
+            alt={currentProject?.videoAlt || `${currentProject?.name || 'Commercial Game Zone'} Video Walkthrough & Tour - Winera`}
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = projectSectionVideo;
@@ -1692,7 +1745,7 @@ export default function ProjectDetail({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="View All Projects"
       />

@@ -1,0 +1,33 @@
+# Winera International
+
+> Winera International Pvt. Ltd. is India's leading commercial manufacturer, turnkey supplier, and setup specialist for amusement park rides, trampoline parks, bowling alleys, soft play equipment, arcade game machines, VR/AR gaming zones, and laser tag arenas. Established in 2014, headquartered in Surat, Gujarat, with 500+ successful entertainment installations across 50+ Indian cities.
+
+## Key Services & Turnkey Solutions
+- [Turnkey Game Zone Development](https://winera.in/): End-to-end game zone design, arena layout, electrical planning, equipment supply, and professional installation.
+- [Commercial ROI Blueprint & Feasibility](https://winera.in/roi): Customized revenue calculation, monthly footfall estimates, upkeep cost breakdown, and break-even timeline for entertainment venues.
+- [Safety Standards & Quality Certifications](https://winera.in/safety-standards): European EN-1176 / ASTM compliant equipment, fire-retardant materials, CE-certified electronic systems, and safety audits.
+- [Completed Projects Portfolio](https://winera.in/projects): Real commercial game zones and family entertainment centers built across India.
+- [About Winera International](https://winera.in/about): 10+ years of manufacturing experience, direct after-sales service, and spare parts supply across India.
+- [Contact Us & Free Consultation](https://winera.in/contact): Direct WhatsApp and phone inquiry for quotes, layout planning, and catalog downloads.
+
+## Core Commercial Attractions & Products
+- [Trampoline Park Equipment & Setup](https://winera.in/trampoline-park): Custom indoor commercial trampoline parks, high-durability galvanized steel frames, foam cube pits, ninja warrior courses, slam dunk hoops, and dodgeball arenas.
+- [Bowling Alley Equipment](https://winera.in/bowling-alley): Energy-efficient modern string pinsetter bowling alleys, duckpin bowling, interactive touch-screen scoreboards, and synthetic lanes.
+- [Arcade Game Machines](https://winera.in/arcade-game): Commercial coin-operated redemption games, claw crane machines, racing simulators, VR pods, basketball shootout, and air hockey tables.
+- [Soft Play Equipment](https://winera.in/soft-play): Modular toddler soft play structures, high-density non-toxic foam padding, ball pits, sensory slides, and thematic obstacle arenas.
+- [Bumper Cars](https://winera.in/bumper-car): Battery-operated and floor-grid commercial bumper cars with LED neon illumination and safety rubber bumpers.
+- [VR Games](https://winera.in/vr-games): 9D VR motion cinema pods, 360-degree roller coaster flight simulators, and multiplayer virtual reality shooting platforms.
+- [AR Games](https://winera.in/ar-games): Augmented reality interactive sand tables, AR wall climbing, and interactive floor projection systems.
+- [Laser Tag & Laser Spy](https://winera.in/laser-tag): Turnkey laser tag combat arena design, wireless sensors, phasers, live TV leaderboards, and laser spy maze rooms.
+- [Amusement Park Rides](https://winera.in/amusement-park): Commercial trackless trains, carousel rides, family pirate ships, and revolving bumper cars.
+- [Hypergrid LED Floor](https://winera.in/hypergrid): High-footfall interactive LED dynamic floor tile games with smart pressure sensors.
+
+## Machine-Readable Catalog
+- [AI Machine-Readable Catalog (JSON)](https://winera.in/ai-catalog.json): Structured product catalog specification for LLMs and automated agents.
+
+## Company Details
+- Brand: Winera International Pvt. Ltd.
+- Website: https://winera.in
+- Phone / WhatsApp: +91 91578 73576 / +91 94289 89488
+- Headquarters: Surat, Gujarat, India
+- Service Reach: Nationwide across India

@@ -7,6 +7,7 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 const amusementHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345536/winera_uploads/s8shz3a3qqju8pkzuosz.png";
 const amusementMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345538/winera_uploads/zoiowsmyqss0g4jfojxg.png";
 const amusementSupplierCollage = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345542/winera_uploads/fdeml6rze08pwyeevuol.png";
@@ -24,7 +25,8 @@ const talkToRoiButtonImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_a
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
+  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -36,7 +38,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
       <>
         <span className="winera-amusement-banner-line1">Complete Amusement Park</span>
         <br className="winera-desktop-br" />
-        <span className="winera-amusement-banner-highlight" style={{ color: highlightColor }}>
+        <span className="winera-amusement-banner-highlight" style={{ color: actualHighlight }}>
           <span className="winera-amusement-banner-line2">Setups, Built for </span>
           <span className="winera-amusement-banner-line3">Indian Venues</span>
         </span>
@@ -58,7 +60,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 
     if (isHighlighted) {
       return (
-        <span key={pIdx} style={{ color: highlightColor }}>
+        <span key={pIdx} style={{ color: actualHighlight }}>
           {renderedContent}
         </span>
       );
@@ -144,6 +146,7 @@ export default function AmusementPark({ siteData }) {
 
   const { header, footer } = siteData;
   const heroBgImage = getValidImageUrl(siteData?.amusementHero?.bgUrl, amusementHeroBg);
+  const mobileHeroBgImage = getValidImageUrl(siteData?.amusementHero?.mobileBgUrl, amusementMobileHeroBg);
 
   const defaultRideItems = [
     { boldText: "Thrill Rides", desc: "For Teens And Adults Chasing Excitement" },
@@ -212,7 +215,7 @@ export default function AmusementPark({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
-        '--winera-amusement-mobile-bg': `url("${amusementMobileHeroBg}")`,
+        '--winera-amusement-mobile-bg': `url("${mobileHeroBgImage}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -220,6 +223,11 @@ export default function AmusementPark({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
+        <img
+          src={heroBgImage}
+          alt={siteData?.amusementHero?.bgAlt || "Turnkey Amusement Park Equipment & Setup - Winera International"}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Amusement Park */}
           <h1 className="winera-amusement-hero-title" style={{
@@ -257,7 +265,7 @@ export default function AmusementPark({ siteData }) {
           <div className="winera-amusement-supplier-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
               src={getValidImageUrl(siteData?.amusementIntro?.mainImgUrl || siteData?.amusementIntro?.imgUrl, amusementSupplierCollage)}
-              alt="Amusement Park Ride Manufacturer in India"
+              alt={siteData?.amusementIntro?.mainImgAlt || siteData?.amusementIntro?.imgAlt || "Amusement Park Ride Manufacturer in India - Winera"}
               style={{
                 width: '100%',
                 maxWidth: '680px',
@@ -282,14 +290,17 @@ export default function AmusementPark({ siteData }) {
             </div>
 
             {/* Subtitle Paragraph */}
-            <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '9px' }}>
-              {siteData?.amusementIntro?.desc || "India's ROI-first amusement park partner rides and attractions sourced, installed, and serviced by our own team across 50+ cities."}
-            </p>
+            <p
+              style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '9px' }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.amusementIntro?.desc || "India's ROI-first amusement park partner rides and attractions sourced, installed, and serviced by our own team across 50+ cities.").replace(/\n/g, '<br>'))
+              }}
+            />
 
             {/* Action Button: Get Quote From Expert with Yellow Offset Tab Backdrop Wrapper */}
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
               {(() => {
-                const baseLink = siteData?.amusementIntro?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.amusementIntro?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.amusementIntro?.waMessage || "Hello Winera International! I want to get a quote and details for Amusement Park Rides. Please share details. [Ref: Amusement Park Page]";
                 
                 let hrefLink = baseLink;
@@ -341,14 +352,20 @@ export default function AmusementPark({ siteData }) {
             {/* Paragraphs with Mobile Expandable Text */}
             <MobileExpandableText
               preview={
-                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.7, fontWeight: '500', marginBottom: '20px' }}>
-                  {siteData?.amusementBanner?.paragraph1 || "Winera International has been supplying and installing amusement park rides and attractions across India since 2014 \u2014 for theme parks, malls, resorts, and family entertainment centres in over 50 cities. We source every ride from established manufacturers, install it with our own team, and stay on for servicing after handover."}
-                </p>
+                <p
+                  style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.7, fontWeight: '500', marginBottom: '20px' }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml((siteData?.amusementBanner?.paragraph1 || "Winera International has been supplying and installing amusement park rides and attractions across India since 2014 \u2014 for theme parks, malls, resorts, and family entertainment centres in over 50 cities. We source every ride from established manufacturers, install it with our own team, and stay on for servicing after handover.").replace(/\n/g, '<br>'))
+                  }}
+                />
               }
               expandedContent={
-                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.7, fontWeight: '500', margin: 0 }}>
-                  {siteData?.amusementBanner?.paragraph2 || "From a few signature rides to a full park layout, we handle the whole project space planning, ride selection, installation, and after-sales support so you deal with one team from start to finish, not a chain of separate vendors."}
-                </p>
+                <p
+                  style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.7, fontWeight: '500', margin: 0 }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml((siteData?.amusementBanner?.paragraph2 || "From a few signature rides to a full park layout, we handle the whole project space planning, ride selection, installation, and after-sales support so you deal with one team from start to finish, not a chain of separate vendors.").replace(/\n/g, '<br>'))
+                  }}
+                />
               }
             />
           </div>
@@ -357,7 +374,7 @@ export default function AmusementPark({ siteData }) {
           <div className="winera-amusement-banner-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
               src={getValidImageUrl(siteData?.amusementBanner?.imgUrl, amusementSetupsCollage)}
-              alt="Complete Amusement Park Setups Built for Indian Venues"
+              alt={siteData?.amusementBanner?.imgAlt || "Complete Amusement Park Setups Built for Indian Venues - Winera"}
               style={{
                 width: '100%',
                 maxWidth: '640px',
@@ -403,9 +420,12 @@ export default function AmusementPark({ siteData }) {
                 </h2>
               </div>
 
-              <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, letterSpacing: '0px', marginBottom: '20px' }}>
-                {siteData?.amusementOptions?.subtitle || "We Supply Many Types Of Rides So You Can Build The Right Experience For Your Space And Visitors."}
-              </p>
+              <p
+                style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, letterSpacing: '0px', marginBottom: '20px' }}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeAndFormatHtml((siteData?.amusementOptions?.subtitle || "We Supply Many Types Of Rides So You Can Build The Right Experience For Your Space And Visitors.").replace(/\n/g, '<br>'))
+                }}
+              />
 
               {/* Bullet Points List */}
               <div className="winera-amusement-points-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
@@ -414,22 +434,30 @@ export default function AmusementPark({ siteData }) {
                     <span className="winera-amusement-point-icon" style={{ color: '#38bdf8', fontWeight: '900', fontSize: '16px', marginTop: '2px', flexShrink: 0 }}>&#10148;</span>
                     <div className="winera-amusement-point-content">
                       <strong style={{ color: '#0f172a', fontWeight: '700' }}>{item.boldText || item.title} :-</strong>{' '}
-                      <span style={{ fontWeight: '500', color: '#475569' }}>{item.desc || item.description}</span>
+                      <span
+                        style={{ fontWeight: '500', color: '#475569' }}
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeAndFormatHtml((item.desc || item.description || '').replace(/\n/g, '<br>'))
+                        }}
+                      />
                     </div>
                   </div>
                 ))}
               </div>
 
-              <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, letterSpacing: '0px', margin: 0 }}>
-                {siteData?.amusementOptions?.footerText || "Every Ride Comes With Strong Safety Belts, Automatic Sensors That Stop The Ride If Something Goes Wrong, And A Tough, Durable Build. We Test Each Ride On-Site Before Handing It Over To You."}
-              </p>
+              <p
+                style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, letterSpacing: '0px', margin: 0 }}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeAndFormatHtml((siteData?.amusementOptions?.footerText || "Every Ride Comes With Strong Safety Belts, Automatic Sensors That Stop The Ride If Something Goes Wrong, And A Tough, Durable Build. We Test Each Ride On-Site Before Handing It Over To You.").replace(/\n/g, '<br>'))
+                }}
+              />
             </div>
 
             {/* Right Collage Image Column */}
             <div className="winera-amusement-options-img" style={{ display: 'flex', justifyContent: 'center' }}>
               <img
                 src={getValidImageUrl(siteData?.amusementOptions?.topImgUrl || siteData?.amusementOptions?.imgUrl, amusementOptionsTopCollage)}
-                alt="Rides and Attractions We Supply"
+                alt={siteData?.amusementOptions?.topImgAlt || siteData?.amusementOptions?.imgAlt || "Rides and Attractions We Supply - Winera Commercial Amusement Parks"}
                 style={{ width: '100%', maxWidth: '520px', height: 'auto', display: 'block' }}
               />
             </div>
@@ -446,7 +474,7 @@ export default function AmusementPark({ siteData }) {
             <div className="winera-amusement-roi-img" style={{ display: 'flex', justifyContent: 'center' }}>
               <img
                 src={getValidImageUrl(siteData?.amusementRoi?.bottomImgUrl || siteData?.amusementRoi?.imgUrl, amusementOptionsBottomImg)}
-                alt="Before You Build Know What It Will Earn"
+                alt={siteData?.amusementRoi?.bottomImgAlt || siteData?.amusementRoi?.imgAlt || "Before You Build Know What It Will Earn - Amusement Park ROI Setup Winera"}
                 style={{ width: '100%', maxWidth: '520px', height: 'auto', display: 'block' }}
               />
             </div>
@@ -467,19 +495,25 @@ export default function AmusementPark({ siteData }) {
               {/* Paragraphs with Mobile Expandable Text */}
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '16px' }}>
-                    {siteData?.amusementRoi?.paragraph1 || "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline."}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '16px' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.amusementRoi?.paragraph1 || "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '26px' }}>
-                    {siteData?.amusementRoi?.paragraph2 || "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins."}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '26px' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.amusementRoi?.paragraph2 || "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
               />
 
               {(() => {
-                const baseLink = siteData?.amusementRoi?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.amusementRoi?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.amusementRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Amusement Park setup & commercial ROI calculation. Please share details. [Ref: Amusement Park Page]";
                 
                 let hrefLink = baseLink;
@@ -610,12 +644,15 @@ export default function AmusementPark({ siteData }) {
                         whyUsIcons[cIdx % whyUsIcons.length]
                       )}
                     </div>
-                    <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                    <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                       {card.title}
-                    </h4>
-                    <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                      {card.desc || card.description}
-                    </p>
+                    </h3>
+                    <p
+                      style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndFormatHtml((card.desc || card.description || '').replace(/\n/g, '<br>'))
+                      }}
+                    />
                   </div>
                 ))}
               </div>
@@ -686,12 +723,15 @@ export default function AmusementPark({ siteData }) {
                           whyUsIcons[(topCards.length + bIdx) % whyUsIcons.length]
                         )}
                       </div>
-                      <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                         {card.title}
-                      </h4>
-                      <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                        {card.desc || card.description}
-                      </p>
+                      </h3>
+                      <p
+                        style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeAndFormatHtml((card.desc || card.description || '').replace(/\n/g, '<br>'))
+                        }}
+                      />
                     </div>
                   ))}
                 </div>
@@ -718,11 +758,11 @@ export default function AmusementPark({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
       />
       <TestimonialsSection siteData={siteData} />
-      <RelatedProductsSection sectionData={siteData?.amusementRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
-      <FaqSection faqsList={(Array.isArray(siteData?.amusementFaqs) && siteData.amusementFaqs.length >= 7) ? siteData.amusementFaqs : defaultAmusementFaqs} highlightColor="#38bdf8" />
+      <RelatedProductsSection sectionData={siteData?.amusementRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
+      <FaqSection faqsList={(Array.isArray(siteData?.amusementFaqs) && siteData.amusementFaqs.length >= 7) ? siteData.amusementFaqs : defaultAmusementFaqs} highlightColor="#0072b8" />
 
       {/* CTA BANNER SECTION WITH DYNAMIC CONTENT & EXACT TILTED CARDS MATCHING UI 1:1 */}
       <div className="winera-amusement-cta-wrapper">
@@ -749,13 +789,13 @@ export default function AmusementPark({ siteData }) {
               : "Need Any Consultations?"
           }
           subtitle={
-            siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
-              ? siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText
-              : "We're Ready To Give Answers To <br/>Your Questions."
+            siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText ? (
+              <span dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.amusementCta?.subtitle || siteData?.amusementCta?.whiteText).replace(/\n/g, '<br/>')) }} />
+            ) : "We're Ready To Give Answers To <br/>Your Questions."
           }
           description={null}
           buttonText={siteData?.amusementCta?.buttonText || "Talk to an ROI Expert"}
-          buttonLink={siteData?.amusementCta?.buttonLink || "https://wa.me/919428989488"}
+          buttonLink={siteData?.amusementCta?.buttonLink || "https://wa.me/919157873576"}
         />
       </div>
 

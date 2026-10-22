@@ -31,7 +31,7 @@ const seedDatabase = async () => {
     const products = catalogData.cards || [];
     const categoriesList = catalogData.categoriesList || [
       "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
-      "Bike Racing Game", "Car Racing Game", "Shooting Games", "VR Games", "Strength Based Games"
+      "Bike & Car Racing Games", "Shooting Games", "VR Games", "Strength Based Games"
     ];
 
     console.log(`📦 Found ${products.length} products to insert.`);

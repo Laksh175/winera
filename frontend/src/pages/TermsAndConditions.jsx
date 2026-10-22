@@ -1,8 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 const aboutHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345516/winera_uploads/c3mm4hffgjiimryiq4et.png";
-const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const gameZoneMobileBanner = projectPageMobileBanner;
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/') || url.includes('eqjkboeokagpaus2ifxa')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
+
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
+  let text = rawText || defaultText;
+  if (!text) return null;
+
+  text = text.replace(/([^\s>])(<br\s*\/?>)/gi, '$1 $2').replace(/(<br\s*\/?>)([^\s<])/gi, '$1 $2');
+  const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
+
+  return parts.map((part, pIdx) => {
+    const isHighlighted = pIdx % 2 === 1;
+    if (isHighlighted) {
+      return (
+        <span key={pIdx} style={{ color: highlightColor }}>
+          {part}
+        </span>
+      );
+    }
+    return <span key={pIdx}>{part}</span>;
+  });
+};
 
 export default function TermsAndConditions({ siteData }) {
   const [isPhone, setIsPhone] = useState(
@@ -19,6 +55,14 @@ export default function TermsAndConditions({ siteData }) {
 
   const header = siteData?.header || {};
   const footer = siteData?.footer || {};
+  const termsHero = siteData?.termsHero || {};
+  const heroBg = getValidImageUrl(termsHero.bgUrl, aboutHeroBg);
+  const mobileHeroBg = getValidImageUrl(termsHero.mobileBgUrl, gameZoneMobileBanner);
+  const bgAlt = termsHero.bgAlt || "Terms & Conditions - Winera International";
+  const mobileBgAlt = termsHero.mobileBgAlt || termsHero.bgAlt || "Terms & Conditions Mobile Banner - Winera International";
+  const heroTitle = termsHero.title || "Terms & *Conditions*";
+  const breadcrumbHome = termsHero.breadcrumbHome || "Home";
+  const breadcrumbText = termsHero.breadcrumbText || "Terms & Conditions";
 
   const termsSeo = siteData?.termsSeo || {
     pageTitle: "Terms & Conditions | Winera International Pvt. Ltd.",
@@ -226,7 +270,7 @@ export default function TermsAndConditions({ siteData }) {
         aspectRatio: isPhone ? '941 / 550' : 'auto',
         paddingTop: isPhone ? '55px' : '165px',
         paddingBottom: isPhone ? '0px' : '50px',
-        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${aboutHeroBg}) center/100% 100% no-repeat`,
+        background: isPhone ? `url(${mobileHeroBg}) center top / 100% 100% no-repeat` : `url(${heroBg}) center/100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -235,6 +279,14 @@ export default function TermsAndConditions({ siteData }) {
         color: '#ffffff',
         overflow: 'hidden'
       }}>
+        {/* SEO crawler discoverable image with alt text */}
+        <img
+          src={isPhone ? mobileHeroBg : heroBg}
+          alt={isPhone ? mobileBgAlt : bgAlt}
+          style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}
+          loading="lazy"
+          decoding="async"
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {isPhone ? (
             <h1 className="winera-terms-hero-h1" style={{
@@ -251,19 +303,19 @@ export default function TermsAndConditions({ siteData }) {
               textAlign: 'center',
               textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
             }}>
-              <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+              <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>{breadcrumbHome}</a>
               <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
-              <span style={{ color: '#ffcd00', fontWeight: '900' }}>Terms & Conditions</span>
+              <span style={{ color: '#ffcd00', fontWeight: '900' }}>{breadcrumbText}</span>
             </h1>
           ) : (
             <>
               <h1 style={{ fontSize: '42px', fontWeight: '900', letterSpacing: '-1px', marginBottom: '8px', lineHeight: 1.15 }}>
-                Terms & <span style={{ color: '#ffcd00' }}>Conditions</span>
+                {renderTitleMarkup(heroTitle, 'Terms & <span style="color: #ffcd00">Conditions</span>')}
               </h1>
               <p style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', opacity: 0.9, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+                <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>{breadcrumbHome}</a>
                 <span style={{ color: '#ffcd00' }}>&gt;</span>
-                <span style={{ color: '#ffffff' }}>Terms & Conditions</span>
+                <span style={{ color: '#ffffff' }}>{breadcrumbText}</span>
               </p>
             </>
           )}
@@ -271,178 +323,271 @@ export default function TermsAndConditions({ siteData }) {
       </section>
 
       {/* Main Content Container */}
-      <section style={{ padding: '60px 4vw 90px', maxWidth: '940px', margin: '0 auto', textAlign: 'left' }}>
-        <div className="winera-terms-content-card" style={{
-          background: '#ffffff',
-          borderRadius: '24px',
-          border: '1.5px solid #e2e8f0',
-          padding: '40px 45px',
-          boxShadow: 'none',
+      <section style={{ padding: isPhone ? '35px 5vw 60px' : '55px 4vw 90px', width: '100%' }}>
+        <div className="winera-terms-content-container" style={{
+          maxWidth: '1240px',
+          margin: '0 auto',
           textAlign: 'left'
         }}>
 
           {/* Preamble */}
-          <div style={{ marginBottom: '32px', paddingBottom: '28px', borderBottom: '1px solid #e2e8f0' }}>
-            <h2 className="winera-terms-preamble-title" style={{ fontSize: isPhone ? '1.25rem' : '1.4rem', fontWeight: '900', color: '#0f172a', margin: '0 0 10px', lineHeight: 1.3 }}>
-              {isPhone ? (
-                <>
-                  <span style={{ whiteSpace: 'nowrap' }}>Winera International</span>
-                  <br />
-                  <span style={{ whiteSpace: 'nowrap' }}>Pvt. Ltd.</span>
-                </>
-              ) : (
-                "Winera International Pvt. Ltd."
-              )}
+          <div style={{ marginBottom: '36px', paddingBottom: '24px', borderBottom: '1.5px solid #e2e8f0' }}>
+            <h2 className="winera-terms-preamble-title" style={{
+              fontSize: isPhone ? '1.35rem' : '1.85rem',
+              fontWeight: '900',
+              color: '#0f172a',
+              margin: '0 0 12px',
+              lineHeight: 1.3,
+              letterSpacing: '-0.3px'
+            }}>
+              Winera International Pvt. Ltd.
             </h2>
-            <p style={{ fontSize: '14.5px', color: '#334155', lineHeight: 1.75, margin: 0, fontWeight: '450' }}>
+            <p style={{ fontSize: isPhone ? '15px' : '16px', color: '#334155', lineHeight: 1.85, margin: 0, fontWeight: '400' }}>
               These Terms and Conditions (“Agreement”, “Terms”) govern your (“you”, “your”, “client”, “customer”) access to and use of the website <a href="http://www.winera.in" target="_blank" rel="noreferrer" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>www.winera.in</a> (the “Site”), and the products and services (“Services”) offered by Winera International Pvt. Ltd. (“Company”, “Winera”, “we”, “our”, or “us”). By accessing or using our Site and/or Services, you agree to be legally bound by these Terms. If you do not agree, please do not use this Site or engage with our services.
             </p>
           </div>
 
-          {/* Render Sections 1 to 19 */}
-          {sections.map((sec, idx) => (
-            <div key={idx} style={{
-              marginBottom: idx === sections.length - 1 ? '40px' : '36px',
-              paddingBottom: idx === sections.length - 1 ? '0' : '32px',
-              borderBottom: idx === sections.length - 1 ? 'none' : '1px solid #f1f5f9'
+          {/* Render Sections 1 to 20 */}
+          {sections.map((sec, idx) => {
+            const isContact = sec.isContactBox || sec.number === "20" || (sec.title && sec.title.toLowerCase().includes('contact'));
+            if (isContact) {
+              return (
+                <div key={idx} style={{
+                  background: '#f8fafc',
+                  border: '1.5px solid #cbd5e1',
+                  borderRadius: '16px',
+                  padding: isPhone ? '24px 20px' : '30px 32px',
+                  marginTop: '28px'
+                }}>
+                  <h3 style={{
+                    fontSize: isPhone ? '1.15rem' : '1.3rem',
+                    fontWeight: '800',
+                    color: '#0f172a',
+                    margin: '0 0 14px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px'
+                  }}>
+                    <span style={{
+                      background: '#0284c7',
+                      color: '#ffffff',
+                      borderRadius: '8px',
+                      width: '30px',
+                      height: '30px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '13px',
+                      fontWeight: '800',
+                      flexShrink: 0
+                    }}>
+                      {sec.number || '20'}
+                    </span>
+                    {sec.title || 'Contact Us'}
+                  </h3>
+                  {(sec.subtitle || sec.intro) && (
+                    <p
+                      style={{ fontSize: isPhone ? '15px' : '16px', color: '#334155', fontWeight: '600', margin: '0 0 14px' }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(sec.subtitle || sec.intro) }}
+                    />
+                  )}
+                  <div style={{ fontSize: isPhone ? '14.5px' : '15px', color: '#475569', lineHeight: 1.8, fontWeight: '450' }}>
+                    <p
+                      style={{ margin: '0 0 8px', fontWeight: '700', color: '#0f172a', fontSize: '15.5px' }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(sec.companyName || (sec.content && sec.content[0]) || "Winera International Pvt. Ltd.") }}
+                    />
+                    <p
+                      style={{ margin: '0 0 12px', maxWidth: '820px' }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(sec.address || (sec.content && sec.content[1]) || "📍 1011, 10th floor, Millennium Business Hub, opp., Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat-395006, India") }}
+                    />
+                    {sec.bulletsText ? (
+                      <ul style={{ margin: '0 0 12px', paddingLeft: '24px', listStyleType: 'disc' }}>
+                        {sec.bulletsText.map((tItem, tIdx) => (
+                          <li
+                            key={tIdx}
+                            style={{ fontSize: isPhone ? '14.5px' : '15px', color: '#475569', lineHeight: 1.75, marginBottom: '8px' }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(tItem) }}
+                          />
+                        ))}
+                      </ul>
+                    ) : (
+                      <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', marginTop: '10px' }}>
+                        <div>
+                          <strong style={{ color: '#0f172a' }}>📧 Email:</strong>{' '}
+                          <a href="mailto:info@winera.in" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                            info@winera.in
+                          </a>
+                        </div>
+                        <div>
+                          <strong style={{ color: '#0f172a' }}>📞 Phone:</strong>{' '}
+                          <a href="tel:+919157873576" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                            +91 91578 73576
+                          </a>
+                          {' / '}
+                          <a href="tel:+919512356766" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                            +91 95123 56766
+                          </a>
+                        </div>
+                        <div>
+                          <strong style={{ color: '#0f172a' }}>🌐 Website:</strong>{' '}
+                          <a href="https://www.winera.in" target="_blank" rel="noreferrer" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                            www.winera.in
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <div key={idx} style={{
+                marginBottom: idx === sections.length - 1 ? '35px' : '30px',
+                paddingBottom: idx === sections.length - 1 ? '0' : '28px',
+                borderBottom: idx === sections.length - 1 ? 'none' : '1px solid #e2e8f0'
+              }}>
+                <h3 style={{
+                  fontSize: isPhone ? '1.15rem' : '1.3rem',
+                  fontWeight: '800',
+                  color: '#0f172a',
+                  margin: '0 0 14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  lineHeight: 1.35,
+                  letterSpacing: '-0.2px'
+                }}>
+                  <span style={{
+                    background: '#e0f2fe',
+                    color: '#0284c7',
+                    borderRadius: '8px',
+                    width: '30px',
+                    height: '30px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '13px',
+                    fontWeight: '800',
+                    flexShrink: 0
+                  }}>
+                    {sec.number}
+                  </span>
+                  <span>{sec.title}</span>
+                </h3>
+
+                {(sec.intro || sec.subtitle) && (
+                  <p
+                    style={{ fontSize: isPhone ? '15px' : '16px', color: '#334155', lineHeight: 1.85, margin: '0 0 12px', fontWeight: '400' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(sec.intro || sec.subtitle) }}
+                  />
+                )}
+
+                {sec.content && (Array.isArray(sec.content) ? sec.content : [sec.content]).map((pText, pIdx) => (
+                  <p
+                    key={pIdx}
+                    style={{ fontSize: isPhone ? '15px' : '16px', color: '#334155', lineHeight: 1.85, margin: '0 0 10px', fontWeight: '400' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(pText) }}
+                  />
+                ))}
+
+                {/* Labelled bullets */}
+                {sec.bullets && (
+                  <ul style={{ margin: '0 0 12px', paddingLeft: '24px', listStyleType: 'disc' }}>
+                    {sec.bullets.map((bItem, bIdx) => (
+                      <li key={bIdx} style={{ fontSize: isPhone ? '15px' : '16px', color: '#334155', lineHeight: 1.8, marginBottom: '8px' }}>
+                        <strong style={{ color: '#0f172a', fontWeight: '700' }}>{bItem.label}:</strong>{' '}
+                        <span dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(bItem.text) }} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Simple text bullets */}
+                {sec.bulletsText && (
+                  <ul style={{ margin: '0 0 12px', paddingLeft: '24px', listStyleType: 'disc' }}>
+                    {sec.bulletsText.map((tItem, tIdx) => (
+                      <li
+                        key={tIdx}
+                        style={{ fontSize: isPhone ? '15px' : '16px', color: '#334155', lineHeight: 1.8, marginBottom: '8px' }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(tItem) }}
+                      />
+                    ))}
+                  </ul>
+                )}
+              </div>
+            );
+          })}
+
+          {/* Section 20: Fallback Contact Us Box if not already rendered in sections array */}
+          {!sections.some(s => s.number === "20" || (s.title && s.title.toLowerCase().includes('contact'))) && (
+            <div style={{
+              background: '#f8fafc',
+              border: '1.5px solid #cbd5e1',
+              borderRadius: '16px',
+              padding: isPhone ? '24px 20px' : '30px 32px',
+              marginTop: '28px'
             }}>
               <h3 style={{
-                fontSize: '1.25rem',
+                fontSize: isPhone ? '1.15rem' : '1.3rem',
                 fontWeight: '800',
                 color: '#0f172a',
                 margin: '0 0 14px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px',
-                lineHeight: 1.3
+                gap: '12px'
               }}>
                 <span style={{
-                  background: '#e0f2fe',
-                  color: '#0284c7',
-                  borderRadius: '10px',
-                  width: '32px',
-                  height: '32px',
+                  background: '#0284c7',
+                  color: '#ffffff',
+                  borderRadius: '8px',
+                  width: '30px',
+                  height: '30px',
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   fontWeight: '800',
                   flexShrink: 0
                 }}>
-                  {sec.number}
+                  20
                 </span>
-                {sec.title}
+                Contact Us
               </h3>
-
-              {sec.intro && (
-                <p style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, margin: '0 0 12px', fontWeight: '450' }}>
-                  {sec.intro}
+              <div style={{ fontSize: isPhone ? '14.5px' : '15px', color: '#475569', lineHeight: 1.8, fontWeight: '450' }}>
+                <p style={{ margin: '0 0 8px', fontWeight: '700', color: '#0f172a', fontSize: '15.5px' }}>
+                  Winera International Pvt. Ltd.
                 </p>
-              )}
-
-              {sec.content && sec.content.map((pText, pIdx) => (
-                <p key={pIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, margin: '0 0 10px', fontWeight: '450' }}>
-                  {pText}
+                <p style={{ margin: '0 0 12px', maxWidth: '820px' }}>
+                  📍 1011, 10th floor, Millennium Business Hub, opp., Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat-395006, India
                 </p>
-              ))}
-
-              {sec.subtitle && (
-                <p style={{ fontSize: '14.5px', color: '#334155', fontWeight: '600', margin: '0 0 12px', lineHeight: 1.6 }}>
-                  {sec.subtitle}
-                </p>
-              )}
-
-              {/* Labelled bullets */}
-              {sec.bullets && (
-                <ul style={{ margin: 0, paddingLeft: '22px', listStyleType: 'disc' }}>
-                  {sec.bullets.map((bItem, bIdx) => (
-                    <li key={bIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, marginBottom: '8px' }}>
-                      <strong style={{ color: '#0f172a', fontWeight: '700' }}>{bItem.label}:</strong> {bItem.text}
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* Simple text bullets */}
-              {sec.bulletsText && (
-                <ul style={{ margin: 0, paddingLeft: '22px', listStyleType: 'disc' }}>
-                  {sec.bulletsText.map((tItem, tIdx) => (
-                    <li key={tIdx} style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.7, marginBottom: '8px' }}>
-                      {tItem}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-
-          {/* Section 20: Contact Us Box */}
-          <div style={{
-            background: '#f0f9ff',
-            border: '1.5px solid #38bdf8',
-            borderRadius: '20px',
-            padding: '30px 32px',
-            marginTop: '20px'
-          }}>
-            <h3 style={{
-              fontSize: '1.25rem',
-              fontWeight: '800',
-              color: '#0f172a',
-              margin: '0 0 14px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px'
-            }}>
-              <span style={{
-                background: '#38bdf8',
-                color: '#ffffff',
-                borderRadius: '10px',
-                width: '32px',
-                height: '32px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '14px',
-                fontWeight: '800',
-                flexShrink: 0
-              }}>
-                20
-              </span>
-              Contact Us
-            </h3>
-            <div style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, fontWeight: '500' }}>
-              <p style={{ margin: '0 0 8px', fontWeight: '700', color: '#0f172a', fontSize: '15px' }}>
-                Winera International Pvt. Ltd.
-              </p>
-              <p style={{ margin: '0 0 12px', maxWidth: '720px' }}>
-                📍 1011, 10th floor, Millennium Business Hub, opp., Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat-395006, India
-              </p>
-              <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', marginTop: '10px' }}>
-                <div>
-                  <strong style={{ color: '#0f172a' }}>📧 Email:</strong>{' '}
-                  <a href="mailto:info@winera.in" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
-                    info@winera.in
-                  </a>
-                </div>
-                <div>
-                  <strong style={{ color: '#0f172a' }}>📞 Phone:</strong>{' '}
-                  <a href="tel:+919428989488" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
-                    +91 94289 89488
-                  </a>
-                  {' / '}
-                  <a href="tel:+919512356766" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
-                    +91 95123 56766
-                  </a>
-                </div>
-                <div>
-                  <strong style={{ color: '#0f172a' }}>🌐 Website:</strong>{' '}
-                  <a href="https://www.winera.in" target="_blank" rel="noreferrer" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
-                    www.winera.in
-                  </a>
+                <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', marginTop: '10px' }}>
+                  <div>
+                    <strong style={{ color: '#0f172a' }}>📧 Email:</strong>{' '}
+                    <a href="mailto:info@winera.in" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                      info@winera.in
+                    </a>
+                  </div>
+                  <div>
+                    <strong style={{ color: '#0f172a' }}>📞 Phone:</strong>{' '}
+                    <a href="tel:+919157873576" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                      +91 91578 73576
+                    </a>
+                    {' / '}
+                    <a href="tel:+919512356766" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                      +91 95123 56766
+                    </a>
+                  </div>
+                  <div>
+                    <strong style={{ color: '#0f172a' }}>🌐 Website:</strong>{' '}
+                    <a href="https://www.winera.in" target="_blank" rel="noreferrer" style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+                      www.winera.in
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
         </div>
       </section>

@@ -5,11 +5,13 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
+import { sanitizeAndFormatHtml } from './BlogDetail';
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 const ctaMainBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345648/winera_uploads/ei16uczeuelaabtue4bs.jpg";
 const laserTagLeftCta = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791348709/winera_uploads/hzwfj0eti3q15lzthvz5.png";
 const laserTagRightCta = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791348711/winera_uploads/fy9rcztxwdtqhw65ylvo.png";
 const laserTagHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345630/winera_uploads/tj7ke5cpufz9t41c4d7v.png";
-const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const gameZoneMobileBanner = projectPageMobileBanner;
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 const laserTagImg1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345668/winera_uploads/pvowe89a9npyelw0urvy.png";
 const laserTagImg2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345670/winera_uploads/pdxjsxxlv5fmskyvexns.png";
@@ -40,14 +42,16 @@ import { FileText, Shield, Activity, Crosshair, Users, Tv, Sparkles, Sliders, Ta
 // Helper to resolve valid image URLs or fallback
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '') return fallback;
+  if (url.includes('eqjkboeokagpaus2ifxa') || url.includes('/src/assets/')) return fallback;
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
   if (url.startsWith('/uploads/')) return `http://localhost:5001${url}`;
-  if (url.startsWith('/assets/') || url.startsWith('/src/assets/')) return fallback;
+  if (url.startsWith('/assets/')) return fallback;
   return url;
 };
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#00a6ff' || highlightColor === '#00b0ff') ? '#0072b8' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -66,7 +70,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 
     if (isHighlighted) {
       return (
-        <span key={pIdx} style={{ color: highlightColor }}>
+        <span key={pIdx} style={{ color: actualHighlight }}>
           {renderedContent}
         </span>
       );
@@ -189,11 +193,6 @@ const LaserTagComparisonSlider = ({ features = [], lasertagPoints = [], laserspy
   const [activeIndex, setActiveIndex] = useState(0);
   const touchStartXRef = useRef(0);
 
-  const cleanText = (t) => {
-    if (!t || typeof t !== 'string') return '';
-    return t.replace(/<br\s*\/?>/gi, ' ').trim();
-  };
-
   const total = Array.isArray(features) && features.length > 0 ? features.length : 6;
 
   const handlePrev = () => {
@@ -219,8 +218,8 @@ const LaserTagComparisonSlider = ({ features = [], lasertagPoints = [], laserspy
   };
 
   const currentFeature = features[activeIndex] || "";
-  const currentLaserTag = cleanText(lasertagPoints[activeIndex]?.text || "");
-  const currentLaserSpy = cleanText(laserspyPoints[activeIndex]?.text || "");
+  const currentLaserTag = lasertagPoints[activeIndex]?.text || "";
+  const currentLaserSpy = laserspyPoints[activeIndex]?.text || "";
 
   return (
     <div className="winera-lasertag-comparison-mobile">
@@ -234,9 +233,9 @@ const LaserTagComparisonSlider = ({ features = [], lasertagPoints = [], laserspy
           <span className="winera-comparison-step-badge">
             {String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
           </span>
-          <h4 className="winera-comparison-feature-title">
+          <h3 className="winera-comparison-feature-title">
             {currentFeature}
-          </h4>
+          </h3>
         </div>
 
         {/* 1. Left Side Point: Laser Tag */}
@@ -244,9 +243,10 @@ const LaserTagComparisonSlider = ({ features = [], lasertagPoints = [], laserspy
           <div className="winera-comparison-option-badge electric-badge">
             🔫 Laser Tag
           </div>
-          <p className="winera-comparison-option-text">
-            {currentLaserTag}
-          </p>
+          <p
+            className="winera-comparison-option-text"
+            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(currentLaserTag.replace(/\n/g, '<br/>')) }}
+          />
         </div>
 
         {/* VS Divider */}
@@ -259,9 +259,10 @@ const LaserTagComparisonSlider = ({ features = [], lasertagPoints = [], laserspy
           <div className="winera-comparison-option-badge battery-badge">
             🎯 Laser Spy
           </div>
-          <p className="winera-comparison-option-text">
-            {currentLaserSpy}
-          </p>
+          <p
+            className="winera-comparison-option-text"
+            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(currentLaserSpy.replace(/\n/g, '<br/>')) }}
+          />
         </div>
       </div>
 
@@ -336,6 +337,7 @@ export default function LaserTag({ siteData }) {
   const header = siteData?.header || {};
   const footer = siteData?.footer || {};
   const heroBgImage = getValidImageUrl(siteData?.lasertagHero?.bgUrl, laserTagHeroBg);
+  const mobileHeroBg = getValidImageUrl(siteData?.lasertagHero?.mobileBgUrl, gameZoneMobileBanner);
   const introImg = getValidImageUrl(siteData?.lasertagIntro?.mainImgUrl, laserTagImg1);
   const setupImg = getValidImageUrl(siteData?.lasertagSetup?.mainImgUrl, laserTagImg2);
   const groupsBg = getValidImageUrl(siteData?.lasertagGroups?.bgUrl, laserTagBg3);
@@ -363,7 +365,7 @@ export default function LaserTag({ siteData }) {
         aspectRatio: isPhone ? '941 / 550' : 'auto',
         paddingTop: isPhone ? '55px' : '165px',
         paddingBottom: isPhone ? '0px' : '75px',
-        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${heroBgImage}) center top / 100% 100% no-repeat`,
+        background: isPhone ? `url(${mobileHeroBg}) center top / 100% 100% no-repeat` : `url(${heroBgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -372,6 +374,11 @@ export default function LaserTag({ siteData }) {
         color: '#ffffff',
         overflow: 'hidden'
       }}>
+        <img
+          src={isPhone ? mobileHeroBg : heroBgImage}
+          alt={isPhone ? (siteData?.lasertagHero?.mobileBgAlt || siteData?.lasertagHero?.bgAlt || "Commercial Laser Tag Arena Equipment & Setup - Winera") : (siteData?.lasertagHero?.bgAlt || "Commercial Laser Tag Arena Equipment & Setup - Winera")}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Laser Tag */}
           <h1 className="winera-lasertag-hero-h1" style={{
@@ -446,9 +453,9 @@ export default function LaserTag({ siteData }) {
                 if (highlight.trim() === "Laser Tag Gaming Equipment" && normal.trim() === "& Laser Spy Supplier in India") {
                   return (
                     <>
-                      <span style={{ color: '#38bdf8' }}>Laser Tag Gaming</span>
+                      <span style={{ color: '#0072b8' }}>Laser Tag Gaming</span>
                       <br />
-                      <span style={{ color: '#38bdf8' }}>Equipment </span>
+                      <span style={{ color: '#0072b8' }}>Equipment </span>
                       <span style={{ color: '#0f172a' }}>& Laser Spy</span>
                       <br />
                       <span style={{ color: '#0f172a' }}>Supplier in India</span>
@@ -458,7 +465,7 @@ export default function LaserTag({ siteData }) {
 
                 return (
                   <>
-                    <span style={{ color: '#38bdf8' }}>
+                    <span style={{ color: '#0072b8' }}>
                       {highlight.split('\n').map((hLine, hIdx) => (
                         <React.Fragment key={hIdx}>
                           {hIdx > 0 && <br />}
@@ -491,22 +498,25 @@ export default function LaserTag({ siteData }) {
                   return (
                     <MobileExpandableText
                       preview={
-                        <p style={{ fontSize: isPhone ? '14px' : '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: isPhone ? 'center' : 'left' }}>
-                          {p1}
-                        </p>
+                        <p
+                          style={{ fontSize: isPhone ? '14px' : '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: isPhone ? 'center' : 'left' }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(p1.replace(/\n/g, '<br/>')) }}
+                        />
                       }
                       expandedContent={
-                        <p style={{ fontSize: isPhone ? '14px' : '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '8px 0 0 0', textAlign: isPhone ? 'center' : 'left' }}>
-                          {p2}
-                        </p>
+                        <p
+                          style={{ fontSize: isPhone ? '14px' : '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '8px 0 0 0', textAlign: isPhone ? 'center' : 'left' }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(p2.replace(/\n/g, '<br/>')) }}
+                        />
                       }
                     />
                   );
                 }
                 return (
-                  <p style={{ fontSize: isPhone ? '14px' : '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: isPhone ? 'center' : 'left' }}>
-                    {fullDesc}
-                  </p>
+                  <p
+                    style={{ fontSize: isPhone ? '14px' : '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, textAlign: isPhone ? 'center' : 'left' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(fullDesc.replace(/\n/g, '<br/>')) }}
+                  />
                 );
               })()}
             </div>
@@ -514,7 +524,7 @@ export default function LaserTag({ siteData }) {
             {/* Get A Quote Button matching VR Games style */}
             <div className="winera-cyan-cta-wrapper">
               {(() => {
-                const baseLink = siteData?.lasertagIntro?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.lasertagIntro?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.lasertagIntro?.waMessage || "Hello Winera International! I want to get a quote for Laser Tag & Laser Spy Equipment setup. Please share details.";
                 let hrefLink = baseLink;
                 if (!baseLink.includes('text=')) {
@@ -545,7 +555,7 @@ export default function LaserTag({ siteData }) {
           }}>
             <img
               src={introImg}
-              alt="Laser Tag Gaming Equipment & Laser Spy Supplier in India"
+              alt={siteData?.lasertagIntro?.mainImgAlt || siteData?.lasertagIntro?.imgAlt || "Laser Tag Gaming Equipment & Laser Spy Supplier in India - Winera"}
               style={{
                 width: '100%',
                 maxWidth: '620px',
@@ -583,7 +593,7 @@ export default function LaserTag({ siteData }) {
           }}>
             <img
               src={setupImg}
-              alt="One Team for Your Whole Laser Tag & Laser Spy Setup"
+              alt={siteData?.lasertagSetup?.mainImgAlt || siteData?.lasertagSetup?.imgAlt || "One Team for Your Whole Laser Tag & Laser Spy Setup - Winera"}
               style={{
                 width: '100%',
                 maxWidth: '520px',
@@ -638,7 +648,7 @@ export default function LaserTag({ siteData }) {
                       <span style={{ color: '#0f172a' }}>One Team for Your Whole</span>
                       <br />
                       <span style={{ color: '#0f172a' }}>Laser </span>
-                      <span style={{ color: '#38bdf8' }}>Tag & Laser Spy Setup</span>
+                      <span style={{ color: '#0072b8' }}>Tag & Laser Spy Setup</span>
                     </>
                   );
                 }
@@ -654,7 +664,7 @@ export default function LaserTag({ siteData }) {
                       ))}
                     </span>
                     {' '}
-                    <span style={{ color: '#38bdf8' }}>
+                    <span style={{ color: '#0072b8' }}>
                       {highlight.split('\n').map((hLine, hIdx) => (
                         <React.Fragment key={hIdx}>
                           {hIdx > 0 && <br />}
@@ -671,29 +681,35 @@ export default function LaserTag({ siteData }) {
             <div style={{ maxWidth: '660px', width: '100%', textAlign: isPhone ? 'center' : 'left' }}>
               <MobileExpandableText
                 preview={
-                  <p style={{
-                    fontSize: isPhone ? '14px' : '15px',
-                    color: '#475569',
-                    lineHeight: 1.65,
-                    fontWeight: '500',
-                    marginBottom: isPhone ? '0px' : '16px',
-                    textAlign: isPhone ? 'center' : 'left'
-                  }}>
-                    {siteData?.lasertagSetup?.paragraph1 || "Winera International has set up laser tag and laser spy games for entertainment centres, malls, hotels, schools, and resorts across India since 2014. Every setup comes with the full equipment, game software, scoreboards, and complete arena setup."}
-                  </p>
+                  <p
+                    style={{
+                      fontSize: isPhone ? '14px' : '15px',
+                      color: '#475569',
+                      lineHeight: 1.65,
+                      fontWeight: '500',
+                      marginBottom: isPhone ? '0px' : '16px',
+                      textAlign: isPhone ? 'center' : 'left'
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.lasertagSetup?.paragraph1 || "Winera International has set up laser tag and laser spy games for entertainment centres, malls, hotels, schools, and resorts across India since 2014. Every setup comes with the full equipment, game software, scoreboards, and complete arena setup.").replace(/\n/g, '<br/>'))
+                    }}
+                  />
                 }
                 expandedContent={
-                  <p style={{
-                    fontSize: isPhone ? '14px' : '15px',
-                    color: '#475569',
-                    lineHeight: 1.65,
-                    fontWeight: '500',
-                    marginTop: isPhone ? '8px' : '0px',
-                    marginBottom: '0px',
-                    textAlign: isPhone ? 'center' : 'left'
-                  }}>
-                    {siteData?.lasertagSetup?.paragraph2 || "Before you order anything, we check your space size, how many players you want, and how you plan to run it. Then our own team handles everything — design, setup, and staff training across 50+ cities in India."}
-                  </p>
+                  <p
+                    style={{
+                      fontSize: isPhone ? '14px' : '15px',
+                      color: '#475569',
+                      lineHeight: 1.65,
+                      fontWeight: '500',
+                      marginTop: isPhone ? '8px' : '0px',
+                      marginBottom: '0px',
+                      textAlign: isPhone ? 'center' : 'left'
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.lasertagSetup?.paragraph2 || "Before you order anything, we check your space size, how many players you want, and how you plan to run it. Then our own team handles everything — design, setup, and staff training across 50+ cities in India.").replace(/\n/g, '<br/>'))
+                    }}
+                  />
                 }
               />
             </div>
@@ -739,23 +755,26 @@ export default function LaserTag({ siteData }) {
               lineHeight: 1.2,
               margin: '0 0 12px 0'
             }}>
-              <span style={{ color: '#38bdf8' }}>
+              <span style={{ color: '#0072b8' }}>
                 {siteData?.lasertagGroups?.titleHighlight || "Laser Tag - "}
               </span>
               <span style={{ color: '#0f172a' }}>
                 {siteData?.lasertagGroups?.titleNormal || "Great for Groups"}
               </span>
             </h2>
-            <p style={{
-              fontSize: isPhone ? '13.5px' : '14.5px',
-              color: '#475569',
-              lineHeight: 1.65,
-              fontWeight: '500',
-              maxWidth: '740px',
-              margin: '0 auto'
-            }}>
-              {siteData?.lasertagGroups?.desc || "Laser tag fills fast because groups book many players at once at birthday parties, office teams, and school outings. We supply the complete game and set it up fully, so you're ready to take bookings from day one."}
-            </p>
+            <p
+              style={{
+                fontSize: isPhone ? '13.5px' : '14.5px',
+                color: '#475569',
+                lineHeight: 1.65,
+                fontWeight: '500',
+                maxWidth: '740px',
+                margin: '0 auto'
+              }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.lasertagGroups?.desc || "Laser tag fills fast because groups book many players at once at birthday parties, office teams, and school outings. We supply the complete game and set it up fully, so you're ready to take bookings from day one.").replace(/\n/g, '<br/>'))
+              }}
+            />
           </div>
 
           {/* 2-Column Content Grid */}
@@ -823,7 +842,7 @@ export default function LaserTag({ siteData }) {
                 />
                 <img
                   src={groupsImg}
-                  alt="Laser Tag - Great for Groups"
+                  alt={siteData?.lasertagGroups?.mainImgAlt || siteData?.lasertagGroups?.imgAlt || "Laser Tag - Great for Groups & Team Building - Winera"}
                   style={{
                     position: 'absolute',
                     top: 0,
@@ -861,6 +880,11 @@ export default function LaserTag({ siteData }) {
           justifyContent: 'space-between',
           boxSizing: 'border-box'
         }}>
+          <img
+            src={specsBg}
+            alt={siteData?.lasertagSpecs?.bgAlt || "Laser Tag Technical Specifications Arena - Winera"}
+            style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0.001, pointerEvents: 'none' }}
+          />
           {/* Top Title: Technical Specifications with Yellow Accent Stroke */}
           <div style={{ position: 'relative', display: isPhone ? 'flex' : 'inline-block', flexDirection: isPhone ? 'column' : 'initial', alignItems: isPhone ? 'center' : 'flex-start', textAlign: isPhone ? 'center' : 'left', marginBottom: isPhone ? '20px' : '28px' }}>
             <img
@@ -962,10 +986,11 @@ export default function LaserTag({ siteData }) {
           {/* Bottom CTA Button: Download Our Brochure matching Hypergrid */}
           <div style={{ margin: 0 }}>
             {(() => {
-              const baseLink = siteData?.lasertagSpecs?.buttonLink || "https://wa.me/919428989488";
+              const baseLink = siteData?.lasertagSpecs?.buttonLink || "https://wa.me/919157873576";
               const defaultMsg = siteData?.lasertagSpecs?.waMessage || "Hello Winera International! I want to download the Laser Tag Equipment & Setup Brochure. Please share details.";
+              const isPdf = typeof baseLink === 'string' && (baseLink.toLowerCase().includes('.pdf') || baseLink.includes('/uploads') || baseLink.includes('cloudinary') || baseLink.includes('drive.google'));
               let hrefLink = baseLink;
-              if (!baseLink.includes('text=')) {
+              if (!isPdf && !baseLink.includes('text=')) {
                 const separator = baseLink.includes('?') ? '&' : '?';
                 hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
               }
@@ -974,6 +999,7 @@ export default function LaserTag({ siteData }) {
                   href={hrefLink}
                   target="_blank"
                   rel="noreferrer"
+                  download={isPdf ? "Winera-Laser-Tag-Brochure.pdf" : undefined}
                   aria-label="Download Our Brochure"
                   style={{
                     display: 'inline-flex',
@@ -1047,7 +1073,7 @@ export default function LaserTag({ siteData }) {
                   lineHeight: 1.2,
                   margin: '0 0 10px 0'
                 }}>
-                  <span style={{ color: '#38bdf8' }}>
+                  <span style={{ color: '#0072b8' }}>
                     {siteData?.lasertagSpace?.titleHighlight || "How Much Space"}
                   </span>
                   {' '}
@@ -1066,16 +1092,19 @@ export default function LaserTag({ siteData }) {
                 </h2>
 
                 {/* Description Text */}
-                <p style={{
-                  fontSize: isPhone ? '13px' : '14px',
-                  color: '#475569',
-                  lineHeight: 1.55,
-                  fontWeight: '500',
-                  maxWidth: '560px',
-                  margin: 0
-                }}>
-                  {siteData?.lasertagSpace?.desc || "A laser tag arena works from about 1,000 sq ft, but 2,500–5,000 sq ft is ideal; it gives players room to move, hide, and enjoy the game. Here's how the space is used:"}
-                </p>
+                <p
+                  style={{
+                    fontSize: isPhone ? '13px' : '14px',
+                    color: '#475569',
+                    lineHeight: 1.55,
+                    fontWeight: '500',
+                    maxWidth: '560px',
+                    margin: 0
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml((siteData?.lasertagSpace?.desc || "A laser tag arena works from about 1,000 sq ft, but 2,500–5,000 sq ft is ideal; it gives players room to move, hide, and enjoy the game. Here's how the space is used:").replace(/\n/g, '<br/>'))
+                  }}
+                />
               </div>
 
               {/* Left: 2-Tone Contiguous Zones Specification Table Card */}
@@ -1406,7 +1435,7 @@ export default function LaserTag({ siteData }) {
                 <span style={{ color: '#0f172a' }}>
                   {siteData?.lasertagSpy?.titleDark || "Laser Spy — Laser "}
                 </span>
-                <span style={{ color: '#00b0ff' }}>
+                <span style={{ color: '#0072b8' }}>
                   {siteData?.lasertagSpy?.titleCyan || "Beam Game That Fits in a Small Room"}
                 </span>
               </h2>
@@ -1415,35 +1444,45 @@ export default function LaserTag({ siteData }) {
               <div style={{ maxWidth: '600px', width: '100%', marginBottom: '20px', textAlign: isPhone ? 'center' : 'left' }}>
                 <MobileExpandableText
                   preview={
-                    <p style={{
-                      fontSize: isPhone ? '13.5px' : '14px',
-                      color: '#475569',
-                      lineHeight: 1.6,
-                      fontWeight: '450',
-                      margin: 0,
-                      textAlign: isPhone ? 'center' : 'left'
-                    }}>
-                      {siteData?.lasertagSpy?.desc ? (
-                        siteData.lasertagSpy.desc.includes('. ')
-                          ? siteData.lasertagSpy.desc.substring(0, siteData.lasertagSpy.desc.indexOf('. ') + 1)
-                          : siteData.lasertagSpy.desc
-                      ) : "Laser spy is a room full of laser beams. Players have to move through them without touching any."}
-                    </p>
+                    <p
+                      style={{
+                        fontSize: isPhone ? '13.5px' : '14px',
+                        color: '#475569',
+                        lineHeight: 1.6,
+                        fontWeight: '450',
+                        margin: 0,
+                        textAlign: isPhone ? 'center' : 'left'
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndFormatHtml(
+                          (siteData?.lasertagSpy?.desc ? (
+                            siteData.lasertagSpy.desc.includes('. ')
+                              ? siteData.lasertagSpy.desc.substring(0, siteData.lasertagSpy.desc.indexOf('. ') + 1)
+                              : siteData.lasertagSpy.desc
+                          ) : "Laser spy is a room full of laser beams. Players have to move through them without touching any.").replace(/\n/g, '<br/>')
+                        )
+                      }}
+                    />
                   }
                   expandedContent={
-                    <p style={{
-                      fontSize: isPhone ? '13.5px' : '14px',
-                      color: '#475569',
-                      lineHeight: 1.6,
-                      fontWeight: '450',
-                      marginTop: '8px',
-                      marginBottom: 0,
-                      textAlign: isPhone ? 'center' : 'left'
-                    }}>
-                      {siteData?.lasertagSpy?.desc && siteData.lasertagSpy.desc.includes('. ')
-                        ? siteData.lasertagSpy.desc.substring(siteData.lasertagSpy.desc.indexOf('. ') + 2)
-                        : "People love it and come back again and again to beat their best score. And it fits in a small room, so you can add it even when you don't have much space. We supply and set up the full game, ready to play."}
-                    </p>
+                    <p
+                      style={{
+                        fontSize: isPhone ? '13.5px' : '14px',
+                        color: '#475569',
+                        lineHeight: 1.6,
+                        fontWeight: '450',
+                        marginTop: '8px',
+                        marginBottom: 0,
+                        textAlign: isPhone ? 'center' : 'left'
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndFormatHtml(
+                          (siteData?.lasertagSpy?.desc && siteData.lasertagSpy.desc.includes('. ')
+                            ? siteData.lasertagSpy.desc.substring(siteData.lasertagSpy.desc.indexOf('. ') + 2)
+                            : "People love it and come back again and again to beat their best score. And it fits in a small room, so you can add it even when you don't have much space. We supply and set up the full game, ready to play.").replace(/\n/g, '<br/>')
+                        )
+                      }}
+                    />
                   }
                 />
               </div>
@@ -1614,10 +1653,11 @@ export default function LaserTag({ siteData }) {
           {/* Bottom CTA Button: Download Our Brochure matching Hypergrid */}
           <div style={{ margin: 0 }}>
             {(() => {
-              const baseLink = siteData?.lasertagSpySpecs?.buttonLink || "https://wa.me/919428989488";
+              const baseLink = siteData?.lasertagSpySpecs?.buttonLink || "https://wa.me/919157873576";
               const defaultMsg = siteData?.lasertagSpySpecs?.waMessage || "Hello Winera International! I want to download the Laser Spy Equipment & Setup Brochure. Please share details.";
+              const isPdf = typeof baseLink === 'string' && (baseLink.toLowerCase().includes('.pdf') || baseLink.includes('/uploads') || baseLink.includes('cloudinary') || baseLink.includes('drive.google'));
               let hrefLink = baseLink;
-              if (!baseLink.includes('text=')) {
+              if (!isPdf && !baseLink.includes('text=')) {
                 const separator = baseLink.includes('?') ? '&' : '?';
                 hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
               }
@@ -1626,6 +1666,7 @@ export default function LaserTag({ siteData }) {
                   href={hrefLink}
                   target="_blank"
                   rel="noreferrer"
+                  download={isPdf ? "Winera-Laser-Spy-Brochure.pdf" : undefined}
                   aria-label="Download Our Brochure"
                   style={{
                     display: 'inline-flex',
@@ -1672,7 +1713,7 @@ export default function LaserTag({ siteData }) {
               style={{ display: 'block', width: isPhone ? '240px' : '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: isPhone ? '25px' : '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.lasertagComparison?.title, "*Which Game Is* Right for Your Venue?", '#38bdf8')}
+              {renderTitleMarkup(siteData?.lasertagComparison?.title, "*Which Game Is* Right for Your Venue?", '#0072b8')}
             </h2>
           </div>
 
@@ -1729,22 +1770,20 @@ export default function LaserTag({ siteData }) {
                       boxSizing: 'border-box',
                       transition: 'all 0.3s ease'
                     }}>
-                      <span style={{
-                        fontSize: '12.5px',
-                        fontWeight: '600',
-                        color: '#0f172a',
-                        textAlign: 'left',
-                        flex: 1,
-                        lineHeight: 1.25,
-                        whiteSpace: 'normal'
-                      }}>
-                        {formattedText.split(/<br\s*\/?>|\n/i).map((line, lIdx) => (
-                          <React.Fragment key={lIdx}>
-                            {lIdx > 0 && <br />}
-                            {line}
-                          </React.Fragment>
-                        ))}
-                      </span>
+                      <span
+                        style={{
+                          fontSize: '12.5px',
+                          fontWeight: '600',
+                          color: '#0f172a',
+                          textAlign: 'left',
+                          flex: 1,
+                          lineHeight: 1.25,
+                          whiteSpace: 'normal'
+                        }}
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeAndFormatHtml(formattedText.replace(/\n/g, '<br/>'))
+                        }}
+                      />
                       <span style={{
                         width: '30px',
                         height: '30px',
@@ -1934,22 +1973,20 @@ export default function LaserTag({ siteData }) {
                       }}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <span style={{
-                        fontSize: '12.5px',
-                        fontWeight: '600',
-                        color: '#ffffff',
-                        textAlign: 'left',
-                        flex: 1,
-                        lineHeight: 1.25,
-                        whiteSpace: 'normal'
-                      }}>
-                        {formattedText.split(/<br\s*\/?>|\n/i).map((line, lIdx) => (
-                          <React.Fragment key={lIdx}>
-                            {lIdx > 0 && <br />}
-                            {line}
-                          </React.Fragment>
-                        ))}
-                      </span>
+                      <span
+                        style={{
+                          fontSize: '12.5px',
+                          fontWeight: '600',
+                          color: '#ffffff',
+                          textAlign: 'left',
+                          flex: 1,
+                          lineHeight: 1.25,
+                          whiteSpace: 'normal'
+                        }}
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeAndFormatHtml(formattedText.replace(/\n/g, '<br/>'))
+                        }}
+                      />
                     </div>
                   );
                 })}
@@ -1970,16 +2007,19 @@ export default function LaserTag({ siteData }) {
             marginTop: isPhone ? '25px' : '45px',
             padding: isPhone ? '0 10px' : '0 40px'
           }}>
-            <p style={{
-              fontSize: isPhone ? '14px' : '17px',
-              fontWeight: '500',
-              color: '#334155',
-              lineHeight: 1.6,
-              maxWidth: '850px',
-              margin: '0 auto'
-            }}>
-              {siteData?.lasertagComparison?.note || "Not sure which fits your venue? Our team looks at your space and how you want to run it, then suggests the right game or both, if you have the room."}
-            </p>
+            <p
+              style={{
+                fontSize: isPhone ? '14px' : '17px',
+                fontWeight: '500',
+                color: '#334155',
+                lineHeight: 1.6,
+                maxWidth: '850px',
+                margin: '0 auto'
+              }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.lasertagComparison?.note || "Not sure which fits your venue? Our team looks at your space and how you want to run it, then suggests the right game or both, if you have the room.").replace(/\n/g, '<br/>'))
+              }}
+            />
           </div>
         </div>
       </section>
@@ -2030,53 +2070,61 @@ export default function LaserTag({ siteData }) {
               }}
             />
 
-            {/* Cyan Bold Heading */}
+            {/* Brand Two-Tone Bold Heading */}
             <h2 style={{
               fontSize: isPhone ? '24px' : '32px',
               fontWeight: '800',
-              color: '#00a6ff',
+              color: '#0f172a',
               lineHeight: 1.15,
               letterSpacing: '-0.5px',
               margin: '0 0 12px 0',
               fontFamily: "var(--font-heading, 'Outfit', 'Montserrat', sans-serif)"
             }}>
-              {renderTitleMarkup(siteData?.lasertagRoi?.title, "Know Your Numbers<br/>Before You Spend", "#00a6ff")}
+              {renderTitleMarkup(siteData?.lasertagRoi?.title, "Know Your Numbers<br/>*Before You Spend*", "#0072b8")}
             </h2>
 
             {/* Paragraphs with Mobile Expandable Text */}
             <div style={{ width: '100%', maxWidth: '95%', margin: '0 0 18px 0', textAlign: isPhone ? 'center' : 'left' }}>
               <MobileExpandableText
                 preview={
-                  <p className="winera-lasertag-roi-p" style={{
-                    fontSize: '14.5px',
-                    color: '#475569',
-                    lineHeight: 1.55,
-                    fontWeight: '400',
-                    margin: 0,
-                    textAlign: isPhone ? 'center' : 'left'
-                  }}>
-                    {siteData?.lasertagRoi?.paragraph1 || "Buying a laser tag or laser spy setup is a big decision, and you shouldn't have to guess whether it will pay off. That's why every project with Winera starts with a free ROI report built around your venue, not a general estimate copied from a brochure."}
-                  </p>
+                  <p
+                    className="winera-lasertag-roi-p"
+                    style={{
+                      fontSize: '14.5px',
+                      color: '#475569',
+                      lineHeight: 1.55,
+                      fontWeight: '400',
+                      margin: 0,
+                      textAlign: isPhone ? 'center' : 'left'
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.lasertagRoi?.paragraph1 || "Buying a laser tag or laser spy setup is a big decision, and you shouldn't have to guess whether it will pay off. That's why every project with Winera starts with a free ROI report built around your venue, not a general estimate copied from a brochure.").replace(/\n/g, '<br/>'))
+                    }}
+                  />
                 }
                 expandedContent={
-                  <p className="winera-lasertag-roi-p" style={{
-                    fontSize: '14.5px',
-                    color: '#475569',
-                    lineHeight: 1.55,
-                    fontWeight: '400',
-                    marginTop: '10px',
-                    marginBottom: 0,
-                    textAlign: isPhone ? 'center' : 'left'
-                  }}>
-                    {siteData?.lasertagRoi?.paragraph2 || "We work out how many games you can run each day, how much you can earn from them, what upkeep will cost, and how soon you'll make your money back. Both games are strong earners because they pull in groups, parties, office teams, and school outings that book many players at once and with just one staff member running the show, you keep costs low and games flowing. You'll see the full picture first, then decide."}
-                  </p>
+                  <p
+                    className="winera-lasertag-roi-p"
+                    style={{
+                      fontSize: '14.5px',
+                      color: '#475569',
+                      lineHeight: 1.55,
+                      fontWeight: '400',
+                      marginTop: '10px',
+                      marginBottom: 0,
+                      textAlign: isPhone ? 'center' : 'left'
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.lasertagRoi?.paragraph2 || "We work out how many games you can run each day, how much you can earn from them, what upkeep will cost, and how soon you'll make your money back. Both games are strong earners because they pull in groups, parties, office teams, and school outings that book many players at once and with just one staff member running the show, you keep costs low and games flowing. You'll see the full picture first, then decide.").replace(/\n/g, '<br/>'))
+                    }}
+                  />
                 }
               />
             </div>
 
             {/* ROI WhatsApp CTA Button */}
             {(() => {
-              const baseLink = siteData?.lasertagRoi?.buttonLink || "https://wa.me/919428989488";
+              const baseLink = siteData?.lasertagRoi?.buttonLink || "https://wa.me/919157873576";
               const defaultMsg = siteData?.lasertagRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert regarding Laser Tag & Laser Spy setup for my venue.";
               let hrefLink = baseLink;
               if (!baseLink.includes('text=')) {
@@ -2169,7 +2217,7 @@ export default function LaserTag({ siteData }) {
               {/* Main Photo (In Front - slim blue chevron on left, 100% height without top/bottom space) */}
               <img
                 src={getValidImageUrl(siteData?.lasertagRoi?.mainImgUrl, laserTagImg7)}
-                alt="Know Your Numbers ROI - Laser Tag"
+                alt={siteData?.lasertagRoi?.mainImgAlt || siteData?.lasertagRoi?.imgAlt || "Know Your Numbers ROI - Laser Tag Turnkey Setup Winera"}
                 loading="lazy"
                 decoding="async"
                 style={{
@@ -2202,7 +2250,7 @@ export default function LaserTag({ siteData }) {
               style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 className="winera-ar-whyus-h2" style={{ fontSize: isPhone ? '26px' : '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.lasertagWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
+              {renderTitleMarkup(siteData?.lasertagWhyUs?.title, "Why Choose *Winera International*", '#0072b8')}
             </h2>
           </div>
 
@@ -2304,12 +2352,13 @@ export default function LaserTag({ siteData }) {
                               iconsList[cIdx % iconsList.length]
                             )}
                           </div>
-                          <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
+                          <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
                             {card.title}
-                          </h4>
-                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                            {card.desc}
-                          </p>
+                          </h3>
+                          <p
+                            style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((card.desc || '').replace(/\n/g, '<br/>')) }}
+                          />
                         </div>
                       ))}
                     </div>
@@ -2382,12 +2431,13 @@ export default function LaserTag({ siteData }) {
                                 iconsList[(topCards.length + bIdx) % iconsList.length]
                               )}
                             </div>
-                            <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
+                            <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0', whiteSpace: 'nowrap' }}>
                               {card.title}
-                            </h4>
-                            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                              {card.desc}
-                            </p>
+                            </h3>
+                            <p
+                              style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                              dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((card.desc || '').replace(/\n/g, '<br/>')) }}
+                            />
                           </div>
                         ))}
                       </div>
@@ -2415,7 +2465,7 @@ export default function LaserTag({ siteData }) {
       {/* 3. RELATED PRODUCTS CAROUSEL SECTION */}
       <RelatedProductsSection
         sectionData={siteData?.lasertagRelated || siteData?.arcadeRelated}
-        accentColor="#38bdf8"
+        accentColor="#0072b8"
       />
 
       {/* 4. WHAT OUR CLIENTS SAY SECTION (TESTIMONIALS) */}
@@ -2423,14 +2473,14 @@ export default function LaserTag({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 5. FREQUENTLY ASKED QUESTIONS SECTION */}
       <FaqSection
         faqList={(Array.isArray(siteData?.lasertagFaqs) && siteData.lasertagFaqs.length > 0) ? siteData.lasertagFaqs : defaultLaserTagFaqs}
         title="Frequently Asked *Questions*"
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 5.5. CTA BANNER SECTION */}
@@ -2472,7 +2522,7 @@ export default function LaserTag({ siteData }) {
           }
           description={null}
           buttonText={siteData?.lasertagCta?.buttonText || "Get a Quote on WhatsApp"}
-          buttonLink={siteData?.lasertagCta?.buttonLink || "https://wa.me/919428989488"}
+          buttonLink={siteData?.lasertagCta?.buttonLink || "https://wa.me/919157873576"}
         />
       </div>
 

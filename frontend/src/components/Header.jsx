@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-const wineraLogo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png";
+const wineraLogo = "https://res.cloudinary.com/achfsmlm/image/upload/f_webp,q_auto:eco,w_180/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu";
 import { MessageSquare } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -31,11 +31,14 @@ export default function Header({ headerData }) {
   const instagramUrl = headerData?.instagramUrl || "https://instagram.com";
   const youtubeUrl = headerData?.youtubeUrl || "https://youtube.com";
   const twitterUrl = headerData?.twitterUrl || "https://x.com";
-  const whatsappUrl = headerData?.whatsappUrl || "https://wa.me/919428989488";
+  const whatsappUrl = headerData?.whatsappUrl || "https://wa.me/919157873576";
 
   const getValidImageUrl = (url, fallback) => {
     if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
       return fallback;
+    }
+    if (url.includes('res.cloudinary.com') && url.includes('/image/upload/')) {
+      return url.replace(/\/image\/upload\/(?:[^\/]+\/)?(v\d+\/)?/, '/image/upload/f_webp,q_auto:eco,w_180/$1');
     }
     if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
       return url;
@@ -78,7 +81,7 @@ export default function Header({ headerData }) {
   const productSubMenu = Array.isArray(headerData?.productSubMenu) && headerData.productSubMenu.length > 0 ? headerData.productSubMenu : defaultProductSubMenu;
   const resourcesSubMenu = Array.isArray(headerData?.resourcesSubMenu) && headerData.resourcesSubMenu.length > 0 ? headerData.resourcesSubMenu : defaultResourcesSubMenu;
   const ctaText = headerData?.ctaText || "Free Consultation";
-  const ctaLink = headerData?.ctaLink || "https://wa.me/919428989488";
+  const ctaLink = headerData?.ctaLink || "https://wa.me/919157873576";
 
   const isHomeActive = currentPath === '/';
   const isProductActive = currentPath.startsWith('/product');
@@ -199,7 +202,7 @@ export default function Header({ headerData }) {
       }}>
         {/* 1. Official Winera Logo */}
         <Link to="/" onClick={() => setMobileMenuOpen(false)} aria-label="Winera International Home" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <img src={logoSrc} alt="Winera International Pvt. Ltd." className="winera-logo-img" style={{ objectFit: 'contain' }} />
+          <img src={logoSrc} alt={headerData?.logoAlt || "Winera International Pvt. Ltd. - Commercial Game Zone Setup & Turnkey Equipment"} className="winera-logo-img" width="180" height="48" decoding="async" style={{ width: 'auto', aspectRatio: '180 / 48', objectFit: 'contain' }} />
         </Link>
 
         {/* 2. Navigation Menu (hidden on mobile) */}

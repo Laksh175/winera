@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 const blogHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345630/winera_uploads/tj7ke5cpufz9t41c4d7v.png";
-const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const gameZoneMobileBanner = projectPageMobileBanner;
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 import WineraImage from '../components/WineraImage';
 import { ChevronDown, Calendar, PenTool } from 'lucide-react';
-import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
+import { fetchBlogs } from '../services/api';
 
-const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
+const getValidImageUrl = (url, fallback) => {
+  if (url && typeof url === 'string' && (url.includes('eqjkboeokagpaus2ifxa') || url.includes('/src/assets/'))) {
+    return fallback || blogCardImg;
+  }
   if (url && typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:'))) {
     return url;
   }
   if (url && typeof url === 'string' && (url.startsWith('/uploads/') || url.startsWith('uploads/'))) {
     const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${cleanUrl}`;
+    const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    if (isLocal) {
+      return `http://localhost:5001${cleanUrl}`;
+    }
+    const apiUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '').replace(/\/$/, '') : '';
+    if (apiUrl) return `${apiUrl}${cleanUrl}`;
+    return typeof window !== 'undefined' ? `${window.location.origin}${cleanUrl}` : cleanUrl;
   }
   if (url && typeof url === 'string' && !url.includes('/src/assets/') && (url.startsWith('/assets/') || url.startsWith('/@fs/'))) {
     return url;
@@ -26,15 +35,7 @@ const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
   if (url && typeof url === 'object' && url.src) {
     return url.src;
   }
-  // Check default post image by matching ID or index
-  if (postId !== null && postId !== undefined) {
-    const match = DEFAULT_BLOG_POSTS.find(p => String(p.id) === String(postId) || (p.slug && p.slug === String(postId)));
-    if (match?.image) return match.image;
-  }
-  if (typeof postIdx === 'number' && DEFAULT_BLOG_POSTS[postIdx]?.image) {
-    return DEFAULT_BLOG_POSTS[postIdx].image;
-  }
-  return fallback;
+  return fallback || blogCardImg;
 };
 
 // Helper for title & subtitle concatenation with proper spacing
@@ -70,6 +71,19 @@ export default function Blog({ siteData }) {
   const [isPhone, setIsPhone] = useState(
     typeof window !== 'undefined' ? window.innerWidth <= 768 : false
   );
+  const [dynamicBlogPosts, setDynamicBlogPosts] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchBlogs({ limit: 'all' })
+      .then(res => {
+        if (isMounted && res?.success && Array.isArray(res.blogs || res.posts)) {
+          setDynamicBlogPosts(res.blogs || res.posts);
+        }
+      })
+      .catch(err => console.warn('Dynamic blogs fetch notice:', err));
+    return () => { isMounted = false; };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -86,27 +100,30 @@ export default function Blog({ siteData }) {
   const blogHero = siteData?.blogHero || {
     breadcrumbText: 'Blog',
     bgUrl: blogHeroBg,
+    bgAlt: "Winera International Game Zone & Entertainment Industry Blog",
+    mobileBgUrl: gameZoneMobileBanner,
+    mobileBgAlt: "Winera International Game Zone & Entertainment Industry Blog Mobile Banner"
   };
   const heroBg = (blogHero?.bgUrl && (blogHero.bgUrl.startsWith('http') || blogHero.bgUrl.startsWith('uploads') || blogHero.bgUrl.startsWith('/uploads')))
     ? getValidImageUrl(blogHero.bgUrl, blogHeroBg)
     : blogHeroBg;
+  const mobileHeroBg = getValidImageUrl(blogHero?.mobileBgUrl, gameZoneMobileBanner);
 
   const isDummyPosts = Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && (
     siteData.blogPosts[0]?.title === 'Blog 1' ||
-    (siteData.blogPosts[0]?.title?.includes('Soft Play vs Trampoline Park: Which') && siteData.blogPosts.length < 15) ||
     siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
   );
 
-  const rawPosts = (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
-    ? siteData.blogPosts
-    : DEFAULT_BLOG_POSTS;
+  const rawPosts = (dynamicBlogPosts.length > 0)
+    ? dynamicBlogPosts
+    : (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
+      ? siteData.blogPosts
+      : [];
 
-  const blogPosts = rawPosts.map((post, idx) => {
-    const defaultPost = DEFAULT_BLOG_POSTS[idx] || DEFAULT_BLOG_POSTS.find(d => String(d.id) === String(post.id) || d.slug === post.slug) || {};
+  const blogPosts = rawPosts.map((post) => {
     return {
-      ...defaultPost,
       ...post,
-      image: getValidImageUrl(post.image || post.imgUrl, defaultPost.image || blogCardImg, post.id, idx)
+      image: getValidImageUrl(post.image || post.imageUrl || post.imgUrl, blogCardImg)
     };
   });
 
@@ -151,7 +168,7 @@ export default function Blog({ siteData }) {
         aspectRatio: isPhone ? '941 / 550' : 'auto',
         paddingTop: isPhone ? '55px' : '175px',
         paddingBottom: isPhone ? '0px' : '95px',
-        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${heroBg}) center top / 100% 100% no-repeat`,
+        background: isPhone ? `url(${mobileHeroBg}) center top / 100% 100% no-repeat` : `url(${heroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -160,6 +177,11 @@ export default function Blog({ siteData }) {
         color: '#ffffff',
         overflow: 'hidden'
       }}>
+        <img
+          src={isPhone ? mobileHeroBg : heroBg}
+          alt={isPhone ? (blogHero?.mobileBgAlt || blogHero?.bgAlt || "Winera International Game Zone & Entertainment Industry Blog") : (blogHero?.bgAlt || "Winera International Game Zone & Entertainment Industry Blog")}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <h1 className="winera-blog-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
@@ -202,7 +224,7 @@ export default function Blog({ siteData }) {
               style={{ display: 'block', width: '240px', height: '10px', margin: '0 auto 8px', objectFit: 'fill' }}
             />
             <h2 className="winera-blog-heading-title" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
-              our <span style={{ color: '#38bdf8' }}>Blogs</span>
+              our <span style={{ color: '#0072b8' }}>Blogs</span>
             </h2>
           </motion.div>
 
@@ -219,6 +241,7 @@ export default function Blog({ siteData }) {
               const startY = isLeft || isRight ? 0 : 50;
               const postExcerpt = post.excerpt || post.description || (post.line1 ? `${post.line1} ${post.line2 || ''}` : 'Soft play or trampoline park? Discover the key differences...');
               const truncatedExcerpt = formatExcerpt(postExcerpt, 80);
+              const postSlug = post.slug || post.id;
 
               return (
                 <motion.div
@@ -232,94 +255,101 @@ export default function Blog({ siteData }) {
                     delay: (index % 3) * 0.12,
                     ease: [0.16, 1, 0.3, 1]
                   }}
-                  onClick={() => navigate(`/blog/${post.id}`)}
-                  className="winera-blog-single-card"
-                  style={{
-                    background: '#ffffff',
-                    border: '1.5px solid #e2e8f0',
-                    borderRadius: '24px',
-                    padding: '18px',
-                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'all 0.25s ease',
-                    cursor: 'pointer',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-6px)';
-                    e.currentTarget.style.boxShadow = '0 14px 35px rgba(0, 0, 0, 0.08)';
-                    e.currentTarget.style.borderColor = '#38bdf8';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.04)';
-                    e.currentTarget.style.borderColor = '#e2e8f0';
-                  }}
+                  style={{ display: 'flex', height: '100%' }}
                 >
-                  {/* Card Top Image */}
-                  <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '16px', overflow: 'hidden', height: '210px', flexShrink: 0, marginBottom: '16px', background: '#e0f2fe' }}>
-                    <WineraImage
-                      src={getValidImageUrl(post.image || post.imgUrl, blogCardImg, post.id, index)}
-                      alt={getFullTitle(post)}
-                      style={{ width: '100%', height: '100%' }}
-                      imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                    />
-                  </div>
+                  <Link
+                    to={`/blog/${postSlug}`}
+                    className="winera-blog-single-card"
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      background: '#ffffff',
+                      border: '1.5px solid #e2e8f0',
+                      borderRadius: '24px',
+                      padding: '18px',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      width: '100%',
+                      transition: 'all 0.25s ease',
+                      cursor: 'pointer',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-6px)';
+                      e.currentTarget.style.boxShadow = '0 14px 35px rgba(0, 0, 0, 0.08)';
+                      e.currentTarget.style.borderColor = '#38bdf8';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.04)';
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                    }}
+                  >
+                    {/* Card Top Image */}
+                    <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '16px', overflow: 'hidden', height: '210px', flexShrink: 0, marginBottom: '16px', background: '#e0f2fe' }}>
+                      <WineraImage
+                        src={getValidImageUrl(post.image || post.imgUrl, blogCardImg, post.id, index)}
+                        alt={post.imageAlt || getFullTitle(post)}
+                        style={{ width: '100%', height: '100%' }}
+                        imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      />
+                    </div>
 
-                  {/* Blog Title & Subtitle */}
-                  <h3 className="winera-blog-card-title" style={{
-                    fontSize: '18px',
-                    fontWeight: '600',
-                    color: '#0f172a',
-                    lineHeight: 1.35,
-                    margin: '0 0 10px 0',
-                    textAlign: 'left'
-                  }}>
-                    {getFullTitle(post)}
-                  </h3>
-
-                  {/* Excerpt Description */}
-                  <p className="winera-blog-card-desc" style={{
-                    fontSize: '14px',
-                    fontWeight: '400',
-                    color: '#64748b',
-                    lineHeight: 1.6,
-                    margin: '0 0 20px 0',
-                    flexGrow: 1,
-                    textAlign: 'left'
-                  }}>
-                    {truncatedExcerpt}
-                  </p>
-
-                  {/* Card Footer: Date & Founder Name */}
-                  <div className="winera-blog-card-footer" style={{
-                    paddingTop: '14px',
-                    borderTop: '1px solid #f1f5f9',
-                    fontSize: '13px',
-                    fontWeight: '700',
-                    color: '#64748b',
-                    marginTop: 'auto',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      <Calendar style={{ width: '13px', height: '13px', color: '#0284c7' }} />
-                      {post.date || 'SEP 12, 2026'}
-                    </span>
-                    <span style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '5px',
-                      color: '#0284c7',
-                      fontWeight: '700',
-                      fontSize: '13px',
-                      letterSpacing: '0.2px'
+                    {/* Blog Title & Subtitle */}
+                    <h3 className="winera-blog-card-title" style={{
+                      fontSize: '18px',
+                      fontWeight: '600',
+                      color: '#0f172a',
+                      lineHeight: 1.35,
+                      margin: '0 0 10px 0',
+                      textAlign: 'left'
                     }}>
-                      <PenTool style={{ width: '13px', height: '13px', color: '#0284c7' }} />
-                      {post.author || post.founder || 'Divyang Mandani'}
-                    </span>
-                  </div>
+                      {getFullTitle(post)}
+                    </h3>
+
+                    {/* Excerpt Description */}
+                    <p className="winera-blog-card-desc" style={{
+                      fontSize: '14px',
+                      fontWeight: '400',
+                      color: '#64748b',
+                      lineHeight: 1.6,
+                      margin: '0 0 20px 0',
+                      flexGrow: 1,
+                      textAlign: 'left'
+                    }}>
+                      {truncatedExcerpt}
+                    </p>
+
+                    {/* Card Footer: Date & Founder Name */}
+                    <div className="winera-blog-card-footer" style={{
+                      paddingTop: '14px',
+                      borderTop: '1px solid #f1f5f9',
+                      fontSize: '13px',
+                      fontWeight: '700',
+                      color: '#64748b',
+                      marginTop: 'auto',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        <Calendar style={{ width: '13px', height: '13px', color: '#0284c7' }} />
+                        {post.date || 'SEP 12, 2026'}
+                      </span>
+                      <span style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                        color: '#0284c7',
+                        fontWeight: '700',
+                        fontSize: '13px',
+                        letterSpacing: '0.2px'
+                      }}>
+                        <PenTool style={{ width: '13px', height: '13px', color: '#0284c7' }} />
+                        {post.author || post.founder || 'Divyang Mandani'}
+                      </span>
+                    </div>
+                  </Link>
                 </motion.div>
               );
             })}

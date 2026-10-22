@@ -186,14 +186,22 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
 
           const currentSlug = getCardSlug ? getCardSlug(card) : ((card.slug && card.slug !== 'new-arcade-game') ? card.slug : ((card.name || card.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'parkour-motor-2-dx'));
 
-          return (
-            <div
-              key={card.name || card.title || stackLevel}
-              onClick={(e) => {
-                if (isClickable && isTop && Math.abs(dragOffset.x) < 5 && Math.abs(dragOffset.y) < 5) {
-                  navigate(`/product/${currentSlug}`);
+          const CardElement = (isClickable && isTop) ? Link : 'div';
+          const cardProps = (isClickable && isTop)
+            ? {
+                to: `/product/${currentSlug}`,
+                onClick: (e) => {
+                  if (Math.abs(dragOffset.x) > 5 || Math.abs(dragOffset.y) > 5) {
+                    e.preventDefault();
+                  }
                 }
-              }}
+              }
+            : {};
+
+          return (
+            <CardElement
+              key={card.name || card.title || stackLevel}
+              {...cardProps}
               style={{
                 position: 'absolute',
                 top: 0,
@@ -211,6 +219,8 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
                 flexDirection: 'column',
                 alignItems: 'center',
                 textAlign: 'center',
+                textDecoration: 'none',
+                color: 'inherit',
                 transform,
                 opacity,
                 zIndex,
@@ -279,26 +289,31 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
 
               {/* Bottom Quick Action CTA Pill */}
               {showCta && (
-                <div style={{
-                  marginTop: 'auto',
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '6px',
-                  padding: '8px 14px',
-                  borderRadius: '14px',
-                  background: isTop ? '#0284c7' : '#e0f2fe',
-                  color: isTop ? '#ffffff' : '#0369a1',
-                  fontSize: '12px',
-                  fontWeight: '800',
-                  transition: 'all 0.2s ease'
-                }}>
+                <div
+                  style={{
+                    marginTop: 'auto',
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    padding: '8px 14px',
+                    borderRadius: '14px',
+                    background: isTop ? '#0284c7' : '#e0f2fe',
+                    color: isTop ? '#ffffff' : '#0369a1',
+                    fontSize: '12px',
+                    fontWeight: '800',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                    cursor: isTop ? 'pointer' : 'default',
+                    pointerEvents: isTop ? 'auto' : 'none'
+                  }}
+                >
                   <span>View Details & Specs</span>
                   <ArrowRight style={{ width: '13px', height: '13px' }} />
                 </div>
               )}
-            </div>
+            </CardElement>
           );
         })}
       </div>

@@ -1,27 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Plus,
-  Trash2,
-  Edit,
-  Upload,
-  Eye,
-  ArrowLeft,
-  Calendar,
-  Clock,
-  User,
-  PenTool,
-  Search,
-  CheckCircle,
-  AlertCircle,
-  MoveUp,
-  MoveDown
-} from 'lucide-react';
+import { Plus, Trash2, Edit, Upload, Eye, ArrowLeft, Calendar, Clock, User, PenTool, Search, CheckCircle, AlertCircle, MoveUp, MoveDown } from 'lucide-react';
 import RichTextareaWithEditor from './RichTextareaWithEditor';
-import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
 import { sanitizeAndFormatHtml } from '../pages/BlogDetail';
+import { fetchBlogs, createBlogApi, updateBlogApi, deleteBlogApi } from '../services/api';
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 
-const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
+const getValidImageUrl = (url, fallback) => {
   if (url && typeof url === 'string' && !url.includes('/src/assets/') && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:'))) {
     return url;
   }
@@ -40,13 +24,6 @@ const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
   if (url && typeof url === 'object' && url.src) {
     return url.src;
   }
-  if (postId !== null && postId !== undefined) {
-    const match = DEFAULT_BLOG_POSTS.find(p => String(p.id) === String(postId) || (p.slug && p.slug === String(postId)));
-    if (match?.image) return match.image;
-  }
-  if (typeof postIdx === 'number' && DEFAULT_BLOG_POSTS[postIdx]?.image) {
-    return DEFAULT_BLOG_POSTS[postIdx].image;
-  }
   return fallback || blogCardImg;
 };
 
@@ -63,6 +40,7 @@ const parseBlogToForm = (post) => {
       author: 'Divyang Mandani',
       category: 'INSIGHTS',
       image: '',
+      imageAlt: '',
       description: '',
       sections: [
         { title: '', paragraph: '' }
@@ -72,9 +50,18 @@ const parseBlogToForm = (post) => {
 
   // If already has structured sections array
   if (Array.isArray(post.sections) && post.sections.length > 0) {
+    let desc = post.description || '';
+    if (!desc && post.fullContent) {
+      const cleanRaw = String(post.fullContent).replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n');
+      const firstPart = cleanRaw.split(/\n(?=###\s+)/)[0];
+      if (firstPart && !firstPart.trim().startsWith('###')) {
+        desc = firstPart.trim();
+      }
+    }
     return {
       ...post,
-      description: post.description || post.excerpt || '',
+      imageAlt: post.imageAlt || '',
+      description: desc || post.excerpt || '',
       sections: post.sections.map(s => ({
         title: s.title || '',
         paragraph: s.paragraph || s.content || ''
@@ -133,13 +120,12 @@ export default function BlogAdminManagement({
 }) {
   const isDummyPosts = Array.isArray(formData.blogPosts) && formData.blogPosts.length > 0 && (
     formData.blogPosts[0]?.title === 'Blog 1' ||
-    (formData.blogPosts[0]?.title?.includes('Soft Play vs Trampoline Park: Which') && formData.blogPosts.length < 15) ||
     formData.blogPosts[0]?.image === '/src/assets/blog-images.png'
   );
 
   const rawList = (Array.isArray(formData.blogPosts) && formData.blogPosts.length > 0 && !isDummyPosts)
     ? formData.blogPosts
-    : DEFAULT_BLOG_POSTS;
+    : [];
 
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState('list'); // 'list' | 'create' | 'edit'
@@ -151,10 +137,16 @@ export default function BlogAdminManagement({
   // Initialize or synchronize posts in formData if empty or dummy
   useEffect(() => {
     if (!Array.isArray(formData.blogPosts) || formData.blogPosts.length === 0 || isDummyPosts) {
-      setFormData(prev => ({
-        ...prev,
-        blogPosts: DEFAULT_BLOG_POSTS
-      }));
+      fetchBlogs({ limit: 'all' })
+        .then(res => {
+          if (res?.success && Array.isArray(res.blogs || res.posts)) {
+            setFormData(prev => ({
+              ...prev,
+              blogPosts: res.blogs || res.posts
+            }));
+          }
+        })
+        .catch(err => console.warn('Dynamic blogs fetch in admin error:', err));
     }
   }, [formData.blogPosts]);
 
@@ -174,11 +166,19 @@ export default function BlogAdminManagement({
     setActiveTabPreview(false);
   };
 
-  const handleDeletePost = (index) => {
+  const handleDeletePost = async (index) => {
     if (window.confirm('Are you sure you want to delete this blog post?')) {
+      const postToDelete = rawList[index];
       const updated = rawList.filter((_, i) => i !== index);
       setFormData(prev => ({ ...prev, blogPosts: updated }));
-      persistSectionToDatabase('blogPosts', updated);
+      await persistSectionToDatabase('blogPosts', updated);
+      if (postToDelete?._id || postToDelete?.id || postToDelete?.slug) {
+        try {
+          await deleteBlogApi(postToDelete._id || postToDelete.id || postToDelete.slug, adminToken);
+        } catch (delErr) {
+          console.warn('Direct blog delete notice:', delErr);
+        }
+      }
     }
   };
 
@@ -262,7 +262,8 @@ export default function BlogAdminManagement({
       slug,
       excerpt: editingBlog.excerpt || excerpt,
       fullContent,
-      sections: editingBlog.sections
+      description: editingBlog.description || '',
+      sections: editingBlog.sections || []
     };
 
     let updatedList = [...rawList];
@@ -274,6 +275,17 @@ export default function BlogAdminManagement({
 
     setFormData(prev => ({ ...prev, blogPosts: updatedList }));
     await persistSectionToDatabase('blogPosts', updatedList);
+    try {
+      if (activeView === 'create' || currentEditIndex === null) {
+        await createBlogApi(finalizedPost, adminToken);
+      } else {
+        const idToUpdate = finalizedPost._id || finalizedPost.id || finalizedPost.slug;
+        await updateBlogApi(idToUpdate, finalizedPost, adminToken);
+      }
+    } catch (apiErr) {
+      console.warn('Direct blog API sync notice:', apiErr);
+    }
+    alert('Blog post saved successfully! Changes are live on the website.');
     setActiveView('list');
     setEditingBlog(null);
   };
@@ -438,11 +450,38 @@ export default function BlogAdminManagement({
                             {post.author || 'Divyang Mandani'}
                           </span>
                         </div>
+                        <div style={{ marginTop: '3px', fontSize: '12px', color: '#0284c7', fontWeight: '700' }}>
+                          🔗 <span style={{ color: '#64748b' }}>/blog/</span>{post.slug || post.id}
+                        </div>
                       </div>
                     </div>
 
                     {/* Right: Action Buttons */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <a
+                        href={`/blog/${post.slug || post.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          background: '#f0f9ff',
+                          color: '#0284c7',
+                          border: '1.5px solid #bae6fd',
+                          padding: '8px 14px',
+                          borderRadius: '10px',
+                          fontWeight: '800',
+                          fontSize: '12.5px',
+                          textDecoration: 'none',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease'
+                        }}
+                      >
+                        <Eye style={{ width: '14px', height: '14px' }} />
+                        View Live
+                      </a>
+
                       <button
                         type="button"
                         onClick={() => handleStartEdit(originalIndex >= 0 ? originalIndex : index)}
@@ -666,6 +705,40 @@ export default function BlogAdminManagement({
                 />
               </div>
 
+              {/* 1.5. SEO URL SLUG */}
+              <div>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
+                  SEO Friendly URL Slug
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', background: '#f8fafc', border: '1.5px solid #cbd5e1', borderRadius: '12px', overflow: 'hidden' }}>
+                  <span style={{ padding: '0 12px', color: '#0284c7', fontSize: '13.5px', fontWeight: '800', background: '#f1f5f9', height: '42px', display: 'flex', alignItems: 'center', borderRight: '1.5px solid #cbd5e1', whiteSpace: 'nowrap' }}>
+                    https://winera.in/blog/
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="auto-generated-from-title"
+                    value={editingBlog.slug || ''}
+                    onChange={(e) => setEditingBlog(prev => ({
+                      ...prev,
+                      slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '')
+                    }))}
+                    style={{
+                      flex: 1,
+                      padding: '10px 14px',
+                      border: 'none',
+                      background: 'transparent',
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      color: '#0f172a',
+                      outline: 'none'
+                    }}
+                  />
+                </div>
+                <p style={{ fontSize: '11.5px', color: '#64748b', margin: '4px 0 0' }}>
+                  💡 Leave empty to auto-generate from Title. This gives clean SEO links like <code>/blog/how-to-start-a-game-zone</code> instead of numeric IDs like <code>/1</code>.
+                </p>
+              </div>
+
               {/* 2. META BAR: DATE, READ TIME, FOUNDER/AUTHOR */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px' }}>
                 {/* Date */}
@@ -759,6 +832,18 @@ export default function BlogAdminManagement({
                           }}
                         />
                       </label>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Game Zone Setup and ROI Planning - Winera International"
+                        value={editingBlog.imageAlt || ''}
+                        onChange={(e) => setEditingBlog(prev => ({ ...prev, imageAlt: e.target.value }))}
+                        style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                      />
                     </div>
                     <span style={{ fontSize: '12px', color: '#64748b' }}>
                       Tip: Supported formats include PNG, JPG, WebP. Auto-optimizes to WebP format.

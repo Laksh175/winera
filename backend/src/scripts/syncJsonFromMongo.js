@@ -26,8 +26,8 @@ const syncMongoToJson = async () => {
     // 2. Fetch CMS categories list
     const contentDoc = await Content.findOne({ sectionKey: 'arcadeCategories' });
     const categoriesList = contentDoc?.data?.categoriesList || [
-      "Arcade Games", "Claw Machine", "Redemption Game", "Bike Racing Game",
-      "Car Racing Game", "Shooting Games", "VR Games", "Kiddy Ride", "Strength Based Games"
+      "Arcade Games", "Claw Machine", "Redemption Game", "Bike & Car Racing Games",
+      "Shooting Games", "VR Games", "Kiddy Ride", "Strength Based Games"
     ];
 
     const jsonPayload = {

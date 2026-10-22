@@ -33,12 +33,23 @@ export default function ClientsMarqueeSection({
   const resumeTimeoutRef = useRef(null);
   const animFrameIdRef = useRef(null);
   const [isGrabbing, setIsGrabbing] = useState(false);
+  const setWidthRef = useRef(1400);
 
   const rawList = (clientLogos && clientLogos.length > 0) ? clientLogos : defaultList;
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+
+    // Cache setWidth on mount and resize to avoid forced reflow in requestAnimationFrame
+    const updateWidth = () => {
+      const firstSet = track.children[0];
+      if (firstSet && firstSet.offsetWidth > 0) {
+        setWidthRef.current = firstSet.offsetWidth;
+      }
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth, { passive: true });
 
     let lastTime = performance.now();
     const baseSpeed = 38; // px per second
@@ -47,8 +58,7 @@ export default function ClientsMarqueeSection({
       const dt = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
 
-      const firstSet = track.children[0];
-      const setWidth = firstSet ? firstSet.offsetWidth : 1400;
+      const setWidth = setWidthRef.current;
 
       if (!isInteractingRef.current) {
         if (Math.abs(velocityRef.current) > 0.5) {
@@ -77,6 +87,7 @@ export default function ClientsMarqueeSection({
     animFrameIdRef.current = requestAnimationFrame(loop);
 
     return () => {
+      window.removeEventListener('resize', updateWidth);
       if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
       if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     };
@@ -153,130 +164,144 @@ export default function ClientsMarqueeSection({
       overflow: 'hidden'
     }}>
       <MotionFadeIn style={{ width: '100%' }}>
-      <div style={{ maxWidth: '100%', width: '100%', margin: '0 auto' }}>
-        <SectionHeading marginBottom={subtitle ? "8px" : "30px"} accentWidth="400px" accentMaxWidth="400px">
-          {(() => {
-            const rawTitle = title || "*Our Clients* Section";
-            const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
-            return parts.map((part, index) => {
-              if (index % 2 === 1) {
-                return (
-                  <span key={index} style={{ color: '#00a8ff' }}>
-                    {part}
-                  </span>
-                );
-              }
-              return part;
-            });
-          })()}
-        </SectionHeading>
+        <div style={{ maxWidth: '100%', width: '100%', margin: '0 auto' }}>
+          <SectionHeading marginBottom={subtitle ? "8px" : "30px"} accentWidth="400px" accentMaxWidth="400px">
+            {(() => {
+              const rawTitle = title || "*Our Clients* Section";
+              const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
+              return parts.map((part, index) => {
+                if (index % 2 === 1) {
+                  return (
+                    <span key={index} style={{ color: '#0072b8' }}>
+                      {part}
+                    </span>
+                  );
+                }
+                return part;
+              });
+            })()}
+          </SectionHeading>
 
-        {subtitle ? (
-          <p style={{ color: '#334155', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
-            {subtitle}
-          </p>
-        ) : null}
+          {subtitle ? (
+            <p style={{ color: '#334155', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
+              {subtitle}
+            </p>
+          ) : null}
 
-        {/* Gesture & Touch Controlled Infinite Marquee Showcase */}
-        <div
-          onTouchStart={(e) => handleStart(e.touches[0].clientX)}
-          onTouchMove={(e) => handleMove(e.touches[0].clientX)}
-          onTouchEnd={handleEnd}
-          onTouchCancel={handleEnd}
-          onMouseDown={(e) => handleStart(e.clientX)}
-          onMouseMove={(e) => handleMove(e.clientX)}
-          onMouseUp={handleEnd}
-          onMouseLeave={handleEnd}
-          style={{
-            width: '100%',
-            maxWidth: '100vw',
-            margin: '0 auto',
-            padding: '20px 0',
-            overflow: 'hidden',
-            position: 'relative',
-            cursor: isGrabbing ? 'grabbing' : 'grab',
-            userSelect: 'none',
-            touchAction: 'pan-y'
-          }}
-        >
+          {/* Gesture & Touch Controlled Infinite Marquee Showcase */}
           <div
-            ref={trackRef}
+            onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+            onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+            onTouchEnd={handleEnd}
+            onTouchCancel={handleEnd}
+            onMouseDown={(e) => handleStart(e.clientX)}
+            onMouseMove={(e) => handleMove(e.clientX)}
+            onMouseUp={handleEnd}
+            onMouseLeave={handleEnd}
             style={{
-              display: 'flex',
-              width: 'max-content',
-              willChange: 'transform'
+              width: '100%',
+              maxWidth: '100vw',
+              margin: '0 auto',
+              padding: '20px 0',
+              overflow: 'hidden',
+              position: 'relative',
+              cursor: isGrabbing ? 'grabbing' : 'grab',
+              userSelect: 'none',
+              touchAction: 'pan-y'
             }}
           >
-            {[...Array(4)].map((_, setIdx) => (
-              <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '60px', paddingRight: '60px' }}>
-                {(clientLogos && clientLogos.length > 0) ? (
-                  (() => {
-                    let list = [...clientLogos];
-                    while (list.length < 8) {
-                      list = [...list, ...clientLogos];
-                    }
-                    return list.map((client, idx) => (
+            <div
+              ref={trackRef}
+              style={{
+                display: 'flex',
+                width: 'max-content',
+                willChange: 'transform'
+              }}
+            >
+              {[...Array(2)].map((_, setIdx) => (
+                <div key={setIdx} style={{ display: 'flex', alignItems: 'center', gap: '55px', paddingRight: '55px' }}>
+                  {(clientLogos && clientLogos.length > 0) ? (
+                    (() => {
+                      let list = [...clientLogos];
+                      while (list.length < 8) {
+                        list = [...list, ...clientLogos];
+                      }
+                      return list.map((client, idx) => (
+                        <div
+                          key={idx}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '115px',
+                            userSelect: 'none',
+                            pointerEvents: 'none'
+                          }}
+                        >
+                          {client.logoUrl ? (
+                            <img
+                              src={(() => {
+                                const u = client.logoUrl;
+                                if (!u || typeof u !== 'string') return u;
+                                if (u.includes('res.cloudinary.com') && u.includes('/upload/')) {
+                                  if (u.includes('/f_auto,q_auto,w_')) return u.replace(/\/f_auto,q_auto,w_\d+\//, '/f_auto,q_auto:eco,w_180/');
+                                  if (u.includes('/f_auto,q_auto/')) return u.replace('/upload/f_auto,q_auto/', '/upload/f_auto,q_auto:eco,w_180/');
+                                  return u.replace('/upload/', '/upload/f_auto,q_auto:eco,w_180/');
+                                }
+                                return u;
+                              })()}
+                              alt={client.logoAlt || `${client.name || 'Client'} Logo - Winera International`}
+                              width={220}
+                              height={100}
+                              loading="lazy"
+                              decoding="async"
+                              draggable="false"
+                              style={{
+                                width: 'auto',
+                                height: 'auto',
+                                maxHeight: '100px',
+                                maxWidth: '220px',
+                                aspectRatio: '220 / 100',
+                                objectFit: 'contain',
+                                userSelect: 'none',
+                                pointerEvents: 'none'
+                              }}
+                            />
+                          ) : (
+                            <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px', userSelect: 'none' }}>
+                              {client.name}
+                            </span>
+                          )}
+                        </div>
+                      ));
+                    })()
+                  ) : (
+                    defaultList.map((client, idx) => (
                       <div
                         key={idx}
                         style={{
+                          fontSize: '2.1rem',
+                          fontWeight: client.font || '900',
+                          color: '#1e293b',
+                          letterSpacing: '1px',
+                          opacity: 0.85,
+                          whiteSpace: 'nowrap',
                           display: 'inline-flex',
                           alignItems: 'center',
-                          justifyContent: 'center',
-                          height: '115px',
+                          gap: '8px',
                           userSelect: 'none',
                           pointerEvents: 'none'
                         }}
                       >
-                        {client.logoUrl ? (
-                          <img
-                            src={client.logoUrl}
-                            alt={client.name || 'Logo'}
-                            loading="lazy"
-                            decoding="async"
-                            draggable="false"
-                            style={{
-                              maxHeight: '110px',
-                              maxWidth: '271px',
-                              objectFit: 'contain',
-                              userSelect: 'none',
-                              pointerEvents: 'none'
-                            }}
-                          />
-                        ) : (
-                          <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px', userSelect: 'none' }}>
-                            {client.name}
-                          </span>
-                        )}
+                        {client.text || client.name}
                       </div>
-                    ));
-                  })()
-                ) : (
-                  defaultList.map((client, idx) => (
-                    <div
-                      key={idx}
-                      style={{
-                        fontSize: '2.1rem',
-                        fontWeight: client.font || '900',
-                        color: '#1e293b',
-                        letterSpacing: '1px',
-                        opacity: 0.85,
-                        whiteSpace: 'nowrap',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        userSelect: 'none',
-                        pointerEvents: 'none'
-                      }}
-                    >
-                      {client.text || client.name}
-                    </div>
-                  ))
-                )}
-              </div>
-            ))}
+                    ))
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
       </MotionFadeIn>
     </section>
   );

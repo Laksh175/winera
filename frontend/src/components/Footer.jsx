@@ -74,7 +74,7 @@ export default function Footer({ footerData }) {
   const productLinks = Array.isArray(footerData?.productLinks) && footerData.productLinks.length > 0 ? footerData.productLinks : defaultProductLinks;
   const quickLinks = Array.isArray(footerData?.quickLinks) && footerData.quickLinks.length > 0 ? footerData.quickLinks : defaultQuickLinks;
   const resourceLinks = Array.isArray(footerData?.resourceLinks) && footerData.resourceLinks.length > 0 ? footerData.resourceLinks : defaultResourceLinks;
-  const phone1 = footerData?.phone1 || "+91 94289 89488";
+  const phone1 = footerData?.phone1 || "+91 91578 73576";
   const phone2 = footerData?.phone2 || "+91 95123 56766";
   const email = footerData?.email || "info@winera.in";
   const copyright = footerData?.copyright || "© 2026 Winera International Pvt. Ltd. All Rights Reserved.";
@@ -103,7 +103,7 @@ export default function Footer({ footerData }) {
           {/* Column 1: Logo & Tagline Description */}
           <div className="winera-footer-brand-col">
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: isMobile ? '8px' : '18px' }}>
-              <img src={logoSrc} alt="Winera International" style={{ height: isMobile ? '48px' : '62px', maxWidth: '240px', objectFit: 'contain' }} />
+              <img src={logoSrc} alt={footerData?.logoAlt || "Winera International - Commercial Game Zone Setup & Turnkey Equipment"} width="200" height="48" loading="lazy" decoding="async" style={{ width: 'auto', height: isMobile ? '48px' : '62px', maxWidth: '240px', aspectRatio: '200 / 48', objectFit: 'contain' }} />
             </div>
             <p style={{ fontSize: '13px', color: '#334155', fontWeight: '500', lineHeight: 1.5, maxWidth: '310px', margin: isMobile ? '0 0 8px' : '0 0 24px' }}>
               {tagline}
@@ -116,9 +116,9 @@ export default function Footer({ footerData }) {
               className={`winera-footer-col-header ${openSections.product ? 'is-open' : 'is-closed'}`}
               onClick={() => toggleSection('product')}
             >
-              <h4 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+              <h3 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
                 Product
-              </h4>
+              </h3>
               {isMobile && (
                 <ChevronDown
                   className="winera-footer-chevron"
@@ -168,9 +168,9 @@ export default function Footer({ footerData }) {
               className={`winera-footer-col-header ${openSections.quick ? 'is-open' : 'is-closed'}`}
               onClick={() => toggleSection('quick')}
             >
-              <h4 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+              <h3 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
                 Quick Links
-              </h4>
+              </h3>
               {isMobile && (
                 <ChevronDown
                   className="winera-footer-chevron"
@@ -221,9 +221,9 @@ export default function Footer({ footerData }) {
               className={`winera-footer-col-header ${openSections.resource ? 'is-open' : 'is-closed'}`}
               onClick={() => toggleSection('resource')}
             >
-              <h4 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+              <h3 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
                 Resources
-              </h4>
+              </h3>
               {isMobile && (
                 <ChevronDown
                   className="winera-footer-chevron"
@@ -282,7 +282,7 @@ export default function Footer({ footerData }) {
           {/* Left Social Media Circular Buttons */}
           <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '10px' : '14px' }}>
             {/* Facebook */}
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" style={{
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Visit Facebook" style={{
               width: isMobile ? '34px' : '38px',
               height: isMobile ? '34px' : '38px',
               borderRadius: '50%',
@@ -299,7 +299,7 @@ export default function Footer({ footerData }) {
             </a>
 
             {/* Instagram Gradient */}
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" style={{
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Visit Instagram" style={{
               width: isMobile ? '34px' : '38px',
               height: isMobile ? '34px' : '38px',
               borderRadius: '50%',
@@ -318,7 +318,7 @@ export default function Footer({ footerData }) {
             </a>
 
             {/* Youtube Red */}
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" style={{
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="Visit YouTube" style={{
               width: isMobile ? '34px' : '38px',
               height: isMobile ? '34px' : '38px',
               borderRadius: '50%',
@@ -360,9 +360,9 @@ export default function Footer({ footerData }) {
             textAlign: isMobile ? 'center' : 'left',
             gap: '6px'
           }}>
-            <h5 style={{ fontSize: isMobile ? '18px' : '1rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+            <h3 style={{ fontSize: isMobile ? '18px' : '1rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
               Get in Touch
-            </h5>
+            </h3>
             <div className="winera-footer-contact-links" style={{
               display: 'flex',
               flexDirection: isMobile ? 'column' : 'row',

@@ -44,7 +44,13 @@ const testiOwner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_au
 import { Gamepad2, Trophy, Flame, Sparkles, Star, ShieldCheck, Zap, Shield, Wrench, Play, ChevronLeft, ChevronRight, ChevronDown, CheckCheck, MessageCircle, UserCheck, Settings, Database, Coins, Headset, Box, ArrowRight, ArrowUpRight, Search, X } from 'lucide-react';
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 import ArcadeSwipeCardDeck from '../components/ArcadeSwipeCardDeck';
-import allArcadeProducts from '../data/allArcadeProducts.json';
+import { fetchArcadeProducts } from '../services/api';
+import { sanitizeAndFormatHtml } from './BlogDetail';
+
+const DEFAULT_ARCADE_CATEGORIES = [
+  "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
+  "Bike & Car Racing Games", "Shooting Games", "Strength Based Games"
+];
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -57,9 +63,11 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
   let text = rawText || defaultText;
   if (!text) return null;
+
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#00a6ff' || highlightColor === '#00b0ff') ? '#0072b8' : highlightColor;
 
   // Auto-accent "Winera International" if user entered plain text without asterisks
   if (!text.includes('*') && text.includes('Winera International')) {
@@ -83,7 +91,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 
     if (isHighlighted) {
       return (
-        <span key={pIdx} style={{ color: highlightColor }}>
+        <span key={pIdx} style={{ color: actualHighlight }}>
           {renderedContent}
         </span>
       );
@@ -93,6 +101,25 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 };
 
 import { useVideoModal } from '../context/VideoModalContext';
+
+const normalizeArcadeCategories = (categories) => {
+  if (!Array.isArray(categories)) return [];
+  const result = [];
+  let addedCombined = false;
+  for (const cat of categories) {
+    if (cat === "Bike Racing Game" || cat === "Car Racing Game" || cat === "Bike & Car Racing Games") {
+      if (!addedCombined) {
+        result.push("Bike & Car Racing Games");
+        addedCombined = true;
+      }
+    } else {
+      if (!result.includes(cat)) {
+        result.push(cat);
+      }
+    }
+  }
+  return result;
+};
 
 export default function ArcadeGame({ siteData }) {
   const { openVideoModal } = useVideoModal();
@@ -105,6 +132,25 @@ export default function ArcadeGame({ siteData }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
+  const [dynamicArcadeCards, setDynamicArcadeCards] = useState([]);
+  const [dynamicCategoriesList, setDynamicCategoriesList] = useState(DEFAULT_ARCADE_CATEGORIES);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchArcadeProducts({ limit: 'all' })
+      .then(res => {
+        if (isMounted && res?.success) {
+          if (Array.isArray(res.cards || res.products) && (res.cards || res.products).length > 0) {
+            setDynamicArcadeCards(res.cards || res.products);
+          }
+          if (Array.isArray(res.categoriesList) && res.categoriesList.length > 0) {
+            setDynamicCategoriesList(res.categoriesList);
+          }
+        }
+      })
+      .catch(err => console.warn('Dynamic arcade products fetch notice:', err));
+    return () => { isMounted = false; };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -134,8 +180,8 @@ export default function ArcadeGame({ siteData }) {
 
   const { header, footer } = siteData;
 
-  const arcadeGames = (allArcadeProducts && Array.isArray(allArcadeProducts.cards) && allArcadeProducts.cards.length > 0)
-    ? allArcadeProducts.cards
+  const arcadeGames = (dynamicArcadeCards && dynamicArcadeCards.length > 0)
+    ? dynamicArcadeCards
     : (Array.isArray(siteData?.arcadeCategories?.cards) && siteData.arcadeCategories.cards.length > 0
         ? siteData.arcadeCategories.cards
         : []);
@@ -173,7 +219,7 @@ export default function ArcadeGame({ siteData }) {
         },
         {
           q: "How Do I Get Started With Ordering Arcade Machines From Winera?",
-          a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Our team will recommend the right machine mix for your space and send a quote ASAP."
+          a: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Our team will recommend the right machine mix for your space and send a quote ASAP."
         },
         {
           q: "Which Arcade Games Give The Best ROI For FECs And Malls In India?",
@@ -193,43 +239,62 @@ export default function ArcadeGame({ siteData }) {
 
       <main id="main-content">
         {/* 2. ARCADE GAME HERO BANNER MATCHING SECOND IMAGE 1:1 */}
-        <section className="winera-arcade-hero-section" style={{
-        position: 'relative',
-        width: '100%',
-        paddingTop: '175px',
-        paddingBottom: '95px',
-        background: isMobile
-          ? `linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), url(${arcadeMobileHeroBg}) center top / 100% 100% no-repeat`
-          : `url(${getValidImageUrl(siteData?.arcadeHero?.bgUrl, arcadeHeroBg)}) center top / 100% 100% no-repeat`,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        color: '#ffffff'
-      }}>
-        <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          {/* Centered Title / Breadcrumb: Home › Arcade Game */}
-          <h1 className="winera-arcade-hero-h1" style={{
-            fontSize: '21px',
-            fontWeight: '800',
-            color: '#ffffff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            margin: 0,
-            lineHeight: 1.2,
-            textAlign: 'center'
-          }}>
-            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
-            <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
-            <span style={{ color: '#ffcd00', fontWeight: '900' }}>
-              {siteData?.arcadeHero?.breadcrumbText || "Arcade Game"}
-            </span>
-          </h1>
-        </div>
-      </section>
+        {(() => {
+          const currentMobileHeroBg = getValidImageUrl(siteData?.arcadeHero?.mobileBgUrl, arcadeMobileHeroBg);
+          const currentDesktopHeroBg = getValidImageUrl(siteData?.arcadeHero?.bgUrl, arcadeHeroBg);
+          const currentHeroAlt = isMobile
+            ? (siteData?.arcadeHero?.mobileBgAlt || siteData?.arcadeHero?.bgAlt || "Arcade Game Machines Setup & Turnkey Solutions - Winera International")
+            : (siteData?.arcadeHero?.bgAlt || "Arcade Game Machines Setup & Turnkey Solutions - Winera International");
+
+          return (
+            <section className="winera-arcade-hero-section" style={{
+              position: 'relative',
+              width: '100%',
+              paddingTop: '175px',
+              paddingBottom: '95px',
+              background: isMobile
+                ? `linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), url(${currentMobileHeroBg}) center top / 100% 100% no-repeat`
+                : `url(${currentDesktopHeroBg}) center top / 100% 100% no-repeat`,
+              '--winera-arcade-mobile-bg': `url("${currentMobileHeroBg}")`,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              color: '#ffffff'
+            }}>
+              {/* SEO crawler discoverable image with alt text */}
+              <img
+                src={isMobile ? currentMobileHeroBg : currentDesktopHeroBg}
+                alt={currentHeroAlt}
+                style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}
+                loading="lazy"
+                decoding="async"
+              />
+              <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
+                {/* Centered Title / Breadcrumb: Home › Arcade Game */}
+                <h1 className="winera-arcade-hero-h1" style={{
+                  fontSize: '21px',
+                  fontWeight: '800',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  margin: 0,
+                  lineHeight: 1.2,
+                  textAlign: 'center'
+                }}>
+                  <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+                  <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
+                  <span style={{ color: '#ffcd00', fontWeight: '900' }}>
+                    {siteData?.arcadeHero?.breadcrumbText || "Arcade Game"}
+                  </span>
+                </h1>
+              </div>
+            </section>
+          );
+        })()}
 
       {/* 3. ARCADE GAME MACHINES IN INDIA SECTION (1:1 FIGMA SCREENSHOT MATCH) */}
       <section className="winera-arcade-intro-section" style={{ padding: '40px 4vw 35px', background: '#F5F5F9', overflow: 'hidden' }}>
@@ -250,10 +315,17 @@ export default function ArcadeGame({ siteData }) {
               borderRadius: '24px',
               overflow: 'hidden',
               boxShadow: '0 20px 45px rgba(0,0,0,0.12)',
-              background: `url(${siteData?.arcadeIntro?.mainImgUrl || arcadeBoy}) center/cover no-repeat`,
               position: 'relative',
               zIndex: 2
-            }}></div>
+            }}>
+              <img
+                src={siteData?.arcadeIntro?.mainImgUrl || arcadeBoy}
+                alt={siteData?.arcadeIntro?.mainImgAlt || "Commercial Arcade Game Machine Setup in India - Winera International"}
+                loading="lazy"
+                decoding="async"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
 
             {/* Bottom-Right Overlapping Image: Arcade Arena Overview */}
             <div style={{
@@ -266,13 +338,20 @@ export default function ArcadeGame({ siteData }) {
               overflow: 'hidden',
               boxShadow: '0 20px 50px rgba(0,0,0,0.2)',
               border: '5px solid #ffffff',
-              background: `url(${siteData?.arcadeIntro?.secondaryImgUrl || arcadeHall}) center/cover no-repeat`,
               zIndex: 10
-            }}></div>
+            }}>
+              <img
+                src={siteData?.arcadeIntro?.secondaryImgUrl || arcadeHall}
+                alt={siteData?.arcadeIntro?.secondaryImgAlt || "Commercial Arcade Arena Zone Overview - Winera"}
+                loading="lazy"
+                decoding="async"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
 
             {/* Floating Pill Tag */}
             {(() => {
-              const baseLink = siteData?.arcadeIntro?.quoteLink || "https://wa.me/919428989488";
+              const baseLink = siteData?.arcadeIntro?.quoteLink || "https://wa.me/919157873576";
               const defaultMsg = siteData?.arcadeIntro?.waMessage || "Hello Winera International! I want to inquire about Commercial Arcade Game Machines. Please share catalog and details. [Ref: Arcade Games Page]";
               
               let hrefLink = baseLink;
@@ -348,7 +427,7 @@ export default function ArcadeGame({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#00a8ff' }}>
+                      <span key={index} style={{ color: '#0072b8' }}>
                         {part}
                       </span>
                     );
@@ -366,9 +445,11 @@ export default function ArcadeGame({ siteData }) {
               lineHeight: 1.65,
               marginBottom: '28px',
               maxWidth: '540px'
-            }}>
-              {siteData?.arcadeIntro?.desc || "Winera International Pvt. Ltd is a trusted arcade games manufacturer and supplier of premium arcade machines, sourced and serviced end-to-end across 50+ cities. With over 15 years of industry expertise, we source every arcade game machine from established global manufacturers and configure it with modern coin, card, or ticket-based redemption systems to match your venue's requirements"}
-            </p>
+            }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.arcadeIntro?.desc || "Winera International Pvt. Ltd is a trusted arcade games manufacturer and supplier of premium arcade machines, sourced and serviced end-to-end across 50+ cities. With over 15 years of industry expertise, we source every arcade game machine from established global manufacturers and configure it with modern coin, card, or ticket-based redemption systems to match your venue's requirements").replace(/\n/g, '<br>'))
+              }}
+            />
 
             {/* Dynamic Features List */}
             {(Array.isArray(siteData?.arcadeIntro?.features) ? siteData.arcadeIntro.features : [
@@ -405,12 +486,14 @@ export default function ArcadeGame({ siteData }) {
                     <Wrench style={{ width: '19px', height: '19px', color: '#0f172a' }} />
                   )}
                 </div>
-                <h4 className="winera-arcade-feature-title" style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: '0 0 4px' }}>
+                <h3 className="winera-arcade-feature-title" style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: '0 0 4px' }}>
                   {feature.title}
-                </h4>
-                <p className="winera-arcade-feature-desc" style={{ fontSize: '13px', color: '#64748b', fontWeight: '500', lineHeight: 1.55, margin: 0 }}>
-                  {feature.desc}
-                </p>
+                </h3>
+                <p className="winera-arcade-feature-desc" style={{ fontSize: '13px', color: '#64748b', fontWeight: '500', lineHeight: 1.55, margin: 0 }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml(String(feature.desc || '').replace(/\n/g, '<br>'))
+                  }}
+                />
               </div>
             ))}
 
@@ -440,7 +523,7 @@ export default function ArcadeGame({ siteData }) {
 
               {/* Button 2: Get a Quote with arcadegame-button-2.png BG */}
               {(() => {
-                const baseLink = siteData?.arcadeIntro?.quoteLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.arcadeIntro?.quoteLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.arcadeIntro?.waMessage || "Hello Winera International! I want to inquire about Commercial Arcade Game Machines. Please share catalog and details. [Ref: Arcade Games Page]";
                 
                 let hrefLink = baseLink;
@@ -542,12 +625,12 @@ export default function ArcadeGame({ siteData }) {
                 overflowY: 'auto',
                 padding: '6px'
               }}>
-                {((Array.isArray(siteData?.arcadeCategories?.categoriesList) && siteData.arcadeCategories.categoriesList.length > 0)
-                  ? siteData.arcadeCategories.categoriesList
-                  : (allArcadeProducts?.categoriesList || [
-                    "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
-                    "Bike Racing Game", "Car Racing Game", "Shooting Games", "VR Games", "Strength Based Games"
-                  ])
+                {normalizeArcadeCategories(
+                  (dynamicCategoriesList && dynamicCategoriesList.length > 0)
+                    ? dynamicCategoriesList
+                    : ((Array.isArray(siteData?.arcadeCategories?.categoriesList) && siteData.arcadeCategories.categoriesList.length > 0)
+                        ? siteData.arcadeCategories.categoriesList
+                        : DEFAULT_ARCADE_CATEGORIES)
                 ).map((cat, cIdx) => {
                   const isSelected = (activeCategory || "Arcade Games") === cat;
                   return (
@@ -607,19 +690,12 @@ export default function ArcadeGame({ siteData }) {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {(() => {
-                  const availableCats = (Array.isArray(siteData?.arcadeCategories?.categoriesList) && siteData.arcadeCategories.categoriesList.length > 0)
-                    ? siteData.arcadeCategories.categoriesList
-                    : (allArcadeProducts?.categoriesList || [
-                      "Arcade Games",
-                      "Claw Machine",
-                      "Redemption Game",
-                      "Kiddy Ride",
-                      "Bike Racing Game",
-                      "Car Racing Game",
-                      "Shooting Games",
-                      "VR Games",
-                      "Strength Based Games"
-                    ]);
+                  const rawAvailableCats = (dynamicCategoriesList && dynamicCategoriesList.length > 0)
+                    ? dynamicCategoriesList
+                    : ((Array.isArray(siteData?.arcadeCategories?.categoriesList) && siteData.arcadeCategories.categoriesList.length > 0)
+                        ? siteData.arcadeCategories.categoriesList
+                        : DEFAULT_ARCADE_CATEGORIES);
+                  const availableCats = normalizeArcadeCategories(rawAvailableCats);
 
                   const topCategory = availableCats[0] || "Arcade Games";
                   const subCategories = availableCats.slice(1);
@@ -713,6 +789,7 @@ export default function ArcadeGame({ siteData }) {
                 const categoryDefaultImages = {
                   "Claw Machine": arcadeHall,
                   "Redemption Game": superAirHockeyImg,
+                  "Bike & Car Racing Games": bikeArcade,
                   "Bike Racing Game": bikeArcade,
                   "Car Racing Game": arcadegamesImg,
                   "Shooting Games": arcadeHall,
@@ -748,9 +825,9 @@ export default function ArcadeGame({ siteData }) {
                   "Lucky Catcher Crane Machine": arcadeBoy
                 };
 
-                const masterCards = Array.isArray(allArcadeProducts?.cards) && allArcadeProducts.cards.length > 0
-                  ? allArcadeProducts.cards
-                  : [];
+                const masterCards = (dynamicArcadeCards && dynamicArcadeCards.length > 0)
+                  ? dynamicArcadeCards
+                  : (Array.isArray(siteData?.arcadeCategories?.cards) ? siteData.arcadeCategories.cards : []);
 
                 const legacyMockups = new Set([
                   'super air hockey', 'super-air-hockey',
@@ -821,12 +898,25 @@ export default function ArcadeGame({ siteData }) {
 
                 // Filter cards by selected activeCategory
                 const isAllCategory = !activeCategory || activeCategory === "Arcade Games" || activeCategory === "All";
+                const isRacingTarget = (activeCategory || "").toLowerCase().trim() === "bike & car racing games" ||
+                  ((activeCategory || "").toLowerCase().includes("racing") && ((activeCategory || "").toLowerCase().includes("bike") || (activeCategory || "").toLowerCase().includes("car")));
+
                 const categoryMatched = isAllCategory
                   ? allCards
                   : allCards.filter(c => {
                       const cat = (c.category || c.tag || c.subCategory || "").toLowerCase().trim();
                       const target = activeCategory.toLowerCase().trim();
                       const title = (c.name || c.title || "").toLowerCase().trim();
+                      if (isRacingTarget) {
+                        if (
+                          cat === "bike & car racing games" ||
+                          cat === "bike racing game" ||
+                          cat === "car racing game" ||
+                          (cat.includes("racing") && (cat.includes("bike") || cat.includes("car")))
+                        ) {
+                          return true;
+                        }
+                      }
                       return cat === target || cat.includes(target) || target.includes(cat) || title.includes(target);
                     });
 
@@ -962,9 +1052,9 @@ export default function ArcadeGame({ siteData }) {
                         boxSizing: 'border-box'
                       }}>
                         <Search style={{ width: '36px', height: '36px', color: '#38bdf8', margin: '0 auto 12px' }} />
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px' }}>
+                        <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px' }}>
                           {searchQuery ? `No games found matching "${searchQuery}"` : `Custom ${activeCategory} Machines Available`}
-                        </h4>
+                        </h3>
                         <p style={{ fontSize: '13.5px', color: '#64748b', maxWidth: '460px', margin: '0 auto 18px', lineHeight: 1.6 }}>
                           {searchQuery ? `Try searching with another keyword or clear the search filter.` : `We manufacture and supply commercial-grade ${activeCategory} machines customized for your space, theme, and payment system.`}
                         </p>
@@ -986,7 +1076,7 @@ export default function ArcadeGame({ siteData }) {
                           </button>
                         ) : (
                           <a
-                            href={`https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera International! I want to inquire about ${activeCategory} catalog and pricing.`)}`}
+                            href={`https://wa.me/919157873576?text=${encodeURIComponent(`Hello Winera International! I want to inquire about ${activeCategory} catalog and pricing.`)}`}
                             target="_blank"
                             rel="noreferrer"
                             style={{
@@ -1052,7 +1142,7 @@ export default function ArcadeGame({ siteData }) {
                               }}>
                                 <WineraImage
                                   src={card.imageUrl || card.img}
-                                  alt={card.name}
+                                  alt={card.imgAlt || `${card.name} Commercial Arcade Game Machine - Winera`}
                                   style={{
                                     width: '100%',
                                     height: '100%',
@@ -1068,7 +1158,7 @@ export default function ArcadeGame({ siteData }) {
                                 />
                               </div>
 
-                              <h4 style={{
+                              <h3 style={{
                                 fontSize: '1rem',
                                 fontWeight: '600',
                                 color: '#0f172a',
@@ -1080,7 +1170,7 @@ export default function ArcadeGame({ siteData }) {
                                 justifyContent: 'center'
                               }}>
                                 {card.name}
-                              </h4>
+                              </h3>
                             </Link>
                           );
                         })}
@@ -1099,9 +1189,9 @@ export default function ArcadeGame({ siteData }) {
 
           {/* Dynamic Pagination Toolbar (Centered across full section width) */}
           {(() => {
-            const masterCards = Array.isArray(allArcadeProducts?.cards) && allArcadeProducts.cards.length > 0
-              ? allArcadeProducts.cards
-              : [];
+            const masterCards = (dynamicArcadeCards && dynamicArcadeCards.length > 0)
+              ? dynamicArcadeCards
+              : (Array.isArray(siteData?.arcadeCategories?.cards) ? siteData.arcadeCategories.cards : []);
 
             const legacyMockups = new Set([
               'super air hockey', 'super-air-hockey',
@@ -1158,12 +1248,25 @@ export default function ArcadeGame({ siteData }) {
             }));
 
             const isAllCategory = !activeCategory || activeCategory === "Arcade Games" || activeCategory === "All";
+            const isRacingTarget = (activeCategory || "").toLowerCase().trim() === "bike & car racing games" ||
+              ((activeCategory || "").toLowerCase().includes("racing") && ((activeCategory || "").toLowerCase().includes("bike") || (activeCategory || "").toLowerCase().includes("car")));
+
             const categoryMatched = isAllCategory
               ? allCardsPagination
               : allCardsPagination.filter(c => {
                   const cat = (c.category || c.tag || c.subCategory || "").toLowerCase().trim();
                   const target = activeCategory.toLowerCase().trim();
                   const title = (c.name || c.title || "").toLowerCase().trim();
+                  if (isRacingTarget) {
+                    if (
+                      cat === "bike & car racing games" ||
+                      cat === "bike racing game" ||
+                      cat === "car racing game" ||
+                      (cat.includes("racing") && (cat.includes("bike") || cat.includes("car")))
+                    ) {
+                      return true;
+                    }
+                  }
                   return cat === target || cat.includes(target) || target.includes(cat) || title.includes(target);
                 });
 
@@ -1321,7 +1424,7 @@ export default function ArcadeGame({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#00a8ff' }}>
+                      <span key={index} style={{ color: '#0072b8' }}>
                         {part}
                       </span>
                     );
@@ -1333,7 +1436,7 @@ export default function ArcadeGame({ siteData }) {
 
             {/* Mobile Image Render */}
             <div className="winera-commercial-mobile-img" style={{ display: 'none', margin: '20px auto 24px', width: '100%', maxWidth: '340px', height: '240px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 12px 30px rgba(0,0,0,0.15)' }}>
-              <img src={aboutUsSectionImg} alt="Commercial Team" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={getValidImageUrl(siteData?.arcadeCommercial?.teamImgUrl, aboutUsSectionImg)} alt={siteData?.arcadeCommercial?.teamImgAlt || "Winera Commercial Arcade Game Setup & Support Team"} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
 
             {/* Dynamic Commercial Points List */}
@@ -1344,7 +1447,9 @@ export default function ArcadeGame({ siteData }) {
                   {
                     title: siteData?.arcadeCommercial?.point1Title || "Built for Real Commercial Footfall",
                     paragraphs: siteData?.arcadeCommercial?.point1Text
-                      ? [siteData.arcadeCommercial.point1Text]
+                      ? (Array.isArray(siteData.arcadeCommercial.point1Text)
+                          ? siteData.arcadeCommercial.point1Text
+                          : String(siteData.arcadeCommercial.point1Text).split(/\n\n+/).map(p => p.trim()).filter(Boolean))
                       : [
                         "Arcade machines in Indian malls and entertainment centres often run ten or more hours a day, handled mostly by children. Equipment sourced without that environment in mind tends to fail within weeks of installation.",
                         "We at Winera International prioritise machines rated for sustained commercial cycles over units designed for lighter, residential, or occasional use, which is why our installations typically need far less frequent servicing than machines bought through unverified import channels."
@@ -1353,54 +1458,58 @@ export default function ArcadeGame({ siteData }) {
                   {
                     title: siteData?.arcadeCommercial?.point2Title || "What Will Your Arcade Game Zone Actually Earn?",
                     paragraphs: siteData?.arcadeCommercial?.point2Text
-                      ? [siteData.arcadeCommercial.point2Text]
+                      ? (Array.isArray(siteData.arcadeCommercial.point2Text)
+                          ? siteData.arcadeCommercial.point2Text
+                          : String(siteData.arcadeCommercial.point2Text).split(/\n\n+/).map(p => p.trim()).filter(Boolean))
                       : [
                         "An arcade game zone is not a single machine decision, it is a business decision about which machines, in which combination, at what price point, will generate the strongest return for your specific venue. Most suppliers hand you a catalogue and leave that calculation entirely to you.",
                         "Winera International starts there. Before any machine is recommended, our team works out the numbers for your specific floor size, daily footfall, and target visitor age group projected revenue per machine category, daily session estimates, maintenance costs per year, and a realistic break-even timeline. Not a generic percentage claim. Your actual numbers, for your actual venue."
                       ]
                   }
                 ]
-            ).map((point, pIdx) => (
-              <div key={pIdx} style={{ marginBottom: pIdx === 0 ? '22px' : '30px' }}>
-                <div className="winera-commercial-point-title" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '8px', textAlign: 'left' }}>
-                  <CheckCheck style={{ width: '22px', height: '22px', color: '#00a8ff', strokeWidth: 3, flexShrink: 0, marginTop: '2px' }} />
-                  <h4 style={{ fontSize: '20px', fontWeight: '600', color: '#0f172a', margin: 0, lineHeight: 1.35, textAlign: 'left' }}>
-                    {point.title}
-                  </h4>
+            ).map((point, pIdx) => {
+              const paras = Array.isArray(point.paragraphs)
+                ? point.paragraphs
+                : (typeof point.desc === 'string' ? point.desc.split(/\n\n+/).map(p => p.trim()).filter(Boolean) : [point.desc || point.text || '']);
+
+              return (
+                <div key={pIdx} style={{ marginBottom: pIdx === 0 ? '22px' : '30px' }}>
+                  <div className="winera-commercial-point-title" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '8px', textAlign: 'left' }}>
+                    <CheckCheck style={{ width: '22px', height: '22px', color: '#0072b8', strokeWidth: 3, flexShrink: 0, marginTop: '2px' }} />
+                    <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#0f172a', margin: 0, lineHeight: 1.35, textAlign: 'left' }}>
+                      {point.title}
+                    </h3>
+                  </div>
+                  {paras.length > 1 ? (
+                    <MobileExpandableText
+                      preview={
+                        <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '6px', maxWidth: '800px' }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(paras[0]).replace(/\n/g, '<br>')) }}
+                        />
+                      }
+                      expandedContent={
+                        paras.slice(1).map((para, paraIdx) => (
+                          <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '800px' }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(para).replace(/\n/g, '<br>')) }}
+                          />
+                        ))
+                      }
+                    />
+                  ) : (
+                    paras.map((para, paraIdx) => (
+                      <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '800px' }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(para).replace(/\n/g, '<br>')) }}
+                      />
+                    ))
+                  )}
                 </div>
-                {Array.isArray(point.paragraphs) && point.paragraphs.length > 1 ? (
-                  <MobileExpandableText
-                    preview={
-                      <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '6px', maxWidth: '800px' }}>
-                        {point.paragraphs[0]}
-                      </p>
-                    }
-                    expandedContent={
-                      point.paragraphs.slice(1).map((para, paraIdx) => (
-                        <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '800px' }}>
-                          {para}
-                        </p>
-                      ))
-                    }
-                  />
-                ) : Array.isArray(point.paragraphs) ? (
-                  point.paragraphs.map((para, paraIdx) => (
-                    <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '800px' }}>
-                      {para}
-                    </p>
-                  ))
-                ) : (
-                  <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, maxWidth: '800px' }}>
-                    {point.desc || point.text}
-                  </p>
-                )}
-              </div>
-            ))}
+              );
+            })}
 
             {/* WhatsApp CTA Button: Talk to an ROI Expert */}
             <div style={{ marginTop: '-17px' }}>
               {(() => {
-                const baseLink = siteData?.arcadeCommercial?.ctaLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.arcadeCommercial?.ctaLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.arcadeCommercial?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for setup & commercial guidance. Please share details. [Ref: Arcade Game Page]";
                 
                 let hrefLink = baseLink;
@@ -1464,8 +1573,10 @@ export default function ArcadeGame({ siteData }) {
             justifyContent: 'center'
           }}>
             <img
-              src={aboutUsSectionImg}
-              alt="Winera Commercial Arcade Game Team"
+              src={getValidImageUrl(siteData?.arcadeCommercial?.teamImgUrl, aboutUsSectionImg)}
+              alt={siteData?.arcadeCommercial?.teamImgAlt || "Winera Commercial Arcade Game Setup & Support Team"}
+              loading="lazy"
+              decoding="async"
               style={{
                 width: '100%',
                 maxHeight: '460px',
@@ -1486,10 +1597,10 @@ export default function ArcadeGame({ siteData }) {
               src={yellowBrushAccent}
               alt=""
               className="winera-yellow-stroke"
-              style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+              style={{ display: 'block', width: '200px', maxWidth: '100%', height: 'auto', maxHeight: '9px', aspectRatio: '492 / 10', marginBottom: '8px', objectFit: 'contain', margin: '0 auto 8px' }}
             />
             <h2 className="winera-arcade-why-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.arcadeWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
+              {renderTitleMarkup(siteData?.arcadeWhyUs?.title, "Why Choose *Winera International*", '#0072b8')}
             </h2>
           </div>
 
@@ -1654,9 +1765,9 @@ export default function ArcadeGame({ siteData }) {
                         <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
                           {item.title}
                         </h3>
-                        <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '260px', margin: 0 }}>
-                          {item.desc}
-                        </p>
+                        <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '260px', margin: 0 }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(item.desc || '').replace(/\n/g, '<br>')) }}
+                        />
                       </div>
                     ))}
                   </div>
@@ -1722,9 +1833,9 @@ export default function ArcadeGame({ siteData }) {
                           <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
                             {item.title}
                           </h3>
-                          <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '280px', margin: 0 }}>
-                            {item.desc}
-                          </p>
+                          <p style={{ fontSize: '15px', color: '#64748b', fontWeight: '500', lineHeight: 1.5, maxWidth: '280px', margin: 0 }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(item.desc || '').replace(/\n/g, '<br>')) }}
+                          />
                         </div>
                       ))}
                     </div>
@@ -1743,7 +1854,7 @@ export default function ArcadeGame({ siteData }) {
       <ProjectsMarqueeSection
         siteData={siteData}
         showTopHeader={true}
-        title={<><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>GAME ZONES WE HAVE</span><br /><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>BUILT <span style={{ color: '#38bdf8' }}>ACROSS INDIA</span></span></>}
+        title={<><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>GAME ZONES WE HAVE</span><br /><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>BUILT <span style={{ color: '#0072b8' }}>ACROSS INDIA</span></span></>}
         subtext="Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers."
         projects={siteData?.builtProjects}
       />
@@ -1753,22 +1864,23 @@ export default function ArcadeGame({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 9. RELATED PRODUCTS CAROUSEL SECTION */}
-      <RelatedProductsSection sectionData={siteData?.arcadeRelated} accentColor="#38bdf8" />
+      <RelatedProductsSection sectionData={siteData?.arcadeRelated} accentColor="#0072b8" />
 
       {/* 10. FREQUENTLY ASKED QUESTIONS SECTION (DYNAMIC PAGE FAQS WITH DEFAULT FALLBACK) */}
       <FaqSection
         faqList={Array.isArray(siteData?.arcadeFaqs) && siteData.arcadeFaqs.length > 0 ? siteData.arcadeFaqs : arcadeFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 11. CTA BANNER SECTION (DYNAMIC MONGO PERSISTED DATA) */}
       <CtaBanner
+        contentBoxPadding="50px 0px"
         showOverlay={false}
         align="center"
         gradientTitle={true}
@@ -1777,6 +1889,7 @@ export default function ArcadeGame({ siteData }) {
         subtitleFontSize="20px"
         subtitleFontWeight="400"
         bgUrl={siteData?.arcadeCta?.bgUrl && !siteData.arcadeCta.bgUrl.includes('need-consultations-bg') ? siteData.arcadeCta.bgUrl : null}
+        bgAlt={siteData?.arcadeCta?.bgAlt || "Need Any Consultations - Commercial Arcade Setup by Winera"}
         bg={arcadeCtaBg}
         tagline={null}
         title={
@@ -1798,7 +1911,7 @@ export default function ArcadeGame({ siteData }) {
         buttonLink={
           siteData?.arcadeCta?.buttonLink !== undefined
             ? siteData.arcadeCta.buttonLink
-            : "https://wa.me/919428989488"
+            : "https://wa.me/919157873576"
         }
       />
       </main>

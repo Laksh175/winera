@@ -12,8 +12,13 @@ export const markdownToHtml = (md) => {
   // Clean cursor artifacts if any
   html = html.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
 
-  // If it already has HTML paragraphs and no raw markdown, return
-  if (html.includes('<p>') && !html.includes('**') && !html.includes('~~') && !html.includes('[')) {
+  // 1. Auto-heal any accidentally split sentence where an inline element or break occurred
+  // right before a lowercase continuation word (e.g. "Winera...\n\nis a trusted..." or "</strong>\n\nis a")
+  html = html.replace(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|<strong[^>]*>.*?<\/strong>|<a[^>]*>.*?<\/a>|<u>.*?<\/u>|[\w\.,\(\)]+)\s*\n+\s*([a-z])/g, '$1 $2');
+  html = html.replace(/(<\/strong>|<\/a>|<\/u>|<\/em>|<\/b>)\s*<\/p>\s*<p[^>]*>\s*([a-z])/gi, '$1 $2');
+
+  // If it already has clean HTML paragraphs and no raw markdown, return
+  if (/^<p[^>]*>[\s\S]*<\/p>$/i.test(html.trim()) && !html.includes('**') && !html.includes('~~') && !html.includes('[')) {
     return html;
   }
 
@@ -50,8 +55,9 @@ export const markdownToHtml = (md) => {
       const items = html.split(/\n[-*]\s+/).map(it => it.replace(/^[-*]\s+/, '').trim()).filter(Boolean);
       html = `<ul>${items.map(it => `<li>${it}</li>`).join('')}</ul>`;
     } else if (html.includes('\n')) {
-      html = `<p>${html.replace(/\n/g, '<br>')}</p>`;
-    } else if (html && !html.startsWith('<')) {
+      const healed = html.replace(/([^\.\!\?\:\n])\s*\n\s*([a-z0-9])/gi, '$1 $2');
+      html = `<p>${healed.replace(/\n/g, '<br>')}</p>`;
+    } else if (!/^\s*<(?:p|div|h[1-6]|ul|ol|blockquote)[\s>]/i.test(html)) {
       html = `<p>${html}</p>`;
     }
   }
@@ -69,10 +75,13 @@ export const htmlToMarkdown = (html) => {
   // Strip cursor artifacts
   md = md.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
 
+  // If Quill split a sentence across paragraphs (e.g. </p><p>is a trusted...)
+  md = md.replace(/<\/p>\s*<p[^>]*>\s*([a-z])/gi, ' $1');
+
   // Convert paragraphs and linebreaks
   md = md.replace(/<div><br\s*\/?><\/div>/gi, '\n\n');
   md = md.replace(/<div>(.*?)<\/div>/gi, '\n$1');
-  md = md.replace(/<p>(.*?)<\/p>/gi, '$1\n\n');
+  md = md.replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n\n');
   md = md.replace(/<br\s*\/?>/gi, '\n');
 
   // Convert lists
@@ -92,8 +101,7 @@ export const htmlToMarkdown = (html) => {
   md = md.replace(/<u[^>]*>(.*?)<\/u>/gi, '<u>$1</u>');
   md = md.replace(/<del[^>]*>(.*?)<\/del>/gi, '~~$1~~');
   md = md.replace(/<s[^>]*>(.*?)<\/s>/gi, '~~$1~~');
-  md = md.replace(/<strike[^>]*>(.*?)<\/strike>/gi, '~~$1~~');
-  md = md.replace(/<a[^>]+href="([^"]+)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)');
+  md = md.replace(/<a\s+[^>]*?href=["']?([^"'\s>]+)["']?[^>]*>([\s\S]*?)<\/a>/gi, '[$2]($1)');
 
   // Decode HTML entities
   md = md.replace(/&nbsp;/g, ' ')
@@ -102,6 +110,8 @@ export const htmlToMarkdown = (html) => {
          .replace(/&gt;/g, '>')
          .replace(/&quot;/g, '"');
 
+  // Heal any accidental single linebreaks in the middle of sentences
+  md = md.replace(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|[\w\.,\(\)]+)\s*\n+\s*([a-z])/g, '$1 $2');
   md = md.replace(/\n{3,}/g, '\n\n');
   return md.trim();
 };
@@ -156,29 +166,42 @@ export default function RichTextareaWithEditor({
           container: toolbarOptions,
           handlers: {
             link: function (val) {
+              const quill = this.quill;
               if (val) {
-                const range = this.quill.getSelection();
+                let range = quill.getSelection();
                 if (!range || range.length === 0) {
-                  const url = prompt('Enter link URL (e.g. https://winera.in):', 'https://');
+                  const url = prompt('Enter Link URL:', 'https://');
                   if (url && url.trim()) {
-                    const text = prompt('Enter link text:', url.trim());
+                    const text = prompt('Enter Link Text:', url.trim());
                     if (text) {
-                      const idx = range ? range.index : this.quill.getLength();
-                      this.quill.insertText(idx, text, 'link', url.trim());
+                      const idx = range ? range.index : Math.max(0, quill.getLength() - 1);
+                      quill.insertText(idx, text, 'link', url.trim(), 'user');
+                      quill.setSelection(idx + text.length, 0);
                     }
                   }
-                  return;
-                }
-                const currentLink = this.quill.getFormat(range).link;
-                const url = prompt('Enter link URL (e.g. https://winera.in):', currentLink || 'https://');
-                if (url && url.trim()) {
-                  this.quill.format('link', url.trim());
-                } else if (url === '') {
-                  this.quill.format('link', false);
+                } else {
+                  const currentLink = quill.getFormat(range).link;
+                  const url = prompt('Enter Link URL:', currentLink || 'https://');
+                  if (url && url.trim()) {
+                    quill.format('link', url.trim(), 'user');
+                  } else if (url === '') {
+                    quill.format('link', false, 'user');
+                  }
                 }
               } else {
-                this.quill.format('link', false);
+                quill.format('link', false, 'user');
               }
+
+              // Explicitly emit update immediately so React state never misses toolbar link changes
+              setTimeout(() => {
+                const html = quill.root.innerHTML;
+                const isEmpty = quill.getText().trim().length === 0;
+                const output = isEmpty ? '' : htmlToMarkdown(html);
+                lastEmittedValueRef.current = output;
+                if (onChangeRef.current) {
+                  onChangeRef.current(output);
+                }
+              }, 10);
             }
           }
         }
@@ -194,12 +217,12 @@ export default function RichTextareaWithEditor({
       lastEmittedValueRef.current = value;
     }
 
-    // Text change listener
-    quill.on('text-change', (delta, oldDelta, source) => {
-      if (source !== 'user') return;
+    // Text change listener: Handles user typing, formatting, pasting, and toolbar triggers
+    quill.on('text-change', () => {
       const html = quill.root.innerHTML;
       const isEmpty = quill.getText().trim().length === 0;
       const output = isEmpty ? '' : htmlToMarkdown(html);
+      if (output === lastEmittedValueRef.current) return;
       lastEmittedValueRef.current = output;
       if (onChangeRef.current) {
         onChangeRef.current(output);
@@ -217,6 +240,13 @@ export default function RichTextareaWithEditor({
     if (!quill) return;
 
     if (value === lastEmittedValueRef.current) {
+      return;
+    }
+
+    // If current Quill content already translates to the exact same markdown value, do not touch DOM
+    const currentHtml = quill.root.innerHTML;
+    if (htmlToMarkdown(currentHtml) === value) {
+      lastEmittedValueRef.current = value;
       return;
     }
 
@@ -292,16 +322,25 @@ export default function RichTextareaWithEditor({
         .winera-quill-editor-wrapper .ql-editor * b {
           font-weight: 800 !important;
           color: #0f172a !important;
+          display: inline !important;
+          width: auto !important;
+          max-width: none !important;
         }
         .winera-quill-editor-wrapper .ql-editor em,
         .winera-quill-editor-wrapper .ql-editor i,
         .winera-quill-editor-wrapper .ql-editor * em,
         .winera-quill-editor-wrapper .ql-editor * i {
           font-style: italic !important;
+          display: inline !important;
+          width: auto !important;
+          max-width: none !important;
         }
         .winera-quill-editor-wrapper .ql-editor u,
         .winera-quill-editor-wrapper .ql-editor * u {
           text-decoration: underline !important;
+          display: inline !important;
+          width: auto !important;
+          max-width: none !important;
         }
         .winera-quill-editor-wrapper .ql-editor s,
         .winera-quill-editor-wrapper .ql-editor strike,
@@ -310,6 +349,9 @@ export default function RichTextareaWithEditor({
         .winera-quill-editor-wrapper .ql-editor * strike,
         .winera-quill-editor-wrapper .ql-editor * del {
           text-decoration: line-through !important;
+          display: inline !important;
+          width: auto !important;
+          max-width: none !important;
         }
         .winera-quill-editor-wrapper .ql-editor a,
         .winera-quill-editor-wrapper .ql-editor * a {
@@ -317,6 +359,9 @@ export default function RichTextareaWithEditor({
           text-decoration: underline !important;
           font-weight: 700 !important;
           cursor: pointer !important;
+          display: inline !important;
+          width: auto !important;
+          max-width: none !important;
         }
         .winera-quill-editor-wrapper .ql-editor.ql-blank::before {
           color: #94a3b8 !important;

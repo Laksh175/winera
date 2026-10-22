@@ -11,7 +11,19 @@ import MobileExpandableText from '../components/MobileExpandableText';
 import SectionHeading from '../components/SectionHeading';
 import WineraImage from '../components/WineraImage';
 import ArcadeSwipeCardDeck from '../components/ArcadeSwipeCardDeck';
-import allVrGames from '../data/allVrGames.json';
+import { fetchVrGames } from '../services/api';
+import { sanitizeAndFormatHtml } from './BlogDetail';
+
+const DEFAULT_VR_CATEGORIES = [
+  "All VR Games",
+  "VR 9D Cinema",
+  "VR Racing Simulator",
+  "VR Shooting Simulator",
+  "VR Flying Simulator",
+  "Movie Experience",
+  "VR 360 Simulator",
+  "Kids' Interactive Equipment"
+];
 import { 
   ShieldCheck, Settings, Database, Headset, Wrench, Plane, Users, Radio, 
   Gamepad2, Zap, Sparkles, Flame, Target, Tv, Layers, Activity, Plus, Minus,
@@ -53,7 +65,8 @@ const amusementParkCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_a
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
+  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -77,7 +90,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 
     if (isHighlighted) {
       return (
-        <span key={pIdx} style={{ color: highlightColor }}>
+        <span key={pIdx} style={{ color: actualHighlight }}>
           {renderedContent}
         </span>
       );
@@ -106,6 +119,33 @@ export default function VrGames({ siteData }) {
   const [selectedSpecsProduct, setSelectedSpecsProduct] = useState(null);
   const [selectedModalImageIdx, setSelectedModalImageIdx] = useState(0);
   const [openReliabilityIndex, setOpenReliabilityIndex] = useState(-1);
+  const [dynamicVrCards, setDynamicVrCards] = useState(
+    Array.isArray(siteData?.vrCategories?.cards) && siteData.vrCategories.cards.length > 0
+      ? siteData.vrCategories.cards
+      : []
+  );
+  const [dynamicCategoriesList, setDynamicCategoriesList] = useState(
+    Array.isArray(siteData?.vrCategories?.categoriesList) && siteData.vrCategories.categoriesList.length > 0
+      ? siteData.vrCategories.categoriesList
+      : DEFAULT_VR_CATEGORIES
+  );
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchVrGames({ limit: 'all' })
+      .then(res => {
+        if (isMounted && res?.success) {
+          if (Array.isArray(res.cards) && res.cards.length > 0) {
+            setDynamicVrCards(res.cards);
+          }
+          if (Array.isArray(res.categoriesList) && res.categoriesList.length > 0) {
+            setDynamicCategoriesList(res.categoriesList);
+          }
+        }
+      })
+      .catch(err => console.warn('Dynamic VR games fetch notice:', err));
+    return () => { isMounted = false; };
+  }, []);
 
   React.useEffect(() => {
     if (!siteData) return;
@@ -129,6 +169,7 @@ export default function VrGames({ siteData }) {
 
   const { header, footer } = siteData;
   const heroBgImage = getValidImageUrl(siteData?.vrHero?.bgUrl, vrHeroBg);
+  const mobileHeroBgImage = getValidImageUrl(siteData?.vrHero?.mobileBgUrl, vrMobileHeroBg);
 
 
 
@@ -163,7 +204,7 @@ export default function VrGames({ siteData }) {
     },
     {
       question: "How do I get started with a VR gaming machine order from Winera?",
-      answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
+      answer: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
     }
   ];
 
@@ -206,7 +247,7 @@ export default function VrGames({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
-        '--winera-vr-mobile-bg': `url("${vrMobileHeroBg}")`,
+        '--winera-vr-mobile-bg': `url("${mobileHeroBgImage}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -214,6 +255,14 @@ export default function VrGames({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
+        {/* SEO crawler discoverable image with alt text */}
+        <img
+          src={heroBgImage}
+          alt={siteData?.vrHero?.bgAlt || "Virtual Reality VR Games Machines Setup - Winera International"}
+          style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}
+          loading="lazy"
+          decoding="async"
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › VR Games */}
           <h1 className="winera-vr-hero-h1" style={{
@@ -251,7 +300,7 @@ export default function VrGames({ siteData }) {
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
               src={siteData?.vrIntro?.mainImgUrl || vrSupplierCollage}
-              alt="VR Gaming Machine Supplier in India"
+              alt={siteData?.vrIntro?.mainImgAlt || "VR Gaming Machine Supplier in India - Winera International"}
               style={{
                 width: '100%',
                 maxWidth: '460px',
@@ -272,17 +321,20 @@ export default function VrGames({ siteData }) {
                 style={{ display: 'block', width: '260px', maxWidth: '100%', height: '10px', marginBottom: '10px', objectFit: 'fill', margin: '0 0 10px 0' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.vrIntro?.title, "*VR Gaming Machine*<br/>supplier in India", '#38bdf8')}
+                {renderTitleMarkup(siteData?.vrIntro?.title, "*VR Gaming Machine*<br/>supplier in India", '#0072b8')}
               </h2>
             </div>
 
-            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '5px' }}>
-              {siteData?.vrIntro?.desc || "India's ROI-first VR gaming supplier commercial-grade machines sourced, configured, and serviced by our own team across 50+ cities"}
-            </p>
+            <p
+              style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '5px' }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.vrIntro?.desc || "India's ROI-first VR gaming supplier commercial-grade machines sourced, configured, and serviced by our own team across 50+ cities").replace(/\n/g, '<br>'))
+              }}
+            />
 
             <div className="winera-cyan-cta-wrapper">
               {(() => {
-                const baseLink = siteData?.vrIntro?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.vrIntro?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.vrIntro?.waMessage || "Hello Winera International! I want to get a quote and details for VR Gaming Machine setup. Please share details. [Ref: VR Games Page]";
                 let hrefLink = baseLink;
                 if (!baseLink.includes('text=')) {
@@ -337,7 +389,7 @@ export default function VrGames({ siteData }) {
                 {renderTitleMarkup(
                   siteData?.vrMatchedVenue?.title || (siteData?.vrMatchedVenue?.titleLine1 ? `${siteData.vrMatchedVenue.titleLine1}<br/>${siteData.vrMatchedVenue.titleLine2 || ''}` : null),
                   "*Commercial VR Machines,*<br/>Matched to Your Venue",
-                  '#38bdf8'
+                  '#0072b8'
                 )}
               </h2>
             </div>
@@ -345,21 +397,33 @@ export default function VrGames({ siteData }) {
             <div style={{ marginBottom: '14px', width: '100%', maxWidth: '100%' }}>
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 8px 0' }}>
-                    {siteData?.vrMatchedVenue?.p1 || "Winera International Pvt. Ltd. is a trusted VR gaming machine supplier in India sourcing and servicing commercial virtual reality machines end-to-end across India."}
-                  </p>
+                  <p
+                    style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 8px 0' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.vrMatchedVenue?.p1 || "Winera International Pvt. Ltd. is a trusted VR gaming machine supplier in India sourcing and servicing commercial virtual reality machines end-to-end across India.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
                 expandedContent={
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '8px' }}>
-                    <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                      {siteData?.vrMatchedVenue?.p2 || "With over 15 years of industry expertise, we source every VR gaming machine from established global manufacturers and configure it with the right game library, payment system, and safety setup to match your venue's requirements."}
-                    </p>
-                    <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                      {siteData?.vrMatchedVenue?.p3 || "Before delivery, each unit goes through a commercial-grade durability check — built for high-footfall environments like malls, hotels, and family entertainment centres."}
-                    </p>
-                    <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                      {siteData?.vrMatchedVenue?.p4 || "From sourcing to installation and after-sales support, our own team manages the entire process."}
-                    </p>
+                    <p
+                      style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndFormatHtml((siteData?.vrMatchedVenue?.p2 || "With over 15 years of industry expertise, we source every VR gaming machine from established global manufacturers and configure it with the right game library, payment system, and safety setup to match your venue's requirements.").replace(/\n/g, '<br>'))
+                      }}
+                    />
+                    <p
+                      style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndFormatHtml((siteData?.vrMatchedVenue?.p3 || "Before delivery, each unit goes through a commercial-grade durability check — built for high-footfall environments like malls, hotels, and family entertainment centres.").replace(/\n/g, '<br>'))
+                      }}
+                    />
+                    <p
+                      style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndFormatHtml((siteData?.vrMatchedVenue?.p4 || "From sourcing to installation and after-sales support, our own team manages the entire process.").replace(/\n/g, '<br>'))
+                      }}
+                    />
                   </div>
                 }
               />
@@ -367,7 +431,7 @@ export default function VrGames({ siteData }) {
 
             <div className="winera-cyan-cta-wrapper">
               {(() => {
-                const baseLink = siteData?.vrMatchedVenue?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.vrMatchedVenue?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.vrMatchedVenue?.waMessage || "Hello Winera International! I want to get a quote for Commercial VR Machines matched to my venue. Please share details. [Ref: VR Games Page]";
                 let hrefLink = baseLink;
                 if (!baseLink.includes('text=')) {
@@ -392,7 +456,7 @@ export default function VrGames({ siteData }) {
           <div className="winera-vr-attractions-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
               src={siteData?.vrMatchedVenue?.imgUrl || vrMatchedVenueDirect}
-              alt="Commercial VR Machines Setup"
+              alt={siteData?.vrMatchedVenue?.imgAlt || "Commercial VR Machines Setup - Winera"}
               style={{
                 width: '100%',
                 maxWidth: '580px',
@@ -467,9 +531,10 @@ export default function VrGames({ siteData }) {
                 overflowY: 'auto',
                 padding: '6px'
               }}>
-                {(siteData?.vrCategories?.categoriesList || siteData?.vrRange?.categoriesList || siteData?.vrCategoriesData?.categoriesList || allVrGames?.categoriesList || [
-                  "All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"
-                ]).map((cat, cIdx) => {
+                {Array.from(new Set(
+                  dynamicCategoriesList ||
+                  siteData?.vrCategories?.categoriesList || siteData?.vrRange?.categoriesList || siteData?.vrCategoriesData?.categoriesList || DEFAULT_VR_CATEGORIES
+                )).map((cat, cIdx) => {
                   const isSelected = (activeCategory || "All VR Games") === cat;
                   return (
                     <div
@@ -527,13 +592,10 @@ export default function VrGames({ siteData }) {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {(() => {
-                  const availableCats = siteData?.vrCategories?.categoriesList || siteData?.vrRange?.categoriesList || siteData?.vrCategoriesData?.categoriesList || allVrGames?.categoriesList || [
-                    "All VR Games",
-                    "Bester VR",
-                    "Funin VR",
-                    "Movie Power",
-                    "Oculeap VR"
-                  ];
+                  const availableCats = Array.from(new Set(
+                    dynamicCategoriesList ||
+                    siteData?.vrCategories?.categoriesList || siteData?.vrRange?.categoriesList || siteData?.vrCategoriesData?.categoriesList || DEFAULT_VR_CATEGORIES
+                  ));
 
                   const topCategory = availableCats[0] || "All VR Games";
                   const subCategories = availableCats.slice(1);
@@ -623,7 +685,11 @@ export default function VrGames({ siteData }) {
               {(() => {
                 const vrSource = siteData?.vrCategories || siteData?.vrRange || siteData?.vrCategoriesData;
                 const deletedSlugs = new Set((vrSource?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
-                const baseCards = Array.isArray(allVrGames?.cards) ? allVrGames.cards : [];
+                const baseCards = (dynamicVrCards && dynamicVrCards.length > 0)
+                  ? dynamicVrCards
+                  : (Array.isArray(vrSource?.cards) && vrSource.cards.length > 0
+                      ? vrSource.cards
+                      : []);
                 let masterCards = baseCards.filter(mc => {
                   const k1 = (mc.slug || '').toLowerCase().trim();
                   const k2 = (mc.name || mc.title || '').toLowerCase().trim();
@@ -793,9 +859,9 @@ export default function VrGames({ siteData }) {
                         boxSizing: 'border-box'
                       }}>
                         <Search style={{ width: '36px', height: '36px', color: '#38bdf8', margin: '0 auto 12px' }} />
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px' }}>
+                        <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px' }}>
                           {searchQuery ? `No VR machines found matching "${searchQuery}"` : `Custom ${activeCategory} Machines Available`}
-                        </h4>
+                        </h3>
                         <p style={{ fontSize: '13.5px', color: '#64748b', maxWidth: '460px', margin: '0 auto 18px', lineHeight: 1.6 }}>
                           {searchQuery ? `Try searching with another keyword or clear the search filter.` : `We manufacture and supply commercial-grade ${activeCategory} virtual reality machines customized for your space.`}
                         </p>
@@ -817,7 +883,7 @@ export default function VrGames({ siteData }) {
                           </button>
                         ) : (
                           <a
-                            href={`https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera International! I want to inquire about ${activeCategory} catalog and pricing.`)}`}
+                            href={`https://wa.me/919157873576?text=${encodeURIComponent(`Hello Winera International! I want to inquire about ${activeCategory} catalog and pricing.`)}`}
                             target="_blank"
                             rel="noreferrer"
                             style={{
@@ -883,8 +949,10 @@ export default function VrGames({ siteData }) {
                                 position: 'relative'
                               }}>
                                 <WineraImage
+                                  key={card.slug || card.id || card.name}
                                   src={card.imageUrl || card.img}
-                                  alt={card.name}
+                                  alt={card.imgAlt || `${card.name || card.title} Commercial VR Simulator Game - Winera`}
+                                  targetWidth={500}
                                   style={{
                                     width: '100%',
                                     height: '100%',
@@ -900,7 +968,7 @@ export default function VrGames({ siteData }) {
                                 />
                               </div>
 
-                              <h4 style={{
+                              <h3 style={{
                                 fontSize: '1rem',
                                 fontWeight: '700',
                                 color: '#0f172a',
@@ -912,7 +980,7 @@ export default function VrGames({ siteData }) {
                                 justifyContent: 'center'
                               }}>
                                 {card.name}
-                              </h4>
+                              </h3>
 
                               <div style={{
                                 display: 'flex',
@@ -951,9 +1019,40 @@ export default function VrGames({ siteData }) {
 
           {/* Dynamic Pagination Toolbar (Centered across full section width 1:1 matching Arcade Games) */}
           {(() => {
-            const masterCards = (Array.isArray(siteData?.vrCategoriesData?.cards) && siteData.vrCategoriesData.cards.length > 0)
-              ? siteData.vrCategoriesData.cards
-              : (Array.isArray(allVrGames?.cards) ? allVrGames.cards : []);
+            const vrSource = siteData?.vrCategories || siteData?.vrRange || siteData?.vrCategoriesData;
+            const deletedSlugs = new Set((vrSource?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
+            const baseCards = (dynamicVrCards && dynamicVrCards.length > 0)
+              ? dynamicVrCards
+              : (Array.isArray(vrSource?.cards) && vrSource.cards.length > 0
+                  ? vrSource.cards
+                  : []);
+            let masterCards = baseCards.filter(mc => {
+              const k1 = (mc.slug || '').toLowerCase().trim();
+              const k2 = (mc.name || mc.title || '').toLowerCase().trim();
+              return !deletedSlugs.has(k1) && !deletedSlugs.has(k2);
+            });
+
+            if (Array.isArray(vrSource?.cards) && vrSource.cards.length > 0) {
+              const cmsMap = new Map();
+              vrSource.cards.forEach(c => {
+                const k1 = (c.slug || '').toLowerCase().trim();
+                const k2 = (c.name || c.title || '').toLowerCase().trim();
+                if (k1 && !deletedSlugs.has(k1)) cmsMap.set(k1, c);
+                else if (k2 && !deletedSlugs.has(k2)) cmsMap.set(k2, c);
+              });
+              masterCards = masterCards.map(mc => {
+                const k1 = (mc.slug || '').toLowerCase().trim();
+                const k2 = (mc.name || mc.title || '').toLowerCase().trim();
+                return cmsMap.has(k1) ? { ...mc, ...cmsMap.get(k1) } : cmsMap.has(k2) ? { ...mc, ...cmsMap.get(k2) } : mc;
+              });
+              vrSource.cards.forEach(cc => {
+                const k1 = (cc.slug || '').toLowerCase().trim();
+                const k2 = (cc.name || cc.title || '').toLowerCase().trim();
+                if (cc.isUserCreated && !deletedSlugs.has(k1) && !deletedSlugs.has(k2) && !masterCards.some(mc => (mc.slug || mc.name || mc.title || '').toLowerCase().trim() === k1)) {
+                  masterCards.unshift(cc);
+                }
+              });
+            }
             const isAllCategory = !activeCategory || activeCategory === "All VR Games" || activeCategory === "All";
             const categoryMatched = isAllCategory
               ? masterCards
@@ -1165,7 +1264,7 @@ export default function VrGames({ siteData }) {
                 }}>
                   <WineraImage
                     src={(selectedSpecsProduct.gallery && selectedSpecsProduct.gallery[selectedModalImageIdx]) || selectedSpecsProduct.imageUrl || selectedSpecsProduct.img}
-                    alt={selectedSpecsProduct.name}
+                    alt={selectedSpecsProduct.imgAlt || `${selectedSpecsProduct.name} Commercial VR Simulator Game - Winera`}
                     style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                     imgStyle={{ width: '100%', height: '100%', objectFit: 'contain' }}
                   />
@@ -1191,7 +1290,7 @@ export default function VrGames({ siteData }) {
                           flexShrink: 0
                         }}
                       >
-                        <img src={gImg} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                        <img src={gImg} alt={(selectedSpecsProduct.galleryAlt && selectedSpecsProduct.galleryAlt[gIdx]) || (selectedSpecsProduct.imgAlt ? `${selectedSpecsProduct.imgAlt} - Angle ${gIdx + 1}` : `${selectedSpecsProduct.name} VR Simulator View ${gIdx + 1}`)} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                       </button>
                     ))}
                   </div>
@@ -1227,6 +1326,14 @@ export default function VrGames({ siteData }) {
                   <p style={{ fontSize: '13px', color: '#64748b', margin: 0, lineHeight: 1.5 }}>
                     {selectedSpecsProduct.tagline}
                   </p>
+                  {selectedSpecsProduct.desc && (
+                    <div
+                      style={{ fontSize: '13px', color: '#475569', marginTop: '8px', lineHeight: 1.5 }}
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndFormatHtml(selectedSpecsProduct.desc.replace(/\n/g, '<br>'))
+                      }}
+                    />
+                  )}
                 </div>
 
                 {/* Technical Specifications Grid */}
@@ -1239,9 +1346,9 @@ export default function VrGames({ siteData }) {
                   flexDirection: 'column',
                   gap: '10px'
                 }}>
-                  <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', margin: '0 0 4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  <h3 style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', margin: '0 0 4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                     Machine Specifications
-                  </h4>
+                  </h3>
 
                   {selectedSpecsProduct.dimensions && (
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', borderBottom: '1px solid #e2e8f0', paddingBottom: '6px' }}>
@@ -1302,7 +1409,7 @@ export default function VrGames({ siteData }) {
 
                 {/* WhatsApp Quote Button */}
                 <a
-                  href={`https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera International! I want to inquire about the quote and specifications for "${selectedSpecsProduct.name}" (${selectedSpecsProduct.category}).`)}`}
+                  href={`https://wa.me/919157873576?text=${encodeURIComponent(`Hello Winera International! I want to inquire about the quote and specifications for "${selectedSpecsProduct.name}" (${selectedSpecsProduct.category}).`)}`}
                   target="_blank"
                   rel="noreferrer"
                   style={{
@@ -1360,13 +1467,16 @@ export default function VrGames({ siteData }) {
                 width: '100%',
                 maxWidth: '100%'
               }}>
-                {renderTitleMarkup(siteData?.vrReliability?.title, "*Commercial-Grade Quality*<br/>and Reliability", '#38bdf8')}
+                {renderTitleMarkup(siteData?.vrReliability?.title, "*Commercial-Grade Quality*<br/>and Reliability", '#0072b8')}
               </h2>
             </div>
 
-            <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', width: '100%', maxWidth: '100%' }}>
-              {siteData?.vrReliability?.mainP || "Most VR machines look impressive in a showroom. What matters for your venue is how they perform after six months of daily public use. Every unit we supply is built specifically for commercial cycling not consumer hardware repackaged for public environments. The difference shows up in your maintenance bills, not the spec sheet."}
-            </p>
+            <p
+              style={{ fontSize: '14px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', width: '100%', maxWidth: '100%' }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.vrReliability?.mainP || "Most VR machines look impressive in a showroom. What matters for your venue is how they perform after six months of daily public use. Every unit we supply is built specifically for commercial cycling not consumer hardware repackaged for public environments. The difference shows up in your maintenance bills, not the spec sheet.").replace(/\n/g, '<br>'))
+              }}
+            />
 
             {/* Checkmark Feature Blocks as FAQ Accordion on Mobile */}
             <div className="winera-vr-reliability-features-list" style={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -1399,9 +1509,12 @@ export default function VrGames({ siteData }) {
                       </div>
                     </div>
                     <div className={`winera-vr-reliability-faq-body ${isOpen ? 'is-open' : ''}`}>
-                      <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                        {feat.desc}
-                      </p>
+                      <p
+                        style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeAndFormatHtml((feat.desc || '').replace(/\n/g, '<br>'))
+                        }}
+                      />
                     </div>
                   </div>
                 );
@@ -1413,7 +1526,7 @@ export default function VrGames({ siteData }) {
           <div className="winera-vr-reliability-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'flex-start', marginTop: '35px' }}>
             <img
               src={siteData?.vrReliability?.imgUrl || vrCommercialReliability}
-              alt="Commercial-Grade Quality and Reliability"
+              alt={siteData?.vrReliability?.imgAlt || "Commercial-Grade Quality and Reliability - Winera VR"}
               style={{
                 width: '100%',
                 maxWidth: '520px',
@@ -1468,7 +1581,7 @@ export default function VrGames({ siteData }) {
                 {renderTitleMarkup(
                   siteData?.vrEarn?.title || (siteData?.vrEarn?.titleLine1 ? `${siteData.vrEarn.titleLine1}<br/>${siteData.vrEarn.titleLine2 || ''}` : null),
                   "What Will Your VR Gaming<br/>*Zone Actually Earn?*",
-                  '#38bdf8'
+                  '#0072b8'
                 )}
               </h2>
             </div>
@@ -1476,14 +1589,20 @@ export default function VrGames({ siteData }) {
             <div style={{ marginBottom: '16px', width: '100%', maxWidth: '100%' }}>
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: '0 0 6px 0' }}>
-                    {siteData?.vrEarn?.p1 || "Most VR machine suppliers in India quote a price and leave the financial decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any order, our team prepares a complete ROI report for your specific venue covering machine cost, projected daily sessions, estimated revenue per player, maintenance costs, and break-even timeline."}
-                  </p>
+                  <p
+                    style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: '0 0 6px 0' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.vrEarn?.p1 || "Most VR machine suppliers in India quote a price and leave the financial decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any order, our team prepares a complete ROI report for your specific venue covering machine cost, projected daily sessions, estimated revenue per player, maintenance costs, and break-even timeline.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: '6px 0 0 0' }}>
-                    {siteData?.vrEarn?.p2 || "Every figure is calculated around your venue type, footfall, and machine selection, not an industry average pulled from a brochure. Very few VR gaming suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
-                  </p>
+                  <p
+                    style={{ fontSize: '13px', color: '#334155', lineHeight: 1.55, fontWeight: '500', margin: '6px 0 0 0' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.vrEarn?.p2 || "Every figure is calculated around your venue type, footfall, and machine selection, not an industry average pulled from a brochure. Very few VR gaming suppliers in India include this as a standard part of their process. For Winera, it is where every project starts").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
               />
             </div>
@@ -1491,7 +1610,7 @@ export default function VrGames({ siteData }) {
             {/* Get Quote Button matching Image 1 1:1 */}
             <div className="winera-cyan-cta-wrapper">
               {(() => {
-                const baseLink = siteData?.vrEarn?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.vrEarn?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.vrEarn?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for VR Gaming Zone setup & commercial ROI calculation. Please share details. [Ref: VR Games Page]";
                 let hrefLink = baseLink;
                 if (!baseLink.includes('text=')) {
@@ -1525,7 +1644,7 @@ export default function VrGames({ siteData }) {
           }}>
             <img
               src={getValidImageUrl(siteData?.vrEarn?.imgUrl, vrGameImg)}
-              alt="VR Gaming Zone ROI Player"
+              alt={siteData?.vrEarn?.imgAlt || "What Will Your VR Gaming Zone Actually Earn - Winera International"}
               style={{
                 width: '100%',
                 height: '100%',
@@ -1567,7 +1686,7 @@ export default function VrGames({ siteData }) {
               style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 className="winera-vr-whyus-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.vrWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
+              {renderTitleMarkup(siteData?.vrWhyUs?.title, "Why Choose *Winera International*", '#0072b8')}
             </h2>
           </div>
 
@@ -1664,12 +1783,15 @@ export default function VrGames({ siteData }) {
                               iconsList[cIdx % iconsList.length]
                             )}
                           </div>
-                          <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                          <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                             {card.title}
-                          </h4>
-                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                            {card.desc}
-                          </p>
+                          </h3>
+                          <p
+                            style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                            dangerouslySetInnerHTML={{
+                              __html: sanitizeAndFormatHtml((card.desc || '').replace(/\n/g, '<br>'))
+                            }}
+                          />
                         </div>
                       ))}
                     </div>
@@ -1742,12 +1864,15 @@ export default function VrGames({ siteData }) {
                                 iconsList[(topCards.length + bIdx) % iconsList.length]
                               )}
                             </div>
-                            <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                            <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                               {card.title}
-                            </h4>
-                            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                              {card.desc}
-                            </p>
+                            </h3>
+                            <p
+                              style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                              dangerouslySetInnerHTML={{
+                                __html: sanitizeAndFormatHtml((card.desc || '').replace(/\n/g, '<br>'))
+                              }}
+                            />
                           </div>
                         ))}
                       </div>
@@ -1774,7 +1899,7 @@ export default function VrGames({ siteData }) {
           <div style={{ textAlign: 'center', marginTop: '45px' }}>
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
               <a
-                href={siteData?.vrWhyUs?.ctaLink || "https://wa.me/919428989488"}
+                href={siteData?.vrWhyUs?.ctaLink || "https://wa.me/919157873576"}
                 target="_blank"
                 rel="noreferrer"
                 className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
@@ -1791,7 +1916,7 @@ export default function VrGames({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="Know More"
       />
@@ -1801,18 +1926,18 @@ export default function VrGames({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 11. RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection sectionData={siteData?.vrRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
+      <RelatedProductsSection sectionData={siteData?.vrRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
 
       {/* 12. FAQ SECTION */}
       <FaqSection
         faqList={Array.isArray(siteData?.vrFaqs) && siteData.vrFaqs.length > 0 ? siteData.vrFaqs : defaultVrFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 9. NEED ANY CONSULTATIONS CTA BANNER SECTION */}
@@ -1834,6 +1959,7 @@ export default function VrGames({ siteData }) {
             : null
         }
         bg={ctaMainBanner}
+        bgAlt={siteData?.vrCta?.bgAlt || "Need Any Consultations - Winera VR Game Setup"}
         leftImgUrl={
           siteData?.vrCta?.leftImgUrl && !siteData.vrCta.leftImgUrl.includes('home-block-1')
             ? getValidImageUrl(siteData.vrCta.leftImgUrl, vrgameCtaBg)
@@ -1866,7 +1992,7 @@ export default function VrGames({ siteData }) {
         buttonLink={
           siteData?.vrCta?.buttonLink !== undefined
             ? siteData.vrCta.buttonLink
-            : "https://wa.me/919428989488"
+            : "https://wa.me/919157873576"
         }
       />
 

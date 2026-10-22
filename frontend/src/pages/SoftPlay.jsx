@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 import Header from '../components/Header';
@@ -9,6 +9,8 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
+import BrochureModal from '../components/BrochureModal';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 const needConsultationsBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
 const softplayCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345683/winera_uploads/onngsoz46k1mgxbyi6n1.png";
 const softplayHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345683/winera_uploads/s9xcisfml3w3bzaqkoq9.png";
@@ -38,7 +40,8 @@ import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
+  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -61,7 +64,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 
     if (isHighlighted) {
       return (
-        <span key={pIdx} style={{ color: highlightColor }}>
+        <span key={pIdx} style={{ color: actualHighlight }}>
           {renderedContent}
         </span>
       );
@@ -90,6 +93,7 @@ export default function SoftPlay({ siteData }) {
   const { openVideoModal } = useVideoModal();
   const [visibleCount, setVisibleCount] = useState(1);
   const [openMaterialIndex, setOpenMaterialIndex] = useState(0);
+  const [isBrochureOpen, setIsBrochureOpen] = useState(false);
   const typesSectionRef = useRef(null);
   const softplaySeo = siteData?.softplaySeo || {
     pageTitle: "Top Soft Play Equipment Manufacturers in India | Winera International",
@@ -107,10 +111,19 @@ export default function SoftPlay({ siteData }) {
     metaTag.setAttribute('content', softplaySeo.metaDescription || softplaySeo.description || "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget.");
   }, [softplaySeo]);
 
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Soft Play...</div>;
 
   const { header, footer } = siteData;
-  const heroBgImage = getValidImageUrl(siteData?.softplayHero?.bgUrl, softplayHeroBg);
+  const currentMobileBg = getValidImageUrl(siteData?.softplayHero?.mobileBgUrl, softplayMobileHeroBg);
+  const heroBgImage = isMobile ? currentMobileBg : getValidImageUrl(siteData?.softplayHero?.bgUrl, softplayHeroBg);
 
   return (
     <div style={{ backgroundColor: '#F5F5F9', color: '#0f172a', minHeight: '100vh', overflowX: 'hidden' }}>
@@ -124,7 +137,7 @@ export default function SoftPlay({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
-        '--winera-softplay-mobile-bg': `url("${softplayMobileHeroBg}")`,
+        '--winera-softplay-mobile-bg': `url("${currentMobileBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -132,6 +145,11 @@ export default function SoftPlay({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
+        <img
+          src={heroBgImage}
+          alt={isMobile ? (siteData?.softplayHero?.mobileBgAlt || siteData?.softplayHero?.bgAlt || "Commercial Soft Play Equipment Setup - Winera International") : (siteData?.softplayHero?.bgAlt || "Commercial Soft Play Equipment Setup - Winera International")}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Main Title / Breadcrumb: Home › Soft Play */}
           <h1 className="winera-softplay-hero-h1" style={{
@@ -166,8 +184,8 @@ export default function SoftPlay({ siteData }) {
           {/* Left Side Direct Soft Play Image */}
           <div className="winera-softplay-supplier-img" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <img
-              src={softPlayImg}
-              alt="Indoor Soft Play Equipment Manufacturer"
+              src={siteData?.softplayIntro?.mainImgUrl || siteData?.softplayIntro?.imgUrl || softPlayImg}
+              alt={siteData?.softplayIntro?.imgAlt || "Indoor Soft Play Equipment Manufacturer in India - Winera"}
               loading="lazy"
               decoding="async"
               width={540}
@@ -191,25 +209,26 @@ export default function SoftPlay({ siteData }) {
                 src={yellowStrokeLine}
                 alt=""
                 aria-hidden="true"
-                width={320}
+                className="winera-yellow-stroke"
+                width={280}
                 height={10}
-                style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
+                style={{ display: 'block', width: '280px', maxWidth: '75%', height: 'auto', maxHeight: '10px', aspectRatio: '492 / 10', marginBottom: '10px', objectFit: 'contain' }}
               />
               <h2 className="winera-softplay-supplier-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                <span style={{ color: '#38bdf8' }}>Indoor Soft Play</span>
+                <span style={{ color: '#0072b8' }}>Indoor Soft Play</span>
                 <br />
                 <span>Equipment Manufacturer in India</span>
               </h2>
             </div>
 
             {/* Subtitle Description Paragraph */}
-            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '5px' }}>
-              {siteData?.softplayIntro?.desc || "India's trusted soft play equipment manufacturer custom designed, safety certified, and installed by our own team across India."}
-            </p>
+            <p className="winera-softplay-supplier-p" style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '5px' }}
+              dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.softplayIntro?.desc || "India's trusted soft play equipment manufacturer custom designed, safety certified, and installed by our own team across India.").replace(/\n/g, '<br>')) }}
+            />
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
               {(() => {
-                const baseLink = siteData?.softplayIntro?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.softplayIntro?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.softplayIntro?.waMessage || "Hello Winera International! I want to get custom design & quote for Soft Play equipment. Please share details. [Ref: Soft Play Page]";
 
                 let hrefLink = baseLink;
@@ -262,14 +281,14 @@ export default function SoftPlay({ siteData }) {
 
             <MobileExpandableText
               preview={
-                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}>
-                  {siteData?.softplayManufacture?.p1 || "At Winera International, we are one of India's leading soft play equipment manufacturers, designing and supplying custom indoor play areas for kids across malls, hotels, schools, hospitals, and family entertainment centres since 2014. As a direct soft play manufacturer in India, we ensure every project starts with a detailed 3D design and ends with a fully installed, safety-certified play zone with our own team managing every step from concept to handover."}
-                </p>
+                <p className="winera-softplay-intro-p" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.softplayManufacture?.p1 || "At Winera International, we are one of India's leading soft play equipment manufacturers, designing and supplying custom indoor play areas for kids across malls, hotels, schools, hospitals, and family entertainment centres since 2014. As a direct soft play manufacturer in India, we ensure every project starts with a detailed 3D design and ends with a fully installed, safety-certified play zone with our own team managing every step from concept to handover.").replace(/\n/g, '<br>')) }}
+                />
               }
               expandedContent={
-                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '8px' }}>
-                  {siteData?.softplayManufacture?.p2 || "Whether you are setting up a compact 500 sq ft play corner or a large-scale interactive soft play zone, we deliver indoor kids play zone equipment tailored precisely to your space, budget, and audience, not a pre-packaged, off-the-shelf solution."}
-                </p>
+                <p className="winera-softplay-intro-p" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '8px' }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.softplayManufacture?.p2 || "Whether you are setting up a compact 500 sq ft play corner or a large-scale interactive soft play zone, we deliver indoor kids play zone equipment tailored precisely to your space, budget, and audience, not a pre-packaged, off-the-shelf solution.").replace(/\n/g, '<br>')) }}
+                />
               }
             />
 
@@ -288,7 +307,7 @@ export default function SoftPlay({ siteData }) {
           <div className="winera-softplay-intro-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
               src={siteData?.softplayManufacture?.imgUrl || softplayCastle3d}
-              alt="Soft Play Equipment Manufacture 3D Castle Render"
+              alt={siteData?.softplayManufacture?.imgAlt || "Soft Play Equipment Manufacture 3D Castle Render - Winera"}
               loading="lazy"
               decoding="async"
               width={560}
@@ -406,15 +425,17 @@ export default function SoftPlay({ siteData }) {
               </div>
 
               {/* Subtitle intro description */}
-              <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '28px' }}>
-                {siteData?.softplayMaterials?.desc || "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:"}
-              </p>
+              <p className="winera-softplay-materials-desc" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '28px' }}
+                dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.softplayMaterials?.desc || "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:").replace(/\n/g, '<br>')) }}
+              />
 
               {/* Left Photo Card with all.webp */}
               <div style={{ position: 'relative', width: '100%' }}>
                 <img
-                  src={allImg}
-                  alt="Premium Materials Exceptional Durability Soft Play"
+                  src={siteData?.softplayMaterials?.imgUrl ? getValidImageUrl(siteData.softplayMaterials.imgUrl, allImg) : allImg}
+                  alt={siteData?.softplayMaterials?.imgAlt || siteData?.softplayMaterials?.mainImgAlt || "Premium Materials Exceptional Durability Soft Play - Winera"}
+                  loading="lazy"
+                  decoding="async"
                   style={{
                     width: '100%',
                     height: 'auto',
@@ -438,12 +459,12 @@ export default function SoftPlay({ siteData }) {
                     {/* Home Page Icon */}
                     <img src={homePageIcon} alt="" style={{ width: '16px', height: '16px', marginTop: '3px', objectFit: 'contain', flexShrink: 0 }} />
                     <div>
-                      <h4 style={{ fontSize: '17px', fontWeight: '600', color: '#0f172a', margin: '0 0 4px 0' }}>
+                      <h3 style={{ fontSize: '17px', fontWeight: '600', color: '#0f172a', margin: '0 0 4px 0' }}>
                         {item.title}
-                      </h4>
-                      <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
-                        {item.desc}
-                      </p>
+                      </h3>
+                      <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: 1.55, fontWeight: '500', margin: 0 }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(item.desc || '') }}
+                      />
                     </div>
                   </div>
                 ))}
@@ -465,9 +486,9 @@ export default function SoftPlay({ siteData }) {
                       <div className="winera-softplay-material-accordion-header">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1, minWidth: 0 }}>
                           <img src={homePageIcon} alt="" style={{ width: '15px', height: '15px', objectFit: 'contain', flexShrink: 0 }} />
-                          <h4 style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', margin: 0 }}>
+                          <h3 style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', margin: 0 }}>
                             {item.title}
-                          </h4>
+                          </h3>
                         </div>
                         <span className="winera-softplay-accordion-chevron" style={{
                           transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -486,9 +507,9 @@ export default function SoftPlay({ siteData }) {
 
                       {isOpen && (
                         <div className="winera-softplay-material-accordion-body">
-                          <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, margin: 0, fontWeight: '400' }}>
-                            {item.desc}
-                          </p>
+                          <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, margin: 0, fontWeight: '400' }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(item.desc || '') }}
+                          />
                         </div>
                       )}
                     </div>
@@ -665,9 +686,9 @@ export default function SoftPlay({ siteData }) {
                                 <h3 style={{ fontSize: '2rem', fontWeight: '900', color: '#38bdf8', marginBottom: '14px', lineHeight: 1.2 }}>
                                   {stepItem.title}
                                 </h3>
-                                <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                                  {stepItem.desc}
-                                </p>
+                                <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                                  dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(stepItem.desc || '') }}
+                                />
                               </div>
                             ) : (
                               <motion.div
@@ -678,12 +699,20 @@ export default function SoftPlay({ siteData }) {
                                   borderRadius: '24px',
                                   overflow: 'hidden',
                                   boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                                  background: `url(${imgUrl}) center/cover no-repeat`,
+                                  position: 'relative',
                                   cursor: 'pointer',
                                   backfaceVisibility: 'hidden',
                                   WebkitBackfaceVisibility: 'hidden'
                                 }}
-                              />
+                              >
+                                <img
+                                  src={imgUrl}
+                                  alt={stepItem.imgAlt || `${stepItem.title} - Soft Play Equipment Manufacturer Winera`}
+                                  loading="lazy"
+                                  decoding="async"
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                />
+                              </motion.div>
                             )}
                           </motion.div>
 
@@ -704,20 +733,28 @@ export default function SoftPlay({ siteData }) {
                                   borderRadius: '24px',
                                   overflow: 'hidden',
                                   boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                                  background: `url(${imgUrl}) center/cover no-repeat`,
+                                  position: 'relative',
                                   cursor: 'pointer',
                                   backfaceVisibility: 'hidden',
                                   WebkitBackfaceVisibility: 'hidden'
                                 }}
-                              />
+                              >
+                                <img
+                                  src={imgUrl}
+                                  alt={stepItem.imgAlt || `${stepItem.title} - Soft Play Equipment Manufacturer Winera`}
+                                  loading="lazy"
+                                  decoding="async"
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                />
+                              </motion.div>
                             ) : (
                               <div>
                                 <h3 style={{ fontSize: '2rem', fontWeight: '900', color: '#38bdf8', marginBottom: '14px', lineHeight: 1.2 }}>
                                   {stepItem.title}
                                 </h3>
-                                <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                                  {stepItem.desc}
-                                </p>
+                                <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                                  dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(stepItem.desc || '') }}
+                                />
                               </div>
                             )}
                           </motion.div>
@@ -832,11 +869,9 @@ export default function SoftPlay({ siteData }) {
             style={{ display: 'flex', justifyContent: 'center', marginTop: '45px', width: '100%' }}
           >
             <div>
-              <a
-                href={siteData?.softplaySpecs?.brochureUrl || siteData?.softplayTypes?.brochureUrl || "#"}
-                target="_blank"
-                rel="noreferrer"
-                download
+              <button
+                type="button"
+                onClick={() => setIsBrochureOpen(true)}
                 aria-label="Download Our Brochure"
                 style={{
                   display: 'inline-flex',
@@ -851,14 +886,13 @@ export default function SoftPlay({ siteData }) {
                   fontWeight: '600',
                   textAlign: 'center',
                   lineHeight: 1,
-                  textDecoration: 'none',
                   border: 'none',
                   outline: 'none',
                   cursor: 'pointer'
                 }}
               >
                 {siteData?.softplayTypes?.buttonText || "Download Our Brochure"}
-              </a>
+              </button>
             </div>
           </motion.div>
         </div>
@@ -895,24 +929,24 @@ export default function SoftPlay({ siteData }) {
 
             <MobileExpandableText
               preview={
-                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px' }}>
-                  {siteData?.softplayRoi?.p1 || "Most soft play suppliers will quote you a price and ask you to decide. Winera International works differently."}
-                </p>
+                <p className="winera-softplay-roi-p" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px' }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.softplayRoi?.p1 || "Most soft play suppliers will quote you a price and ask you to decide. Winera International works differently.").replace(/\n/g, '<br>')) }}
+                />
               }
               expandedContent={
                 <>
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px' }}>
-                    {siteData?.softplayRoi?.p2 || "Before any equipment is selected, our team prepares a complete ROI report for your specific venue covering your exact soft play area cost, projected monthly footfall, estimated revenue, maintenance costs, and break-even timeline. Every number is calculated around your space, your city, and your business, not an industry average copied from a brochure."}
-                  </p>
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px' }}>
-                    {siteData?.softplayRoi?.p3 || "No other soft play manufacturer or supplier in India currently offers this as a standard part of their process. For Winera, it is not an add-on, it is how every project starts."}
-                  </p>
+                  <p className="winera-softplay-roi-p" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.softplayRoi?.p2 || "Before any equipment is selected, our team prepares a complete ROI report for your specific venue covering your exact soft play area cost, projected monthly footfall, estimated revenue, maintenance costs, and break-even timeline. Every number is calculated around your space, your city, and your business, not an industry average copied from a brochure.").replace(/\n/g, '<br>')) }}
+                  />
+                  <p className="winera-softplay-roi-p" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.softplayRoi?.p3 || "No other soft play manufacturer or supplier in India currently offers this as a standard part of their process. For Winera, it is not an add-on, it is how every project starts.").replace(/\n/g, '<br>')) }}
+                  />
                 </>
               }
             />
 
             {(() => {
-              const baseLink = siteData?.softplayRoi?.buttonLink || "https://wa.me/919428989488";
+              const baseLink = siteData?.softplayRoi?.buttonLink || "https://wa.me/919157873576";
               const defaultMsg = siteData?.softplayRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Soft Play setup & commercial ROI calculation. Please share details. [Ref: Soft Play Page]";
 
               let hrefLink = baseLink;
@@ -970,7 +1004,7 @@ export default function SoftPlay({ siteData }) {
           <div className="winera-softplay-roi-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
             <img
               src={siteData?.softplayRoi?.mainImgUrl ? getValidImageUrl(siteData.softplayRoi.mainImgUrl, softPalyImage) : softPalyImage}
-              alt="Know Your Returns ROI Report"
+              alt={siteData?.softplayRoi?.mainImgAlt || siteData?.softplayRoi?.imgAlt || "Know Your Returns ROI Report - Winera Soft Play Setup"}
               loading="lazy"
               decoding="async"
               style={{
@@ -1094,9 +1128,9 @@ export default function SoftPlay({ siteData }) {
                           <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px' }}>
                             {card.title}
                           </h3>
-                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                            {card.desc}
-                          </p>
+                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(card.desc || '') }}
+                          />
                         </div>
                       ))}
                     </div>
@@ -1172,9 +1206,9 @@ export default function SoftPlay({ siteData }) {
                             <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', marginBottom: '8px' }}>
                               {card.title}
                             </h3>
-                            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                              {card.desc}
-                            </p>
+                            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                              dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(card.desc || '') }}
+                            />
                           </div>
                         ))}
                       </div>
@@ -1204,7 +1238,7 @@ export default function SoftPlay({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
       />
 
       {/* 11. WHAT OUR CLIENTS SAY SECTION (PERSISTED TESTIMONIALS DATA) */}
@@ -1212,18 +1246,18 @@ export default function SoftPlay({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 12. RELATED PRODUCTS CAROUSEL SECTION */}
-      <RelatedProductsSection sectionData={siteData?.softplayRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
+      <RelatedProductsSection sectionData={siteData?.softplayRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
 
       {/* 13. FREQUENTLY ASKED QUESTIONS SECTION (DYNAMIC SOFT PLAY FAQS) */}
       <FaqSection
         faqList={Array.isArray(siteData?.softplayFaqs) && siteData.softplayFaqs.length > 0 ? siteData.softplayFaqs : defaultSoftPlayFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 14. READY TO BUILD YOUR SOFT PLAY ZONE CTA BANNER SECTION */}
@@ -1262,13 +1296,30 @@ export default function SoftPlay({ siteData }) {
           buttonLink={
             siteData?.softplayCta?.buttonLink !== undefined
               ? siteData.softplayCta.buttonLink
-              : "https://wa.me/919428989488"
+              : "https://wa.me/919157873576"
           }
         />
       </div>
 
       {/* 15. FOOTER */}
       <Footer footerData={footer} />
+
+      {/* BROCHURE PREVIEW & DOWNLOAD MODAL */}
+      <BrochureModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+        pdfUrl={
+          (() => {
+            const sUrl = siteData?.softplaySpecs?.brochureUrl;
+            if (sUrl && typeof sUrl === 'string' && sUrl.trim() !== '#' && sUrl.trim() !== '') return sUrl.trim();
+            const tUrl = siteData?.softplayTypes?.brochureUrl;
+            if (tUrl && typeof tUrl === 'string' && tUrl.trim() !== '#' && tUrl.trim() !== '') return tUrl.trim();
+            return "/pdf/Winera Softplay.pdf";
+          })()
+        }
+        title="Soft Play Catalogue & Solutions"
+        fileName="Winera Softplay Brochure.pdf"
+      />
     </div>
   );
 }

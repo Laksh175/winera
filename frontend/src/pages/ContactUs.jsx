@@ -6,10 +6,26 @@ import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import FaqSection from '../components/FaqSection';
 import { Phone, Mail, Building2, Globe, CheckCircle2, MapPin } from 'lucide-react';
+import { sanitizeAndFormatHtml } from './BlogDetail';
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 const contactUsHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/z2qo5dtx8u7tyfvzjhmr.png";
-const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const gameZoneMobileBanner = projectPageMobileBanner;
 const aboutHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345516/winera_uploads/c3mm4hffgjiimryiq4et.png";
 const arcadeHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/rpygauibfzxyouopsc4r.png";
+
+const getValidImageUrl = (url, fallback) => {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/') || url.includes('eqjkboeokagpaus2ifxa')) {
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  return fallback;
+};
 
 export default function ContactUs({ siteData }) {
   const [formData, setFormData] = useState({
@@ -37,7 +53,30 @@ export default function ContactUs({ siteData }) {
     setSubmitted(true);
   };
 
+  const contactSeo = siteData?.contactSeo || {
+    pageTitle: "Contact Winera International | Game Zone Equipment Setup",
+    metaDescription: "Contact Winera International for game zone equipment setup, bowling alley installation, soft play, trampoline park & VR gaming inquiries in India."
+  };
+
+  useEffect(() => {
+    document.title = contactSeo.pageTitle || contactSeo.title || "Contact Winera International | Game Zone Equipment Setup";
+    let metaTag = document.querySelector('meta[name="description"]');
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.setAttribute('name', 'description');
+      document.head.appendChild(metaTag);
+    }
+    metaTag.setAttribute('content', contactSeo.metaDescription || contactSeo.description || "Contact Winera International for game zone equipment setup, bowling alley installation, soft play, trampoline park & VR gaming inquiries in India.");
+  }, [contactSeo]);
+
   const footer = siteData?.footer;
+  const contactHero = siteData?.contactHero || {};
+  const heroBg = getValidImageUrl(contactHero.bgUrl, contactUsHeroBg);
+  const mobileHeroBg = getValidImageUrl(contactHero.mobileBgUrl, gameZoneMobileBanner);
+  const bgAlt = contactHero.bgAlt || "Contact Winera International - Commercial Game Zone Setup & Turnkey Solutions";
+  const mobileBgAlt = contactHero.mobileBgAlt || contactHero.bgAlt || "Contact Winera International Mobile Banner - Commercial Game Zone Setup & Turnkey Solutions";
+  const breadcrumbHome = contactHero.breadcrumbHome || "Home";
+  const breadcrumbText = contactHero.breadcrumbText || "Contact Us";
 
   return (
     <div style={{ background: '#F5F5F9', minHeight: '100vh', color: '#0f172a', fontFamily: "'Open Sans', sans-serif" }}>
@@ -52,7 +91,7 @@ export default function ContactUs({ siteData }) {
         aspectRatio: isPhone ? '941 / 550' : 'auto',
         paddingTop: isPhone ? '55px' : (isMobile ? '120px' : '165px'),
         paddingBottom: isPhone ? '0px' : (isMobile ? '60px' : '100px'),
-        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${contactUsHeroBg}) center top / 100% 100% no-repeat`,
+        background: isPhone ? `url(${mobileHeroBg}) center top / 100% 100% no-repeat` : `url(${heroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -64,6 +103,14 @@ export default function ContactUs({ siteData }) {
         boxSizing: 'border-box',
         overflow: 'hidden'
       }}>
+        {/* SEO crawler discoverable image with alt text */}
+        <img
+          src={isPhone ? mobileHeroBg : heroBg}
+          alt={isPhone ? mobileBgAlt : bgAlt}
+          style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}
+          loading="lazy"
+          decoding="async"
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: 0, zIndex: 2 }}>
           <h1 className="winera-contact-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
@@ -79,9 +126,9 @@ export default function ContactUs({ siteData }) {
             textAlign: 'center',
             textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
           }}>
-            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
+            <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>{breadcrumbHome}</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
-            <span style={{ color: '#ffcd00', fontWeight: '900' }}>Contact Us</span>
+            <span style={{ color: '#ffcd00', fontWeight: '900' }}>{breadcrumbText}</span>
           </h1>
         </div>
       </section>
@@ -129,7 +176,7 @@ export default function ContactUs({ siteData }) {
                             );
                           }
                           return (
-                            <span key={pIdx} className="winera-contact-title-cyan" style={{ color: '#38bdf8' }}>
+                            <span key={pIdx} className="winera-contact-title-cyan" style={{ color: '#0072b8' }}>
                               {part}
                             </span>
                           );
@@ -141,9 +188,13 @@ export default function ContactUs({ siteData }) {
               </SectionHeading>
             </div>
 
-            <p className="winera-contact-desc" style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '36px', maxWidth: '590px' }}>
-              {siteData?.contactPage?.desc || "Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations."}
-            </p>
+            <p
+              className="winera-contact-desc"
+              style={{ color: '#64748b', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', marginBottom: '36px', maxWidth: '590px' }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.contactPage?.desc || "Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations.").replace(/\n/g, '<br/>'))
+              }}
+            />
 
             {/* Stack of 2 Contact Info Cards (Call Us & Email Our Team) */}
             <div className="winera-contact-info-cards-stack" style={{ display: 'flex', flexDirection: 'column', gap: '36px', paddingTop: '10px' }}>
@@ -216,7 +267,7 @@ export default function ContactUs({ siteData }) {
                       {siteData?.contactPage?.callTitle || "CALL US DIRECTLY"}
                     </h5>
                     <div className="winera-contact-phones-row" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-                      <a href={`tel:${(siteData?.contactPage?.phone1 || "+91 94289 89488").replace(/\s+/g, '')}`} style={{ fontSize: '13.5px', fontWeight: '300', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.phone1 || "+91 94289 89488"}</a>
+                      <a href={`tel:${(siteData?.contactPage?.phone1 || "+91 91578 73576").replace(/\s+/g, '')}`} style={{ fontSize: '13.5px', fontWeight: '300', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.phone1 || "+91 91578 73576"}</a>
                       <a href={`tel:${(siteData?.contactPage?.phone2 || "+91 95123 56766").replace(/\s+/g, '')}`} style={{ fontSize: '13.5px', fontWeight: '300', color: '#475569', textDecoration: 'none' }}>{siteData?.contactPage?.phone2 || "+91 95123 56766"}</a>
                     </div>
                   </div>
@@ -436,7 +487,7 @@ export default function ContactUs({ siteData }) {
           <div style={{ marginBottom: isMobile ? '40px' : '80px', textAlign: 'center' }}>
             <SectionHeading align="center" marginBottom="28px" accentWidth="240px" accentMaxWidth="400px">
               <span style={{ color: '#0f172a' }}>Where We’re </span>
-              <span style={{ color: '#38bdf8' }}>Globally Present</span>
+              <span style={{ color: '#0072b8' }}>Globally Present</span>
             </SectionHeading>
             <div className="winera-contact-locations-grid" style={{
               display: 'grid',
@@ -506,9 +557,12 @@ export default function ContactUs({ siteData }) {
                       <span style={{ fontSize: '14px', color: '#475569', fontWeight: '500' }}>{siteData?.contactPage?.hq1Badge || "Corporate & Sales Office"}</span>
                     </div>
                   </div>
-                  <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '300', margin: 0, whiteSpace: 'pre-line' }}>
-                    {siteData?.contactPage?.hq1Address || "Winera International Pvt. Ltd.\nSurat, Gujarat, India.\nHotline: +91 94289 89488 / +91 95123 56766"}
-                  </p>
+                  <p
+                    style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '300', margin: 0, whiteSpace: 'normal' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.contactPage?.hq1Address || "Winera International Pvt. Ltd.\nSurat, Gujarat, India.\nHotline: +91 91578 73576 / +91 95123 56766").replace(/\n/g, '<br/>'))
+                    }}
+                  />
                 </div>
               </motion.div>
 
@@ -573,9 +627,12 @@ export default function ContactUs({ siteData }) {
                       <span style={{ fontSize: '14px', color: '#475569', fontWeight: '500' }}>{siteData?.contactPage?.hq2Badge || "Sourcing & Assembly Hub"}</span>
                     </div>
                   </div>
-                  <p style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '300', margin: 0, whiteSpace: 'pre-line' }}>
-                    {siteData?.contactPage?.hq2Address || "Winera International Global Assembly Base\nGuangzhou / Panyu Amusement Equipment Zone,\nGuangdong Province, China."}
-                  </p>
+                  <p
+                    style={{ position: 'relative', zIndex: 3, color: '#334155', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '300', margin: 0, whiteSpace: 'normal' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.contactPage?.hq2Address || "Winera International Global Assembly Base\nGuangzhou / Panyu Amusement Equipment Zone,\nGuangdong Province, China.").replace(/\n/g, '<br/>'))
+                    }}
+                  />
                 </div>
               </motion.div>
             </div>
@@ -584,7 +641,7 @@ export default function ContactUs({ siteData }) {
           {/* Location Map */}
           <div style={{ textAlign: 'center', marginTop: isMobile ? '40px' : '80px' }}>
             <SectionHeading align="center" marginBottom="28px" accentWidth="220px" accentMaxWidth="360px">
-              <span style={{ color: '#38bdf8' }}>Discover Our </span>
+              <span style={{ color: '#0072b8' }}>Discover Our </span>
               <span style={{ color: '#0f172a' }}>Locations</span>
             </SectionHeading>
 

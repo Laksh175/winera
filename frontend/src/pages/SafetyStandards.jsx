@@ -5,9 +5,10 @@ import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
 import MobileExpandableText from '../components/MobileExpandableText';
 import { ShieldCheck } from 'lucide-react';
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 const safetyBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345683/winera_uploads/getce7p5gid4wrppgnic.png";
-const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const gameZoneMobileBanner = projectPageMobileBanner;
 const safetyStandardImg1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345683/winera_uploads/z3eceycrpfb2wkxweq2g.png";
 const safetyStandardBg2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345683/winera_uploads/lihbfrarrh6ffswp6v6s.png";
 const safetyStandard2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345680/winera_uploads/eawljpqyxow6oyrtd63i.png";
@@ -19,10 +20,12 @@ const rightTiltedCard = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto
 const homeLeftArrow = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345664/winera_uploads/c1v6ksephaop0pt9laxi.png";
 const homeRightArrow = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345665/winera_uploads/irelt5fskkf6fydyofmp.png";
 import SafetyMaterialStackedCardDeck from '../components/SafetyMaterialStackedCardDeck';
+import SafetyStructureAccordion from '../components/SafetyStructureAccordion';
 import SafetyStructureInteractiveDeck from '../components/SafetyStructureInteractiveDeck';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 
 const getValidImageUrl = (url, fallback) => {
-  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/') || url.includes('eqjkboeokagpaus2ifxa')) {
     return fallback;
   }
   if (url.includes('home-block') || url.includes('cta-consultations') || url.includes('hypergrid-winera-lastblock') || url.includes('cta-gamers')) {
@@ -187,6 +190,7 @@ export default function SafetyStandards({ siteData }) {
   };
 
   const bgImage = getValidImageUrl(siteData?.safetyHero?.bgUrl, safetyBg);
+  const mobileHeroBg = getValidImageUrl(siteData?.safetyHero?.mobileBgUrl, gameZoneMobileBanner);
   const introImg = getValidImageUrl(siteData?.safetyIntro?.mainImgUrl, safetyStandardImg1);
 
   useEffect(() => {
@@ -201,7 +205,7 @@ export default function SafetyStandards({ siteData }) {
   }, [siteData]);
 
   return (
-    <div style={{ background: 'rgb(241, 241, 246)', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflowX: 'clip' }}>
+    <div style={{ background: 'rgb(241, 241, 246)', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflow: 'visible' }}>
       {/* 1. HEADER */}
       <Header headerData={header} />
 
@@ -213,7 +217,7 @@ export default function SafetyStandards({ siteData }) {
         aspectRatio: isPhone ? '941 / 550' : 'auto',
         paddingTop: isPhone ? '55px' : '175px',
         paddingBottom: isPhone ? '0px' : '95px',
-        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${bgImage}) center top / 100% 100% no-repeat`,
+        background: isPhone ? `url(${mobileHeroBg}) center top / 100% 100% no-repeat` : `url(${bgImage}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -222,6 +226,11 @@ export default function SafetyStandards({ siteData }) {
         color: '#ffffff',
         overflow: 'hidden'
       }}>
+        <img
+          src={isPhone ? mobileHeroBg : bgImage}
+          alt={isPhone ? (siteData?.safetyHero?.mobileBgAlt || siteData?.safetyHero?.bgAlt || "Winera Safety Standards - Commercial Game Zone Setup") : (siteData?.safetyHero?.bgAlt || "Winera Safety Standards - Commercial Game Zone Setup")}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Safety Standards */}
           <h1 className="winera-safety-hero-h1" style={{
@@ -269,7 +278,7 @@ export default function SafetyStandards({ siteData }) {
           >
             <img
               src={introImg}
-              alt="Game Zone & Kids Play Equipment Safety Standards"
+              alt={siteData?.safetyIntro?.mainImgAlt || "Game Zone & Kids Play Equipment Safety Standards - Winera International"}
               style={{
                 width: '100%',
                 maxWidth: '640px',
@@ -297,187 +306,141 @@ export default function SafetyStandards({ siteData }) {
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {siteData?.safetyIntro?.titleLine1 || "Game Zone & Kids Play"}<br />
-                <span style={{ color: '#38bdf8' }}>{siteData?.safetyIntro?.titleLine2 || "Equipment Safety Standards"}</span>
+                <span style={{ color: '#0072b8' }}>{siteData?.safetyIntro?.titleLine2 || "Equipment Safety Standards"}</span>
               </h2>
             </div>
 
             <MobileExpandableText
               preview={
-                <p style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}>
-                  {siteData?.safetyIntro?.p1 || "When you invest in a game zone or family entertainment center, the safety of your equipment protects your visitors, your reputation, and your investment. At Winera International, product safety and quality is our highest priority. Every product we supply — from arcade games to trampoline parks and climbing walls is certified to international safety standards for commercial, high-footfall use, and every venue is installed by our own trained team and inspected on-site before handover."}
-                </p>
+                <p
+                  style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml(siteData?.safetyIntro?.p1 || "When you invest in a game zone or family entertainment center, the safety of your equipment protects your visitors, your reputation, and your investment. At Winera International, product safety and quality is our highest priority. Every product we supply — from arcade games to trampoline parks and climbing walls is certified to international safety standards for commercial, high-footfall use, and every venue is installed by our own trained team and inspected on-site before handover.")
+                  }}
+                />
               }
               expandedContent={
-                <p style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}>
-                  {siteData?.safetyIntro?.p2 || "As a complete game zone developer, our safety commitment covers four areas: the attractions themselves, the materials they're made of, the electrical systems that power them, and the structure and operation of the finished venue."}
-                </p>
+                <p
+                  style={{ fontSize: '14.5px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0 }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml(siteData?.safetyIntro?.p2 || "As a complete game zone developer, our safety commitment covers four areas: the attractions themselves, the materials they're made of, the electrical systems that power them, and the structure and operation of the finished venue.")
+                  }}
+                />
               }
             />
           </motion.div>
         </div>
       </section>
 
-      {/* 4. PLAY & ATTRACTION EQUIPMENT SAFETY SECTION (MATCHING SCREENSHOT 1:1) */}
-      <section className="winera-safety-standards-section" style={{ padding: '40px 4vw 40px', background: 'rgb(241, 241, 246)' }}>
-        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          {/* Centered Header */}
-          <div className="winera-reveal winera-reveal-delay-1" style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 30px' }}>
-            <img
-              src={yellowStrokeLine}
-              alt=""
-              style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
-            />
-            <h2 className="winera-safety-standards-h2" style={{
-              fontSize: '35px',
-              fontWeight: '900',
-              color: '#0f172a',
-              margin: '0 0 12px',
-              lineHeight: 1.2,
-              textAlign: 'center'
+      {/* 4. PLAY & ATTRACTION EQUIPMENT SAFETY SECTION (KRIRAAI STICKY STACKING CARDS ANIMATION) */}
+      <section className="winera-safety-standards-section" style={{
+        padding: isPhone ? '45px 4vw 60px' : '70px 4vw 90px',
+        background: 'rgb(241, 241, 246)',
+        position: 'relative',
+        overflow: 'visible'
+      }}>
+        <div style={{ maxWidth: '1240px', margin: '0 auto', overflow: 'visible' }}>
+          <div className="winera-safety-sticky-container" style={{ overflow: 'visible' }}>
+            {/* Left Column: Vertically Centered Sticky Title & Subtitle */}
+            <div className="winera-safety-sticky-left" style={{
+              flex: isPhone ? 'none' : '0 0 42%',
+              position: isPhone ? 'static' : 'sticky',
+              top: isPhone ? 'auto' : '50%',
+              transform: isPhone ? 'none' : 'translateY(-50%)',
+              alignSelf: 'flex-start',
+              paddingRight: isPhone ? '0' : '18px',
+              zIndex: 10,
+              textAlign: isPhone ? 'center' : 'left',
+              marginBottom: isPhone ? '28px' : '0'
             }}>
-              <span>Play &amp; Attraction</span>{' '}
-              <span style={{ color: '#38bdf8' }}>Equipment Safety</span>
-            </h2>
-            <p style={{
-              fontSize: '14.5px',
-              color: '#64748b',
-              fontWeight: '500',
-              margin: 0,
-              lineHeight: 1.6
-            }}>
-              These standards make sure every attraction people play on is safe by design.
-            </p>
-          </div>
-
-          {/* Desktop Cards Grid */}
-          <div className="winera-safety-standards-grid winera-safety-standards-desktop-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '24px',
-            maxWidth: '1200px',
-            margin: '0 auto'
-          }}>
-            {certCardsList.map((card, idx, arr) => {
-              const isLastOdd = (arr.length % 2 !== 0) && (idx === arr.length - 1);
-              const isLeft = idx % 2 === 0;
-              const startX = isLastOdd ? 0 : (isLeft ? -75 : 75);
-              const startY = isLastOdd ? 40 : 0;
-              const delayVal = isLastOdd ? 0.2 : (isLeft ? 0.05 : 0.2);
-
-              return (
-                <motion.div
-                  key={idx}
-                  data-framer-motion="true"
-                  initial={{ opacity: 0, x: startX, y: startY }}
-                  whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  viewport={{ once: false, amount: 0.15 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: delayVal,
-                    ease: [0.16, 1, 0.3, 1]
-                  }}
-                  className={`winera-safety-card ${isLastOdd ? 'winera-safety-card-wide' : ''}`}
-                  style={{
-                    gridColumn: isLastOdd ? '1 / -1' : 'auto',
-                    maxWidth: isLastOdd ? '680px' : '100%',
-                    width: '100%',
-                    margin: isLastOdd ? '0 auto' : '0',
-                    background: 'linear-gradient(180deg, #d3ebff 0%, #ffffff 100%)',
-                    borderRadius: '18px',
-                    padding: '30px 32px',
-                    textAlign: 'center',
-                    boxShadow: 'none'
-                  }}
-                >
-                  <h3 style={{
-                    fontSize: '1.15rem',
-                    fontWeight: '800',
-                    color: '#0f172a',
-                    marginBottom: '12px',
-                    lineHeight: 1.35
-                  }}>
-                    {card.title}
-                  </h3>
-                  <p style={{
-                    fontSize: '14.5px',
-                    color: '#475569',
-                    lineHeight: 1.6,
-                    fontWeight: '500',
-                    margin: 0
-                  }}>
-                    {card.desc}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Mobile Interactive Slider */}
-          <div className="winera-safety-standards-mobile-slider">
-            <div className="winera-safety-mobile-slider-wrapper">
-              <button
-                type="button"
-                onClick={handlePrevCert}
-                className="winera-safety-slider-btn"
-                aria-label="Previous Certificate"
-              >
-                <img src={homeLeftArrow} alt="Previous" style={{ width: '16px', height: '16px', objectFit: 'contain' }} />
-              </button>
-
-              <div
-                className="winera-safety-mobile-card-container"
-                onTouchStart={(e) => {
-                  certTouchStartRef.current = e.touches[0].clientX;
+              <img
+                src={yellowStrokeLine}
+                alt=""
+                style={{
+                  display: isPhone ? 'block' : 'inline-block',
+                  margin: isPhone ? '0 auto 12px' : '0 0 14px',
+                  maxWidth: '100%',
+                  width: '240px',
+                  height: '8px',
+                  objectFit: 'fill'
                 }}
-                onTouchEnd={(e) => {
-                  const diffX = e.changedTouches[0].clientX - certTouchStartRef.current;
-                  if (diffX > 40) {
-                    handlePrevCert();
-                  } else if (diffX < -40) {
-                    handleNextCert();
-                  }
+              />
+              <h2 className="winera-safety-standards-h2" style={{
+                fontSize: isPhone ? '1.85rem' : '38px',
+                fontWeight: '900',
+                color: '#0f172a',
+                margin: '0 0 14px',
+                lineHeight: 1.2,
+                letterSpacing: '-0.5px'
+              }}>
+                <span>{siteData?.safetyCertifications?.title1 || "Play & Attraction"}</span><br />
+                <span style={{ color: '#0072b8' }}>{siteData?.safetyCertifications?.title2 || "Equipment Safety"}</span>
+              </h2>
+              <p
+                style={{
+                  fontSize: isPhone ? '14px' : '15px',
+                  color: '#475569',
+                  fontWeight: '500',
+                  margin: isPhone ? '0 auto 20px' : 0,
+                  lineHeight: 1.6,
+                  maxWidth: isPhone ? '100%' : '440px'
                 }}
-              >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeCertIndex}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.28, ease: "easeOut" }}
-                    className="winera-safety-mobile-card"
-                  >
-                    <h3 className="winera-safety-mobile-card-title">
-                      {certCardsList[activeCertIndex]?.title}
-                    </h3>
-                    <p className="winera-safety-mobile-card-desc">
-                      {certCardsList[activeCertIndex]?.desc}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleNextCert}
-                className="winera-safety-slider-btn"
-                aria-label="Next Certificate"
-              >
-                <img src={homeRightArrow} alt="Next" style={{ width: '16px', height: '16px', objectFit: 'contain' }} />
-              </button>
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeAndFormatHtml(siteData?.safetyCertifications?.subtitle || "These standards make sure every attraction people play on is safe by design.")
+                }}
+              />
             </div>
 
-            {/* Pagination Dots */}
-            <div className="winera-safety-slider-dots">
-              {certCardsList.map((_, dotIdx) => (
-                <button
-                  key={dotIdx}
-                  type="button"
-                  onClick={() => setActiveCertIndex(dotIdx)}
-                  className={`winera-safety-slider-dot ${dotIdx === activeCertIndex ? 'is-active' : ''}`}
-                  aria-label={`Slide ${dotIdx + 1}`}
-                />
-              ))}
+            {/* Right Column: Sticky Stacking Cards (stacks on scroll like KriraAI deck) */}
+            <div className="winera-safety-sticky-right" style={{ overflow: 'visible', position: 'relative' }}>
+              {certCardsList.map((card, idx) => {
+                const topOffset = isPhone ? (75 + idx * 12) : (115 + idx * 16);
+                return (
+                  <div
+                    key={idx}
+                    className="winera-safety-stack-card"
+                    style={{
+                      position: 'sticky',
+                      top: `${topOffset}px`,
+                      zIndex: idx + 1,
+                      marginBottom: idx === certCardsList.length - 1 ? (isPhone ? '28px' : '40px') : (isPhone ? '24px' : '32px'),
+                      background: 'linear-gradient(180deg, #d8eeff 0%, #ffffff 85%)',
+                      borderRadius: isPhone ? '20px' : '24px',
+                      border: '1.5px solid #bae6fd',
+                      padding: isPhone ? '22px 20px' : '32px 34px',
+                      boxShadow: '0 10px 30px rgba(2, 132, 199, 0.08), 0 2px 6px rgba(0,0,0,0.03)',
+                      transform: 'translateZ(0)',
+                      WebkitTransform: 'translateZ(0)',
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden',
+                      transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+                    }}
+                  >
+                    <h3 style={{
+                      fontSize: '1.25rem',
+                      fontWeight: '800',
+                      color: '#0f172a',
+                      marginBottom: '12px',
+                      lineHeight: 1.35
+                    }}>
+                      {card.title}
+                    </h3>
+
+                    <p
+                      style={{
+                        fontSize: '14.5px',
+                        color: '#475569',
+                        lineHeight: 1.65,
+                        fontWeight: '500',
+                        margin: 0
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndFormatHtml(card.desc)
+                      }}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -507,19 +470,23 @@ export default function SafetyStandards({ siteData }) {
               margin: '0 0 12px',
               lineHeight: 1.2
             }}>
-              <span style={{ color: '#38bdf8' }}>{siteData?.safetyMaterials?.title1 || "Material &"}</span>{' '}
+              <span style={{ color: '#0072b8' }}>{siteData?.safetyMaterials?.title1 || "Material &"}</span>{' '}
               <span>{siteData?.safetyMaterials?.title2 || "Fire Safety"}</span>
             </h2>
-            <p className="winera-safety-material-desc" style={{
-              fontSize: '14.5px',
-              color: '#64748b',
-              fontWeight: '500',
-              margin: 0,
-              lineHeight: 1.6,
-              maxWidth: '820px'
-            }}>
-              {siteData?.safetyMaterials?.subtitle || "These standards make sure everything is made from safe materials that don't catch fire easily and are not harmful to touch which is also a legal rule for game zones in India."}
-            </p>
+            <p
+              className="winera-safety-material-desc"
+              style={{
+                fontSize: '14.5px',
+                color: '#64748b',
+                fontWeight: '500',
+                margin: 0,
+                lineHeight: 1.6,
+                maxWidth: '820px'
+              }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml(siteData?.safetyMaterials?.subtitle || "These standards make sure everything is made from safe materials that don't catch fire easily and are not harmful to touch which is also a legal rule for game zones in India.")
+              }}
+            />
           </div>
 
           {/* 2-Column Grid: Left 4 Wide Rectangle Cards, Right 3D Shield Graphic */}
@@ -558,16 +525,19 @@ export default function SafetyStandards({ siteData }) {
                   }}>
                     {card.title}
                   </h3>
-                  <p style={{
-                    fontSize: '14.5px',
-                    color: '#475569',
-                    lineHeight: 1.55,
-                    fontWeight: '500',
-                    margin: 0,
-                    textAlign: 'left'
-                  }}>
-                    {card.desc}
-                  </p>
+                  <p
+                    style={{
+                      fontSize: '14.5px',
+                      color: '#475569',
+                      lineHeight: 1.55,
+                      fontWeight: '500',
+                      margin: 0,
+                      textAlign: 'left'
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml(card.desc)
+                    }}
+                  />
                 </motion.div>
               ))}
             </div>
@@ -580,8 +550,8 @@ export default function SafetyStandards({ siteData }) {
             {/* Right 3D Shield Collage Image */}
             <motion.div
               data-framer-motion="true"
-              initial={{ opacity: 0, x: 75 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: isPhone ? 0 : 75, y: isPhone ? 30 : 0 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: false, amount: 0.15 }}
               transition={{
                 duration: 0.85,
@@ -589,11 +559,23 @@ export default function SafetyStandards({ siteData }) {
                 ease: [0.16, 1, 0.3, 1]
               }}
               className="winera-safety-material-img"
+              style={{
+                textAlign: isPhone ? 'center' : 'left',
+                justifyContent: isPhone ? 'center' : 'flex-start'
+              }}
             >
-              <img
-                src={getValidImageUrl(siteData?.safetyMaterials?.imgUrl, safetyStandard2)}
-                alt="Material & Fire Safety"
-              />
+              <picture className="winera-safety-material-picture" style={{ display: isPhone ? 'block' : 'contents', margin: isPhone ? '0 auto' : undefined }}>
+                <source type="image/webp" media="(max-width: 850px)" srcSet="/assets/safety-material-shield-centered.webp" />
+                <source type="image/png" media="(max-width: 850px)" srcSet="/assets/safety-material-shield-centered.png" />
+                <img
+                  src={getValidImageUrl(siteData?.safetyMaterials?.imgUrl, safetyStandard2)}
+                  alt={siteData?.safetyMaterials?.imgAlt || "Material & Fire Safety - Commercial Play Equipment - Winera"}
+                  style={{
+                    margin: isPhone ? '0 auto' : undefined,
+                    display: 'block'
+                  }}
+                />
+              </picture>
             </motion.div>
           </div>
         </div>
@@ -625,18 +607,22 @@ export default function SafetyStandards({ siteData }) {
               lineHeight: 1.2
             }}>
               <span>{siteData?.safetyElectrical?.title1 || "Electrical &"}</span>{' '}
-              <span style={{ color: '#38bdf8' }}>{siteData?.safetyElectrical?.title2 || "Machine Safety"}</span>
+              <span style={{ color: '#0072b8' }}>{siteData?.safetyElectrical?.title2 || "Machine Safety"}</span>
             </h2>
-            <p className="winera-safety-electrical-desc" style={{
-              fontSize: '14.5px',
-              color: '#64748b',
-              fontWeight: '500',
-              margin: 0,
-              lineHeight: 1.6,
-              maxWidth: '720px'
-            }}>
-              {siteData?.safetyElectrical?.subtitle || "These rules make sure all machines that run on electricity are safe to use — like arcade games, VR, laser tag, bumper cars, hypergrid, bowling, and rides."}
-            </p>
+            <p
+              className="winera-safety-electrical-desc"
+              style={{
+                fontSize: '14.5px',
+                color: '#64748b',
+                fontWeight: '500',
+                margin: 0,
+                lineHeight: 1.6,
+                maxWidth: '720px'
+              }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml(siteData?.safetyElectrical?.subtitle || "These rules make sure all machines that run on electricity are safe to use — like arcade games, VR, laser tag, bumper cars, hypergrid, bowling, and rides.")
+              }}
+            />
           </div>
 
           {/* 2-Column Grid: Left Numbered List Items, Right Image */}
@@ -693,18 +679,21 @@ export default function SafetyStandards({ siteData }) {
                       </h3>
                     </div>
                     {/* Description Paragraph */}
-                    <p style={{
-                      fontSize: '14.5px',
-                      color: '#475569',
-                      lineHeight: 1.6,
-                      fontWeight: '500',
-                      margin: 0,
-                      paddingLeft: 0,
-                      textAlign: 'left',
-                      maxWidth: '750px'
-                    }}>
-                      {item.desc}
-                    </p>
+                    <p
+                      style={{
+                        fontSize: '14.5px',
+                        color: '#475569',
+                        lineHeight: 1.6,
+                        fontWeight: '500',
+                        margin: 0,
+                        paddingLeft: 0,
+                        textAlign: 'left',
+                        maxWidth: '750px'
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndFormatHtml(item.desc)
+                      }}
+                    />
                   </motion.div>
                 ))}
               </div>
@@ -765,9 +754,12 @@ export default function SafetyStandards({ siteData }) {
 
                       {isOpen && (
                         <div className="winera-safety-electrical-accordion-body">
-                          <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, margin: 0, fontWeight: '500', textAlign: 'left' }}>
-                            {item.desc}
-                          </p>
+                          <p
+                            style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, margin: 0, fontWeight: '500', textAlign: 'left' }}
+                            dangerouslySetInnerHTML={{
+                              __html: sanitizeAndFormatHtml(item.desc)
+                            }}
+                          />
                         </div>
                       )}
                     </div>
@@ -792,7 +784,7 @@ export default function SafetyStandards({ siteData }) {
             >
               <img
                 src={getValidImageUrl(siteData?.safetyElectrical?.imgUrl, safetyStandardImg3)}
-                alt="Electrical & Machine Safety"
+                alt={siteData?.safetyElectrical?.imgAlt || "Electrical & Machine Safety - Commercial Play Zones - Winera"}
                 style={{
                   width: '100%',
                   maxWidth: '420px',
@@ -831,175 +823,29 @@ export default function SafetyStandards({ siteData }) {
               lineHeight: 1.2,
               textAlign: 'center'
             }}>
-              <span style={{ color: '#38bdf8' }}>{siteData?.safetyStructure?.title1 || "Structure, Installation &"}</span>
+              <span style={{ color: '#0072b8' }}>{siteData?.safetyStructure?.title1 || "Structure, Installation &"}</span>
               <br />
               <span style={{ color: '#0f172a' }}>{siteData?.safetyStructure?.title2 || "Operational Safety"}</span>
             </h2>
-            <p style={{
-              fontSize: '14.5px',
-              color: '#64748b',
-              fontWeight: '500',
-              margin: '0 auto',
-              lineHeight: 1.6,
-              maxWidth: '800px',
-              textAlign: 'center'
-            }}>
-              {siteData?.safetyStructure?.subtitle || "These standards make sure the finished venue is strong, set up correctly, and safe to run every day — and ready to pass the local safety check needed for a licence."}
-            </p>
-          </div>
-
-          {/* 2x2 Grid with Offset Colored Borders (Desktop) */}
-          <div className="winera-safety-structure-grid winera-safety-structure-desktop-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '32px 28px',
-            alignItems: 'stretch',
-            maxWidth: '1240px',
-            margin: '0 auto'
-          }}>
-            {structureCardsList.map((card, idx) => {
-              const isLeft = idx % 2 === 0;
-              const startX = isLeft ? -75 : 75;
-              return (
-                <motion.div
-                  key={idx}
-                  data-framer-motion="true"
-                  initial={{ opacity: 0, x: startX }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: false, amount: 0.15 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: (idx % 2) * 0.12,
-                    ease: [0.16, 1, 0.3, 1]
-                  }}
-                  style={{
-                    position: 'relative',
-                    width: '100%',
-                    height: '100%',
-                    paddingTop: '12px',
-                    paddingLeft: '12px'
-                  }}
-                >
-                  {/* Accent Offset Colored Backing (Stops at ~68% width on top, ~82% height on left) */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '3px',
-                    left: '3px',
-                    width: '68%',
-                    height: '82%',
-                    background: card.accent || '#00aeef',
-                    borderRadius: '28px 20px 20px 28px',
-                    zIndex: 1
-                  }} />
-
-                  {/* Main White Card Box */}
-                  <div style={{
-                    position: 'relative',
-                    zIndex: 2,
-                    background: '#ffffff',
-                    borderRadius: '24px',
-                    padding: '26px 24px',
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.03)',
-                    overflow: 'hidden'
-                  }}>
-                    {/* Top Header Row: Small Icon Badge Left, Giant Watermark Number Right */}
-                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px' }}>
-                      <div style={{
-                        width: '42px',
-                        height: '42px',
-                        borderRadius: '12px',
-                        background: '#d8eefd',
-                        color: '#0284c7',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0
-                      }}>
-                        <ShieldCheck size={22} strokeWidth={2.2} />
-                      </div>
-                      <span className="winera-safety-watermark-num" style={{
-                        fontFamily: "'Open Sans', sans-serif",
-                        fontSize: '5.2rem',
-                        fontWeight: '800',
-                        color: '#f1f5f9',
-                        lineHeight: 0.9,
-                        letterSpacing: '-2px',
-                        userSelect: 'none',
-                        marginTop: '-4px',
-                        marginRight: '-4px'
-                      }}>
-                        {card.num}
-                      </span>
-                    </div>
-
-                    {/* Card Title */}
-                    <h3 style={{
-                      fontSize: '1.15rem',
-                      fontWeight: '800',
-                      color: '#0f172a',
-                      marginBottom: '10px',
-                      lineHeight: 1.35,
-                      textAlign: 'left'
-                    }}>
-                      {card.title}
-                    </h3>
-
-                    {/* Card Description */}
-                    <p style={{
-                      fontSize: '14px',
-                      color: '#475569',
-                      lineHeight: 1.6,
-                      fontWeight: '500',
-                      margin: 0,
-                      textAlign: 'left'
-                    }}>
-                      {card.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Mobile Unique Interactive Coverflow Deck */}
-          <div className="winera-safety-structure-mobile-deck">
-            <SafetyStructureInteractiveDeck
-              cards={
-                Array.isArray(siteData?.safetyStructure?.cards) && siteData.safetyStructure.cards.length > 0
-                  ? siteData.safetyStructure.cards
-                  : [
-                    {
-                      num: "01",
-                      accent: "#00aeef",
-                      title: "Strong and Stable Setup (India)",
-                      desc: "In India, a game zone must pass a check for strong, stable structure before it can get a licence. We build and fix everything properly so your venue is ready to pass that check. This matters most for climbing walls, ninja courses, trampolines, and rides, where the structure has to hold real weight safely."
-                    },
-                    {
-                      num: "02",
-                      accent: "#ffd600",
-                      title: "Quality Checks (ISO 9001)",
-                      desc: "ISO 9001 is a worldwide standard for good quality work. It makes sure the design, sourcing, and installation are done to a consistent, high standard every time. We follow these quality practices in all our projects."
-                    },
-                    {
-                      num: "03",
-                      accent: "#00aeef",
-                      title: "Full Safety Check Before Handover",
-                      desc: "Good equipment alone is not enough. Once all the games and machines are installed, our trained team runs a full safety check on the complete setup. We hand it over only after everything passes."
-                    },
-                    {
-                      num: "04",
-                      accent: "#ffd600",
-                      title: "Safe Running & Maintenance (ISO 17842-2 / EN 13814-2)",
-                      desc: "These standards are about running and looking after the attractions safely after they are built. We set up your venue the right way and show your team how to run and maintain each attraction safely."
-                    }
-                  ]
-              }
+            <p
+              className="winera-safety-structure-desc"
+              style={{
+                fontSize: '14.5px',
+                color: '#64748b',
+                fontWeight: '500',
+                margin: '0 auto',
+                lineHeight: 1.6,
+                maxWidth: '800px',
+                textAlign: 'center'
+              }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml(siteData?.safetyStructure?.subtitle || "These standards make sure the finished venue is strong, set up correctly, and safe to run every day — and ready to pass the local safety check needed for a licence.")
+              }}
             />
           </div>
+
+          {/* Animated Expanding Card Accordion Deck (KriraAI Style Animation) */}
+          <SafetyStructureAccordion cards={structureCardsList} />
         </div>
       </section>
 
@@ -1028,16 +874,20 @@ export default function SafetyStandards({ siteData }) {
               lineHeight: 1.2,
               textAlign: 'center'
             }}>
-              <span style={{ color: '#38bdf8' }}>{(siteData?.safetyWhyMatters?.title1 || "Why This Matters").trim()}{' '}</span>
+              <span style={{ color: '#0072b8' }}>{(siteData?.safetyWhyMatters?.title1 || "Why This Matters").trim()}{' '}</span>
               <span style={{ color: '#0f172a' }}>{(siteData?.safetyWhyMatters?.title2 || "for Your Business").trim()}</span>
             </h2>
-            <p className="winera-safety-why-matters-text" style={{
-              margin: '0 auto',
-              maxWidth: '1060px',
-              textAlign: 'center'
-            }}>
-              {siteData?.safetyWhyMatters?.subtitle || "Good, certified equipment is a smart investment. It keeps visitors safe, protects your money, and helps you get your licence easier. In India, every game zone must pass checks for strong structure, fire safety, and electrical safety before it can open. Because we supply you certified equipment, fire-safe materials, and proper installation, your game zone is ready to pass these checks. The result: you open on time, stay within the rules, and win the trust of every family."}
-            </p>
+            <p
+              className="winera-safety-why-matters-text"
+              style={{
+                margin: '0 auto',
+                maxWidth: '1060px',
+                textAlign: 'center'
+              }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml(siteData?.safetyWhyMatters?.subtitle || "Good, certified equipment is a smart investment. It keeps visitors safe, protects your money, and helps you get your licence easier. In India, every game zone must pass checks for strong structure, fire safety, and electrical safety before it can open. Because we supply you certified equipment, fire-safe materials, and proper installation, your game zone is ready to pass these checks. The result: you open on time, stay within the rules, and win the trust of every family.")
+              }}
+            />
           </div>
 
           {/* BUILD YOURS NOW CTA BANNER (MATCHING SCREENSHOT 1:1) */}
@@ -1081,7 +931,7 @@ export default function SafetyStandards({ siteData }) {
             {/* Left Tilted Card Image */}
             <img
               src={getValidImageUrl(siteData?.safetyWhyMatters?.leftImgUrl, rightTiltedCard)}
-              alt="Build Yours Now Left"
+              alt={siteData?.safetyWhyMatters?.leftImgAlt || "Build Your Game Zone - Commercial Setup Winera"}
               style={{
                 position: 'absolute',
                 left: '15px',
@@ -1098,7 +948,7 @@ export default function SafetyStandards({ siteData }) {
             {/* Right Tilted Card Image */}
             <img
               src={getValidImageUrl(siteData?.safetyWhyMatters?.rightImgUrl, leftTiltedCard)}
-              alt="Build Yours Now Right"
+              alt={siteData?.safetyWhyMatters?.rightImgAlt || "Safety Standard Certified Game Zone Equipment - Winera"}
               style={{
                 position: 'absolute',
                 right: '15px',
@@ -1160,43 +1010,28 @@ export default function SafetyStandards({ siteData }) {
               </h2>
 
               {/* White Subtitle Text */}
-              <p className="winera-cta-subtitle" style={{
-                color: '#ffffff',
-                fontSize: '20px',
-                fontWeight: '400',
-                lineHeight: 1.35,
-                margin: '0 auto 22px auto',
-                maxWidth: '520px',
-                textAlign: 'center',
-                textShadow: '0 2px 8px rgba(0,0,0,0.6)'
-              }}>
-                {(() => {
-                  const sub = siteData?.safetyWhyMatters?.ctaSubtitle || siteData?.safetyWhyMatters?.whiteText;
-                  if (sub) {
-                    const lines = sub.split(/<br\s*\/?>/i);
-                    return lines.map((line, idx) => (
-                      <React.Fragment key={idx}>
-                        {idx > 0 && (
-                          <>
-                            <br className="winera-cta-br" />
-                            {" "}
-                          </>
-                        )}
-                        {line}
-                      </React.Fragment>
-                    ));
-                  }
-                  return (
-                    <>
-                      We're Ready To Give Answers To <br className="winera-cta-br" />Your Questions.
-                    </>
-                  );
-                })()}
-              </p>
+              <p
+                className="winera-cta-subtitle"
+                style={{
+                  color: '#ffffff',
+                  fontSize: '20px',
+                  fontWeight: '400',
+                  lineHeight: 1.35,
+                  margin: '0 auto 22px auto',
+                  maxWidth: '520px',
+                  textAlign: 'center',
+                  textShadow: '0 2px 8px rgba(0,0,0,0.6)'
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeAndFormatHtml(
+                    siteData?.safetyWhyMatters?.ctaSubtitle || siteData?.safetyWhyMatters?.whiteText || "We're Ready To Give Answers To <br class=\"winera-cta-br\" />Your Questions."
+                  )
+                }}
+              />
 
               <div className="winera-cta-banner-btn-wrapper" style={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '0 auto' }}>
                 <a
-                  href="#"
+                  href={siteData?.safetyWhyMatters?.buttonLink || "/contact"}
                   onClick={(e) => {
                     e.preventDefault();
                     setIsModalOpen(true);

@@ -3,22 +3,32 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 const blogHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345630/winera_uploads/tj7ke5cpufz9t41c4d7v.png";
-const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const gameZoneMobileBanner = projectPageMobileBanner;
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 import WineraImage from '../components/WineraImage';
 import { Calendar, Clock, PenTool } from 'lucide-react';
-import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
+import { fetchBlogBySlug, fetchBlogs } from '../services/api';
+import { sanitizeAndFormatHtml, normalizeRawContent } from '../utils/sanitizeHtml';
 
-const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
+const getValidImageUrl = (url, fallback) => {
+  if (url && typeof url === 'string' && (url.includes('eqjkboeokagpaus2ifxa') || url.includes('/src/assets/'))) {
+    return fallback || blogCardImg;
+  }
   if (url && typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:'))) {
     return url;
   }
   if (url && typeof url === 'string' && (url.startsWith('/uploads/') || url.startsWith('uploads/'))) {
     const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
-    return `http://${hostname}:5001${cleanUrl}`;
+    const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    if (isLocal) {
+      return `http://localhost:5001${cleanUrl}`;
+    }
+    const apiUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '').replace(/\/$/, '') : '';
+    if (apiUrl) return `${apiUrl}${cleanUrl}`;
+    return typeof window !== 'undefined' ? `${window.location.origin}${cleanUrl}` : cleanUrl;
   }
   if (url && typeof url === 'string' && !url.includes('/src/assets/') && (url.startsWith('/assets/') || url.startsWith('/@fs/'))) {
     return url;
@@ -26,14 +36,7 @@ const getValidImageUrl = (url, fallback, postId = null, postIdx = null) => {
   if (url && typeof url === 'object' && url.src) {
     return url.src;
   }
-  if (postId !== null && postId !== undefined) {
-    const match = DEFAULT_BLOG_POSTS.find(p => String(p.id) === String(postId) || (p.slug && p.slug === String(postId)));
-    if (match?.image) return match.image;
-  }
-  if (typeof postIdx === 'number' && DEFAULT_BLOG_POSTS[postIdx]?.image) {
-    return DEFAULT_BLOG_POSTS[postIdx].image;
-  }
-  return fallback;
+  return fallback || blogCardImg;
 };
 
 // Helper for title & subtitle concatenation with proper spacing
@@ -98,64 +101,8 @@ const extractHeadings = (text) => {
   return headings;
 };
 
-export const sanitizeAndFormatHtml = (input) => {
-  if (!input || typeof input !== 'string') return '';
-  let html = input;
+export { sanitizeAndFormatHtml, normalizeRawContent };
 
-  // 1. Remove editor cursor artifacts
-  html = html.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
-
-  // 2. Convert markdown to HTML tags if markdown syntax exists
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/(^|[^\*])\*(?!\*)(.+?)\*(?!\*)/g, '$1<em>$2</em>');
-  html = html.replace(/~~(.+?)~~/g, '<del>$1</del>');
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-
-  // 3. Ensure links have proper color, font-weight and security attributes
-  html = html.replace(/<a\s+(?:[^>]*?\s+)?href="([^"]*)"([^>]*)>/gi, (match, href, rest) => {
-    const isWineraOrRelative = href.startsWith('/') || href.startsWith('#');
-    const targetAttr = isWineraOrRelative ? '' : ' target="_blank" rel="noopener noreferrer"';
-    return `<a href="${href}" style="color: #0284c7; font-weight: 700; text-decoration: underline;"${targetAttr}>`;
-  });
-
-  return html;
-};
-
-export const normalizeRawContent = (raw) => {
-  if (!raw) return '';
-  let str = String(raw);
-
-  // 1. Convert literal string representations of newlines ("\\n", "\\r\\n") to real newlines
-  str = str.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n');
-
-  // Strip ql-cursor or unwanted meta spans
-  str = str.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
-
-  // Convert HTML headings to markdown ###
-  str = str.replace(/<h[1-6][^>]*>([\s\S]*?)<\/h[1-6]>/gi, (match, headingContent) => {
-    const cleanHeading = headingContent.replace(/<[^>]+>/g, '').trim();
-    return cleanHeading ? `\n\n### ${cleanHeading}\n\n` : '';
-  });
-
-  // Convert lists
-  str = str.replace(/<ul>([\s\S]*?)<\/ul>/gi, (match, listContent) => {
-    return '\n' + listContent.replace(/<li>(.*?)<\/li>/gi, '- $1\n').trim() + '\n\n';
-  });
-  str = str.replace(/<ol>([\s\S]*?)<\/ol>/gi, (match, listContent) => {
-    let idx = 1;
-    return '\n' + listContent.replace(/<li>(.*?)<\/li>/gi, () => `${idx++}. $1\n`).trim() + '\n\n';
-  });
-
-  // Replace <p>...</p> blocks with double newlines
-  str = str.replace(/<p[^>]*>/gi, '').replace(/<\/p>/gi, '\n\n');
-
-  // Replace <br\s*/?> with single newline
-  str = str.replace(/<br\s*\/?>/gi, '\n');
-
-  // Clean multiple newlines
-  str = str.replace(/\n{3,}/g, '\n\n');
-  return str.trim();
-};
 
 const renderFormattedText = (text) => {
   if (!text) return null;
@@ -292,6 +239,30 @@ export default function BlogDetail({ siteData }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+  const [apiBlog, setApiBlog] = useState(null);
+  const [dynamicBlogPosts, setDynamicBlogPosts] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (id) {
+      fetchBlogBySlug(id).then(res => {
+        if (isMounted && (res?.blog || res?.post)) {
+          setApiBlog(res.blog || res.post);
+        }
+      }).catch(err => console.warn('Blog fetch by slug notice:', err));
+    }
+    return () => { isMounted = false; };
+  }, [id]);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchBlogs({ limit: 'all' }).then(res => {
+      if (isMounted && res?.success && Array.isArray(res.blogs || res.posts)) {
+        setDynamicBlogPosts(res.blogs || res.posts);
+      }
+    }).catch(err => console.warn('Dynamic blogs fetch notice:', err));
+    return () => { isMounted = false; };
+  }, []);
 
   const header = siteData?.header || {};
   const footer = siteData?.footer || {};
@@ -299,52 +270,73 @@ export default function BlogDetail({ siteData }) {
   const blogHero = siteData?.blogHero || {
     breadcrumbText: 'Blog',
     bgUrl: blogHeroBg,
+    bgAlt: "Winera International Game Zone & Entertainment Industry Blog",
+    mobileBgUrl: gameZoneMobileBanner,
+    mobileBgAlt: "Winera International Game Zone & Entertainment Industry Blog Mobile Banner"
   };
   const heroBg = (blogHero?.bgUrl && (blogHero.bgUrl.startsWith('http') || blogHero.bgUrl.startsWith('uploads') || blogHero.bgUrl.startsWith('/uploads')))
     ? getValidImageUrl(blogHero.bgUrl, blogHeroBg)
     : blogHeroBg;
+  const mobileHeroBg = getValidImageUrl(blogHero?.mobileBgUrl, gameZoneMobileBanner);
 
   const isDummyPosts = Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && (
     siteData.blogPosts[0]?.title === 'Blog 1' ||
-    (siteData.blogPosts[0]?.title?.includes('Soft Play vs Trampoline Park: Which') && siteData.blogPosts.length < 15) ||
     siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
   );
 
-  const rawPosts = (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
-    ? siteData.blogPosts
-    : DEFAULT_BLOG_POSTS;
+  const rawPosts = (dynamicBlogPosts.length > 0)
+    ? dynamicBlogPosts
+    : (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
+      ? siteData.blogPosts
+      : [];
 
-  const blogPosts = rawPosts.map((p, idx) => {
-    const defaultP = DEFAULT_BLOG_POSTS[idx] || DEFAULT_BLOG_POSTS.find(d => String(d.id) === String(p.id) || d.slug === p.slug) || {};
+  const blogPosts = rawPosts.map((p) => {
     return {
-      ...defaultP,
       ...p,
-      image: getValidImageUrl(p.image || p.imgUrl, defaultP.image || blogCardImg, p.id, idx)
+      image: getValidImageUrl(p.image || p.imageUrl || p.imgUrl, blogCardImg)
     };
   });
 
-  // Find post by ID or slug with fallback
-  const defaultMatch = DEFAULT_BLOG_POSTS.find(p => String(p.id) === String(id) || String(p.slug) === String(id));
-  const post = blogPosts.find(p => String(p.id) === String(id) || String(p.slug) === String(id)) || defaultMatch || blogPosts[0];
-  const postImg = getValidImageUrl(post?.image || post?.imgUrl, defaultMatch?.image || blogCardImg, post?.id);
+  // Find post from list or apiBlog
+  const foundInList = blogPosts.find(p => String(p.id) === String(id) || String(p.slug) === String(id));
+  const post = apiBlog || foundInList || blogPosts[0] || {};
+  const postImg = getValidImageUrl(post?.image || post?.imageUrl || post?.imgUrl, blogCardImg);
 
-  // Recent/Related posts: Pick the NEXT 3 consecutive blogs after current blog (e.g. blog 5 -> blogs 6, 7, 8)
+  // Recent/Related posts: Pick the NEXT 3 consecutive blogs after current blog
   const currentIndex = blogPosts.findIndex(p => String(p.id) === String(post?.id) || String(p.slug) === String(post?.slug));
   const validIndex = currentIndex >= 0 ? currentIndex : 0;
-  const recentPosts = [1, 2, 3].map(offset => {
-    const nextIdx = (validIndex + offset) % blogPosts.length;
-    return blogPosts[nextIdx];
-  });
+  const recentPosts = blogPosts.length > 0
+    ? [1, 2, 3].map(offset => {
+        const nextIdx = (validIndex + offset) % blogPosts.length;
+        return blogPosts[nextIdx];
+      })
+    : [];
 
   useEffect(() => {
+    if (!post?.title && !post?.subtitle) return;
     const fullTitle = `${post.title || ''} ${post.subtitle || ''}`.trim();
     document.title = `${fullTitle || 'Blog Detail'} | Winera International`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [post]);
 
-  // Resolve rich article content from fullContent or structured description & sections
-  let rawArticleContent = post.fullContent || '';
-  if (!rawArticleContent && (post.description || Array.isArray(post.sections))) {
+    // Canonical link tag update for SEO
+    let canonicalTag = document.querySelector("link[rel='canonical']");
+    if (!canonicalTag) {
+      canonicalTag = document.createElement('link');
+      canonicalTag.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalTag);
+    }
+    const currentSlug = post.slug || post.id;
+    canonicalTag.setAttribute('href', `https://winera.in/blog/${currentSlug}`);
+
+    // Canonical SEO URL Redirect: If accessed via numeric ID (e.g. /blog/2), seamlessly replace URL with SEO-friendly slug
+    if (post?.slug && String(id) !== String(post.slug)) {
+      navigate(`/blog/${post.slug}`, { replace: true });
+    }
+  }, [id, post, navigate]);
+
+  // Resolve rich article content: prioritize structured description & sections (the direct fields edited in admin), fallback to fullContent
+  let rawArticleContent = '';
+  if (post.description || (Array.isArray(post.sections) && post.sections.length > 0)) {
     const parts = [];
     if (post.description && post.description.trim()) {
       parts.push(post.description.trim());
@@ -360,8 +352,14 @@ export default function BlogDetail({ siteData }) {
     }
     rawArticleContent = parts.join('\n\n');
   }
+
+  // Fallback to fullContent if structured description & sections are absent
+  if (!rawArticleContent && post.fullContent) {
+    rawArticleContent = post.fullContent;
+  }
+
   if (!rawArticleContent) {
-    rawArticleContent = DEFAULT_BLOG_POSTS[0]?.fullContent || '';
+    rawArticleContent = '';
   }
 
   const headings = extractHeadings(rawArticleContent);
@@ -379,7 +377,7 @@ export default function BlogDetail({ siteData }) {
         aspectRatio: isPhone ? '941 / 550' : 'auto',
         paddingTop: isPhone ? '55px' : '175px',
         paddingBottom: isPhone ? '0px' : '95px',
-        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${heroBg}) center top / 100% 100% no-repeat`,
+        background: isPhone ? `url(${mobileHeroBg}) center top / 100% 100% no-repeat` : `url(${heroBg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -388,6 +386,11 @@ export default function BlogDetail({ siteData }) {
         color: '#ffffff',
         overflow: 'hidden'
       }}>
+        <img
+          src={isPhone ? mobileHeroBg : heroBg}
+          alt={isPhone ? (blogHero?.mobileBgAlt || blogHero?.bgAlt || "Winera International Game Zone & Entertainment Industry Blog") : (blogHero?.bgAlt || "Winera International Game Zone & Entertainment Industry Blog")}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <div className="winera-blog-hero-h1" style={{
             fontSize: '21px',
@@ -468,7 +471,7 @@ export default function BlogDetail({ siteData }) {
           }}>
             <WineraImage
               src={postImg}
-              alt={post.title}
+              alt={post.imageAlt || post.title}
               style={{ width: '100%', display: 'block' }}
               imgStyle={{
                 width: '100%',
@@ -515,9 +518,11 @@ export default function BlogDetail({ siteData }) {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   {headings.map((h) => (
-                    <button
+                    <a
                       key={h.id}
-                      onClick={() => {
+                      href={`#${h.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
                         const el = document.getElementById(h.id);
                         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                       }}
@@ -537,7 +542,8 @@ export default function BlogDetail({ siteData }) {
                         display: 'flex',
                         alignItems: 'flex-start',
                         gap: '6px',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        textDecoration: 'none'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.background = '#e0f2fe';
@@ -558,7 +564,7 @@ export default function BlogDetail({ siteData }) {
                       }}>
                         {h.title}
                       </span>
-                    </button>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -710,15 +716,19 @@ export default function BlogDetail({ siteData }) {
                 const recExcerpt = recPost.excerpt || recPost.line1 || 'Soft play or trampoline park? Discover the key differences in investment...';
                 const truncatedExcerpt = formatExcerpt(recExcerpt, 95);
 
+                const recSlug = recPost.slug || recPost.id;
+
                 return (
-                  <div
+                  <Link
                     key={recPost.id}
+                    to={`/blog/${recSlug}`}
                     className="winera-blog-more-explore-card"
                     onClick={() => {
-                      navigate(`/blog/${recPost.id}`);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
                       background: '#ffffff',
                       border: '1.5px solid #e2e8f0',
                       borderRadius: '20px',
@@ -744,7 +754,7 @@ export default function BlogDetail({ siteData }) {
                     <div style={{ width: '100%', height: '190px', borderRadius: '14px', overflow: 'hidden', flexShrink: 0, marginBottom: '14px', background: '#e0f2fe' }}>
                       <WineraImage
                         src={recImage}
-                        alt={getFullTitle(recPost)}
+                        alt={recPost.imageAlt || getFullTitle(recPost)}
                         style={{ width: '100%', height: '100%' }}
                         imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                       />
@@ -803,7 +813,7 @@ export default function BlogDetail({ siteData }) {
                         {recPost.author || recPost.founder || 'Divyang Mandani'}
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

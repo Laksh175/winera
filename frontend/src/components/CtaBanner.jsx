@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 const ctaMainBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345648/winera_uploads/ei16uczeuelaabtue4bs.jpg";
 import LeadCaptureModal from './LeadCaptureModal';
 import MotionFadeIn from './MotionFadeIn';
+import { sanitizeAndFormatHtml } from '../utils/sanitizeHtml';
 
 const getValidImg = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -86,15 +87,18 @@ export default function CtaBanner({
   descriptionFontSize = null,
   descriptionFontWeight = null,
   buttonText = "Talk to an Expert",
-  buttonLink = "https://wa.me/919428989488",
+  buttonLink = "https://wa.me/919157873576",
   buttonTheme = "cyan",
   buttonBg = null,
   bgUrl = null,
   bg = ctaMainBanner,
   leftImgUrl = null,
   leftImg = null,
+  leftImgAlt = null,
   rightImgUrl = null,
   rightImg = null,
+  rightImgAlt = null,
+  bgAlt = null,
   align = "left",
   yellowTitle = false,
   sectionPadding = "60px 4vw 80px",
@@ -165,7 +169,27 @@ export default function CtaBanner({
               filter: (blurBg && !isCustomBgUploaded) ? 'blur(6px) scale(1.05)' : 'none',
               borderRadius: '24px',
               zIndex: 0
-            }} />
+            }}>
+              {finalBg && (
+                <img
+                  src={finalBg}
+                  alt={bgAlt || (typeof title === 'string' ? title : "Winera Commercial Setup Banner")}
+                  style={{
+                    position: 'absolute',
+                    width: '1px',
+                    height: '1px',
+                    padding: 0,
+                    margin: '-1px',
+                    overflow: 'hidden',
+                    clip: 'rect(0, 0, 0, 0)',
+                    whiteSpace: 'nowrap',
+                    border: 0
+                  }}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+            </div>
 
             {/* Dark Background Overlay (disabled/transparent for custom uploaded banners to preserve 100% image brightness) */}
             {showOverlay && (
@@ -199,7 +223,7 @@ export default function CtaBanner({
               }}>
                 <img
                   src={finalLeftImg}
-                  alt="Left CTA Graphic"
+                  alt={leftImgAlt || "Winera International Game Zone Turnkey Setup"}
                   style={{
                     width: '100%',
                     height: 'auto',
@@ -287,7 +311,9 @@ export default function CtaBanner({
                   textAlign: isCentered ? 'center' : 'left',
                   textShadow: showTextShadow ? '0 2px 10px rgba(0,0,0,0.85)' : 'none'
                 }}>
-                  {typeof subtitle === 'string' ? (
+                  {typeof subtitle === 'string' && /<[a-z][\s\S]*>/i.test(subtitle) ? (
+                    <span dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(subtitle.replace(/\n/g, '<br>')) }} />
+                  ) : typeof subtitle === 'string' ? (
                     renderTextWithBreaks(subtitle, false)
                   ) : (
                     subtitle
@@ -304,15 +330,13 @@ export default function CtaBanner({
                   marginBottom: '24px',
                   maxWidth: hasSideImages ? '560px' : '620px',
                   textAlign: isCentered ? 'center' : 'left'
-                }}>
-                  {description}
-                </p>
+                }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(description).replace(/\n/g, '<br>')) }} />
               )}
 
               <div className="winera-cta-banner-btn-wrapper">
                 {buttonBg ? (
                   <a
-                    href={buttonLink || "#"}
+                    href={buttonLink || "/contact"}
                     onClick={(e) => {
                       e.preventDefault();
                       setIsModalOpen(true);
@@ -339,7 +363,7 @@ export default function CtaBanner({
                   </a>
                 ) : (
                   <a
-                    href={buttonLink || "#"}
+                    href={buttonLink || "/contact"}
                     onClick={(e) => {
                       e.preventDefault();
                       setIsModalOpen(true);
@@ -374,7 +398,7 @@ export default function CtaBanner({
               }}>
                 <img
                   src={finalRightImg}
-                  alt="Right CTA Graphic"
+                  alt={rightImgAlt || "Commercial Game Zone Solutions - Winera International"}
                   style={{
                     width: '100%',
                     height: 'auto',

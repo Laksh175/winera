@@ -23,8 +23,7 @@ const arcadeBtn2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_au
 import { 
   ChevronUp, ChevronDown, ChevronLeft, ChevronRight, MoveHorizontal, Box, Ruler, MessageCircle, ArrowRight 
 } from 'lucide-react';
-import allArcadeProducts from '../data/allArcadeProducts.json';
-import allVrGames from '../data/allVrGames.json';
+import { fetchArcadeProductBySlug, fetchVrGameBySlug } from '../services/api';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '') {
@@ -47,7 +46,7 @@ export const arcadeProductsData = {
     tagline: 'High-Performance Dual Player Commercial Motorbike Racing Simulator',
     img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadegamesImg, bikeArcade, ctaArcade, arcadeHall],
+    gallery: [arcadegamesImg],
     specs: {
       power: '880 W',
       voltage: '220v',
@@ -59,7 +58,7 @@ export const arcadeProductsData = {
       height: '2490 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Parkour%20Motor%20II%20(DX)'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Parkour%20Motor%20II%20(DX)'
   },
   'manx-tt-32': {
     slug: 'manx-tt-32',
@@ -70,7 +69,7 @@ export const arcadeProductsData = {
     tagline: 'Classic High-Velocity Arcade Motorcycle Simulator',
     img: bikeArcade,
     heroBg: arcadegame1Bg,
-    gallery: [bikeArcade, arcadegamesImg, ctaArcade, arcadeHall],
+    gallery: [bikeArcade],
     specs: {
       power: '500 W',
       voltage: '220v',
@@ -82,7 +81,7 @@ export const arcadeProductsData = {
       height: '1700 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20MANX%20TT%2032"'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20MANX%20TT%2032"'
   },
   'super-air-hockey': {
     slug: 'super-air-hockey',
@@ -105,7 +104,7 @@ export const arcadeProductsData = {
       height: '820 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Super%20Air%20Hockey'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Super%20Air%20Hockey'
   },
   'puck-carnival-air-hockey': {
     slug: 'puck-carnival-air-hockey',
@@ -128,7 +127,7 @@ export const arcadeProductsData = {
       height: '850 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Puck%20Carnival%20Air%20Hockey'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Puck%20Carnival%20Air%20Hockey'
   },
   'dazzling-air-hockey-multi-puck': {
     slug: 'dazzling-air-hockey-multi-puck',
@@ -151,7 +150,7 @@ export const arcadeProductsData = {
       height: '900 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Dazzling%20Air%20Hockey'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Dazzling%20Air%20Hockey'
   },
   'aurora-air-hockey': {
     slug: 'aurora-air-hockey',
@@ -174,7 +173,7 @@ export const arcadeProductsData = {
       height: '830 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aurora%20Air%20Hockey'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aurora%20Air%20Hockey'
   },
   'ocha-air-hockey': {
     slug: 'ocha-air-hockey',
@@ -197,7 +196,7 @@ export const arcadeProductsData = {
       height: '800 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Ocha%20Air%20Hockey'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Ocha%20Air%20Hockey'
   },
   'aero-x-air-hockey': {
     slug: 'aero-x-air-hockey',
@@ -220,7 +219,7 @@ export const arcadeProductsData = {
       height: '860 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aero%20X%20Air%20Hockey'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aero%20X%20Air%20Hockey'
   },
   'astrology-cointopia': {
     slug: 'astrology-cointopia',
@@ -229,9 +228,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Cointopia',
     category: 'Claw Machine',
     tagline: 'Commercial High-Earning Astrology Cointopia Coin & Prize Machine',
-    img: arcadeHall,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeHall, arcadeBoy, arcadegamesImg, ctaArcade],
+    gallery: [arcadegamesImg],
     specs: {
       power: '280 W',
       voltage: '220v',
@@ -243,7 +242,7 @@ export const arcadeProductsData = {
       height: '2100 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Astrology%20Cointopia'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Astrology%20Cointopia'
   },
   'astrology-capsule-version': {
     slug: 'astrology-capsule-version',
@@ -252,9 +251,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Version',
     category: 'Claw Machine',
     tagline: 'Interactive Capsule Prize & Gashapon Vending Arcade Machine',
-    img: arcadeBoy,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeBoy, arcadeHall, bikeArcade, arcadegamesImg],
+    gallery: [arcadegamesImg],
     specs: {
       power: '220 W',
       voltage: '220v',
@@ -266,7 +265,7 @@ export const arcadeProductsData = {
       height: '1950 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Astrology%20Capsule%20Version'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Astrology%20Capsule%20Version'
   },
   'basketball-star': {
     slug: 'basketball-star',
@@ -277,7 +276,7 @@ export const arcadeProductsData = {
     tagline: 'Commercial LED Moving Hoop Arcade Basketball Simulator',
     img: superAirHockeyImg,
     heroBg: arcadegame1Bg,
-    gallery: [superAirHockeyImg, puckCarnivalAirHockeyImg, arcadeHall, arcadegamesImg],
+    gallery: [superAirHockeyImg],
     specs: {
       power: '350 W',
       voltage: '220v',
@@ -289,7 +288,7 @@ export const arcadeProductsData = {
       height: '2400 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Basketball%20Star'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Basketball%20Star'
   },
   'pinball-storm': {
     slug: 'pinball-storm',
@@ -300,7 +299,7 @@ export const arcadeProductsData = {
     tagline: 'Dynamic Digital Arcade Pinball Simulator with High-Score Display',
     img: aeroXAirHockeyImg,
     heroBg: arcadegame1Bg,
-    gallery: [aeroXAirHockeyImg, dazzlingAirHockeyImg, arcadeBoy, arcadeHall],
+    gallery: [aeroXAirHockeyImg],
     specs: {
       power: '400 W',
       voltage: '220v',
@@ -312,7 +311,7 @@ export const arcadeProductsData = {
       height: '1900 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Pinball%20Storm'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Pinball%20Storm'
   },
   'larva-kids-ride': {
     slug: 'larva-kids-ride',
@@ -321,9 +320,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Kids Ride',
     category: 'Kiddy Ride',
     tagline: 'Animated Coin-Operated Dynamic Motion Ride for Children',
-    img: arcadeBoy,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeBoy, bikeArcade, arcadeHall, arcadegamesImg],
+    gallery: [arcadegamesImg],
     specs: {
       power: '180 W',
       voltage: '220v',
@@ -335,7 +334,7 @@ export const arcadeProductsData = {
       height: '1100 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Larva%20Kids%20Ride'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Larva%20Kids%20Ride'
   },
   'toy-story-plush-claw-machine': {
     slug: 'toy-story-plush-claw-machine',
@@ -344,9 +343,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Claw Machine',
     category: 'Claw Machine',
     tagline: 'Commercial Grade Plush Prize Claw Crane Game',
-    img: arcadeHall,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeHall, arcadeBoy, arcadegamesImg, ctaArcade],
+    gallery: [arcadegamesImg],
     specs: {
       power: '250 W',
       voltage: '220v',
@@ -358,7 +357,7 @@ export const arcadeProductsData = {
       height: '2000 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Toy%20Story%20Plush%20Claw%20Machine'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Toy%20Story%20Plush%20Claw%20Machine'
   },
   'lucky-catcher-crane-machine': {
     slug: 'lucky-catcher-crane-machine',
@@ -367,9 +366,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Crane Machine',
     category: 'Claw Machine',
     tagline: 'High Earning LED Claw Machine for Malls and Gaming Zones',
-    img: arcadeBoy,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeBoy, arcadeHall, arcadegamesImg, bikeArcade],
+    gallery: [arcadegamesImg],
     specs: {
       power: '260 W',
       voltage: '220v',
@@ -381,7 +380,7 @@ export const arcadeProductsData = {
       height: '2050 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Lucky%20Catcher%20Crane%20Machine'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Lucky%20Catcher%20Crane%20Machine'
   },
   'happy-carousel-kiddy-ride': {
     slug: 'happy-carousel-kiddy-ride',
@@ -390,9 +389,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Kiddy Ride',
     category: 'Kiddy Ride',
     tagline: 'Interactive Coin-Operated Carousel Ride for Kids and Toddlers',
-    img: arcadeBoy,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeBoy, arcadeHall, bikeArcade, arcadegamesImg],
+    gallery: [arcadegamesImg],
     specs: {
       power: '350 W',
       voltage: '220v',
@@ -404,7 +403,7 @@ export const arcadeProductsData = {
       height: '1800 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Happy%20Carousel%20Kiddy%20Ride'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Happy%20Carousel%20Kiddy%20Ride'
   },
   'super-speed-mini-racer': {
     slug: 'super-speed-mini-racer',
@@ -415,7 +414,7 @@ export const arcadeProductsData = {
     tagline: 'Safe, Colorful Mini Racing Motion Ride for Children',
     img: bikeArcade,
     heroBg: arcadegame1Bg,
-    gallery: [bikeArcade, arcadegamesImg, arcadeBoy, arcadeHall],
+    gallery: [bikeArcade],
     specs: {
       power: '220 W',
       voltage: '220v',
@@ -427,7 +426,7 @@ export const arcadeProductsData = {
       height: '1050 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Super%20Speed%20Mini%20Racer'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Super%20Speed%20Mini%20Racer'
   },
   'speed-driver-5-twin-motion': {
     slug: 'speed-driver-5-twin-motion',
@@ -436,9 +435,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Twin Motion',
     category: 'Car Racing Game',
     tagline: 'Motion Force-Feedback Twin Car Racing Arcade Machine with HD Screen',
-    img: arcadeBoy,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeBoy, bikeArcade, arcadegamesImg, arcadeHall],
+    gallery: [arcadegamesImg],
     specs: {
       power: '900 W',
       voltage: '220v',
@@ -450,7 +449,7 @@ export const arcadeProductsData = {
       height: '2100 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Speed%20Driver%205%20Twin%20Motion'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Speed%20Driver%205%20Twin%20Motion'
   },
   'outrun-2-supercar-simulator': {
     slug: 'outrun-2-supercar-simulator',
@@ -461,7 +460,7 @@ export const arcadeProductsData = {
     tagline: 'Ultra-Dynamic Force Feedback Supercar Racing Simulator',
     img: bikeArcade,
     heroBg: arcadegame1Bg,
-    gallery: [bikeArcade, arcadegamesImg, arcadeBoy, arcadeHall],
+    gallery: [bikeArcade],
     specs: {
       power: '850 W',
       voltage: '220v',
@@ -473,7 +472,7 @@ export const arcadeProductsData = {
       height: '2050 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20OutRun%202%20Supercar%20Simulator'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20OutRun%202%20Supercar%20Simulator'
   },
   'scarlet-dawn-dual-gun-shooter': {
     slug: 'scarlet-dawn-dual-gun-shooter',
@@ -482,9 +481,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Dual Gun Shooter',
     category: 'Shooting Games',
     tagline: 'Two-Player Recoil Force Arcade Gun Shooter with Immersive Sound',
-    img: arcadeHall,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeHall, arcadegamesImg, arcadeBoy, bikeArcade],
+    gallery: [arcadegamesImg],
     specs: {
       power: '650 W',
       voltage: '220v',
@@ -496,7 +495,7 @@ export const arcadeProductsData = {
       height: '2250 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Scarlet%20Dawn%20Dual%20Gun%20Shooter'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Scarlet%20Dawn%20Dual%20Gun%20Shooter'
   },
   'jurassic-motion-arcade-shooter': {
     slug: 'jurassic-motion-arcade-shooter',
@@ -505,9 +504,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Arcade Shooter',
     category: 'Shooting Games',
     tagline: 'Full Motion Theater Arcade Shooting Game Machine',
-    img: arcadeBoy,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeBoy, arcadeHall, arcadegamesImg, bikeArcade],
+    gallery: [arcadegamesImg],
     specs: {
       power: '950 W',
       voltage: '220v',
@@ -519,7 +518,7 @@ export const arcadeProductsData = {
       height: '2300 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Jurassic%20Motion%20Arcade%20Shooter'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Jurassic%20Motion%20Arcade%20Shooter'
   },
   'dragon-boxer-punching-machine': {
     slug: 'dragon-boxer-punching-machine',
@@ -528,9 +527,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Punching Machine',
     category: 'Strength Based Games',
     tagline: 'Commercial Boxing Punch Strength Tester Arcade Game',
-    img: arcadeHall,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeHall, arcadeBoy, arcadegamesImg, bikeArcade],
+    gallery: [arcadegamesImg],
     specs: {
       power: '120 W',
       voltage: '220v',
@@ -542,7 +541,7 @@ export const arcadeProductsData = {
       height: '2200 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Dragon%20Boxer%20Punching%20Machine'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Dragon%20Boxer%20Punching%20Machine'
   },
   'ultimate-hammer-king-pro': {
     slug: 'ultimate-hammer-king-pro',
@@ -551,9 +550,9 @@ export const arcadeProductsData = {
     nameHighlight: 'Pro',
     category: 'Strength Based Games',
     tagline: 'High Power Hammer Strike Carnival Arcade Machine',
-    img: arcadeBoy,
+    img: arcadegamesImg,
     heroBg: arcadegame1Bg,
-    gallery: [arcadeBoy, arcadeHall, arcadegamesImg, bikeArcade],
+    gallery: [arcadegamesImg],
     specs: {
       power: '150 W',
       voltage: '220v',
@@ -565,7 +564,7 @@ export const arcadeProductsData = {
       height: '2450 mm'
     },
     videoUrl: 'https://youtube.com',
-    quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Ultimate%20Hammer%20King%20Pro'
+    quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Ultimate%20Hammer%20King%20Pro'
   }
 };
 
@@ -579,24 +578,73 @@ export default function ArcadeGameDetail({ siteData }) {
 
   // Selected image index for gallery thumbnails
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [apiProduct, setApiProduct] = useState(null);
 
   useEffect(() => {
     setSelectedImageIndex(0);
   }, [slug]);
 
+  useEffect(() => {
+    let isMounted = true;
+    if (slug) {
+      const isVrSlug = slug.toLowerCase().startsWith('vr-') || slug.toLowerCase().includes('vr');
+      const primaryFetch = isVrSlug ? fetchVrGameBySlug(slug) : fetchArcadeProductBySlug(slug);
+      const secondaryFetch = isVrSlug ? fetchArcadeProductBySlug(slug) : fetchVrGameBySlug(slug);
+
+      primaryFetch.then(res => {
+        const prod = res?.product || res?.game;
+        if (isMounted && prod) {
+          setApiProduct(prod);
+          const gal = Array.isArray(prod.gallery) ? prod.gallery.filter(Boolean) : [];
+          if (gal.length <= 1) {
+            secondaryFetch.then(secRes => {
+              const secProd = secRes?.product || secRes?.game;
+              if (isMounted && secProd) {
+                const secGal = Array.isArray(secProd.gallery) ? secProd.gallery.filter(Boolean) : [];
+                if (secGal.length > gal.length) {
+                  setApiProduct(prev => ({
+                    ...(prev || {}),
+                    ...secProd,
+                    gallery: secGal
+                  }));
+                }
+              }
+            }).catch(() => {});
+          }
+        } else {
+          secondaryFetch.then(secRes => {
+            const secProd = secRes?.product || secRes?.game;
+            if (isMounted && secProd) {
+              setApiProduct(secProd);
+            }
+          }).catch(() => {});
+        }
+      }).catch(() => {
+        secondaryFetch.then(secRes => {
+          const secProd = secRes?.product || secRes?.game;
+          if (isMounted && secProd) {
+            setApiProduct(secProd);
+          }
+        }).catch(() => {});
+      });
+    }
+    return () => { isMounted = false; };
+  }, [slug]);
+
   // Helper to slugify text
   const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-  // Image lookup map for preset products
+  // Image lookup map for preset products (strictly genuine machine visuals, never generic arcade hall photos)
   const categoryDefaultImages = {
-    "Claw Machine": arcadeHall,
+    "Claw Machine": arcadegamesImg,
     "Redemption Game": superAirHockeyImg,
+    "Bike & Car Racing Games": bikeArcade,
     "Bike Racing Game": bikeArcade,
     "Car Racing Game": arcadegamesImg,
-    "Shooting Games": arcadeHall,
-    "VR Games": arcadeBoy,
-    "Kiddy Ride": arcadeBoy,
-    "Strength Based Games": arcadeHall,
+    "Shooting Games": arcadegamesImg,
+    "VR Games": arcadegamesImg,
+    "Kiddy Ride": arcadegamesImg,
+    "Strength Based Games": arcadegamesImg,
     "Arcade Games": arcadegamesImg
   };
 
@@ -609,26 +657,27 @@ export default function ArcadeGameDetail({ siteData }) {
     'aurora-air-hockey': auroraAirHockeyImg,
     'ocha-air-hockey': ochaAirHockeyImg,
     'aero-x-air-hockey': aeroXAirHockeyImg,
-    'astrology-cointopia': arcadeHall,
-    'astrology-capsule-version': arcadeBoy,
-    'toy-story-plush-claw-machine': arcadeHall,
-    'lucky-catcher-crane-machine': arcadeBoy,
+    'astrology-cointopia': arcadegamesImg,
+    'astrology-capsule-version': arcadegamesImg,
+    'toy-story-plush-claw-machine': arcadegamesImg,
+    'lucky-catcher-crane-machine': arcadegamesImg,
     'basketball-star': superAirHockeyImg,
     'pinball-storm': aeroXAirHockeyImg,
-    'larva-kids-ride': arcadeBoy,
-    'happy-carousel-kiddy-ride': arcadeBoy,
+    'larva-kids-ride': arcadegamesImg,
+    'happy-carousel-kiddy-ride': arcadegamesImg,
     'super-speed-mini-racer': bikeArcade,
-    'speed-driver-5-twin-motion': arcadeBoy,
+    'speed-driver-5-twin-motion': arcadegamesImg,
     'outrun-2-supercar-simulator': bikeArcade,
-    'scarlet-dawn-dual-gun-shooter': arcadeHall,
-    'jurassic-motion-arcade-shooter': arcadeBoy,
-    'dragon-boxer-punching-machine': arcadeHall,
-    'ultimate-hammer-king-pro': arcadeBoy
+    'scarlet-dawn-dual-gun-shooter': arcadegamesImg,
+    'jurassic-motion-arcade-shooter': arcadegamesImg,
+    'dragon-boxer-punching-machine': arcadegamesImg,
+    'ultimate-hammer-king-pro': arcadegamesImg
   };
 
-  // Extract dynamic cards from CMS siteData.arcadeCategories
-  const cmsArcadeData = siteData?.arcadeCategories;
-  const cmsCards = Array.isArray(cmsArcadeData?.cards) ? cmsArcadeData.cards : (Array.isArray(cmsArcadeData) ? cmsArcadeData : []);
+  // Extract dynamic cards from CMS siteData.arcadeCategories and siteData.vrCategories
+  const cmsArcadeCards = Array.isArray(siteData?.arcadeCategories?.cards) ? siteData.arcadeCategories.cards : (Array.isArray(siteData?.arcadeCategories) ? siteData.arcadeCategories : []);
+  const cmsVrCards = Array.isArray(siteData?.vrCategories?.cards) ? siteData.vrCategories.cards : (Array.isArray(siteData?.vrCategories) ? siteData.vrCategories : []);
+  const cmsCards = [...cmsArcadeCards, ...cmsVrCards];
 
   // Find dynamic CMS product card matching slug
   const cmsFoundCard = cmsCards.find(c => {
@@ -647,12 +696,11 @@ export default function ArcadeGameDetail({ siteData }) {
     );
   });
 
-  // Find in master catalog (VR prioritized first so accurate Excel VR multi-images and specs take precedence, then Arcade)
+  // Find in master catalog (API product prioritized first, then dynamic VR cards)
   const masterCards = [
-    ...(Array.isArray(allVrGames?.cards) ? allVrGames.cards : []),
-    ...(Array.isArray(allArcadeProducts?.cards) ? allArcadeProducts.cards : [])
+    ...(Array.isArray(siteData?.vrCategories?.cards) ? siteData.vrCategories.cards : [])
   ];
-  const masterFoundCard = masterCards.find(c => {
+  const masterFoundCard = apiProduct || masterCards.find(c => {
     const cardTitleSlug = slugify(c.title || c.name);
     return (
       c.slug === slug ||
@@ -716,20 +764,29 @@ export default function ArcadeGameDetail({ siteData }) {
         }
       }));
 
-  const defaultGallery = defaultProduct.gallery || [defaultProduct.img];
+  // Resolve main image safely, guarding against generic room stock photos
+  let rawMainImg = masterFoundCard?.imageUrl || masterFoundCard?.img || cmsFoundCard?.imageUrl || cmsFoundCard?.img || defaultProduct.img || categoryDefaultImages[masterFoundCard?.category || cmsFoundCard?.category] || arcadegamesImg;
+  if (typeof rawMainImg === 'string' && (rawMainImg === arcadeHall || rawMainImg.includes('ctowdzk3h7ee5rxb2vpn') || rawMainImg === arcadeBoy || rawMainImg.includes('lxgyufz5gdfquteol0qq'))) {
+    rawMainImg = arcadegamesImg;
+  }
+  const resolvedMainImg = getValidImageUrl(rawMainImg, arcadegamesImg);
 
-  // Resolve main image safely
-  const rawMainImg = masterFoundCard?.imageUrl || masterFoundCard?.img || cmsFoundCard?.imageUrl || cmsFoundCard?.img || defaultProduct.img || categoryDefaultImages[masterFoundCard?.category || cmsFoundCard?.category] || arcadegamesImg;
-  const resolvedMainImg = getValidImageUrl(rawMainImg, defaultProduct.img || arcadegamesImg);
-
-  // Collect ONLY uploaded gallery photos
+  // Collect ONLY authentic uploaded gallery photos
   let customGalleries = [];
-  if (Array.isArray(cmsFoundCard?.gallery) && cmsFoundCard.gallery.length > 1) {
-    customGalleries = cmsFoundCard.gallery.filter(g => typeof g === 'string' && g.trim() !== '');
+  const candidateGalleries = [
+    cmsFoundCard?.gallery,
+    apiProduct?.gallery,
+    masterFoundCard?.gallery
+  ];
+  for (const candidate of candidateGalleries) {
+    if (Array.isArray(candidate)) {
+      const valid = candidate.filter(g => typeof g === 'string' && g.trim() !== '');
+      if (valid.length > customGalleries.length) {
+        customGalleries = valid;
+      }
+    }
   }
-  if (customGalleries.length === 0 && Array.isArray(masterFoundCard?.gallery) && masterFoundCard.gallery.length > 0) {
-    customGalleries = masterFoundCard.gallery.filter(g => typeof g === 'string' && g.trim() !== '');
-  }
+
   if (customGalleries.length === 0) {
     const direct = [
       cmsFoundCard?.gallery1,
@@ -744,28 +801,58 @@ export default function ArcadeGameDetail({ siteData }) {
     }
   }
 
+  const productCategory = cmsFoundCard?.category || cmsFoundCard?.specsCategory || masterFoundCard?.category || defaultProduct.category || '';
+
+  const normalizeImgUrl = (url) => {
+    if (!url || typeof url !== 'string') return '';
+    return url.replace(/\/f_auto,q_auto\//g, '/').replace(/\/+$/, '').trim().toLowerCase();
+  };
+
   let galleryList = [];
   if (customGalleries.length > 0) {
     const mapped = customGalleries.map(img => getValidImageUrl(img, resolvedMainImg));
-    if (resolvedMainImg && !mapped.includes(resolvedMainImg)) {
-      galleryList = [resolvedMainImg, ...mapped];
-    } else {
-      galleryList = mapped;
+    const unique = [];
+    const seen = new Set();
+    
+    if (resolvedMainImg) {
+      unique.push(resolvedMainImg);
+      seen.add(normalizeImgUrl(resolvedMainImg));
     }
-  } else if (masterFoundCard?.img || cmsFoundCard?.img || cmsFoundCard?.imageUrl) {
-    galleryList = [resolvedMainImg];
+    
+    for (const img of mapped) {
+      const norm = normalizeImgUrl(img);
+      if (norm && !seen.has(norm)) {
+        seen.add(norm);
+        unique.push(img);
+      }
+    }
+    galleryList = unique;
   } else {
-    // Untouched default fallback mockups
-    galleryList = defaultGallery.map(img => getValidImageUrl(img, resolvedMainImg));
+    galleryList = [resolvedMainImg];
+  }
+
+  // Strictly filter out any room background photos, arcade halls, or non-product stock photos
+  galleryList = galleryList.filter(img => 
+    img && 
+    typeof img === 'string' &&
+    img !== arcadeHall && 
+    !img.includes('ctowdzk3h7ee5rxb2vpn') &&
+    img !== arcadeBoy && 
+    !img.includes('lxgyufz5gdfquteol0qq')
+  );
+
+  // Guarantee at least the authentic resolved main image is present
+  if (galleryList.length === 0 && resolvedMainImg) {
+    galleryList = [resolvedMainImg];
   }
 
   // Calculate nameBase and nameHighlight cleanly to show stylish Black (Base) + Cyan (Highlight) colors
-  const rawTitle = cmsFoundCard?.name || cmsFoundCard?.title || masterFoundCard?.name || masterFoundCard?.title || defaultProduct.name || '';
+  const rawTitle = (cmsFoundCard?.name || cmsFoundCard?.title || masterFoundCard?.name || masterFoundCard?.title || defaultProduct.name || '').replace(/TO\[ GUN/gi, 'TOP GUN');
   let finalNameBase = '';
   let finalNameHighlight = '';
 
   if (cmsFoundCard?.nameBase !== undefined && cmsFoundCard?.nameHighlight !== undefined && (cmsFoundCard.nameBase || cmsFoundCard.nameHighlight)) {
-    finalNameBase = cmsFoundCard.nameBase;
+    finalNameBase = String(cmsFoundCard.nameBase).replace(/TO\[ GUN/gi, 'TOP GUN');
     finalNameHighlight = cmsFoundCard.nameHighlight;
   } else if (cmsFoundCard?.nameHighlight) {
     const highlight = cmsFoundCard.nameHighlight;
@@ -792,8 +879,7 @@ export default function ArcadeGameDetail({ siteData }) {
   }
 
   // Construct dynamic product object
-  const productName = cmsFoundCard?.name || cmsFoundCard?.title || masterFoundCard?.name || masterFoundCard?.title || defaultProduct.name;
-  const productCategory = cmsFoundCard?.category || cmsFoundCard?.specsCategory || masterFoundCard?.category || defaultProduct.category;
+  const productName = (cmsFoundCard?.name || cmsFoundCard?.title || masterFoundCard?.name || masterFoundCard?.title || defaultProduct.name || '').replace(/TO\[ GUN/gi, 'TOP GUN');
 
   const product = {
     name: productName,
@@ -816,7 +902,7 @@ export default function ArcadeGameDetail({ siteData }) {
     },
     gallery: galleryList,
     videoUrl: cmsFoundCard?.videoUrl || defaultProduct.videoUrl,
-    quoteUrl: cmsFoundCard?.quoteUrl || defaultProduct.quoteUrl || `https://wa.me/919428989488?text=${encodeURIComponent(`Hello Winera, I want a quote for ${productName}`)}`,
+    quoteUrl: cmsFoundCard?.quoteUrl || defaultProduct.quoteUrl || `https://wa.me/919157873576?text=${encodeURIComponent(`Hello Winera, I want a quote for ${productName}`)}`,
     features: [
       {
         num: "1.",
@@ -843,8 +929,8 @@ export default function ArcadeGameDetail({ siteData }) {
 
   const isVrProduct = Boolean(
     masterFoundCard?.isVr ||
-    (allVrGames?.cards && allVrGames.cards.some(c => c.slug === slug || (c.name && slugify(c.name) === slug))) ||
-    ['Bester VR', 'Funin VR', 'Funin R', 'Movie Power', 'Oculeap VR', 'VR Games'].some(cat =>
+    (Array.isArray(siteData?.vrCategories?.cards) && siteData.vrCategories.cards.some(c => c.slug === slug || (c.name && slugify(c.name) === slug))) ||
+    ['Bester VR', 'Funin VR', 'Funin R', 'Movie Power', 'Oculeap VR', 'VR Games', 'VR 9D Cinema', 'VR Racing Simulator', 'VR Shooting Simulator', 'VR Flying Simulator', 'Movie Experience', 'VR 360 Simulator', "Kids' Interactive Equipment"].some(cat =>
       (productCategory || '').toLowerCase().includes(cat.toLowerCase()) ||
       (masterFoundCard?.category || '').toLowerCase().includes(cat.toLowerCase())
     )
@@ -908,7 +994,7 @@ export default function ArcadeGameDetail({ siteData }) {
             }}>
               <Link to="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</Link>
               <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
-              <Link to={isVrProduct ? "/vr-games" : "/product/arcade-games"} style={{ color: '#ffffff', textDecoration: 'none' }}>
+              <Link to={isVrProduct ? "/product/vr-games" : "/product/arcade-games"} style={{ color: '#ffffff', textDecoration: 'none' }}>
                 {isVrProduct ? "VR Games" : "Arcade Games"}
               </Link>
               <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
@@ -1015,7 +1101,7 @@ export default function ArcadeGameDetail({ siteData }) {
                           >
                             <img
                               src={thumbUrl}
-                              alt=""
+                              alt={(product.galleryAlt && product.galleryAlt[thumbIdx]) || (product.imgAlt ? `${product.imgAlt} - View ${thumbIdx + 1}` : `${product.name} Angle View ${thumbIdx + 1}`)}
                               onError={(e) => {
                                 e.currentTarget.onerror = null;
                                 e.currentTarget.src = defaultProduct.img || arcadegamesImg;
@@ -1058,7 +1144,7 @@ export default function ArcadeGameDetail({ siteData }) {
                   <img
                     key={selectedImageIndex}
                     src={product.gallery[selectedImageIndex] || product.img || arcadegamesImg}
-                    alt={product.name}
+                    alt={(product.galleryAlt && product.galleryAlt[selectedImageIndex]) || product.imgAlt || `${product.name} Commercial Arcade Game Machine - Winera`}
                     onError={(e) => {
                       e.currentTarget.onerror = null;
                       e.currentTarget.src = defaultProduct.img || arcadegamesImg;
@@ -1081,7 +1167,18 @@ export default function ArcadeGameDetail({ siteData }) {
                 <img
                   src={yellowBrushAccent}
                   alt=""
-                  style={{ width: '380px', maxWidth: '92%', height: '8px', objectFit: 'fill', marginBottom: '4px' }}
+                  className="winera-yellow-stroke"
+                  style={{
+                    width: '180px',
+                    maxWidth: '85%',
+                    height: 'auto',
+                    aspectRatio: '492 / 10',
+                    objectFit: 'contain',
+                    marginBottom: '6px',
+                    marginLeft: 0,
+                    marginRight: 'auto',
+                    display: 'block'
+                  }}
                 />
 
                 {/* Title */}
@@ -1090,7 +1187,7 @@ export default function ArcadeGameDetail({ siteData }) {
                   {product.nameHighlight ? (
                     <>
                       {(!String(product.nameBase || product.name || '').endsWith(' ') && !String(product.nameHighlight || '').startsWith(' ')) ? ' ' : ''}
-                      <span style={{ color: '#38bdf8' }}>{product.nameHighlight}</span>
+                      <span style={{ color: '#0072b8' }}>{product.nameHighlight}</span>
                     </>
                   ) : null}
                 </h2>
@@ -1241,7 +1338,7 @@ export default function ArcadeGameDetail({ siteData }) {
 
                   {/* Button 2: Get a Quote with arcadegame-button-2.png BG */}
                   {(() => {
-                    const rawQuoteUrl = product.quoteUrl || "https://wa.me/919428989488";
+                    const rawQuoteUrl = product.quoteUrl || "https://wa.me/919157873576";
                     let hrefUrl = rawQuoteUrl;
                     if (!rawQuoteUrl.includes('text=')) {
                       const defaultMsg = `Hello Winera International! I want to get a quote for ${product.name || 'this arcade machine'}. Please share price and details. [Ref: Arcade Game - ${product.name || 'Detail'}]`;
@@ -1290,10 +1387,21 @@ export default function ArcadeGameDetail({ siteData }) {
               <img
                 src={yellowBrushAccent}
                 alt=""
-                style={{ width: '380px', maxWidth: '90%', height: '8px', objectFit: 'fill', marginBottom: '4px' }}
+                className="winera-yellow-stroke"
+                style={{
+                  width: '240px',
+                  maxWidth: '85%',
+                  height: 'auto',
+                  aspectRatio: '492 / 10',
+                  objectFit: 'contain',
+                  marginBottom: '8px',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  display: 'block'
+                }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
-                Specification <span style={{ color: '#38bdf8' }}>Detail</span>
+                Specification <span style={{ color: '#0072b8' }}>Detail</span>
               </h2>
             </div>
 
@@ -1352,7 +1460,7 @@ export default function ArcadeGameDetail({ siteData }) {
           subtitle={"We're Ready To Give Answers To <br/>Your Question."}
           description={null}
           buttonText="Get Quote Now"
-          buttonLink={product.quoteUrl || "https://wa.me/919428989488"}
+          buttonLink={product.quoteUrl || "https://wa.me/919157873576"}
         />
       </main>
 

@@ -5,10 +5,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
-import projectsData from '../data/projectsData.json';
+import { fetchProjects } from '../services/api';
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 
 const projectBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/jp7chlrldb0lxltyst5b.png";
-const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const gameZoneMobileBanner = projectPageMobileBanner;
 const projHulaboo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/a52mbp31belkkslptdal.jpg";
 const projNeon1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg";
 const projSoft1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg";
@@ -31,10 +32,13 @@ const resolveProjectImg = (proj) => {
     }
     const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
     if (url.startsWith('http://localhost:5001/uploads/') || url.startsWith('/uploads') || url.includes('/uploads/')) {
+      const uploadPath = url.substring(url.indexOf('/uploads/'));
       if (isLocal) {
-        const uploadPath = url.substring(url.indexOf('/uploads/'));
         return `http://localhost:5001${uploadPath}`;
       }
+      const apiUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '').replace(/\/$/, '') : '';
+      if (apiUrl) return `${apiUrl}${uploadPath}`;
+      return typeof window !== 'undefined' ? `${window.location.origin}${uploadPath}` : uploadPath;
     } else if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
@@ -106,7 +110,7 @@ export default function Project({ siteData }) {
   const ctaData = siteData?.projectCta || {};
 
   const getValidImageUrl = (url, fallback) => {
-    if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+    if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/') || url.includes('eqjkboeokagpaus2ifxa')) {
       return fallback;
     }
     if (url.startsWith('/assets/') || url.startsWith('assets/')) {
@@ -129,7 +133,7 @@ export default function Project({ siteData }) {
     return fallback;
   };
 
-  const renderTitleMarkup = (titleText, fallbackMarkup, accentColor = '#38bdf8') => {
+  const renderTitleMarkup = (titleText, fallbackMarkup, accentColor = '#0072b8') => {
     const text = titleText !== undefined && titleText !== null && titleText !== '' ? titleText : fallbackMarkup;
     if (typeof text !== 'string') return text;
 
@@ -142,16 +146,27 @@ export default function Project({ siteData }) {
   };
 
   const bannerImg = getValidImageUrl(heroData.bannerImg, projectBanner);
+  const mobileBannerImg = getValidImageUrl(heroData.mobileBgUrl, gameZoneMobileBanner);
   const breadcrumbHome = heroData.breadcrumbHome || 'Home';
   const breadcrumbPage = heroData.breadcrumbPage || 'Project';
   const ctaBg = getValidImageUrl(ctaData.bgUrl, projectCtaBg);
-  const ctaLink = ctaData.buttonLink || "https://wa.me/919428989488";
+  const ctaLink = ctaData.buttonLink || "https://wa.me/919157873576";
 
   const [activeCategory, setActiveCategory] = useState("All");
+  const [dynamicProjects, setDynamicProjects] = useState([]);
 
-  // Canonical 15 detailed projects from Website Structure .docx
-  const allProjects = projectsData;
-
+  useEffect(() => {
+    let isMounted = true;
+    fetchProjects()
+      .then(res => {
+        const list = Array.isArray(res) ? res : (res?.projects || res?.data || []);
+        if (isMounted && list.length > 0) {
+          setDynamicProjects(list);
+        }
+      })
+      .catch(err => console.warn('Dynamic projects fetch notice:', err));
+    return () => { isMounted = false; };
+  }, []);
 
   const fifthAlleyObj = {
     id: "fifthalley",
@@ -167,9 +182,11 @@ export default function Project({ siteData }) {
 
   const normalizeSlug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-  const allRawItems = (Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
-    ? siteData.projectItems
-    : allProjects;
+  const allRawItems = (dynamicProjects.length > 0)
+    ? dynamicProjects
+    : (Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
+      ? siteData.projectItems
+      : [];
 
   const isFifthAlleyInactive = allRawItems.some(p => 
     (p.slug === "fifthalley-sport-bowling" || (p.name || "").toLowerCase().includes("fifthalley")) && 
@@ -294,7 +311,7 @@ export default function Project({ siteData }) {
         paddingTop: isPhone ? '55px' : '175px',
         paddingBottom: isPhone ? '0px' : '95px',
         aspectRatio: isPhone ? '941 / 550' : 'auto',
-        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${bannerImg}) center top / 100% 100% no-repeat`,
+        background: isPhone ? `url(${mobileBannerImg}) center top / 100% 100% no-repeat` : `url(${bannerImg}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -303,6 +320,14 @@ export default function Project({ siteData }) {
         color: '#ffffff',
         overflow: 'hidden'
       }}>
+        {/* SEO crawler discoverable image with alt text */}
+        <img
+          src={isPhone ? mobileBannerImg : bannerImg}
+          alt={isPhone ? (heroData.mobileBgAlt || heroData.bannerImgAlt || heroData.bgAlt || "Commercial Game Zone Projects Turnkey Setup - Winera International") : (heroData.bannerImgAlt || heroData.bgAlt || "Commercial Game Zone Projects Turnkey Setup - Winera International")}
+          style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}
+          loading="lazy"
+          decoding="async"
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Breadcrumb: Home › Project */}
           <h1 className="winera-project-hero-h1" style={{
@@ -331,8 +356,8 @@ export default function Project({ siteData }) {
         {/* Title: Crafting India's Best Play Destinations */}
         <div className="winera-project-heading-wrapper">
           <SectionHeading marginBottom="45px" accentWidth="220px" accentMaxWidth="260px">
-            <span className="winera-project-heading-line1">Crafting <span style={{ color: '#00a8ff' }}>India's Best</span></span>{' '}
-            <span className="winera-project-heading-line2" style={{ color: '#00a8ff' }}>Play Destinations</span>
+            <span className="winera-project-heading-line1">Crafting <span style={{ color: '#0072b8' }}>India's Best</span></span>{' '}
+            <span className="winera-project-heading-line2" style={{ color: '#0072b8' }}>Play Destinations</span>
           </SectionHeading>
         </div>
 
@@ -469,13 +494,27 @@ export default function Project({ siteData }) {
                     position: 'relative',
                     height: '360px',
                     boxShadow: '0 15px 35px rgba(0,0,0,0.12)',
-                    background: `url("${resolveProjectImg(proj)}") center/cover no-repeat`,
+                    background: '#0f172a',
                     cursor: 'pointer',
                     backfaceVisibility: 'hidden',
                     WebkitFontSmoothing: 'subpixel-antialiased',
                     willChange: 'transform',
                   }}
                 >
+                  <img
+                    src={resolveProjectImg(proj)}
+                    alt={proj.imgAlt || `${proj.name} Commercial Game Zone Project in ${proj.city || ''}, ${proj.state || 'India'} - Winera`}
+                    loading="lazy"
+                    decoding="async"
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      zIndex: 1,
+                    }}
+                  />
                   <Link
                     to={`/project/${proj.slug || (proj.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`}
                     style={{
@@ -552,13 +591,13 @@ export default function Project({ siteData }) {
         )}
       </section>
 
-      {/* 4. CTA BANNER SECTION */}
+      {/* 3. CTA BANNER SECTION */}
       <CtaBanner
         showOverlay={false}
         align="center"
         buttonTheme="yellow"
         titleFontSize="38px"
-        sectionPadding="20px 4vw 30px"
+        sectionPadding="40px 4vw 60px"
         containerPadding="25px 40px"
         showTextShadow={false}
         bgUrl={
@@ -566,6 +605,7 @@ export default function Project({ siteData }) {
             ? getValidImageUrl(siteData.projectCta.bgUrl, projectCtaBg)
             : null
         }
+        bgAlt={siteData?.projectCta?.bgAlt || "Planning a Game Zone of Your Own? Commercial Game Zone Setup Consultation - Winera"}
         bg={projectCtaBg}
         tagline={null}
         title={
@@ -597,7 +637,7 @@ export default function Project({ siteData }) {
         buttonLink={
           siteData?.projectCta?.buttonLink !== undefined
             ? siteData.projectCta.buttonLink
-            : "https://wa.me/919428989488"
+            : "https://wa.me/919157873576"
         }
       />
 

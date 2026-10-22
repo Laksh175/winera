@@ -6,9 +6,19 @@ import { v2 as cloudinary } from 'cloudinary';
 import Admin from '../models/Admin.js';
 import Content from '../models/Content.js';
 import Project from '../models/Project.js';
+import Blog from '../models/Blog.js';
+import ArcadeProduct from '../models/ArcadeProduct.js';
+import VrGame from '../models/VrGame.js';
 import jwt from 'jsonwebtoken';
+import {
+  addOrUpdateUrlInSitemap,
+  addMultipleUrlsToSitemap,
+  syncAllDatabaseToSitemap,
+  getSitemapXmlContent
+} from '../utils/sitemapService.js';
 
 const projectsData = JSON.parse(fs.readFileSync(new URL('../data/projectsData.json', import.meta.url), 'utf-8'));
+const blogsData = JSON.parse(fs.readFileSync(new URL('../data/blogsData.json', import.meta.url), 'utf-8'));
 
 // Configure Cloudinary from environment variables with safe defaults
 cloudinary.config({
@@ -32,7 +42,7 @@ const storage = multer.diskStorage({
   }
 });
 
-export const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } });
+export const upload = multer({ storage, limits: { fileSize: 100 * 1024 * 1024 } });
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET || 'winera_secret_key_123', {
@@ -71,7 +81,7 @@ export const defaultArcadeFaqs = [
   },
   {
     q: "How Do I Get Started With Ordering Arcade Machines From Winera?",
-    a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Our team will recommend the right machine mix for your space and send a quote ASAP."
+    a: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Our team will recommend the right machine mix for your space and send a quote ASAP."
   },
   {
     q: "Which Arcade Games Give The Best ROI For FECs And Malls In India?",
@@ -95,14 +105,14 @@ export const defaultSiteData = {
       { label: "Projects", href: "/#projects" },
       { label: "Contact Us", href: "/#contact" }
     ],
-    contactPhone: "+91 94289 89488",
-    whatsappNumber: "+919428989488"
+    contactPhone: "+91 91578 73576",
+    whatsappNumber: "+919157873576"
   },
   hero: {
     title: "India's Trusted Game Zone Equipment Manufacturer & Supplier",
     subtitle: "India's ROI-First Game Zone Developer from bowling alleys and trampoline parks to arcade zones and VR gaming & complete indoor amusement park setup, installed by our own team across 50+ cities.",
     ctaPrimaryText: "Plan Your Game Zone",
-    ctaPrimaryLink: "https://wa.me/919428989488",
+    ctaPrimaryLink: "https://wa.me/919157873576",
     ctaSecondaryText: "Explore Products",
     ctaSecondaryLink: "#products",
     heroImage: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1600&q=80"
@@ -208,7 +218,7 @@ export const defaultSiteData = {
     },
     {
       q: "How do I get started with my game zone project?",
-      a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. We're also available on social media."
+      a: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. We're also available on social media."
     },
     {
       q: "Can Winera International help me plan my game zone from scratch?",
@@ -832,7 +842,7 @@ export const defaultSiteData = {
     title: "*Amusement Park Ride*<br/>Manufacturer in India",
     desc: "India's ROI-first amusement park partner rides and attractions sourced, installed, and serviced by our own team across 50+ cities.",
     buttonText: "Get Quote From Expert",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     mainImgUrl: ""
   },
   amusementBanner: {
@@ -859,7 +869,7 @@ export const defaultSiteData = {
     paragraph1: "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline.",
     paragraph2: "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins.",
     buttonText: "Talk to an ROI Expert",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     bottomImgUrl: ""
   },
   amusementFaqs: [
@@ -900,13 +910,13 @@ export const defaultSiteData = {
     title: "*Interactive LED Hypergrid*<br/>Arena Manufacturer in India",
     desc: "Transform your venue into an immersive, active gaming arena with Winera's custom LED floor grid systems, real-time motion tracking, and high-margin active gaming attractions.",
     buttonText: "Get Quote From Expert",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     mainImgUrl: ""
   },
   hypergridSpecs: {
     title: "*Technical* Specifications",
     buttonText: "Download Our Brochure",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     bgUrl: "",
     rows: [
       { spec: "Players", details: "1 to 6 simultaneously" },
@@ -938,7 +948,7 @@ export const defaultSiteData = {
     paragraph1: "Most interactive LED floor game suppliers quote a unit price and leave the business decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any Hypergrid order, our team prepares a complete ROI report for your specific venue — covering equipment cost, projected daily sessions, estimated revenue per session, maintenance costs, and break-even timeline.",
     paragraph2: "Every figure is calculated around your venue type, daily footfall, and target visitor demographic — not an industry average. Very few Hypergrid game suppliers in India include this as a standard part of their process. For Winera, it is where every project starts.",
     buttonText: "Talk to an ROI Expert",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     imgUrl: ""
   },
   hypergridWhyUs: {
@@ -993,7 +1003,7 @@ export const defaultSiteData = {
     cyanText: "HYPERGRID CONSULTATIONS?",
     subtitle: "We're Ready To Give Answers To Your Questions.",
     buttonText: "Talk to an ROI Expert",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     bgUrl: ""
   },
   hypergridSeo: {
@@ -1005,7 +1015,7 @@ export const defaultSiteData = {
     cyanText: "CONSULTATIONS?",
     subtitle: "We're Ready To Give Answers To Your Questions.",
     buttonText: "Talk to an ROI Expert",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     bgUrl: ""
   },
   amusementSeo: {
@@ -1037,7 +1047,7 @@ export const defaultSiteData = {
       }
     ],
     ctaText: "Get Free Consultation",
-    ctaLink: "https://wa.me/919428989488"
+    ctaLink: "https://wa.me/919157873576"
   },
   bumpercarSeo: {
     pageTitle: "Bumper Car Manufacturer in India | Electric & Battery Cars | Winera International",
@@ -1075,7 +1085,7 @@ export const defaultSiteData = {
     title: "*Hypergrid Game*<br/>Supplier in India",
     desc: "India's trusted Hypergrid game supplier commercial-grade interactive LED floor systems, installed and serviced by our own team across 50+ cities.",
     buttonText: "Get A Quote",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     mainImgUrl: "/src/assets/hypergrid-supplier-collage.png"
   },
   hypergridBanner: {
@@ -1095,7 +1105,7 @@ export const defaultSiteData = {
       { spec: "Expected lifespan", details: "8+ years — commercial grade" }
     ],
     buttonText: "Download Our Brochure",
-    buttonLink: "https://wa.me/919428989488"
+    buttonLink: "https://wa.me/919157873576"
   },
   hypergridWhyUs: {
     bgUrl: "/src/assets/hypergrid-why-us-bg.png",
@@ -1122,7 +1132,7 @@ export const defaultSiteData = {
     paragraph1: "Most interactive LED floor game suppliers quote a unit price and leave the business decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any Hypergrid order, our team prepares a complete ROI report for your specific venue — covering equipment cost, projected daily sessions, estimated revenue per session, maintenance costs, and break-even timeline.",
     paragraph2: "Every figure is calculated around your venue type, daily footfall, and target visitor demographic — not an industry average. Very few Hypergrid game suppliers in India include this as a standard part of their process. For Winera, it is where every project starts.",
     buttonText: "Talk to an ROI Expert",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     imgUrl: "/src/assets/hypergrid-image.png"
   },
   hypergridWhyWinera: {
@@ -1200,7 +1210,7 @@ export const defaultSiteData = {
   ],
   hypergridCta: {
     bgUrl: "/src/assets/hypergrid-winera-lastblock.png",
-    buttonLink: "https://wa.me/919428989488"
+    buttonLink: "https://wa.me/919157873576"
   },
   hypergridSeo: {
     pageTitle: "Interactive LED Hypergrid Arena Manufacturer in India | Winera International",
@@ -1208,6 +1218,8 @@ export const defaultSiteData = {
   },
   projectHero: {
     bannerImg: "/src/assets/project-banner.png",
+    mobileBgUrl: "/src/assets/project-page-mobile-banner.png",
+    mobileBgAlt: "Commercial Game Zone Projects Portfolio Mobile Banner - Winera International",
     breadcrumbHome: "Home",
     breadcrumbPage: "Project"
   },
@@ -1219,7 +1231,7 @@ export const defaultSiteData = {
     titleLine3: "in the Heart of Surat",
     description: "How we designed and installed a professional-grade bowling alley across 3,000 sq. ft., transforming an empty space in Katargam into a destination entertainment venue in Surat.",
     buttonText: "Get A Quote",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     image: "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg"
   },
   projectBasicInfo: {
@@ -1262,7 +1274,7 @@ export const defaultSiteData = {
   },
   projectVideo: {
     image: "/src/assets/project-section-video.png",
-    videoUrl: "https://wa.me/919428989488"
+    videoUrl: "https://wa.me/919157873576"
   },
   projectSeo: {
     title: "Our Projects | Turnkey Game Zone & Entertainment Venues by Winera International",
@@ -1270,11 +1282,22 @@ export const defaultSiteData = {
   },
   projectCta: {
     bgUrl: "",
-    buttonLink: "https://wa.me/919428989488"
+    buttonLink: "https://wa.me/919157873576"
   },
   safetyHero: {
     bgUrl: "/src/assets/safety-bg.png",
-    breadcrumbText: "Safety Standards"
+    breadcrumbText: "Safety Standards",
+    bgAlt: "Safety Standards & Quality Certification - Winera",
+    mobileBgUrl: "/src/assets/project-page-mobile-banner.png",
+    mobileBgAlt: "Safety Standards & Quality Certification Mobile Banner - Winera"
+  },
+  aboutHero: {
+    title: "*About* Us",
+    breadcrumbText: "About Us",
+    bgUrl: "/src/assets/about-us-banner.webp",
+    bgAlt: "About Winera International - Commercial Entertainment Solutions",
+    mobileBgUrl: "/src/assets/project-page-mobile-banner.png",
+    mobileBgAlt: "About Winera International Mobile Banner - Commercial Entertainment Solutions"
   },
   safetyIntro: {
     titleLine1: "Game Zone & Kids Play",
@@ -1403,7 +1426,7 @@ export const defaultSiteData = {
     ctaTitle1: "BUILD",
     ctaTitle2: "YOURS NOW",
     buttonText: "Talk to an ROI Expert",
-    buttonLink: "https://wa.me/919428989488"
+    buttonLink: "https://wa.me/919157873576"
   },
   safetySeo: {
     pageTitle: "Equipment Safety Standards | Winera International",
@@ -1411,7 +1434,10 @@ export const defaultSiteData = {
   },
   roiHero: {
     breadcrumbPage: "ROI",
-    bgUrl: "/src/assets/roi-bg-image.png"
+    bgUrl: "/src/assets/roi-bg-image.png",
+    bgAlt: "FEC & Game Zone ROI Calculator - Winera International",
+    mobileBgUrl: "/src/assets/project-page-mobile-banner.png",
+    mobileBgAlt: "FEC & Game Zone ROI Calculator Mobile Banner - Winera International"
   },
   roiIntro: {
     tagline: "Return on Investment (ROI)",
@@ -1421,7 +1447,7 @@ export const defaultSiteData = {
     paragraph1: "Anyone can fill a room with arcade machines. Very few build a game zone that pays back your investment and keeps printing profit month after month.",
     paragraph2: "Most game zone owners lose money in year one — not because gaming is dead, but because the setup, game mix, and management were wrong from day one.",
     buttonText: "Book Your Free ROI Consultation",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     image: "/src/assets/roi-img1.png"
   },
   roiMatters: {
@@ -1502,7 +1528,7 @@ export const defaultSiteData = {
     cyanText: "NUMBERS?",
     subtitle: "Book A Free Consultation With Winera International. We'll Walk You Through The ROI Projection For Your Space, Your Budget, And Your City — Before You Spend Anything.",
     buttonText: "Book Your Free ROI Call",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     bgUrl: "/src/assets/home-block.png"
   },
   roiSeo: {
@@ -1511,100 +1537,12 @@ export const defaultSiteData = {
   },
   blogHero: {
     breadcrumbText: "Blog",
-    bgUrl: "/src/assets/blog-image-bg.png"
+    bgUrl: "/src/assets/blog-image-bg.png",
+    bgAlt: "Winera International Game Zone & Entertainment Industry Blog",
+    mobileBgUrl: "/src/assets/project-page-mobile-banner.png",
+    mobileBgAlt: "Winera International Game Zone & Entertainment Industry Blog Mobile Banner"
   },
-  blogPosts: [
-    {
-      id: 1,
-      title: "Soft Play vs Trampoline Park: Which",
-      subtitle: "Is Better for Your Space?",
-      line1: "Soft play or trampoline park? Discover",
-      line2: "the key differences in investment, space",
-      line3: "requirements, safety, and revenue.....",
-      date: "Aug 22, 2026",
-      image: "/src/assets/blog-images.png"
-    },
-    {
-      id: 2,
-      title: "Soft Play vs Trampoline Park: Which",
-      subtitle: "Is Better for Your Space?",
-      line1: "Soft play or trampoline park? Discover",
-      line2: "the key differences in investment, space",
-      line3: "requirements, safety, and revenue.....",
-      date: "Aug 22, 2026",
-      image: "/src/assets/blog-images.png"
-    },
-    {
-      id: 3,
-      title: "Soft Play vs Trampoline Park: Which",
-      subtitle: "Is Better for Your Space?",
-      line1: "Soft play or trampoline park? Discover",
-      line2: "the key differences in investment, space",
-      line3: "requirements, safety, and revenue.....",
-      date: "Aug 22, 2026",
-      image: "/src/assets/blog-images.png"
-    },
-    {
-      id: 4,
-      title: "Soft Play vs Trampoline Park: Which",
-      subtitle: "Is Better for Your Space?",
-      line1: "Soft play or trampoline park? Discover",
-      line2: "the key differences in investment, space",
-      line3: "requirements, safety, and revenue.....",
-      date: "Aug 22, 2026",
-      image: "/src/assets/blog-images.png"
-    },
-    {
-      id: 5,
-      title: "Soft Play vs Trampoline Park: Which",
-      subtitle: "Is Better for Your Space?",
-      line1: "Soft play or trampoline park? Discover",
-      line2: "the key differences in investment, space",
-      line3: "requirements, safety, and revenue.....",
-      date: "Aug 22, 2026",
-      image: "/src/assets/blog-images.png"
-    },
-    {
-      id: 6,
-      title: "Soft Play vs Trampoline Park: Which",
-      subtitle: "Is Better for Your Space?",
-      line1: "Soft play or trampoline park? Discover",
-      line2: "the key differences in investment, space",
-      line3: "requirements, safety, and revenue.....",
-      date: "Aug 22, 2026",
-      image: "/src/assets/blog-images.png"
-    },
-    {
-      id: 7,
-      title: "Soft Play vs Trampoline Park: Which",
-      subtitle: "Is Better for Your Space?",
-      line1: "Soft play or trampoline park? Discover",
-      line2: "the key differences in investment, space",
-      line3: "requirements, safety, and revenue.....",
-      date: "Aug 22, 2026",
-      image: "/src/assets/blog-images.png"
-    },
-    {
-      id: 8,
-      title: "Soft Play vs Trampoline Park: Which",
-      subtitle: "Is Better for Your Space?",
-      line1: "Soft play or trampoline park? Discover",
-      line2: "the key differences in investment, space",
-      line3: "requirements, safety, and revenue.....",
-      date: "Aug 22, 2026",
-      image: "/src/assets/blog-images.png"
-    },
-    {
-      id: 9,
-      title: "Soft Play vs Trampoline Park: Which",
-      subtitle: "Is Better for Your Space?",
-      line1: "Soft play or trampoline park? Discover",
-      line2: "the key differences in investment, space",
-      line3: "requirements, safety, and revenue.....",
-      date: "Aug 22, 2026",
-      image: "/src/assets/blog-images.png"
-    }
-  ],
+  blogPosts: blogsData,
   homeSeo: {
     pageTitle: "Game Zone Equipment Manufacturer in India | Winera International",
     metaDescription: "Winera International is your trusted Game Zone Equipment Manufacturer and Indoor Play Equipment Manufacturer in India since 2014. Get Amazing deals!"
@@ -1633,7 +1571,7 @@ export const defaultSiteData = {
     title: "*Bowling Alley*<br/>Manufacturers in India",
     desc: "India's trusted source for refurbished Brunswick bowling equipment — complete setup, installation, and a free ROI report before you invest.",
     buttonText: "Get Quote From Expert",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     waMessage: "Hello Winera International! I want to get a quote and estimation for a Bowling Alley setup. Please share details. [Ref: Bowling Alley Page]",
     mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344866/winera_uploads/xrp2eoojjxjr7iiywstj.png",
     imgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344866/winera_uploads/xrp2eoojjxjr7iiywstj.png"
@@ -1675,7 +1613,7 @@ export const defaultSiteData = {
     title: "Know Your Returns *Before You Invest*",
     p1: "A bowling alley is one of the highest-earning attractions in any entertainment venue — but the numbers need to work for your specific location. We calculate your estimated daily bowler count, lane turnover, running costs, and monthly revenue so you know exactly what return to expect before you spend.",
     btnText: "Talk to an ROI Expert",
-    videoUrl: "https://wa.me/919428989488",
+    videoUrl: "https://wa.me/919157873576",
     btnBg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344887/winera_uploads/kw0kya2v0nvmkmleahtw.png",
     mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344884/winera_uploads/bazxjkdohyk64kudmqnx.png",
     imgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344884/winera_uploads/bazxjkdohyk64kudmqnx.png"
@@ -1725,7 +1663,9 @@ export const defaultSiteData = {
   },
   lasertagHero: {
     breadcrumbText: "Laser Tag",
-    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289365/winera_uploads/eyseeavds5nxr2bgyw5y.png"
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289365/winera_uploads/eyseeavds5nxr2bgyw5y.png",
+    mobileBgUrl: "/src/assets/project-page-mobile-banner.png",
+    mobileBgAlt: "Commercial Laser Tag Arena Equipment & Setup Mobile Banner - Winera"
   },
   lasertagIntro: {
     titleHighlight: "Laser Tag Gaming Equipment",
@@ -1733,7 +1673,7 @@ export const defaultSiteData = {
     title: "*Laser Tag Gaming<br/>Equipment* & Laser Spy<br/>Supplier in India",
     desc: "Turn your venue into a place people book again and again. We set up complete laser tag and laser spy games for venues across India. arenas equipment, design, installation, and support handled by our own team across 50+ cities.",
     buttonText: "Get A Quote",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     waMessage: "Hello Winera International! I want to get a quote for Laser Tag & Laser Spy Equipment setup. Please share details.",
     mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289349/winera_uploads/elpoxj7ydvsuhbwoocnk.png"
   },
@@ -1766,7 +1706,7 @@ export const defaultSiteData = {
     title: "*Technical* Specifications",
     bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289356/winera_uploads/rzfmnxulpmws60hun51o.png",
     buttonText: "Download Our Brochure",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     waMessage: "Hello Winera International! I want to download the Laser Tag Equipment & Setup Brochure. Please share details.",
     specHeading: "Specification",
     detailsHeading: "Details",
@@ -1832,7 +1772,7 @@ export const defaultSiteData = {
     title: "*Technical* Specifications",
     bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289356/winera_uploads/rzfmnxulpmws60hun51o.png",
     buttonText: "Download Our Brochure",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     waMessage: "Hello Winera International! I want to download the Laser Spy Equipment & Setup Brochure. Please share details.",
     specHeading: "Specification",
     detailsHeading: "Details",
@@ -1877,7 +1817,7 @@ export const defaultSiteData = {
     paragraph1: "Buying a laser tag or laser spy setup is a big decision, and you shouldn't have to guess whether it will pay off. That's why every project with Winera starts with a free ROI report built around your venue, not a general estimate copied from a brochure.",
     paragraph2: "We work out how many games you can run each day, how much you can earn from them, what upkeep will cost, and how soon you'll make your money back. Both games are strong earners because they pull in groups, parties, office teams, and school outings that book many players at once and with just one staff member running the show, you keep costs low and games flowing. You'll see the full picture first, then decide.",
     buttonText: "Talk to an ROI Expert",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     waMessage: "Hello Winera International! I want to talk to an ROI Expert regarding Laser Tag and Laser Spy setup for my venue.",
     mainImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/c4xhhkjcjwhagwd8drzm.png",
     bgImgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/b2chyjep2n8etsts6zrh.png"
@@ -1927,7 +1867,7 @@ export const defaultSiteData = {
     title: "Thinking About Adding Laser Tag<br/>& Laser Spy To Your Venue?",
     subtitle: "Book a free call and we'll walk you through with a free ROI report and a plan made for your venue",
     buttonText: "Get a Quote on WhatsApp",
-    buttonLink: "https://wa.me/919428989488"
+    buttonLink: "https://wa.me/919157873576"
   },
   safetySeo: {
     pageTitle: "Where Game Zone Safety Comes First | Winera International",
@@ -1948,6 +1888,32 @@ export const defaultSiteData = {
   termsSeo: {
     pageTitle: "Terms of Service | Winera International",
     metaDescription: "Read Winera International's Terms of Service outlining your rights, responsibilities, and guidelines for using our game zone equipment and setup in India."
+  },
+  contactHero: {
+    breadcrumbHome: "Home",
+    breadcrumbText: "Contact Us",
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/z2qo5dtx8u7tyfvzjhmr.png",
+    bgAlt: "Contact Winera International - Commercial Game Zone Setup & Turnkey Solutions",
+    mobileBgUrl: "/src/assets/project-page-mobile-banner.png",
+    mobileBgAlt: "Contact Winera International Mobile Banner - Commercial Game Zone Setup & Turnkey Solutions"
+  },
+  privacyHero: {
+    title: "Privacy *Policy*",
+    breadcrumbHome: "Home",
+    breadcrumbText: "Privacy Policy",
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345517/winera_uploads/wa3oylkwg39op9yozk90.png",
+    bgAlt: "Privacy Policy - Winera International",
+    mobileBgUrl: "/src/assets/project-page-mobile-banner.png",
+    mobileBgAlt: "Privacy Policy Mobile Banner - Winera International"
+  },
+  termsHero: {
+    title: "Terms & *Conditions*",
+    breadcrumbHome: "Home",
+    breadcrumbText: "Terms & Conditions",
+    bgUrl: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345517/winera_uploads/wa3oylkwg39op9yozk90.png",
+    bgAlt: "Terms & Conditions - Winera International",
+    mobileBgUrl: "/src/assets/project-page-mobile-banner.png",
+    mobileBgAlt: "Terms & Conditions Mobile Banner - Winera International"
   }
 };
 
@@ -2020,33 +1986,45 @@ export const getContent = async (req, res) => {
       }
     }
 
-    // Auto-clean stale dummy blogPosts from MongoDB so 28 rich blogs with local assets load cleanly
-    if (Array.isArray(siteData.blogPosts) && siteData.blogPosts.length > 0 && (
-      siteData.blogPosts[0]?.title === 'Blog 1' ||
-      siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
-    )) {
-      await Content.deleteOne({ sectionKey: 'blogPosts' });
-      delete siteData.blogPosts;
+    // Auto-clean stale or empty mobile banner images from MongoDB to unified project-page-mobile-banner
+    const mobileBannerSections = ['projectHero', 'roiHero', 'safetyHero', 'aboutHero', 'blogHero', 'lasertagHero', 'contactHero', 'privacyHero', 'termsHero'];
+    for (const secKey of mobileBannerSections) {
+      if (siteData[secKey]) {
+        if (!siteData[secKey].mobileBgUrl || siteData[secKey].mobileBgUrl.includes('eqjkboeokagpaus2ifxa')) {
+          siteData[secKey].mobileBgUrl = "/src/assets/project-page-mobile-banner.png";
+          await Content.findOneAndUpdate(
+            { sectionKey: secKey },
+            { sectionKey: secKey, data: siteData[secKey] },
+            { upsert: true, new: true }
+          );
+        }
+      }
     }
 
-    // Auto-clean stale dummy blogPosts from MongoDB so 28 rich blogs with local assets load cleanly
-    if (Array.isArray(siteData.blogPosts) && siteData.blogPosts.length > 0 && (
+    // Auto-ensure dynamic blogs from MongoDB Blog collection are loaded into siteData.blogPosts
+    const isStaleBlogPosts = Array.isArray(siteData.blogPosts) && siteData.blogPosts.length > 0 && (
       siteData.blogPosts[0]?.title === 'Blog 1' ||
-      (siteData.blogPosts[0]?.title?.includes('Soft Play vs Trampoline Park: Which') && siteData.blogPosts.length < 15) ||
       siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
-    )) {
-      await Content.deleteOne({ sectionKey: 'blogPosts' });
-      delete siteData.blogPosts;
+    );
+    if (!Array.isArray(siteData.blogPosts) || siteData.blogPosts.length === 0 || isStaleBlogPosts) {
+      const activeBlogs = await Blog.find({ isPublished: { $ne: false } }).sort({ id: 1, createdAt: -1 });
+      siteData.blogPosts = activeBlogs.length > 0 ? activeBlogs.map(b => (b.toObject ? b.toObject() : b)) : blogsData;
+      await Content.findOneAndUpdate(
+        { sectionKey: 'blogPosts' },
+        { sectionKey: 'blogPosts', data: siteData.blogPosts },
+        { upsert: true, new: true }
+      );
     }
 
     // Auto-ensure detailed case study projects from docx are present in MongoDB if empty
     if (!Array.isArray(siteData.projectItems) || siteData.projectItems.length === 0) {
+      const activeProjects = await Project.find({ isActive: { $ne: false }, status: { $ne: 'inactive' } }).sort({ createdAt: 1 });
+      siteData.projectItems = activeProjects.length > 0 ? activeProjects.map(p => p.toObject ? p.toObject() : p) : projectsData;
       await Content.findOneAndUpdate(
         { sectionKey: 'projectItems' },
-        { sectionKey: 'projectItems', data: projectsData },
+        { sectionKey: 'projectItems', data: siteData.projectItems },
         { upsert: true, new: true }
       );
-      siteData.projectItems = projectsData;
     } else if (Array.isArray(siteData.projectItems) && siteData.projectItems.some(p => p.slug === 'funfair' || p.slug === 'skidz-play-spaces')) {
       const cleanedProjects = siteData.projectItems.filter(p => p.slug !== 'funfair' && p.slug !== 'skidz-play-spaces');
       await Content.findOneAndUpdate(
@@ -2141,6 +2119,26 @@ export const getContent = async (req, res) => {
       }
     }
 
+    if (req.query.page === 'home') {
+      const homeSections = [
+        'header', 'hero', 'stats', 'statsHeader',
+        'clientLogos', 'clientsHeader', 'aboutHome',
+        'channelPartners', 'channelPartnersHeader',
+        'productsHome', 'partnerHome', 'industriesHeader',
+        'processHome', 'builtProjects', 'builtProjectsHeader',
+        'projectItems', 'whyChooseUs', 'testimonials',
+        'testimonialsHeader', 'faqs', 'faqsHeader',
+        'ctaBanner', 'footer', 'homeSeo'
+      ];
+      const filteredData = {};
+      homeSections.forEach(k => {
+        if (siteData[k] !== undefined) {
+          filteredData[k] = siteData[k];
+        }
+      });
+      return res.json(filteredData);
+    }
+
     res.json(siteData);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -2163,6 +2161,21 @@ export const updateContent = async (req, res) => {
       await content.save();
     } else {
       content = await Content.create({ sectionKey, data });
+    }
+
+    if (sectionKey === 'blogPosts' && Array.isArray(data)) {
+      try {
+        for (const blogItem of data) {
+          const itemSlug = blogItem.slug || (blogItem.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          await Blog.findOneAndUpdate(
+            { $or: [{ slug: itemSlug }, { id: blogItem.id || itemSlug }] },
+            { $set: { ...blogItem, slug: itemSlug } },
+            { upsert: true }
+          );
+        }
+      } catch (blogErr) {
+        console.warn('Failed to sync Blog collection:', blogErr.message);
+      }
     }
 
     if (sectionKey === 'projectItems' && Array.isArray(data)) {
@@ -2209,6 +2222,57 @@ export const updateContent = async (req, res) => {
       }
     }
 
+    // Automatic SEO Sitemap Synchronizer (Code-driven, zero admin manual management required)
+    try {
+      if (sectionKey === 'blogPosts') {
+        const blogsArray = Array.isArray(data) ? data : (data?.posts && Array.isArray(data.posts) ? data.posts : []);
+        const blogUrls = blogsArray
+          .filter(b => b && (b.slug || b.title))
+          .map(b => ({
+            url: `https://winera.in/blog/${b.slug || b.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`,
+            priority: '0.8',
+            changefreq: 'weekly'
+          }));
+        if (blogUrls.length > 0) {
+          addMultipleUrlsToSitemap(blogUrls).catch(e => console.warn('Auto-sitemap blog sync error:', e?.message));
+        }
+      } else if (sectionKey === 'projectItems') {
+        const projsArray = Array.isArray(data) ? data : [];
+        const projUrls = projsArray
+          .filter(p => p && (p.slug || p.name))
+          .map(p => ({
+            url: `https://winera.in/project/${p.slug || p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`,
+            priority: '0.8',
+            changefreq: 'weekly'
+          }));
+        if (projUrls.length > 0) {
+          addMultipleUrlsToSitemap(projUrls).catch(e => console.warn('Auto-sitemap project sync error:', e?.message));
+        }
+      } else if (sectionKey === 'arcadeCategories' || sectionKey === 'vrCategories' || sectionKey === 'vrRange') {
+        const cards = data?.cards && Array.isArray(data.cards) ? data.cards : (Array.isArray(data) ? data : []);
+        const prodUrls = cards
+          .filter(c => c && (c.slug || c.title || c.name))
+          .map(c => ({
+            url: `https://winera.in/product/${c.slug || (c.title || c.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`,
+            priority: '0.8',
+            changefreq: 'monthly'
+          }));
+        const catUrls = (data?.categoriesList && Array.isArray(data.categoriesList) ? data.categoriesList : [])
+          .filter(Boolean)
+          .map(cat => ({
+            url: `https://winera.in/product/${cat.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`,
+            priority: '0.9',
+            changefreq: 'weekly'
+          }));
+        const combined = [...prodUrls, ...catUrls];
+        if (combined.length > 0) {
+          addMultipleUrlsToSitemap(combined).catch(e => console.warn('Auto-sitemap product/category sync error:', e?.message));
+        }
+      }
+    } catch (sitemapErr) {
+      console.warn('Auto-sitemap update notice:', sitemapErr?.message);
+    }
+
     res.json({ message: `Section '${sectionKey}' updated successfully`, content });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -2227,13 +2291,60 @@ export const uploadImage = async (req, res) => {
     api_secret: process.env.CLOUDINARY_API_SECRET || 'eWxHZbi60csujh5_BpDln8qIQmA'
   });
 
+  const ext = path.extname(req.file.path).toLowerCase();
+  const isDocument = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip'].includes(ext);
+
+  // For documents/PDF brochures: Send directly to Cloudinary (no local server storage fallback!)
+  // If on Free plan, Cloudinary automatically enforces its 10MB limit.
+  // If on a Paid/Pro plan, Cloudinary automatically allows higher sizes (e.g. 20MB, 50MB, 100MB)!
+  if (isDocument) {
+    try {
+      const uploadOptions = {
+        folder: 'winera_uploads/brochures',
+        resource_type: 'auto',
+        use_filename: true,
+        unique_filename: true
+      };
+
+      const result = await cloudinary.uploader.upload(req.file.path, uploadOptions);
+      if (fs.existsSync(req.file.path)) {
+        try { fs.unlinkSync(req.file.path); } catch (e) {}
+      }
+      return res.json({ url: result.secure_url, filename: result.public_id, isCloudinary: true });
+    } catch (err) {
+      if (fs.existsSync(req.file.path)) {
+        try { fs.unlinkSync(req.file.path); } catch (e) {}
+      }
+      console.error('Cloudinary document upload error:', err?.message || err);
+      const errMsg = err?.message || 'Upload error';
+      if (errMsg.toLowerCase().includes('file size too large') || errMsg.toLowerCase().includes('maximum is')) {
+        const maxMatch = errMsg.match(/maximum is (\d+)/i);
+        const gotMatch = errMsg.match(/got (\d+)/i);
+        const maxMB = maxMatch ? (parseInt(maxMatch[1], 10) / (1024 * 1024)).toFixed(0) : '10';
+        const gotMB = gotMatch ? (parseInt(gotMatch[1], 10) / (1024 * 1024)).toFixed(1) : '';
+        return res.status(400).json({
+          message: `Cloudinary limit reached: File size ${gotMB ? `(${gotMB} MB) ` : ''}exceeds your Cloudinary account plan limit (${maxMB} MB). If you are currently on Cloudinary's Free plan, the limit is 10 MB. Please compress your PDF via iLovePDF or upgrade your Cloudinary plan for larger files.`
+        });
+      }
+      return res.status(400).json({
+        message: `Cloudinary upload failed: ${errMsg}`
+      });
+    }
+  }
+
+  // Image upload handling for Cloudinary
   try {
-    const result = await cloudinary.uploader.upload(req.file.path, {
+    const uploadOptions = {
       folder: 'winera_uploads',
+      resource_type: 'image',
+      use_filename: true,
+      unique_filename: true,
       transformation: [
         { quality: 'auto', fetch_format: 'auto' }
       ]
-    });
+    };
+
+    const result = await cloudinary.uploader.upload(req.file.path, uploadOptions);
     // Remove temporary local file after Cloudinary upload
     if (fs.existsSync(req.file.path)) {
       try { fs.unlinkSync(req.file.path); } catch (e) {}
@@ -2242,9 +2353,10 @@ export const uploadImage = async (req, res) => {
     if (optUrl && optUrl.includes('/upload/') && !optUrl.includes('/f_auto,q_auto/')) {
       optUrl = optUrl.replace('/upload/', '/upload/f_auto,q_auto/');
     }
-    return res.json({ url: optUrl, filename: result.public_id });
+    return res.json({ url: optUrl, filename: result.public_id, isCloudinary: true });
   } catch (err) {
-    console.error('Cloudinary upload error, falling back to local storage:', err);
+    console.warn('Cloudinary image upload notice:', err?.message || err);
+    // Fall through to local sharp webp storage for images
   }
 
   // Local fallback: auto-convert image to .webp format via sharp
@@ -2273,7 +2385,7 @@ export const uploadImage = async (req, res) => {
   }
 
   const fileUrl = `${protocol}://${host}/uploads/${finalFilename}`;
-  res.json({ url: fileUrl, filename: finalFilename });
+  res.json({ url: fileUrl, filename: finalFilename, isCloudinary: false, note: 'Saved to server storage (exceeded Cloudinary free limit or Cloudinary notice)' });
 };
 
 export const mutateContentItem = async (req, res) => {
@@ -2339,6 +2451,51 @@ export const mutateContentItem = async (req, res) => {
         await contentDoc.save();
       } else {
         contentDoc = await Content.create({ sectionKey, data: catData });
+      }
+
+      // Also keep ArcadeProduct and VrGame dedicated collections in sync
+      try {
+        const itemSlug = item?.slug || (item?.title || item?.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        if (sectionKey === 'arcadeCategories') {
+          if (action === 'delete') {
+            const delVal = matchValue || itemSlug;
+            if (delVal) await ArcadeProduct.deleteOne({ $or: [{ slug: delVal }, { name: delVal }] });
+          } else if (item) {
+            await ArcadeProduct.findOneAndUpdate(
+              { $or: [{ slug: itemSlug }, { name: item.name || item.title }] },
+              { $set: { ...item, slug: itemSlug, name: item.name || item.title, title: item.title || item.name } },
+              { upsert: true, new: true }
+            );
+          }
+        } else if (sectionKey === 'vrCategories' || sectionKey === 'vrRange') {
+          if (action === 'delete') {
+            const delVal = matchValue || itemSlug;
+            if (delVal) await VrGame.deleteOne({ $or: [{ slug: delVal }, { name: delVal }] });
+          } else if (item) {
+            await VrGame.findOneAndUpdate(
+              { $or: [{ slug: itemSlug }, { name: item.name || item.title }] },
+              { $set: { ...item, slug: itemSlug, name: item.name || item.title, title: item.title || item.name } },
+              { upsert: true, new: true }
+            );
+          }
+        }
+      } catch (syncErr) {
+        console.warn(`Sync ${sectionKey} to model warning:`, syncErr?.message);
+      }
+
+      if (action !== 'delete' && item) {
+        try {
+          const itemSlug = item.slug || (item.title || item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          if (itemSlug) {
+            addOrUpdateUrlInSitemap({ url: `https://winera.in/product/${itemSlug}`, priority: '0.8', changefreq: 'monthly' }).catch(() => {});
+          }
+          if (item.category) {
+            const catSlug = item.category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            if (catSlug) {
+              addOrUpdateUrlInSitemap({ url: `https://winera.in/product/${catSlug}`, priority: '0.9', changefreq: 'weekly' }).catch(() => {});
+            }
+          }
+        } catch (sErr) {}
       }
 
       return res.json({
@@ -2430,6 +2587,23 @@ export const mutateContentItem = async (req, res) => {
       }
     }
 
+    // Auto-sync added or updated items to sitemap
+    if (action !== 'delete' && item) {
+      try {
+        if (sectionKey === 'projectItems') {
+          const itemSlug = item.slug || (item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          if (itemSlug) {
+            addOrUpdateUrlInSitemap({ url: `https://winera.in/project/${itemSlug}`, priority: '0.8', changefreq: 'weekly' }).catch(() => {});
+          }
+        } else if (sectionKey === 'blogPosts') {
+          const itemSlug = item.slug || (item.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          if (itemSlug) {
+            addOrUpdateUrlInSitemap({ url: `https://winera.in/blog/${itemSlug}`, priority: '0.8', changefreq: 'weekly' }).catch(() => {});
+          }
+        }
+      } catch (sErr) {}
+    }
+
     return res.json({
       success: true,
       message: `Item in '${sectionKey}' ${action}ed successfully`,
@@ -2441,5 +2615,25 @@ export const mutateContentItem = async (req, res) => {
   }
 };
 
+// @desc    Trigger full sitemap sync from all DB models and site data
+// @route   POST /api/admin/sitemap/sync
+export const syncSitemapController = async (req, res) => {
+  try {
+    const result = await syncAllDatabaseToSitemap();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
-
+// @desc    Serve sitemap.xml dynamically with XML content-type
+// @route   GET /sitemap.xml or GET /api/sitemap.xml
+export const getSitemapXmlController = (req, res) => {
+  try {
+    const xml = getSitemapXmlContent();
+    res.set('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (error) {
+    res.status(500).send('Error generating sitemap XML');
+  }
+};

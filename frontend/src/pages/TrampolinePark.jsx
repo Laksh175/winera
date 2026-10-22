@@ -8,6 +8,8 @@ import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import LeadCaptureModal from '../components/LeadCaptureModal';
 import MobileExpandableText from '../components/MobileExpandableText';
+import BrochureModal from '../components/BrochureModal';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 const trampolineParkBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345688/winera_uploads/nri2vtjcndonajowvvqw.png";
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 const ctaConsultationsBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
@@ -25,6 +27,38 @@ const talkToRoiButtonImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_a
 const ctaBtn3 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/vgckfg2bwupvrlk4sva2.png";
 const trampolineMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345500/winera_uploads/dkzoc8fluvnby5coqgjp.png";
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
+import freeJumpImg from '../assets/trampoline-park/Free jump.jpg.jpeg';
+import dunkHoopsImg from '../assets/trampoline-park/Dunk hoops.webp';
+import zipLineImg from '../assets/trampoline-park/Zip line.jpg.jpeg';
+import obstacleImg from '../assets/trampoline-park/Obstacle.webp';
+import airBagImg from '../assets/trampoline-park/Air bag.webp';
+import climbingWallImg from '../assets/trampoline-park/Climbing Wall.jpg.jpeg';
+import ninjaCourseImg from '../assets/trampoline-park/ninja cource.webp';
+import foamCubeImg from '../assets/trampoline-park/foam cube.webp';
+
+const zoneImageMap = {
+  'free-jump': freeJumpImg,
+  'free jump zones': freeJumpImg,
+  'free jump': freeJumpImg,
+  'dunk-hoops': dunkHoopsImg,
+  'dunk hoops': dunkHoopsImg,
+  'zip-line': zipLineImg,
+  'zip line': zipLineImg,
+  'obstacle-courts': obstacleImg,
+  'obstacle courts': obstacleImg,
+  'obstacle': obstacleImg,
+  'air-bags': airBagImg,
+  'air bags': airBagImg,
+  'air bag': airBagImg,
+  'climbing-wall': climbingWallImg,
+  'climbing wall': climbingWallImg,
+  'ninja-courses': ninjaCourseImg,
+  'ninja courses': ninjaCourseImg,
+  'ninja cource': ninjaCourseImg,
+  'foam-cubes': foamCubeImg,
+  'foam cubes': foamCubeImg,
+  'foam cube': foamCubeImg
+};
 
 
 const getValidImageUrl = (url, fallback) => {
@@ -42,7 +76,8 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#00a8ff') ? '#0072b8' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -63,7 +98,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 
     if (isHighlighted) {
       return (
-        <span key={pIdx} style={{ color: highlightColor }}>
+        <span key={pIdx} style={{ color: actualHighlight }}>
           {renderedContent}
         </span>
       );
@@ -75,6 +110,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
 export default function TrampolinePark({ siteData }) {
   const [activeZoneIndex, setActiveZoneIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBrochureOpen, setIsBrochureOpen] = useState(false);
   const tabsScrollRef = useRef(null);
 
   useEffect(() => {
@@ -103,70 +139,86 @@ export default function TrampolinePark({ siteData }) {
     metaTag.content = metaDesc;
   }, [siteData]);
 
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
 
-  const bgImage = siteData?.trampolineHero?.bgUrl || trampolineParkBg;
+  const currentMobileBg = getValidImageUrl(siteData?.trampolineHero?.mobileBgUrl, trampolineMobileHeroBg);
+  const bgImage = isMobile ? currentMobileBg : (siteData?.trampolineHero?.bgUrl || trampolineParkBg);
 
   const defaultParkZones = [
     {
       id: "free-jump",
       title: "Free Jump Zones",
       desc: "Free jump zones are open trampoline areas where visitors of all ages jump freely without restrictions. They are the primary attraction of any trampoline park — simple to supervise, high throughput, and effective at keeping visitors active throughout their session. Suitable for all age groups from 3 years upward.",
-      img: tampolineImg5
+      img: freeJumpImg
     },
     {
       id: "dunk-hoops",
       title: "Dunk Hoops",
       desc: "Dunk hoops are basketball hoops mounted above trampolines so visitors can jump and slam-dunk — something impossible at standard court height. A consistently popular zone with teenagers and young adults that extends session time. Low maintenance and easy to integrate into any free jump area.",
-      img: tampolineImg5
+      img: dunkHoopsImg
     },
     {
       id: "zip-line",
       title: "Zip Line",
       desc: "An indoor zip line where visitors glide from an elevated platform to a foam landing pit. The zip line is an aerial experience that most standard trampoline parks do not include, making it a strong differentiator for venues wanting a premium attraction mix. Suitable for visitors aged 6 and above.",
-      img: tampolineImg5
+      img: zipLineImg
     },
     {
       id: "obstacle-courts",
       title: "Obstacle Courts",
       desc: "Obstacle courts are connected physical challenge courses built across trampoline surfaces jumping, dodging, climbing, and balancing in a single run. They work particularly well for school group bookings, birthday parties, and corporate team events, where structured activity rather than open jumping is preferred.",
-      img: tampolineImg5
+      img: obstacleImg
     },
     {
       id: "air-bags",
       title: "Air Bags",
       desc: "Large soft inflatable bags where visitors land after jumping from a height. Safe and exciting visitors can try flips and aerial jumps without worrying about hard landings. Very popular with teenagers.",
-      img: tampolineImg5
+      img: airBagImg
     },
     {
       id: "climbing-wall",
       title: "Climbing Wall",
       desc: "Indoor climbing walls where visitors use fixed grips to climb to the top. Winera International is a trusted Climbing Wall Manufacturer in India — offering options from beginner-friendly bouldering walls to more challenging rope climb routes, suitable for all ages and fitness levels.",
-      img: tampolineImg5
+      img: climbingWallImg
     },
     {
       id: "ninja-courses",
       title: "Ninja Courses",
       desc: "A set of physical obstacles warped walls, balance beams, hanging bars, rope bridges, and timed speed courses. Winera International is a leading Ninja Course Equipment Manufacturer in India, designing courses for ages 6 and above. Visitors come back again and again to beat their own time and improve their skills.",
-      img: tampolineImg5
+      img: ninjaCourseImg
     },
     {
       id: "foam-cubes",
       title: "Foam Cubes",
       desc: "A large pit filled with soft foam cubes where visitors jump in and land safely. One of the most popular attractions is that children especially love it and tend to spend more time here than any other zone.",
-      img: tampolineImg5
+      img: foamCubeImg
     }
   ];
 
   const cmsInsideZones = siteData?.trampolineInside?.zones || siteData?.trampolineInside?.items;
   const customParkZones = (Array.isArray(cmsInsideZones) && cmsInsideZones.length > 0)
-    ? cmsInsideZones.map((z, idx) => ({
-        id: z.id || `zone-${idx}`,
-        title: z.name || z.title || z.tabName || `Zone ${idx + 1}`,
-        desc: z.desc || z.description || '',
-        img: z.img || z.imageUrl || tampolineImg5
-      }))
+    ? cmsInsideZones.map((z, idx) => {
+        const idKey = (z.id || '').toLowerCase().trim();
+        const titleKey = (z.name || z.title || z.tabName || '').toLowerCase().trim();
+        const specificFallback = zoneImageMap[idKey] || zoneImageMap[titleKey] || defaultParkZones[idx]?.img || freeJumpImg;
+        const rawImg = z.img || z.imageUrl;
+        const isValidImg = rawImg && typeof rawImg === 'string' && rawImg.trim() !== '' && !rawImg.includes('tampoline-img-5') && !rawImg.includes('/src/assets/');
+        return {
+          id: z.id || `zone-${idx}`,
+          title: z.name || z.title || z.tabName || `Zone ${idx + 1}`,
+          desc: z.desc || z.description || '',
+          img: isValidImg ? rawImg : specificFallback
+        };
+      })
     : defaultParkZones;
 
   const handlePrevZone = () => {
@@ -262,7 +314,7 @@ export default function TrampolinePark({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${bgImage}) center top / 100% 100% no-repeat`,
-        '--winera-trampoline-mobile-bg': `url("${trampolineMobileHeroBg}")`,
+        '--winera-trampoline-mobile-bg': `url("${currentMobileBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -270,6 +322,11 @@ export default function TrampolinePark({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
+        <img
+          src={bgImage}
+          alt={isMobile ? (siteData?.trampolineHero?.mobileBgAlt || siteData?.trampolineHero?.bgAlt || "Commercial Trampoline Park Manufacturer & Setup - Winera International") : (siteData?.trampolineHero?.bgAlt || "Commercial Trampoline Park Manufacturer & Setup - Winera International")}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Breadcrumb Heading: Home > Trampoline Park */}
           <h1 className="winera-trampoline-hero-h1" style={{
@@ -307,7 +364,7 @@ export default function TrampolinePark({ siteData }) {
           <div className="winera-trampoline-intro-img-wrapper" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
               src={getValidImageUrl(siteData?.trampolineIntro?.mainImgUrl, trampolineParkImg1)}
-              alt="Trampoline Park Manufacturer in India"
+              alt={siteData?.trampolineIntro?.mainImgAlt || siteData?.trampolineIntro?.imgAlt || "Trampoline Park Manufacturer in India - Winera"}
               style={{
                 width: '100%',
                 maxWidth: '620px',
@@ -327,18 +384,21 @@ export default function TrampolinePark({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '12px', objectFit: 'fill', marginLeft: 0 }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.trampolineIntro?.title, "Trampoline Park *Manufacturer in India*", '#38bdf8')}
+                {renderTitleMarkup(siteData?.trampolineIntro?.title, "Trampoline Park *Manufacturer in India*", '#0072b8')}
               </h2>
             </div>
 
             {/* Description Paragraph */}
-            <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '520px' }}>
-              {siteData?.trampolineIntro?.desc || siteData?.trampolineIntro?.p1 || "India's trusted trampoline park manufacturer safety-certified equipment, custom-designed layouts, and installed by our own team across India."}
-            </p>
+            <p
+              style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '520px' }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.trampolineIntro?.desc || siteData?.trampolineIntro?.p1 || "India's trusted trampoline park manufacturer safety-certified equipment, custom-designed layouts, and installed by our own team across India.").replace(/\n/g, '<br>'))
+              }}
+            />
 
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
               {(() => {
-                const baseLink = siteData?.trampolineIntro?.buttonLink || siteData?.trampolineIntro?.ctaLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.trampolineIntro?.buttonLink || siteData?.trampolineIntro?.ctaLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.trampolineIntro?.waMessage || "Hello Winera International! I want to get a quote and design details for a Trampoline Park setup. Please share details. [Ref: Trampoline Park Page]";
                 
                 let hrefLink = baseLink;
@@ -375,7 +435,7 @@ export default function TrampolinePark({ siteData }) {
             alignItems: 'flex-start'
           }}>
             {/* Center Content Column: Header + 4-Row Paragraph */}
-            <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', margin: '0 auto', paddingRight: '175px', paddingLeft: '0px' }}>
+            <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', margin: '0 auto', paddingRight: '0px', paddingLeft: '0px' }}>
               {/* Yellow Accent Stroke Line */}
               <img
                 src={yellowStrokeLine}
@@ -384,80 +444,84 @@ export default function TrampolinePark({ siteData }) {
               />
               
               {/* H2 Title */}
-              <h2 className="winera-trampoline-custom-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: '0 0 14px 0' }}>
-                <span>{siteData?.trampolineCustom?.title1?.trim() || "Custom Trampoline Parks"}</span>
-                <br className="winera-tp-title-br" />
-                <span style={{ color: '#38bdf8' }}>
-                  {siteData?.trampolineCustom?.title2 && siteData?.trampolineCustom?.title3
-                    ? `${siteData.trampolineCustom.title2} ${siteData.trampolineCustom.title3}`
+              <h2 className="winera-trampoline-custom-h2" style={{ fontSize: 'clamp(26px, 2.3vw, 35px)', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: '0 0 14px 0' }}>
+                <span>{siteData?.trampolineCustom?.title1?.trim() || "Custom Trampoline Parks"}</span>{' '}
+                <span style={{ color: '#0072b8' }}>
+                  {siteData?.trampolineCustom?.title2
+                    ? `${siteData.trampolineCustom.title2} ${siteData.trampolineCustom.title3 || ''}`.trim()
                     : "by Winera International"}
                 </span>
               </h2>
 
               {/* 4-Row Wide Paragraph Text */}
-              {(() => {
-                const fullText = siteData?.trampolineCustom?.paragraph || "At Winera International, we specialize in creating custom-built trampoline parks tailored to your space, budget, and activity preferences. As a leading trampoline manufacturer in India we ensure top-quality design, safety, and durability in every project. Whether you're envisioning a compact jump zone or a large-scale interactive entertainment center, we are the trampoline park manufacturer that delivers complete turnkey solutions to bring your vision to life. We have been designing and supplying commercial trampoline parks for malls, hotels, schools, resorts, and family entertainment centres since 2014.";
+              <div className="winera-trampoline-custom-p-wrap" style={{ paddingRight: '175px' }}>
+                {(() => {
+                  const fullText = siteData?.trampolineCustom?.paragraph || "At Winera International, we specialize in creating custom-built trampoline parks tailored to your space, budget, and activity preferences. As a leading trampoline manufacturer in India we ensure top-quality design, safety, and durability in every project. Whether you're envisioning a compact jump zone or a large-scale interactive entertainment center, we are the trampoline park manufacturer that delivers complete turnkey solutions to bring your vision to life. We have been designing and supplying commercial trampoline parks for malls, hotels, schools, resorts, and family entertainment centres since 2014.";
 
-                const splitIndex = fullText.indexOf("Whether you're");
-                let p1 = fullText;
-                let p2 = "";
-                if (splitIndex !== -1) {
-                  p1 = fullText.substring(0, splitIndex).trim();
-                  p2 = fullText.substring(splitIndex).trim();
-                } else {
-                  const sentences = fullText.split('. ');
-                  if (sentences.length >= 3) {
-                    p1 = sentences.slice(0, 2).join('. ') + '.';
-                    p2 = sentences.slice(2).join('. ');
+                  const splitIndex = fullText.indexOf("Whether you're");
+                  let p1 = fullText;
+                  let p2 = "";
+                  if (splitIndex !== -1) {
+                    p1 = fullText.substring(0, splitIndex).trim();
+                    p2 = fullText.substring(splitIndex).trim();
+                  } else {
+                    const sentences = fullText.split('. ');
+                    if (sentences.length >= 3) {
+                      p1 = sentences.slice(0, 2).join('. ') + '.';
+                      p2 = sentences.slice(2).join('. ');
+                    }
                   }
-                }
 
-                if (p2) {
+                  if (p2) {
+                    return (
+                      <MobileExpandableText
+                        preview={
+                          <p
+                            style={{
+                              fontSize: '15px',
+                              color: '#475569',
+                              lineHeight: 1.65,
+                              fontWeight: '500',
+                              margin: '0 auto',
+                              maxWidth: '1200px',
+                              textAlign: 'center'
+                            }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(p1.replace(/\n/g, '<br>')) }}
+                          />
+                        }
+                        expandedContent={
+                          <p
+                            style={{
+                              fontSize: '15px',
+                              color: '#475569',
+                              lineHeight: 1.65,
+                              fontWeight: '500',
+                              margin: '10px auto 0',
+                              maxWidth: '1200px',
+                              textAlign: 'center'
+                            }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(p2.replace(/\n/g, '<br>')) }}
+                          />
+                        }
+                      />
+                    );
+                  }
                   return (
-                    <MobileExpandableText
-                      preview={
-                        <p style={{
-                          fontSize: '15px',
-                          color: '#475569',
-                          lineHeight: 1.65,
-                          fontWeight: '500',
-                          margin: '0 auto',
-                          maxWidth: '1200px',
-                          textAlign: 'center'
-                        }}>
-                          {p1}
-                        </p>
-                      }
-                      expandedContent={
-                        <p style={{
-                          fontSize: '15px',
-                          color: '#475569',
-                          lineHeight: 1.65,
-                          fontWeight: '500',
-                          margin: '10px auto 0',
-                          maxWidth: '1200px',
-                          textAlign: 'center'
-                        }}>
-                          {p2}
-                        </p>
-                      }
+                    <p
+                      style={{
+                        fontSize: '15px',
+                        color: '#475569',
+                        lineHeight: 1.65,
+                        fontWeight: '500',
+                        margin: '0 auto',
+                        maxWidth: '1200px',
+                        textAlign: 'center'
+                      }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(fullText.replace(/\n/g, '<br>')) }}
                     />
                   );
-                }
-                return (
-                  <p style={{
-                    fontSize: '15px',
-                    color: '#475569',
-                    lineHeight: 1.65,
-                    fontWeight: '500',
-                    margin: '0 auto',
-                    maxWidth: '1200px',
-                    textAlign: 'center'
-                  }}>
-                    {fullText}
-                  </p>
-                );
-              })()}
+                })()}
+              </div>
             </div>
 
             {/* Right Side Compact Mascot Panda Image */}
@@ -469,7 +533,7 @@ export default function TrampolinePark({ siteData }) {
             }}>
               <img
                 src={getValidImageUrl(siteData?.trampolineCustom?.imgUrl, trampolineParkImg2)}
-                alt="Custom Trampoline Parks by Winera International"
+                alt={siteData?.trampolineCustom?.imgAlt || "Custom Trampoline Parks by Winera International"}
                 style={{
                   width: '165px',
                   height: 'auto',
@@ -493,7 +557,7 @@ export default function TrampolinePark({ siteData }) {
             maxWidth: '1100px',
             margin: '0 auto',
             minHeight: '540px',
-            background: `url(${siteData?.trampolineSpecs?.bgUrl || siteData?.trampolineSpecs?.imgUrl || trampolineImg3}) center center / 100% 100% no-repeat`,
+            background: `url(${getValidImageUrl(siteData?.trampolineSpecs?.bgUrl || siteData?.trampolineSpecs?.imgUrl, trampolineImg3)}) center center / 100% 100% no-repeat`,
             borderRadius: '32px',
             padding: '45px 56px',
             display: 'flex',
@@ -502,6 +566,11 @@ export default function TrampolinePark({ siteData }) {
             overflow: 'hidden',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.12)'
           }}>
+            <img
+              src={getValidImageUrl(siteData?.trampolineSpecs?.bgUrl || siteData?.trampolineSpecs?.imgUrl, trampolineImg3)}
+              alt={siteData?.trampolineSpecs?.bgAlt || "Commercial Trampoline Park Technical Specifications - Winera"}
+              style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0.001, pointerEvents: 'none' }}
+            />
             {/* Left Section Content: Title + White Table Card + Button */}
             <div style={{ maxWidth: '595px', width: '100%', zIndex: 2 }}>
               {/* Yellow Accent Stroke Line */}
@@ -516,7 +585,7 @@ export default function TrampolinePark({ siteData }) {
               <h2 className="winera-trampoline-specs-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#ffffff', margin: '0 0 24px 0', lineHeight: 1.15 }}>
                 {(() => {
                   let raw = siteData?.trampolineSpecs?.title;
-                  if (!raw || raw === "Technical *Specifications*") {
+                  if (!raw || raw.toLowerCase().includes("technical") || raw.toLowerCase().includes("specification")) {
                     raw = "*Technical* Specifications";
                   }
                   return renderTitleMarkup(raw, "*Technical* Specifications", '#ffcd00');
@@ -572,10 +641,9 @@ export default function TrampolinePark({ siteData }) {
               </div>
 
               <div>
-                <a
-                  href={siteData?.trampolineSpecs?.buttonLink || siteData?.trampolineSpecs?.brochureLink || siteData?.trampolineIntro?.buttonLink || "https://wa.me/919428989488"}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  type="button"
+                  onClick={() => setIsBrochureOpen(true)}
                   aria-label="Download Our Brochure"
                   style={{
                     display: 'inline-flex',
@@ -590,14 +658,13 @@ export default function TrampolinePark({ siteData }) {
                     fontWeight: '600',
                     textAlign: 'center',
                     lineHeight: 1,
-                    textDecoration: 'none',
                     border: 'none',
                     outline: 'none',
                     cursor: 'pointer'
                   }}
                 >
                   {siteData?.trampolineSpecs?.buttonText || "Download Our Brochure"}
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -651,20 +718,23 @@ export default function TrampolinePark({ siteData }) {
                     if (!rawTitle || rawTitle.includes("custom") || rawTitle.includes("inside") || rawTitle.includes("*custom")) {
                       return (
                         <>
-                          <span style={{ color: '#38bdf8' }}>What is inside a </span>
+                          <span style={{ color: '#0072b8' }}>What is inside a </span>
                           <span style={{ color: '#091E2B' }}>custom</span>
                           <br />
                           <span style={{ color: '#091E2B' }}>trampoline park?</span>
                         </>
                       );
                     }
-                    return renderTitleMarkup(rawTitle, "*What is inside a* custom<br />trampoline park?", '#38bdf8');
+                    return renderTitleMarkup(rawTitle, "*What is inside a* custom<br />trampoline park?", '#0072b8');
                   })()}
                 </h2>
               </div>
-              <p style={{ fontSize: '14.5px', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.6, fontWeight: '500', margin: '0 auto', maxWidth: '780px' }}>
-                {siteData?.trampolineInside?.subtitle || "A Winera trampoline park is built around your available space and visitor profile. Below are the zones you can include each can be combined in any configuration based on your floor area and budget."}
-              </p>
+              <p
+                style={{ fontSize: '14.5px', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.6, fontWeight: '500', margin: '0 auto', maxWidth: '780px' }}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeAndFormatHtml((siteData?.trampolineInside?.subtitle || "A Winera trampoline park is built around your available space and visitor profile. Below are the zones you can include each can be combined in any configuration based on your floor area and budget.").replace(/\n/g, '<br>'))
+                }}
+              />
             </div>
 
             {/* Carousel Container: Left Arrow + Main Block with Box Shadow + Right Arrow */}
@@ -705,7 +775,7 @@ export default function TrampolinePark({ siteData }) {
                 <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <img
                     src={customParkZones[activeZoneIndex].img}
-                    alt={customParkZones[activeZoneIndex].title}
+                    alt={customParkZones[activeZoneIndex]?.imgAlt || `${customParkZones[activeZoneIndex]?.title || 'Attraction'} - Commercial Trampoline Park Setup Winera`}
                     style={{
                       width: '100%',
                       maxHeight: '260px',
@@ -721,9 +791,12 @@ export default function TrampolinePark({ siteData }) {
                   <h3 style={{ fontSize: '42px', fontWeight: '700', color: '#0f172a', margin: '0 0 16px 0', lineHeight: 1.2 }}>
                     {customParkZones[activeZoneIndex].title}
                   </h3>
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.68, fontWeight: '500', margin: 0 }}>
-                    {customParkZones[activeZoneIndex].desc}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.68, fontWeight: '500', margin: 0 }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((customParkZones[activeZoneIndex]?.desc || '').replace(/\n/g, '<br>'))
+                    }}
+                  />
                 </div>
               </div>
 
@@ -823,18 +896,21 @@ export default function TrampolinePark({ siteData }) {
                   return (
                     <>
                       <span style={{ color: '#091E2B' }}>What Will Your </span>
-                      <span style={{ color: '#38bdf8' }}>Trampoline</span>
+                      <span style={{ color: '#0072b8' }}>Trampoline</span>
                       <br className="winera-tp-title-br" />
-                      <span style={{ color: '#38bdf8' }}>Park Actually Earn?</span>
+                      <span style={{ color: '#0072b8' }}>Park Actually Earn?</span>
                     </>
                   );
                 }
-                return renderTitleMarkup(rawTitle, "What Will Your *Trampoline<br />Park Actually Earn?*", '#38bdf8');
+                return renderTitleMarkup(rawTitle, "What Will Your *Trampoline<br />Park Actually Earn?*", '#0072b8');
               })()}
             </h2>
-            <p style={{ fontSize: '15px', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
-              {siteData?.trampolineRoi?.subtitle || "Most trampoline park suppliers in India send a price list and wait for you to decide."}
-            </p>
+            <p
+              style={{ fontSize: '15px', color: 'rgba(0, 28, 38, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.trampolineRoi?.subtitle || "Most trampoline park suppliers in India send a price list and wait for you to decide.").replace(/\n/g, '<br>'))
+              }}
+            />
           </div>
 
           {/* 2-Column Grid: Text Content + Graphic */}
@@ -849,19 +925,25 @@ export default function TrampolinePark({ siteData }) {
             <div style={{ textAlign: 'left' }}>
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 14px 0', textAlign: 'justify' }}>
-                    As India's ROI-First Game Zone Developer, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact trampoline park setup cost, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline. Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average.
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 14px 0', textAlign: 'justify' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.trampolineRoi?.paragraph1 || "As India's ROI-First Game Zone Developer, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact trampoline park setup cost, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline. Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 20px 0', textAlign: 'justify' }}>
-                    {siteData?.trampolineRoi?.paragraph2 || "Very few indoor trampoline park suppliers in India include this as a standard part of their process. For Winera, the ROI report is not an add-on, it is how every project starts."}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 0 20px 0', textAlign: 'justify' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.trampolineRoi?.paragraph2 || "Very few indoor trampoline park suppliers in India include this as a standard part of their process. For Winera, the ROI report is not an add-on, it is how every project starts.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
               />
 
               {(() => {
-                  const baseLink = siteData?.trampolineRoi?.buttonLink || "https://wa.me/919428989488";
+                  const baseLink = siteData?.trampolineRoi?.buttonLink || "https://wa.me/919157873576";
                   const defaultMsg = siteData?.trampolineRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Trampoline Park setup & commercial ROI calculation. Please share details. [Ref: Trampoline Park Page]";
                   
                   let hrefLink = baseLink;
@@ -919,7 +1001,7 @@ export default function TrampolinePark({ siteData }) {
             <div style={{ textAlign: 'center' }}>
               <img
                 src={getValidImageUrl(siteData?.trampolineRoi?.imgUrl, tampolineImage6)}
-                alt="Trampoline Park ROI Report"
+                alt={siteData?.trampolineRoi?.imgAlt || "Trampoline Park ROI Report - Winera Turnkey Setup"}
                 style={{
                   width: '100%',
                   height: 'auto',
@@ -949,7 +1031,7 @@ export default function TrampolinePark({ siteData }) {
               style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }} className="winera-why-h2">
-              {renderTitleMarkup(siteData?.trampolineWhyChoose?.title, "Why Choose *Winera International*", '#38bdf8')}
+              {renderTitleMarkup(siteData?.trampolineWhyChoose?.title, "Why Choose *Winera International*", '#0072b8')}
             </h2>
           </div>
 
@@ -997,9 +1079,12 @@ export default function TrampolinePark({ siteData }) {
                         <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                           {item.title}
                         </h3>
-                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
-                          {item.desc}
-                        </p>
+                        <p
+                          style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}
+                          dangerouslySetInnerHTML={{
+                            __html: sanitizeAndFormatHtml((item.desc || '').replace(/\n/g, '<br>'))
+                          }}
+                        />
                         {idx < topRow.length - 1 && (
                           <div className="winera-v-line" style={{
                             position: 'absolute',
@@ -1055,9 +1140,12 @@ export default function TrampolinePark({ siteData }) {
                           <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                             {item.title}
                           </h3>
-                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}>
-                            {item.desc}
-                          </p>
+                          <p
+                            style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.55, fontWeight: '500', margin: 0 }}
+                            dangerouslySetInnerHTML={{
+                              __html: sanitizeAndFormatHtml((item.desc || '').replace(/\n/g, '<br>'))
+                            }}
+                          />
                           {idx < bottomRow.length - 1 && (
                             <div className="winera-v-line" style={{
                               position: 'absolute',
@@ -1102,14 +1190,14 @@ export default function TrampolinePark({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
       />
 
       {/* TESTIMONIALS SECTION (WHAT OUR CLIENTS SAY) */}
       <TestimonialsSection siteData={siteData} />
 
       {/* RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection sectionData={siteData?.trampolineRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
+      <RelatedProductsSection sectionData={siteData?.trampolineRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
 
       {/* FREQUENTLY ASKED QUESTIONS SECTION */}
       <FaqSection
@@ -1213,14 +1301,20 @@ export default function TrampolinePark({ siteData }) {
                 fontWeight: '400',
                 textShadow: '0 2px 10px rgba(0,0,0,0.85)'
               }} className="winera-cta-p">
-                <span style={{ color: '#ffffff', opacity: 1 }}>{siteData?.trampolineCta?.descLine1 || "Our team will assess your venue, prepare a free ROI report, and"}</span>
-                <br />
-                <span style={{ color: '#ffffff', opacity: 1 }}>{siteData?.trampolineCta?.descLine2 || "recommend the right zone mix for your space."}</span>
+                {siteData?.trampolineCta?.description ? (
+                  <span dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(siteData.trampolineCta.description.replace(/\n/g, '<br/>')) }} />
+                ) : (
+                  <>
+                    <span style={{ color: '#ffffff', opacity: 1 }}>{siteData?.trampolineCta?.descLine1 || "Our team will assess your venue, prepare a free ROI report, and"}</span>
+                    <br />
+                    <span style={{ color: '#ffffff', opacity: 1 }}>{siteData?.trampolineCta?.descLine2 || "recommend the right zone mix for your space."}</span>
+                  </>
+                )}
               </p>
 
               <div className="winera-cta-banner-btn-wrapper">
                 <a
-                  href="#"
+                  href={siteData?.trampolineCta?.buttonLink || "/contact"}
                   onClick={(e) => {
                     e.preventDefault();
                     setIsModalOpen(true);
@@ -1259,6 +1353,21 @@ export default function TrampolinePark({ siteData }) {
 
       {/* FOOTER */}
       <Footer footerData={footer} />
+
+      {/* BROCHURE PREVIEW & DOWNLOAD MODAL */}
+      <BrochureModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+        pdfUrl={
+          (() => {
+            const tUrl = siteData?.trampolineSpecs?.buttonLink || siteData?.trampolineSpecs?.brochureLink || siteData?.trampolineSpecs?.brochureUrl;
+            if (tUrl && typeof tUrl === 'string' && tUrl.trim() !== '#' && tUrl.trim() !== '' && !tUrl.includes('wa.me')) return tUrl.trim();
+            return "/pdf/Trampoline Catalogue.pdf";
+          })()
+        }
+        title="Trampoline Park Catalogue & Specifications"
+        fileName="Trampoline Catalogue - Winera International.pdf"
+      />
     </div>
   );
 }

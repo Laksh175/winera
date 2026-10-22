@@ -25,8 +25,8 @@ const lazyWithRetry = (componentImport) =>
     }
   });
 
-// Route Level Code Splitting with React.lazy
-const Home = lazyWithRetry(() => import('./pages/Home'));
+// Direct import for Homepage to eliminate secondary chunk waterfall and Suspense delay on root
+import Home from './pages/Home';
 const AboutUs = lazyWithRetry(() => import('./pages/AboutUs'));
 const ArcadeGame = lazyWithRetry(() => import('./pages/ArcadeGame'));
 const ArcadeGameDetail = lazyWithRetry(() => import('./pages/ArcadeGameDetail'));
@@ -69,9 +69,6 @@ function GlobalScrollAnimation() {
       el.classList.remove('is-visible', 'aos-animate');
     });
 
-    // Force DOM reflow so browser engine acknowledges removal of animation classes
-    void document.body.offsetHeight;
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -83,10 +80,12 @@ function GlobalScrollAnimation() {
       },
       {
         root: null,
-        rootMargin: '0px 0px -30px 0px',
-        threshold: 0.03
+        rootMargin: '120px 0px 50px 0px',
+        threshold: 0.01
       }
     );
+
+    const observedSet = new WeakSet();
 
     const scanAndObserve = () => {
       if (window.location.pathname.startsWith('/admin')) return;
@@ -109,21 +108,16 @@ function GlobalScrollAnimation() {
 
       const elements = document.querySelectorAll(selector);
       elements.forEach((el) => {
+        if (observedSet.has(el)) return;
         if (el.classList.contains('framer-motion-wrapper') || el.dataset.noAutoReveal === 'true') {
           return;
-        }
-
-        const rect = el.getBoundingClientRect();
-        // Immediately reveal elements that are already inside or near the viewport
-        if (rect.top < window.innerHeight * 1.1 && rect.bottom > 0) {
-          el.classList.add('is-visible');
-          el.classList.add('aos-animate');
         }
 
         // Hero sections should never be hidden
         if (el.tagName === 'SECTION' && (el.className.includes('hero') || el.querySelector('[class*="hero"]'))) {
           el.classList.add('is-visible');
           el.classList.add('aos-animate');
+          observedSet.add(el);
           return;
         }
 
@@ -134,36 +128,17 @@ function GlobalScrollAnimation() {
         if (!el.classList.contains('winera-reveal') && !el.classList.contains('winera-animate-block') && !el.classList.contains('winera-reveal-left') && !el.classList.contains('winera-reveal-right')) {
           el.classList.add('winera-reveal');
         }
+        observedSet.add(el);
         observer.observe(el);
       });
     };
 
     scanAndObserve();
 
-    const animationFrameId = requestAnimationFrame(() => {
-      scanAndObserve();
-    });
-
-    const interval = setInterval(scanAndObserve, 250);
-    const timeout = setTimeout(() => clearInterval(interval), 3000);
-
-    // Safety fallback: after 400ms force reveal all elements in initial viewport so page never stays blank
-    const safetyTimeout = setTimeout(() => {
-      const topElements = document.querySelectorAll('.winera-reveal:not(.is-visible), .winera-reveal-left:not(.is-visible), .winera-reveal-right:not(.is-visible)');
-      topElements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 1.2) {
-          el.classList.add('is-visible');
-          el.classList.add('aos-animate');
-        }
-      });
-    }, 400);
+    const timeout = setTimeout(scanAndObserve, 400);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      clearInterval(interval);
       clearTimeout(timeout);
-      clearTimeout(safetyTimeout);
       observer.disconnect();
     };
   }, [pathname]);
@@ -193,7 +168,9 @@ function AppRoutes({ siteData, loadData }) {
             src={wineraLogo}
             alt="Loading Winera..."
             className="winera-logo-blinking"
-            style={{ width: '120px', height: 'auto', objectFit: 'contain' }}
+            width="120"
+            height="32"
+            style={{ width: '120px', height: 'auto', aspectRatio: '120 / 32', objectFit: 'contain' }}
           />
         </div>
       }>
@@ -201,110 +178,68 @@ function AppRoutes({ siteData, loadData }) {
           {/* 1. Home Page */}
           <Route path="/" element={<Home siteData={siteData} />} />
 
-          {/* 2. Blog Page & Blog Detail */}
+          {/* 2. Blog Page & Blog Detail (Canonical /blog & /blog/:id) */}
           <Route path="/blog" element={<Blog siteData={siteData} />} />
           <Route path="/blog/:id" element={<BlogDetail siteData={siteData} />} />
-          <Route path="/resources/blog" element={<Blog siteData={siteData} />} />
-          <Route path="/resources/blog/:id" element={<BlogDetail siteData={siteData} />} />
 
-          {/* 3. About Us Page */}
+          {/* 3. About Us Page (Canonical /why-us) */}
           <Route path="/why-us" element={<AboutUs siteData={siteData} />} />
-          <Route path="/about" element={<AboutUs siteData={siteData} />} />
-          <Route path="/about-us" element={<AboutUs siteData={siteData} />} />
 
-          {/* 4. Arcade Games */}
+          {/* 4. Arcade Games (Canonical /product/arcade-games) */}
           <Route path="/product/arcade-games" element={<ArcadeGame siteData={siteData} />} />
-          <Route path="/products/arcade-games" element={<ArcadeGame siteData={siteData} />} />
-          <Route path="/products/arcade-game" element={<ArcadeGame siteData={siteData} />} />
-          <Route path="/arcade-game" element={<ArcadeGame siteData={siteData} />} />
 
-          {/* 5. Bowling Alley */}
+          {/* 5. Bowling Alley (Canonical /product/bowling-alley) */}
           <Route path="/product/bowling-alley" element={<BowlingAlley siteData={siteData} />} />
-          <Route path="/products/bowling-alley" element={<BowlingAlley siteData={siteData} />} />
-          <Route path="/bowling-alley" element={<BowlingAlley siteData={siteData} />} />
 
-          {/* 6. Soft Play */}
+          {/* 6. Soft Play (Canonical /product/soft-play) */}
           <Route path="/product/soft-play" element={<SoftPlay siteData={siteData} />} />
-          <Route path="/products/soft-play" element={<SoftPlay siteData={siteData} />} />
-          <Route path="/soft-play" element={<SoftPlay siteData={siteData} />} />
 
-          {/* 7. Trampoline Park */}
+          {/* 7. Trampoline Park (Canonical /product/trampoline-park) */}
           <Route path="/product/trampoline-park" element={<TrampolinePark siteData={siteData} />} />
-          <Route path="/products/trampoline-park" element={<TrampolinePark siteData={siteData} />} />
-          <Route path="/products/trampoline-parks" element={<TrampolinePark siteData={siteData} />} />
-          <Route path="/trampoline-park" element={<TrampolinePark siteData={siteData} />} />
 
-          {/* 8. VR Games */}
+          {/* 8. VR Games (Canonical /product/vr-games) */}
           <Route path="/product/vr-games" element={<VrGames siteData={siteData} />} />
-          <Route path="/products/vr-games" element={<VrGames siteData={siteData} />} />
-          <Route path="/vr-games" element={<VrGames siteData={siteData} />} />
-          <Route path="/product/vr-game" element={<VrGames siteData={siteData} />} />
-          <Route path="/products/vr-game" element={<VrGames siteData={siteData} />} />
-          <Route path="/vr-game" element={<VrGames siteData={siteData} />} />
-          <Route path="/vr" element={<VrGames siteData={siteData} />} />
 
-          {/* 9. Bumper Car */}
+          {/* 9. Bumper Car (Canonical /product/bumper-car) */}
           <Route path="/product/bumper-car" element={<BumperCar siteData={siteData} />} />
-          <Route path="/products/bumper-car" element={<BumperCar siteData={siteData} />} />
-          <Route path="/products/bumper-cars" element={<BumperCar siteData={siteData} />} />
-          <Route path="/bumper-car" element={<BumperCar siteData={siteData} />} />
 
-          {/* 10. Amusement Park */}
+          {/* 10. Amusement Park (Canonical /product/amusement-park) */}
           <Route path="/product/amusement-park" element={<AmusementPark siteData={siteData} />} />
-          <Route path="/products/amusement-park" element={<AmusementPark siteData={siteData} />} />
-          <Route path="/amusement-park" element={<AmusementPark siteData={siteData} />} />
 
-          {/* 11. AR Games */}
+          {/* 11. AR Games (Canonical /product/ar-games) */}
           <Route path="/product/ar-games" element={<ArGames siteData={siteData} />} />
-          <Route path="/products/ar-games" element={<ArGames siteData={siteData} />} />
-          <Route path="/ar-games" element={<ArGames siteData={siteData} />} />
-          <Route path="/product/ar-game" element={<ArGames siteData={siteData} />} />
-          <Route path="/products/ar-game" element={<ArGames siteData={siteData} />} />
-          <Route path="/ar-game" element={<ArGames siteData={siteData} />} />
 
-          {/* 12. Hypergrid */}
+          {/* 12. Hypergrid (Canonical /product/hypergrid) */}
           <Route path="/product/hypergrid" element={<Hypergrid siteData={siteData} />} />
-          <Route path="/products/hypergrid" element={<Hypergrid siteData={siteData} />} />
-          <Route path="/hypergrid" element={<Hypergrid siteData={siteData} />} />
 
-          {/* 13. Laser Tag */}
+          {/* 13. Laser Tag (Canonical /product/laser-tag) */}
           <Route path="/product/laser-tag" element={<LaserTag siteData={siteData} />} />
-          <Route path="/products/laser-tag" element={<LaserTag siteData={siteData} />} />
-          <Route path="/laser-tag" element={<LaserTag siteData={siteData} />} />
 
-          {/* Arcade Detail Dynamic Route */}
+          {/* Product Detail Dynamic Route (Canonical /product/:slug) */}
           <Route path="/product/:slug" element={<ArcadeGameDetail siteData={siteData} />} />
-          <Route path="/arcade-game/:slug" element={<ArcadeGameDetail siteData={siteData} />} />
 
-          {/* 14. Safety Standards */}
+          {/* 14. Safety Standards (Canonical /resource/safety-standards) */}
           <Route path="/resource/safety-standards" element={<SafetyStandards siteData={siteData} />} />
-          <Route path="/resources/safety-standards" element={<SafetyStandards siteData={siteData} />} />
-          <Route path="/safety-standards" element={<SafetyStandards siteData={siteData} />} />
 
-          {/* 15. ROI */}
+          {/* 15. ROI (Canonical /resource/roi) */}
           <Route path="/resource/roi" element={<Roi siteData={siteData} />} />
-          <Route path="/resources/roi" element={<Roi siteData={siteData} />} />
-          <Route path="/roi" element={<Roi siteData={siteData} />} />
 
-          {/* 16. Project Page & Single Project Detail */}
+          {/* 16. Project Page & Single Project Detail (Canonical /project & /project/:slug) */}
           <Route path="/project" element={<Project siteData={siteData} />} />
-          <Route path="/projects" element={<Project siteData={siteData} />} />
           <Route path="/project/:slug" element={<ProjectDetail siteData={siteData} />} />
 
-          {/* 17. Contact Us */}
+          {/* 17. Contact Us (Canonical /contact) */}
           <Route path="/contact" element={<ContactUs siteData={siteData} />} />
-          <Route path="/contact-us" element={<ContactUs siteData={siteData} />} />
 
-          {/* 18. Privacy Policy & Terms */}
+          {/* 18. Privacy Policy & Terms (Canonical) */}
           <Route path="/privacy-policy" element={<PrivacyPolicy siteData={siteData} />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions siteData={siteData} />} />
-          <Route path="/terms" element={<TermsAndConditions siteData={siteData} />} />
 
           {/* 19. Admin CMS */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard siteData={siteData} refreshContent={loadData} />} />
 
-          {/* 20. Fallback 404 Page Not Found Route */}
+          {/* 20. Strict Fallback 404 Page Not Found Route for all non-canonical / invalid URLs */}
           <Route path="*" element={<NotFoundPage siteData={siteData} />} />
         </Routes>
       </Suspense>
@@ -316,10 +251,27 @@ export default function App() {
   const [siteData, setSiteData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const loadData = async () => {
+  const loadData = async (forceFull = false) => {
     try {
-      const data = await fetchSiteContent();
+      const isHome = typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '');
+      const pageParam = (!forceFull && isHome) ? 'home' : null;
+      const data = await fetchSiteContent(pageParam);
       setSiteData(data || {});
+
+      // If we loaded lightweight homepage content first, silently fetch full site data in the background
+      // so inner pages and administration are ready with zero delay and no data loss
+      if (pageParam === 'home') {
+        setTimeout(async () => {
+          try {
+            const fullData = await fetchSiteContent();
+            if (fullData && Object.keys(fullData).length > 0) {
+              setSiteData(prev => ({ ...prev, ...fullData }));
+            }
+          } catch (e) {
+            // silent background prefetch fallback
+          }
+        }, 2500);
+      }
     } catch (err) {
       console.error('Failed to load content from backend, fallback to local', err);
       setSiteData({});

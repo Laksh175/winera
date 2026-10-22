@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { sanitizeAndFormatHtml } from '../pages/BlogDetail';
 
 export default function SafetyMaterialStackedCardDeck({ cards = [] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -82,9 +83,12 @@ export default function SafetyMaterialStackedCardDeck({ cards = [] }) {
                   transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
               >
-                <p className="winera-cardstack-desc">
-                  {card.desc}
-                </p>
+                <p
+                  className="winera-cardstack-desc"
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml(card.desc)
+                  }}
+                />
               </div>
             </div>
           );
