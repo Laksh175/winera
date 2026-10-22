@@ -1,21 +1,23 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import MobileExpandableText from '../components/MobileExpandableText';
-import FaqSection from '../components/FaqSection';
-import ProjectsMarqueeSection from '../components/ProjectsMarqueeSection';
-import TestimonialsSection from '../components/TestimonialsSection';
 import ClientsMarqueeSection from '../components/ClientsMarqueeSection';
-import CtaBanner from '../components/CtaBanner';
 import MotionCardFlip from '../components/MotionCardFlip';
+import { sanitizeAndFormatHtml } from '../utils/sanitizeHtml';
+
+const Footer = React.lazy(() => import('../components/Footer'));
+const ProjectsMarqueeSection = React.lazy(() => import('../components/ProjectsMarqueeSection'));
+const FaqSection = React.lazy(() => import('../components/FaqSection'));
+const TestimonialsSection = React.lazy(() => import('../components/TestimonialsSection'));
+const CtaBanner = React.lazy(() => import('../components/CtaBanner'));
 const heroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345656/winera_uploads/jszelnb45kglcliprty7.png";
-const gameZoneBgTransparent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/metbo4e8giv2tctvqkdh.png";
+const gameZoneBgTransparent = "/assets/mobile-hero-banner.webp";
 const about1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345510/winera_uploads/wxqjmaw9a6bio8qwbeq4.png";
 const about2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345511/winera_uploads/tqdmbldbsagsq6pylfq0.jpg";
 const about3 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345512/winera_uploads/x14hcngkdlrhsdccxigh.jpg";
-const aboutCollage = "/assets/vr-game-images/Shape.png";
+const aboutCollage = "/assets/vr-game-images/Shape.webp";
 const qualityBadge = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345678/winera_uploads/qo6y6cacxlcrnciq21d4.png";
 const productsBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/wqc4jha00ll6le56beqf.png";
 const homePageBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345656/winera_uploads/zoe6avnvez48z60vpdb8.png";
@@ -38,7 +40,7 @@ const homeRightArrow = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,
 import { Check, ArrowRight, ShieldCheck, ChevronLeft, ChevronRight, LayoutGrid, ShoppingBag, Palette, Wrench, CheckCheck, UserCheck } from 'lucide-react';
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
-const getValidImageUrl = (url, fallback) => {
+const getValidImageUrl = (url, fallback, width) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
     return fallback;
   }
@@ -63,6 +65,18 @@ const getValidImageUrl = (url, fallback) => {
   if (finalUrl.includes('/uploads/')) {
     finalUrl = finalUrl.replace(/\.(png|jpg|jpeg)$/i, '.webp');
   }
+
+  if (finalUrl.includes('res.cloudinary.com') && finalUrl.includes('/image/upload/')) {
+    const targetW = width || 340;
+    if (finalUrl.includes('/image/upload/f_auto,q_auto,w_')) {
+      finalUrl = finalUrl.replace(/\/image\/upload\/f_auto,q_auto,w_\d+\//, `/image/upload/f_auto,q_auto:eco,w_${targetW}/`);
+    } else if (finalUrl.includes('/image/upload/f_auto,q_auto/')) {
+      finalUrl = finalUrl.replace('/image/upload/f_auto,q_auto/', `/image/upload/f_auto,q_auto:eco,w_${targetW}/`);
+    } else if (!finalUrl.includes('/w_')) {
+      finalUrl = finalUrl.replace('/image/upload/', `/image/upload/f_auto,q_auto:eco,w_${targetW}/`);
+    }
+  }
+
   if (finalUrl.startsWith('http://') || finalUrl.startsWith('https://') || finalUrl.startsWith('data:') || finalUrl.startsWith('/')) {
     return finalUrl;
   }
@@ -152,51 +166,51 @@ export default function Home({ siteData }) {
   }, []);
 
   const resolveProductLink = (prod) => {
-    if (!prod) return '/products/trampoline-park';
+    if (!prod) return '/product/trampoline-park';
     const id = (prod.id || '').toLowerCase();
     const title = (prod.title || '').toLowerCase();
     const rawLink = (prod.link || '').toLowerCase();
 
     // Specific product checks (checked before general 2-letter tokens like 'ar' or 'vr')
     if (id.includes('trampoline') || title.includes('trampoline') || rawLink.includes('trampoline')) {
-      return '/products/trampoline-park';
+      return '/product/trampoline-park';
     }
     if (id.includes('amusement') || title.includes('amusement') || rawLink.includes('amusement')) {
-      return '/products/amusement-park';
+      return '/product/amusement-park';
     }
     if (id.includes('bumper') || title.includes('bumper') || rawLink.includes('bumper')) {
-      return '/products/bumper-car';
+      return '/product/bumper-car';
     }
     if (id.includes('arcade') || title.includes('arcade') || rawLink.includes('arcade')) {
-      return '/products/arcade-games';
+      return '/product/arcade-games';
     }
     if (id.includes('bowling') || title.includes('bowling') || rawLink.includes('bowling')) {
-      return '/products/bowling-alley';
+      return '/product/bowling-alley';
     }
     if (id.includes('soft') || title.includes('soft') || rawLink.includes('soft')) {
-      return '/products/soft-play';
+      return '/product/soft-play';
     }
     if (id.includes('hyper') || title.includes('hyper') || rawLink.includes('hyper')) {
-      return '/products/hypergrid';
+      return '/product/hypergrid';
     }
     if (id.includes('laser') || title.includes('laser') || rawLink.includes('laser')) {
-      return '/products/laser-tag';
+      return '/product/laser-tag';
     }
     if (id === 'vr' || id.includes('vr-') || id.includes('vrgame') || title === 'vr game' || title.includes('vr game') || title.includes('virtual reality') || rawLink.includes('vr-game')) {
-      return '/products/vr-games';
+      return '/product/vr-games';
     }
     if (id === 'ar' || id.includes('ar-') || id.includes('argame') || title === 'ar game' || title.includes('ar game') || title.includes('augmented') || rawLink.includes('ar-game')) {
-      return '/products/ar-games';
+      return '/product/ar-games';
     }
     if (title.includes('decorative') || title.includes('light') || rawLink.includes('light')) {
-      return '/products/lights';
+      return '/product/lights';
     }
 
     if (prod.link && prod.link.startsWith('/')) {
-      return prod.link;
+      return prod.link.replace(/^\/products\//, '/product/');
     }
 
-    return '/products/trampoline-park';
+    return '/product/trampoline-park';
   };
 
   const homeSeo = siteData?.homeSeo || {
@@ -250,9 +264,8 @@ export default function Home({ siteData }) {
     };
   }, [siteData]);
 
-  if (!siteData) return <div style={{ minHeight: '100vh', background: '#06132d', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
-
-  const { header, hero, footer } = siteData;
+  const safeSiteData = siteData || {};
+  const { header, hero, footer } = safeSiteData;
 
   const defaultHomeFaqs = [
     {
@@ -285,7 +298,7 @@ export default function Home({ siteData }) {
     },
     {
       q: "How do I get started with my game zone project?",
-      a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. We're also available on social media."
+      a: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. We're also available on social media."
     },
     {
       q: "Can Winera International help me plan my game zone from scratch?",
@@ -304,7 +317,7 @@ export default function Home({ siteData }) {
           aspectRatio: isPhone ? '1080 / 1685' : '1920 / 840',
           paddingTop: isPhone ? '0px' : '65px',
           paddingBottom: isPhone ? '0px' : '70px',
-          background: isPhone ? 'none' : `url(${heroBg}) center/100% 100% no-repeat`,
+          background: isPhone ? 'none' : `url(${getValidImageUrl(hero?.bgUrl, heroBg)}) center/100% 100% no-repeat`,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -313,42 +326,38 @@ export default function Home({ siteData }) {
           color: '#ffffff',
           overflow: 'hidden'
         }}>
-          {/* Desktop Background */}
-          <img
-            src={heroBg}
-            alt=""
-            className="winera-home-hero-bg-desktop"
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              zIndex: 1,
-              pointerEvents: 'none'
-            }}
-          />
-          {/* Mobile Background */}
-          <img
-            src={gameZoneBgTransparent}
-            alt=""
-            className="winera-home-hero-bg-mobile"
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              zIndex: 1,
-              pointerEvents: 'none'
-            }}
-          />
+          {/* Responsive Hero Background via Picture Element */}
+          <picture style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none' }}>
+            <source
+              media="(max-width: 768px)"
+              srcSet={getValidImageUrl(hero?.mobileBgUrl || hero?.bgUrlMobile, gameZoneBgTransparent)}
+              width={480}
+              height={748}
+            />
+            <source
+              media="(min-width: 769px)"
+              srcSet={getValidImageUrl(hero?.bgUrl, heroBg)}
+              width={1920}
+              height={840}
+            />
+            <img
+              src={getValidImageUrl(hero?.mobileBgUrl || hero?.bgUrlMobile, gameZoneBgTransparent)}
+              alt={hero?.mobileBgAlt || hero?.bgAlt || "Game Zone Setup & Commercial Equipment - Winera International"}
+              className="winera-home-hero-bg-responsive"
+              width={480}
+              height={748}
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+            />
+          </picture>
           <div className="winera-hero-animate" style={{
             width: '100%',
             maxWidth: '951px',
@@ -362,19 +371,21 @@ export default function Home({ siteData }) {
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '6px 48px 2px 40px',
-              width: '38%',
+              padding: '6px 36px 4px',
+              width: 'auto',
               minWidth: '220px',
               height: '40px',
-              background: 'linear-gradient(90deg, rgba(0, 42, 95, 1) 0%, rgba(255, 212, 0, 1) 35%, rgba(8, 45, 86, 1) 100%)',
-              color: 'rgba(255, 255, 255, 1)',
+              background: 'linear-gradient(90deg, rgba(255, 183, 3, 0.15) 0%, rgba(255, 196, 0, 0.95) 25%, rgba(255, 196, 0, 0.95) 75%, rgba(255, 183, 3, 0.15) 100%)',
+              color: '#ffffff',
               fontFamily: "'Black Han Sans', sans-serif",
               fontWeight: 400,
-              fontSize: '25px',
+              fontSize: '22px',
               lineHeight: '40px',
-              letterSpacing: '0px',
+              letterSpacing: '0.5px',
+              textShadow: '0 2px 4px rgba(0,0,0,0.6)',
               marginBottom: '18px',
-              clipPath: 'polygon(0% 0%, calc(100% - 20px) 0%, 85% 50%, calc(100% - 22px) 100%, 0% 100%)'
+              borderRadius: '4px',
+              clipPath: 'polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%)'
             }}>
               India's Trusted
             </div>
@@ -438,13 +449,13 @@ export default function Home({ siteData }) {
               fontWeight: 400,
               letterSpacing: '0px',
               textAlign: 'center'
-            }}>
-              {hero?.subtitle || "India's ROI-First Game Zone Developer from bowling alleys and trampoline parks to arcade zones and VR gaming & complete indoor amusement park setup, installed by our own team across 50+ cities."}
-            </p>
+            }}
+              dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((hero?.subtitle || "India's ROI-First Game Zone Developer from bowling alleys and trampoline parks to arcade zones and VR gaming & complete indoor amusement park setup, installed by our own team across 50+ cities.").replace(/\n/g, '<br>')) }}
+            />
 
             {/* CTA Button (Image 4 & 5: Gap 35px, Width 346px, Height 74px, Font Open Sans 700 Bold, 20px, Color rgba(1, 21, 28, 1)) */}
             {(() => {
-              const defaultBaseLink = hero?.ctaPrimaryLink || "https://wa.me/919428989488";
+              const defaultBaseLink = hero?.ctaPrimaryLink || "https://wa.me/919157873576";
               const defaultMsg = hero?.waMessage || "Hello Winera International! I want to plan and setup a Game Zone for my space. Please share details and an ROI report. [Ref: Home Page]";
 
               let hrefLink = defaultBaseLink;
@@ -478,7 +489,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: 'rgba(0, 174, 239, 1)' }}>
+                      <span key={index} style={{ color: '#0072b8' }}>
                         {part}
                       </span>
                     );
@@ -600,7 +611,7 @@ export default function Home({ siteData }) {
                       fontSize: '46.72px',
                       lineHeight: '51.39px',
                       letterSpacing: '-1.4px',
-                      color: 'rgba(0, 174, 239, 1)',
+                      color: '#0072b8',
                       marginBottom: '4px',
                       textAlign: 'left'
                     }}>
@@ -653,17 +664,17 @@ export default function Home({ siteData }) {
                     <CountUpNumber targetText={siteData?.statsHeader?.safetyBadgeText !== undefined ? siteData.statsHeader.safetyBadgeText : "100% CERTIFIED"} />
                   </span>
                 </div>
-                <h4 style={{
+                <h3 style={{
                   fontFamily: "'Open Sans', sans-serif",
                   fontSize: '28px',
                   fontWeight: 400,
                   lineHeight: '32px',
-                  color: 'rgba(0, 174, 239, 1)',
+                  color: '#0072b8',
                   margin: '2px 0 6px',
                   textAlign: 'left'
                 }}>
                   {siteData?.statsHeader?.safetyTitle !== undefined ? siteData.statsHeader.safetyTitle : "Safety First"}
-                </h4>
+                </h3>
                 <p className="winera-stats-safety-desc" style={{
                   fontFamily: "'Open Sans', sans-serif",
                   color: 'rgba(0, 28, 38, 1)',
@@ -697,7 +708,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#00a8ff' }}>
+                      <span key={index} style={{ color: '#0072b8' }}>
                         {part}
                       </span>
                     );
@@ -711,37 +722,51 @@ export default function Home({ siteData }) {
               <div className="winera-reveal-left">
                 <MobileExpandableText
                   preview={
-                    <p style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '15px', lineHeight: 1.65, fontWeight: '500', textAlign: 'left', marginBottom: '16px' }}>
-                      {siteData?.aboutHome?.paragraph1 || "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project."}
-                    </p>
+                    <div className="winera-about-desc-p" style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: '500', textAlign: 'left', marginBottom: '16px' }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.aboutHome?.paragraph1 || "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project.").replace(/\n/g, '<br>')) }}
+                    />
                   }
                   expandedContent={
-                    <p style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '15px', lineHeight: 1.65, fontWeight: '500', textAlign: 'left', marginBottom: '24px' }}>
-                      {siteData?.aboutHome?.paragraph2 || "Our team calculates a complete ROI Blueprint for your space, covering projected footfall, revenue potential, and break-even timeline. At Winera International Pvt. Ltd, we've built a reputation for efficiency and reliability, making us the go-to choice for exceptional gaming experiences in the B2B sector."}
-                    </p>
+                    <div className="winera-about-desc-p" style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: '500', textAlign: 'left', marginBottom: '24px' }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.aboutHome?.paragraph2 || "Our team calculates a complete ROI Blueprint for your space, covering projected footfall, revenue potential, and break-even timeline. At Winera International Pvt. Ltd, we've built a reputation for efficiency and reliability, making us the go-to choice for exceptional gaming experiences in the B2B sector.").replace(/\n/g, '<br>')) }}
+                    />
                   }
                 />
 
-                {/* Dynamic Checkmark Feature Bullets */}
+                {/* Dynamic Checkmark Feature Bullets (2-column layout matching reference exactly) */}
                 <div className="winera-about-bullets-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 20px', marginBottom: '32px' }}>
-                  {(
-                    Array.isArray(siteData?.aboutHome?.features) && siteData.aboutHome.features.length > 0
-                      ? siteData.aboutHome.features.filter(f => f && f.trim() !== '')
-                      : [
-                        "Game Zone Setup",
-                        "FEC Equipment & Setup",
-                        "Bowling Alley Equipment",
-                        "Arcade & Amusement Equipment",
-                        "Kids Entertainment Solutions",
-                        "VR Gaming Equipment",
-                        "Concept to Installation"
-                      ]
-                  ).map((feat, idx) => (
-                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <img src={homePageIcon} alt="check" style={{ width: '18px', height: '18px', objectFit: 'contain', flexShrink: 0 }} />
-                      <span style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '15px', fontWeight: '500', color: '#475569' }}>{feat}</span>
-                    </div>
-                  ))}
+                  {(() => {
+                    const defaultAboutFeatures = [
+                      "Game Zone Setup",
+                      "FEC Equipment & Setup",
+                      "Bowling Alley Equipment",
+                      "Arcade & Amusement Equipment",
+                      "Kids Entertainment Solutions",
+                      "VR Gaming Equipment",
+                      "Concept to Installation"
+                    ];
+                    let feats = siteData?.aboutHome?.features;
+                    if (Array.isArray(feats) && feats.length > 0) {
+                      if (feats.length === 1 && feats[0].includes('FEC Equipment')) {
+                        feats = defaultAboutFeatures;
+                      }
+                    } else if (typeof feats === 'string' && feats.trim() !== '') {
+                      if (feats.includes('FEC Equipment') && !feats.includes('\n')) {
+                        feats = defaultAboutFeatures;
+                      } else {
+                        feats = feats.split('\n').map(f => f.replace(/^[-*•]\s+/, '').trim()).filter(Boolean);
+                      }
+                    } else {
+                      feats = defaultAboutFeatures;
+                    }
+                    const validFeats = (Array.isArray(feats) ? feats : defaultAboutFeatures).filter(f => f && f.trim() !== '');
+                    return (validFeats.length > 0 ? validFeats : defaultAboutFeatures).map((feat, idx) => (
+                      <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <img src={homePageIcon} alt="check" style={{ width: '18px', height: '18px', objectFit: 'contain', flexShrink: 0 }} />
+                        <span style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '15px', fontWeight: '500', color: '#475569' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(feat) }} />
+                      </div>
+                    ));
+                  })()}
                 </div>
 
                 {/* CTA Button */}
@@ -781,16 +806,20 @@ export default function Home({ siteData }) {
               <div className="winera-about-images-grid winera-reveal-right" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <img
                   src={siteData?.aboutHome?.rightImgUrl || aboutCollage}
-                  alt="About Winera International"
-                  loading="eager"
+                  alt={siteData?.aboutHome?.rightImgAlt || "About Winera International - Commercial Game Zone Developer & Turnkey Supplier"}
+                  loading="lazy"
                   decoding="async"
-                  width={520}
-                  height={480}
+                  width={400}
+                  height={400}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "/assets/vr-game-images/Shape.png";
+                  }}
                   style={{
                     width: '100%',
-                    maxWidth: '520px',
+                    maxWidth: '400px',
                     height: 'auto',
-                    aspectRatio: '520 / 480',
+                    objectFit: 'contain',
                     display: 'block',
                     filter: 'drop-shadow(0 15px 35px rgba(0, 0, 0, 0.12))'
                   }}
@@ -837,7 +866,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#00a8ff' }}>
+                      <span key={index} style={{ color: '#0072b8' }}>
                         {part}
                       </span>
                     );
@@ -847,9 +876,7 @@ export default function Home({ siteData }) {
               })()}
             </SectionHeading>
 
-            <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '700', marginBottom: '40px' }}>
-              {siteData?.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions"}
-            </p>
+            <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '700', marginBottom: '40px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions").replace(/\n/g, '<br>')) }} />
 
             <div className="winera-products-container" style={{
               display: 'flex',
@@ -861,16 +888,16 @@ export default function Home({ siteData }) {
             }}>
               {(() => {
                 const defaultProductsCards = [
-                  { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp", link: "/products/arcade-games" },
-                  { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg", link: "/products/vr-games" },
-                  { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg", link: "/products/ar-games" },
-                  { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp", link: "/products/bowling-alley" },
-                  { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp", link: "/products/soft-play" },
-                  { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp", link: "/products/trampoline-park" },
-                  { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg", link: "/products/hypergrid" },
-                  { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg", link: "/products/amusement-park" },
-                  { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp", link: "/products/bumper-car" },
-                  { id: "lasertag", title: "Laser Tag", desc: "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp", link: "/products/laser-tag" }
+                  { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp", link: "/product/arcade-games" },
+                  { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg", link: "/product/vr-games" },
+                  { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg", link: "/product/ar-games" },
+                  { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp", link: "/product/bowling-alley" },
+                  { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp", link: "/product/soft-play" },
+                  { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp", link: "/product/trampoline-park" },
+                  { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg", link: "/product/hypergrid" },
+                  { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg", link: "/product/amusement-park" },
+                  { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp", link: "/product/bumper-car" },
+                  { id: "lasertag", title: "Laser Tag", desc: "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp", link: "/product/laser-tag" }
                 ];
 
                 const getCustomTitleStyle = (prod) => {
@@ -937,25 +964,20 @@ export default function Home({ siteData }) {
                   const cardStyle = getCustomTitleStyle(prod);
 
                   return (
-                    <div
+                    <Link
                       key={idx}
-                      role="button"
-                      tabIndex={0}
+                      to={targetLink}
                       aria-expanded={isExpanded}
-                      aria-label={`View ${prod.title} equipment`}
-                      onClick={() => {
-                        if (isExpanded) {
-                          navigate(targetLink);
-                        } else {
+                      onClick={(e) => {
+                        if (!isExpanded) {
+                          e.preventDefault();
                           setActiveProductIndex(idx);
                         }
                       }}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          if (isExpanded) {
-                            navigate(targetLink);
-                          } else {
+                          if (!isExpanded) {
+                            e.preventDefault();
                             setActiveProductIndex(idx);
                           }
                         }
@@ -970,13 +992,16 @@ export default function Home({ siteData }) {
                         cursor: 'pointer',
                         transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
                         boxShadow: isExpanded ? '0 16px 36px rgba(2, 132, 199, 0.22)' : '0 4px 12px rgba(0,0,0,0.06)',
-                        background: '#0f172a'
+                        background: '#0f172a',
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        display: 'block'
                       }}
                     >
                       {/* Product Card Image with Native Lazy Loading */}
                       <img
-                        src={getValidImageUrl(prod.img, '')}
-                        alt={prod.title}
+                        src={getValidImageUrl(prod.img, '', isPhone ? 280 : 340)}
+                        alt={prod.imgAlt || `${prod.title} Commercial Equipment - Winera`}
                         loading="lazy"
                         decoding="async"
                         style={{
@@ -1021,29 +1046,28 @@ export default function Home({ siteData }) {
                               boxShadow: '0 10px 25px rgba(0,0,0,0.15)'
                             }}
                           >
-                            <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0284c7', marginBottom: '6px' }}>{prod.title}</h3>
-                            <p style={{ fontSize: '11.5px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }}>
-                              {prod.desc}
-                            </p>
-                            <Link
-                              to={targetLink}
+                            <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0072b8', marginBottom: '6px' }}>{prod.title}</h3>
+                            <p style={{ fontSize: '11.5px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((prod.desc || '').replace(/\n/g, '<br>')) }} />
+                            <span
                               className="winera-product-view-more-link"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                              }}
                               style={{
-                                color: '#0284c7',
-                                fontSize: isMobile ? '14px' : '12px',
+                                color: '#0072b8',
+                                fontSize: isMobile ? '14px' : '13.5px',
                                 fontWeight: '800',
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '4px',
+                                gap: '8px',
+                                padding: '8px 18px',
+                                borderRadius: '24px',
+                                background: 'rgba(0, 114, 184, 0.08)',
+                                marginTop: '8px',
+                                marginBottom: '2px',
                                 textDecoration: 'none'
                               }}
                             >
                               <span>View More Info</span>
-                              <ArrowRight style={{ width: isMobile ? '15px' : '13px', height: isMobile ? '15px' : '13px' }} />
-                            </Link>
+                              <ArrowRight style={{ width: isMobile ? '15px' : '14px', height: isMobile ? '15px' : '14px' }} />
+                            </span>
                           </div>
                         </div>
                       ) : (
@@ -1073,7 +1097,7 @@ export default function Home({ siteData }) {
                           {prod.title}
                         </div>
                       )}
-                    </div>
+                    </Link>
                   );
                 });
               })()}
@@ -1131,7 +1155,7 @@ export default function Home({ siteData }) {
                     return parts.map((part, index) => {
                       if (index % 2 === 1) {
                         return (
-                          <span key={index} style={{ color: '#00a8ff' }}>
+                          <span key={index} style={{ color: '#0072b8' }}>
                             {part}
                           </span>
                         );
@@ -1148,7 +1172,7 @@ export default function Home({ siteData }) {
                   return (
                     <span className="winera-partner-title-block">
                       <span className="winera-partner-line winera-partner-line-1">
-                        <span style={{ color: '#00a8ff' }}>Your Partner</span> {isMobile ? "In" : "in"}
+                        <span style={{ color: '#0072b8' }}>Your Partner</span> {isMobile ? "In" : "in"}
                       </span>
                       <span className="winera-partner-line winera-partner-line-2">
                         {isMobile ? "Building A Profitable" : "Building a Profitable"}
@@ -1172,24 +1196,24 @@ export default function Home({ siteData }) {
                 width: '100%',
                 textAlign: isMobile ? 'center' : 'left',
                 margin: isMobile ? '14px auto 0 auto' : '18px 0 0 0'
-              }}>
-                {siteData?.partnerHome?.subtitle || "Discover how Winera International helps you plan, build, and launch a successful game zone from free ROI consultation to safety-certified equipment and complete installation support."}
-              </p>
+              }}
+                dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.partnerHome?.subtitle || "Discover how Winera International helps you plan, build, and launch a successful game zone from free ROI consultation to safety-certified equipment and complete installation support.").replace(/\n/g, '<br>')) }}
+              />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '20px' : '36px' }}>
               {/* Box 1: Free ROI Consultancy */}
               <MotionCardFlip className="winera-partner-box-wrapper-yellow winera-reveal-right winera-reveal-delay-1">
                 <div className="winera-partner-box-yellow">
-                  <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '6px', textAlign: isMobile ? 'center' : 'left' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '6px', textAlign: isMobile ? 'center' : 'left' }}>
                     {siteData?.partnerHome?.box1Title || "Free ROI Consultancy"}
-                  </h4>
-                  <p style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '0px', textAlign: isMobile ? 'center' : 'left' }}>
-                    {siteData?.partnerHome?.box1Desc || "Before you invest a single rupee, our team consults with you on layout, equipment mix, and budget and hands you a complete ROI report covering projected revenue, footfall, and break-even timeline."}
-                  </p>
+                  </h3>
+                  <p style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '0px', textAlign: isMobile ? 'center' : 'left' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.partnerHome?.box1Desc || "Before you invest a single rupee, our team consults with you on layout, equipment mix, and budget and hands you a complete ROI report covering projected revenue, footfall, and break-even timeline.").replace(/\n/g, '<br>')) }}
+                  />
                   <div style={{ textAlign: isMobile ? 'center' : 'right', display: 'flex', justifyContent: isMobile ? 'center' : 'flex-end', marginTop: isMobile ? '-10px' : '-15px', marginBottom: isMobile ? '-8px' : '-12px' }}>
                     <Link
-                      to={siteData?.partnerHome?.box1Link || "/roi"}
+                      to={(siteData?.partnerHome?.box1Link || "/resource/roi").replace(/^\/roi$/, '/resource/roi').replace(/^\/resources\/roi$/, '/resource/roi')}
                       title="Learn More about Free ROI Consultancy"
                       style={{
                         display: 'inline-flex',
@@ -1216,15 +1240,15 @@ export default function Home({ siteData }) {
               {/* Box 2: Safety-Certified Installation */}
               <MotionCardFlip className="winera-partner-box-wrapper-cyan winera-reveal-right winera-reveal-delay-2">
                 <div className="winera-partner-box-cyan">
-                  <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '6px', textAlign: isMobile ? 'center' : 'left' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', marginBottom: '6px', textAlign: isMobile ? 'center' : 'left' }}>
                     {siteData?.partnerHome?.box2Title || "Safety-Certified Installation"}
-                  </h4>
-                  <p style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '0px', textAlign: isMobile ? 'center' : 'left' }}>
-                    {siteData?.partnerHome?.box2Desc || "Every product we install meets commercial safety standards tested for high-footfall environments, assembled by our own trained team, and handed over only after a full on-site safety inspection."}
-                  </p>
+                  </h3>
+                  <p style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '0px', textAlign: isMobile ? 'center' : 'left' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.partnerHome?.box2Desc || "Every product we install meets commercial safety standards tested for high-footfall environments, assembled by our own trained team, and handed over only after a full on-site safety inspection.").replace(/\n/g, '<br>')) }}
+                  />
                   <div style={{ textAlign: isMobile ? 'center' : 'right', display: 'flex', justifyContent: isMobile ? 'center' : 'flex-end', marginTop: isMobile ? '-10px' : '-15px', marginBottom: isMobile ? '-8px' : '-12px' }}>
                     <Link
-                      to={siteData?.partnerHome?.box2Link || "/safety-standards"}
+                      to={(siteData?.partnerHome?.box2Link || "/resource/safety-standards").replace(/^\/safety-standards$/, '/resource/safety-standards').replace(/^\/resources\/safety-standards$/, '/resource/safety-standards')}
                       title="Learn More about Safety Standards"
                       style={{
                         display: 'inline-flex',
@@ -1267,7 +1291,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#00a8ff' }}>
+                      <span key={index} style={{ color: '#0072b8' }}>
                         {part}
                       </span>
                     );
@@ -1277,9 +1301,7 @@ export default function Home({ siteData }) {
               })()}
             </SectionHeading>
 
-            <p className="winera-industries-subtitle" style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '50px', textAlign: 'center' }}>
-              {siteData?.industriesHeader?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
-            </p>
+            <p className="winera-industries-subtitle" style={{ color: '#475569', fontFamily: "'Open Sans', sans-serif", fontSize: '15px', lineHeight: 1.65, fontWeight: '500', marginBottom: '50px', textAlign: 'center' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.industriesHeader?.subtitle || "We deliver complete game zone setup solutions for businesses across India").replace(/\n/g, '<br>')) }} />
 
             <div className="winera-industries-carousel-wrapper" style={{
               position: 'relative',
@@ -1314,7 +1336,7 @@ export default function Home({ siteData }) {
                   transition: 'opacity 0.2s ease'
                 }}
               >
-                <img src={homeLeftArrow} alt="Previous" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src={homeLeftArrow} alt="Previous" width={42} height={42} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </button>
 
               <div className="winera-industries-track" style={{
@@ -1397,7 +1419,7 @@ export default function Home({ siteData }) {
                       >
                         <img
                           src={getValidImageUrl(ind.img, defaultIndustries[idx % defaultIndustries.length]?.img || indMall)}
-                          alt={ind.title}
+                          alt={ind.imgAlt || `${ind.title} Game Zone Solutions - Winera International`}
                           loading="lazy"
                           decoding="async"
                           onError={(e) => {
@@ -1425,7 +1447,7 @@ export default function Home({ siteData }) {
                             textAlign: 'left',
                             boxShadow: '0 12px 30px rgba(0,0,0,0.25)'
                           }}>
-                            <h3 style={{ fontSize: '1.2rem', fontWeight: '900', color: '#00a8ff', margin: 0 }}>
+                            <h3 style={{ fontSize: '1.2rem', fontWeight: '900', color: '#0072b8', margin: 0 }}>
                               {ind.title}
                             </h3>
                           </div>
@@ -1459,7 +1481,7 @@ export default function Home({ siteData }) {
                   transition: 'opacity 0.2s ease'
                 }}
               >
-                <img src={homeRightArrow} alt="Next" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src={homeRightArrow} alt="Next" width={42} height={42} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </button>
             </div>
           </div>
@@ -1478,7 +1500,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#00a8ff' }}>
+                      <span key={index} style={{ color: '#0072b8' }}>
                         {part}
                       </span>
                     );
@@ -1498,9 +1520,7 @@ export default function Home({ siteData }) {
               color: isMobile ? 'rgb(55, 62, 65)' : 'rgb(30, 35, 44)',
               textAlign: 'center',
               marginBottom: isMobile ? '16px' : '36px'
-            }}>
-              {siteData?.processHome?.subtitle || "How We Setup Your Game Zone"}
-            </p>
+            }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.processHome?.subtitle || "How We Setup Your Game Zone").replace(/\n/g, '<br>')) }} />
 
             {/* Dynamic Working Process Cards */}
             <div className="winera-process-cards-container" style={{ display: 'flex', flexDirection: 'column', gap: '50px', maxWidth: '1180px', margin: '0 auto', paddingTop: '8px' }}>
@@ -1668,7 +1688,8 @@ export default function Home({ siteData }) {
                         {/* Bullet Points */}
                         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
                           {(() => {
-                            const validPts = (Array.isArray(step?.points) ? step.points : []).filter(p => p && p.trim() !== '');
+                            const rawPts = Array.isArray(step?.points) ? step.points : (typeof step?.points === 'string' ? step.points.split('\n') : []);
+                            const validPts = rawPts.map(p => typeof p === 'string' ? p.replace(/^[-*•]\s+/, '').trim() : '').filter(Boolean);
                             return validPts.map((pt, pIdx) => {
                               const isLastInCard45 = actualIndex >= 3 && pIdx === validPts.length - 1;
                               return (
@@ -1684,8 +1705,8 @@ export default function Home({ siteData }) {
                                   gap: '8px',
                                   paddingBottom: isLastInCard45 ? '6px' : '0px'
                                 }}>
-                                  <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '15px', fontWeight: '900', marginTop: '-1px', flexShrink: 0 }}>•</span>
-                                  <span>{pt}</span>
+                                  <span style={{ color: isYellow ? '#eab308' : '#0072b8', fontSize: '15px', fontWeight: '900', marginTop: '-1px', flexShrink: 0 }}>•</span>
+                                  <span dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(pt) }} />
                                 </li>
                               );
                             });
@@ -1717,7 +1738,7 @@ export default function Home({ siteData }) {
                       </div>
 
                       {/* Interactive Step Dots */}
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '14px', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '14px', gap: '4px' }}>
                         {cardList.map((_, dotIdx) => (
                           <button
                             key={dotIdx}
@@ -1733,16 +1754,28 @@ export default function Home({ siteData }) {
                             }}
                             aria-label={`Go to step ${dotIdx + 1}`}
                             style={{
-                              width: activeProcessStep === dotIdx ? '28px' : '8px',
-                              height: '8px',
-                              borderRadius: '10px',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              minWidth: '28px',
+                              minHeight: '28px',
+                              padding: '6px 4px',
                               border: 'none',
-                              padding: 0,
-                              background: activeProcessStep === dotIdx ? '#00a8ff' : '#cbd5e1',
-                              transition: 'all 0.3s ease',
+                              background: 'transparent',
                               cursor: 'pointer'
                             }}
-                          />
+                          >
+                            <span
+                              style={{
+                                display: 'block',
+                                width: activeProcessStep === dotIdx ? '28px' : '8px',
+                                height: '8px',
+                                borderRadius: '10px',
+                                background: activeProcessStep === dotIdx ? '#0072b8' : '#cbd5e1',
+                                transition: 'all 0.3s ease'
+                              }}
+                            />
+                          </button>
                         ))}
                       </div>
                     </div>
@@ -1778,14 +1811,16 @@ export default function Home({ siteData }) {
           </div>
         </section>
 
-        <ProjectsMarqueeSection
-          siteData={siteData}
-          showTopHeader={true}
-          projects={siteData?.builtProjects}
-          title={siteData?.builtProjectsHeader?.title}
-          subtext={siteData?.builtProjectsHeader?.subtext}
-          bg={clientsBg}
-        />
+        <React.Suspense fallback={<div style={{ minHeight: '300px' }} />}>
+          <ProjectsMarqueeSection
+            siteData={siteData}
+            showTopHeader={true}
+            projects={siteData?.builtProjects}
+            title={siteData?.builtProjectsHeader?.title}
+            subtext={siteData?.builtProjectsHeader?.subtext}
+            bg={clientsBg}
+          />
+        </React.Suspense>
 
         <section id="why-us" className="winera-why-us-section" style={{
           position: 'relative',
@@ -1800,14 +1835,14 @@ export default function Home({ siteData }) {
           textAlign: 'center'
         }}>
           <div style={{ maxWidth: '1180px', width: '100%', margin: '0 auto' }}>
-            <SectionHeading marginBottom="8px" accentColor="#00a8ff">
+            <SectionHeading marginBottom="8px">
               {(() => {
                 const rawTitle = siteData?.whyChooseUs?.title || "*Why* Choose Us";
                 const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#00a8ff' }}>
+                      <span key={index} style={{ color: '#0072b8' }}>
                         {part}
                       </span>
                     );
@@ -1817,9 +1852,7 @@ export default function Home({ siteData }) {
               })()}
             </SectionHeading>
 
-            <p style={{ color: '#334155', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }}>
-              {siteData?.whyChooseUs?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
-            </p>
+            <p style={{ color: '#334155', fontSize: '13px', fontWeight: '600', marginBottom: '45px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.whyChooseUs?.subtitle || "We deliver complete game zone setup solutions for businesses across India").replace(/\n/g, '<br>')) }} />
 
             {(() => {
               const whyUsItems = (
@@ -1865,12 +1898,10 @@ export default function Home({ siteData }) {
                           }}
                         />
                         <div style={{ textAlign: 'left', flex: 1 }}>
-                          <h4 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#0f172a', marginBottom: '4px', textAlign: 'left' }}>
+                          <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#0f172a', marginBottom: '4px', textAlign: 'left' }}>
                             {item.title}
-                          </h4>
-                          <p className="winera-why-us-desc" style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, letterSpacing: '0px', margin: 0, width: '100%', textAlign: 'left' }}>
-                            {item.desc}
-                          </p>
+                          </h3>
+                          <p className="winera-why-us-desc" style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, letterSpacing: '0px', margin: 0, width: '100%', textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(item.desc || '') }} />
                         </div>
                       </div>
                     ))}
@@ -1884,48 +1915,55 @@ export default function Home({ siteData }) {
           </div>
         </section>
 
-        <TestimonialsSection
-          testimonials={siteData?.testimonials}
-          title={siteData?.testimonialsHeader?.title}
-          subtitle={siteData?.testimonialsHeader?.subtitle}
-        />
+        <React.Suspense fallback={null}>
+          <TestimonialsSection
+            testimonials={siteData?.testimonials}
+            title={siteData?.testimonialsHeader?.title}
+            subtitle={siteData?.testimonialsHeader?.subtitle}
+          />
 
-        <FaqSection
-          faqList={(Array.isArray(siteData?.faqs) && siteData.faqs.length >= 9) ? siteData.faqs : defaultHomeFaqs}
-          title={siteData?.faqsHeader?.title}
-          subtitle={siteData?.faqsHeader?.subtitle}
-        />
+          <FaqSection
+            faqList={(Array.isArray(siteData?.faqs) && siteData.faqs.length >= 9) ? siteData.faqs : defaultHomeFaqs}
+            title={siteData?.faqsHeader?.title}
+            subtitle={siteData?.faqsHeader?.subtitle}
+          />
 
-        {/* 15. CTA BANNER SECTION */}
-        <CtaBanner
-          blurBg={true}
-          align="center"
-          buttonTheme="yellow_white"
-          gradientTagline={false}
-          gradientTitle={false}
-          titleFontSize="33px"
-          descriptionFontSize="17px"
-          bgUrl={siteData?.ctaBanner?.bgUrl !== undefined ? siteData.ctaBanner.bgUrl : null}
-          bg={ctaMainBanner}
-          leftImgUrl={siteData?.ctaBanner?.leftImgUrl !== undefined ? siteData.ctaBanner.leftImgUrl : null}
-          leftImg={homeBlock1}
-          rightImgUrl={siteData?.ctaBanner?.rightImgUrl !== undefined ? siteData.ctaBanner.rightImgUrl : null}
-          rightImg={homeBlock2}
-          tagline={null}
-          title={
-            siteData?.ctaBanner?.title && siteData.ctaBanner.title !== "Start Your Game Zone Journey"
-              ? siteData.ctaBanner.title
-              : "Game Zones Are India's Fastest Growing Business Are You In?"
-          }
-          subtitle={null}
-          description={siteData?.ctaBanner?.description || "Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company"}
-          buttonText={siteData?.ctaBanner?.buttonText || "Talk to an Expert"}
-          buttonLink={siteData?.ctaBanner?.buttonLink || "https://wa.me/919428989488"}
-        />
+          {/* 15. CTA BANNER SECTION */}
+          <CtaBanner
+            blurBg={true}
+            align="center"
+            buttonTheme="yellow_white"
+            gradientTagline={false}
+            gradientTitle={false}
+            titleFontSize="33px"
+            descriptionFontSize="17px"
+            bgUrl={siteData?.ctaBanner?.bgUrl !== undefined ? siteData.ctaBanner.bgUrl : null}
+            bg={ctaMainBanner}
+            leftImgUrl={siteData?.ctaBanner?.leftImgUrl !== undefined ? siteData.ctaBanner.leftImgUrl : null}
+            leftImg={homeBlock1}
+            leftImgAlt={siteData?.ctaBanner?.leftImgAlt || "Commercial Game Zone Setup Solutions - Winera International"}
+            rightImgUrl={siteData?.ctaBanner?.rightImgUrl !== undefined ? siteData.ctaBanner.rightImgUrl : null}
+            rightImg={homeBlock2}
+            rightImgAlt={siteData?.ctaBanner?.rightImgAlt || "Turnkey Game Zone Equipment - Winera International"}
+            bgAlt={siteData?.ctaBanner?.bgAlt || "Game Zone Turnkey Consultation & Equipment - Winera International"}
+            tagline={null}
+            title={
+              siteData?.ctaBanner?.title && siteData.ctaBanner.title !== "Start Your Game Zone Journey"
+                ? siteData.ctaBanner.title
+                : "Game Zones Are India's Fastest Growing Business Are You In?"
+            }
+            subtitle={null}
+            description={siteData?.ctaBanner?.description || "Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company"}
+            buttonText={siteData?.ctaBanner?.buttonText || "Talk to an Expert"}
+            buttonLink={siteData?.ctaBanner?.buttonLink || "https://wa.me/919157873576"}
+          />
+        </React.Suspense>
       </main>
 
       {/* 16. FOOTER SECTION */}
-      <Footer footerData={footer} />
+      <React.Suspense fallback={<div style={{ minHeight: '120px' }} />}>
+        <Footer footerData={footer} />
+      </React.Suspense>
     </div>
   );
 }

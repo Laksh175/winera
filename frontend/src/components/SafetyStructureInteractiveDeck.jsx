@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ShieldCheck } from 'lucide-react';
+import { sanitizeAndFormatHtml } from '../pages/BlogDetail';
 
 export default function SafetyStructureInteractiveDeck({ cards = [] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -117,9 +118,12 @@ export default function SafetyStructureInteractiveDeck({ cards = [] }) {
                 </h3>
 
                 {/* Description */}
-                <p className="winera-safety-structure-card-desc">
-                  {card.desc}
-                </p>
+                <p
+                  className="winera-safety-structure-card-desc"
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml(card.desc)
+                  }}
+                />
               </div>
             </div>
           );

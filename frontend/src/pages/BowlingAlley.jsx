@@ -8,6 +8,8 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import CtaBanner from '../components/CtaBanner';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import MobileExpandableText from '../components/MobileExpandableText';
+import BrochureModal from '../components/BrochureModal';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 
 const wineraLogo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png";
 const arcadeHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/rpygauibfzxyouopsc4r.png";
@@ -29,10 +31,10 @@ const bikeArcade = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_au
 const builtCommercialBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345639/winera_uploads/apcgofmnk7ywywfbzgnp.png";
 const commercialTeam = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345643/winera_uploads/ld6pprroti7x4husa1kz.jpg";
 const needConsultationsBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
-const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344888/winera_uploads/oadq9n7rqdg5bs4u8eyo.png";
+const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 const ctaSoftplayBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345648/winera_uploads/w1m4przklz2qiyevbxtu.png";
 const trampolineParkCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345688/winera_uploads/l1grqnreps9stov1wrta.png";
-const yellowBrushAccent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344888/winera_uploads/oadq9n7rqdg5bs4u8eyo.png";
+const yellowBrushAccent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 const about1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345510/winera_uploads/wxqjmaw9a6bio8qwbeq4.png";
 const about2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345511/winera_uploads/tqdmbldbsagsq6pylfq0.jpg";
 const about3 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345512/winera_uploads/x14hcngkdlrhsdccxigh.jpg";
@@ -68,6 +70,7 @@ const getValidImageUrl = (url, fallback) => {
 
 // Helper function to render title with *word* highlights, <cyan>cyan words</cyan> and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#00a8ff') ? '#0072b8' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -91,14 +94,14 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => 
       ));
 
       if (isCyan) {
-        return <span key={sIdx} style={{ color: '#38bdf8' }}>{lineElements}</span>;
+        return <span key={sIdx} style={{ color: '#0072b8' }}>{lineElements}</span>;
       }
       return <React.Fragment key={sIdx}>{lineElements}</React.Fragment>;
     });
 
     if (isHighlighted) {
       return (
-        <span key={pIdx} style={{ color: highlightColor }}>
+        <span key={pIdx} style={{ color: actualHighlight }}>
           {renderedSub}
         </span>
       );
@@ -121,6 +124,7 @@ export default function BowlingAlley({ siteData }) {
   const [isPaused, setIsPaused] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
+  const [isBrochureOpen, setIsBrochureOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -143,7 +147,8 @@ export default function BowlingAlley({ siteData }) {
   }, [siteData]);
 
   // Hero background asset constant
-  const heroBgImage = isMobile ? bowlingMobileHeroBg : getValidImageUrl(siteData?.bowlingHero?.bgUrl, bowlingHeroBg);
+  const currentMobileBg = getValidImageUrl(siteData?.bowlingHero?.mobileBgUrl, bowlingMobileHeroBg);
+  const heroBgImage = isMobile ? currentMobileBg : getValidImageUrl(siteData?.bowlingHero?.bgUrl, bowlingHeroBg);
 
   // Bowling Machine categories/cards fallback
   const defaultBowlingCategories = [
@@ -234,7 +239,7 @@ export default function BowlingAlley({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
-        '--winera-bowling-mobile-bg': `url("${bowlingMobileHeroBg}")`,
+        '--winera-bowling-mobile-bg': `url("${currentMobileBg}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -242,6 +247,12 @@ export default function BowlingAlley({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
+        {/* Hidden SEO Image for Google Indexing */}
+        <img
+          src={heroBgImage}
+          alt={isMobile ? (siteData?.bowlingHero?.mobileBgAlt || siteData?.bowlingHero?.bgAlt || "Bowling Alley Setup & Manufacturer - Winera International") : (siteData?.bowlingHero?.bgAlt || "Bowling Alley Setup & Manufacturer - Winera International")}
+          style={{ display: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Bowling Alley */}
           <h1 className="winera-bowling-hero-h1" style={{
@@ -282,7 +293,8 @@ export default function BowlingAlley({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '320px', height: '14px', marginBottom: '10px', objectFit: 'fill' }}
+                className="winera-yellow-stroke"
+                style={{ display: 'block', width: '280px', maxWidth: '75%', height: 'auto', maxHeight: '10px', aspectRatio: '492 / 10', marginBottom: '10px', objectFit: 'contain' }}
               />
               <h2 style={{
                 fontSize: '35px',
@@ -299,7 +311,7 @@ export default function BowlingAlley({ siteData }) {
                   return parts.map((part, index) => {
                     if (index % 2 === 1) {
                       return (
-                        <span key={index} style={{ color: '#38bdf8' }}>
+                        <span key={index} style={{ color: '#0072b8' }}>
                           {part}
                         </span>
                       );
@@ -319,20 +331,23 @@ export default function BowlingAlley({ siteData }) {
               </h2>
             </div>
 
-            <p style={{
-              color: '#64748b',
-              fontSize: '14px',
-              lineHeight: 1.65,
-              fontWeight: '500',
-              maxWidth: '520px',
-              marginBottom: '0px'
-            }}>
-              {siteData?.bowlingIntro?.desc || "India's trusted source for refurbished Brunswick bowling equipment — complete setup, installation, and a free ROI report before you invest."}
-            </p>
+            <p
+              style={{
+                color: '#64748b',
+                fontSize: '14px',
+                lineHeight: 1.65,
+                fontWeight: '500',
+                maxWidth: '520px',
+                marginBottom: '0px'
+              }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.bowlingIntro?.desc || "India's trusted source for refurbished Brunswick bowling equipment — complete setup, installation, and a free ROI report before you invest.").replace(/\n/g, '<br>'))
+              }}
+            />
 
             {/* Get Quote From Expert CTA Button with offset rotated backdrop */}
             {(() => {
-              const baseLink = siteData?.bowlingIntro?.buttonLink || "https://wa.me/919428989488";
+              const baseLink = siteData?.bowlingIntro?.buttonLink || "https://wa.me/919157873576";
               const defaultMsg = siteData?.bowlingIntro?.waMessage || "Hello Winera International! I want to get a quote and estimation for a Bowling Alley setup. Please share details. [Ref: Bowling Alley Page]";
 
               let hrefLink = baseLink;
@@ -361,7 +376,7 @@ export default function BowlingAlley({ siteData }) {
           <div className="winera-bowling-supplier-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
             <img
               src={getValidImageUrl(siteData?.bowlingIntro?.mainImgUrl || siteData?.bowlingIntro?.imgUrl, bowlingImg)}
-              alt="Bowling Alley Manufacturer Winera International"
+              alt={siteData?.bowlingIntro?.mainImgAlt || siteData?.bowlingIntro?.imgAlt || "Bowling Alley Manufacturer Winera International"}
               loading="lazy"
               decoding="async"
               style={{
@@ -402,7 +417,7 @@ export default function BowlingAlley({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#38bdf8' }}>
+                      <span key={index} style={{ color: '#0072b8' }}>
                         {part}
                       </span>
                     );
@@ -419,14 +434,20 @@ export default function BowlingAlley({ siteData }) {
             <div className="winera-bowling-premium-text" style={{ flex: '1 1 800px', color: '#475569', fontSize: '13.5px', lineHeight: 1.65, fontWeight: '500', textAlign: 'center' }}>
               <MobileExpandableText
                 preview={
-                  <p style={{ maxWidth: '1024px', margin: '0 auto 10px' }}>
-                    {siteData?.bowlingManufacturer?.p1 || "At Winera International Pvt. Ltd., we are proud to be India's leading bowling alley manufacturer and supplier of refurbished Brunswick bowling equipment. With over 15 years of expertise in the industry, we have built a reputation for delivering top-quality bowling alley equipment and exceptional customer service, tailored to fit the unique needs and budgets of our clients."}
-                  </p>
+                  <p
+                    style={{ maxWidth: '1024px', margin: '0 auto 10px' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.bowlingManufacturer?.p1 || "At Winera International Pvt. Ltd., we are proud to be India's leading bowling alley manufacturer and supplier of refurbished Brunswick bowling equipment. With over 15 years of expertise in the industry, we have built a reputation for delivering top-quality bowling alley equipment and exceptional customer service, tailored to fit the unique needs and budgets of our clients.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ maxWidth: '1024px', margin: '10px auto 0' }}>
-                    {siteData?.bowlingManufacturer?.p2 || "We specialize in providing refurbished Brunswick GS98 & GSX equipment, enhanced with the latest Frameworx or Vector Scoring Systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience."}
-                  </p>
+                  <p
+                    style={{ maxWidth: '1024px', margin: '10px auto 0' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.bowlingManufacturer?.p2 || "We specialize in providing refurbished Brunswick GS98 & GSX equipment, enhanced with the latest Frameworx or Vector Scoring Systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
               />
             </div>
@@ -435,7 +456,7 @@ export default function BowlingAlley({ siteData }) {
             <div className="winera-bowling-pins-explode" style={{ flex: '0 0 250px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <img
                 src={getValidImageUrl(siteData?.bowlingManufacturer?.mainImgUrl || siteData?.bowlingManufacturer?.imgUrl, bowlingPinsExplode)}
-                alt="Exploding Bowling Pins"
+                alt={siteData?.bowlingManufacturer?.mainImgAlt || siteData?.bowlingManufacturer?.imgAlt || "Exploding Bowling Pins - Commercial Bowling Lanes Setup"}
                 style={{
                   width: '100%',
                   maxWidth: '260px',
@@ -475,27 +496,27 @@ export default function BowlingAlley({ siteData }) {
                   className="winera-yellow-stroke"
                   style={{ display: 'block', width: '200px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
                 />
-                <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                <h2 style={{ fontSize: 'clamp(27px, 2.25vw, 35px)', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
                   {(() => {
                     let titleStr = siteData?.bowlingFreeFall?.title;
-                    if (!titleStr || titleStr === "*Free-Fall Bowling:* Give the Full Professional Experience" || titleStr.includes("Full Professional Experience")) {
-                      titleStr = "*Free-Fall Bowling:*<br/>Give the Full<br/>Professional Experience";
+                    if (!titleStr || titleStr === "*Free-Fall Bowling:* Give the Full Professional Experience" || titleStr.includes("Give the Full<br/>Professional Experience") || titleStr.includes("Give the Full<br />Professional Experience")) {
+                      titleStr = "*Free-Fall Bowling:*<br/>Give the Full Professional Experience";
                     }
-                    return renderTitleMarkup(titleStr, "*Free-Fall Bowling:*<br/>Give the Full<br/>Professional Experience", '#38bdf8');
+                    return renderTitleMarkup(titleStr, "*Free-Fall Bowling:*<br/>Give the Full Professional Experience", '#0072b8');
                   })()}
                 </h2>
               </div>
 
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}>
-                    {siteData?.bowlingFreeFall?.p1 || "Free-fall bowling is the traditional game you'll find in professional bowling centers worldwide. When the ball hits the pins, they fall freely and naturally, and a pinsetter machine clears and resets them for the next throw. It delivers the true feel of real bowling, the satisfying strike and the competition-grade experience serious players expect."}
-                  </p>
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.bowlingFreeFall?.p1 || "Free-fall bowling is the traditional game you'll find in professional bowling centers worldwide. When the ball hits the pins, they fall freely and naturally, and a pinsetter machine clears and resets them for the next throw. It delivers the true feel of real bowling, the satisfying strike and the competition-grade experience serious players expect.").replace(/\n/g, '<br>')) }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '24px', textAlign: 'justify' }}>
-                    {siteData?.bowlingFreeFall?.p2 || "We specialise in refurbished Brunswick GS98 and GS-X equipment, restored to perform like new and enhanced with the latest Frameworx or Vector scoring systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience. It's the ideal choice for dedicated bowling centers and premium venues where bowling is the main attraction."}
-                  </p>
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '24px', textAlign: 'justify' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.bowlingFreeFall?.p2 || "We specialise in refurbished Brunswick GS98 and GS-X equipment, restored to perform like new and enhanced with the latest Frameworx or Vector scoring systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience. It's the ideal choice for dedicated bowling centers and premium venues where bowling is the main attraction.").replace(/\n/g, '<br>')) }}
+                  />
                 }
               />
 
@@ -538,7 +559,7 @@ export default function BowlingAlley({ siteData }) {
               {/* Main Oval Free-Fall Pins Image: Mask-group.webp */}
               <img
                 src={getValidImageUrl(siteData?.bowlingFreeFall?.mainImgUrl || siteData?.bowlingFreeFall?.imgUrl, maskGroupImg)}
-                alt="Free Fall Bowling Pinsetter"
+                alt={siteData?.bowlingFreeFall?.mainImgAlt || siteData?.bowlingFreeFall?.imgAlt || "Free Fall Bowling Pinsetter - Commercial Bowling Setup"}
                 loading="lazy"
                 decoding="async"
                 style={{
@@ -729,7 +750,7 @@ export default function BowlingAlley({ siteData }) {
               {/* Main Friends Bowling Photo: Mask-group-01.webp */}
               <img
                 src={getValidImageUrl(siteData?.bowlingString?.mainImgUrl || siteData?.bowlingString?.imgUrl, maskGroup01Img)}
-                alt="String Bowling Friends"
+                alt={siteData?.bowlingString?.mainImgAlt || siteData?.bowlingString?.imgAlt || "String Bowling Friends - Commercial String Bowling Machine"}
                 style={{
                   position: 'absolute',
                   right: '0px',
@@ -933,21 +954,21 @@ export default function BowlingAlley({ siteData }) {
                     if (!titleStr || titleStr.includes("String Bowling") || titleStr.includes("Every Venue")) {
                       titleStr = "String Bowling Machines:<br/>*Affordable Bowling Setup*<br/>*for Every Venue*";
                     }
-                    return renderTitleMarkup(titleStr, "String Bowling Machines:<br/>*Affordable Bowling Setup*<br/>*for Every Venue*", '#38bdf8');
+                    return renderTitleMarkup(titleStr, "String Bowling Machines:<br/>*Affordable Bowling Setup*<br/>*for Every Venue*", '#0072b8');
                   })()}
                 </h2>
               </div>
 
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}>
-                    {siteData?.bowlingString?.p1 || "Add a complete, ready-to-play bowling setup to your venue at a lower upfront cost than a traditional free-fall system. We supply and install full string bowling lanes pins, strings, scoring screens, and commissioning so you get a finished attraction, not just a machine."}
-                  </p>
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', textAlign: 'justify' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.bowlingString?.p1 || "Add a complete, ready-to-play bowling setup to your venue at a lower upfront cost than a traditional free-fall system. We supply and install full string bowling lanes pins, strings, scoring screens, and commissioning so you get a finished attraction, not just a machine.").replace(/\n/g, '<br>')) }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '7px', textAlign: 'justify' }}>
-                    {siteData?.bowlingString?.p2 || "String systems have fewer moving parts, which means quieter lanes, easier maintenance your own team can handle, and a compact footprint that fits where a full 89 ft lane won't. That's why family entertainment centers, malls, resorts, and cafés choose them. Lower to set up, lower to run, and quick to start earning."}
-                  </p>
+                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '7px', textAlign: 'justify' }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.bowlingString?.p2 || "String systems have fewer moving parts, which means quieter lanes, easier maintenance your own team can handle, and a compact footprint that fits where a full 89 ft lane won't. That's why family entertainment centers, malls, resorts, and cafés choose them. Lower to set up, lower to run, and quick to start earning.").replace(/\n/g, '<br>')) }}
+                  />
                 }
               />
 
@@ -961,11 +982,9 @@ export default function BowlingAlley({ siteData }) {
               </div>
 
               <div className="winera-bowling-types-btn-row" style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '45px' }}>
-                <a
-                  href={siteData?.bowlingString?.brochureUrl || "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  download
+                <button
+                  type="button"
+                  onClick={() => setIsBrochureOpen(true)}
                   aria-label="Download String Bowling Brochure"
                   style={{
                     display: 'inline-flex',
@@ -980,14 +999,13 @@ export default function BowlingAlley({ siteData }) {
                     fontWeight: '600',
                     textAlign: 'center',
                     lineHeight: 1,
-                    textDecoration: 'none',
                     border: 'none',
                     outline: 'none',
                     cursor: 'pointer'
                   }}
                 >
                   {siteData?.bowlingString?.brochureBtnText || "Download Our Brochure"}
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -1021,7 +1039,7 @@ export default function BowlingAlley({ siteData }) {
                   return parts.map((part, index) => {
                     if (index % 2 === 1) {
                       return (
-                        <span key={index} style={{ color: '#38bdf8' }}>
+                        <span key={index} style={{ color: '#0072b8' }}>
                           {part}
                         </span>
                       );
@@ -1034,26 +1052,32 @@ export default function BowlingAlley({ siteData }) {
 
             <MobileExpandableText
               preview={
-                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '10px', width: '109%' }}>
-                  {(() => {
-                    const p1Text = siteData?.bowlingRoi?.p1;
-                    if (!p1Text || p1Text.includes("Add a complete, ready-to-play") || p1Text.includes("string bowling")) {
-                      return "Setting up a bowling center is a significant investment which is why we don't just sell you equipment and walk away. We're India's ROI-First Game Zone Developer. Before you commit to a project, every client receives a complete report covering product costing, maintenance costs, and projected revenue timeline, so your investment decision is based on real numbers, not estimates.";
-                    }
-                    return p1Text;
-                  })()}
-                </p>
+                <p
+                  style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '10px', width: '109%' }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml((() => {
+                      const p1Text = siteData?.bowlingRoi?.p1;
+                      if (!p1Text || p1Text.includes("Add a complete, ready-to-play") || p1Text.includes("string bowling")) {
+                        return "Setting up a bowling center is a significant investment which is why we don't just sell you equipment and walk away. We're India's ROI-First Game Zone Developer. Before you commit to a project, every client receives a complete report covering product costing, maintenance costs, and projected revenue timeline, so your investment decision is based on real numbers, not estimates.";
+                      }
+                      return p1Text;
+                    })().replace(/\n/g, '<br>'))
+                  }}
+                />
               }
               expandedContent={
-                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '3px', width: '103%' }}>
-                  {siteData?.bowlingRoi?.p2 || "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment."}
-                </p>
+                <p
+                  style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '3px', width: '103%' }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml((siteData?.bowlingRoi?.p2 || "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment.").replace(/\n/g, '<br>'))
+                  }}
+                />
               }
             />
 
             <div>
               {(() => {
-                const baseLink = siteData?.bowlingRoi?.videoUrl || "https://wa.me/919428989488";
+                const baseLink = siteData?.bowlingRoi?.videoUrl || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.bowlingRoi?.waMessage || "Hello Winera International! I want to get custom Bowling ROI calculation & setup guidance. Please share details. [Ref: Bowling Alley Page]";
 
                 let hrefLink = baseLink;
@@ -1140,7 +1164,7 @@ export default function BowlingAlley({ siteData }) {
             {/* Bowling Photo: bowlling-image.png */}
             <img
               src={getValidImageUrl(siteData?.bowlingRoi?.mainImgUrl || siteData?.bowlingRoi?.imgUrl, bowlingImage)}
-              alt="Bowling Alley Lanes ROI"
+              alt={siteData?.bowlingRoi?.mainImgAlt || siteData?.bowlingRoi?.imgAlt || "Bowling Alley Lanes ROI - High Profit Game Zone Equipment"}
               loading="lazy"
               decoding="async"
               style={{
@@ -1169,7 +1193,7 @@ export default function BowlingAlley({ siteData }) {
             <div className="winera-bowling-whyus-img" style={{ flex: '0 0 360px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <img
                 src={getValidImageUrl(siteData?.bowlingWhyUs?.mainImgUrl || siteData?.bowlingWhyUs?.graphicUrl || siteData?.bowlingWhyUs?.imgUrl, bowlingBallPinsBlue)}
-                alt="Blue Bowling Ball and Pins"
+                alt={siteData?.bowlingWhyUs?.mainImgAlt || siteData?.bowlingWhyUs?.imgAlt || "Blue Bowling Ball and Pins - Winera Game Zone Manufacturer"}
                 loading="lazy"
                 decoding="async"
                 style={{
@@ -1201,18 +1225,24 @@ export default function BowlingAlley({ siteData }) {
                 margin: '0 0 20px',
                 letterSpacing: '-0.5px'
               }}>
-                {renderTitleMarkup(siteData?.bowlingWhyUs?.title, "Why Choose *Winera International*", '#38bdf8')}
+                {renderTitleMarkup(siteData?.bowlingWhyUs?.title, "Why Choose *Winera International*", '#0072b8')}
               </h2>
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', maxWidth: '780px', margin: '0 auto 14px' }}>
-                    {siteData?.bowlingWhyUs?.p1 || "At Winera International, we bring over 15 years of industry experience as a trusted bowling alley manufacturer in India. We are the largest bowling alley supplier in the country, with more than 30 complete setups delivered successfully."}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '14px', maxWidth: '780px', margin: '0 auto 14px' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.bowlingWhyUs?.p1 || "At Winera International, we bring over 15 years of industry experience as a trusted bowling alley manufacturer in India. We are the largest bowling alley supplier in the country, with more than 30 complete setups delivered successfully.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 auto', maxWidth: '780px' }}>
-                    {siteData?.bowlingWhyUs?.p2 || "Our equipment is sourced from the USA/China, ensuring proven quality. We provide affordable refurbished options along with installation, maintenance, and support across India with low failure rates and easy servicing, tailored to your budget and space."}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: '0 auto', maxWidth: '780px' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.bowlingWhyUs?.p2 || "Our equipment is sourced from the USA/China, ensuring proven quality. We provide affordable refurbished options along with installation, maintenance, and support across India with low failure rates and easy servicing, tailored to your budget and space.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
               />
             </div>
@@ -1225,7 +1255,7 @@ export default function BowlingAlley({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="Know More"
       />
@@ -1235,13 +1265,13 @@ export default function BowlingAlley({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 9. RELATED PRODUCTS CAROUSEL SECTION */}
       <RelatedProductsSection
         sectionData={siteData?.bowlingRelated || siteData?.arcadeRelated}
-        accentColor="#38bdf8"
+        accentColor="#0072b8"
         accentWidth="370px"
         accentMaxWidth="95%"
         accentHeight="11px"
@@ -1254,7 +1284,7 @@ export default function BowlingAlley({ siteData }) {
         faqList={Array.isArray(siteData?.bowlingFaqs) && siteData.bowlingFaqs.length >= 8 ? siteData.bowlingFaqs : defaultBowlingFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
         accentWidth="510px"
         accentMaxWidth="95%"
         accentHeight="11px"
@@ -1280,6 +1310,7 @@ export default function BowlingAlley({ siteData }) {
         titleFontSize="35px"
         descriptionFontSize="17px"
         bgUrl={siteData?.bowlingCta?.bgUrl && !siteData.bowlingCta.bgUrl.includes('bowling-last-image-bg') ? siteData.bowlingCta.bgUrl : null}
+        bgAlt={siteData?.bowlingCta?.bgAlt || "Bowling Alley Setup Consultation - Winera International"}
         bg={trampolineParkCtaBg}
         tagline={null}
         title={siteData?.bowlingCta?.title || "Need Any Consultations?"}
@@ -1297,12 +1328,27 @@ export default function BowlingAlley({ siteData }) {
         buttonLink={
           siteData?.bowlingCta?.buttonLink !== undefined
             ? siteData.bowlingCta.buttonLink
-            : "https://wa.me/919428989488"
+            : "https://wa.me/919157873576"
         }
       />
 
       {/* 12. FOOTER */}
       <Footer footerData={footer} />
+
+      {/* BROCHURE PREVIEW & DOWNLOAD MODAL */}
+      <BrochureModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+        pdfUrl={
+          (() => {
+            const bUrl = siteData?.bowlingString?.brochureUrl;
+            if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '') return bUrl.trim();
+            return "/pdf/Bowling Catalogue.pdf";
+          })()
+        }
+        title="Bowling Catalogue & Technical Specifications"
+        fileName="Bowling Catalogue - Winera International.pdf"
+      />
     </div>
   );
 }

@@ -1,13 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { updateSectionContent, mutateContentItem, uploadImageFile } from '../services/api';
+import { updateSectionContent, mutateContentItem, uploadImageFile, syncSitemapApi, fetchArcadeProducts, fetchVrGames, fetchProjects, createProjectApi, updateProjectApi, deleteProjectApi } from '../services/api';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
-import { BLOG_POSTS as DEFAULT_BLOG_POSTS } from '../data/blogData';
-import allArcadeProducts from '../data/allArcadeProducts.json';
-import allVrGames from '../data/allVrGames.json';
-import projectsData from '../data/projectsData.json';
+import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import StatusDropdown from '../components/StatusDropdown';
+
+const DEFAULT_ARCADE_CATEGORIES = [
+  "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
+  "Bike & Car Racing Games", "Shooting Games", "Strength Based Games"
+];
+const DEFAULT_VR_CATEGORIES = [
+  "All VR Games",
+  "VR 9D Cinema",
+  "VR Racing Simulator",
+  "VR Shooting Simulator",
+  "VR Flying Simulator",
+  "Movie Experience",
+  "VR 360 Simulator",
+  "Kids' Interactive Equipment"
+];
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, Edit3, X, Star, Video, Trophy, Sparkles, Calculator, Menu, Target, ChevronDown } from 'lucide-react';
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 const yellowBrushAccent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
@@ -16,6 +30,7 @@ const vrCtaRightImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q
 const vrBlock1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345688/winera_uploads/lwatadqikcv51rk0ekf7.jpg";
 const wineraLogo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png";
 const heroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345656/winera_uploads/jszelnb45kglcliprty7.png";
+const heroMobileBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/metbo4e8giv2tctvqkdh.png";
 const laserTagImg1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345668/winera_uploads/pvowe89a9npyelw0urvy.png";
 const laserTagImg2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345670/winera_uploads/pdxjsxxlv5fmskyvexns.png";
 const laserTagImg3 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345671/winera_uploads/c6ibna0gcd0tjshkgo8o.png";
@@ -166,6 +181,20 @@ const arcadeHall = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_au
 const founderUnnit = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345649/winera_uploads/cjhrbui8tkykaxa9tztp.png";
 const welcomeWineraImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345693/winera_uploads/lqcqhjziwp6sl1zbinep.png";
 const aboutHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345517/winera_uploads/wa3oylkwg39op9yozk90.png";
+const contactUsHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/z2qo5dtx8u7tyfvzjhmr.png";
+
+const defaultGameZoneMobileBanner = projectPageMobileBanner;
+const homeMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/metbo4e8giv2tctvqkdh.png";
+const arcadeMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345625/winera_uploads/dv8p9pwu3yjmojbsvay6.png";
+const bowlingMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791344862/winera_uploads/rkmpp6gdku34kpzrxakm.png";
+const softplayMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345497/winera_uploads/rvdbku2mm1xbhj90hvyq.png";
+const trampolineMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345500/winera_uploads/dkzoc8fluvnby5coqgjp.png";
+const amusementMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345538/winera_uploads/zoiowsmyqss0g4jfojxg.png";
+const hypergridMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345666/winera_uploads/pbm1z3vndfr2wnyvlx8z.png";
+const bumpercarMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345487/winera_uploads/euuvj5czlmbwfxazwcy8.png";
+const vrMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345690/winera_uploads/kpty49ky7coh1q3mmylu.png";
+const arHeroMobileBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345484/winera_uploads/cjhcvoxksmptc84yslh2.png";
+const lasertagMobileHeroBg = defaultGameZoneMobileBanner;
 
 const arcadeProductImageMap = {
   "Astrology Cointopia": arcadeHall,
@@ -193,6 +222,7 @@ const arcadeProductImageMap = {
   "Lucky Catcher Crane Machine": arcadeBoy,
   "Claw Machine": arcadeHall,
   "Redemption Game": superAirHockeyImg,
+  "Bike & Car Racing Games": bikeArcade,
   "Bike Racing Game": bikeArcade,
   "Car Racing Game": arcadegamesImg,
   "Shooting Games": arcadeHall,
@@ -206,7 +236,27 @@ const getAdminValidImageUrl = (url, fallback = bikeArcade) => {
   if (!url) return fallback;
   if (typeof url === 'object' && url.default) return url.default;
   if (typeof url !== 'string' || url.trim() === '') return fallback;
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:') || url.startsWith('/') || url.startsWith('./')) {
+  if (url.includes('eqjkboeokagpaus2ifxa') || url.includes('project-page-mobile-banner')) {
+    return projectPageMobileBanner;
+  }
+  if (url.includes('/src/assets/') || url.includes('hypergrid-specs-bg') || url.includes('AR-image') || url.includes('hypergrid-image')) {
+    if (url.includes('hypergrid-specs-bg')) return hypergridSpecsBg;
+    if (url.includes('AR-image') || url.includes('ar-image')) return arImage;
+    if (url.includes('hypergrid-image')) return hypergridImage;
+    if (url.includes('hypergrid-whyus-bg')) return hypergridWhyUsBg;
+    if (url.includes('hypergrid-supplier-collage')) return hypergridSupplierCollage;
+    if (url.includes('hypergrid-banner')) return hypergridBannerImg;
+    if (url.includes('hypergrid-hero-bg')) return hypergridHeroBg;
+    return fallback;
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:')) {
+    return url;
+  }
+  if (url.startsWith('/uploads')) {
+    const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${hostname}:5001${url}`;
+  }
+  if (url.startsWith('/') || url.startsWith('./')) {
     return url;
   }
   return fallback;
@@ -237,6 +287,9 @@ const defaultBumperCarThrillCards = [
 
 const defaultHypergridHero = {
   bgUrl: hypergridHeroBg,
+  bgAlt: 'Hypergrid Game Supplier in India - Winera International',
+  mobileBgUrl: hypergridMobileHeroBg,
+  mobileBgAlt: 'Hypergrid Interactive Game Mobile Banner - Winera International',
   breadcrumbText: 'Hypergrid'
 };
 
@@ -244,7 +297,7 @@ const defaultHypergridIntro = {
   title: '*Hypergrid Game* Supplier<br/>in India',
   desc: "India's trusted Hypergrid game supplier commercial-grade interactive LED floor systems, installed and serviced by our own team across 50+ cities.",
   buttonText: 'Get A Quote',
-  buttonLink: 'https://wa.me/919428989488',
+  buttonLink: 'https://wa.me/919157873576',
   mainImgUrl: hypergridSupplierCollage
 };
 
@@ -266,7 +319,7 @@ const defaultHypergridSpecs = {
     { spec: "Expected lifespan", details: "8+ years — commercial grade" }
   ],
   buttonText: 'Download Our Brochure',
-  buttonLink: 'https://wa.me/919428989488'
+  buttonLink: '/pdf/Hyper Grid.pdf'
 };
 
 const defaultHypergridWhyUs = {
@@ -295,7 +348,7 @@ const defaultHypergridRoi = {
   paragraph1: "Most interactive LED floor game suppliers quote a unit price and leave the business decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any Hypergrid order, our team prepares a complete ROI report for your specific venue — covering equipment cost, projected daily sessions, estimated revenue per session, maintenance costs, and break-even timeline.",
   paragraph2: "Every figure is calculated around your venue type, daily footfall, and target visitor demographic — not an industry average. Very few Hypergrid game suppliers in India include this as a standard part of their process. For Winera, it is where every project starts.",
   buttonText: 'Talk to an ROI Expert',
-  buttonLink: 'https://wa.me/919428989488',
+  buttonLink: 'https://wa.me/919157873576',
   imgUrl: hypergridImage
 };
 
@@ -378,7 +431,7 @@ const defaultHypergridFaqs = [
 
 const defaultHypergridCta = {
   bgUrl: hypergridWineraLastblock,
-  buttonLink: 'https://wa.me/919428989488'
+  buttonLink: 'https://wa.me/919157873576'
 };
 
 const defaultHypergridSeo = {
@@ -388,7 +441,9 @@ const defaultHypergridSeo = {
 
 const defaultLasertagHero = {
   breadcrumbText: "Laser Tag",
-  bgUrl: laserTagHeroBg
+  bgUrl: laserTagHeroBg,
+  mobileBgUrl: defaultGameZoneMobileBanner,
+  mobileBgAlt: "Commercial Laser Tag Arena Equipment & Setup Mobile Banner - Winera"
 };
 
 const defaultLasertagIntro = {
@@ -397,7 +452,7 @@ const defaultLasertagIntro = {
   title: "*Laser Tag Gaming<br/>Equipment* & Laser Spy<br/>Supplier in India",
   desc: "Turn your venue into a place people book again and again. We set up complete laser tag and laser spy games for venues across India. arenas equipment, design, installation, and support handled by our own team across 50+ cities.",
   buttonText: "Get A Quote",
-  buttonLink: "https://wa.me/919428989488",
+  buttonLink: "https://wa.me/919157873576",
   waMessage: "Hello Winera International! I want to get a quote for Laser Tag & Laser Spy Equipment setup. Please share details.",
   mainImgUrl: laserTagImg1
 };
@@ -433,7 +488,7 @@ const defaultLasertagSpecs = {
   title: "*Technical* Specifications",
   bgUrl: laserTagBg4,
   buttonText: "Download Our Brochure",
-  buttonLink: "https://wa.me/919428989488",
+  buttonLink: "https://wa.me/919157873576",
   waMessage: "Hello Winera International! I want to download the Laser Tag Equipment & Setup Brochure. Please share details.",
   specHeading: "Specification",
   detailsHeading: "Details",
@@ -452,7 +507,7 @@ const defaultLasertagSpySpecs = {
   title: "*Technical* Specifications",
   bgUrl: laserTagBg4,
   buttonText: "Download Our Brochure",
-  buttonLink: "https://wa.me/919428989488",
+  buttonLink: "https://wa.me/919157873576",
   waMessage: "Hello Winera International! I want to download the Laser Spy Equipment & Setup Brochure. Please share details.",
   specHeading: "Specification",
   detailsHeading: "Details",
@@ -553,10 +608,12 @@ const defaultLasertagSeo = {
 
 const defaultProjectHero = {
   bannerImg: projectBanner,
+  mobileBgUrl: defaultGameZoneMobileBanner,
+  mobileBgAlt: "Commercial Game Zone Projects Portfolio Mobile Banner - Winera International",
   breadcrumbHome: 'Home',
   breadcrumbPage: 'Project'
 };
-const defaultProjectItemsList = projectsData;
+const defaultProjectItemsList = [];
 
 
 const defaultProjectBlock = {
@@ -567,7 +624,7 @@ const defaultProjectBlock = {
   titleLine3: 'in the Heart of Surat',
   description: 'How we designed and installed a professional-grade bowling alley across 3,000 sq. ft., transforming an empty space in Katargam into a destination entertainment venue in Surat.',
   buttonText: 'Get A Quote',
-  buttonLink: 'https://wa.me/919428989488',
+  buttonLink: 'https://wa.me/919157873576',
   image: '/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg'
 };
 
@@ -615,7 +672,7 @@ const defaultProjectGallery = {
 
 const defaultProjectVideo = {
   image: projectSectionVideo,
-  videoUrl: 'https://wa.me/919428989488'
+  videoUrl: 'https://wa.me/919157873576'
 };
 
 const defaultProjectSeo = {
@@ -625,10 +682,13 @@ const defaultProjectSeo = {
 
 const defaultBlogHero = {
   breadcrumbText: "Blog",
-  bgUrl: blogHeroBg
+  bgUrl: blogHeroBg,
+  bgAlt: "Winera International Game Zone & Entertainment Industry Blog",
+  mobileBgUrl: defaultGameZoneMobileBanner,
+  mobileBgAlt: "Winera International Game Zone & Entertainment Industry Blog Mobile Banner"
 };
 
-const defaultBlogPosts = DEFAULT_BLOG_POSTS;
+const defaultBlogPosts = [];
 
 const defaultBlogSeo = {
   pageTitle: "Blog | Winera International – Game Zone Insights & Tips",
@@ -637,7 +697,10 @@ const defaultBlogSeo = {
 
 const defaultRoiHero = {
   breadcrumbPage: "ROI",
-  bgUrl: roiBgImage
+  bgUrl: roiBgImage,
+  bgAlt: "FEC & Game Zone ROI Calculator - Winera International",
+  mobileBgUrl: defaultGameZoneMobileBanner,
+  mobileBgAlt: "FEC & Game Zone ROI Calculator Mobile Banner - Winera International"
 };
 
 const defaultRoiIntro = {
@@ -648,7 +711,7 @@ const defaultRoiIntro = {
   paragraph1: "Anyone can fill a room with arcade machines. Very few build a game zone that pays back your investment and keeps printing profit month after month.",
   paragraph2: "Most game zone owners lose money in year one — not because gaming is dead, but because the setup, game mix, and management were wrong from day one.",
   buttonText: "Book Your Free ROI Consultation",
-  buttonLink: "https://wa.me/919428989488",
+  buttonLink: "https://wa.me/919157873576",
   image: roiImg1
 };
 
@@ -735,7 +798,7 @@ const defaultRoiCta = {
   cyanText: "Numbers?",
   subtitle: "Book A Free Consultation With Winera International. We'll Walk You Through The ROI Projection For Your Space, Your Budget, And Your City — Before You Spend Anything.",
   buttonText: "Book Your Free ROI Call",
-  buttonLink: "https://wa.me/919428989488",
+  buttonLink: "https://wa.me/919157873576",
   bgUrl: homeBlockBg
 };
 
@@ -746,7 +809,10 @@ const defaultRoiSeo = {
 
 const defaultSafetyHero = {
   bgUrl: safetyBg,
-  breadcrumbText: 'Safety Standards'
+  breadcrumbText: 'Safety Standards',
+  bgAlt: 'Safety Standards & Quality Certification - Winera',
+  mobileBgUrl: defaultGameZoneMobileBanner,
+  mobileBgAlt: 'Safety Standards & Quality Certification Mobile Banner - Winera'
 };
 
 const defaultSafetyIntro = {
@@ -784,7 +850,7 @@ const defaultSafetyCertificationsCards = [
   },
   {
     title: "EN 13814 / ISO 17842 — Amusement Devices (International)",
-    desc: "EN 13814 and ISO 17842 are the international standards for amusement rides and machinery safety. They specify structural strength, emergency stops, mechanical locks, and maintenance protocols. Winera International supplies rides and equipment that comply with these standards — keeping your operating staff and visitors safe."
+    desc: "EN 13814 and ISO 17842 are the international standards for amusement rides and devices, developed by CEN and ISO. They set safety requirements for the design, manufacturing, and operation of rides. Winera International supplies bumper cars and amusement park attractions that comply with these standards — ensuring safe, reliable operation in high-footfall venues."
   }
 ];
 
@@ -890,12 +956,41 @@ const defaultSafetyWhyMatters = {
   ctaTitle: "Need Any Consultations?",
   ctaSubtitle: "We're Ready To Give Answers To Your Questions.",
   buttonText: "Talk to an Expert",
-  buttonLink: "https://wa.me/919428989488"
+  buttonLink: "https://wa.me/919157873576"
 };
 
 const defaultSafetySeo = {
-  pageTitle: "Equipment Safety Standards | Winera International",
-  metaDescription: "Winera International equipment safety standards, international certifications, commercial-grade materials, and on-site inspection protocols for game zones in India."
+  pageTitle: "Where Game Zone Safety Comes First | Winera International",
+  metaDescription: "Safety comes first at Winera International. Every ride, play structure, and machine we install meets global safety standards, so your venue opens ready to run."
+};
+
+const defaultContactHero = {
+  breadcrumbHome: "Home",
+  breadcrumbText: "Contact Us",
+  bgUrl: contactUsHeroBg,
+  bgAlt: "Contact Winera International - Commercial Game Zone Setup & Turnkey Solutions",
+  mobileBgUrl: defaultGameZoneMobileBanner,
+  mobileBgAlt: "Contact Winera International Mobile Banner - Commercial Game Zone Setup & Turnkey Solutions"
+};
+
+const defaultPrivacyHero = {
+  title: "Privacy *Policy*",
+  breadcrumbHome: "Home",
+  breadcrumbText: "Privacy Policy",
+  bgUrl: aboutHeroBg,
+  bgAlt: "Privacy Policy - Winera International",
+  mobileBgUrl: defaultGameZoneMobileBanner,
+  mobileBgAlt: "Privacy Policy Mobile Banner - Winera International"
+};
+
+const defaultTermsHero = {
+  title: "Terms & *Conditions*",
+  breadcrumbHome: "Home",
+  breadcrumbText: "Terms & Conditions",
+  bgUrl: aboutHeroBg,
+  bgAlt: "Terms & Conditions - Winera International",
+  mobileBgUrl: defaultGameZoneMobileBanner,
+  mobileBgAlt: "Terms & Conditions Mobile Banner - Winera International"
 };
 
 const defaultPrivacySections = [
@@ -1023,7 +1118,7 @@ const defaultPrivacySections = [
     ],
     bulletsText: [
       "Email: info@winera.in",
-      "Phone: +91 94289 89488 / +91 95123 56766"
+      "Phone: +91 91578 73576 / +91 95123 56766"
     ]
   }
 ];
@@ -1211,7 +1306,7 @@ const defaultTermsSections = [
     ],
     bulletsText: [
       "Email: info@winera.in",
-      "Phone: +91 94289 89488 / +91 95123 56766",
+      "Phone: +91 91578 73576 / +91 95123 56766",
       "Website: www.winera.in"
     ]
   }
@@ -1249,12 +1344,12 @@ const defaultHeaderData = {
   instagramUrl: 'https://instagram.com',
   youtubeUrl: 'https://youtube.com',
   twitterUrl: 'https://x.com',
-  whatsappUrl: 'https://wa.me/919428989488',
+  whatsappUrl: 'https://wa.me/919157873576',
   navLinks: defaultHeaderNavLinks,
   productSubMenu: defaultHeaderProductSubMenu,
   resourcesSubMenu: defaultHeaderResourcesSubMenu,
   ctaText: 'Free Consultation',
-  ctaLink: 'https://wa.me/919428989488'
+  ctaLink: 'https://wa.me/919157873576'
 };
 
 const defaultFooterProductLinks = [
@@ -1290,7 +1385,7 @@ const defaultFooterData = {
   productLinks: defaultFooterProductLinks,
   quickLinks: defaultFooterQuickLinks,
   resourceLinks: defaultFooterResourceLinks,
-  phone1: "+91 94289 89488",
+  phone1: "+91 91578 73576",
   phone2: "+91 95123 56766",
   email: "info@winera.in",
   copyright: "© 2026 Winera International Pvt. Ltd. All Rights Reserved."
@@ -1298,6 +1393,9 @@ const defaultFooterData = {
 
 const defaultTrampolineHero = {
   bgUrl: trampolineParkBg,
+  bgAlt: 'Commercial Trampoline Park Manufacturer & Setup - Winera International',
+  mobileBgUrl: trampolineMobileHeroBg,
+  mobileBgAlt: 'Commercial Trampoline Park Mobile Banner - Winera International',
   breadcrumbText: 'Trampoline Park'
 };
 
@@ -1305,7 +1403,7 @@ const defaultTrampolineIntro = {
   title: 'Trampoline Park *Manufacturer in India*',
   desc: "India's trusted trampoline park manufacturer safety-certified equipment, custom-designed layouts, and installed by our own team across India.",
   buttonText: 'Get Quote From Expert',
-  buttonLink: 'https://wa.me/919428989488',
+  buttonLink: 'https://wa.me/919157873576',
   waMessage: 'Hello Winera International! I want to get a quote and design details for a Trampoline Park setup. Please share details. [Ref: Trampoline Park Page]',
   mainImgUrl: trampolineParkImg1
 };
@@ -1323,7 +1421,7 @@ const defaultTrampolineSpecs = {
   bgUrl: trampolineImg3,
   imgUrl: trampolineImg3,
   buttonText: 'Download Our Brochure',
-  buttonLink: 'https://wa.me/919428989488',
+  buttonLink: '/pdf/Trampoline Catalogue.pdf',
   specsData: [
     { label: "Minimum space required", value: "2,000 sq ft" },
     { label: "Ceiling height required", value: "4.5 m minimum" },
@@ -1344,56 +1442,56 @@ const defaultTrampolineInside = {
       name: "Free Jump Zones",
       title: "Free Jump Zones",
       desc: "Free jump zones are open trampoline areas where visitors of all ages jump freely without restrictions. They are the primary attraction of any trampoline park — simple to supervise, high throughput, and effective at keeping visitors active throughout their session. Suitable for all age groups from 3 years upward.",
-      img: tampolineImg5
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/v1792386747/winera_trampoline_park/yknrmsmvy1aacscicymv.jpg"
     },
     {
       id: "dunk-hoops",
       name: "Dunk Hoops",
       title: "Dunk Hoops",
       desc: "Dunk hoops are basketball hoops mounted above trampolines so visitors can jump and slam-dunk — something impossible at standard court height. A consistently popular zone with teenagers and young adults that extends session time. Low maintenance and easy to integrate into any free jump area.",
-      img: tampolineImg5
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/v1792386746/winera_trampoline_park/u0hyusapnoejpkit0xho.webp"
     },
     {
       id: "zip-line",
       name: "Zip Line",
       title: "Zip Line",
       desc: "An indoor zip line where visitors glide from an elevated platform to a foam landing pit. The zip line is an aerial experience that most standard trampoline parks do not include, making it a strong differentiator for venues wanting a premium attraction mix. Suitable for visitors aged 6 and above.",
-      img: tampolineImg5
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/v1792386748/winera_trampoline_park/o0pgd5vemckew8ki1xxo.jpg"
     },
     {
       id: "obstacle-courts",
       name: "Obstacle Courts",
       title: "Obstacle Courts",
       desc: "Obstacle courts are connected physical challenge courses built across trampoline surfaces jumping, dodging, climbing, and balancing in a single run. They work particularly well for school group bookings, birthday parties, and corporate team events, where structured activity rather than open jumping is preferred.",
-      img: tampolineImg5
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/v1792386748/winera_trampoline_park/ridg0hj2y1xy6vwgyrsj.webp"
     },
     {
       id: "air-bags",
       name: "Air Bags",
       title: "Air Bags",
       desc: "Large soft inflatable bags where visitors land after jumping from a height. Safe and exciting visitors can try flips and aerial jumps without worrying about hard landings. Very popular with teenagers.",
-      img: tampolineImg5
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/v1792386744/winera_trampoline_park/udv5wncmkw7oav7berkx.webp"
     },
     {
       id: "climbing-wall",
       name: "Climbing Wall",
       title: "Climbing Wall",
       desc: "Indoor climbing walls where visitors use fixed grips to climb to the top. Winera International is a trusted Climbing Wall Manufacturer in India — offering options from beginner-friendly bouldering walls to more challenging rope climb routes, suitable for all ages and fitness levels.",
-      img: tampolineImg5
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/v1792386745/winera_trampoline_park/wgd3f1fult5ojkvwpuy5.jpg"
     },
     {
       id: "ninja-courses",
       name: "Ninja Courses",
       title: "Ninja Courses",
       desc: "A set of physical obstacles warped walls, balance beams, hanging bars, rope bridges, and timed speed courses. Winera International is a leading Ninja Course Equipment Manufacturer in India, designing courses for ages 6 and above. Visitors come back again and again to beat their own time and improve their skills.",
-      img: tampolineImg5
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/v1792386750/winera_trampoline_park/cle2bmqr4wyb7b4ancgt.webp"
     },
     {
       id: "foam-cubes",
       name: "Foam Cubes",
       title: "Foam Cubes",
       desc: "A large pit filled with soft foam cubes where visitors jump in and land safely. One of the most popular attractions is that children especially love it and tend to spend more time here than any other zone.",
-      img: tampolineImg5
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/v1792386749/winera_trampoline_park/goz913jmxtrozb7ha3tx.webp"
     }
   ]
 };
@@ -1404,7 +1502,7 @@ const defaultTrampolineRoi = {
   paragraph1: "As India's ROI-First Game Zone Developer, Winera International works differently. Before a single design is drawn, our team prepares a complete ROI report for your specific venue covering your exact trampoline park setup cost, projected daily footfall, estimated monthly revenue, maintenance costs, and break-even timeline. Every figure is calculated around your location, your venue type, and your visitor profile, not an industry average.",
   paragraph2: "Very few indoor trampoline park suppliers in India include this as a standard part of their process. For Winera, the ROI report is not an add-on, it is how every project starts.",
   buttonText: 'Talk to an ROI Expert',
-  buttonLink: 'https://wa.me/919428989488',
+  buttonLink: 'https://wa.me/919157873576',
   waMessage: 'Hello Winera International! I want to talk to an ROI Expert for Trampoline Park setup & commercial ROI calculation. Please share details. [Ref: Trampoline Park Page]',
   imgUrl: tampolineImage6
 };
@@ -1488,7 +1586,7 @@ const defaultTrampolineCta = {
   descLine1: "Our team will assess your venue, prepare a free ROI report, and",
   descLine2: "recommend the right zone mix for your space.",
   buttonText: "Get Quote Now",
-  buttonLink: "https://wa.me/919428989488",
+  buttonLink: "https://wa.me/919157873576",
   bgUrl: trampolineParkCtaBg
 };
 
@@ -1510,7 +1608,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         if (urlPage) return urlPage;
         const saved = localStorage.getItem('admin_selected_page');
         if (saved) return saved;
-      } catch (e) {}
+      } catch (e) { }
     }
     return 'home';
   });
@@ -1524,7 +1622,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         if (urlSection) return urlSection;
         const saved = localStorage.getItem('admin_active_section');
         if (saved) return saved;
-      } catch (e) {}
+      } catch (e) { }
     }
     return 'stats';
   });
@@ -1542,7 +1640,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           url.searchParams.set('section', activeSection);
           window.history.replaceState(null, '', url.pathname + url.search);
         }
-      } catch (e) {}
+      } catch (e) { }
     }
   }, [selectedPage, activeSection]);
 
@@ -1560,6 +1658,28 @@ export default function AdminDashboard({ siteData, refreshContent }) {
   const [adminVrPage, setAdminVrPage] = useState(1);
   const [newVrCategoryInput, setNewVrCategoryInput] = useState('');
   const [openProjectStatusDropdown, setOpenProjectStatusDropdown] = useState(null);
+  const [isSyncingSitemap, setIsSyncingSitemap] = useState(false);
+  const [arcadeMasterCards, setArcadeMasterCards] = useState([]);
+  const [vrMasterCards, setVrMasterCards] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchArcadeProducts({ limit: 'all' })
+      .then(res => {
+        if (isMounted && res?.success && Array.isArray(res.cards || res.products)) {
+          setArcadeMasterCards(res.cards || res.products);
+        }
+      })
+      .catch(() => {});
+    fetchVrGames({ limit: 'all' })
+      .then(res => {
+        if (isMounted && res?.success && Array.isArray(res.cards)) {
+          setVrMasterCards(res.cards);
+        }
+      })
+      .catch(() => {});
+    return () => { isMounted = false; };
+  }, []);
 
   // Close project status dropdown when clicking outside
   useEffect(() => {
@@ -1778,7 +1898,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         { id: 'arHero', name: 'AR Games Hero Banner' },
         { id: 'arIntro', name: 'AR Games Supplier in India' },
         { id: 'arMatchedVenue', name: 'Interactive AR Attractions' },
-        { id: 'arCategoriesData', name: 'Categories & Games Catalog' },
         { id: 'arFeatures', name: 'AR Features & Highlights' },
         { id: 'arEarn', name: 'Know Your Returns Section' },
         { id: 'arWhyUs', name: 'Why Choose Winera Section' },
@@ -1862,6 +1981,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       label: 'Contact Us Page',
       icon: <PhoneCall style={{ width: '18px', height: '18px' }} />,
       sections: [
+        { id: 'contactHero', name: 'Contact Hero Banner' },
         { id: 'contactPage', name: 'Contact Info & Form' },
         { id: 'contactSeo', name: 'SEO Meta Title & Description' }
       ]
@@ -1898,6 +2018,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       label: 'Privacy Policy Page',
       icon: <FileText style={{ width: '18px', height: '18px' }} />,
       sections: [
+        { id: 'privacyHero', name: 'Privacy Hero Banner' },
         { id: 'privacySections', name: 'Privacy Policy Content & Sections' },
         { id: 'privacySeo', name: 'SEO Meta Title & Description' }
       ]
@@ -1906,9 +2027,32 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       label: 'Terms & Conditions Page',
       icon: <FileText style={{ width: '18px', height: '18px' }} />,
       sections: [
+        { id: 'termsHero', name: 'Terms Hero Banner' },
         { id: 'termsSections', name: 'Terms & Conditions Content & Sections' },
         { id: 'termsSeo', name: 'SEO Meta Title & Description' }
       ]
+    }
+  };
+
+  const handleSyncSitemap = async () => {
+    setIsSyncingSitemap(true);
+    setStatusMsg('Synchronizing SEO Sitemap (scanning all blogs, products, categories & projects)...');
+    try {
+      const token = admin?.token || (() => {
+        try {
+          const stored = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+          return stored?.token || '';
+        } catch { return ''; }
+      })();
+      const res = await syncSitemapApi(token);
+      setStatusMsg(res.message || '✅ Sitemap synchronized successfully!');
+      alert(res.message || '✅ Sitemap synchronized successfully!');
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message;
+      setStatusMsg('Sitemap notice: ' + msg);
+      alert('Sitemap Sync Notice:\n\n' + msg);
+    } finally {
+      setIsSyncingSitemap(false);
     }
   };
 
@@ -1948,6 +2092,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       list[index] = { ...list[index], [field]: value };
       return { ...prev, [section]: list };
     });
+  };
+
+  const handleBrochureUpload = async (e, sectionKey, fieldKey = 'brochureUrl', extraOverrides = {}, defaultData = {}) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Reset file input value so selecting the same file again triggers onChange
+    e.target.value = '';
+
+    const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+    setStatusMsg(`Uploading PDF brochure to Cloudinary (${sizeMB} MB)... Please wait.`);
+    try {
+      const token = admin?.token || (() => {
+        try {
+          const stored = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+          return stored?.token || '';
+        } catch { return ''; }
+      })();
+      const res = await uploadImageFile(file, token);
+      const currentSectionData = formData[sectionKey] || {};
+      const updatedSec = { ...defaultData, ...currentSectionData, ...extraOverrides, [fieldKey]: res.url };
+      setFormData(prev => ({ ...prev, [sectionKey]: updatedSec }));
+      await persistSectionToDatabase(sectionKey, updatedSec);
+      setStatusMsg(`✅ PDF Brochure (${sizeMB} MB) uploaded to Cloudinary & saved permanently!`);
+    } catch (err) {
+      const errMsg = err.response?.data?.message || err.message;
+      setStatusMsg('❌ Upload error: ' + errMsg);
+      alert('Upload Error:\n\n' + errMsg);
+    }
   };
 
   const handleFileUpload = async (e, section, index, field) => {
@@ -2123,7 +2296,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           depth: '2310 mm',
           height: '2490 mm',
           videoUrl: 'https://youtube.com',
-          quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Parkour%20Motor%20II%20(DX)'
+          quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Parkour%20Motor%20II%20(DX)'
         },
         'manx-tt-32': {
           nameBase: 'MANX TT ',
@@ -2139,7 +2312,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           depth: '2200 mm',
           height: '2400 mm',
           videoUrl: 'https://youtube.com',
-          quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20MANX%20TT%2032'
+          quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20MANX%20TT%2032'
         },
         'super-air-hockey': {
           nameBase: 'Super Air ',
@@ -2155,7 +2328,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           depth: '1300 mm',
           height: '850 mm',
           videoUrl: 'https://youtube.com',
-          quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Super%20Air%20Hockey'
+          quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Super%20Air%20Hockey'
         },
         'puck-carnival-air-hockey': {
           nameBase: 'Puck Carnival ',
@@ -2171,7 +2344,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           depth: '1350 mm',
           height: '880 mm',
           videoUrl: 'https://youtube.com',
-          quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Puck%20Carnival%20Air%20Hockey'
+          quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Puck%20Carnival%20Air%20Hockey'
         },
         'dazzling-air-hockey-multi-puck': {
           nameBase: 'Dazzling Air Hockey ',
@@ -2187,7 +2360,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           depth: '1400 mm',
           height: '900 mm',
           videoUrl: 'https://youtube.com',
-          quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Dazzling%20Air%20Hockey'
+          quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Dazzling%20Air%20Hockey'
         },
         'aurora-air-hockey': {
           nameBase: 'Aurora Air ',
@@ -2203,7 +2376,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           depth: '1250 mm',
           height: '840 mm',
           videoUrl: 'https://youtube.com',
-          quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aurora%20Air%20Hockey'
+          quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aurora%20Air%20Hockey'
         },
         'ocha-air-hockey': {
           nameBase: 'Ocha Air ',
@@ -2219,7 +2392,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           depth: '1200 mm',
           height: '820 mm',
           videoUrl: 'https://youtube.com',
-          quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Ocha%20Air%20Hockey'
+          quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Ocha%20Air%20Hockey'
         },
         'aero-x-air-hockey': {
           nameBase: 'Aero X Air ',
@@ -2235,7 +2408,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           depth: '1280 mm',
           height: '860 mm',
           videoUrl: 'https://youtube.com',
-          quoteUrl: 'https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aero%20X%20Air%20Hockey'
+          quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aero%20X%20Air%20Hockey'
         }
       };
 
@@ -2270,7 +2443,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         gallery5: item.gallery5 || (Array.isArray(item.gallery) ? item.gallery[4] : '') || '',
         gallery6: item.gallery6 || (Array.isArray(item.gallery) ? item.gallery[5] : '') || '',
         videoUrl: item.videoUrl || knownDefault.videoUrl || 'https://youtube.com',
-        quoteUrl: item.quoteUrl || knownDefault.quoteUrl || 'https://wa.me/919428989488',
+        quoteUrl: item.quoteUrl || knownDefault.quoteUrl || 'https://wa.me/919157873576',
         feature1Title: item.feature1Title !== undefined ? item.feature1Title : (knownDefault.feature1Title || '12+ Years of Expertise'),
         feature1Desc: item.feature1Desc !== undefined ? item.feature1Desc : (knownDefault.feature1Desc || 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.'),
         feature2Title: item.feature2Title !== undefined ? item.feature2Title : (knownDefault.feature2Title || 'Quality & Safety Standards'),
@@ -2281,11 +2454,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         feature4Desc: item.feature4Desc !== undefined ? item.feature4Desc : (knownDefault.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.')
       };
 
-      const resolvedGallery = (Array.isArray(item.gallery) && item.gallery.length > 0)
-        ? item.gallery.filter(Boolean)
-        : [item.gallery1, item.gallery2, item.gallery3, item.gallery4, item.gallery5, item.gallery6].filter(Boolean);
+      // Search in arcadeMasterCards for full catalog data and multi-angle gallery
+      const masterCards = arcadeMasterCards || [];
+      const masterMatch = masterCards.find(m =>
+        (m.slug && cardSlug && m.slug.toLowerCase().trim() === cardSlug.toLowerCase().trim()) ||
+        (m.name && cardTitle && m.name.toLowerCase().trim() === cardTitle.toLowerCase().trim()) ||
+        (m.title && cardTitle && m.title.toLowerCase().trim() === cardTitle.toLowerCase().trim())
+      );
 
-      setModalItemData({ ...defaultArcadeItem, ...item, gallery: resolvedGallery });
+      const candidateGalleries = [
+        Array.isArray(item.gallery) ? item.gallery.filter(Boolean) : [],
+        [item.gallery1, item.gallery2, item.gallery3, item.gallery4, item.gallery5, item.gallery6].filter(Boolean),
+        Array.isArray(masterMatch?.gallery) ? masterMatch.gallery.filter(Boolean) : []
+      ];
+      let richestGallery = [];
+      for (const gal of candidateGalleries) {
+        if (gal.length > richestGallery.length) {
+          richestGallery = gal;
+        }
+      }
+      if (richestGallery.length === 0 && (item.img || item.imageUrl || masterMatch?.img || masterMatch?.imageUrl)) {
+        richestGallery = [item.img || item.imageUrl || masterMatch?.img || masterMatch?.imageUrl].filter(Boolean);
+      }
+
+      setModalItemData({
+        ...defaultArcadeItem,
+        ...(masterMatch || {}),
+        ...item,
+        gallery: richestGallery
+      });
       setIsModalOpen(true);
       return;
     }
@@ -2294,6 +2491,28 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       const slugifyText = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       const cardTitle = item.title || item.name || (mode === 'add' ? '' : 'New VR Game');
       const cardSlug = (item.slug && item.slug !== 'new-vr-game') ? item.slug : slugifyText(cardTitle);
+
+      const masterVrList = vrMasterCards || [];
+      const vrMatch = masterVrList.find(m =>
+        (m.slug && cardSlug && m.slug.toLowerCase().trim() === cardSlug.toLowerCase().trim()) ||
+        (m.name && cardTitle && m.name.toLowerCase().trim() === cardTitle.toLowerCase().trim()) ||
+        (m.title && cardTitle && m.title.toLowerCase().trim() === cardTitle.toLowerCase().trim())
+      );
+
+      const candidateVrGalleries = [
+        Array.isArray(item.gallery) ? item.gallery.filter(Boolean) : [],
+        [item.gallery1, item.gallery2, item.gallery3, item.gallery4].filter(Boolean),
+        Array.isArray(vrMatch?.gallery) ? vrMatch.gallery.filter(Boolean) : []
+      ];
+      let richestVrGallery = [];
+      for (const gal of candidateVrGalleries) {
+        if (gal.length > richestVrGallery.length) {
+          richestVrGallery = gal;
+        }
+      }
+      if (richestVrGallery.length === 0 && (item.img || item.imageUrl || vrMatch?.img || vrMatch?.imageUrl)) {
+        richestVrGallery = [item.img || item.imageUrl || vrMatch?.img || vrMatch?.imageUrl].filter(Boolean);
+      }
 
       const defaultVrItem = {
         name: cardTitle,
@@ -2305,8 +2524,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         slug: cardSlug,
         tagline: item.tagline || 'Commercial VR virtual reality simulation system designed for maximum guest throughput.',
         desc: item.desc || '',
-        img: item.img || item.imageUrl || '',
-        imageUrl: item.img || item.imageUrl || '',
+        img: item.img || item.imageUrl || vrMatch?.img || vrMatch?.imageUrl || '',
+        imageUrl: item.img || item.imageUrl || vrMatch?.imageUrl || vrMatch?.img || '',
         power: item.power || '',
         voltage: item.voltage || '220V / 110V',
         specsCategory: item.specsCategory || item.category || 'VR Game',
@@ -2320,18 +2539,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         width: item.width || '',
         depth: item.depth || '',
         height: item.height || '',
-        gallery: (Array.isArray(item.gallery) && item.gallery.length > 0)
-          ? item.gallery.filter(Boolean)
-          : [item.gallery1, item.gallery2, item.gallery3, item.gallery4].filter(Boolean),
-        gallery1: item.gallery1 || (Array.isArray(item.gallery) ? item.gallery[0] : '') || '',
-        gallery2: item.gallery2 || (Array.isArray(item.gallery) ? item.gallery[1] : '') || '',
-        gallery3: item.gallery3 || (Array.isArray(item.gallery) ? item.gallery[2] : '') || '',
-        gallery4: item.gallery4 || (Array.isArray(item.gallery) ? item.gallery[3] : '') || '',
+        gallery: richestVrGallery,
+        gallery1: richestVrGallery[0] || item.gallery1 || '',
+        gallery2: richestVrGallery[1] || item.gallery2 || '',
+        gallery3: richestVrGallery[2] || item.gallery3 || '',
+        gallery4: richestVrGallery[3] || item.gallery4 || '',
         videoUrl: item.videoUrl || '',
-        quoteUrl: item.quoteUrl || `https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`
+        quoteUrl: item.quoteUrl || `https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`
       };
 
-      setModalItemData({ ...defaultVrItem, ...item });
+      setModalItemData({
+        ...defaultVrItem,
+        ...(vrMatch || {}),
+        ...item,
+        gallery: richestVrGallery
+      });
       setIsModalOpen(true);
       return;
     }
@@ -2462,7 +2684,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         }
       };
 
-      const knownProj = projectsData.find(p => p.slug === projSlug || p.id === projSlug) || projectCaseStudiesDefaults[projSlug] || {};
+      const knownProj = (Array.isArray(formData.projectItems) ? formData.projectItems : []).find(p => p.slug === projSlug || p.id === projSlug) || projectCaseStudiesDefaults[projSlug] || {};
 
       const defaultProjectItem = {
         name: projTitle,
@@ -2501,9 +2723,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         galleryImage5: (currentItem.galleryImages && currentItem.galleryImages[4]) || currentItem.galleryImage5 || projectBlock2,
         galleryImage6: (currentItem.galleryImages && currentItem.galleryImages[5]) || currentItem.galleryImage6 || projectBlock3,
         videoImg: currentItem.videoImg || currentItem.videoCoverUrl || projectSectionVideo,
-        videoUrl: currentItem.videoUrl || currentItem.videoLink || 'https://wa.me/919428989488',
+        videoUrl: currentItem.videoUrl || currentItem.videoLink || 'https://wa.me/919157873576',
         buttonText: currentItem.buttonText || knownProj.buttonText || 'Get A Quote',
-        buttonLink: currentItem.buttonLink || knownProj.buttonLink || 'https://wa.me/919428989488',
+        buttonLink: currentItem.buttonLink || knownProj.buttonLink || 'https://wa.me/919157873576',
         waMessage: currentItem.waMessage || knownProj.waMessage || `Hello Winera International! I want to get a project quote for ${currentItem.name || projTitle || 'this project'}. Please share details. [Ref: Project Detail Page]`
       };
 
@@ -2520,26 +2742,32 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
     if (mode === 'edit') {
       const editData = { ...currentItem };
+      if (sec === 'clientLogos' || sec === 'channelPartners') {
+        editData.logoAlt = editData.logoAlt || '';
+      }
       if (sec === 'builtProjects') {
         editData.imageUrl = editData.imageUrl || editData.img || '';
         editData.img = editData.imageUrl;
+        editData.imgAlt = editData.imgAlt || '';
       }
       if (sec === 'testimonials') {
         editData.gameZoneName = editData.gameZoneName || editData.name || '';
         editData.reviewerRole = editData.reviewerRole || editData.role || '';
         editData.founderImage = editData.founderImage || editData.img || '';
+        editData.founderImgAlt = editData.founderImgAlt || editData.imgAlt || '';
         editData.starRating = editData.starRating || editData.rating || 5;
         editData.youtubeVideoUrl = editData.youtubeVideoUrl || editData.videoUrl || '';
         editData.videoImg = editData.videoImg || editData.videoThumbnail || '';
+        editData.videoImgAlt = editData.videoImgAlt || '';
         editData.quote = editData.quote || '';
       }
       setModalItemData(editData);
     } else {
       // Default empty structure based on active section
       if (sec === 'stats') setModalItemData({ number: '', label: '' });
-      else if (sec === 'clientLogos') setModalItemData({ name: '', logoUrl: '' });
-      else if (sec === 'channelPartners') setModalItemData({ name: '', logoUrl: '' });
-      else if (sec === 'builtProjects') setModalItemData({ name: '', city: '', imageUrl: '', img: '' });
+      else if (sec === 'clientLogos') setModalItemData({ name: '', logoUrl: '', logoAlt: '' });
+      else if (sec === 'channelPartners') setModalItemData({ name: '', logoUrl: '', logoAlt: '' });
+      else if (sec === 'builtProjects') setModalItemData({ name: '', city: '', imageUrl: '', img: '', imgAlt: '' });
       else if (sec === 'projectItems') setModalItemData({
         name: 'New Turnkey Project',
         category: 'Game Zones',
@@ -2551,6 +2779,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         isActive: true,
         status: 'active',
         img: projectImage01,
+        imgAlt: '',
         titleLine1: 'New Project: A',
         titleLine2: 'Complete ',
         titleLine2Black: 'Game Zone Setup',
@@ -2559,9 +2788,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         clientWanted1: 'The client had an empty space and a clear vision to build a top-tier entertainment center.',
         clientWanted2: 'They wanted one partner to handle layout planning, machine installation, and final handover.',
         clientImg: projectImage3,
+        clientImgAlt: '',
         solution1: 'Winera International delivered the complete setup from start to finish, optimizing flow and high-energy zones.',
         solution2: 'The result is a bright, safe, and profitable entertainment venue ready for opening day.',
         solutionImg: projectImage4,
+        solutionImgAlt: '',
         galleryImages: [
           projectBlock1,
           projectBlock2,
@@ -2577,13 +2808,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         galleryImage5: projectBlock2,
         galleryImage6: projectBlock3,
         videoImg: projectSectionVideo,
-        videoUrl: 'https://wa.me/919428989488',
+        videoUrl: 'https://wa.me/919157873576',
         buttonText: 'Get A Quote',
-        buttonLink: 'https://wa.me/919428989488',
+        buttonLink: 'https://wa.me/919157873576',
         waMessage: 'Hello Winera International! I want to get a project quote. Please share details. [Ref: Project Detail Page]'
       });
       else if (sec && sec.toLowerCase().includes('faq')) setModalItemData({ q: '', a: '' });
-      else if (sec === 'testimonials') setModalItemData({ founderImage: '', gameZoneName: '', reviewerRole: '', starRating: 5, youtubeVideoUrl: '', videoImg: '', quote: '' });
+      else if (sec === 'testimonials') setModalItemData({ founderImage: '', founderImgAlt: '', gameZoneName: '', reviewerRole: '', starRating: 5, youtubeVideoUrl: '', videoImg: '', videoImgAlt: '', quote: '' });
       else setModalItemData({});
     }
     setIsModalOpen(true);
@@ -2651,6 +2882,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           ...updatedBuiltProjects[bpIdx],
           img: modalItemData.img || modalItemData.imageUrl || updatedBuiltProjects[bpIdx].img,
           imageUrl: modalItemData.imageUrl || modalItemData.img || updatedBuiltProjects[bpIdx].imageUrl,
+          imgAlt: modalItemData.imgAlt || updatedBuiltProjects[bpIdx].imgAlt,
           isActive: isItemActiveVal,
           status: isItemActiveVal ? 'active' : 'inactive'
         };
@@ -2692,11 +2924,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     }
 
     if (secKey === 'arcadeCategories') {
-      const defaultCats = allArcadeProducts.categoriesList || [
-        "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
-        "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"
-      ];
-      const masterCards = allArcadeProducts.cards || [];
+      const defaultCats = DEFAULT_ARCADE_CATEGORIES;
+      const masterCards = arcadeMasterCards || [];
 
       let categoriesList = defaultCats;
       let cardsList = [...masterCards];
@@ -2739,13 +2968,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         gallery: (Array.isArray(modalItemData.gallery)
           ? modalItemData.gallery
           : [
-              modalItemData.gallery1,
-              modalItemData.gallery2,
-              modalItemData.gallery3,
-              modalItemData.gallery4,
-              modalItemData.gallery5,
-              modalItemData.gallery6
-            ]
+            modalItemData.gallery1,
+            modalItemData.gallery2,
+            modalItemData.gallery3,
+            modalItemData.gallery4,
+            modalItemData.gallery5,
+            modalItemData.gallery6
+          ]
         ).map(s => (typeof s === 'string' ? s.trim() : '')).filter(Boolean),
         gallery1: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[0] : modalItemData.gallery1) || '',
         gallery2: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[1] : modalItemData.gallery2) || '',
@@ -2762,7 +2991,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         depth: modalItemData.depth || '2310 mm',
         height: modalItemData.height || '2490 mm',
         videoUrl: modalItemData.videoUrl || '',
-        quoteUrl: modalItemData.quoteUrl || 'https://wa.me/919428989488',
+        quoteUrl: modalItemData.quoteUrl || 'https://wa.me/919157873576',
         feature1Title: modalItemData.feature1Title !== undefined ? modalItemData.feature1Title : '12+ Years of Expertise',
         feature1Desc: modalItemData.feature1Desc !== undefined ? modalItemData.feature1Desc : 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.',
         feature2Title: modalItemData.feature2Title !== undefined ? modalItemData.feature2Title : 'Quality & Safety Standards',
@@ -2826,10 +3055,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     }
 
     if (secKey === 'vrCategories' || secKey === 'vrRange') {
-      const defaultVrCats = allVrGames?.categoriesList || [
-        "All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"
-      ];
-      const masterCards = allVrGames?.cards || [];
+      const defaultVrCats = DEFAULT_VR_CATEGORIES;
+      const masterCards = vrMasterCards || [];
 
       let categoriesList = defaultVrCats;
       let cardsList = [...masterCards];
@@ -2876,11 +3103,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         gallery: (Array.isArray(modalItemData.gallery)
           ? modalItemData.gallery
           : [
-              modalItemData.gallery1,
-              modalItemData.gallery2,
-              modalItemData.gallery3,
-              modalItemData.gallery4
-            ]
+            modalItemData.gallery1,
+            modalItemData.gallery2,
+            modalItemData.gallery3,
+            modalItemData.gallery4
+          ]
         ).map(s => (typeof s === 'string' ? s.trim() : '')).filter(Boolean),
         gallery1: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[0] : modalItemData.gallery1) || '',
         gallery2: (Array.isArray(modalItemData.gallery) ? modalItemData.gallery[1] : modalItemData.gallery2) || '',
@@ -2900,7 +3127,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         depth: modalItemData.depth || '',
         height: modalItemData.height || '',
         videoUrl: modalItemData.videoUrl || '',
-        quoteUrl: modalItemData.quoteUrl || `https://wa.me/919428989488?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`
+        quoteUrl: modalItemData.quoteUrl || `https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`
       };
 
       if (modalMode === 'add') {
@@ -3071,6 +3298,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       modalItemData.quote = qText;
       modalItemData.videoImg = vImg;
       modalItemData.videoThumbnail = vImg;
+      modalItemData.founderImgAlt = modalItemData.founderImgAlt || modalItemData.imgAlt || '';
+      modalItemData.videoImgAlt = modalItemData.videoImgAlt || '';
     }
 
     if (secKey === 'builtProjects') {
@@ -3083,7 +3312,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       modalItemData.location = modalItemData.location || (pCity ? `${pCity}` : '');
       modalItemData.imageUrl = pImg;
       modalItemData.img = pImg;
+      modalItemData.imgAlt = modalItemData.imgAlt || '';
       modalItemData.slug = modalItemData.slug || pName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+
+    if (secKey === 'clientLogos' || secKey === 'channelPartners') {
+      modalItemData.logoAlt = modalItemData.logoAlt || '';
     }
 
     if (modalMode === 'add') {
@@ -3499,6 +3733,32 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
         {/* Sidebar Footer Details & Quick Action Controls */}
         <div style={{ padding: '20px 16px', borderTop: '1px solid #1e293b', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <button
+            onClick={handleSyncSitemap}
+            disabled={isSyncingSitemap}
+            style={{
+              width: '100%',
+              padding: '10px',
+              borderRadius: '12px',
+              background: '#f0fdf4',
+              border: '1px solid #86efac',
+              color: '#166534',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              fontSize: '12.5px',
+              fontWeight: '800',
+              cursor: isSyncingSitemap ? 'wait' : 'pointer',
+              marginBottom: '8px',
+              transition: 'all 0.2s ease'
+            }}
+            title="Sitemap updates automatically on every save. Click to force a full re-sync anytime."
+          >
+            <RefreshCw style={{ width: '15px', height: '15px', animation: isSyncingSitemap ? 'spin 1s linear infinite' : 'none' }} />
+            <span>{isSyncingSitemap ? 'Syncing...' : '⚡ Sync Sitemap (SEO)'}</span>
+          </button>
+
           <Link
             to="/"
             target="_blank"
@@ -3550,70 +3810,136 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
       {/* MAIN CONTENT EDIT AREA */}
       <main className="winera-admin-main" style={{ flex: 1, height: '100vh', padding: '30px 36px', overflowY: 'auto' }}>
-        {/* Mobile Top Navigation Toggle Bar */}
-        <div className="winera-admin-hamburger-btn" style={{ marginBottom: '16px', width: '100%' }}>
-          <button
-            onClick={() => setIsMobileSidebarOpen(true)}
-            style={{
-              width: '100%',
-              padding: '12px 18px',
-              borderRadius: '14px',
-              background: '#0f172a',
-              color: '#ffffff',
-              border: 'none',
-              fontWeight: '800',
-              fontSize: '13.5px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.2)',
-              cursor: 'pointer'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Menu style={{ width: '20px', height: '20px', color: '#38bdf8' }} />
-              <span>Open Pages & Sections Menu</span>
-            </div>
-            <span style={{ background: '#38bdf8', color: '#fff', fontSize: '11px', padding: '3px 10px', borderRadius: '10px' }}>
-              {selectedPage.replace('_', ' ')}
-            </span>
-          </button>
-        </div>
+        {/* Dynamic Current Breadcrumb Path & Section Info */}
+        {(() => {
+          const currentNavPage = navigationMenu[selectedPage];
+          let matchedPageTitle = currentNavPage?.label || selectedPage.replace(/([A-Z])/g, ' $1').replace('_', ' ');
+          let currentNavSection = currentNavPage?.sections?.find(s => s.id === activeSection);
 
-        {/* Top Header Card */}
-        <div className="winera-admin-topheader" style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '28px',
-          background: '#ffffff',
-          padding: '24px 32px',
-          borderRadius: '24px',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
-          border: '1px solid #e2e8f0'
-        }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-              <span style={{
-                background: '#e0f2fe',
-                color: '#0284c7',
-                fontSize: '11px',
-                fontWeight: '900',
-                padding: '4px 12px',
-                borderRadius: '12px',
-                textTransform: 'uppercase'
+          if (!currentNavSection) {
+            for (const pKey of Object.keys(navigationMenu)) {
+              const s = navigationMenu[pKey]?.sections?.find(sec => sec.id === activeSection);
+              if (s) {
+                currentNavSection = s;
+                matchedPageTitle = navigationMenu[pKey]?.label || pKey;
+                break;
+              }
+            }
+          }
+
+          const currentSectionTitle = currentNavSection?.name || activeSection;
+
+          return (
+            <>
+              {/* Mobile Top Navigation Toggle Bar */}
+              <div className="winera-admin-hamburger-btn" style={{ marginBottom: '16px', width: '100%' }}>
+                <button
+                  onClick={() => setIsMobileSidebarOpen(true)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 18px',
+                    borderRadius: '14px',
+                    background: '#0f172a',
+                    color: '#ffffff',
+                    border: 'none',
+                    fontWeight: '800',
+                    fontSize: '13.5px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 4px 14px rgba(15, 23, 42, 0.2)',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <Menu style={{ width: '20px', height: '20px', color: '#38bdf8' }} />
+                    <span>Open Pages & Sections Menu</span>
+                  </div>
+                  <span style={{ background: '#38bdf8', color: '#fff', fontSize: '11px', padding: '3px 10px', borderRadius: '10px' }}>
+                    {matchedPageTitle}
+                  </span>
+                </button>
+              </div>
+
+              {/* Top Header Card: Proper Breadcrumb Path & Section Title */}
+              <div className="winera-admin-topheader" style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '28px',
+                background: '#ffffff',
+                padding: '24px 32px',
+                borderRadius: '24px',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
+                border: '1px solid #e2e8f0'
               }}>
-                {selectedPage.replace('_', ' ')}
-              </span>
-              <h1 style={{ fontSize: '1.4rem', fontWeight: '900', color: '#0f172a', margin: 0 }}>
-                Manage Section: <span style={{ color: '#38bdf8' }}>{activeSection}</span>
-              </h1>
-            </div>
-            <p style={{ color: '#64748b', fontSize: '12.5px', fontWeight: '500', marginTop: '4px' }}>
-              Add, edit, or delete items. Changes save automatically directly into MongoDB database.
-            </p>
-          </div>
-        </div>
+                <div style={{ width: '100%' }}>
+                  {/* Proper Breadcrumb Navigation Trail */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    fontSize: '12.5px',
+                    fontWeight: '700',
+                    color: '#64748b',
+                    marginBottom: '10px',
+                    flexWrap: 'wrap'
+                  }}>
+                    <span style={{ color: '#94a3b8', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                      <Home style={{ width: '13px', height: '13px', color: '#94a3b8' }} /> CMS Admin
+                    </span>
+                    <span style={{ color: '#cbd5e1', fontWeight: '900' }}>›</span>
+                    <span style={{
+                      background: '#e0f2fe',
+                      color: '#0284c7',
+                      fontSize: '11.5px',
+                      fontWeight: '900',
+                      padding: '3px 10px',
+                      borderRadius: '8px',
+                      letterSpacing: '0.2px'
+                    }}>
+                      {matchedPageTitle}
+                    </span>
+                    <span style={{ color: '#cbd5e1', fontWeight: '900' }}>›</span>
+                    <span style={{
+                      color: '#0f172a',
+                      fontWeight: '800',
+                      fontSize: '12px',
+                      background: '#f8fafc',
+                      padding: '3px 10px',
+                      borderRadius: '8px',
+                      border: '1px solid #e2e8f0'
+                    }}>
+                      {currentSectionTitle}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '14px', flexWrap: 'wrap' }}>
+                    <h1 style={{ fontSize: '1.45rem', fontWeight: '900', color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                      <span>{currentSectionTitle}</span>
+                      <span style={{
+                        fontSize: '11px',
+                        fontWeight: '800',
+                        color: '#64748b',
+                        background: '#f1f5f9',
+                        padding: '3px 8px',
+                        borderRadius: '6px',
+                        border: '1px solid #e2e8f0',
+                        fontFamily: 'monospace'
+                      }}>
+                        #{activeSection}
+                      </span>
+                    </h1>
+                  </div>
+
+                  <p style={{ color: '#64748b', fontSize: '12.5px', fontWeight: '500', marginTop: '6px', margin: '6px 0 0' }}>
+                    Add, edit, or delete items. Changes save automatically directly into MongoDB database.
+                  </p>
+                </div>
+              </div>
+            </>
+          );
+        })()}
 
         {/* Floating Top-Right Success / Status Toast Notification */}
         {statusMsg && (
@@ -3716,23 +4042,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Hero Subtitle Paragraph
-                </label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Hero Subtitle Paragraph"
                   rows={3}
                   value={formData.hero?.subtitle !== undefined && formData.hero.subtitle !== '' ? formData.hero.subtitle : "India's ROI-First Game Zone Developer from bowling alleys and trampoline parks to arcade zones and VR gaming & complete indoor amusement park setup, installed by our own team across 50+ cities."}
-                  onChange={(e) => handleFieldChange('hero', 'subtitle', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    borderRadius: '14px',
-                    border: '1.5px solid #e2e8f0',
-                    background: '#F5F5F9',
-                    fontSize: '13.5px',
-                    fontWeight: '500',
-                    lineHeight: 1.5
-                  }}
+                  onChange={(val) => handleFieldChange('hero', 'subtitle', val)}
+                  placeholder="Enter Hero Subtitle Paragraph..."
                 />
               </div>
 
@@ -3763,8 +4078,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. https://wa.me/919428989488 or /contact"
-                  value={formData.hero?.ctaPrimaryLink !== undefined && formData.hero.ctaPrimaryLink !== '' ? formData.hero.ctaPrimaryLink : "https://wa.me/919428989488"}
+                  placeholder="e.g. https://wa.me/919157873576 or /contact"
+                  value={formData.hero?.ctaPrimaryLink !== undefined && formData.hero.ctaPrimaryLink !== '' ? formData.hero.ctaPrimaryLink : "https://wa.me/919157873576"}
                   onChange={(e) => handleFieldChange('hero', 'ctaPrimaryLink', e.target.value)}
                   style={{
                     width: '100%',
@@ -3840,6 +4155,72 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Hero Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.hero?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('hero', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Commercial Game Zone Setup & Turnkey Equipment Manufacturer - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 1080 × 1685 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.hero?.mobileBgUrl, heroMobileBg)}
+                    alt="Mobile Hero Background Preview"
+                    style={{ width: '50px', height: '78px', borderRadius: '8px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
+                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Mobile Banner
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setStatusMsg('Uploading mobile background...');
+                        try {
+                          const res = await uploadImageFile(file, admin.token);
+                          handleFieldChange('hero', 'mobileBgUrl', res.url);
+                          setStatusMsg('Mobile hero background uploaded!');
+                        } catch (err) {
+                          setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.hero?.mobileBgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('hero', 'mobileBgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '8px 14px', borderRadius: '10px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Mobile Hero Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.hero?.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('hero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. Commercial Game Zone Setup Mobile Banner - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -3884,26 +4265,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Paragraph 1
-                </label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Section Paragraph 1"
                   rows={4}
                   value={formData.aboutHome?.paragraph1 || "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project."}
-                  onChange={(e) => handleFieldChange('aboutHome', 'paragraph1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.6 }}
+                  onChange={(val) => handleFieldChange('aboutHome', 'paragraph1', val)}
+                  placeholder="Enter About Section Paragraph 1..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Paragraph 2
-                </label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Section Paragraph 2"
                   rows={3}
                   value={formData.aboutHome?.paragraph2 || "Our team calculates a complete ROI Blueprint for your space, covering projected footfall, revenue potential, and break-even timeline. At Winera International Pvt. Ltd, we've built a reputation for efficiency and reliability, making us the go-to choice for exceptional gaming experiences in the B2B sector."}
-                  onChange={(e) => handleFieldChange('aboutHome', 'paragraph2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.6 }}
+                  onChange={(val) => handleFieldChange('aboutHome', 'paragraph2', val)}
+                  placeholder="Enter About Section Paragraph 2..."
                 />
               </div>
 
@@ -3913,16 +4290,44 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <textarea
                   rows={7}
-                  value={
-                    Array.isArray(formData.aboutHome?.features)
-                      ? formData.aboutHome.features.join('\n')
-                      : (formData.aboutHome?.features || "Game Zone Setup\nFEC Equipment & Setup\nBowling Alley Equipment\nArcade & Amusement Equipment\nKids Entertainment Solutions\nVR Gaming Equipment\nConcept to Installation")
-                  }
+                  value={(() => {
+                    const defaultAboutFeatures = [
+                      "Game Zone Setup",
+                      "FEC Equipment & Setup",
+                      "Bowling Alley Equipment",
+                      "Arcade & Amusement Equipment",
+                      "Kids Entertainment Solutions",
+                      "VR Gaming Equipment",
+                      "Concept to Installation"
+                    ];
+                    const feats = formData.aboutHome?.features;
+                    if (typeof feats === 'string') {
+                      return feats;
+                    }
+                    if (Array.isArray(feats) && feats.length > 0) {
+                      if (feats.length === 1 && feats[0].includes('FEC Equipment')) {
+                        return defaultAboutFeatures.join('\n');
+                      }
+                      return feats.join('\n');
+                    }
+                    return defaultAboutFeatures.join('\n');
+                  })()}
                   onChange={(e) => {
-                    const list = e.target.value.split('\n');
-                    handleFieldChange('aboutHome', 'features', list);
+                    handleFieldChange('aboutHome', 'features', e.target.value);
                   }}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.6, fontFamily: 'monospace' }}
+                  placeholder="Enter feature checkmark items (one per line)..."
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    borderRadius: '14px',
+                    border: '1.5px solid #cbd5e1',
+                    background: '#F5F5F9',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    lineHeight: 1.6,
+                    color: '#0f172a',
+                    boxSizing: 'border-box'
+                  }}
                 />
               </div>
 
@@ -3983,11 +4388,50 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ About Photo Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.aboutHome?.rightImgAlt || ''}
+                    onChange={(e) => handleFieldChange('aboutHome', 'rightImgAlt', e.target.value)}
+                    placeholder="e.g. About Winera International - Commercial Game Zone Developer & Turnkey Supplier"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
-                  onClick={() => persistSectionToDatabase('aboutHome', formData.aboutHome || {})}
+                  onClick={() => {
+                    const defaultAboutFeatures = [
+                      "Game Zone Setup",
+                      "FEC Equipment & Setup",
+                      "Bowling Alley Equipment",
+                      "Arcade & Amusement Equipment",
+                      "Kids Entertainment Solutions",
+                      "VR Gaming Equipment",
+                      "Concept to Installation"
+                    ];
+                    const currentAbout = { ...(formData.aboutHome || {}) };
+                    if (!currentAbout.paragraph1) {
+                      currentAbout.paragraph1 = "Winera International Pvt. Ltd. is a dynamic force in the gaming and indoor amusement industry, headquartered in Surat, India. Since our establishment in 2014, we have focused exclusively on delivering project-based gaming solutions to the B2B sector nationwide. Our unwavering commitment to excellence and tailored approach sets us apart. We're dedicated to understanding our client's unique needs and providing the most suitable gaming solutions for each project.";
+                    }
+                    if (!currentAbout.paragraph2) {
+                      currentAbout.paragraph2 = "Our team calculates a complete ROI Blueprint for your space, covering projected footfall, revenue potential, and break-even timeline. At Winera International Pvt. Ltd, we've built a reputation for efficiency and reliability, making us the go-to choice for exceptional gaming experiences in the B2B sector.";
+                    }
+                    if (typeof currentAbout.features === 'string') {
+                      currentAbout.features = currentAbout.features
+                        .split('\n')
+                        .map(line => line.replace(/^[-*•]\s+/, '').trim())
+                        .filter(Boolean);
+                    }
+                    if (!currentAbout.features || !Array.isArray(currentAbout.features) || currentAbout.features.length === 0) {
+                      currentAbout.features = defaultAboutFeatures;
+                    }
+                    persistSectionToDatabase('aboutHome', currentAbout);
+                  }}
                   style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -4027,14 +4471,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Subtitle Paragraph
-                </label>
-                <input
-                  type="text"
+                <RichTextareaWithEditor
+                  label="Section Subtitle Paragraph"
+                  rows={2}
                   value={formData.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions"}
-                  onChange={(e) => handleFieldChange('productsHome', 'subtitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('productsHome', 'subtitle', val)}
+                  placeholder="Enter Products Subtitle..."
                 />
               </div>
 
@@ -4045,81 +4487,81 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <button
                     onClick={async () => {
                       const defaultCards = [
-          {
-                    "id": "arcade",
-                    "title": "Arcade Game",
-                    "desc": "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
-                    "link": "/products/arcade-games"
-          },
-          {
-                    "id": "vr",
-                    "title": "VR GAME",
-                    "desc": "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
-                    "link": "/products/vr-games"
-          },
-          {
-                    "id": "ar",
-                    "title": "AR GAME",
-                    "desc": "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
-                    "link": "/products/ar-games"
-          },
-          {
-                    "id": "bowling",
-                    "title": "Bowling Alley",
-                    "desc": "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
-                    "link": "/products/bowling-alley"
-          },
-          {
-                    "id": "softplay",
-                    "title": "Soft Play",
-                    "desc": "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
-                    "link": "/products/soft-play"
-          },
-          {
-                    "id": "trampoline",
-                    "title": "Trampoline Park",
-                    "desc": "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
-                    "link": "/products/trampoline-park"
-          },
-          {
-                    "id": "hypergrid",
-                    "title": "Hyper Grid",
-                    "desc": "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
-                    "link": "/products/hypergrid"
-          },
-          {
-                    "id": "amusement",
-                    "title": "Amusement Park",
-                    "desc": "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
-                    "link": "/products/amusement-park"
-          },
-          {
-                    "id": "bumpercar",
-                    "title": "Bumper Cars",
-                    "desc": "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
-                    "link": "/products/bumper-car"
-          },
-          {
-                    "id": "lasertag",
-                    "title": "Laser Tag",
-                    "desc": "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp",
-                    "link": "/products/laser-tag"
-          }
-];
+                        {
+                          "id": "arcade",
+                          "title": "Arcade Game",
+                          "desc": "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+                          "link": "/product/arcade-games"
+                        },
+                        {
+                          "id": "vr",
+                          "title": "VR GAME",
+                          "desc": "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
+                          "link": "/product/vr-games"
+                        },
+                        {
+                          "id": "ar",
+                          "title": "AR GAME",
+                          "desc": "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
+                          "link": "/product/ar-games"
+                        },
+                        {
+                          "id": "bowling",
+                          "title": "Bowling Alley",
+                          "desc": "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
+                          "link": "/product/bowling-alley"
+                        },
+                        {
+                          "id": "softplay",
+                          "title": "Soft Play",
+                          "desc": "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+                          "link": "/product/soft-play"
+                        },
+                        {
+                          "id": "trampoline",
+                          "title": "Trampoline Park",
+                          "desc": "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+                          "link": "/product/trampoline-park"
+                        },
+                        {
+                          "id": "hypergrid",
+                          "title": "Hyper Grid",
+                          "desc": "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
+                          "link": "/product/hypergrid"
+                        },
+                        {
+                          "id": "amusement",
+                          "title": "Amusement Park",
+                          "desc": "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
+                          "link": "/product/amusement-park"
+                        },
+                        {
+                          "id": "bumpercar",
+                          "title": "Bumper Cars",
+                          "desc": "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
+                          "link": "/product/bumper-car"
+                        },
+                        {
+                          "id": "lasertag",
+                          "title": "Laser Tag",
+                          "desc": "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.",
+                          "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp",
+                          "link": "/product/laser-tag"
+                        }
+                      ];
                       const cur = (Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)
                         ? formData.productsHome.cardsList
                         : defaultCards;
-                      const updatedList = [...cur, { id: `prod-${Date.now()}`, title: 'New Product', desc: 'Short description.', img: '', link: '/products/arcade-games' }];
+                      const updatedList = [...cur, { id: `prod-${Date.now()}`, title: 'New Product', desc: 'Short description.', img: '', link: '/product/arcade-games' }];
                       const updated = { ...(formData.productsHome || {}), cardsList: updatedList };
                       setFormData(prev => ({ ...prev, productsHome: updated }));
                       await persistSectionToDatabase('productsHome', updated);
@@ -4133,77 +4575,77 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   {(() => {
                     const defaultCardsList = [
-          {
-                    "id": "arcade",
-                    "title": "Arcade Game",
-                    "desc": "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
-                    "link": "/products/arcade-games"
-          },
-          {
-                    "id": "vr",
-                    "title": "VR GAME",
-                    "desc": "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
-                    "link": "/products/vr-games"
-          },
-          {
-                    "id": "ar",
-                    "title": "AR GAME",
-                    "desc": "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
-                    "link": "/products/ar-games"
-          },
-          {
-                    "id": "bowling",
-                    "title": "Bowling Alley",
-                    "desc": "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
-                    "link": "/products/bowling-alley"
-          },
-          {
-                    "id": "softplay",
-                    "title": "Soft Play",
-                    "desc": "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
-                    "link": "/products/soft-play"
-          },
-          {
-                    "id": "trampoline",
-                    "title": "Trampoline Park",
-                    "desc": "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
-                    "link": "/products/trampoline-park"
-          },
-          {
-                    "id": "hypergrid",
-                    "title": "Hyper Grid",
-                    "desc": "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
-                    "link": "/products/hypergrid"
-          },
-          {
-                    "id": "amusement",
-                    "title": "Amusement Park",
-                    "desc": "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
-                    "link": "/products/amusement-park"
-          },
-          {
-                    "id": "bumpercar",
-                    "title": "Bumper Cars",
-                    "desc": "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
-                    "link": "/products/bumper-car"
-          },
-          {
-                    "id": "lasertag",
-                    "title": "Laser Tag",
-                    "desc": "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp",
-                    "link": "/products/laser-tag"
-          }
-];
+                      {
+                        "id": "arcade",
+                        "title": "Arcade Game",
+                        "desc": "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+                        "link": "/product/arcade-games"
+                      },
+                      {
+                        "id": "vr",
+                        "title": "VR GAME",
+                        "desc": "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
+                        "link": "/product/vr-games"
+                      },
+                      {
+                        "id": "ar",
+                        "title": "AR GAME",
+                        "desc": "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
+                        "link": "/product/ar-games"
+                      },
+                      {
+                        "id": "bowling",
+                        "title": "Bowling Alley",
+                        "desc": "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
+                        "link": "/product/bowling-alley"
+                      },
+                      {
+                        "id": "softplay",
+                        "title": "Soft Play",
+                        "desc": "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+                        "link": "/product/soft-play"
+                      },
+                      {
+                        "id": "trampoline",
+                        "title": "Trampoline Park",
+                        "desc": "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+                        "link": "/product/trampoline-park"
+                      },
+                      {
+                        "id": "hypergrid",
+                        "title": "Hyper Grid",
+                        "desc": "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
+                        "link": "/product/hypergrid"
+                      },
+                      {
+                        "id": "amusement",
+                        "title": "Amusement Park",
+                        "desc": "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
+                        "link": "/product/amusement-park"
+                      },
+                      {
+                        "id": "bumpercar",
+                        "title": "Bumper Cars",
+                        "desc": "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
+                        "link": "/product/bumper-car"
+                      },
+                      {
+                        "id": "lasertag",
+                        "title": "Laser Tag",
+                        "desc": "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp",
+                        "link": "/product/laser-tag"
+                      }
+                    ];
 
                     const displayCards = (Array.isArray(formData.productsHome?.cardsList) && formData.productsHome.cardsList.length > 0)
                       ? formData.productsHome.cardsList
@@ -4246,25 +4688,24 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           </div>
 
                           <div>
-                            <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Short Description</label>
-                            <textarea
+                            <RichTextareaWithEditor
+                              label="Short Description"
                               rows={2}
                               placeholder="Short Description"
                               value={card.desc || ''}
-                              onChange={(e) => {
+                              onChange={(val) => {
                                 const list = [...getList()];
-                                list[idx] = { ...list[idx], desc: e.target.value };
+                                list[idx] = { ...list[idx], desc: val };
                                 handleFieldChange('productsHome', 'cardsList', list);
                               }}
-                              style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                             />
                           </div>
 
                           <div>
-                            <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Link (e.g. /products/arcade-games)</label>
+                            <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Link (e.g. /product/arcade-games)</label>
                             <input
                               type="text"
-                              placeholder="/products/arcade-games"
+                              placeholder="/product/arcade-games"
                               value={card.link || ''}
                               onChange={(e) => {
                                 const list = [...getList()];
@@ -4311,6 +4752,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 style={{ fontSize: '12px' }}
                               />
                             </div>
+                            <div style={{ marginTop: '8px' }}>
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '800', color: '#64748b', marginBottom: '2px' }}>
+                                🏷️ Image Alt Text (SEO Keyword)
+                              </label>
+                              <input
+                                type="text"
+                                value={card.imgAlt || ''}
+                                onChange={(e) => {
+                                  const list = [...getList()];
+                                  list[idx] = { ...list[idx], imgAlt: e.target.value };
+                                  handleFieldChange('productsHome', 'cardsList', list);
+                                }}
+                                placeholder={`e.g. ${card.title || 'Product'} Commercial Equipment - Winera`}
+                                style={{ width: '100%', padding: '6px 10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '11.5px' }}
+                              />
+                            </div>
                           </div>
                         </div>
                       );
@@ -4323,77 +4780,77 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <button
                   onClick={() => {
                     const defaultCardsList = [
-          {
-                    "id": "arcade",
-                    "title": "Arcade Game",
-                    "desc": "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
-                    "link": "/products/arcade-games"
-          },
-          {
-                    "id": "vr",
-                    "title": "VR GAME",
-                    "desc": "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
-                    "link": "/products/vr-games"
-          },
-          {
-                    "id": "ar",
-                    "title": "AR GAME",
-                    "desc": "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
-                    "link": "/products/ar-games"
-          },
-          {
-                    "id": "bowling",
-                    "title": "Bowling Alley",
-                    "desc": "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
-                    "link": "/products/bowling-alley"
-          },
-          {
-                    "id": "softplay",
-                    "title": "Soft Play",
-                    "desc": "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
-                    "link": "/products/soft-play"
-          },
-          {
-                    "id": "trampoline",
-                    "title": "Trampoline Park",
-                    "desc": "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
-                    "link": "/products/trampoline-park"
-          },
-          {
-                    "id": "hypergrid",
-                    "title": "Hyper Grid",
-                    "desc": "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
-                    "link": "/products/hypergrid"
-          },
-          {
-                    "id": "amusement",
-                    "title": "Amusement Park",
-                    "desc": "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
-                    "link": "/products/amusement-park"
-          },
-          {
-                    "id": "bumpercar",
-                    "title": "Bumper Cars",
-                    "desc": "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
-                    "link": "/products/bumper-car"
-          },
-          {
-                    "id": "lasertag",
-                    "title": "Laser Tag",
-                    "desc": "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp",
-                    "link": "/products/laser-tag"
-          }
-];
+                      {
+                        "id": "arcade",
+                        "title": "Arcade Game",
+                        "desc": "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+                        "link": "/product/arcade-games"
+                      },
+                      {
+                        "id": "vr",
+                        "title": "VR GAME",
+                        "desc": "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg",
+                        "link": "/product/vr-games"
+                      },
+                      {
+                        "id": "ar",
+                        "title": "AR GAME",
+                        "desc": "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg",
+                        "link": "/product/ar-games"
+                      },
+                      {
+                        "id": "bowling",
+                        "title": "Bowling Alley",
+                        "desc": "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp",
+                        "link": "/product/bowling-alley"
+                      },
+                      {
+                        "id": "softplay",
+                        "title": "Soft Play",
+                        "desc": "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+                        "link": "/product/soft-play"
+                      },
+                      {
+                        "id": "trampoline",
+                        "title": "Trampoline Park",
+                        "desc": "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+                        "link": "/product/trampoline-park"
+                      },
+                      {
+                        "id": "hypergrid",
+                        "title": "Hyper Grid",
+                        "desc": "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg",
+                        "link": "/product/hypergrid"
+                      },
+                      {
+                        "id": "amusement",
+                        "title": "Amusement Park",
+                        "desc": "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg",
+                        "link": "/product/amusement-park"
+                      },
+                      {
+                        "id": "bumpercar",
+                        "title": "Bumper Cars",
+                        "desc": "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp",
+                        "link": "/product/bumper-car"
+                      },
+                      {
+                        "id": "lasertag",
+                        "title": "Laser Tag",
+                        "desc": "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.",
+                        "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp",
+                        "link": "/product/laser-tag"
+                      }
+                    ];
                     const dataToSave = {
                       title: formData.productsHome?.title || "Take a look At *Our Best Products*",
                       subtitle: formData.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions",
@@ -4442,14 +4899,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Subtitle Paragraph
-                </label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Section Subtitle Paragraph"
                   rows={3}
                   value={formData.partnerHome?.subtitle || "Discover how Winera International helps you plan, build, and launch a successful game zone from free ROI consultation to safety-certified equipment and complete installation support."}
-                  onChange={(e) => handleFieldChange('partnerHome', 'subtitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', lineHeight: 1.6 }}
+                  onChange={(val) => handleFieldChange('partnerHome', 'subtitle', val)}
+                  placeholder="Enter Partner Section Subtitle..."
                 />
               </div>
 
@@ -4466,19 +4921,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#475569', marginBottom: '6px' }}>Card 1 Description</label>
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Card 1 Description"
                     rows={2}
                     value={formData.partnerHome?.box1Desc || "Before you invest a single rupee, our team consults with you on layout, equipment mix, and budget and hands you a complete ROI report covering projected revenue, footfall, and break-even timeline."}
-                    onChange={(e) => handleFieldChange('partnerHome', 'box1Desc', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                    onChange={(val) => handleFieldChange('partnerHome', 'box1Desc', val)}
+                    placeholder="Enter Card 1 Description..."
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#475569', marginBottom: '6px' }}>Card 1 Link URL (e.g. /roi)</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#475569', marginBottom: '6px' }}>Card 1 Link URL (e.g. /resource/roi)</label>
                   <input
                     type="text"
-                    value={formData.partnerHome?.box1Link || "/roi"}
+                    value={formData.partnerHome?.box1Link || "/resource/roi"}
                     onChange={(e) => handleFieldChange('partnerHome', 'box1Link', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                   />
@@ -4498,19 +4953,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#475569', marginBottom: '6px' }}>Card 2 Description</label>
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Card 2 Description"
                     rows={2}
                     value={formData.partnerHome?.box2Desc || "Every product we install meets commercial safety standards tested for high-footfall environments, assembled by our own trained team, and handed over only after a full on-site safety inspection."}
-                    onChange={(e) => handleFieldChange('partnerHome', 'box2Desc', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                    onChange={(val) => handleFieldChange('partnerHome', 'box2Desc', val)}
+                    placeholder="Enter Card 2 Description..."
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#475569', marginBottom: '6px' }}>Card 2 Link URL (e.g. /safety-standards)</label>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#475569', marginBottom: '6px' }}>Card 2 Link URL (e.g. /resource/safety-standards)</label>
                   <input
                     type="text"
-                    value={formData.partnerHome?.box2Link || "/safety-standards"}
+                    value={formData.partnerHome?.box2Link || "/resource/safety-standards"}
                     onChange={(e) => handleFieldChange('partnerHome', 'box2Link', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                   />
@@ -4559,14 +5014,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Subtitle Paragraph
-                </label>
-                <input
-                  type="text"
+                <RichTextareaWithEditor
+                  label="Section Subtitle Paragraph"
+                  rows={2}
                   value={formData.industriesHeader?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
-                  onChange={(e) => handleFieldChange('industriesHeader', 'subtitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('industriesHeader', 'subtitle', val)}
+                  placeholder="Enter Industries Subtitle..."
                 />
               </div>
 
@@ -4574,47 +5027,47 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                 {(() => {
                   const defaultItems = [
-          {
-                    "title": "Shopping Malls",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885841/winera_uploads/qrhgcb1f1ovtfcxljjhp.jpg"
-          },
-          {
-                    "title": "Hotels & Resorts",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg"
-          },
-          {
-                    "title": "Schools & Academies",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885840/winera_uploads/l5jhtvihkadehhnkgjmc.jpg"
-          },
-          {
-                    "title": "Commercial Spaces",
-                    "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
-          },
-          {
-                    "title": "Residential Projects",
-                    "img": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80"
-          },
-          {
-                    "title": "Sports Centres",
-                    "img": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80"
-          },
-          {
-                    "title": "Entertainment Hubs",
-                    "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-          },
-          {
-                    "title": "Airports & Terminals",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885838/winera_uploads/vlznxp5vpxt5nxrorrzw.webp"
-          },
-          {
-                    "title": "Hospitals & Clinics",
-                    "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/vbmyhwwywzwqzclv0a5u.jpg"
-          },
-          {
-                    "title": "Food and Beverage",
-                    "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-          }
-];
+                    {
+                      "title": "Shopping Malls",
+                      "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885841/winera_uploads/qrhgcb1f1ovtfcxljjhp.jpg"
+                    },
+                    {
+                      "title": "Hotels & Resorts",
+                      "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg"
+                    },
+                    {
+                      "title": "Schools & Academies",
+                      "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885840/winera_uploads/l5jhtvihkadehhnkgjmc.jpg"
+                    },
+                    {
+                      "title": "Commercial Spaces",
+                      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                      "title": "Residential Projects",
+                      "img": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                      "title": "Sports Centres",
+                      "img": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                      "title": "Entertainment Hubs",
+                      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                      "title": "Airports & Terminals",
+                      "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885838/winera_uploads/vlznxp5vpxt5nxrorrzw.webp"
+                    },
+                    {
+                      "title": "Hospitals & Clinics",
+                      "img": "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/vbmyhwwywzwqzclv0a5u.jpg"
+                    },
+                    {
+                      "title": "Food and Beverage",
+                      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+                    }
+                  ];
 
                   const getList = () => Array.isArray(formData.industriesHeader?.items)
                     ? formData.industriesHeader.items
@@ -4713,6 +5166,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                   style={{ fontSize: '12px' }}
                                 />
                               </div>
+                              <div style={{ marginTop: '8px' }}>
+                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '800', color: '#64748b', marginBottom: '2px' }}>
+                                  🏷️ Image Alt Text (SEO Keyword)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={item.imgAlt || ''}
+                                  onChange={(e) => {
+                                    const list = [...currentItemsList];
+                                    list[idx] = { ...list[idx], imgAlt: e.target.value };
+                                    handleFieldChange('industriesHeader', 'items', list);
+                                  }}
+                                  placeholder={`e.g. ${item.title || 'Industry'} Game Zone Setup & Turnkey Solutions - Winera`}
+                                  style={{ width: '100%', padding: '6px 10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '11.5px' }}
+                                />
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -4772,14 +5241,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Subtitle Paragraph
-                </label>
-                <input
-                  type="text"
+                <RichTextareaWithEditor
+                  label="Section Subtitle Paragraph"
+                  rows={2}
                   value={formData.processHome?.subtitle || "How We Setup Your Game Zone"}
-                  onChange={(e) => handleFieldChange('processHome', 'subtitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('processHome', 'subtitle', val)}
+                  placeholder="Enter Working Process Subtitle..."
                 />
               </div>
 
@@ -4895,12 +5362,32 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               </div>
                             </div>
                             <div>
-                              <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Bullet Points (One per line)</label>
+                              <label style={{ display: 'block', fontWeight: '800', fontSize: '12px', color: '#0f172a', marginBottom: '6px' }}>
+                                Bullet Points (One per line)
+                              </label>
                               <textarea
                                 rows={3}
-                                value={cardData.points.join('\n')}
-                                onChange={(e) => updateSingleCard({ ...cardData, points: e.target.value.split('\n') })}
-                                style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'monospace' }}
+                                value={Array.isArray(cardData.points) ? cardData.points.join('\n') : (cardData.points || '')}
+                                onChange={(e) => {
+                                  updateSingleCard({ ...cardData, points: e.target.value });
+                                }}
+                                onBlur={(e) => {
+                                  const cleaned = (typeof e.target.value === 'string' ? e.target.value : '').split('\n').map(line => line.replace(/^[-*•]\s+/, '').trim()).filter(Boolean);
+                                  updateSingleCard({ ...cardData, points: cleaned });
+                                }}
+                                placeholder="Enter bullet points for this step (one per line)..."
+                                style={{
+                                  width: '100%',
+                                  padding: '8px 12px',
+                                  borderRadius: '10px',
+                                  border: '1.5px solid #cbd5e1',
+                                  background: '#F5F5F9',
+                                  fontSize: '13px',
+                                  fontWeight: '600',
+                                  lineHeight: 1.5,
+                                  color: '#0f172a',
+                                  boxSizing: 'border-box'
+                                }}
                               />
                             </div>
                           </div>
@@ -4914,7 +5401,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             const dataToSave = {
                               title: formData.processHome?.title || "*Our Working* Process",
                               subtitle: formData.processHome?.subtitle || "How We Setup Your Game Zone",
-                              cards: cardsList
+                              cards: cardsList.map(c => ({
+                                ...c,
+                                points: Array.isArray(c.points)
+                                  ? c.points
+                                  : (typeof c.points === 'string' ? c.points.split('\n').map(l => l.replace(/^[-*•]\s+/, '').trim()).filter(Boolean) : [])
+                              }))
                             };
                             persistSectionToDatabase('processHome', dataToSave);
                           }}
@@ -4961,14 +5453,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Subtitle Paragraph
-                </label>
-                <input
-                  type="text"
+                <RichTextareaWithEditor
+                  label="Section Subtitle Paragraph"
+                  rows={2}
                   value={formData.whyChooseUs?.subtitle || "We deliver complete game zone setup solutions for businesses across India"}
-                  onChange={(e) => handleFieldChange('whyChooseUs', 'subtitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('whyChooseUs', 'subtitle', val)}
+                  placeholder="Enter Why Choose Us Subtitle..."
                 />
               </div>
 
@@ -5069,12 +5559,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               />
                             </div>
                             <div>
-                              <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#475569', marginBottom: '4px' }}>Feature Description</label>
-                              <textarea
+                              <RichTextareaWithEditor
+                                label="Feature Description"
                                 rows={2}
                                 value={itemData.desc}
-                                onChange={(e) => updateSingleItem({ ...itemData, desc: e.target.value })}
-                                style={{ width: '100%', padding: '8px 12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '12.5px' }}
+                                onChange={(val) => updateSingleItem({ ...itemData, desc: val })}
+                                placeholder="Enter feature description..."
                               />
                             </div>
                           </div>
@@ -5497,14 +5987,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>
-                    Secondary Subtext Paragraph
-                  </label>
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Secondary Subtext Paragraph"
                     rows={2}
                     value={formData.builtProjectsHeader?.subtext || "Complete indoor game zone setups engineered and delivered by Winera International"}
-                    onChange={(e) => handleFieldChange('builtProjectsHeader', 'subtext', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                    onChange={(val) => handleFieldChange('builtProjectsHeader', 'subtext', val)}
+                    placeholder="Enter secondary subtext..."
                   />
                 </div>
                 <div style={{ textAlign: 'right' }}>
@@ -5603,14 +6091,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>
-                    Secondary Subtitle Paragraph
-                  </label>
-                  <input
-                    type="text"
+                  <RichTextareaWithEditor
+                    label="Secondary Subtitle Paragraph"
+                    rows={2}
                     value={formData.faqsHeader?.subtitle || "Everything you need to know about setting up a game zone in India"}
-                    onChange={(e) => handleFieldChange('faqsHeader', 'subtitle', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                    onChange={(val) => handleFieldChange('faqsHeader', 'subtitle', val)}
+                    placeholder="Enter FAQ subtitle..."
                   />
                 </div>
                 <div style={{ textAlign: 'right' }}>
@@ -5676,7 +6162,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         },
                         {
                           q: "How do I get started with my game zone project?",
-                          a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. We're also available on social media."
+                          a: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. We're also available on social media."
                         },
                         {
                           q: "Can Winera International help me plan my game zone from scratch?",
@@ -6003,14 +6489,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Description Paragraph
-                </label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Description Paragraph"
                   rows={2}
                   value={formData.ctaBanner?.description !== undefined ? formData.ctaBanner.description : "Get expert guidance, custom layout design and complete installation support from India's trusted game zone setup company"}
-                  onChange={(e) => handleFieldChange('ctaBanner', 'description', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
+                  onChange={(val) => handleFieldChange('ctaBanner', 'description', val)}
+                  placeholder="Enter CTA description..."
                 />
               </div>
 
@@ -6032,7 +6516,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.ctaBanner?.buttonLink !== undefined ? formData.ctaBanner.buttonLink : "https://wa.me/919428989488"}
+                  value={formData.ctaBanner?.buttonLink !== undefined ? formData.ctaBanner.buttonLink : "https://wa.me/919157873576"}
                   onChange={(e) => handleFieldChange('ctaBanner', 'buttonLink', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
@@ -6096,6 +6580,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Reset to Default Banner
                     </button>
                   )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Banner Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.ctaBanner?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('ctaBanner', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Commercial Game Zone Turnkey Setup & ROI Consultation - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
                 </div>
               </div>
 
@@ -6180,6 +6676,84 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
+                  {formData.arcadeHero?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('arcadeHero', 'bgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Hero Banner Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arcadeHero?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('arcadeHero', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Commercial Arcade Game Setup & Machines India - Winera International"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
+              </div>
+
+              {/* Mobile Screen Hero Banner Upload & Preview */}
+              <div>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.arcadeHero?.mobileBgUrl, arcadeMobileHeroBg)}
+                    alt="Mobile Hero Bg Preview"
+                    style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1.5px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.arcadeHero?.mobileBgUrl || ''}
+                    onChange={(e) => handleFieldChange('arcadeHero', 'mobileBgUrl', e.target.value)}
+                    placeholder="Mobile Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const res = await uploadImageFile(file, admin.token);
+                          handleFieldChange('arcadeHero', 'mobileBgUrl', res.url);
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.arcadeHero?.mobileBgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('arcadeHero', 'mobileBgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Mobile Hero Banner Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arcadeHero?.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('arcadeHero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. Commercial Arcade Game Setup Mobile Banner - Winera International"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
                 </div>
               </div>
 
@@ -6263,6 +6837,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Main Photo Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arcadeIntro?.mainImgAlt || ''}
+                    onChange={(e) => handleFieldChange('arcadeIntro', 'mainImgAlt', e.target.value)}
+                    placeholder="e.g. Commercial Arcade Game Machine Setup in India - Winera International"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               {/* Image 2 Upload: Secondary Bottom-Right Image */}
@@ -6318,6 +6904,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Secondary Photo Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arcadeIntro?.secondaryImgAlt || ''}
+                    onChange={(e) => handleFieldChange('arcadeIntro', 'secondaryImgAlt', e.target.value)}
+                    placeholder="e.g. Commercial Arcade Arena Zone Overview - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div>
@@ -6333,14 +6931,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Section Description Paragraph
-                </label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Section Description Paragraph"
                   rows={4}
                   value={formData.arcadeIntro?.desc !== undefined ? formData.arcadeIntro.desc : "Winera International Pvt. Ltd is a trusted arcade games manufacturer and supplier of premium arcade machines, sourced and serviced end-to-end across 50+ cities. With over 15 years of industry expertise, we source every arcade game machine from established global manufacturers and configure it with modern coin, card, or ticket-based redemption systems to match your venue's requirements"}
-                  onChange={(e) => handleFieldChange('arcadeIntro', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('arcadeIntro', 'desc', val)}
+                  placeholder="Enter arcade section description..."
                 />
               </div>
 
@@ -6357,12 +6953,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Feature 1 Description</label>
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Feature 1 Description"
                     rows={3}
                     value={formData.arcadeIntro?.feature1Desc !== undefined ? formData.arcadeIntro.feature1Desc : "Before delivery, each unit goes through a commercial-grade durability check built for high-footfall environments like malls, hotels, and entertainment centres, not casual or residential use."}
-                    onChange={(e) => handleFieldChange('arcadeIntro', 'feature1Desc', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    onChange={(val) => handleFieldChange('arcadeIntro', 'feature1Desc', val)}
+                    placeholder="Enter feature 1 description..."
                   />
                 </div>
               </div>
@@ -6380,12 +6976,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Feature 2 Description</label>
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Feature 2 Description"
                     rows={3}
                     value={formData.arcadeIntro?.feature2Desc !== undefined ? formData.arcadeIntro.feature2Desc : "From sourcing to installation and after-sales support, our own team handles the entire arcade game zone setup process, not a third-party contractor."}
-                    onChange={(e) => handleFieldChange('arcadeIntro', 'feature2Desc', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    onChange={(val) => handleFieldChange('arcadeIntro', 'feature2Desc', val)}
+                    placeholder="Enter feature 2 description..."
                   />
                 </div>
               </div>
@@ -6433,7 +7029,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.arcadeIntro?.quoteLink || 'https://wa.me/919428989488'}
+                    value={formData.arcadeIntro?.quoteLink || 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('arcadeIntro', 'quoteLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -6464,7 +7060,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
-                  onClick={() => persistSectionToDatabase('arcadeIntro', formData.arcadeIntro || {})}
+                  onClick={() => {
+                    const currentIntro = { ...(formData.arcadeIntro || {}) };
+                    if (typeof currentIntro.desc === 'string') {
+                      currentIntro.desc = currentIntro.desc.replace(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|[\w\.,\(\)]+)\s*\n+\s*([a-z])/g, '$1 $2').trim();
+                    }
+                    persistSectionToDatabase('arcadeIntro', currentIntro);
+                  }}
                   style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                 >
                   Save Arcade Intro Section
@@ -6475,12 +7077,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
           {/* ARCADE GAME CATEGORIES & PRODUCTS MANAGER FORM */}
           {activeSection === 'arcadeCategories' && (() => {
-            const defaultArcadeCategories = allArcadeProducts.categoriesList || [
-              "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
-              "Bike Racing Game", "Car Racing Game", "Shooting Games", "VR Games", "Strength Based Games"
-            ];
-
-            const masterCards = allArcadeProducts.cards || [];
+            const defaultArcadeCategories = DEFAULT_ARCADE_CATEGORIES;
+            const masterCards = arcadeMasterCards || [];
 
             const legacyMockups = new Set([
               'super air hockey', 'super-air-hockey',
@@ -6519,7 +7117,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 });
                 cardsList = cardsList.map(mc => {
                   const k = (mc.slug || mc.name || mc.title || '').toLowerCase().trim();
-                  return cmsMap.has(k) ? { ...mc, ...cmsMap.get(k) } : mc;
+                  if (!cmsMap.has(k)) return mc;
+                  const cmsItem = cmsMap.get(k);
+                  const cmsGal = Array.isArray(cmsItem.gallery) ? cmsItem.gallery.filter(Boolean) : [];
+                  const mcGal = Array.isArray(mc.gallery) ? mc.gallery.filter(Boolean) : [];
+                  const bestGal = cmsGal.length > mcGal.length ? cmsGal : (mcGal.length > 0 ? mcGal : cmsGal);
+                  return { ...mc, ...cmsItem, gallery: bestGal };
                 });
                 rawCards.forEach(cc => {
                   const k1 = (cc.slug || '').toLowerCase().trim();
@@ -6542,11 +7145,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
             const searchFiltered = adminArcadeSearch.trim()
               ? categoryFiltered.filter(item => {
-                  const q = adminArcadeSearch.toLowerCase().trim();
-                  const name = (item.name || item.title || "").toLowerCase();
-                  const cat = (item.category || item.tag || "").toLowerCase();
-                  return name.includes(q) || cat.includes(q);
-                })
+                const q = adminArcadeSearch.toLowerCase().trim();
+                const name = (item.name || item.title || "").toLowerCase();
+                const cat = (item.category || item.tag || "").toLowerCase();
+                return name.includes(q) || cat.includes(q);
+              })
               : categoryFiltered;
 
             const adminItemsPerPage = 24;
@@ -6712,8 +7315,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     gap: '20px'
                   }}>
                     {filteredCards.map((card, idx) => {
-                      const realIdx = cardsList.indexOf(card) !== -1 
-                        ? cardsList.indexOf(card) 
+                      const realIdx = cardsList.indexOf(card) !== -1
+                        ? cardsList.indexOf(card)
                         : cardsList.findIndex(c => (c._id && card._id && c._id === card._id) || (c.slug && card.slug && c.slug !== 'new-arcade-game' && c.slug === card.slug) || (c.title && card.title && c.title === card.title));
                       const displayTitle = card.name || card.title || "Arcade Machine";
                       const displayImg = getAdminValidImageUrl(
@@ -6801,8 +7404,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                     const currentDeleted = Array.isArray(formData?.arcadeCategories?.deletedSlugs) ? formData.arcadeCategories.deletedSlugs : [];
                                     const updatedDeletedSlugs = Array.from(new Set([...currentDeleted, targetSlug]));
 
-                                    const updated = { 
-                                      categoriesList, 
+                                    const updated = {
+                                      categoriesList,
                                       cards: newCards,
                                       deletedSlugs: updatedDeletedSlugs
                                     };
@@ -6945,6 +7548,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Team Photo Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arcadeCommercial?.teamImgAlt || ''}
+                    onChange={(e) => handleFieldChange('arcadeCommercial', 'teamImgAlt', e.target.value)}
+                    placeholder="e.g. Winera Commercial Arcade Game Setup & Support Team"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               {/* Point 1 Control */}
@@ -6960,12 +7575,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Description Paragraphs</label>
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Description Paragraphs"
                     rows={4}
-                    value={formData.arcadeCommercial?.point1Text !== undefined ? formData.arcadeCommercial.point1Text : "Winera International supplies commercial arcade machines in India built specifically for high-intensity, continuous daily operation. From reinforced cabinets and commercial power supplies to coin mechanisms and digital card reader interfaces, every machine we deliver is tested for long life before it reaches your venue."}
-                    onChange={(e) => handleFieldChange('arcadeCommercial', 'point1Text', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    value={formData.arcadeCommercial?.point1Text !== undefined ? formData.arcadeCommercial.point1Text : "Arcade machines in Indian malls and entertainment centres often run ten or more hours a day, handled mostly by children. Equipment sourced without that environment in mind tends to fail within weeks of installation.\n\nWe at Winera International prioritise machines rated for sustained commercial cycles over units designed for lighter, residential, or occasional use, which is why our installations typically need far less frequent servicing than machines bought through unverified import channels."}
+                    onChange={(val) => handleFieldChange('arcadeCommercial', 'point1Text', val)}
+                    placeholder="Enter block 1 paragraphs..."
                   />
                 </div>
               </div>
@@ -6983,12 +7598,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Description Paragraphs</label>
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Description Paragraphs"
                     rows={4}
-                    value={formData.arcadeCommercial?.point2Text !== undefined ? formData.arcadeCommercial.point2Text : "Anyone can fill a room with arcade machines. Very few build a game zone that pays back your investment and keeps printing profit month after month. We help venue owners calculate their expected daily footfall, average spend per visitor, machine payback periods, and total ROI — before you commit to a single machine."}
-                    onChange={(e) => handleFieldChange('arcadeCommercial', 'point2Text', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    value={formData.arcadeCommercial?.point2Text !== undefined ? formData.arcadeCommercial.point2Text : "An arcade game zone is not a single machine decision, it is a business decision about which machines, in which combination, at what price point, will generate the strongest return for your specific venue. Most suppliers hand you a catalogue and leave that calculation entirely to you.\n\nWinera International starts there. Before any machine is recommended, our team works out the numbers for your specific floor size, daily footfall, and target visitor age group projected revenue per machine category, daily session estimates, maintenance costs per year, and a realistic break-even timeline. Not a generic percentage claim. Your actual numbers, for your actual venue."}
+                    onChange={(val) => handleFieldChange('arcadeCommercial', 'point2Text', val)}
+                    placeholder="Enter block 2 paragraphs..."
                   />
                 </div>
               </div>
@@ -7012,7 +7627,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={(formData.arcadeCommercial?.ctaLink && formData.arcadeCommercial.ctaLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.arcadeCommercial?.ctaLink && formData.arcadeCommercial.ctaLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.arcadeCommercial?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for setup & commercial guidance. Please share details. [Ref: Arcade Game Page]";
@@ -7042,7 +7657,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.arcadeCommercial?.ctaLink && formData.arcadeCommercial.ctaLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.arcadeCommercial?.ctaLink && formData.arcadeCommercial.ctaLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     const updated = {
                       ...(formData.arcadeCommercial || {}),
@@ -7215,17 +7830,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                           style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}
                         />
-                        <textarea
-                          rows={2}
-                          placeholder="Feature Description"
-                          value={item.desc || ''}
-                          onChange={(e) => {
-                            const updated = [...itemsList];
-                            updated[idx] = { ...updated[idx], desc: e.target.value };
-                            handleFieldChange('arcadeWhyUs', 'items', updated);
-                          }}
-                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
-                        />
+                        <div style={{ marginTop: '8px' }}>
+                          <RichTextareaWithEditor
+                            label="Feature Description"
+                            rows={2}
+                            placeholder="Feature Description"
+                            value={item.desc || ''}
+                            onChange={(val) => {
+                              const updated = [...itemsList];
+                              updated[idx] = { ...updated[idx], desc: val };
+                              handleFieldChange('arcadeWhyUs', 'items', updated);
+                            }}
+                          />
+                        </div>
                       </div>
                     ));
                   })()}
@@ -7276,27 +7893,59 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           {/* RELATED PRODUCTS SECTION FORM (GENERIC FOR ALL PAGES) */}
           {(activeSection.endsWith('Related') || activeSection.includes('Related')) && (() => {
             const defaultList = [
-              { title: "Arcade Games", link: "/products/arcade-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882222/winera_uploads/psq0lwhhp7kdasz18mhg.jpg" },
-              { title: "VR Games", link: "/products/vr-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881945/winera_uploads/ciltspbpf3nwcvcbu16m.jpg" },
-              { title: "AR Games", link: "/products/ar-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881961/winera_uploads/ucij9ckzxnlpskx6n0hj.png" },
-              { title: "Bowling Alley", link: "/products/bowling-alley", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881975/winera_uploads/bj0fjmjyi9ogxwme3hqc.jpg" },
-              { title: "Trampoline Park", link: "/products/trampoline-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881999/winera_uploads/yx5bfvbaexcazrkt331g.jpg" },
-              { title: "Soft Play", link: "/products/soft-play", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882021/winera_uploads/sxlzfslbp7mmm3avg0vq.jpg" },
-              { title: "Bumper Cars", link: "/products/bumper-cars", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882033/winera_uploads/goun29t9b7kopvwkfze9.jpg" },
-              { title: "Hypergrid", link: "/products/hypergrid", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882049/winera_uploads/jxgltybqdkbolwzlzcar.jpg" },
-              { title: "Laser Tag", link: "/products/laser-tag", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882062/winera_uploads/y7nkbq60c8siqqatkr36.jpg" },
-              { title: "Amusement Park", link: "/products/amusement-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882084/winera_uploads/tgofoefcimwe14lmqrso.jpg" },
-              { title: "Lights", link: "/products/lights", img: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80" },
-              { title: "Sculpture", link: "/products/sculpture", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751076/winera_uploads/r9m4zijctdjvzmbueeze.png" },
-              { title: "Reception Table", link: "/products/reception-table", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" }
+              { title: "Arcade Games", link: "/product/arcade-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882222/winera_uploads/psq0lwhhp7kdasz18mhg.jpg", isActive: true, status: 'active' },
+              { title: "VR Games", link: "/product/vr-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881945/winera_uploads/ciltspbpf3nwcvcbu16m.jpg", isActive: true, status: 'active' },
+              { title: "AR Games", link: "/product/ar-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881961/winera_uploads/ucij9ckzxnlpskx6n0hj.png", isActive: true, status: 'active' },
+              { title: "Bowling Alley", link: "/product/bowling-alley", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881975/winera_uploads/bj0fjmjyi9ogxwme3hqc.jpg", isActive: true, status: 'active' },
+              { title: "Trampoline Park", link: "/product/trampoline-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881999/winera_uploads/yx5bfvbaexcazrkt331g.jpg", isActive: true, status: 'active' },
+              { title: "Soft Play", link: "/product/soft-play", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882021/winera_uploads/sxlzfslbp7mmm3avg0vq.jpg", isActive: true, status: 'active' },
+              { title: "Bumper Cars", link: "/product/bumper-car", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882033/winera_uploads/goun29t9b7kopvwkfze9.jpg", isActive: true, status: 'active' },
+              { title: "Hypergrid", link: "/product/hypergrid", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882049/winera_uploads/jxgltybqdkbolwzlzcar.jpg", isActive: true, status: 'active' },
+              { title: "Laser Tag", link: "/product/laser-tag", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882062/winera_uploads/y7nkbq60c8siqqatkr36.jpg", isActive: true, status: 'active' },
+              { title: "Amusement Park", link: "/product/amusement-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882084/winera_uploads/tgofoefcimwe14lmqrso.jpg", isActive: true, status: 'active' },
+              { title: "Lights", link: "/product/lights", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791892550/winera_uploads/xzgzyyd26y9sukeicpd1.jpg", isActive: false, status: 'inactive' },
+              { title: "Sculpture", link: "/product/sculpture", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791893113/winera_uploads/llle0ckzymanfgvegqmw.jpg", isActive: false, status: 'inactive' },
+              { title: "Reception Table", link: "/product/reception-table", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791892969/winera_uploads/uswx6jond0sb102zq1k9.jpg", isActive: false, status: 'inactive' }
             ];
 
-            const itemsList = (Array.isArray(formData[activeSection]?.items) && formData[activeSection].items.length > 0)
+            const rawItemsList = (Array.isArray(formData[activeSection]?.items) && formData[activeSection].items.length > 0)
               ? formData[activeSection].items
               : defaultList;
 
+            const itemsList = rawItemsList.map(it => {
+              const clean = (it.title || '').trim().toLowerCase();
+              let img = it.img;
+              if (clean === 'lights' && (!img || img.includes('images.unsplash.com') || img.includes('1508739773434'))) {
+                img = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791892550/winera_uploads/xzgzyyd26y9sukeicpd1.jpg";
+              } else if (clean === 'sculpture' && (!img || img.includes('r9m4zijctdjvzmbueeze'))) {
+                img = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791893113/winera_uploads/llle0ckzymanfgvegqmw.jpg";
+              } else if (clean === 'reception table' && (!img || img.includes('images.unsplash.com') || img.includes('1497366216548'))) {
+                img = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791892969/winera_uploads/uswx6jond0sb102zq1k9.jpg";
+              }
+
+              // Determine active status: default Lights, Sculpture, Reception Table to false unless explicitly set true
+              const isDefaultInactive = clean === 'lights' || clean === 'sculpture' || clean === 'reception table';
+              let isActive = it.isActive;
+              let status = it.status;
+              if (isActive === undefined && !status) {
+                isActive = !isDefaultInactive;
+                status = isDefaultInactive ? 'inactive' : 'active';
+              } else {
+                isActive = isActive !== false && status !== 'inactive';
+                status = isActive ? 'active' : 'inactive';
+              }
+
+              // Normalize link to /product/
+              const rawLink = it.link || '';
+              const normalizedLink = rawLink.startsWith('/products/')
+                ? rawLink.replace(/^\/products\//, '/product/')
+                : rawLink;
+
+              return { ...it, img, isActive, status, link: normalizedLink };
+            });
+
             const handleAddItem = () => {
-              const updated = [...itemsList, { title: "New Product", link: "/products/new-product", img: "" }];
+              const updated = [...itemsList, { title: "New Product", link: "/product/new-product", img: "", isActive: true, status: 'active' }];
               const updatedSection = { ...(formData[activeSection] || {}), items: updated };
               setFormData(prev => ({ ...prev, [activeSection]: updatedSection }));
             };
@@ -7358,8 +8007,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     {itemsList.map((item, idx) => (
                       <div key={idx} style={{ background: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>Category Card #{idx + 1}</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                            <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8' }}>Category Card #{idx + 1}</span>
+                            <StatusDropdown
+                              isActive={item.isActive !== false && item.status !== 'inactive'}
+                              status={item.status}
+                              onChange={async (newStatus, isAct) => {
+                                const updated = itemsList.map((it, i) => i === idx ? { ...it, isActive: isAct, status: newStatus } : it);
+                                const updatedSection = { ...(formData[activeSection] || {}), items: updated };
+                                setFormData(prev => ({ ...prev, [activeSection]: updatedSection }));
+                                await persistSectionToDatabase(activeSection, updatedSection);
+                                setStatusMsg(`'${item.title || `Card #${idx + 1}`}' set to ${isAct ? 'Active (Visible on website)' : 'Inactive (Hidden on website)'}!`);
+                              }}
+                            />
+                          </div>
                           <button
                             type="button"
                             onClick={() => handleDeleteItem(idx)}
@@ -7403,7 +8065,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <input
                             type="text"
                             value={item.link || ''}
-                            placeholder="/products/your-product-slug"
+                            placeholder="/product/your-product-slug"
                             onChange={(e) => {
                               const updated = [...itemsList];
                               updated[idx] = { ...updated[idx], link: e.target.value };
@@ -7476,14 +8138,99 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               ) : null;
                             })()}
                           </div>
+                          <div style={{ marginTop: '8px' }}>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                              🏷️ Image Alt Text (SEO Keyword)
+                            </label>
+                            <input
+                              type="text"
+                              value={item.imgAlt || ''}
+                              placeholder="e.g. Commercial Arcade Racing Game Setup - Winera"
+                              onChange={(e) => {
+                                const updated = itemsList.map((it, i) => i === idx ? { ...it, imgAlt: e.target.value } : it);
+                                setFormData(prev => ({
+                                  ...prev,
+                                  [activeSection]: { ...(prev[activeSection] || {}), items: updated }
+                                }));
+                              }}
+                              style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                            />
+                          </div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <div style={{ display: 'flex', gap: '14px', justifyContent: 'flex-end', alignItems: 'center', marginTop: '16px', flexWrap: 'wrap' }}>
                   <button
+                    type="button"
+                    onClick={async () => {
+                      const finalItems = itemsList.map((it, i) => ({
+                        ...it,
+                        img: it.img || defaultList.find(c => c.title.toLowerCase() === (it.title || '').trim().toLowerCase())?.img || defaultList[i]?.img || '',
+                        isActive: it.isActive !== false && it.status !== 'inactive',
+                        status: it.status || (it.isActive !== false ? 'active' : 'inactive')
+                      }));
+                      const allRelatedKeys = [
+                        'arcadeRelated',
+                        'bowlingRelated',
+                        'softplayRelated',
+                        'trampolineRelated',
+                        'amusementRelated',
+                        'hypergridRelated',
+                        'bumpercarRelated',
+                        'vrRelated',
+                        'arRelated',
+                        'lasertagRelated',
+                        'projectRelated'
+                      ];
+                      setLoadingSection(activeSection);
+                      setStatusMsg('Syncing Related Products Carousel across ALL 11 pages...');
+                      try {
+                        const token = admin?.token || (() => {
+                          try {
+                            const stored = JSON.parse(localStorage.getItem('winera_admin') || '{}');
+                            return stored?.token || '';
+                          } catch { return ''; }
+                        })();
+                        for (const key of allRelatedKeys) {
+                          const existing = formData[key] || {};
+                          const payload = {
+                            ...existing,
+                            title: existing.title || formData[activeSection]?.title || '*Related* Products',
+                            items: finalItems
+                          };
+                          await updateSectionContent(key, payload, token);
+                        }
+                        await refreshContent();
+                        setStatusMsg('✓ Successfully saved & synced to ALL 11 product & project pages!');
+                      } catch (err) {
+                        setStatusMsg('Sync Error: ' + (err.response?.data?.message || err.message));
+                      } finally {
+                        setLoadingSection('');
+                      }
+                    }}
+                    style={{
+                      background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '12px 24px',
+                      borderRadius: '12px',
+                      fontWeight: '800',
+                      fontSize: '13.5px',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      boxShadow: '0 4px 14px rgba(2, 132, 199, 0.35)'
+                    }}
+                  >
+                    ⚡ Save & Sync to ALL Pages
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={() => {
                       const finalItems = itemsList.map((it, i) => ({
                         ...it,
@@ -7491,9 +8238,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }));
                       persistSectionToDatabase(activeSection, { ...(formData[activeSection] || {}), items: finalItems });
                     }}
-                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 24px', borderRadius: '12px', fontWeight: '800', fontSize: '13.5px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                   >
-                    Save Related Products Section
+                    Save for This Page Only
                   </button>
                 </div>
               </div>
@@ -7530,14 +8277,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  White Main Subtitle Text
-                </label>
-                <input
-                  type="text"
+                <RichTextareaWithEditor
+                  label="White Main Subtitle Text"
+                  rows={2}
                   value={formData.arcadeCta?.whiteText !== undefined ? formData.arcadeCta.whiteText : "We're Ready To Give Answers To Your Question."}
-                  onChange={(e) => handleFieldChange('arcadeCta', 'whiteText', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  onChange={(val) => handleFieldChange('arcadeCta', 'whiteText', val)}
+                  placeholder="We're Ready To Give Answers To Your Question."
                 />
               </div>
 
@@ -7559,7 +8304,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.arcadeCta?.buttonLink !== undefined ? formData.arcadeCta.buttonLink : "https://wa.me/919428989488"}
+                    value={formData.arcadeCta?.buttonLink !== undefined ? formData.arcadeCta.buttonLink : "https://wa.me/919157873576"}
                     onChange={(e) => handleFieldChange('arcadeCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -7619,6 +8364,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Banner Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arcadeCta?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('arcadeCta', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Need Any Consultations - Commercial Arcade Setup by Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -7668,7 +8425,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         { q: "Which Businesses Typically Install Arcade Game Machines In India?", a: "Malls, hotels, resorts, and family entertainment centres are the most common buyers of arcade machines." },
                         { q: "How Long Does It Take To Install Arcade Machines?", a: "Installation timelines depend on the number of machines, your venue's readiness, and your location. We share an exact schedule as part of your quote, so you know precisely when your arcade zone will be ready." },
                         { q: "What Is The Price Of Arcade Machines In India?", a: "Arcade machine pricing in India depends on the machine category, payment mechanism, and customisation level. Because Winera International sources directly at scale, our pricing avoids the markup typical of multi-layer resellers." },
-                        { q: "How Do I Get Started With Ordering Arcade Machines From Winera?", a: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Our team will recommend the right machine mix for your space and send a quote ASAP." },
+                        { q: "How Do I Get Started With Ordering Arcade Machines From Winera?", a: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Our team will recommend the right machine mix for your space and send a quote ASAP." },
                         { q: "Which Arcade Games Give The Best ROI For FECs And Malls In India?", a: "Ticket redemption games, claw machines, and racing simulators consistently deliver the strongest revenue per square foot in Indian FECs and malls. Winera International helps you choose the right arcade game zone machine mix based on your specific footfall, floor size, and visitor demographic — not a generic recommendation." },
                         { q: "What Is The Difference Between Coin-Operated And Card-Based Arcade Machines?", a: "Coin-operated arcade machines accept physical tokens and suit venues with casual walk-in visitors. Card-based systems use rechargeable cards — better for revenue tracking, reducing cash handling, and encouraging repeat visits through balance top-ups. Winera supplies both and advises on the right system for your venue." }
                       ];
@@ -7767,6 +8524,86 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
+                  {formData.bowlingHero?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('bowlingHero', 'bgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Hero Background Image Alt Tag */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Background Image Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.bowlingHero?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('bowlingHero', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Bowling Alley Setup & Manufacturer in India - Winera International"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              {/* Mobile Screen Hero Banner Upload & Preview */}
+              <div>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.bowlingHero?.mobileBgUrl, bowlingMobileHeroBg)}
+                    alt="Mobile Hero Bg Preview"
+                    style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.bowlingHero?.mobileBgUrl || ''}
+                    onChange={(e) => handleFieldChange('bowlingHero', 'mobileBgUrl', e.target.value)}
+                    placeholder="Mobile Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const res = await uploadImageFile(file, admin.token);
+                          handleFieldChange('bowlingHero', 'mobileBgUrl', res.url);
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.bowlingHero?.mobileBgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('bowlingHero', 'mobileBgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bowlingHero?.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('bowlingHero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. Bowling Alley Setup & Manufacturer Mobile Banner - Winera International"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
                 </div>
               </div>
 
@@ -7816,17 +8653,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <img
                     src={getAdminValidImageUrl(formData.softplayHero?.bgUrl, softplayHeroBg)}
                     alt="Preview"
-                    style={{ height: '50px', width: '90px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #cbd5e1' }}
+                    style={{ height: '65px', width: '120px', borderRadius: '10px', objectFit: 'cover', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
                   />
                   <input
                     type="text"
                     value={formData.softplayHero?.bgUrl || ''}
                     onChange={(e) => handleFieldChange('softplayHero', 'bgUrl', e.target.value)}
                     placeholder="Background Image URL"
-                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#ffffff' }}
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
                   />
-                  <label style={{ background: '#38bdf8', color: '#fff', padding: '10px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Custom Background
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload
                     <input
                       type="file"
                       accept="image/*"
@@ -7845,6 +8682,85 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
+                  {formData.softplayHero?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('softplayHero', 'bgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Background Image Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.softplayHero?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('softplayHero', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Indoor Soft Play Area Equipment Manufacturers - Winera"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              {/* Mobile Screen Hero Banner Upload & Preview */}
+              <div>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.softplayHero?.mobileBgUrl, softplayMobileHeroBg)}
+                    alt="Mobile Hero Bg Preview"
+                    style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.softplayHero?.mobileBgUrl || ''}
+                    onChange={(e) => handleFieldChange('softplayHero', 'mobileBgUrl', e.target.value)}
+                    placeholder="Mobile Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const res = await uploadImageFile(file, admin.token);
+                          handleFieldChange('softplayHero', 'mobileBgUrl', res.url);
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.softplayHero?.mobileBgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('softplayHero', 'mobileBgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.softplayHero?.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('softplayHero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. Indoor Soft Play Area Equipment Mobile Banner - Winera International"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
                 </div>
               </div>
 
@@ -7875,12 +8791,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Description Paragraph"
                   rows={3}
                   value={formData.softplayIntro?.desc || "India's trusted soft play equipment manufacturer custom designed, safety certified, and installed by our own team across India."}
-                  onChange={(e) => handleFieldChange('softplayIntro', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('softplayIntro', 'desc', val)}
+                  placeholder="Enter description paragraph..."
                 />
               </div>
 
@@ -7898,7 +8814,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link URL</label>
                   <input
                     type="text"
-                    value={(formData.softplayIntro?.buttonLink && formData.softplayIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.softplayIntro?.buttonLink && formData.softplayIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.softplayIntro?.waMessage || "Hello Winera International! I want to get custom design & quote for Soft Play equipment. Please share details. [Ref: Soft Play Page]";
@@ -7928,7 +8844,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.softplayIntro?.buttonLink && formData.softplayIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.softplayIntro?.buttonLink && formData.softplayIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     const updated = {
                       ...(formData.softplayIntro || {}),
@@ -7976,6 +8892,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Section Photo Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.softplayIntro?.imgAlt || ''}
+                    onChange={(e) => handleFieldChange('softplayIntro', 'imgAlt', e.target.value)}
+                    placeholder="e.g. Indoor Soft Play Equipment Manufacturer in India - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -8005,22 +8933,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1 Description"
                   rows={4}
                   value={formData.softplayManufacture?.p1 !== undefined && formData.softplayManufacture.p1 !== '' ? formData.softplayManufacture.p1 : "At Winera International, we are one of India's leading soft play equipment manufacturers, designing and supplying custom indoor play areas for kids across malls, hotels, schools, hospitals, and family entertainment centres since 2014. As a direct soft play manufacturer in India, we ensure every project starts with a detailed 3D design and ends with a fully installed, safety-certified play zone with our own team managing every step from concept to handover."}
-                  onChange={(e) => handleFieldChange('softplayManufacture', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('softplayManufacture', 'p1', val)}
+                  placeholder="Enter Paragraph 1..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2 Description"
                   rows={4}
                   value={formData.softplayManufacture?.p2 !== undefined && formData.softplayManufacture.p2 !== '' ? formData.softplayManufacture.p2 : "Whether you are setting up a compact 500 sq ft play corner or a large-scale interactive soft play zone, we deliver indoor kids play zone equipment tailored precisely to your space, budget, and audience, not a pre-packaged, off-the-shelf solution."}
-                  onChange={(e) => handleFieldChange('softplayManufacture', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('softplayManufacture', 'p2', val)}
+                  placeholder="Enter Paragraph 2..."
                 />
               </div>
 
@@ -8040,7 +8968,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.softplayManufacture?.videoUrl || 'https://wa.me/919428989488'}
+                    value={formData.softplayManufacture?.videoUrl || 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('softplayManufacture', 'videoUrl', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -8085,6 +9013,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ 3D Render Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.softplayManufacture?.imgAlt || ''}
+                    onChange={(e) => handleFieldChange('softplayManufacture', 'imgAlt', e.target.value)}
+                    placeholder="e.g. Soft Play Equipment Manufacture 3D Castle Render - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
                 </div>
               </div>
 
@@ -8228,6 +9168,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </label>
                   </div>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Background Image Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => handleFieldChange('softplaySpecs', 'bgAlt', e.target.value)}
+                      placeholder="e.g. Technical Specifications Soft Play Equipment - Winera International"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
                 </div>
 
                 <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -8303,12 +9255,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Intro Description</label>
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Subtitle Intro Description"
                     rows={3}
                     value={currentSec.desc !== undefined ? currentSec.desc : "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:"}
-                    onChange={(e) => handleFieldChange('softplayMaterials', 'desc', e.target.value)}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                    onChange={(val) => handleFieldChange('softplayMaterials', 'desc', val)}
+                    placeholder="Enter subtitle intro description..."
                   />
                 </div>
 
@@ -8351,6 +9303,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </label>
                   </div>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Photo Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentSec.imgAlt || ''}
+                      onChange={(e) => handleFieldChange('softplayMaterials', 'imgAlt', e.target.value)}
+                      placeholder="e.g. Premium Materials Exceptional Durability Soft Play - Winera"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
                 </div>
 
                 {/* Subpoints Manager */}
@@ -8390,13 +9354,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           />
                         </div>
                         <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#475569', marginBottom: '4px' }}>Full Material Description</label>
-                          <textarea
+                          <RichTextareaWithEditor
+                            label="Full Material Description"
                             rows={3}
                             placeholder="Material Description"
                             value={mSub.desc}
-                            onChange={(e) => handleSubpointChange(subIdx, 'desc', e.target.value)}
-                            style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5, fontFamily: 'inherit', background: '#f8fafc' }}
+                            onChange={(val) => handleSubpointChange(subIdx, 'desc', val)}
                           />
                         </div>
                       </div>
@@ -8472,13 +9435,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File / Link URL</label>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      Brochure PDF File / Link URL <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📄 PDF Document</span>
+                    </label>
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <input
                         type="text"
-                        value={currentSec.brochureUrl !== undefined ? currentSec.brochureUrl : '/winera-brochure.pdf'}
+                        value={(currentSec.brochureUrl && String(currentSec.brochureUrl).trim() !== '') ? currentSec.brochureUrl : '/pdf/Winera Softplay.pdf'}
                         onChange={(e) => handleFieldChange('softplayTypes', 'brochureUrl', e.target.value)}
-                        placeholder="e.g. /winera-brochure.pdf or upload PDF..."
+                        placeholder="e.g. /pdf/Winera Softplay.pdf or upload PDF..."
                         style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                       />
                       <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
@@ -8486,21 +9451,28 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <input
                           type="file"
                           accept="application/pdf,.pdf"
-                          onChange={async (e) => {
-                            const file = e.target.files[0];
-                            if (!file) return;
-                            setStatusMsg('Uploading PDF brochure...');
-                            try {
-                              const res = await uploadImageFile(file, admin.token);
-                              handleFieldChange('softplayTypes', 'brochureUrl', res.url);
-                              setStatusMsg('PDF Brochure uploaded successfully!');
-                            } catch (err) {
-                              setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                            }
-                          }}
+                          onChange={(e) => handleBrochureUpload(e, 'softplayTypes', 'brochureUrl', { typesList })}
                           style={{ display: 'none' }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                      <span style={{ fontSize: '11px', color: '#64748b' }}>
+                        💡 Cloudinary Free plan limit: <strong>10 MB</strong> (Allows larger files automatically with a Cloudinary Pro plan). Compress via <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#0284c7', textDecoration: 'underline', fontWeight: '700' }}>iLovePDF</a> if needed.
+                      </span>
+                      {(() => {
+                        const activePdf = (currentSec.brochureUrl && String(currentSec.brochureUrl).trim() !== '') ? currentSec.brochureUrl : '/pdf/Winera Softplay.pdf';
+                        return activePdf && activePdf !== '#' ? (
+                          <a
+                            href={activePdf}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ fontSize: '11.5px', color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}
+                          >
+                            📄 Test & Preview Softplay Brochure
+                          </a>
+                        ) : null;
+                      })()}
                     </div>
                   </div>
                 </div>
@@ -8542,12 +9514,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             onChange={(e) => handleTypeChange(tIdx, 'title', e.target.value)}
                             style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                           />
-                          <textarea
-                            rows={2}
+                          <RichTextareaWithEditor
+                            label="Zone Description"
+                            rows={3}
                             placeholder="Zone Description"
                             value={tItem.desc}
-                            onChange={(e) => handleTypeChange(tIdx, 'desc', e.target.value)}
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
+                            onChange={(val) => handleTypeChange(tIdx, 'desc', val)}
                           />
 
                           {/* Integrated Zone Card Image Upload */}
@@ -8588,6 +9560,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               📐 600 × 400 px
                             </span>
                           </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
+                              🏷️ Card Image Alt Text (SEO Keyword)
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="e.g. Themed Soft Play Zones - Custom Indoor Play Area Setup Winera"
+                              value={tItem.imgAlt || ''}
+                              onChange={(e) => handleTypeChange(tIdx, 'imgAlt', e.target.value)}
+                              style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                            />
+                          </div>
                         </div>
                       );
                     })}
@@ -8622,30 +9606,30 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
-                <textarea
-                  rows={2}
+                <RichTextareaWithEditor
+                  label="Paragraph 1 Description"
+                  rows={3}
                   value={formData.softplayRoi?.p1 !== undefined && formData.softplayRoi.p1 !== '' ? formData.softplayRoi.p1 : "Most soft play suppliers will quote you a price and ask you to decide. Winera International works differently."}
-                  onChange={(e) => handleFieldChange('softplayRoi', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('softplayRoi', 'p1', val)}
+                  placeholder="Enter Paragraph 1 description..."
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2 Description"
                   rows={4}
                   value={formData.softplayRoi?.p2 !== undefined && formData.softplayRoi.p2 !== '' ? formData.softplayRoi.p2 : "Before any equipment is selected, our team prepares a complete ROI report for your specific venue covering your exact soft play area cost, projected monthly footfall, estimated revenue, maintenance costs, and break-even timeline. Every number is calculated around your space, your city, and your business, not an industry average copied from a brochure."}
-                  onChange={(e) => handleFieldChange('softplayRoi', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('softplayRoi', 'p2', val)}
+                  placeholder="Enter Paragraph 2 description..."
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 3 Description</label>
-                <textarea
-                  rows={2}
+                <RichTextareaWithEditor
+                  label="Paragraph 3 Description"
+                  rows={3}
                   value={formData.softplayRoi?.p3 !== undefined && formData.softplayRoi.p3 !== '' ? formData.softplayRoi.p3 : "No other soft play manufacturer or supplier in India currently offers this as a standard part of their process. For Winera, it is not an add-on, it is how every project starts."}
-                  onChange={(e) => handleFieldChange('softplayRoi', 'p3', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('softplayRoi', 'p3', val)}
+                  placeholder="Enter Paragraph 3 description..."
                 />
               </div>
 
@@ -8663,7 +9647,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link URL</label>
                   <input
                     type="text"
-                    value={(formData.softplayRoi?.buttonLink && formData.softplayRoi.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.softplayRoi?.buttonLink && formData.softplayRoi.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.softplayRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Soft Play setup & commercial ROI calculation. Please share details. [Ref: Soft Play Page]";
@@ -8693,7 +9677,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.softplayRoi?.buttonLink && formData.softplayRoi.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.softplayRoi?.buttonLink && formData.softplayRoi.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     const updated = {
                       ...(formData.softplayRoi || {}),
@@ -8740,6 +9724,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ ROI Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.softplayRoi?.mainImgAlt || formData.softplayRoi?.imgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const updated = { ...(formData.softplayRoi || {}), mainImgAlt: val, imgAlt: val };
+                      setFormData(prev => ({ ...prev, softplayRoi: updated }));
+                    }}
+                    placeholder="e.g. Know Your Returns ROI Report - Winera Soft Play Setup"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
                 </div>
               </div>
 
@@ -8834,12 +9834,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                         />
 
-                        <textarea
+                        <RichTextareaWithEditor
+                          label="Card Description"
                           rows={2}
                           placeholder="Card Description"
                           value={wCard.desc}
-                          onChange={(e) => handleCardChange(wIdx, 'desc', e.target.value)}
-                          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
+                          onChange={(val) => handleCardChange(wIdx, 'desc', val)}
                         />
 
                         {/* Custom Icon Image Upload */}
@@ -9019,19 +10019,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Description Paragraph"
                   rows={2}
                   value={
                     formData.softplayCta?.description !== undefined
                       ? String(formData.softplayCta.description).replace(/<br\s*\/?>/gi, ' ')
                       : (formData.softplayCta?.subtitle !== undefined ? String(formData.softplayCta.subtitle).replace(/<br\s*\/?>/gi, ' ') : "Talk to India's trusted soft play manufacturer and get a setup made for your space and budget.")
                   }
-                  onChange={(e) => {
-                    handleFieldChange('softplayCta', 'description', e.target.value);
-                    handleFieldChange('softplayCta', 'subtitle', e.target.value);
+                  onChange={(val) => {
+                    handleFieldChange('softplayCta', 'description', val);
+                    handleFieldChange('softplayCta', 'subtitle', val);
                   }}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  placeholder="Enter description paragraph..."
                 />
               </div>
 
@@ -9049,7 +10049,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.softplayCta?.buttonLink !== undefined ? formData.softplayCta.buttonLink : "https://wa.me/919428989488"}
+                    value={formData.softplayCta?.buttonLink !== undefined ? formData.softplayCta.buttonLink : "https://wa.me/919157873576"}
                     onChange={(e) => handleFieldChange('softplayCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -9109,6 +10109,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Banner Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.softplayCta?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('softplayCta', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Ready to Build Your Soft Play Zone - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -9151,6 +10163,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     src={getAdminValidImageUrl(formData.amusementHero?.bgUrl, amusementHeroBg)}
                     alt="Hero Background Preview"
                     style={{ width: '80px', height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.amusementHero?.bgUrl || ''}
+                    onChange={(e) => handleFieldChange('amusementHero', 'bgUrl', e.target.value)}
+                    placeholder="Image URL or Asset Path"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                   />
                   <label style={{
                     background: '#38bdf8',
@@ -9197,6 +10216,84 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Background Image Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.amusementHero?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('amusementHero', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Amusement Rides & Equipment Setup - Winera"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              {/* Mobile Screen Hero Banner Upload & Preview */}
+              <div>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.amusementHero?.mobileBgUrl, amusementMobileHeroBg)}
+                    alt="Mobile Hero Bg Preview"
+                    style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.amusementHero?.mobileBgUrl || ''}
+                    onChange={(e) => handleFieldChange('amusementHero', 'mobileBgUrl', e.target.value)}
+                    placeholder="Mobile Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Mobile Banner
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          setStatusMsg('Uploading mobile hero banner image...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.amusementHero || {}), mobileBgUrl: res.url };
+                            setFormData(prev => ({ ...prev, amusementHero: updated }));
+                            await persistSectionToDatabase('amusementHero', updated);
+                            setStatusMsg('Mobile banner uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.amusementHero?.mobileBgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('amusementHero', 'mobileBgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.amusementHero?.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('amusementHero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. Turnkey Amusement Park Setup Mobile Banner - Winera International"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
+              </div>
+
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('amusementHero', formData.amusementHero || {})}
@@ -9224,12 +10321,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Description Paragraph</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Description Paragraph"
                   rows={3}
-                  value={formData.amusementIntro?.desc || "India's ROI-first amusement park partner rides and attractions sourced, installed, and serviced by our own team across 50+ cities."}
-                  onChange={(e) => handleFieldChange('amusementIntro', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                  value={formData.amusementIntro?.desc !== undefined ? formData.amusementIntro.desc : "India's ROI-first amusement park partner rides and attractions sourced, installed, and serviced by our own team across 50+ cities."}
+                  onChange={(val) => handleFieldChange('amusementIntro', 'desc', val)}
+                  placeholder="Enter description paragraph..."
                 />
               </div>
 
@@ -9247,7 +10344,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={(formData.amusementIntro?.buttonLink && formData.amusementIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.amusementIntro?.buttonLink && formData.amusementIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.amusementIntro?.waMessage || "Hello Winera International! I want to get a quote and details for Amusement Park Rides. Please share details. [Ref: Amusement Park Page]";
@@ -9277,7 +10374,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.amusementIntro?.buttonLink && formData.amusementIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.amusementIntro?.buttonLink && formData.amusementIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -9348,6 +10445,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Left Collage Graphic Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.amusementIntro?.mainImgAlt || formData.amusementIntro?.imgAlt || ''}
+                  onChange={(e) => {
+                    handleFieldChange('amusementIntro', 'mainImgAlt', e.target.value);
+                    handleFieldChange('amusementIntro', 'imgAlt', e.target.value);
+                  }}
+                  placeholder="e.g. Amusement Park Ride Manufacturer in India - Winera"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('amusementIntro', formData.amusementIntro || {})}
@@ -9375,22 +10488,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Paragraph 1</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1"
                   rows={4}
                   value={formData.amusementBanner?.paragraph1 !== undefined && formData.amusementBanner.paragraph1 !== '' ? formData.amusementBanner.paragraph1 : "Winera International has been supplying and installing amusement park rides and attractions across India since 2014 — for theme parks, malls, resorts, and family entertainment centres in over 50 cities. We source every ride from established manufacturers, install it with our own team, and stay on for servicing after handover."}
-                  onChange={(e) => handleFieldChange('amusementBanner', 'paragraph1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('amusementBanner', 'paragraph1', val)}
+                  placeholder="Enter Paragraph 1..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Paragraph 2</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2"
                   rows={4}
                   value={formData.amusementBanner?.paragraph2 !== undefined && formData.amusementBanner.paragraph2 !== '' ? formData.amusementBanner.paragraph2 : "From a few signature rides to a full park layout, we handle the whole project space planning, ride selection, installation, and after-sales support so you deal with one team from start to finish, not a chain of separate vendors."}
-                  onChange={(e) => handleFieldChange('amusementBanner', 'paragraph2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('amusementBanner', 'paragraph2', val)}
+                  placeholder="Enter Paragraph 2..."
                 />
               </div>
 
@@ -9449,6 +10562,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Right Graphic Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.amusementBanner?.imgAlt || ''}
+                  onChange={(e) => handleFieldChange('amusementBanner', 'imgAlt', e.target.value)}
+                  placeholder="e.g. Complete Amusement Park Setups Built for Indian Venues - Winera"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('amusementBanner', formData.amusementBanner || {})}
@@ -9476,12 +10602,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Subtitle</label>
-                <input
-                  type="text"
-                  value={formData.amusementOptions?.subtitle || 'We Supply Many Types Of Rides So You Can Build The Right Experience For Your Space And Visitors.'}
-                  onChange={(e) => handleFieldChange('amusementOptions', 'subtitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
+                <RichTextareaWithEditor
+                  label="Subtitle"
+                  rows={2}
+                  value={formData.amusementOptions?.subtitle !== undefined ? formData.amusementOptions.subtitle : 'We Supply Many Types Of Rides So You Can Build The Right Experience For Your Space And Visitors.'}
+                  onChange={(val) => handleFieldChange('amusementOptions', 'subtitle', val)}
+                  placeholder="Enter subtitle..."
                 />
               </div>
 
@@ -9533,7 +10659,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               Delete Item
                             </button>
                           </div>
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '10px' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             <input
                               type="text"
                               value={item.boldText || item.title || ''}
@@ -9544,19 +10670,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 setFormData(prev => ({ ...prev, amusementOptions: updatedSec }));
                               }}
                               placeholder="Category Name (e.g. Thrill Rides)"
-                              style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                              style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                             />
-                            <input
-                              type="text"
+                            <RichTextareaWithEditor
+                              label="Item Description"
+                              rows={2}
                               value={item.desc || item.description || ''}
-                              onChange={(e) => {
+                              onChange={(val) => {
                                 const updated = [...rideItemsList];
-                                updated[idx] = { ...updated[idx], desc: e.target.value, description: e.target.value };
+                                updated[idx] = { ...updated[idx], desc: val, description: val };
                                 const updatedSec = { ...currentSec, items: updated };
                                 setFormData(prev => ({ ...prev, amusementOptions: updatedSec }));
                               }}
                               placeholder="Description (e.g. For Teens And Adults...)"
-                              style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                             />
                           </div>
                         </div>
@@ -9567,12 +10693,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               })()}
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Footer Safety Note</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Footer Safety Note"
                   rows={3}
                   value={formData.amusementOptions?.footerText !== undefined && formData.amusementOptions.footerText !== '' ? formData.amusementOptions.footerText : "Every Ride Comes With Strong Safety Belts, Automatic Sensors That Stop The Ride If Something Goes Wrong, And A Tough, Durable Build. We Test Each Ride On-Site Before Handing It Over To You."}
-                  onChange={(e) => handleFieldChange('amusementOptions', 'footerText', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('amusementOptions', 'footerText', val)}
+                  placeholder="Enter footer safety note..."
                 />
               </div>
 
@@ -9631,6 +10757,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Top Collage Graphic Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.amusementOptions?.topImgAlt || formData.amusementOptions?.imgAlt || ''}
+                  onChange={(e) => {
+                    handleFieldChange('amusementOptions', 'topImgAlt', e.target.value);
+                    handleFieldChange('amusementOptions', 'imgAlt', e.target.value);
+                  }}
+                  placeholder="e.g. Rides & Attractions We Supply - Winera Commercial Amusement Parks"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('amusementOptions', formData.amusementOptions || {})}
@@ -9658,22 +10800,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Paragraph 1</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1"
                   rows={3}
                   value={formData.amusementRoi?.paragraph1 !== undefined && formData.amusementRoi.paragraph1 !== '' ? formData.amusementRoi.paragraph1 : "Most Amusement Park Equipment Suppliers In India Hand You A Catalogue And A Price List, Leaving The Financial Planning Entirely To You. As India's ROI-First Game Zone Developer, Winera International Works Differently. Before Recommending, Our Team Prepares A Complete ROI Report For Your Specific Venue Covering Equipment Cost, Projected Daily Visitor Capacity, Estimated Revenue, Maintenance Costs, And Break-Even Timeline."}
-                  onChange={(e) => handleFieldChange('amusementRoi', 'paragraph1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('amusementRoi', 'paragraph1', val)}
+                  placeholder="Enter Paragraph 1..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>Paragraph 2</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2"
                   rows={3}
                   value={formData.amusementRoi?.paragraph2 !== undefined && formData.amusementRoi.paragraph2 !== '' ? formData.amusementRoi.paragraph2 : "Every Figure Is Calculated Around Your Land Size, Footfall Projection, And Target Visitor Demographic Not An Industry Average. Very Few Amusement Park Manufacturers In India Include This As A Standard Part Of Their Process. For Winera, It Is Where Every Project Begins."}
-                  onChange={(e) => handleFieldChange('amusementRoi', 'paragraph2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('amusementRoi', 'paragraph2', val)}
+                  placeholder="Enter Paragraph 2..."
                 />
               </div>
 
@@ -9691,7 +10833,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={(formData.amusementRoi?.buttonLink && formData.amusementRoi.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.amusementRoi?.buttonLink && formData.amusementRoi.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.amusementRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Amusement Park setup & commercial ROI calculation. Please share details. [Ref: Amusement Park Page]";
@@ -9721,7 +10863,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.amusementRoi?.buttonLink && formData.amusementRoi.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.amusementRoi?.buttonLink && formData.amusementRoi.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -9790,6 +10932,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Bottom Inflatable Graphic Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.amusementRoi?.bottomImgAlt || formData.amusementRoi?.imgAlt || ''}
+                  onChange={(e) => {
+                    handleFieldChange('amusementRoi', 'bottomImgAlt', e.target.value);
+                    handleFieldChange('amusementRoi', 'imgAlt', e.target.value);
+                  }}
+                  placeholder="e.g. Before You Build Know What It Will Earn - Amusement Park ROI Setup Winera"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -9946,16 +11104,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                     />
 
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Answer"
                       rows={3}
-                      placeholder="Answer"
                       value={faq.answer || faq.a || ''}
-                      onChange={(e) => {
+                      onChange={(val) => {
                         const currentList = [...(formData.amusementFaqs || [])];
-                        currentList[idx] = { ...(currentList[idx] || {}), answer: e.target.value, a: e.target.value };
+                        currentList[idx] = { ...(currentList[idx] || {}), answer: val, a: val };
                         setFormData((prev) => ({ ...prev, amusementFaqs: currentList }));
                       }}
-                      style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                      placeholder="Answer"
                     />
                   </div>
                 ))}
@@ -10026,6 +11184,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Banner Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.amusementCta?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('amusementCta', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Need Any Consultations - Amusement Park Solutions by Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
 
@@ -10052,12 +11222,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Text (White Subtitle Text)</label>
-                <input
-                  type="text"
-                  value={formData.amusementCta?.subtitle || "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
-                  onChange={(e) => handleFieldChange('amusementCta', 'subtitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                <RichTextareaWithEditor
+                  label="Subtitle Text (White Subtitle Text)"
+                  rows={2}
+                  value={formData.amusementCta?.subtitle !== undefined ? formData.amusementCta.subtitle : "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."}
+                  onChange={(val) => handleFieldChange('amusementCta', 'subtitle', val)}
+                  placeholder="Enter subtitle text..."
                 />
               </div>
 
@@ -10075,7 +11245,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link</label>
                   <input
                     type="text"
-                    value={formData.amusementCta?.buttonLink || 'https://wa.me/919428989488'}
+                    value={formData.amusementCta?.buttonLink || 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('amusementCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -10131,6 +11301,84 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                      {currentSec.bgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), bgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Hero Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Active Grid Interactive LED Gaming Floor - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Mobile Screen Hero Banner Upload & Preview */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.mobileBgUrl, hypergridMobileHeroBg)}
+                        alt="Mobile Hero Preview"
+                        style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                      />
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), mobileBgUrl: e.target.value } }))}
+                        placeholder="Mobile Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), mobileBgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                      {currentSec.mobileBgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), mobileBgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Mobile Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), mobileBgAlt: e.target.value } }))}
+                        placeholder="e.g. Active Grid Interactive LED Gaming Floor Mobile Banner - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
                   <div>
@@ -10173,12 +11421,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Description Paragraph"
                       rows={3}
                       value={currentSec.desc !== undefined ? currentSec.desc : defaultHypergridIntro.desc}
-                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), desc: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), desc: val } }))}
+                      placeholder="Enter description paragraph..."
                     />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -10269,6 +11517,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Left Graphic Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mainImgAlt || currentSec.imgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), mainImgAlt: e.target.value } }))}
+                        placeholder="e.g. Hypergrid Game Supplier in India - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -10301,21 +11561,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                    <textarea
-                      rows={3}
+                    <RichTextareaWithEditor
+                      label="Paragraph 1"
+                      rows={4}
                       value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultHypergridBanner.paragraph1}
-                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), paragraph1: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), paragraph1: val } }))}
+                      placeholder="Enter Paragraph 1..."
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                    <textarea
-                      rows={3}
+                    <RichTextareaWithEditor
+                      label="Paragraph 2"
+                      rows={4}
                       value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultHypergridBanner.paragraph2}
-                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), paragraph2: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), paragraph2: val } }))}
+                      placeholder="Enter Paragraph 2..."
                     />
                   </div>
                   <div>
@@ -10347,6 +11607,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Right Graphic Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), imgAlt: e.target.value } }))}
+                        placeholder="e.g. Interactive LED Floor Games for High-Footfall Venues - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -10375,10 +11647,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1200 × 600 px (2:1)</span>
                     </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <img src={bgImg} alt="BG Preview" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <img src={bgImg} onError={(e) => { e.target.src = hypergridSpecsBg; }} alt="BG Preview" style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
                         type="text"
-                        value={currentSec.bgUrl || ''}
+                        value={currentSec.bgUrl ? (currentSec.bgUrl.includes('/src/assets/') ? hypergridSpecsBg : currentSec.bgUrl) : ''}
                         onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), bgUrl: e.target.value } }))}
                         placeholder="Image URL or Asset Path"
                         style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
@@ -10398,6 +11670,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Technical Specifications - Hypergrid Interactive LED Gaming Floor"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
 
@@ -10478,35 +11762,44 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File / Link URL</label>
-                      <div style={{ display: 'flex', gap: '8px' }}>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Brochure PDF File / Link URL <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📄 PDF Document</span>
+                      </label>
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                         <input
                           type="text"
-                          value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultHypergridSpecs.buttonLink}
+                          value={(currentSec.buttonLink && !currentSec.buttonLink.includes('wa.me')) ? currentSec.buttonLink : defaultHypergridSpecs.buttonLink}
                           onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), buttonLink: e.target.value } }))}
-                          placeholder="e.g. /uploads/hypergrid_brochure.pdf"
+                          placeholder="e.g. /pdf/Hyper Grid.pdf or Cloudinary PDF URL"
                           style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                         />
-                        <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                        <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 18px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', flexShrink: 0 }}>
                           <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
                           <input
                             type="file"
                             accept="application/pdf,.pdf"
-                            onChange={async (e) => {
-                              const file = e.target.files[0];
-                              if (!file) return;
-                              setStatusMsg('Uploading PDF brochure...');
-                              try {
-                                const res = await uploadImageFile(file, admin.token);
-                                setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), buttonLink: res.url } }));
-                                setStatusMsg('PDF Brochure uploaded successfully!');
-                              } catch (err) {
-                                setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                              }
-                            }}
+                            onChange={(e) => handleBrochureUpload(e, 'hypergridSpecs', 'buttonLink', {}, defaultHypergridSpecs)}
                             style={{ display: 'none' }}
                           />
                         </label>
+                      </div>
+                      <div style={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                        <span style={{ fontSize: '11px', color: '#64748b' }}>
+                          💡 Cloudinary Free plan limit: <strong>10 MB</strong> (Allows larger files automatically with a Cloudinary Pro plan). Compress via <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#0284c7', textDecoration: 'underline', fontWeight: '700' }}>iLovePDF</a> if needed.
+                        </span>
+                        {(() => {
+                          const activePdf = (currentSec.buttonLink && !currentSec.buttonLink.includes('wa.me')) ? currentSec.buttonLink : defaultHypergridSpecs.buttonLink;
+                          return activePdf && activePdf !== '#' ? (
+                            <a
+                              href={activePdf}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ fontSize: '11.5px', color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}
+                            >
+                              📄 Test & Preview PDF Brochure
+                            </a>
+                          ) : null;
+                        })()}
                       </div>
                     </div>
                   </div>
@@ -10539,13 +11832,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Left Column Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
                     </label>
                     <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                      <img src={leftImg} alt="Left Preview" style={{ width: '60px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
+                      <img src={leftImg} onError={(e) => { e.target.src = arImage; }} alt="Left Preview" style={{ width: '60px', height: '50px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
                       <input
                         type="text"
-                        value={currentSec.leftImgUrl || ''}
+                        value={currentSec.leftImgUrl ? (currentSec.leftImgUrl.includes('/src/assets/') ? arImage : currentSec.leftImgUrl) : ''}
                         onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), leftImgUrl: e.target.value } }))}
                         placeholder="Left Image URL"
                         style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                      />
+                      <label style={{ padding: '10px 18px', background: '#38bdf8', color: '#ffffff', borderRadius: '10px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', whiteSpace: 'nowrap' }}>
+                        <Upload style={{ width: '15px', height: '15px' }} /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), leftImgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Left Column Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.leftImgAlt || currentSec.imgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), leftImgAlt: e.target.value, imgAlt: e.target.value } }))}
+                        placeholder="e.g. What Makes Hypergrid the Right Choice for Your Venue - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
                     </div>
                   </div>
@@ -10560,12 +11880,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Subtitle"
                       rows={2}
                       value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultHypergridWhyUs.subtitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), subtitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), subtitle: val } }))}
+                      placeholder="Enter subtitle..."
                     />
                   </div>
 
@@ -10612,16 +11932,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             }}
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                           />
-                          <textarea
+                          <RichTextareaWithEditor
+                            label="Feature Description"
                             rows={2}
                             value={card.desc || ''}
                             placeholder="Feature Description"
-                            onChange={(e) => {
+                            onChange={(val) => {
                               const newCards = [...cardsList];
-                              newCards[cIdx] = { ...(newCards[cIdx] || card), desc: e.target.value };
+                              newCards[cIdx] = { ...(newCards[cIdx] || card), desc: val };
                               setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), cards: newCards } }));
                             }}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', lineHeight: 1.5 }}
                           />
                         </div>
                       ))}
@@ -10659,21 +11979,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Paragraph 1"
                       rows={3}
                       value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultHypergridRoi.paragraph1}
-                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), paragraph1: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), paragraph1: val } }))}
+                      placeholder="Enter Paragraph 1..."
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Paragraph 2"
                       rows={3}
                       value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultHypergridRoi.paragraph2}
-                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), paragraph2: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), paragraph2: val } }))}
+                      placeholder="Enter Paragraph 2..."
                     />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -10740,10 +12060,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Right Graphic Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 400 px</span>
                     </label>
                     <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                      <img src={roiImg} alt="Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <img src={roiImg} onError={(e) => { e.target.src = hypergridImage; }} alt="Preview" style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
                       <input
                         type="text"
-                        value={currentSec.imgUrl || ''}
+                        value={currentSec.imgUrl ? (currentSec.imgUrl.includes('/src/assets/') ? hypergridImage : currentSec.imgUrl) : ''}
                         onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), imgUrl: e.target.value } }))}
                         placeholder="Image URL or Asset Path"
                         style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
@@ -10763,6 +12083,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Right Graphic Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), imgAlt: e.target.value } }))}
+                        placeholder="e.g. Is Hypergrid a Smart Investment for Your Venue - Winera Commercial Setup"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -10861,16 +12193,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                           />
 
-                          <textarea
+                          <RichTextareaWithEditor
+                            label="Card Description"
                             rows={2}
                             value={item.desc || ''}
                             placeholder="Card Description"
-                            onChange={(e) => {
+                            onChange={(val) => {
                               const newItems = [...itemsList];
-                              newItems[iIdx] = { ...(newItems[iIdx] || item), desc: e.target.value };
+                              newItems[iIdx] = { ...(newItems[iIdx] || item), desc: val };
                               setFormData(prev => ({ ...prev, hypergridWhyWinera: { ...(prev.hypergridWhyWinera || defaultHypergridWhyWinera), items: newItems } }));
                             }}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', lineHeight: 1.5 }}
                           />
                         </div>
                       ))}
@@ -10944,16 +12276,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                     />
 
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Answer"
                       rows={3}
                       placeholder="Answer"
                       value={faq.answer || faq.a || ''}
-                      onChange={(e) => {
+                      onChange={(val) => {
                         const currentList = [...(formData.hypergridFaqs || [])];
-                        currentList[idx] = { ...(currentList[idx] || {}), answer: e.target.value, a: e.target.value };
+                        currentList[idx] = { ...(currentList[idx] || {}), answer: val, a: val };
                         setFormData((prev) => ({ ...prev, hypergridFaqs: currentList }));
                       }}
-                      style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                     />
                   </div>
                 ))}
@@ -11033,6 +12365,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Banner Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.hypergridCta?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('hypergridCta', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Ready to Add Hypergrid to Your Venue - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
 
@@ -11048,12 +12392,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Text</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Subtitle Text"
                   rows={2}
                   value={formData.hypergridCta?.subtitle !== undefined && formData.hypergridCta.subtitle !== '' ? formData.hypergridCta.subtitle : "Get In Touch With India's Trusted Hypergrid Game Supplier For A Free ROI Report, Space Assessment, And Project Quote."}
-                  onChange={(e) => handleFieldChange('hypergridCta', 'subtitle', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontWeight: '500' }}
+                  onChange={(val) => handleFieldChange('hypergridCta', 'subtitle', val)}
+                  placeholder="Enter Subtitle Text..."
                 />
               </div>
 
@@ -11071,7 +12415,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link</label>
                   <input
                     type="text"
-                    value={formData.hypergridCta?.buttonLink || 'https://wa.me/919428989488'}
+                    value={formData.hypergridCta?.buttonLink || 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('hypergridCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -11121,6 +12465,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.bumpercarHero?.bgUrl, bumpercarHeroBg)}
+                    alt="Hero Background Preview"
+                    style={{ width: '120px', height: '60px', borderRadius: '10px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.bumpercarHero?.bgUrl || ''}
+                    onChange={(e) => handleFieldChange('bumpercarHero', 'bgUrl', e.target.value)}
+                    placeholder="Image URL or Asset Path"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -11154,10 +12510,92 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
+                  {formData.bumpercarHero?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('bumpercarHero', 'bgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Background Image Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.bumpercarHero?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('bumpercarHero', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Commercial Bumper Cars Arena Setup - Winera"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              {/* Mobile Screen Hero Banner Upload & Preview */}
+              <div>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
-                    src={getAdminValidImageUrl(formData.bumpercarHero?.bgUrl, bumpercarHeroBg)}
-                    alt="Hero Background Preview"
-                    style={{ height: '50px', borderRadius: '8px', border: '1.5px solid #38bdf8', objectFit: 'cover' }}
+                    src={getAdminValidImageUrl(formData.bumpercarHero?.mobileBgUrl, bumpercarMobileHeroBg)}
+                    alt="Mobile Hero Bg Preview"
+                    style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.bumpercarHero?.mobileBgUrl || ''}
+                    onChange={(e) => handleFieldChange('bumpercarHero', 'mobileBgUrl', e.target.value)}
+                    placeholder="Mobile Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Mobile Banner
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          setStatusMsg('Uploading mobile hero banner image...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.bumpercarHero || {}), mobileBgUrl: res.url };
+                            setFormData(prev => ({ ...prev, bumpercarHero: updated }));
+                            await persistSectionToDatabase('bumpercarHero', updated);
+                            setStatusMsg('Mobile banner uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.bumpercarHero?.mobileBgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('bumpercarHero', 'mobileBgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bumpercarHero?.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('bumpercarHero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. Commercial Bumper Cars Arena Setup Mobile Banner - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
                 </div>
               </div>
@@ -11189,12 +12627,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Description Paragraph</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Subtitle Description Paragraph"
                   rows={3}
-                  value={formData.bumpercarIntro?.desc || "India's ROI-first bumper car manufacturer — electric floor and battery-operated cars, installed by our own team across 50+ cities, with a free ROI report before you invest."}
-                  onChange={(e) => handleFieldChange('bumpercarIntro', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  value={formData.bumpercarIntro?.desc !== undefined ? formData.bumpercarIntro.desc : "India's ROI-first bumper car manufacturer — electric floor and battery-operated cars, installed by our own team across 50+ cities, with a free ROI report before you invest."}
+                  onChange={(val) => handleFieldChange('bumpercarIntro', 'desc', val)}
+                  placeholder="Enter subtitle description..."
                 />
               </div>
 
@@ -11212,7 +12650,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={(formData.bumpercarIntro?.buttonLink && formData.bumpercarIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.bumpercarIntro?.buttonLink && formData.bumpercarIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.bumpercarIntro?.waMessage || "Hello Winera International! I want to get a quote and details for Bumper Car setup. Please share details. [Ref: Bumper Car Page]";
@@ -11242,7 +12680,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.bumpercarIntro?.buttonLink && formData.bumpercarIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.bumpercarIntro?.buttonLink && formData.bumpercarIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -11285,6 +12723,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <img src={getAdminValidImageUrl(formData.bumpercarIntro?.mainImgUrl, bumpercarCollageFrame)} alt="Intro Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Section Right Collage Graphic Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bumpercarIntro?.mainImgAlt || formData.bumpercarIntro?.imgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      handleFieldChange('bumpercarIntro', 'mainImgAlt', val);
+                      handleFieldChange('bumpercarIntro', 'imgAlt', val);
+                    }}
+                    placeholder="e.g. Bumper Car Manufacturer in India - Winera Commercial Turnkey Setup"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -11314,12 +12768,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Description Paragraph"
                   rows={4}
-                  value={formData.bumpercarBanner?.desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading Bumper Car manufacturer in India and trusted Bumper Car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
-                  onChange={(e) => handleFieldChange('bumpercarBanner', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  value={formData.bumpercarBanner?.desc !== undefined ? formData.bumpercarBanner.desc : "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading Bumper Car manufacturer in India and trusted Bumper Car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
+                  onChange={(val) => handleFieldChange('bumpercarBanner', 'desc', val)}
+                  placeholder="Enter description..."
                 />
               </div>
 
@@ -11349,6 +12803,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   <img src={getAdminValidImageUrl(formData.bumpercarBanner?.imgUrl, bumpercar3dNeon)} alt="3D Neon Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Right 3D Neon Bumper Car Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bumpercarBanner?.imgAlt || ''}
+                    onChange={(e) => handleFieldChange('bumpercarBanner', 'imgAlt', e.target.value)}
+                    placeholder="e.g. 3D Neon Bumper Car Commercial Ride - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
                 </div>
               </div>
 
@@ -11420,17 +12886,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           />
                         </div>
                         <div>
-                          <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#475569', marginBottom: '4px' }}>Card Description</label>
-                          <textarea
+                          <RichTextareaWithEditor
+                            label="Card Description"
                             rows={3}
                             value={card.desc || ''}
-                            onChange={(e) => {
+                            onChange={(val) => {
                               const updated = [...currentCards];
-                              updated[idx] = { ...updated[idx], desc: e.target.value };
+                              updated[idx] = { ...updated[idx], desc: val };
                               const updatedSec = { ...currentSec, cards: updated };
                               setFormData(prev => ({ ...prev, bumpercarThrill: updatedSec }));
                             }}
-                            style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', fontFamily: 'inherit' }}
+                            placeholder="Card Description"
                           />
                         </div>
                       </div>
@@ -11523,38 +12989,74 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </label>
                     <img src={getAdminValidImageUrl(currentSec.bgUrl, bumpercarSpecsBg)} alt="Specs Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                   </div>
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF Document / Link URL</label>
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Background Image Alt Text (SEO Keyword)
+                    </label>
                     <input
                       type="text"
-                      value={currentSec.brochureUrl !== undefined ? currentSec.brochureUrl : '#'}
-                      onChange={(e) => handleFieldChange('bumpercarSpecs', 'brochureUrl', e.target.value)}
-                      placeholder="e.g. /uploads/bumpercar_brochure.pdf"
-                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => handleFieldChange('bumpercarSpecs', 'bgAlt', e.target.value)}
+                      placeholder="e.g. Technical Specifications - Commercial Bumper Car System Winera"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                     />
-                    <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
-                      <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
-                      <input
-                        type="file"
-                        accept="application/pdf,.pdf"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          setStatusMsg('Uploading brochure PDF...');
-                          try {
-                            const res = await uploadImageFile(file, admin.token);
-                            handleFieldChange('bumpercarSpecs', 'brochureUrl', res.url);
-                            setStatusMsg('Brochure PDF uploaded successfully!');
-                          } catch (err) {
-                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                          }
-                        }}
-                        style={{ display: 'none' }}
-                      />
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure Button Label</label>
+                    <input
+                      type="text"
+                      value={currentSec.btnText || currentSec.buttonText || 'Download Our Brochure'}
+                      onChange={(e) => {
+                        handleFieldChange('bumpercarSpecs', 'btnText', e.target.value);
+                        handleFieldChange('bumpercarSpecs', 'buttonText', e.target.value);
+                      }}
+                      placeholder="Download Our Brochure"
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      Brochure PDF Document / Link URL <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📄 PDF Document</span>
                     </label>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <input
+                        type="text"
+                        value={(currentSec.brochureUrl && currentSec.brochureUrl !== '#') ? currentSec.brochureUrl : ''}
+                        onChange={(e) => handleFieldChange('bumpercarSpecs', 'brochureUrl', e.target.value)}
+                        placeholder="e.g. /uploads/bumpercar_brochure.pdf or Cloudinary URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                      />
+                      <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                        <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                        <input
+                          type="file"
+                          accept="application/pdf,.pdf"
+                          onChange={(e) => handleBrochureUpload(e, 'bumpercarSpecs', 'brochureUrl', { specsList })}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                    </div>
+                    <div style={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                      <span style={{ fontSize: '11px', color: '#64748b' }}>
+                        💡 Cloudinary Free plan limit: <strong>10 MB</strong> (Allows larger files automatically with a Cloudinary Pro plan). Compress via <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#0284c7', textDecoration: 'underline', fontWeight: '700' }}>iLovePDF</a> if needed.
+                      </span>
+                      {(() => {
+                        const activePdf = (currentSec.brochureUrl && currentSec.brochureUrl !== '#') ? currentSec.brochureUrl : '';
+                        return activePdf ? (
+                          <a
+                            href={activePdf}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ fontSize: '11.5px', color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}
+                          >
+                            📄 Test & Preview Bumper Car Brochure
+                          </a>
+                        ) : null;
+                      })()}
+                    </div>
                   </div>
                 </div>
 
@@ -11627,12 +13129,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Intro Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Intro Description"
                   rows={2}
-                  value={formData.bumpercarOptions?.desc || "We supply two drive types for indoor bumper car attractions. The right choice depends on your floor infrastructure, venue flexibility, and operational model."}
-                  onChange={(e) => handleFieldChange('bumpercarOptions', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  value={formData.bumpercarOptions?.desc !== undefined ? formData.bumpercarOptions.desc : "We supply two drive types for indoor bumper car attractions. The right choice depends on your floor infrastructure, venue flexibility, and operational model."}
+                  onChange={(val) => handleFieldChange('bumpercarOptions', 'desc', val)}
+                  placeholder="Intro Description"
                 />
               </div>
 
@@ -11647,12 +13149,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     onChange={(e) => handleFieldChange('bumpercarOptions', 'option1Title', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                   />
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Option 1 Description"
                     rows={3}
                     placeholder="Option 1 Description"
-                    value={formData.bumpercarOptions?.option1Desc || "Powered through a conductive floor grid and ceiling contact system. Delivers consistent, uninterrupted power throughout operating hours with zero battery management. Best suited for permanent, fixed installations in amusement parks, large FECs, and dedicated entertainment venues where the infrastructure investment is justified by high daily footfall."}
-                    onChange={(e) => handleFieldChange('bumpercarOptions', 'option1Desc', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                    value={formData.bumpercarOptions?.option1Desc !== undefined ? formData.bumpercarOptions.option1Desc : "Powered through a conductive floor grid and ceiling contact system. Delivers consistent, uninterrupted power throughout operating hours with zero battery management. Best suited for permanent, fixed installations in amusement parks, large FECs, and dedicated entertainment venues where the infrastructure investment is justified by high daily footfall."}
+                    onChange={(val) => handleFieldChange('bumpercarOptions', 'option1Desc', val)}
                   />
                 </div>
               </div>
@@ -11668,12 +13170,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     onChange={(e) => handleFieldChange('bumpercarOptions', 'option2Title', e.target.value)}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                   />
-                  <textarea
+                  <RichTextareaWithEditor
+                    label="Option 2 Description"
                     rows={3}
                     placeholder="Option 2 Description"
-                    value={formData.bumpercarOptions?.option2Desc || "Self-contained rides running on rechargeable batteries — no floor grid or ceiling mesh required. Ideal for multi-purpose venues, temporary setups, and operators seeking lower initial infrastructure costs with maximum operational flexibility."}
-                    onChange={(e) => handleFieldChange('bumpercarOptions', 'option2Desc', e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                    value={formData.bumpercarOptions?.option2Desc !== undefined ? formData.bumpercarOptions.option2Desc : "Self-contained rides running on rechargeable batteries — no floor grid or ceiling rig required. Ideal for malls, gaming zones, and temporary event setups where floor modification is not possible or where the operator wants the flexibility to relocate the attraction."}
+                    onChange={(val) => handleFieldChange('bumpercarOptions', 'option2Desc', val)}
                   />
                 </div>
               </div>
@@ -11704,6 +13206,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </label>
                   <img src={getAdminValidImageUrl(formData.bumpercarOptions?.imgUrl, bumpercarOptionsCollage)} alt="Collage Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Right Collage Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bumpercarOptions?.imgAlt || formData.bumpercarOptions?.rightImgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      handleFieldChange('bumpercarOptions', 'imgAlt', val);
+                      handleFieldChange('bumpercarOptions', 'rightImgAlt', val);
+                    }}
+                    placeholder="e.g. Indoor Bumper Car Options for Your Venue - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
                 </div>
               </div>
 
@@ -11938,12 +13456,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Intro Paragraph</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Intro Paragraph"
                   rows={3}
-                  value={formData.bumpercarInvestment?.introText || "Most bumper car suppliers in India provide a catalogue price and leave the financial decision to you. As India's ROI-First Game Zone Partner, Winera International works differently."}
-                  onChange={(e) => handleFieldChange('bumpercarInvestment', 'introText', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  value={formData.bumpercarInvestment?.introText !== undefined ? formData.bumpercarInvestment.introText : "Most bumper car suppliers in India provide a catalogue price and leave the financial decision to you. As India's ROI-First Game Zone Developer, Winera International works differently."}
+                  onChange={(val) => handleFieldChange('bumpercarInvestment', 'introText', val)}
+                  placeholder="Intro Paragraph"
                 />
               </div>
 
@@ -12018,12 +13536,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Footnote Paragraph</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Footnote Paragraph"
                   rows={2}
-                  value={formData.bumpercarInvestment?.footerText || "Every figure is calculated around your actual floor size, daily footfall, and local entry pricing — not an industry average. This report is provided free, before you commit to anything."}
-                  onChange={(e) => handleFieldChange('bumpercarInvestment', 'footerText', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  value={formData.bumpercarInvestment?.footerText !== undefined ? formData.bumpercarInvestment.footerText : "Every figure is calculated around your actual floor size, daily footfall, and local entry pricing — not an industry average. This report is provided free, before you commit to anything."}
+                  onChange={(val) => handleFieldChange('bumpercarInvestment', 'footerText', val)}
+                  placeholder="Footnote Paragraph"
                 />
               </div>
 
@@ -12041,7 +13559,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link</label>
                   <input
                     type="text"
-                    value={(formData.bumpercarInvestment?.btnLink && formData.bumpercarInvestment.btnLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.bumpercarInvestment?.btnLink && formData.bumpercarInvestment.btnLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.bumpercarInvestment?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Bumper Car setup & commercial ROI calculation. Please share details. [Ref: Bumper Car Page]";
@@ -12071,7 +13589,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.bumpercarInvestment?.btnLink && formData.bumpercarInvestment.btnLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.bumpercarInvestment?.btnLink && formData.bumpercarInvestment.btnLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -12114,6 +13632,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <img src={getAdminValidImageUrl(formData.bumpercarInvestment?.imgUrl, bumpercarInvestmentCollage)} alt="Collage Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Left Collage Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bumpercarInvestment?.imgAlt || formData.bumpercarInvestment?.leftImgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      handleFieldChange('bumpercarInvestment', 'imgAlt', val);
+                      handleFieldChange('bumpercarInvestment', 'leftImgAlt', val);
+                    }}
+                    placeholder="e.g. Is a Bumper Car Ride a Smart Investment for Your Venue - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -12152,11 +13686,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         Array.isArray(formData.bumpercarWhyChoose?.topCards)
                           ? [...formData.bumpercarWhyChoose.topCards, ...(formData.bumpercarWhyChoose?.bottomCards || [])]
                           : [
-                            { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And Break-Even Before You Commit" },
-                            { title: "Own Installation Team", desc: "Our Own Team Install And Commission Every Project Across 50+ Cities" },
-                            { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With Servicing And Maintenance So Your Setup Keeps Running." },
-                            { title: "Proven Track Record", desc: "Take A Look At What We've Built And Hear From The Venues We've Worked With." },
-                            { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything, No Hidden Costs Added Later." }
+                            { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And<br />Break-Even Before You Commit" },
+                            { title: "Own Installation Team", desc: "Our Own Team Install And Commission<br />Every Project Across 50+ Cities" },
+                            { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With<br />Servicing And Maintenance So Your<br />Setup Keeps Running." },
+                            { title: "Proven Track Record", desc: "Take A Look At What We've Built<br />And Hear From The Venues We've<br />Worked With." },
+                            { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything,<br />No Hidden Costs Added Later." }
                           ]
                       );
                       handleFieldChange('bumpercarWhyChoose', 'cardsList', [...cur, { title: '', desc: '' }]);
@@ -12171,15 +13705,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     Array.isArray(formData.bumpercarWhyChoose?.topCards)
                       ? [...formData.bumpercarWhyChoose.topCards, ...(formData.bumpercarWhyChoose?.bottomCards || [])]
                       : [
-                        { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And Break-Even Before You Commit" },
-                        { title: "Own Installation Team", desc: "Our Own Team Install And Commission Every Project Across 50+ Cities" },
-                        { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With Servicing And Maintenance So Your Setup Keeps Running." },
-                        { title: "Proven Track Record", desc: "Take A Look At What We've Built And Hear From The Venues We've Worked With." },
-                        { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything, No Hidden Costs Added Later." }
+                        { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And<br />Break-Even Before You Commit" },
+                        { title: "Own Installation Team", desc: "Our Own Team Install And Commission<br />Every Project Across 50+ Cities" },
+                        { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With<br />Servicing And Maintenance So Your<br />Setup Keeps Running." },
+                        { title: "Proven Track Record", desc: "Take A Look At What We've Built<br />And Hear From The Venues We've<br />Worked With." },
+                        { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything,<br />No Hidden Costs Added Later." }
                       ]
                   )).map((card, idx) => (
-                    <div key={idx} style={{ background: '#ffffff', padding: '12px 16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', gap: '12px', alignItems: 'center' }}>
-                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <div key={idx} style={{ background: '#ffffff', padding: '12px 16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
                         <input
                           type="text"
                           placeholder="Card Title"
@@ -12191,16 +13725,26 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                           style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                         />
-                        <input
-                          type="text"
+                        <RichTextareaWithEditor
+                          label="Card Description"
+                          rows={2}
                           placeholder="Card Description"
-                          value={card.desc}
-                          onChange={(e) => {
-                            const list = [...(formData.bumpercarWhyChoose?.cardsList || [])];
-                            list[idx] = { ...list[idx], desc: e.target.value };
+                          value={card.desc || ''}
+                          onChange={(val) => {
+                            const list = [...(formData.bumpercarWhyChoose?.cardsList || (
+                              Array.isArray(formData.bumpercarWhyChoose?.topCards)
+                                ? [...formData.bumpercarWhyChoose.topCards, ...(formData.bumpercarWhyChoose?.bottomCards || [])]
+                                : [
+                                  { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And<br />Break-Even Before You Commit" },
+                                  { title: "Own Installation Team", desc: "Our Own Team Install And Commission<br />Every Project Across 50+ Cities" },
+                                  { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With<br />Servicing And Maintenance So Your<br />Setup Keeps Running." },
+                                  { title: "Proven Track Record", desc: "Take A Look At What We've Built<br />And Hear From The Venues We've<br />Worked With." },
+                                  { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything,<br />No Hidden Costs Added Later." }
+                                ]
+                            ))];
+                            list[idx] = { ...list[idx], desc: val };
                             handleFieldChange('bumpercarWhyChoose', 'cardsList', list);
                           }}
-                          style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12.5px' }}
                         />
                       </div>
                       <button
@@ -12210,11 +13754,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             Array.isArray(formData.bumpercarWhyChoose?.topCards)
                               ? [...formData.bumpercarWhyChoose.topCards, ...(formData.bumpercarWhyChoose?.bottomCards || [])]
                               : [
-                                { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And Break-Even Before You Commit" },
-                                { title: "Own Installation Team", desc: "Our Own Team Install And Commission Every Project Across 50+ Cities" },
-                                { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With Servicing And Maintenance So Your Setup Keeps Running." },
-                                { title: "Proven Track Record", desc: "Take A Look At What We've Built And Hear From The Venues We've Worked With." },
-                                { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything, No Hidden Costs Added Later." }
+                                { title: "Free ROI Report Before You Invest", desc: "See Your Real Costs, Revenue, And<br />Break-Even Before You Commit" },
+                                { title: "Own Installation Team", desc: "Our Own Team Install And Commission<br />Every Project Across 50+ Cities" },
+                                { title: "Reliable After-Sales Support", desc: "We Stay On After Handover With<br />Servicing And Maintenance So Your<br />Setup Keeps Running." },
+                                { title: "Proven Track Record", desc: "Take A Look At What We've Built<br />And Hear From The Venues We've<br />Worked With." },
+                                { title: "Honest, Transparent Pricing", desc: "One Clear Quote Covering Everything,<br />No Hidden Costs Added Later." }
                               ]
                           ))];
                           const updated = list.filter((_, i) => i !== idx);
@@ -12222,7 +13766,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           setFormData(prev => ({ ...prev, bumpercarWhyChoose: updatedSec }));
                           await persistSectionToDatabase('bumpercarWhyChoose', updatedSec);
                         }}
-                        style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', height: '32px', borderRadius: '8px', cursor: 'pointer', flexShrink: 0 }}
+                        style={{ background: '#ef4444', color: '#fff', border: 'none', width: '32px', height: '32px', borderRadius: '8px', cursor: 'pointer', flexShrink: 0, marginTop: '4px' }}
                       >
                         ×
                       </button>
@@ -12408,16 +13952,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                     />
 
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Answer"
                       rows={3}
                       placeholder="Answer"
-                      value={faq.answer || ''}
-                      onChange={(e) => {
+                      value={faq.answer || faq.a || ''}
+                      onChange={(val) => {
                         const currentList = [...(formData.bumpercarFaqs || [])];
-                        currentList[idx] = { ...currentList[idx], answer: e.target.value };
+                        currentList[idx] = { ...currentList[idx], answer: val, a: val };
                         setFormData((prev) => ({ ...prev, bumpercarFaqs: currentList }));
                       }}
-                      style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                     />
                   </div>
                 ))}
@@ -12487,6 +14031,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '14px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Banner Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bumpercarCta?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('bumpercarCta', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Ready to Explore a Bumper Car Attraction for Your Venue - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
 
@@ -12503,15 +14059,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Description Text</label>
-                <textarea
-                  rows={3}
-                  value={formData.bumpercarCta?.subtitle || formData.bumpercarCta?.whiteText || "Our team will assess your space, prepare a free ROI report,<br/>and recommend the right setup before you spend anything."}
-                  onChange={(e) => {
-                    handleFieldChange('bumpercarCta', 'subtitle', e.target.value);
-                    handleFieldChange('bumpercarCta', 'whiteText', e.target.value);
+                <RichTextareaWithEditor
+                  label="Subtitle Description Text"
+                  rows={2}
+                  value={formData.bumpercarCta?.subtitle !== undefined ? formData.bumpercarCta.subtitle : (formData.bumpercarCta?.whiteText !== undefined ? formData.bumpercarCta.whiteText : "Our team will assess your space, prepare a free ROI report,<br/>and recommend the right setup before you spend anything.")}
+                  onChange={(val) => {
+                    handleFieldChange('bumpercarCta', 'subtitle', val);
+                    handleFieldChange('bumpercarCta', 'whiteText', val);
                   }}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  placeholder="Enter subtitle description text..."
                 />
               </div>
 
@@ -12529,7 +14085,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.bumpercarCta?.buttonLink || 'https://wa.me/919428989488'}
+                    value={formData.bumpercarCta?.buttonLink || 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('bumpercarCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -12557,6 +14113,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.arHero?.bgUrl, arHeroBg)}
+                    alt="AR Hero Background Preview"
+                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.arHero?.bgUrl || ''}
+                    onChange={(e) => handleFieldChange('arHero', 'bgUrl', e.target.value)}
+                    placeholder="Image URL or Asset Path"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -12569,7 +14137,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     alignItems: 'center',
                     gap: '8px'
                   }}>
-                    <Upload style={{ width: '16px', height: '16px' }} /> Choose Hero Background Image
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Image
                     <input
                       type="file"
                       accept="image/*"
@@ -12590,10 +14158,90 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
+                  {formData.arHero?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('arHero', 'bgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>🏷️ Hero Background Alt Text (SEO Keyword)</label>
+                <input
+                  type="text"
+                  value={formData.arHero?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('arHero', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Augmented Reality AR Interactive Games Setup - Winera"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              {/* Mobile Screen Hero Banner Upload & Preview */}
+              <div>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
-                    src={getAdminValidImageUrl(formData.arHero?.bgUrl, arHeroBg)}
-                    alt="AR Hero Background Preview"
-                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                    src={getAdminValidImageUrl(formData.arHero?.mobileBgUrl, arHeroMobileBg)}
+                    alt="AR Mobile Hero Bg Preview"
+                    style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.arHero?.mobileBgUrl || ''}
+                    onChange={(e) => handleFieldChange('arHero', 'mobileBgUrl', e.target.value)}
+                    placeholder="Mobile Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Mobile Banner
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          setStatusMsg('Uploading AR mobile hero banner image...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.arHero || {}), mobileBgUrl: res.url };
+                            setFormData(prev => ({ ...prev, arHero: updated }));
+                            await persistSectionToDatabase('arHero', updated);
+                            setStatusMsg('Mobile banner uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.arHero?.mobileBgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('arHero', 'mobileBgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arHero?.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('arHero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. Augmented Reality AR Games Setup Mobile Banner - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
                 </div>
               </div>
@@ -12629,705 +14277,6 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
           )}
 
-          {/* CATEGORIES & GAMES CATALOG FORM */}
-          {activeSection === 'arCategoriesData' && (() => {
-            const defaultCategoriesData = {
-              "Sports Simulators": [
-                {
-                  "name": "Soccer Simulator",
-                  "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Penalty Shootout",
-                  "img": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Tennis Simulator",
-                  "img": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Basketball",
-                  "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Archery Simulator",
-                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Shooting Simulator",
-                  "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Cycling Simulator",
-                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Skiing Simulator",
-                  "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Ski Simulator",
-                  "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Boxing Simulator",
-                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Running Simulator",
-                  "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Rowing Simulator",
-                  "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Curling Simulator",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Crazy Slingshot",
-                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Super Rolling Ball",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Dynamic Styling",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Motion Sensing Game",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Golf Simulator",
-                  "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Golf Plus",
-                  "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Smart Soccer Wall",
-                  "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
-                }
-              ],
-              "Interactive Games": [
-                {
-                  "name": "SAIO All-in-One 2.0",
-                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "SAIO (LED Version)",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Omniball LED Version",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Omniball",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Combat 6",
-                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Cyber Dunk Reality",
-                  "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Running Wall",
-                  "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Curling",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Cyber AR Boxing",
-                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AR Spin Bike",
-                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AR Spin Bikes — Luxe",
-                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Rock Climbing",
-                  "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Magic Billiard",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Dynamic Kayaking",
-                  "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Billiards",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Whac-a-Mole on Wall",
-                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Wonder Wall",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Slide",
-                  "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AR Magic Swing",
-                  "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Music Wall",
-                  "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Legend Archery",
-                  "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Roll Action",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Particle Man",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Super Grid",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Laser Maze",
-                  "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Motion Master Console",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                }
-              ],
-              "AR & VR Experiences": [
-                {
-                  "name": "AR Bumper Car",
-                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AR Garden",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AR Spin Bike",
-                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AR Spin Bikes — Luxe",
-                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Immersive Laser Shooting",
-                  "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "10M High Range High Accuracy Laser Shooting",
-                  "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Hunting Storm Realistic",
-                  "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Wireless Laser Tag",
-                  "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "7D Imax Cinema",
-                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Immersive Dynamic Cinema",
-                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Immersive Room",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Immersive Restaurant",
-                  "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AI Holographic Bot",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Fog Screen Machine",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Radar",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                }
-              ],
-              "Interactive Floor & Walls": [
-                {
-                  "name": "Magic Floor — Integrated",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Magic Floor — Outdoor",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Magic Floor — Indoor",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Active Game LED Floor",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Digital Display Wall",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Wonderful World",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Magical Waterfall",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Wonder Wall",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Projection Lamp",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Projection Mapping Software",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Electronic Whiteboard",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                }
-              ],
-              "Kids & Family Attractions": [
-                {
-                  "name": "Interactive Trampoline",
-                  "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Sandbox",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Magic Egg Fort",
-                  "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Slide",
-                  "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AR Garden",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Gesture Interactive Book",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Draw2Life (Scan)",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Draw2Life (Screen)",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "GymBuster",
-                  "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
-                }
-              ],
-              "Fitness & Education": [
-                {
-                  "name": "Gym Education Interactive Training System",
-                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AR Spin Bike",
-                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AR Spin Bikes — Luxe",
-                  "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Rock Climbing",
-                  "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Cyber AR Boxing",
-                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Combat 6",
-                  "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Roll Action",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Motion Master Console",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                }
-              ],
-              "Bowling & Ball Games": [
-                {
-                  "name": "Top Bowling",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Bowling",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Mini Bowling",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Bowling",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Magic Billiard",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Interactive Billiards",
-                  "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Super Rolling Ball",
-                  "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-                }
-              ],
-              "Themed & Immersive Zones": [
-                {
-                  "name": "Immersive Room",
-                  "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Immersive Restaurant",
-                  "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Immersive Dynamic Cinema",
-                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "7D Imax Cinema",
-                  "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Themed Sports Bar",
-                  "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Whole Site Planning",
-                  "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
-                }
-              ],
-              "Technology & Infrastructure": [
-                {
-                  "name": "Projection Mapping Software",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "AI Holographic Bot",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Electronic Whiteboard",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Fog Screen Machine",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Projection Lamp",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Radar",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Digital Display Wall",
-                  "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  "name": "Whole Site Planning",
-                  "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
-                }
-              ]
-            };
-
-            const categoriesData = (formData.arCategoriesData && typeof formData.arCategoriesData === 'object' && Object.keys(formData.arCategoriesData).length > 0)
-              ? formData.arCategoriesData
-              : defaultCategoriesData;
-
-            const categoryNames = Object.keys(categoriesData);
-            const selectedCat = categoryNames.includes(adminSelectedCat) ? adminSelectedCat : (categoryNames[0] || 'Sports Simulators');
-            const gamesList = Array.isArray(categoriesData[selectedCat]) ? categoriesData[selectedCat] : [];
-
-            return (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Categories & Games Catalog Manager</h3>
-                <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 10px 0' }}>Manage all game categories and individual games displayed on the AR Games Page.</p>
-
-                {/* Category Selection & Add Category Control */}
-                <div style={{ background: '#F8FAFC', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-                    <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Select Category ({categoryNames.length} Categories Total)</h4>
-
-                    {/* Add Category Input & Button */}
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <input
-                        type="text"
-                        placeholder="New Category Name..."
-                        value={newCategoryInput}
-                        onChange={(e) => setNewCategoryInput(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            e.preventDefault();
-                            let catName = newCategoryInput.trim();
-                            if (!catName) return;
-                            const updated = { ...categoriesData, [catName]: [] };
-                            setFormData(prev => ({ ...prev, arCategoriesData: updated }));
-                            setAdminSelectedCat(catName);
-                            setNewCategoryInput('');
-                            persistSectionToDatabase('arCategoriesData', updated);
-                          }
-                        }}
-                        style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                      <button
-                        onClick={() => {
-                          let catName = newCategoryInput.trim();
-                          if (!catName) {
-                            catName = prompt('Enter new category name:');
-                            if (!catName || !catName.trim()) return;
-                            catName = catName.trim();
-                          }
-                          const updated = { ...categoriesData, [catName]: [] };
-                          setFormData(prev => ({ ...prev, arCategoriesData: updated }));
-                          setAdminSelectedCat(catName);
-                          setNewCategoryInput('');
-                          persistSectionToDatabase('arCategoriesData', updated);
-                        }}
-                        style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '8px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer' }}
-                      >
-                        + Add Category
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Category Selection Pills */}
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', paddingTop: '6px' }}>
-                    {categoryNames.map((cat, idx) => {
-                      const isSel = cat === selectedCat;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => setAdminSelectedCat(cat)}
-                          style={{
-                            padding: '8px 14px',
-                            borderRadius: '10px',
-                            border: isSel ? '2px solid #0284c7' : '1px solid #cbd5e1',
-                            background: isSel ? '#0284c7' : '#ffffff',
-                            color: isSel ? '#ffffff' : '#475569',
-                            fontSize: '12.5px',
-                            fontWeight: isSel ? '800' : '600',
-                            cursor: 'pointer',
-                            boxShadow: isSel ? '0 4px 12px rgba(2, 132, 199, 0.25)' : 'none'
-                          }}
-                        >
-                          {cat} ({categoriesData[cat]?.length || 0})
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Active Category Header, Rename & Delete */}
-                <div style={{ background: '#ffffff', padding: '16px 20px', borderRadius: '16px', border: '1.5px solid #38bdf8', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
-                  <div style={{ flex: 1, display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <label style={{ fontWeight: '800', fontSize: '13px', color: '#0f172a', whiteSpace: 'nowrap' }}>Active Category Name:</label>
-                    <input
-                      type="text"
-                      value={selectedCat}
-                      onChange={(e) => {
-                        const newTitle = e.target.value;
-                        if (!newTitle) return;
-                        const updated = {};
-                        Object.keys(categoriesData).forEach(key => {
-                          if (key === selectedCat) {
-                            updated[newTitle] = categoriesData[selectedCat];
-                          } else {
-                            updated[key] = categoriesData[key];
-                          }
-                        });
-                        setFormData(prev => ({ ...prev, arCategoriesData: updated }));
-                        setAdminSelectedCat(newTitle);
-                        persistSectionToDatabase('arCategoriesData', updated);
-                      }}
-                      style={{ padding: '8px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', fontWeight: '800', color: '#0284c7', flex: 1 }}
-                    />
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      if (categoryNames.length <= 1) {
-                        alert('Cannot delete the last remaining category!');
-                        return;
-                      }
-                      setDeleteConfirmModal({
-                        title: 'Delete Category & Games?',
-                        message: `Are you sure you want to delete category "${selectedCat}" and all its games?`,
-                        onConfirm: () => {
-                          const updated = { ...categoriesData };
-                          delete updated[selectedCat];
-                          setFormData(prev => ({ ...prev, arCategoriesData: updated }));
-                          setAdminSelectedCat(Object.keys(updated)[0]);
-                          persistSectionToDatabase('arCategoriesData', updated);
-                        }
-                      });
-                    }}
-                    style={{ background: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5', padding: '8px 16px', borderRadius: '10px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer' }}
-                  >
-                    Delete Category
-                  </button>
-                </div>
-
-                {/* Games Manager for Selected Category */}
-                <div style={{ background: '#F8FAFC', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                    <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '800', color: '#0369a1' }}>Games under "${selectedCat}" ({gamesList.length} Games)</h4>
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        const newGame = { name: 'New Game', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80' };
-                        const updatedCatList = [...gamesList, newGame];
-                        const updated = { ...categoriesData, [selectedCat]: updatedCatList };
-                        setFormData(prev => ({ ...prev, arCategoriesData: updated }));
-                        await persistSectionToDatabase('arCategoriesData', updated);
-                      }}
-                      style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 16px', borderRadius: '8px', fontSize: '12.5px', fontWeight: '800', cursor: 'pointer' }}
-                    >
-                      + Add New Game
-                    </button>
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px' }}>
-                    {gamesList.map((game, gIdx) => (
-                      <div key={gIdx} style={{ background: '#ffffff', padding: '14px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: '800', fontSize: '12.5px', color: '#0284c7' }}>Game #{gIdx + 1}: {game.name}</span>
-                          <button
-                            type="button"
-                            onClick={async () => {
-                              const updatedCatList = gamesList.filter((_, i) => i !== gIdx);
-                              const updated = { ...categoriesData, [selectedCat]: updatedCatList };
-                              setFormData(prev => ({ ...prev, arCategoriesData: updated }));
-                              await persistSectionToDatabase('arCategoriesData', updated);
-                            }}
-                            style={{ background: '#ef4444', color: '#fff', border: 'none', width: '26px', height: '26px', borderRadius: '6px', cursor: 'pointer', fontWeight: '900' }}
-                          >
-                            ×
-                          </button>
-                        </div>
-
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>Game Title</label>
-                          <input
-                            type="text"
-                            value={game.name || ''}
-                            onChange={(e) => {
-                              const updatedCatList = [...gamesList];
-                              updatedCatList[gIdx] = { ...updatedCatList[gIdx], name: e.target.value };
-                              const updated = { ...categoriesData, [selectedCat]: updatedCatList };
-                              setFormData(prev => ({ ...prev, arCategoriesData: updated }));
-                            }}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
-                          />
-                        </div>
-
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
-                            Game Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 600 × 500 px</span>
-                          </label>
-                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            {game.img && <img src={game.img} alt="" style={{ width: '50px', height: '36px', objectFit: 'cover', borderRadius: '6px' }} />}
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={async (e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                  try {
-                                    const res = await uploadImageFile(file, admin.token);
-                                    if (res.url) {
-                                      const updatedCatList = [...gamesList];
-                                      updatedCatList[gIdx] = { ...updatedCatList[gIdx], img: res.url };
-                                      const updated = { ...categoriesData, [selectedCat]: updatedCatList };
-                                      setFormData(prev => ({ ...prev, arCategoriesData: updated }));
-                                      await persistSectionToDatabase('arCategoriesData', updated);
-                                    }
-                                  } catch (err) {
-                                    console.error(err);
-                                  }
-                                }
-                              }}
-                              style={{ fontSize: '12px' }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                  <button
-                    onClick={() => persistSectionToDatabase('arCategoriesData', categoriesData)}
-                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                  >
-                    Save Categories & Games Catalog
-                  </button>
-                </div>
-              </div>
-            );
-          })()}
 
           {/* AR GAMES SUPPLIER FORM */}
           {activeSection === 'arIntro' && (
@@ -13378,6 +14327,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Right Collage Graphic Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arIntro?.mainImgAlt || formData.arIntro?.imgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      handleFieldChange('arIntro', 'mainImgAlt', val);
+                      handleFieldChange('arIntro', 'imgAlt', val);
+                    }}
+                    placeholder="e.g. AR Games Supplier in India - Winera Commercial Setup"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div>
@@ -13390,15 +14355,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Section Description</label>
-                <textarea
-                  rows={3}
-                  value={formData.arIntro?.desc || "India's ROI-first AR games supplier — we source, install, and service interactive gaming attractions that draw crowds."}
-                  onChange={(e) => handleFieldChange('arIntro', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
-                />
-              </div>
+              <RichTextareaWithEditor
+                label="Section Description"
+                rows={3}
+                value={formData.arIntro?.desc !== undefined ? formData.arIntro.desc : "India's ROI-first AR games supplier — we source, install, and service interactive gaming attractions that draw crowds."}
+                onChange={(val) => handleFieldChange('arIntro', 'desc', val)}
+                placeholder="Enter Section Description..."
+              />
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
@@ -13414,7 +14377,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={(formData.arIntro?.buttonLink && formData.arIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.arIntro?.buttonLink && formData.arIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.arIntro?.waMessage || "Hello Winera International! I want to get a quote and details for AR Games setup. Please share details. [Ref: AR Games Page]";
@@ -13444,7 +14407,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.arIntro?.buttonLink && formData.arIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.arIntro?.buttonLink && formData.arIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -13520,6 +14483,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Left Column Image Graphic Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arMatchedVenue?.imgAlt || ''}
+                    onChange={(e) => handleFieldChange('arMatchedVenue', 'imgAlt', e.target.value)}
+                    placeholder="e.g. Interactive AR Attractions Built for Your Venue - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div>
@@ -13532,25 +14507,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                <textarea
-                  rows={3}
-                  value={formData.arMatchedVenue?.p1 || "Winera International is a trusted AR games supplier in India sourcing and installing commercial sports simulators, interactive floor systems, AR experiences, and immersive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres for more than 15 Years. Every product is sourced from established global manufacturers and configured for sustained commercial use"}
-                  onChange={(e) => handleFieldChange('arMatchedVenue', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
-                />
-              </div>
+              <RichTextareaWithEditor
+                label="Paragraph 1"
+                rows={3}
+                value={formData.arMatchedVenue?.p1 !== undefined ? formData.arMatchedVenue.p1 : "Winera International is a trusted AR games supplier in India sourcing and installing commercial sports simulators, interactive floor systems, AR experiences, and immersive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres for more than 15 Years. Every product is sourced from established global manufacturers and configured for sustained commercial use"}
+                onChange={(val) => handleFieldChange('arMatchedVenue', 'p1', val)}
+                placeholder="Enter Paragraph 1..."
+              />
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                <textarea
-                  rows={3}
-                  value={formData.arMatchedVenue?.p2 || "As a direct AR entertainment setup partner, our own team manages everything from space planning and product selection to installation and after-sales support — one team, zero third-party contractors."}
-                  onChange={(e) => handleFieldChange('arMatchedVenue', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
-                />
-              </div>
+              <RichTextareaWithEditor
+                label="Paragraph 2"
+                rows={3}
+                value={formData.arMatchedVenue?.p2 !== undefined ? formData.arMatchedVenue.p2 : "As a direct AR entertainment setup partner, our own team manages everything from space planning and product selection to installation and after-sales support — one team, zero third-party contractors."}
+                onChange={(val) => handleFieldChange('arMatchedVenue', 'p2', val)}
+                placeholder="Enter Paragraph 2..."
+              />
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
@@ -13566,7 +14537,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={(formData.arMatchedVenue?.buttonLink && formData.arMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.arMatchedVenue?.buttonLink && formData.arMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.arMatchedVenue?.waMessage || "Hello Winera International! I want to get a quote for Interactive AR Attractions setup for my venue. Please share details. [Ref: AR Games Page]";
@@ -13596,7 +14567,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.arMatchedVenue?.buttonLink && formData.arMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.arMatchedVenue?.buttonLink && formData.arMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -13638,12 +14609,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   onChange={(e) => handleFieldChange('arFeatures', 'f1Title', e.target.value)}
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                 />
-                <textarea
+                <RichTextareaWithEditor
+                  label="Row 1 Description"
                   rows={3}
                   placeholder="Row 1 Description"
-                  value={formData.arFeatures?.f1Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
-                  onChange={(e) => handleFieldChange('arFeatures', 'f1Desc', e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.arFeatures?.f1Desc !== undefined ? formData.arFeatures.f1Desc : "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
+                  onChange={(val) => handleFieldChange('arFeatures', 'f1Desc', val)}
                 />
                 <div>
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '12px', color: '#0f172a', marginBottom: '6px' }}>
@@ -13689,6 +14660,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ width: '100px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #38bdf8' }}
                     />
                   </div>
+                  <div style={{ marginTop: '8px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Row 1 Image Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.arFeatures?.f1ImgAlt || ''}
+                      onChange={(e) => handleFieldChange('arFeatures', 'f1ImgAlt', e.target.value)}
+                      placeholder="e.g. Exciting AR Attractions - Winera"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -13702,12 +14685,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   onChange={(e) => handleFieldChange('arFeatures', 'f2Title', e.target.value)}
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                 />
-                <textarea
+                <RichTextareaWithEditor
+                  label="Row 2 Description"
                   rows={3}
                   placeholder="Row 2 Description"
-                  value={formData.arFeatures?.f2Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
-                  onChange={(e) => handleFieldChange('arFeatures', 'f2Desc', e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.arFeatures?.f2Desc !== undefined ? formData.arFeatures.f2Desc : "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
+                  onChange={(val) => handleFieldChange('arFeatures', 'f2Desc', val)}
                 />
                 <div>
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '12px', color: '#0f172a', marginBottom: '6px' }}>
@@ -13753,6 +14736,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ width: '100px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #38bdf8' }}
                     />
                   </div>
+                  <div style={{ marginTop: '8px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Row 2 Image Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.arFeatures?.f2ImgAlt || ''}
+                      onChange={(e) => handleFieldChange('arFeatures', 'f2ImgAlt', e.target.value)}
+                      placeholder="e.g. High-Quality AR Equipment - Winera"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -13766,12 +14761,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   onChange={(e) => handleFieldChange('arFeatures', 'f3Title', e.target.value)}
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                 />
-                <textarea
+                <RichTextareaWithEditor
+                  label="Row 3 Description"
                   rows={3}
                   placeholder="Row 3 Description"
-                  value={formData.arFeatures?.f3Desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
-                  onChange={(e) => handleFieldChange('arFeatures', 'f3Desc', e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.arFeatures?.f3Desc !== undefined ? formData.arFeatures.f3Desc : "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading bumper car manufacturer in India and trusted bumper car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
+                  onChange={(val) => handleFieldChange('arFeatures', 'f3Desc', val)}
                 />
                 <div>
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '12px', color: '#0f172a', marginBottom: '6px' }}>
@@ -13817,6 +14812,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ width: '100px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #38bdf8' }}
                     />
                   </div>
+                  <div style={{ marginTop: '8px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Row 3 Image Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.arFeatures?.f3ImgAlt || ''}
+                      onChange={(e) => handleFieldChange('arFeatures', 'f3ImgAlt', e.target.value)}
+                      placeholder="e.g. Budget-Friendly AR Setup - Winera"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -13846,25 +14853,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                <textarea
-                  rows={3}
-                  value={formData.arEarn?.p1 || "Most AR games suppliers in India present a product catalogue and a price list the financial planning is left entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before recommending any product or configuration, our team prepares a complete ROI report for your specific venue covering equipment cost, projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline."}
-                  onChange={(e) => handleFieldChange('arEarn', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
-                />
-              </div>
+              <RichTextareaWithEditor
+                label="Paragraph 1"
+                rows={3}
+                value={formData.arEarn?.p1 !== undefined ? formData.arEarn.p1 : "Most AR games suppliers in India present a product catalogue and a price list the financial planning is left entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before recommending any product or configuration, our team prepares a complete ROI report for your specific venue covering equipment cost, projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline."}
+                onChange={(val) => handleFieldChange('arEarn', 'p1', val)}
+                placeholder="Enter Paragraph 1..."
+              />
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                <textarea
-                  rows={3}
-                  value={formData.arEarn?.p2 || "Every figure is calculated around your venue type, available floor space, and visitor demographic, not an industry benchmark that may have no relevance to your actual situation. Very few interactive gaming setup suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
-                  onChange={(e) => handleFieldChange('arEarn', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
-                />
-              </div>
+              <RichTextareaWithEditor
+                label="Paragraph 2"
+                rows={3}
+                value={formData.arEarn?.p2 !== undefined ? formData.arEarn.p2 : "Every figure is calculated around your venue type, available floor space, and visitor demographic, not an industry benchmark that may have no relevance to your actual situation. Very few interactive gaming setup suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
+                onChange={(val) => handleFieldChange('arEarn', 'p2', val)}
+                placeholder="Enter Paragraph 2..."
+              />
 
 
               <div>
@@ -13909,6 +14912,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     src={getAdminValidImageUrl(formData.arEarn?.imgUrl, arEarnGamers)}
                     alt="Gamers Graphic Preview"
                     style={{ width: '100px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Right Side Gamers Image Graphic Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arEarn?.imgAlt || ''}
+                    onChange={(e) => handleFieldChange('arEarn', 'imgAlt', e.target.value)}
+                    placeholder="e.g. Know Your Returns Before You Invest in AR Gaming Equipment - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
                 </div>
               </div>
@@ -14007,16 +15022,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                       />
 
-                      <textarea
+                      <RichTextareaWithEditor
+                        label="Card Description"
                         rows={2}
                         placeholder="Card Description"
                         value={card.desc || ''}
-                        onChange={(e) => {
+                        onChange={(val) => {
                           const list = [...(formData.arWhyUs?.cardsList || [])];
-                          list[idx] = { ...list[idx], desc: e.target.value };
+                          list[idx] = { ...list[idx], desc: val };
                           handleFieldChange('arWhyUs', 'cardsList', list);
                         }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                       />
                     </div>
                   ))}
@@ -14047,7 +15062,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         { question: "Who is a reliable AR games supplier in India?", answer: "Winera International is a direct AR games supplier in India, sourcing and installing commercial AR and interactive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres." },
                         { question: "What is the setup cost for AR gaming equipment in India?", answer: "AR gaming cost in India depends on the product category, number of units and customisation requirements. Winera provides a complete cost breakdown of equipment, installation, and maintenance before confirming any order. Contact our team for a quote specific to your venue." },
                         { question: "What is the minimum space required for AR gaming equipment?", answer: "Space requirements vary by product. Interactive floor tiles start from 30x30cm per module, while full sports simulators typically require 4–9 metres in length and 3–3.5 metres ceiling height. Winera's team assesses your exact dimensions before recommending compatible products." },
-                        { question: "How do I get started with an AR gaming zone setup from Winera?", answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP." },
+                        { question: "How do I get started with an AR gaming zone setup from Winera?", answer: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP." },
                         { question: "Can AR gaming equipment be customised with branding or specific game content?", answer: "Yes. Many products in our range support custom branding, game library selection, and venue-specific content configuration. We confirm available customisation options for each product during the consultation stage." },
                         { question: "What is the typical ROI for an AR gaming zone in India?", answer: "ROI depends on your venue type, daily footfall, session pricing, and machine mix. Winera prepares a free ROI report for every project — covering projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline — specific to your venue before you confirm any order." },
                         { question: "Does Winera provide after-sales support for AR and interactive gaming equipment?", answer: "Yes. Our own technicians provide software updates, hardware servicing, and on-site support for all AR games and interactive gaming equipment we install — directly through our own team, without third-party service agents." },
@@ -14069,7 +15084,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     { question: "Who is a reliable AR games supplier in India?", answer: "Winera International is a direct AR games supplier in India, sourcing and installing commercial AR and interactive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres." },
                     { question: "What is the setup cost for AR gaming equipment in India?", answer: "AR gaming cost in India depends on the product category, number of units and customisation requirements. Winera provides a complete cost breakdown of equipment, installation, and maintenance before confirming any order. Contact our team for a quote specific to your venue." },
                     { question: "What is the minimum space required for AR gaming equipment?", answer: "Space requirements vary by product. Interactive floor tiles start from 30x30cm per module, while full sports simulators typically require 4–9 metres in length and 3–3.5 metres ceiling height. Winera's team assesses your exact dimensions before recommending compatible products." },
-                    { question: "How do I get started with an AR gaming zone setup from Winera?", answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP." },
+                    { question: "How do I get started with an AR gaming zone setup from Winera?", answer: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP." },
                     { question: "Can AR gaming equipment be customised with branding or specific game content?", answer: "Yes. Many products in our range support custom branding, game library selection, and venue-specific content configuration. We confirm available customisation options for each product during the consultation stage." },
                     { question: "What is the typical ROI for an AR gaming zone in India?", answer: "ROI depends on your venue type, daily footfall, session pricing, and machine mix. Winera prepares a free ROI report for every project — covering projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline — specific to your venue before you confirm any order." },
                     { question: "Does Winera provide after-sales support for AR and interactive gaming equipment?", answer: "Yes. Our own technicians provide software updates, hardware servicing, and on-site support for all AR games and interactive gaming equipment we install — directly through our own team, without third-party service agents." },
@@ -14088,7 +15103,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               { question: "Who is a reliable AR games supplier in India?", answer: "Winera International is a direct AR games supplier in India, sourcing and installing commercial AR and interactive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres." },
                               { question: "What is the setup cost for AR gaming equipment in India?", answer: "AR gaming cost in India depends on the product category, number of units and customisation requirements. Winera provides a complete cost breakdown of equipment, installation, and maintenance before confirming any order. Contact our team for a quote specific to your venue." },
                               { question: "What is the minimum space required for AR gaming equipment?", answer: "Space requirements vary by product. Interactive floor tiles start from 30x30cm per module, while full sports simulators typically require 4–9 metres in length and 3–3.5 metres ceiling height. Winera's team assesses your exact dimensions before recommending compatible products." },
-                              { question: "How do I get started with an AR gaming zone setup from Winera?", answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP." },
+                              { question: "How do I get started with an AR gaming zone setup from Winera?", answer: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP." },
                               { question: "Can AR gaming equipment be customised with branding or specific game content?", answer: "Yes. Many products in our range support custom branding, game library selection, and venue-specific content configuration. We confirm available customisation options for each product during the consultation stage." },
                               { question: "What is the typical ROI for an AR gaming zone in India?", answer: "ROI depends on your venue type, daily footfall, session pricing, and machine mix. Winera prepares a free ROI report for every project — covering projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline — specific to your venue before you confirm any order." },
                               { question: "Does Winera provide after-sales support for AR and interactive gaming equipment?", answer: "Yes. Our own technicians provide software updates, hardware servicing, and on-site support for all AR games and interactive gaming equipment we install — directly through our own team, without third-party service agents." },
@@ -14116,16 +15131,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                     />
 
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Answer"
                       rows={3}
                       placeholder="Answer"
                       value={faq.answer || faq.a || ''}
-                      onChange={(e) => {
+                      onChange={(val) => {
                         const currentList = Array.isArray(formData.arFaqs) ? [...formData.arFaqs] : [];
-                        currentList[idx] = { ...currentList[idx], answer: e.target.value, a: e.target.value };
+                        currentList[idx] = { ...currentList[idx], answer: val, a: val };
                         setFormData((prev) => ({ ...prev, arFaqs: currentList }));
                       }}
-                      style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                     />
                   </div>
                 ))}
@@ -14205,6 +15220,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '14px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Banner Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.arCta?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('arCta', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Ready to Set Up Your AR Gaming Zone - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
 
@@ -14219,18 +15246,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                <textarea
-                  rows={2}
-                  value={formData.arCta?.description !== undefined ? formData.arCta.description : (formData.arCta?.whiteText !== undefined ? formData.arCta.whiteText : "Get in touch with India's ROI-First Game Zone Developer")}
-                  onChange={(e) => {
-                    handleFieldChange('arCta', 'description', e.target.value);
-                    handleFieldChange('arCta', 'whiteText', e.target.value);
-                  }}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
-                />
-              </div>
+              <RichTextareaWithEditor
+                label="Description Paragraph"
+                rows={2}
+                value={formData.arCta?.description !== undefined ? formData.arCta.description : (formData.arCta?.whiteText !== undefined ? formData.arCta.whiteText : "Get in touch with India's ROI-First Game Zone Developer")}
+                onChange={(val) => {
+                  handleFieldChange('arCta', 'description', val);
+                  handleFieldChange('arCta', 'whiteText', val);
+                }}
+                placeholder="Enter Description..."
+              />
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
@@ -14246,9 +15271,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link (Redirect URL)</label>
                   <input
                     type="text"
-                    value={formData.arCta?.buttonLink !== undefined ? formData.arCta.buttonLink : 'https://wa.me/919428989488'}
+                    value={formData.arCta?.buttonLink !== undefined ? formData.arCta.buttonLink : 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('arCta', 'buttonLink', e.target.value)}
-                    placeholder="https://wa.me/919428989488"
+                    placeholder="https://wa.me/919157873576"
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
                 </div>
@@ -14275,6 +15300,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   Hero Background Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
                 </label>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <img
+                    src={getAdminValidImageUrl(formData.vrHero?.bgUrl, vrHeroBg)}
+                    alt="Hero Background Preview"
+                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.vrHero?.bgUrl || ''}
+                    onChange={(e) => handleFieldChange('vrHero', 'bgUrl', e.target.value)}
+                    placeholder="Image URL or Asset Path"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                  />
                   <label style={{
                     background: '#38bdf8',
                     color: '#ffffff',
@@ -14308,10 +15345,90 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ display: 'none' }}
                     />
                   </label>
+                  {formData.vrHero?.bgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('vrHero', 'bgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>🏷️ Hero Background Alt Text (SEO Keyword)</label>
+                <input
+                  type="text"
+                  value={formData.vrHero?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('vrHero', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Virtual Reality VR Games and Simulators - Winera"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
+              {/* Mobile Screen Hero Banner Upload & Preview */}
+              <div>
+                <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                  Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img
-                    src={getAdminValidImageUrl(formData.vrHero?.bgUrl, vrHeroBg)}
-                    alt="Hero Background Preview"
-                    style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
+                    src={getAdminValidImageUrl(formData.vrHero?.mobileBgUrl, vrMobileHeroBg)}
+                    alt="Mobile Hero Bg Preview"
+                    style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                  />
+                  <input
+                    type="text"
+                    value={formData.vrHero?.mobileBgUrl || ''}
+                    onChange={(e) => handleFieldChange('vrHero', 'mobileBgUrl', e.target.value)}
+                    placeholder="Mobile Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                  />
+                  <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload style={{ width: '16px', height: '16px' }} /> Upload Mobile Banner
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          setStatusMsg('Uploading mobile VR hero banner image...');
+                          try {
+                            const res = await uploadImageFile(file, admin.token);
+                            const updated = { ...(formData.vrHero || {}), mobileBgUrl: res.url };
+                            setFormData(prev => ({ ...prev, vrHero: updated }));
+                            await persistSectionToDatabase('vrHero', updated);
+                            setStatusMsg('Mobile VR banner uploaded successfully!');
+                          } catch (err) {
+                            setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
+                          }
+                        }
+                      }}
+                    />
+                  </label>
+                  {formData.vrHero?.mobileBgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('vrHero', 'mobileBgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.vrHero?.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('vrHero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. Virtual Reality VR Games and Simulators Mobile Banner - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
                 </div>
               </div>
@@ -14383,6 +15500,84 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                      {currentSec.bgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), bgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Hero Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Laser Tag Arena Equipment Suppliers - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Mobile Screen Hero Banner Upload & Preview */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.mobileBgUrl, defaultGameZoneMobileBanner)}
+                        alt="Laser Tag Mobile Hero Bg Preview"
+                        style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                      />
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), mobileBgUrl: e.target.value } }))}
+                        placeholder="Mobile Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Mobile Banner
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), mobileBgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                      {currentSec.mobileBgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), mobileBgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), mobileBgAlt: e.target.value } }))}
+                        placeholder="e.g. Laser Tag Arena Setup Mobile Banner - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
                   <div>
@@ -14451,15 +15646,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <span style={{ color: '#0f172a' }}>{currentSec.titleNormal || defaultLasertagIntro.titleNormal}</span>
                     </div>
                   </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                    <textarea
-                      rows={3}
-                      value={currentSec.desc !== undefined ? currentSec.desc : defaultLasertagIntro.desc}
-                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), desc: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="Description Paragraph"
+                    rows={3}
+                    value={currentSec.desc !== undefined ? currentSec.desc : defaultLasertagIntro.desc}
+                    onChange={(val) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), desc: val } }))}
+                    placeholder="Enter Description Paragraph..."
+                  />
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Text</label>
@@ -14548,6 +15741,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Graphic Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mainImgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), mainImgAlt: e.target.value } }))}
+                        placeholder="e.g. Commercial Laser Tag Game Equipment - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -14607,25 +15812,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
 
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>First Paragraph</label>
-                    <textarea
-                      rows={3}
-                      value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultLasertagSetup.paragraph1}
-                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), paragraph1: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="First Paragraph"
+                    rows={3}
+                    value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultLasertagSetup.paragraph1}
+                    onChange={(val) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), paragraph1: val } }))}
+                    placeholder="Enter First Paragraph..."
+                  />
 
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Second Paragraph</label>
-                    <textarea
-                      rows={3}
-                      value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultLasertagSetup.paragraph2}
-                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), paragraph2: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="Second Paragraph"
+                    rows={3}
+                    value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultLasertagSetup.paragraph2}
+                    onChange={(val) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), paragraph2: val } }))}
+                    placeholder="Enter Second Paragraph..."
+                  />
 
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
@@ -14656,6 +15857,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Graphic Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mainImgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), mainImgAlt: e.target.value } }))}
+                        placeholder="e.g. Commercial Laser Tag Arena Setup - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -14683,7 +15896,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Tag - Great for Groups (Block 3) Settings</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  
+
                   {/* Title Fields */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div>
@@ -14722,16 +15935,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
 
                   {/* Section Description */}
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Subtitle / Description</label>
-                    <textarea
-                      rows={3}
-                      value={currentSec.desc !== undefined ? currentSec.desc : defaultLasertagGroups.desc}
-                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), desc: e.target.value } }))}
-                      placeholder="Enter subtitle description..."
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="Section Subtitle / Description"
+                    rows={3}
+                    value={currentSec.desc !== undefined ? currentSec.desc : defaultLasertagGroups.desc}
+                    onChange={(val) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), desc: val } }))}
+                    placeholder="Enter subtitle description..."
+                  />
 
                   {/* Checklist Subheading */}
                   <div>
@@ -14825,6 +16035,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Right Photo Graphic Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mainImgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), mainImgAlt: e.target.value } }))}
+                        placeholder="e.g. Laser Tag for Groups & Birthday Parties - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -14852,7 +16074,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Tag - Technical Specifications (Block 4) Settings</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  
+
                   {/* Title Inputs with Color Separation */}
                   <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -14986,13 +16208,45 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Target URL / WhatsApp Link</label>
-                      <input
-                        type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultLasertagSpecs.buttonLink}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), buttonLink: e.target.value } }))}
-                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Button Target URL / Brochure PDF / WhatsApp Link
+                      </label>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                          type="text"
+                          value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultLasertagSpecs.buttonLink}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), buttonLink: e.target.value } }))}
+                          placeholder="WhatsApp link or PDF brochure URL"
+                          style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                        />
+                        <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '12px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                          <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                          <input
+                            type="file"
+                            accept="application/pdf,.pdf"
+                            onChange={(e) => handleBrochureUpload(e, 'lasertagSpecs', 'buttonLink', {}, defaultLasertagSpecs)}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                      </div>
+                      <div style={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                        <span style={{ fontSize: '11px', color: '#64748b' }}>
+                          💡 Cloudinary Free plan limit: <strong>10 MB</strong> (Allows larger files automatically with a Cloudinary Pro plan). Compress via <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#0284c7', textDecoration: 'underline', fontWeight: '700' }}>iLovePDF</a> if needed.
+                        </span>
+                        {(() => {
+                          const activePdf = currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultLasertagSpecs.buttonLink;
+                          return activePdf && !activePdf.includes('wa.me') && activePdf !== '#' ? (
+                            <a
+                              href={activePdf}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ fontSize: '11.5px', color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}
+                            >
+                              📄 Test & Preview Laser Tag Brochure
+                            </a>
+                          ) : null;
+                        })()}
+                      </div>
                     </div>
                   </div>
 
@@ -15036,6 +16290,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Card Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Laser Tag Technical Specifications Arena - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -15063,7 +16329,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Tag - Space Requirements (Block 5) Settings</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  
+
                   {/* Title Inputs with Color Separation */}
                   <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -15107,10 +16373,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   {/* Description Textarea */}
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Text</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
                       value={currentSec.desc !== undefined ? currentSec.desc : defaultLasertagSpace.desc}
-                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), desc: e.target.value } }))}
+                      onChange={(val) => setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), desc: val } }))}
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.5 }}
                     />
                   </div>
@@ -15227,6 +16493,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Schematic Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mainImgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), mainImgAlt: e.target.value } }))}
+                        placeholder="e.g. Laser Tag Arena Space Requirements 3D Layout - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -15309,10 +16587,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                   <div>
                     <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#64748b', marginBottom: '6px' }}>Section Description:</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
-                      value={spyData.desc ?? ""}
-                      onChange={(e) => handleSpyChange('desc', e.target.value)}
+                      value={spyData.desc !== undefined && spyData.desc !== null ? spyData.desc : (defaultLasertagSpy.desc || "")}
+                      onChange={(val) => handleSpyChange('desc', val)}
                       style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', lineHeight: 1.5 }}
                     />
                   </div>
@@ -15358,6 +16636,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <Upload style={{ width: '15px', height: '15px' }} /> Upload
                           <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => e.target.files?.[0] && handleCloudinaryUpload(e.target.files[0], (url) => handleSpyChange('mainImgUrl', url))} />
                         </label>
+                      </div>
+                      <div style={{ marginTop: '10px' }}>
+                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                          🏷️ Big Main Arena Image Alt Text (SEO Keyword)
+                        </label>
+                        <input
+                          type="text"
+                          value={spyData.mainImgAlt || ''}
+                          onChange={(e) => handleSpyChange('mainImgAlt', e.target.value)}
+                          placeholder="e.g. Laser Spy Laser Beam Maze Room Setup - Winera"
+                          style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                        />
                       </div>
                     </div>
                   </div>
@@ -15419,7 +16709,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Laser Spy - Technical Specifications Settings</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  
+
                   {/* Title Inputs with Color Separation */}
                   <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -15553,13 +16843,45 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Button Target URL / WhatsApp Link</label>
-                      <input
-                        type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultLasertagSpySpecs.buttonLink}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), buttonLink: e.target.value } }))}
-                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                      />
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                        Button Target URL / Brochure PDF / WhatsApp Link
+                      </label>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                          type="text"
+                          value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultLasertagSpySpecs.buttonLink}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), buttonLink: e.target.value } }))}
+                          placeholder="WhatsApp link or PDF brochure URL"
+                          style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                        />
+                        <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                          <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                          <input
+                            type="file"
+                            accept="application/pdf,.pdf"
+                            onChange={(e) => handleBrochureUpload(e, 'lasertagSpySpecs', 'buttonLink', {}, defaultLasertagSpySpecs)}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+                      </div>
+                      <div style={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                        <span style={{ fontSize: '11px', color: '#64748b' }}>
+                          💡 Cloudinary Free plan limit: <strong>10 MB</strong> (Allows larger files automatically with a Cloudinary Pro plan). Compress via <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#0284c7', textDecoration: 'underline', fontWeight: '700' }}>iLovePDF</a> if needed.
+                        </span>
+                        {(() => {
+                          const activePdf = currentSec.buttonLink !== undefined ? currentSec.buttonLink : defaultLasertagSpySpecs.buttonLink;
+                          return activePdf && !activePdf.includes('wa.me') && activePdf !== '#' ? (
+                            <a
+                              href={activePdf}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ fontSize: '11.5px', color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}
+                            >
+                              📄 Test & Preview Laser Spy Brochure
+                            </a>
+                          ) : null;
+                        })()}
+                      </div>
                     </div>
                   </div>
 
@@ -15602,6 +16924,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Card Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Laser Spy Technical Specifications Arena - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
 
@@ -15664,14 +16998,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '6px' }}>
                       Bottom Advice Note
                     </label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
-                      value={currentSec.note || ''}
-                      onChange={(e) => setFormData(prev => ({
+                      value={currentSec.note !== undefined && currentSec.note !== null ? currentSec.note : defaultLasertagComparison.note}
+                      onChange={(val) => setFormData(prev => ({
                         ...prev,
-                        lasertagComparison: { ...(prev.lasertagComparison || defaultLasertagComparison), note: e.target.value }
+                        lasertagComparison: { ...(prev.lasertagComparison || defaultLasertagComparison), note: val }
                       }))}
-                      style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', background: '#ffffff', color: '#0f172a', resize: 'vertical' }}
+                      style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', background: '#ffffff', color: '#0f172a' }}
                     />
                   </div>
 
@@ -15713,18 +17047,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#854d0e', marginBottom: '4px' }}>
                                 🔫 Laser Tag Point #{idx + 1}
                               </label>
-                              <textarea
+                              <RichTextareaWithEditor
                                 rows={2}
                                 value={lasertagPoints[idx]?.text || ''}
-                                onChange={(e) => {
+                                onChange={(val) => {
                                   const updated = [...lasertagPoints];
-                                  updated[idx] = { ...updated[idx], text: e.target.value };
+                                  updated[idx] = { ...updated[idx], text: val };
                                   setFormData(prev => ({
                                     ...prev,
                                     lasertagComparison: { ...(prev.lasertagComparison || defaultLasertagComparison), lasertagPoints: updated }
                                   }));
                                 }}
-                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #fde047', fontSize: '12.5px', background: '#ffffff', color: '#0f172a', resize: 'vertical' }}
+                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #fde047', fontSize: '12.5px', background: '#ffffff', color: '#0f172a' }}
                               />
                             </div>
 
@@ -15733,18 +17067,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               <label style={{ display: 'block', fontWeight: '800', fontSize: '11.5px', color: '#0369a1', marginBottom: '4px' }}>
                                 🎯 Laser Spy Point #{idx + 1}
                               </label>
-                              <textarea
+                              <RichTextareaWithEditor
                                 rows={2}
                                 value={laserspyPoints[idx]?.text || ''}
-                                onChange={(e) => {
+                                onChange={(val) => {
                                   const updated = [...laserspyPoints];
-                                  updated[idx] = { ...updated[idx], text: e.target.value };
+                                  updated[idx] = { ...updated[idx], text: val };
                                   setFormData(prev => ({
                                     ...prev,
                                     lasertagComparison: { ...(prev.lasertagComparison || defaultLasertagComparison), laserspyPoints: updated }
                                   }));
                                 }}
-                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #7dd3fc', fontSize: '12.5px', background: '#ffffff', color: '#0f172a', resize: 'vertical' }}
+                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #7dd3fc', fontSize: '12.5px', background: '#ffffff', color: '#0f172a' }}
                               />
                             </div>
                           </div>
@@ -15795,10 +17129,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
                   Paragraph 1 (First Description Block)
                 </label>
-                <textarea
+                <RichTextareaWithEditor
                   rows={3}
                   value={formData.lasertagRoi?.paragraph1 ?? "Buying a laser tag or laser spy setup is a big decision, and you shouldn't have to guess whether it will pay off. That's why every project with Winera starts with a free ROI report built around your venue, not a general estimate copied from a brochure."}
-                  onChange={(e) => handleFieldChange('lasertagRoi', 'paragraph1', e.target.value)}
+                  onChange={(val) => handleFieldChange('lasertagRoi', 'paragraph1', val)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', lineHeight: 1.5 }}
                 />
               </div>
@@ -15807,10 +17141,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
                   Paragraph 2 (Second Description Block)
                 </label>
-                <textarea
+                <RichTextareaWithEditor
                   rows={4}
                   value={formData.lasertagRoi?.paragraph2 ?? "We work out how many games you can run each day, how much you can earn from them, what upkeep will cost, and how soon you'll make your money back. Both games are strong earners because they pull in groups, parties, office teams, and school outings that book many players at once and with just one staff member running the show, you keep costs low and games flowing. You'll see the full picture first, then decide."}
-                  onChange={(e) => handleFieldChange('lasertagRoi', 'paragraph2', e.target.value)}
+                  onChange={(val) => handleFieldChange('lasertagRoi', 'paragraph2', val)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', lineHeight: 1.5 }}
                 />
               </div>
@@ -15833,7 +17167,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.lasertagRoi?.buttonLink ?? "https://wa.me/919428989488"}
+                    value={formData.lasertagRoi?.buttonLink ?? "https://wa.me/919157873576"}
                     onChange={(e) => handleFieldChange('lasertagRoi', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }}
                   />
@@ -15876,6 +17210,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }
                     }}
                     style={{ fontSize: '12px' }}
+                  />
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ ROI Photo Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.lasertagRoi?.mainImgAlt || ''}
+                    onChange={(e) => handleFieldChange('lasertagRoi', 'mainImgAlt', e.target.value)}
+                    placeholder="e.g. Laser Tag ROI Returns & Payback Analysis - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                   />
                 </div>
               </div>
@@ -15971,16 +17317,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                       />
 
-                      <textarea
+                      <RichTextareaWithEditor
                         rows={2}
                         placeholder="Card Description"
                         value={card.desc || ''}
-                        onChange={(e) => {
+                        onChange={(val) => {
                           const list = [...(formData.lasertagWhyUs?.cardsList || [])];
-                          list[idx] = { ...list[idx], desc: e.target.value };
+                          list[idx] = { ...list[idx], desc: val };
                           handleFieldChange('lasertagWhyUs', 'cardsList', list);
                         }}
-                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                        style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                       />
                     </div>
                   ))}
@@ -16167,11 +17513,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                       style={{ padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '600' }}
                     />
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
                       placeholder="Answer"
                       value={faq.answer || faq.a || ''}
-                      onChange={(e) => {
+                      onChange={(val) => {
                         const currentList = Array.isArray(formData.lasertagFaqs) && formData.lasertagFaqs.length > 0
                           ? [...formData.lasertagFaqs]
                           : [
@@ -16204,10 +17550,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               answer: "Our own team handles all repairs and servicing directly across 50+ cities, you deal with us, not an outside agent or an overseas supplier. Most issues are fixed quickly so your games keep running."
                             }
                           ];
-                        currentList[index] = { ...currentList[index], answer: e.target.value };
+                        currentList[index] = { ...currentList[index], answer: val };
                         setFormData((prev) => ({ ...prev, lasertagFaqs: currentList }));
                       }}
-                      style={{ padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5, resize: 'vertical' }}
+                      style={{ padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
                     />
                   </div>
                 ))}
@@ -16277,6 +17623,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Banner Background Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.lasertagCta?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('lasertagCta', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Setup Commercial Laser Tag Arena - Winera International"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div>
@@ -16292,14 +17650,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div>
                 <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Subtitle Description Text</label>
-                <textarea
+                <RichTextareaWithEditor
                   rows={3}
                   value={formData.lasertagCta?.subtitle !== undefined && formData.lasertagCta.subtitle !== '' ? formData.lasertagCta.subtitle : (formData.lasertagCta?.whiteText || "Book a free call and we'll walk you through with a free ROI report and a plan made for your venue")}
-                  onChange={(e) => {
-                    handleFieldChange('lasertagCta', 'subtitle', e.target.value);
-                    handleFieldChange('lasertagCta', 'whiteText', e.target.value);
+                  onChange={(val) => {
+                    handleFieldChange('lasertagCta', 'subtitle', val);
+                    handleFieldChange('lasertagCta', 'whiteText', val);
                   }}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
                 />
               </div>
 
@@ -16317,7 +17675,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.lasertagCta?.buttonLink || 'https://wa.me/919428989488'}
+                    value={formData.lasertagCta?.buttonLink || 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('lasertagCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -16384,6 +17742,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Left Image Graphic Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.vrIntro?.mainImgAlt || formData.vrIntro?.imgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      handleFieldChange('vrIntro', 'mainImgAlt', val);
+                      handleFieldChange('vrIntro', 'imgAlt', val);
+                    }}
+                    placeholder="e.g. VR Gaming Machine Supplier in India - Winera Commercial Setup"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div>
@@ -16397,12 +17771,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Section Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Section Description"
                   rows={3}
-                  value={formData.vrIntro?.desc || "India's ROI-first VR gaming supplier commercial-grade machines sourced, configured, and serviced by our own team across 50+ cities"}
-                  onChange={(e) => handleFieldChange('vrIntro', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  value={formData.vrIntro?.desc !== undefined ? formData.vrIntro.desc : "India's ROI-first VR gaming supplier commercial-grade machines sourced, configured, and serviced by our own team across 50+ cities"}
+                  onChange={(val) => handleFieldChange('vrIntro', 'desc', val)}
+                  placeholder="Enter Section Description..."
                 />
               </div>
 
@@ -16420,7 +17794,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={(formData.vrIntro?.buttonLink && formData.vrIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.vrIntro?.buttonLink && formData.vrIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.vrIntro?.waMessage || "Hello Winera International! I want to get a quote and details for VR Gaming Machine setup. Please share details. [Ref: VR Games Page]";
@@ -16450,7 +17824,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.vrIntro?.buttonLink && formData.vrIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.vrIntro?.buttonLink && formData.vrIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -16526,6 +17900,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Right Image Graphic Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.vrMatchedVenue?.imgAlt || ''}
+                    onChange={(e) => handleFieldChange('vrMatchedVenue', 'imgAlt', e.target.value)}
+                    placeholder="e.g. Commercial VR Machines Matched to Your Venue - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div>
@@ -16539,42 +17925,42 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1"
                   rows={2}
-                  value={formData.vrMatchedVenue?.p1 || "Winera International Pvt. Ltd. is a trusted VR gaming machine supplier in India sourcing and servicing commercial virtual reality machines end-to-end across India."}
-                  onChange={(e) => handleFieldChange('vrMatchedVenue', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.vrMatchedVenue?.p1 !== undefined ? formData.vrMatchedVenue.p1 : "Winera International Pvt. Ltd. is a trusted VR gaming machine supplier in India sourcing and servicing commercial virtual reality machines end-to-end across India."}
+                  onChange={(val) => handleFieldChange('vrMatchedVenue', 'p1', val)}
+                  placeholder="Enter Paragraph 1..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2"
                   rows={2}
-                  value={formData.vrMatchedVenue?.p2 || "With over 15 years of industry expertise, we source every VR gaming machine from established global manufacturers and configure it with the right game library, payment system, and safety setup to match your venue's requirements."}
-                  onChange={(e) => handleFieldChange('vrMatchedVenue', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.vrMatchedVenue?.p2 !== undefined ? formData.vrMatchedVenue.p2 : "With over 15 years of industry expertise, we source every VR gaming machine from established global manufacturers and configure it with the right game library, payment system, and safety setup to match your venue's requirements."}
+                  onChange={(val) => handleFieldChange('vrMatchedVenue', 'p2', val)}
+                  placeholder="Enter Paragraph 2..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 3</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 3"
                   rows={2}
-                  value={formData.vrMatchedVenue?.p3 || "Before delivery, each unit goes through a commercial-grade durability check — built for high-footfall environments like malls, hotels, and family entertainment centres."}
-                  onChange={(e) => handleFieldChange('vrMatchedVenue', 'p3', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.vrMatchedVenue?.p3 !== undefined ? formData.vrMatchedVenue.p3 : "Before delivery, each unit goes through a commercial-grade durability check — built for high-footfall environments like malls, hotels, and family entertainment centres."}
+                  onChange={(val) => handleFieldChange('vrMatchedVenue', 'p3', val)}
+                  placeholder="Enter Paragraph 3..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 4</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 4"
                   rows={2}
-                  value={formData.vrMatchedVenue?.p4 || "From sourcing to installation and after-sales support, our own team manages the entire process."}
-                  onChange={(e) => handleFieldChange('vrMatchedVenue', 'p4', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.vrMatchedVenue?.p4 !== undefined ? formData.vrMatchedVenue.p4 : "From sourcing to installation and after-sales support, our own team manages the entire process."}
+                  onChange={(val) => handleFieldChange('vrMatchedVenue', 'p4', val)}
+                  placeholder="Enter Paragraph 4..."
                 />
               </div>
 
@@ -16592,7 +17978,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={(formData.vrMatchedVenue?.buttonLink && formData.vrMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.vrMatchedVenue?.buttonLink && formData.vrMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.vrMatchedVenue?.waMessage || "Hello Winera International! I want to get a quote for Commercial VR Machines matched to my venue. Please share details. [Ref: VR Games Page]";
@@ -16622,7 +18008,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.vrMatchedVenue?.buttonLink && formData.vrMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.vrMatchedVenue?.buttonLink && formData.vrMatchedVenue.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -16651,11 +18037,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
           {/* VR GAME CATEGORIES & CARDS MANAGEMENT */}
           {(activeSection === 'vrCategories' || activeSection === 'vrRange') && (() => {
-            const defaultVrCategories = allVrGames?.categoriesList || [
-              "All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"
-            ];
-
-            const masterCards = allVrGames?.cards || [];
+            const defaultVrCategories = DEFAULT_VR_CATEGORIES;
+            const masterCards = vrMasterCards || [];
 
             const vrSource = formData.vrCategories || formData.vrRange;
             const deletedSlugs = new Set((formData?.vrCategories?.deletedSlugs || formData?.vrRange?.deletedSlugs || []).map(s => (s || '').toLowerCase().trim()));
@@ -16687,7 +18070,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   const k1 = (mc.slug || '').toLowerCase().trim();
                   const k2 = (mc.name || mc.title || '').toLowerCase().trim();
                   const override = cmsMap.get(k1) || cmsMap.get(k2);
-                  return override ? { ...mc, ...override } : mc;
+                  if (!override) return mc;
+                  const ovGal = Array.isArray(override.gallery) ? override.gallery.filter(Boolean) : [];
+                  const mcGal = Array.isArray(mc.gallery) ? mc.gallery.filter(Boolean) : [];
+                  const bestGal = ovGal.length > mcGal.length ? ovGal : (mcGal.length > 0 ? mcGal : ovGal);
+                  return { ...mc, ...override, gallery: bestGal };
                 });
                 rawCards.forEach(cc => {
                   const k1 = (cc.slug || '').toLowerCase().trim();
@@ -16710,11 +18097,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
             const searchFiltered = adminVrSearch.trim()
               ? categoryFiltered.filter(item => {
-                  const q = adminVrSearch.toLowerCase().trim();
-                  const name = (item.name || item.title || "").toLowerCase();
-                  const cat = (item.category || item.tag || "").toLowerCase();
-                  return name.includes(q) || cat.includes(q);
-                })
+                const q = adminVrSearch.toLowerCase().trim();
+                const name = (item.name || item.title || "").toLowerCase();
+                const cat = (item.category || item.tag || "").toLowerCase();
+                return name.includes(q) || cat.includes(q);
+              })
               : categoryFiltered;
 
             const adminItemsPerPage = 24;
@@ -17214,15 +18601,27 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Right Column Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.vrReliability?.imgAlt || ''}
+                    onChange={(e) => handleFieldChange('vrReliability', 'imgAlt', e.target.value)}
+                    placeholder="e.g. Commercial-Grade Quality and Reliability - Winera VR"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Main Paragraph Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Main Paragraph Description"
                   rows={3}
-                  value={formData.vrReliability?.mainP || "Most VR machines look impressive in a showroom. What matters for your venue is how they perform after six months of daily public use. Every unit we supply is built specifically for commercial cycling not consumer hardware repackaged for public environments. The difference shows up in your maintenance bills, not the spec sheet."}
-                  onChange={(e) => handleFieldChange('vrReliability', 'mainP', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  value={formData.vrReliability?.mainP !== undefined ? formData.vrReliability.mainP : "Most VR machines look impressive in a showroom. What matters for your venue is how they perform after six months of daily public use. Every unit we supply is built specifically for commercial cycling not consumer hardware repackaged for public environments. The difference shows up in your maintenance bills, not the spec sheet."}
+                  onChange={(val) => handleFieldChange('vrReliability', 'mainP', val)}
+                  placeholder="Enter main paragraph description..."
                 />
               </div>
 
@@ -17236,12 +18635,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   onChange={(e) => handleFieldChange('vrReliability', 'f1Title', e.target.value)}
                   style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                 />
-                <textarea
+                <RichTextareaWithEditor
+                  label="Feature 1 Description"
                   rows={2}
                   placeholder="Feature 1 Description"
-                  value={formData.vrReliability?.f1Desc || "A 5-player group ride suits a high-footfall mall. A solo seated simulator suits a hotel lobby. Getting this match wrong is the most common reason VR zones underperform. We assess your space, footfall, and visitors before recommending anything — not from a catalogue."}
-                  onChange={(e) => handleFieldChange('vrReliability', 'f1Desc', e.target.value)}
-                  style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.vrReliability?.f1Desc !== undefined ? formData.vrReliability.f1Desc : "A 5-player group ride suits a high-footfall mall. A solo seated simulator suits a hotel lobby. Getting this match wrong is the most common reason VR zones underperform. We assess your space, footfall, and visitors before recommending anything — not from a catalogue."}
+                  onChange={(val) => handleFieldChange('vrReliability', 'f1Desc', val)}
                 />
               </div>
 
@@ -17255,12 +18654,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   onChange={(e) => handleFieldChange('vrReliability', 'f2Title', e.target.value)}
                   style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                 />
-                <textarea
+                <RichTextareaWithEditor
+                  label="Feature 2 Description"
                   rows={2}
                   placeholder="Feature 2 Description"
-                  value={formData.vrReliability?.f2Desc || "The same team that recommends your machine mix sources it, installs it, and supports it after handover. No separate vendors, no subcontractors, no waiting on overseas manufacturers. When something needs attention, one call reaches the right person."}
-                  onChange={(e) => handleFieldChange('vrReliability', 'f2Desc', e.target.value)}
-                  style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.vrReliability?.f2Desc !== undefined ? formData.vrReliability.f2Desc : "The same team that recommends your machine mix sources it, installs it, and supports it after handover. No separate vendors, no subcontractors, no waiting on overseas manufacturers. When something needs attention, one call reaches the right person."}
+                  onChange={(val) => handleFieldChange('vrReliability', 'f2Desc', val)}
                 />
               </div>
 
@@ -17324,6 +18723,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '100px', height: '55px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Right Graphic Image (VR Player) Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.vrEarn?.imgAlt || ''}
+                    onChange={(e) => handleFieldChange('vrEarn', 'imgAlt', e.target.value)}
+                    placeholder="e.g. What Will Your VR Gaming Zone Actually Earn - Winera International"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div>
@@ -17338,22 +18749,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1"
                   rows={3}
-                  value={formData.vrEarn?.p1 || "Most VR machine suppliers in India quote a price and leave the financial decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any order, our team prepares a complete ROI report for your specific venue covering machine cost, projected daily sessions, estimated revenue per player, maintenance costs, and break-even timeline."}
-                  onChange={(e) => handleFieldChange('vrEarn', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.vrEarn?.p1 !== undefined ? formData.vrEarn.p1 : "Most VR machine suppliers in India quote a price and leave the financial decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any order, our team prepares a complete ROI report for your specific venue covering machine cost, projected daily sessions, estimated revenue per player, maintenance costs, and break-even timeline."}
+                  onChange={(val) => handleFieldChange('vrEarn', 'p1', val)}
+                  placeholder="Enter Paragraph 1..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2"
                   rows={3}
-                  value={formData.vrEarn?.p2 || "Every figure is calculated around your venue type, footfall, and machine selection, not an industry average pulled from a brochure. Very few VR gaming suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
-                  onChange={(e) => handleFieldChange('vrEarn', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontFamily: 'inherit' }}
+                  value={formData.vrEarn?.p2 !== undefined ? formData.vrEarn.p2 : "Every figure is calculated around your venue type, footfall, and machine selection, not an industry average pulled from a brochure. Very few VR gaming suppliers in India include this as a standard part of their process. For Winera, it is where every project starts"}
+                  onChange={(val) => handleFieldChange('vrEarn', 'p2', val)}
+                  placeholder="Enter Paragraph 2..."
                 />
               </div>
 
@@ -17371,7 +18782,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={(formData.vrEarn?.buttonLink && formData.vrEarn.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.vrEarn?.buttonLink && formData.vrEarn.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.vrEarn?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for VR Gaming Zone setup & commercial ROI calculation. Please share details. [Ref: VR Games Page]";
@@ -17401,7 +18812,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.vrEarn?.buttonLink && formData.vrEarn.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.vrEarn?.buttonLink && formData.vrEarn.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -17494,17 +18905,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             }}
                             style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                           />
-                          <input
-                            type="text"
+                          <RichTextareaWithEditor
+                            label="Card Description"
+                            rows={2}
                             placeholder="Card Description"
                             value={card.desc || ''}
-                            onChange={(e) => {
+                            onChange={(val) => {
                               const updated = [...cardsList];
-                              updated[idx] = { ...updated[idx], desc: e.target.value };
+                              updated[idx] = { ...updated[idx], desc: val };
                               const updatedSec = { ...currentSec, cardsList: updated };
                               setFormData(prev => ({ ...prev, vrWhyUs: updatedSec }));
                             }}
-                            style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12.5px' }}
                           />
                         </div>
                         <button
@@ -17546,7 +18957,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>CTA Button Link (URL or WhatsApp)</label>
                       <input
                         type="text"
-                        value={currentSec.ctaLink || 'https://wa.me/919428989488'}
+                        value={currentSec.ctaLink || 'https://wa.me/919157873576'}
                         onChange={(e) => {
                           const updatedSec = { ...currentSec, ctaLink: e.target.value };
                           setFormData(prev => ({ ...prev, vrWhyUs: updatedSec }));
@@ -17607,7 +19018,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       },
                       {
                         question: "How do I get started with a VR gaming machine order from Winera?",
-                        answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
+                        answer: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
                       }
                     ];
                     const currentList = Array.isArray(formData.vrFaqs) && formData.vrFaqs.length > 0
@@ -17656,7 +19067,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     },
                     {
                       question: "How do I get started with a VR gaming machine order from Winera?",
-                      answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
+                      answer: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
                     }
                   ]
                 ).map((faq, idx) => (
@@ -17697,7 +19108,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             },
                             {
                               question: "How do I get started with a VR gaming machine order from Winera?",
-                              answer: "Contact us via our website's contact form, WhatsApp, or call +91 94289 89488. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
+                              answer: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
                             }
                           ];
                           const currentList = Array.isArray(formData.vrFaqs) && formData.vrFaqs.length > 0
@@ -17725,16 +19136,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                     />
 
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Answer"
                       rows={3}
                       placeholder="Answer"
                       value={faq.a || faq.answer || ''}
-                      onChange={(e) => {
+                      onChange={(val) => {
                         const currentList = [...(formData.vrFaqs || [])];
-                        currentList[idx] = { ...currentList[idx], a: e.target.value, answer: e.target.value };
+                        currentList[idx] = { ...currentList[idx], a: val, answer: val };
                         setFormData((prev) => ({ ...prev, vrFaqs: currentList }));
                       }}
-                      style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px', fontFamily: 'inherit' }}
                     />
                   </div>
                 ))}
@@ -17812,6 +19223,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '14px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Banner Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.vrCta?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('vrCta', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Need Any Consultations for VR Game Zone Setup - Winera"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
 
@@ -17838,15 +19261,15 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>White Subtitle Text</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="White Subtitle Text"
                   rows={2}
                   value={formData.vrCta?.whiteText !== undefined ? formData.vrCta.whiteText : (formData.vrCta?.subtitle !== undefined ? formData.vrCta.subtitle : "WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS.")}
-                  onChange={(e) => {
-                    handleFieldChange('vrCta', 'whiteText', e.target.value);
-                    handleFieldChange('vrCta', 'subtitle', e.target.value);
+                  onChange={(val) => {
+                    handleFieldChange('vrCta', 'whiteText', val);
+                    handleFieldChange('vrCta', 'subtitle', val);
                   }}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  placeholder="WE'RE READY TO GIVE ANSWERS TO YOUR QUESTIONS."
                 />
               </div>
 
@@ -17865,7 +19288,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link</label>
                   <input
                     type="text"
-                    value={formData.vrCta?.buttonLink !== undefined ? formData.vrCta.buttonLink : 'https://wa.me/919428989488'}
+                    value={formData.vrCta?.buttonLink !== undefined ? formData.vrCta.buttonLink : 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('vrCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -17959,17 +19382,17 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             }}
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
                           />
-                          <textarea
+                          <RichTextareaWithEditor
+                            label="Card Description"
                             rows={2}
-                            placeholder="Description"
                             value={card.desc || ''}
-                            onChange={(e) => {
+                            onChange={(val) => {
                               const updated = [...cardsList];
-                              updated[cIdx] = { ...updated[cIdx], desc: e.target.value };
+                              updated[cIdx] = { ...updated[cIdx], desc: val };
                               const updatedSec = { ...currentSec, cards: updated };
                               setFormData(prev => ({ ...prev, amusementWhyUs: updatedSec }));
                             }}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                            placeholder="Card Description"
                           />
                         </div>
                       ))}
@@ -18006,12 +19429,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Description Paragraph"
                   rows={3}
                   value={formData.bowlingIntro?.desc || "India's trusted source for refurbished Brunswick bowling equipment — complete setup, installation, and a free ROI report before you invest."}
-                  onChange={(e) => handleFieldChange('bowlingIntro', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingIntro', 'desc', val)}
+                  placeholder="Enter bowling intro description..."
                 />
               </div>
 
@@ -18063,6 +19486,24 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
+              {/* Main Graphic Alt Tag */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Main Graphic Image Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.bowlingIntro?.mainImgAlt || formData.bowlingIntro?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const updated = { ...(formData.bowlingIntro || {}), mainImgAlt: val, imgAlt: val };
+                    setFormData(prev => ({ ...prev, bowlingIntro: updated }));
+                  }}
+                  placeholder="e.g. Bowling Alley Manufacturers in India - Winera International"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
               {/* WhatsApp Action Button Controls for Bowling Intro */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
@@ -18082,7 +19523,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={(formData.bowlingIntro?.buttonLink && formData.bowlingIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.bowlingIntro?.buttonLink && formData.bowlingIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.bowlingIntro?.waMessage || "Hello Winera International! I want to get a quote and estimation for a Bowling Alley setup. Please share details. [Ref: Bowling Alley Page]";
@@ -18112,7 +19553,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.bowlingIntro?.buttonLink && formData.bowlingIntro.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.bowlingIntro?.buttonLink && formData.bowlingIntro.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     const updated = {
                       ...(formData.bowlingIntro || {}),
@@ -18128,7 +19569,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
-                  onClick={() => persistSectionToDatabase('bowlingIntro', formData.bowlingIntro || {})}
+                  onClick={() => {
+                    const cur = { ...(formData.bowlingIntro || {}) };
+                    if (typeof cur.desc === 'string') {
+                      cur.desc = cur.desc.replace(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|[\w\.,\(\)]+)\s*\n+\s*([a-z])/g, '$1 $2').trim();
+                    }
+                    persistSectionToDatabase('bowlingIntro', cur);
+                  }}
                   style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
                 >
                   Save Section Data
@@ -18154,22 +19601,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1 Description"
                   rows={4}
                   value={formData.bowlingManufacturer?.p1 !== undefined && formData.bowlingManufacturer.p1 !== '' ? formData.bowlingManufacturer.p1 : "At Winera International Pvt. Ltd., we are proud to be India's leading bowling alley manufacturer and supplier of refurbished Brunswick bowling equipment. With over 15 years of expertise in the industry, we have built a reputation for delivering top-quality bowling alley equipment and exceptional customer service, tailored to fit the unique needs and budgets of our clients."}
-                  onChange={(e) => handleFieldChange('bowlingManufacturer', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingManufacturer', 'p1', val)}
+                  placeholder="Enter Paragraph 1 description..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2 Description"
                   rows={4}
                   value={formData.bowlingManufacturer?.p2 !== undefined && formData.bowlingManufacturer.p2 !== '' ? formData.bowlingManufacturer.p2 : "We specialize in providing refurbished Brunswick GS98 & GSX equipment, enhanced with the latest Frameworx or Vector Scoring Systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience."}
-                  onChange={(e) => handleFieldChange('bowlingManufacturer', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingManufacturer', 'p2', val)}
+                  placeholder="Enter Paragraph 2 description..."
                 />
               </div>
 
@@ -18221,6 +19668,24 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </div>
               </div>
 
+              {/* Pins Graphic Alt Tag */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Pins Graphic Image Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.bowlingManufacturer?.mainImgAlt || formData.bowlingManufacturer?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const updated = { ...(formData.bowlingManufacturer || {}), mainImgAlt: val, imgAlt: val };
+                    setFormData(prev => ({ ...prev, bowlingManufacturer: updated }));
+                  }}
+                  placeholder="e.g. Exploding Bowling Pins - Commercial Bowling Lanes Setup"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
+              </div>
+
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('bowlingManufacturer', formData.bowlingManufacturer || {})}
@@ -18242,29 +19707,29 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 </label>
                 <input
                   type="text"
-                  value={formData.bowlingFreeFall?.title || '*Free-Fall Bowling:*<br/>Give the Full<br/>Professional Experience'}
+                  value={formData.bowlingFreeFall?.title || '*Free-Fall Bowling:*<br/>Give the Full Professional Experience'}
                   onChange={(e) => handleFieldChange('bowlingFreeFall', 'title', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1 Description"
                   rows={4}
                   value={formData.bowlingFreeFall?.p1 !== undefined && formData.bowlingFreeFall.p1 !== '' ? formData.bowlingFreeFall.p1 : "Free-fall bowling is the traditional game you'll find in professional bowling centers worldwide. When the ball hits the pins, they fall freely and naturally, and a pinsetter machine clears and resets them for the next throw. It delivers the true feel of real bowling, the satisfying strike and the competition-grade experience serious players expect."}
-                  onChange={(e) => handleFieldChange('bowlingFreeFall', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingFreeFall', 'p1', val)}
+                  placeholder="Enter Paragraph 1 description..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2 Description"
                   rows={4}
                   value={formData.bowlingFreeFall?.p2 !== undefined && formData.bowlingFreeFall.p2 !== '' ? formData.bowlingFreeFall.p2 : "We specialise in refurbished Brunswick GS98 and GS-X equipment, restored to perform like new and enhanced with the latest Frameworx or Vector scoring systems based on your specific requirements. Our approach is simple — offer the best bowling solutions to match both your budget and venue dimensions, ensuring an outstanding bowling experience. It's the ideal choice for dedicated bowling centers and premium venues where bowling is the main attraction."}
-                  onChange={(e) => handleFieldChange('bowlingFreeFall', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingFreeFall', 'p2', val)}
+                  placeholder="Enter Paragraph 2 description..."
                 />
               </div>
 
@@ -18315,6 +19780,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Free-Fall Graphic Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bowlingFreeFall?.mainImgAlt || formData.bowlingFreeFall?.imgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const updated = { ...(formData.bowlingFreeFall || {}), mainImgAlt: val, imgAlt: val };
+                      setFormData(prev => ({ ...prev, bowlingFreeFall: updated }));
+                    }}
+                    placeholder="e.g. Free Fall Bowling Pinsetter - Commercial Bowling Setup"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -18333,7 +19814,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.bowlingFreeFall?.videoUrl || 'https://wa.me/919428989488'}
+                    value={formData.bowlingFreeFall?.videoUrl || 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('bowlingFreeFall', 'videoUrl', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -18417,22 +19898,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1 Description"
                   rows={4}
                   value={formData.bowlingString?.p1 !== undefined && formData.bowlingString.p1 !== '' ? formData.bowlingString.p1 : "Add a complete, ready-to-play bowling setup to your venue at a lower upfront cost than a traditional free-fall system. We supply and install full string bowling lanes pins, strings, scoring screens, and commissioning so you get a finished attraction, not just a machine."}
-                  onChange={(e) => handleFieldChange('bowlingString', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingString', 'p1', val)}
+                  placeholder="Enter Paragraph 1 description..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2 Description"
                   rows={4}
                   value={formData.bowlingString?.p2 !== undefined && formData.bowlingString.p2 !== '' ? formData.bowlingString.p2 : "String systems have fewer moving parts, which means quieter lanes, easier maintenance your own team can handle, and a compact footprint that fits where a full 89 ft lane won't. That's why family entertainment centers, malls, resorts, and cafés choose them. Lower to set up, lower to run, and quick to start earning."}
-                  onChange={(e) => handleFieldChange('bowlingString', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingString', 'p2', val)}
+                  placeholder="Enter Paragraph 2 description..."
                 />
               </div>
 
@@ -18483,6 +19964,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ String Bowling Graphic Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bowlingString?.mainImgAlt || formData.bowlingString?.imgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const updated = { ...(formData.bowlingString || {}), mainImgAlt: val, imgAlt: val };
+                      setFormData(prev => ({ ...prev, bowlingString: updated }));
+                    }}
+                    placeholder="e.g. String Bowling Friends - Commercial String Bowling Machine"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -18496,13 +19993,45 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Brochure PDF File URL / Link</label>
-                  <input
-                    type="text"
-                    value={formData.bowlingString?.brochureUrl || '/winera-brochure.pdf'}
-                    onChange={(e) => handleFieldChange('bowlingString', 'brochureUrl', e.target.value)}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                  />
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Brochure PDF File URL / Link <span style={{ fontSize: '11px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '6px' }}>📄 PDF Document</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <input
+                      type="text"
+                      value={formData.bowlingString?.brochureUrl || '/pdf/Bowling Catalogue.pdf'}
+                      onChange={(e) => handleFieldChange('bowlingString', 'brochureUrl', e.target.value)}
+                      placeholder="e.g. /pdf/Bowling Catalogue.pdf or Cloudinary URL..."
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                    <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+                      <Upload style={{ width: '15px', height: '15px' }} /> Upload PDF
+                      <input
+                        type="file"
+                        accept="application/pdf,.pdf"
+                        onChange={(e) => handleBrochureUpload(e, 'bowlingString', 'brochureUrl')}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
+                  <div style={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                    <span style={{ fontSize: '11px', color: '#64748b' }}>
+                      💡 Cloudinary Free plan limit: <strong>10 MB</strong> (Allows larger files automatically with a Cloudinary Pro plan). Compress via <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#0284c7', textDecoration: 'underline', fontWeight: '700' }}>iLovePDF</a> if needed.
+                    </span>
+                    {(() => {
+                      const activePdf = formData.bowlingString?.brochureUrl || '/pdf/Bowling Catalogue.pdf';
+                      return activePdf && activePdf !== '#' ? (
+                        <a
+                          href={activePdf}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ fontSize: '11.5px', color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}
+                        >
+                          📄 Test & Preview Bowling Brochure
+                        </a>
+                      ) : null;
+                    })()}
+                  </div>
                 </div>
               </div>
 
@@ -18582,22 +20111,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1 Description"
                   rows={4}
                   value={formData.bowlingRoi?.p1 !== undefined && formData.bowlingRoi.p1 !== '' ? formData.bowlingRoi.p1 : "Setting up a bowling center is a significant investment which is why we don't just sell you equipment and walk away. We're India's ROI-First Game Zone Developer. Before you commit to a project, every client receives a complete report covering product costing, maintenance costs, and projected revenue timeline, so your investment decision is based on real numbers, not estimates."}
-                  onChange={(e) => handleFieldChange('bowlingRoi', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingRoi', 'p1', val)}
+                  placeholder="Enter Paragraph 1 description..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2 Description"
                   rows={4}
                   value={formData.bowlingRoi?.p2 !== undefined && formData.bowlingRoi.p2 !== '' ? formData.bowlingRoi.p2 : "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment."}
-                  onChange={(e) => handleFieldChange('bowlingRoi', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingRoi', 'p2', val)}
+                  placeholder="Enter Paragraph 2 description..."
                 />
               </div>
 
@@ -18615,7 +20144,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Action Button Target Link URL</label>
                   <input
                     type="text"
-                    value={(formData.bowlingRoi?.videoUrl && formData.bowlingRoi.videoUrl.split('?')[0]) || 'https://wa.me/919428989488'}
+                    value={(formData.bowlingRoi?.videoUrl && formData.bowlingRoi.videoUrl.split('?')[0]) || 'https://wa.me/919157873576'}
                     onChange={(e) => {
                       const baseLink = e.target.value;
                       const msg = formData.bowlingRoi?.waMessage || "Hello Winera International! I want to get custom Bowling ROI calculation & setup guidance. Please share details. [Ref: Bowling Alley Page]";
@@ -18645,7 +20174,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.bowlingRoi?.videoUrl && formData.bowlingRoi.videoUrl.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.bowlingRoi?.videoUrl && formData.bowlingRoi.videoUrl.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     const updated = {
                       ...(formData.bowlingRoi || {}),
@@ -18705,6 +20234,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Investment & ROI Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bowlingRoi?.mainImgAlt || formData.bowlingRoi?.imgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const updated = { ...(formData.bowlingRoi || {}), mainImgAlt: val, imgAlt: val };
+                      setFormData(prev => ({ ...prev, bowlingRoi: updated }));
+                    }}
+                    placeholder="e.g. Bowling Alley Lanes ROI - High Profit Game Zone Equipment"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -18735,22 +20280,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 1 Description"
                   rows={4}
                   value={formData.bowlingWhyUs?.p1 !== undefined && formData.bowlingWhyUs.p1 !== '' ? formData.bowlingWhyUs.p1 : "At Winera International, we bring over 15 years of industry experience as a trusted bowling alley manufacturer in India. We are the largest bowling alley supplier in the country, with more than 30 complete setups delivered successfully."}
-                  onChange={(e) => handleFieldChange('bowlingWhyUs', 'p1', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingWhyUs', 'p1', val)}
+                  placeholder="Enter Paragraph 1 description..."
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2 Description</label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Paragraph 2 Description"
                   rows={4}
                   value={formData.bowlingWhyUs?.p2 !== undefined && formData.bowlingWhyUs.p2 !== '' ? formData.bowlingWhyUs.p2 : "Our equipment is sourced from the USA/China, ensuring proven quality. We provide affordable refurbished options along with installation, maintenance, and support across India with low failure rates and easy servicing, tailored to your budget and space."}
-                  onChange={(e) => handleFieldChange('bowlingWhyUs', 'p2', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
+                  onChange={(val) => handleFieldChange('bowlingWhyUs', 'p2', val)}
+                  placeholder="Enter Paragraph 2 description..."
                 />
               </div>
 
@@ -18800,6 +20345,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Why Choose Winera Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.bowlingWhyUs?.mainImgAlt || formData.bowlingWhyUs?.imgAlt || ''}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const updated = { ...(formData.bowlingWhyUs || {}), mainImgAlt: val, imgAlt: val };
+                      setFormData(prev => ({ ...prev, bowlingWhyUs: updated }));
+                    }}
+                    placeholder="e.g. Blue Bowling Ball and Pins - Winera Game Zone Manufacturer"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -18832,14 +20393,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Description Paragraph
-                </label>
-                <textarea
+                <RichTextareaWithEditor
+                  label="Description Paragraph"
                   rows={2}
                   value={formData.bowlingCta?.description !== undefined ? formData.bowlingCta.description : "Invest in our quality bowling equipment and elevate your venue with long-lasting, world-class bowling gear without overspending."}
-                  onChange={(e) => handleFieldChange('bowlingCta', 'description', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
+                  onChange={(val) => handleFieldChange('bowlingCta', 'description', val)}
+                  placeholder="Enter CTA description paragraph..."
                 />
               </div>
 
@@ -18857,7 +20416,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link</label>
                   <input
                     type="text"
-                    value={formData.bowlingCta?.buttonLink !== undefined ? formData.bowlingCta.buttonLink : "https://wa.me/919428989488"}
+                    value={formData.bowlingCta?.buttonLink !== undefined ? formData.bowlingCta.buttonLink : "https://wa.me/919157873576"}
                     onChange={(e) => handleFieldChange('bowlingCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -18922,6 +20481,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </button>
                   )}
                 </div>
+              </div>
+
+              {/* Bowling CTA Banner Image Alt Tag */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  🏷️ Background Banner Image Alt Text (SEO Keyword)
+                </label>
+                <input
+                  type="text"
+                  value={formData.bowlingCta?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('bowlingCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Bowling Alley Setup Consultation & Equipment - Winera International"
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -19015,17 +20588,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Description Paragraph
-                </label>
-                <textarea
-                  rows={3}
-                  value={formData.aboutCta?.description !== undefined ? formData.aboutCta.description : "Whether you're starting from scratch or upgrading an existing space our team is ready to help you plan, build, and launch a game zone that drives real revenue."}
-                  onChange={(e) => handleFieldChange('aboutCta', 'description', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px', fontFamily: 'inherit' }}
-                />
-              </div>
+              <RichTextareaWithEditor
+                label="Description Paragraph"
+                rows={3}
+                value={formData.aboutCta?.description !== undefined ? formData.aboutCta.description : "Whether you're starting from scratch or upgrading an existing space our team is ready to help you plan, build, and launch a game zone that drives real revenue."}
+                onChange={(val) => handleFieldChange('aboutCta', 'description', val)}
+                placeholder="Enter description paragraph..."
+              />
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
@@ -19045,7 +20614,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </label>
                   <input
                     type="text"
-                    value={formData.aboutCta?.buttonLink !== undefined ? formData.aboutCta.buttonLink : "https://wa.me/919428989488"}
+                    value={formData.aboutCta?.buttonLink !== undefined ? formData.aboutCta.buttonLink : "https://wa.me/919157873576"}
                     onChange={(e) => handleFieldChange('aboutCta', 'buttonLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -19097,6 +20666,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }}
                     />
                   </label>
+                  <input
+                    type="text"
+                    value={formData.aboutCta?.bgUrl || ''}
+                    onChange={(e) => handleFieldChange('aboutCta', 'bgUrl', e.target.value)}
+                    placeholder="Image URL or upload banner with button"
+                    style={{ flex: 1, minWidth: '220px', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                  />
                   {formData.aboutCta?.bgUrl && (
                     <button
                       type="button"
@@ -19110,6 +20686,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Reset to Default Banner
                     </button>
                   )}
+                </div>
+                <div style={{ marginTop: '12px' }}>
+                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Background Banner Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.aboutCta?.bgAlt !== undefined ? formData.aboutCta.bgAlt : ''}
+                    onChange={(e) => handleFieldChange('aboutCta', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Take The Next Step Towards Your Perfect Game Zone - Winera International"
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                  />
                 </div>
               </div>
 
@@ -19193,6 +20781,75 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
                   />
                 </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Hero Banner Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.aboutHero?.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('aboutHero', 'bgAlt', e.target.value)}
+                    placeholder="e.g. About Winera International - Commercial Entertainment Solutions"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
+              </div>
+
+              {/* Mobile Screen Hero Banner Upload & Preview */}
+              <div>
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                </label>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    value={formData.aboutHero?.mobileBgUrl || ''}
+                    onChange={(e) => handleFieldChange('aboutHero', 'mobileBgUrl', e.target.value)}
+                    placeholder="Mobile Background Image URL"
+                    style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                  />
+                  <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                    <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                    Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={async (e) => {
+                        if (e.target.files?.[0]) {
+                          const res = await uploadImageFile(e.target.files[0], admin.token);
+                          handleFieldChange('aboutHero', 'mobileBgUrl', res.url);
+                        }
+                      }}
+                    />
+                  </label>
+                  <img
+                    src={getAdminValidImageUrl(formData.aboutHero?.mobileBgUrl, defaultGameZoneMobileBanner)}
+                    alt="About Mobile Hero Preview"
+                    style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                  />
+                  {formData.aboutHero?.mobileBgUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleFieldChange('aboutHero', 'mobileBgUrl', '')}
+                      style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                    >
+                      Reset Image
+                    </button>
+                  )}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.aboutHero?.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('aboutHero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. About Winera International Mobile Banner - Commercial Entertainment Solutions"
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                  />
+                </div>
               </div>
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
@@ -19220,17 +20877,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                 />
               </div>
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Main Description Paragraph
-                </label>
-                <textarea
-                  rows={4}
-                  value={formData.aboutWelcome?.desc !== undefined ? formData.aboutWelcome.desc : "Winera International Pvt. Ltd. is a Surat-based B2B leader in indoor amusement and playground solutions. Since 2014, we have been transforming commercial spaces into world-class entertainment destinations, handling everything from design and manufacturing to installation and after-sales support."}
-                  onChange={(e) => handleFieldChange('aboutWelcome', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
-                />
-              </div>
+              <RichTextareaWithEditor
+                label="Main Description Paragraph"
+                rows={4}
+                value={formData.aboutWelcome?.desc !== undefined ? formData.aboutWelcome.desc : "Winera International Pvt. Ltd. is a Surat-based B2B leader in indoor amusement and playground solutions. Since 2014, we have been transforming commercial spaces into world-class entertainment destinations, handling everything from design and manufacturing to installation and after-sales support."}
+                onChange={(val) => handleFieldChange('aboutWelcome', 'desc', val)}
+                placeholder="Enter main description..."
+              />
 
               {/* Single Welcome Section Photo Upload */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
@@ -19273,6 +20926,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   )}
                 </div>
+                <div style={{ marginTop: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
+                    🏷️ Photo Alt Text (SEO Keyword)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.aboutWelcome?.mainImgAlt || ''}
+                    onChange={(e) => handleFieldChange('aboutWelcome', 'mainImgAlt', e.target.value)}
+                    placeholder="e.g. Welcome to Winera International 13+ Years Experience - Commercial Game Zone Setup"
+                    style={{ width: '100%', boxSizing: 'border-box', padding: '8px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                  />
+                </div>
               </div>
 
               {/* 2 Feature Cards */}
@@ -19287,12 +20952,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       onChange={(e) => handleFieldChange('aboutWelcome', 'box1Title', e.target.value)}
                       style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}
                     />
-                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Box 1 Description</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Box 1 Description"
                       rows={3}
-                      value={formData.aboutWelcome?.box1Desc !== undefined ? formData.aboutWelcome.box1Desc : "At Winera International, Quality Is Key. Our Lanes, Trampolines, Soft Play, And Arcade Games Are Built To Last And Ensure Safety. We Don't Just Build Equipment; We Build Experiences You Can Trust."}
-                      onChange={(e) => handleFieldChange('aboutWelcome', 'box1Desc', e.target.value)}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                      value={formData.aboutWelcome?.box1Desc !== undefined ? formData.aboutWelcome.box1Desc : "At Winera International, quality is key. Our lanes, trampolines, soft play, and arcade games are built to last and ensure safety. We don't just build equipment; we build experiences you can trust."}
+                      onChange={(val) => handleFieldChange('aboutWelcome', 'box1Desc', val)}
+                      placeholder="Enter Box 1 description..."
                     />
                   </div>
 
@@ -19304,12 +20969,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       onChange={(e) => handleFieldChange('aboutWelcome', 'box2Title', e.target.value)}
                       style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}
                     />
-                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Box 2 Description</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Box 2 Description"
                       rows={3}
-                      value={formData.aboutWelcome?.box2Desc !== undefined ? formData.aboutWelcome.box2Desc : "At Winera International, We Prioritize Your Satisfaction. From Product Exploration To Final Installation And Beyond, Our Dedicated Team Walks With You At Every Step."}
-                      onChange={(e) => handleFieldChange('aboutWelcome', 'box2Desc', e.target.value)}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                      value={formData.aboutWelcome?.box2Desc !== undefined ? formData.aboutWelcome.box2Desc : "At Winera International, we prioritize your satisfaction. From product exploration to final installation and beyond, our dedicated team walks with you at every step."}
+                      onChange={(val) => handleFieldChange('aboutWelcome', 'box2Desc', val)}
+                      placeholder="Enter Box 2 description..."
                     />
                   </div>
                 </div>
@@ -19330,7 +20995,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>Button Link URL (WhatsApp URL)</label>
                   <input
                     type="text"
-                    value={formData.aboutWelcome?.btnLink || 'https://wa.me/919428989488'}
+                    value={formData.aboutWelcome?.btnLink || 'https://wa.me/919157873576'}
                     onChange={(e) => handleFieldChange('aboutWelcome', 'btnLink', e.target.value)}
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
@@ -19355,7 +21020,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   })()}
                   onChange={(e) => {
                     const newMsg = e.target.value;
-                    const baseLink = (formData.aboutWelcome?.btnLink && formData.aboutWelcome.btnLink.split('?')[0]) || 'https://wa.me/919428989488';
+                    const baseLink = (formData.aboutWelcome?.btnLink && formData.aboutWelcome.btnLink.split('?')[0]) || 'https://wa.me/919157873576';
                     const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                     setFormData(prev => ({
                       ...prev,
@@ -19528,15 +21193,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
                   />
                 </div>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Mission Statement</label>
-                  <textarea
-                    rows={3}
-                    value={formData.aboutMissionVision?.missionText !== undefined ? formData.aboutMissionVision.missionText : "We deliver premium-quality game zone and indoor playground solutions to B2B clients across India combining expert design, international equipment, and seamless project execution to create entertainment spaces that last."}
-                    onChange={(e) => handleFieldChange('aboutMissionVision', 'missionText', e.target.value)}
-                    style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <RichTextareaWithEditor
+                  label="Mission Statement"
+                  rows={3}
+                  value={formData.aboutMissionVision?.missionText !== undefined ? formData.aboutMissionVision.missionText : "We deliver premium-quality game zone and indoor playground solutions to B2B clients across India combining expert design, international equipment, and seamless project execution to create entertainment spaces that last."}
+                  onChange={(val) => handleFieldChange('aboutMissionVision', 'missionText', val)}
+                  placeholder="Enter Mission Statement..."
+                />
               </div>
 
               {/* Vision Control */}
@@ -19551,15 +21214,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
                   />
                 </div>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Vision Statement</label>
-                  <textarea
-                    rows={3}
-                    value={formData.aboutMissionVision?.visionText !== undefined ? formData.aboutMissionVision.visionText : "To be India's most trusted partner in building world-class indoor entertainment destinations where every space we touch becomes a thriving hub of joy, play, and business success."}
-                    onChange={(e) => handleFieldChange('aboutMissionVision', 'visionText', e.target.value)}
-                    style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <RichTextareaWithEditor
+                  label="Vision Statement"
+                  rows={3}
+                  value={formData.aboutMissionVision?.visionText !== undefined ? formData.aboutMissionVision.visionText : "To be India's most trusted partner in building world-class indoor entertainment destinations where every space we touch becomes a thriving hub of joy, play, and business success."}
+                  onChange={(val) => handleFieldChange('aboutMissionVision', 'visionText', val)}
+                  placeholder="Enter Vision Statement..."
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -19656,19 +21317,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                           style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}
                         />
-                        <textarea
+                        <RichTextareaWithEditor
+                          label="Card Description"
                           rows={3}
-                          placeholder="Description"
+                          placeholder="Enter card description..."
                           value={currentCard.desc || cDef.defaultDesc}
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const newCards = [...cardsList];
-                            newCards[cIdx] = { ...(newCards[cIdx] || cDef), desc: e.target.value };
+                            newCards[cIdx] = { ...(newCards[cIdx] || cDef), desc: val };
                             setFormData(prev => ({
                               ...prev,
                               aboutWhyUsDetail: { ...(prev.aboutWhyUsDetail || {}), cards: newCards }
                             }));
                           }}
-                          style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
                         />
                       </div>
                     );
@@ -19695,7 +21356,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontWeight: '800', fontSize: '12.5px', color: '#0f172a', marginBottom: '4px' }}>Primary Button Link (URL or WhatsApp)</label>
                     <input
                       type="text"
-                      value={formData.aboutWhyUsDetail?.ctaPrimaryLink || 'https://wa.me/919428989488'}
+                      value={formData.aboutWhyUsDetail?.ctaPrimaryLink || 'https://wa.me/919157873576'}
                       onChange={(e) => handleFieldChange('aboutWhyUsDetail', 'ctaPrimaryLink', e.target.value)}
                       style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600' }}
                     />
@@ -19739,7 +21400,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       })()}
                       onChange={(e) => {
                         const newMsg = e.target.value;
-                        const baseLink = (formData.aboutWhyUsDetail?.ctaPrimaryLink && formData.aboutWhyUsDetail.ctaPrimaryLink.split('?')[0]) || 'https://wa.me/919428989488';
+                        const baseLink = (formData.aboutWhyUsDetail?.ctaPrimaryLink && formData.aboutWhyUsDetail.ctaPrimaryLink.split('?')[0]) || 'https://wa.me/919157873576';
                         const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                         setFormData(prev => ({
                           ...prev,
@@ -19986,6 +21647,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         </label>
                         <img src={item.image || founderUnnit} alt="Preview" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #38bdf8' }} />
                       </div>
+                      <div style={{ marginTop: '10px' }}>
+                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                          🏷️ Founder Photo Alt Text (SEO Keyword)
+                        </label>
+                        <input
+                          type="text"
+                          value={item.imageAlt || ''}
+                          onChange={(e) => handleProfileFieldChange(idx, 'imageAlt', e.target.value)}
+                          placeholder="e.g. Mr. Unnit Jogani - Founder & CEO - Winera International"
+                          style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                        />
+                      </div>
                     </div>
 
                     {/* Name & Experience */}
@@ -20025,16 +21698,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
 
                     {/* Biography */}
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Biography / About Details</label>
-                      <textarea
-                        rows={7}
-                        value={item.aboutDetails !== undefined ? item.aboutDetails : defaultBio}
-                        onChange={(e) => handleProfileFieldChange(idx, 'aboutDetails', e.target.value)}
-                        placeholder="Enter founder biography & details..."
-                        style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6, minHeight: '150px' }}
-                      />
-                    </div>
+                    <RichTextareaWithEditor
+                      label="Biography / About Details"
+                      rows={6}
+                      value={item.aboutDetails !== undefined ? item.aboutDetails : defaultBio}
+                      onChange={(val) => handleProfileFieldChange(idx, 'aboutDetails', val)}
+                      placeholder="Enter founder biography & details..."
+                    />
                   </div>
                 ))}
 
@@ -20083,6 +21753,155 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             );
           })()}
 
+          {/* CONTACT HERO BANNER FORM */}
+          {activeSection === 'contactHero' && (() => {
+            const currentHero = formData.contactHero || defaultContactHero;
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Contact Us Hero Banner</h3>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      Breadcrumb Home Label
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.breadcrumbHome || 'Home'}
+                      onChange={(e) => handleFieldChange('contactHero', 'breadcrumbHome', e.target.value)}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      Breadcrumb Active Page Text
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.breadcrumbText || 'Contact Us'}
+                      onChange={(e) => handleFieldChange('contactHero', 'breadcrumbText', e.target.value)}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Desktop Screen Hero Banner */}
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Hero Banner Background Image (Desktop) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <input
+                      type="text"
+                      value={currentHero.bgUrl || ''}
+                      onChange={(e) => handleFieldChange('contactHero', 'bgUrl', e.target.value)}
+                      placeholder="Image URL or Asset Path"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                    />
+                    <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                      <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                      Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          if (e.target.files?.[0]) {
+                            const res = await uploadImageFile(e.target.files[0], admin.token);
+                            handleFieldChange('contactHero', 'bgUrl', res.url);
+                          }
+                        }}
+                      />
+                    </label>
+                    <img
+                      src={getAdminValidImageUrl(currentHero.bgUrl, contactUsHeroBg)}
+                      alt="Contact Hero Preview"
+                      style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                    />
+                  </div>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Hero Banner Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.bgAlt || ''}
+                      onChange={(e) => handleFieldChange('contactHero', 'bgAlt', e.target.value)}
+                      placeholder="e.g. Contact Winera International - Commercial Game Zone Setup & Turnkey Solutions"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Mobile Screen Hero Banner */}
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <input
+                      type="text"
+                      value={currentHero.mobileBgUrl || ''}
+                      onChange={(e) => handleFieldChange('contactHero', 'mobileBgUrl', e.target.value)}
+                      placeholder="Mobile Background Image URL"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                    />
+                    <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                      <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                      Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          if (e.target.files?.[0]) {
+                            const res = await uploadImageFile(e.target.files[0], admin.token);
+                            handleFieldChange('contactHero', 'mobileBgUrl', res.url);
+                          }
+                        }}
+                      />
+                    </label>
+                    <img
+                      src={getAdminValidImageUrl(currentHero.mobileBgUrl, defaultGameZoneMobileBanner)}
+                      alt="Contact Mobile Hero Preview"
+                      style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                    />
+                    {currentHero.mobileBgUrl && (
+                      <button
+                        type="button"
+                        onClick={() => handleFieldChange('contactHero', 'mobileBgUrl', '')}
+                        style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                      >
+                        Reset Image
+                      </button>
+                    )}
+                  </div>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.mobileBgAlt || ''}
+                      onChange={(e) => handleFieldChange('contactHero', 'mobileBgAlt', e.target.value)}
+                      placeholder="e.g. Contact Winera International Mobile Banner - Commercial Game Zone Setup & Turnkey Solutions"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <button
+                    onClick={() => persistSectionToDatabase('contactHero', formData.contactHero || defaultContactHero)}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                  >
+                    Save Contact Hero Banner
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* CONTACT INFO & FORM SECTION */}
           {activeSection === 'contactPage' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -20101,17 +21920,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 />
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  Main Description Paragraph
-                </label>
-                <textarea
-                  rows={4}
-                  value={formData.contactPage?.desc !== undefined ? formData.contactPage.desc : "Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations."}
-                  onChange={(e) => handleFieldChange('contactPage', 'desc', e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13.5px' }}
-                />
-              </div>
+              <RichTextareaWithEditor
+                label="Main Description Paragraph"
+                rows={4}
+                value={formData.contactPage?.desc !== undefined ? formData.contactPage.desc : "Looking for reliable game zone equipment, soft play solutions, or indoor amusement park installations for your business? Our team is here to help you with product details, project pricing, and complete service support. Connect with us to discuss your space requirements and see how Winera International transforms ordinary spaces into extraordinary entertainment destinations."}
+                onChange={(val) => handleFieldChange('contactPage', 'desc', val)}
+                placeholder="Enter main description paragraph..."
+              />
 
               {/* Call Us & Email Cards */}
               <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
@@ -20128,7 +21943,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Phone Number 1</label>
                     <input
                       type="text"
-                      value={formData.contactPage?.phone1 || '+91 94289 89488'}
+                      value={formData.contactPage?.phone1 || '+91 91578 73576'}
                       onChange={(e) => handleFieldChange('contactPage', 'phone1', e.target.value)}
                       style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}
                     />
@@ -20204,12 +22019,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       onChange={(e) => handleFieldChange('contactPage', 'hq1Badge', e.target.value)}
                       style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '600', marginBottom: '6px' }}
                     />
-                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Location 1 Full Address</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Location 1 Full Address"
                       rows={3}
-                      value={formData.contactPage?.hq1Address !== undefined ? formData.contactPage.hq1Address : "Winera International Pvt. Ltd.\nSurat, Gujarat, India.\nHotline: +91 94289 89488 / +91 95123 56766"}
-                      onChange={(e) => handleFieldChange('contactPage', 'hq1Address', e.target.value)}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                      value={formData.contactPage?.hq1Address !== undefined ? formData.contactPage.hq1Address : "Winera International Pvt. Ltd.\nSurat, Gujarat, India.\nHotline: +91 91578 73576 / +91 95123 56766"}
+                      onChange={(val) => handleFieldChange('contactPage', 'hq1Address', val)}
+                      placeholder="Enter Location 1 full address..."
                     />
                   </div>
 
@@ -20228,12 +22043,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       onChange={(e) => handleFieldChange('contactPage', 'hq2Badge', e.target.value)}
                       style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '600', marginBottom: '6px' }}
                     />
-                    <label style={{ display: 'block', fontWeight: '700', fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>Location 2 Full Address</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Location 2 Full Address"
                       rows={3}
                       value={formData.contactPage?.hq2Address !== undefined ? formData.contactPage.hq2Address : "Winera International Global Assembly Base\nGuangzhou / Panyu Amusement Equipment Zone,\nGuangdong Province, China."}
-                      onChange={(e) => handleFieldChange('contactPage', 'hq2Address', e.target.value)}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                      onChange={(val) => handleFieldChange('contactPage', 'hq2Address', val)}
+                      placeholder="Enter Location 2 full address..."
                     />
                   </div>
                 </div>
@@ -20300,6 +22115,75 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Hero Banner Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bannerImgAlt !== undefined ? currentSec.bannerImgAlt : (currentSec.bgAlt || '')}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), bannerImgAlt: e.target.value, bgAlt: e.target.value } }))}
+                        placeholder="e.g. Completed Commercial Game Zone Projects Portfolio - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Mobile Screen Hero Banner Upload & Preview */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.mobileBgUrl, defaultGameZoneMobileBanner)}
+                        alt="Projects Mobile Hero Preview"
+                        style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                      />
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), mobileBgUrl: e.target.value } }))}
+                        placeholder="Mobile Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload Mobile Banner
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), mobileBgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                      {currentSec.mobileBgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), mobileBgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), mobileBgAlt: e.target.value } }))}
+                        placeholder="e.g. Completed Commercial Game Zone Projects Portfolio Mobile Banner - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -20383,7 +22267,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               setNewCategoryInput('');
             };
 
-            const rawList = Array.isArray(formData.projectItems) && formData.projectItems.length > 0 ? formData.projectItems : defaultProjectItemsList;
+            const rawList = Array.isArray(formData.projectItems) ? formData.projectItems : [];
 
             const fifthAlleyItem = { id: 'fifthalley', name: 'FifthAlley Sport Bowling', category: 'Bowling', city: 'Surat', state: 'Gujarat', area: '3,000 sq. ft.', type: 'Bowling Alley Setup', slug: 'fifthalley-sport-bowling', img: '/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg' };
             const hasFA = rawList.some(p => p.slug === "fifthalley-sport-bowling" || (p.name || "").toLowerCase().includes("fifthalley"));
@@ -20543,190 +22427,43 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b' }}>{item.area || 'N/A'}</td>
                             <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b', fontSize: '12px' }}>/project/{item.slug || 'detail'}</td>
                             <td style={{ padding: '14px 18px', textAlign: 'center', position: 'relative' }}>
-                              <div className="project-status-dropdown-wrapper" style={{ position: 'relative', display: 'inline-block' }}>
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    setOpenProjectStatusDropdown(openProjectStatusDropdown === targetIdx ? null : targetIdx);
-                                  }}
-                                  style={{
-                                    background: isItemActive ? '#ecfdf5' : '#fef2f2',
-                                    color: isItemActive ? '#059669' : '#dc2626',
-                                    border: `1.5px solid ${isItemActive ? '#a7f3d0' : '#fecaca'}`,
-                                    padding: '6px 14px',
-                                    borderRadius: '20px',
-                                    fontSize: '12px',
-                                    fontWeight: '800',
-                                    cursor: 'pointer',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '6px',
-                                    transition: 'all 0.2s ease',
-                                    boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
-                                  }}
-                                  title="Click to open status options"
-                                >
-                                  <span style={{
-                                    width: '8px',
-                                    height: '8px',
-                                    borderRadius: '50%',
-                                    background: isItemActive ? '#10b981' : '#ef4444'
-                                  }}></span>
-                                  {isItemActive ? 'Active' : 'Inactive'}
-                                  <ChevronDown style={{ width: '13px', height: '13px', marginLeft: '2px', opacity: 0.7 }} />
-                                </button>
+                              <StatusDropdown
+                                isActive={isItemActive}
+                                direction={idx >= filteredDisplayList.length - 2 && filteredDisplayList.length > 2 ? 'up' : 'down'}
+                                onChange={async (newStatus, isAct) => {
+                                  setSelectedPage('projectPage');
+                                  setActiveSection('projectItems');
+                                  if (typeof window !== 'undefined') {
+                                    try {
+                                      localStorage.setItem('admin_selected_page', 'projectPage');
+                                      localStorage.setItem('admin_active_section', 'projectItems');
+                                    } catch (_) { }
+                                  }
 
-                                {openProjectStatusDropdown === targetIdx && (
-                                  <div
-                                    style={{
-                                      position: 'absolute',
-                                      ...(idx >= filteredDisplayList.length - 2 && filteredDisplayList.length > 2
-                                        ? { bottom: 'calc(100% + 6px)' }
-                                        : { top: 'calc(100% + 6px)' }),
-                                      left: '50%',
-                                      transform: 'translateX(-50%)',
-                                      background: '#ffffff',
-                                      borderRadius: '12px',
-                                      border: '1.5px solid #e2e8f0',
-                                      boxShadow: '0 12px 28px rgba(0,0,0,0.18), 0 4px 10px rgba(0,0,0,0.08)',
-                                      padding: '6px',
-                                      minWidth: '135px',
-                                      zIndex: 9999,
-                                      display: 'flex',
-                                      flexDirection: 'column',
-                                      gap: '4px'
-                                    }}
-                                  >
-                                    {/* Option 1: Active */}
-                                    <button
-                                      type="button"
-                                      onClick={async (e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        setOpenProjectStatusDropdown(null);
-                                        setSelectedPage('projectPage');
-                                        setActiveSection('projectItems');
-                                        if (typeof window !== 'undefined') {
-                                          try {
-                                            localStorage.setItem('admin_selected_page', 'projectPage');
-                                            localStorage.setItem('admin_active_section', 'projectItems');
-                                          } catch (_) {}
-                                        }
+                                  const updatedItem = {
+                                    ...item,
+                                    isActive: isAct,
+                                    status: newStatus
+                                  };
+                                  const updatedList = [...currentList];
+                                  updatedList[targetIdx] = updatedItem;
+                                  let updatedBuilt = Array.isArray(formData.builtProjects) ? [...formData.builtProjects] : [];
+                                  const bpMatchIdx = updatedBuilt.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
+                                  if (bpMatchIdx !== -1) {
+                                    updatedBuilt[bpMatchIdx] = { ...updatedBuilt[bpMatchIdx], isActive: isAct, status: newStatus };
+                                  }
+                                  setFormData(prev => ({ ...prev, projectItems: updatedList, builtProjects: updatedBuilt }));
 
-                                        const updatedItem = {
-                                          ...item,
-                                          isActive: true,
-                                          status: 'active'
-                                        };
-                                        const updatedList = [...currentList];
-                                        updatedList[targetIdx] = updatedItem;
-                                        let updatedBuilt = Array.isArray(formData.builtProjects) ? [...formData.builtProjects] : [];
-                                        const bpMatchIdx = updatedBuilt.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
-                                        if (bpMatchIdx !== -1) {
-                                          updatedBuilt[bpMatchIdx] = { ...updatedBuilt[bpMatchIdx], isActive: true, status: 'active' };
-                                        }
-                                        setFormData(prev => ({ ...prev, projectItems: updatedList, builtProjects: updatedBuilt }));
-
-                                        try {
-                                          await updateSectionContent('projectItems', updatedList, admin.token);
-                                          await refreshContent();
-                                          setStatusMsg(`Project '${item.name || 'item'}' status set to Active!`);
-                                        } catch (err) {
-                                          console.error("Status update error:", err);
-                                          setStatusMsg('Error updating status: ' + (err.response?.data?.message || err.message));
-                                        }
-                                      }}
-                                      style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '8px',
-                                        padding: '7px 12px',
-                                        borderRadius: '8px',
-                                        border: 'none',
-                                        background: isItemActive ? '#f0fdf4' : 'transparent',
-                                        color: '#059669',
-                                        fontSize: '12px',
-                                        fontWeight: '800',
-                                        cursor: 'pointer',
-                                        textAlign: 'left',
-                                        width: '100%',
-                                        transition: 'background 0.15s ease'
-                                      }}
-                                      onMouseEnter={(e) => { e.currentTarget.style.background = '#f0fdf4'; }}
-                                      onMouseLeave={(e) => { if (!isItemActive) e.currentTarget.style.background = 'transparent'; }}
-                                    >
-                                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
-                                      Active
-                                      {isItemActive && <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#10b981' }}>✓</span>}
-                                    </button>
-
-                                    {/* Option 2: Inactive */}
-                                    <button
-                                      type="button"
-                                      onClick={async (e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        setOpenProjectStatusDropdown(null);
-                                        setSelectedPage('projectPage');
-                                        setActiveSection('projectItems');
-                                        if (typeof window !== 'undefined') {
-                                          try {
-                                            localStorage.setItem('admin_selected_page', 'projectPage');
-                                            localStorage.setItem('admin_active_section', 'projectItems');
-                                          } catch (_) {}
-                                        }
-
-                                        const updatedItem = {
-                                          ...item,
-                                          isActive: false,
-                                          status: 'inactive'
-                                        };
-                                        const updatedList = [...currentList];
-                                        updatedList[targetIdx] = updatedItem;
-                                        let updatedBuilt = Array.isArray(formData.builtProjects) ? [...formData.builtProjects] : [];
-                                        const bpMatchIdx = updatedBuilt.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
-                                        if (bpMatchIdx !== -1) {
-                                          updatedBuilt[bpMatchIdx] = { ...updatedBuilt[bpMatchIdx], isActive: false, status: 'inactive' };
-                                        }
-                                        setFormData(prev => ({ ...prev, projectItems: updatedList, builtProjects: updatedBuilt }));
-
-                                        try {
-                                          await updateSectionContent('projectItems', updatedList, admin.token);
-                                          await refreshContent();
-                                          setStatusMsg(`Project '${item.name || 'item'}' status set to Inactive!`);
-                                        } catch (err) {
-                                          console.error("Status update error:", err);
-                                          setStatusMsg('Error updating status: ' + (err.response?.data?.message || err.message));
-                                        }
-                                      }}
-                                      style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '8px',
-                                        padding: '7px 12px',
-                                        borderRadius: '8px',
-                                        border: 'none',
-                                        background: !isItemActive ? '#fef2f2' : 'transparent',
-                                        color: '#dc2626',
-                                        fontSize: '12px',
-                                        fontWeight: '800',
-                                        cursor: 'pointer',
-                                        textAlign: 'left',
-                                        width: '100%',
-                                        transition: 'background 0.15s ease'
-                                      }}
-                                      onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; }}
-                                      onMouseLeave={(e) => { if (isItemActive) e.currentTarget.style.background = 'transparent'; }}
-                                    >
-                                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ef4444' }}></span>
-                                      Inactive
-                                      {!isItemActive && <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#ef4444' }}>✓</span>}
-                                    </button>
-                                  </div>
-                                )}
-                              </div>
+                                  try {
+                                    await updateSectionContent('projectItems', updatedList, admin.token);
+                                    await refreshContent();
+                                    setStatusMsg(`Project '${item.name || 'item'}' status set to ${isAct ? 'Active' : 'Inactive'}!`);
+                                  } catch (err) {
+                                    console.error("Status update error:", err);
+                                    setStatusMsg('Error updating status: ' + (err.response?.data?.message || err.message));
+                                  }
+                                }}
+                              />
                             </td>
                             <td style={{ padding: '14px 18px', textAlign: 'right' }}>
                               <button
@@ -20868,7 +22605,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           const updatedLink = msg ? `${baseLink.split('?')[0]}?text=${encodeURIComponent(msg)}` : baseLink;
                           setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), buttonLink: updatedLink } }));
                         }}
-                        placeholder="https://wa.me/919428989488"
+                        placeholder="https://wa.me/919157873576"
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
@@ -20892,7 +22629,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       })()}
                       onChange={(e) => {
                         const newMsg = e.target.value;
-                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                         const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                         setFormData(prev => ({
                           ...prev,
@@ -20933,6 +22670,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Main Project Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imageAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), imageAlt: e.target.value } }))}
+                        placeholder="e.g. FifthAlley Sport Bowling Setup in Surat - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -20985,6 +22734,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), bgAlt: e.target.value } }))}
+                        placeholder="e.g. FifthAlley Sport Bowling Setup Details - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
 
@@ -21151,6 +22912,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Section Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imageAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), imageAlt: e.target.value } }))}
+                        placeholder="e.g. Client Bowling Setup Requirements - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -21240,6 +23013,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Section Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imageAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), imageAlt: e.target.value } }))}
+                        placeholder="e.g. Winera International Custom Solution Implementation"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -21291,6 +23076,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Gallery Section Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectGallery: { ...(prev.projectGallery || defaultProjectGallery), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Commercial Entertainment Center Gallery & Installation - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
 
@@ -21416,7 +23213,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       type="text"
                       value={currentSec.videoUrl !== undefined ? currentSec.videoUrl : defaultProjectVideo.videoUrl}
                       onChange={(e) => setFormData(prev => ({ ...prev, projectVideo: { ...(prev.projectVideo || defaultProjectVideo), videoUrl: e.target.value } }))}
-                      placeholder="https://wa.me/919428989488 or Youtube link"
+                      placeholder="https://wa.me/919157873576 or Youtube link"
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                     />
                   </div>
@@ -21472,6 +23269,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ CTA Banner Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Planning a Game Zone of Your Own? Winera Setup Consultation"
+                        style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                      />
+                    </div>
                   </div>
 
                   <div>
@@ -21486,11 +23295,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={2}
                       value={currentSec.description !== undefined ? currentSec.description : "Give us the space, and we'll deliver a complete game zone — planned, built, and ready to play. Your only job is to open the doors."}
-                      onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), description: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontFamily: 'inherit' }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), description: val } }))}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
                     />
                   </div>
 
@@ -21508,9 +23317,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Button Link (WhatsApp URL)</label>
                       <input
                         type="text"
-                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : 'https://wa.me/919428989488'}
+                        value={currentSec.buttonLink !== undefined ? currentSec.buttonLink : 'https://wa.me/919157873576'}
                         onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), buttonLink: e.target.value } }))}
-                        placeholder="https://wa.me/919428989488"
+                        placeholder="https://wa.me/919157873576"
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
@@ -21576,6 +23385,75 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Hero Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Safety Standards & Quality Certification - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Mobile Screen Hero Banner Upload & Preview */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.mobileBgUrl, defaultGameZoneMobileBanner)}
+                        alt="Safety Mobile Hero Preview"
+                        style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+                      />
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), mobileBgUrl: e.target.value } }))}
+                        placeholder="Mobile Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), mobileBgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                      {currentSec.mobileBgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), mobileBgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), mobileBgAlt: e.target.value } }))}
+                        placeholder="e.g. Safety Standards & Quality Certification Mobile Banner - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -21617,24 +23495,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                    <textarea
-                      rows={3}
-                      value={currentSec.p1 !== undefined ? currentSec.p1 : defaultSafetyIntro.p1}
-                      onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), p1: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                    <textarea
-                      rows={3}
-                      value={currentSec.p2 !== undefined ? currentSec.p2 : defaultSafetyIntro.p2}
-                      onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), p2: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="Paragraph 1"
+                    rows={4}
+                    value={currentSec.p1 !== undefined ? currentSec.p1 : defaultSafetyIntro.p1}
+                    onChange={(val) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), p1: val } }))}
+                    placeholder="Enter paragraph 1..."
+                  />
+                  <RichTextareaWithEditor
+                    label="Paragraph 2"
+                    rows={4}
+                    value={currentSec.p2 !== undefined ? currentSec.p2 : defaultSafetyIntro.p2}
+                    onChange={(val) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), p2: val } }))}
+                    placeholder="Enter paragraph 2..."
+                  />
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                       Left Graphic Collage Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 640 × 520 px</span>
@@ -21663,6 +23537,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Intro Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mainImgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), mainImgAlt: e.target.value } }))}
+                        placeholder="e.g. Game Zone & Kids Play Equipment Safety Standards - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -21720,15 +23606,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
-                    <input
-                      type="text"
-                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyCertifications.subtitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), subtitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="Section Subtitle"
+                    rows={2}
+                    value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyCertifications.subtitle}
+                    onChange={(val) => setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), subtitle: val } }))}
+                    placeholder="Enter section subtitle..."
+                  />
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '10px' }}>
                     {cardsList.map((card, idx) => (
@@ -21760,16 +23644,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             }}
                             style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                           />
-                          <textarea
-                            rows={2}
+                          <RichTextareaWithEditor
+                            label="Card Description"
+                            rows={3}
                             placeholder="Card Description..."
                             value={card.desc || ''}
-                            onChange={(e) => {
+                            onChange={(val) => {
                               const updated = [...cardsList];
-                              updated[idx] = { ...updated[idx], desc: e.target.value };
+                              updated[idx] = { ...updated[idx], desc: val };
                               setFormData(prev => ({ ...prev, safetyCertifications: { ...(prev.safetyCertifications || defaultSafetyCertifications), cards: updated } }));
                             }}
-                            style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                           />
                         </div>
                       </div>
@@ -21831,15 +23715,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
-                    <textarea
-                      rows={2}
-                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyMaterials.subtitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), subtitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="Section Subtitle"
+                    rows={3}
+                    value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyMaterials.subtitle}
+                    onChange={(val) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), subtitle: val } }))}
+                    placeholder="Enter section subtitle..."
+                  />
 
 
                   <div>
@@ -21870,6 +23752,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Material Safety Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), imgAlt: e.target.value } }))}
+                        placeholder="e.g. Material & Fire Safety - Commercial Play Equipment - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
 
@@ -21902,16 +23796,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                           style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700', marginBottom: '10px' }}
                         />
-                        <textarea
-                          rows={2}
+                        <RichTextareaWithEditor
+                          label="Card Description"
+                          rows={3}
                           placeholder="Card Description..."
                           value={card.desc || ''}
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const updated = [...cardsList];
-                            updated[idx] = { ...updated[idx], desc: e.target.value };
+                            updated[idx] = { ...updated[idx], desc: val };
                             setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), cards: updated } }));
                           }}
-                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                         />
                       </div>
                     ))}
@@ -21972,15 +23866,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
-                    <textarea
-                      rows={2}
-                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyElectrical.subtitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), subtitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="Section Subtitle"
+                    rows={3}
+                    value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyElectrical.subtitle}
+                    onChange={(val) => setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), subtitle: val } }))}
+                    placeholder="Enter section subtitle..."
+                  />
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
                       Right Machine Image <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended: 560 × 520 px</span>
@@ -22009,6 +23901,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Electrical Safety Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), imgAlt: e.target.value } }))}
+                        placeholder="e.g. Electrical & Machine Safety - Commercial Play Zones - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
 
@@ -22054,16 +23958,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             style={{ padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                           />
                         </div>
-                        <textarea
-                          rows={2}
+                        <RichTextareaWithEditor
+                          label="Item Description"
+                          rows={3}
                           placeholder="Item Description..."
                           value={item.desc || ''}
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const updated = [...itemsList];
-                            updated[idx] = { ...updated[idx], desc: e.target.value };
+                            updated[idx] = { ...updated[idx], desc: val };
                             setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), items: updated } }));
                           }}
-                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                         />
                       </div>
                     ))}
@@ -22125,15 +24029,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
-                    <textarea
-                      rows={2}
-                      value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyStructure.subtitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), subtitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="Section Subtitle"
+                    rows={3}
+                    value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyStructure.subtitle}
+                    onChange={(val) => setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), subtitle: val } }))}
+                    placeholder="Enter section subtitle..."
+                  />
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '10px' }}>
                     {cardsList.map((card, idx) => (
@@ -22188,16 +24090,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             style={{ padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                           />
                         </div>
-                        <textarea
-                          rows={2}
+                        <RichTextareaWithEditor
+                          label="Card Description"
+                          rows={3}
                           placeholder="Card Description..."
                           value={card.desc || ''}
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const updated = [...cardsList];
-                            updated[idx] = { ...updated[idx], desc: e.target.value };
+                            updated[idx] = { ...updated[idx], desc: val };
                             setFormData(prev => ({ ...prev, safetyStructure: { ...(prev.safetyStructure || defaultSafetyStructure), cards: updated } }));
                           }}
-                          style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                         />
                       </div>
                     ))}
@@ -22223,6 +24125,35 @@ export default function AdminDashboard({ siteData, refreshContent }) {
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Why This Matters & Build Yours Now CTA Section</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title Part 1 (Cyan)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title1 !== undefined ? currentSec.title1 : defaultSafetyWhyMatters.title1}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), title1: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Section Title Part 2 (Dark)</label>
+                      <input
+                        type="text"
+                        value={currentSec.title2 !== undefined ? currentSec.title2 : defaultSafetyWhyMatters.title2}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), title2: e.target.value } }))}
+                        style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <RichTextareaWithEditor
+                    label="Why This Matters Subtitle Paragraph"
+                    rows={4}
+                    value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultSafetyWhyMatters.subtitle}
+                    onChange={(val) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), subtitle: val } }))}
+                    placeholder="Enter section subtitle paragraph..."
+                  />
 
                   {/* Banner Background Image Upload */}
                   <div style={{ background: '#f8fafc', padding: '18px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
@@ -22260,10 +24191,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ CTA Banner Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Safety Standard Certified Game Zone Consultation - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
-
-
-
 
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Title (Gradient Shaded Text)</label>
@@ -22292,29 +24232,26 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
 
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>CTA Banner Subtitle Text</label>
-                    <input
-                      type="text"
-                      value={
-                        currentSec.ctaSubtitle !== undefined
-                          ? currentSec.ctaSubtitle
-                          : (currentSec.whiteText !== undefined ? currentSec.whiteText : "We're Ready To Give Answers To Your Questions.")
-                      }
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setFormData(prev => ({
-                          ...prev,
-                          safetyWhyMatters: {
-                            ...(prev.safetyWhyMatters || defaultSafetyWhyMatters),
-                            ctaSubtitle: val,
-                            whiteText: val
-                          }
-                        }));
-                      }}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
-                    />
-                  </div>
+                  <RichTextareaWithEditor
+                    label="CTA Banner Subtitle Text"
+                    rows={2}
+                    value={
+                      currentSec.ctaSubtitle !== undefined
+                        ? currentSec.ctaSubtitle
+                        : (currentSec.whiteText !== undefined ? currentSec.whiteText : "We're Ready To Give Answers To Your Questions.")
+                    }
+                    onChange={(val) => {
+                      setFormData(prev => ({
+                        ...prev,
+                        safetyWhyMatters: {
+                          ...(prev.safetyWhyMatters || defaultSafetyWhyMatters),
+                          ctaSubtitle: val,
+                          whiteText: val
+                        }
+                      }));
+                    }}
+                    placeholder="Enter CTA banner subtitle..."
+                  />
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div>
@@ -22388,6 +24325,84 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                      {currentSec.bgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), bgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Hero Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Commercial Trampoline Park Setup & Equipment - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Mobile Screen Hero Banner Upload & Preview */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.mobileBgUrl, trampolineMobileHeroBg)}
+                        alt="Mobile Hero Preview"
+                        style={{ width: '120px', height: '65px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                      />
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgUrl || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), mobileBgUrl: e.target.value } }))}
+                        placeholder="Mobile Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                      />
+                      <label style={{ padding: '12px 20px', background: '#38bdf8', color: '#ffffff', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Upload style={{ width: '16px', height: '16px' }} /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const res = await uploadImageFile(file, admin.token);
+                              setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), mobileBgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                      {currentSec.mobileBgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), mobileBgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '12px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Mobile Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), mobileBgAlt: e.target.value } }))}
+                        placeholder="e.g. Commercial Trampoline Park Setup Mobile Banner - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
                   <div>
@@ -22430,12 +24445,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Description Paragraph"
                       rows={3}
                       value={currentSec.desc !== undefined ? currentSec.desc : defaultTrampolineIntro.desc}
-                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), desc: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), desc: val } }))}
+                      placeholder="Enter description paragraph..."
                     />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -22526,6 +24541,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Main Graphic Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mainImgAlt || currentSec.imgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), mainImgAlt: e.target.value } }))}
+                        placeholder="e.g. Trampoline Park Manufacturer in India - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -22578,12 +24605,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph Content</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Paragraph Content"
                       rows={4}
                       value={currentSec.paragraph !== undefined ? currentSec.paragraph : defaultTrampolineCustom.paragraph}
-                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), paragraph: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), paragraph: val } }))}
+                      placeholder="Enter paragraph content..."
                     />
                   </div>
                   <div>
@@ -22614,6 +24641,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Panda Mascot Graphic Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), imgAlt: e.target.value } }))}
+                        placeholder="e.g. Custom Trampoline Parks Setup Mascot - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -22730,6 +24769,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Card Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Technical Specifications Trampoline Park Equipment - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
 
                   {/* Action Button Controls for Specs */}
@@ -22758,21 +24809,28 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           <input
                             type="file"
                             accept="application/pdf,.pdf"
-                            onChange={async (e) => {
-                              const file = e.target.files[0];
-                              if (!file) return;
-                              setStatusMsg('Uploading PDF brochure...');
-                              try {
-                                const res = await uploadImageFile(file, admin.token);
-                                setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), buttonLink: res.url } }));
-                                setStatusMsg('PDF Brochure uploaded successfully!');
-                              } catch (err) {
-                                setStatusMsg('Upload error: ' + (err.response?.data?.message || err.message));
-                              }
-                            }}
+                            onChange={(e) => handleBrochureUpload(e, 'trampolineSpecs', 'buttonLink', {}, defaultTrampolineSpecs)}
                             style={{ display: 'none' }}
                           />
                         </label>
+                      </div>
+                      <div style={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                        <span style={{ fontSize: '11px', color: '#64748b' }}>
+                          💡 Cloudinary Free plan limit: <strong>10 MB</strong> (Allows larger files automatically with a Cloudinary Pro plan). Compress via <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#0284c7', textDecoration: 'underline', fontWeight: '700' }}>iLovePDF</a> if needed.
+                        </span>
+                        {(() => {
+                          const activePdf = currentSec.buttonLink !== undefined ? currentSec.buttonLink : (currentSec.brochureLink || defaultTrampolineSpecs.buttonLink);
+                          return activePdf && activePdf !== '#' ? (
+                            <a
+                              href={activePdf}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ fontSize: '11.5px', color: '#0284c7', fontWeight: '700', textDecoration: 'underline' }}
+                            >
+                              📄 Test & Preview Trampoline Brochure
+                            </a>
+                          ) : null;
+                        })()}
                       </div>
                     </div>
                   </div>
@@ -22808,12 +24866,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Subtitle"
                       rows={2}
                       value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultTrampolineInside.subtitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), subtitle: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), subtitle: val } }))}
+                      placeholder="Enter subtitle..."
                     />
                   </div>
                   <div>
@@ -22832,77 +24890,118 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </button>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                      {zonesList.map((z, idx) => (
-                        <div key={idx} style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Zone #{idx + 1} Tab: {z.name || z.title}</span>
-                            <button
-                              onClick={async () => {
-                                const updated = zonesList.filter((_, i) => i !== idx);
-                                const updatedSec = { ...(formData.trampolineInside || defaultTrampolineInside), zones: updated };
-                                setFormData(prev => ({ ...prev, trampolineInside: updatedSec }));
-                                await persistSectionToDatabase('trampolineInside', updatedSec);
-                              }}
-                              style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
-                            >
-                              Delete Zone
-                            </button>
-                          </div>
-                          <input
-                            type="text"
-                            value={z.name || z.title || ''}
-                            onChange={(e) => {
-                              const updated = [...zonesList];
-                              updated[idx] = { ...updated[idx], name: e.target.value, title: e.target.value };
-                              setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
-                            }}
-                            placeholder="Zone Name (e.g. Free Jump Zones)"
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', fontWeight: '700' }}
-                          />
-                          <textarea
-                            rows={3}
-                            value={z.desc}
-                            onChange={(e) => {
-                              const updated = [...zonesList];
-                              updated[idx] = { ...updated[idx], desc: e.target.value };
-                              setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
-                            }}
-                            placeholder="Description"
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
-                          />
-                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            <img src={getAdminValidImageUrl(z.img, tampolineImg5)} alt="" style={{ width: '60px', height: '45px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+                      {zonesList.map((z, idx) => {
+                        const zoneCloudMap = {
+                          'free-jump': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386747/winera_trampoline_park/yknrmsmvy1aacscicymv.jpg',
+                          'free jump zones': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386747/winera_trampoline_park/yknrmsmvy1aacscicymv.jpg',
+                          'dunk-hoops': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386746/winera_trampoline_park/u0hyusapnoejpkit0xho.webp',
+                          'dunk hoops': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386746/winera_trampoline_park/u0hyusapnoejpkit0xho.webp',
+                          'zip-line': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386748/winera_trampoline_park/o0pgd5vemckew8ki1xxo.jpg',
+                          'zip line': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386748/winera_trampoline_park/o0pgd5vemckew8ki1xxo.jpg',
+                          'obstacle-courts': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386748/winera_trampoline_park/ridg0hj2y1xy6vwgyrsj.webp',
+                          'obstacle courts': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386748/winera_trampoline_park/ridg0hj2y1xy6vwgyrsj.webp',
+                          'air-bags': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386744/winera_trampoline_park/udv5wncmkw7oav7berkx.webp',
+                          'air bags': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386744/winera_trampoline_park/udv5wncmkw7oav7berkx.webp',
+                          'climbing-wall': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386745/winera_trampoline_park/wgd3f1fult5ojkvwpuy5.jpg',
+                          'climbing wall': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386745/winera_trampoline_park/wgd3f1fult5ojkvwpuy5.jpg',
+                          'ninja-courses': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386750/winera_trampoline_park/cle2bmqr4wyb7b4ancgt.webp',
+                          'ninja courses': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386750/winera_trampoline_park/cle2bmqr4wyb7b4ancgt.webp',
+                          'foam-cubes': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386749/winera_trampoline_park/goz913jmxtrozb7ha3tx.webp',
+                          'foam cubes': 'https://res.cloudinary.com/achfsmlm/image/upload/v1792386749/winera_trampoline_park/goz913jmxtrozb7ha3tx.webp'
+                        };
+                        const idKey = (z.id || '').toLowerCase().trim();
+                        const titleKey = (z.name || z.title || '').toLowerCase().trim();
+                        const defaultImgForZone = zoneCloudMap[idKey] || zoneCloudMap[titleKey] || defaultTrampolineInside.zones[idx]?.img || tampolineImg5;
+                        const effectiveImg = (z.img && !z.img.includes('tampoline-img-5') && !z.img.includes('/src/assets/')) ? z.img : defaultImgForZone;
+
+                        return (
+                          <div key={idx} style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontWeight: '800', fontSize: '13px', color: '#0284c7' }}>Zone #{idx + 1} Tab: {z.name || z.title}</span>
+                              <button
+                                onClick={async () => {
+                                  const updated = zonesList.filter((_, i) => i !== idx);
+                                  const updatedSec = { ...(formData.trampolineInside || defaultTrampolineInside), zones: updated };
+                                  setFormData(prev => ({ ...prev, trampolineInside: updatedSec }));
+                                  await persistSectionToDatabase('trampolineInside', updatedSec);
+                                }}
+                                style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: '800', fontSize: '12px' }}
+                              >
+                                Delete Zone
+                              </button>
+                            </div>
                             <input
                               type="text"
-                              value={z.img || ''}
+                              value={z.name || z.title || ''}
                               onChange={(e) => {
                                 const updated = [...zonesList];
-                                updated[idx] = { ...updated[idx], img: e.target.value };
+                                updated[idx] = { ...updated[idx], name: e.target.value, title: e.target.value };
                                 setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
                               }}
-                              placeholder="Image URL or Asset Path"
-                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+                              placeholder="Zone Name (e.g. Free Jump Zones)"
+                              style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', fontWeight: '700' }}
                             />
-                            <label style={{ background: '#38bdf8', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                              <Upload style={{ width: '14px', height: '14px' }} /> Upload
+                            <RichTextareaWithEditor
+                              label="Zone Description"
+                              rows={3}
+                              value={z.desc}
+                              onChange={(val) => {
+                                const updated = [...zonesList];
+                                updated[idx] = { ...updated[idx], desc: val };
+                                setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                              }}
+                              placeholder="Zone Description"
+                            />
+                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                              <img src={getAdminValidImageUrl(effectiveImg, tampolineImg5)} alt="" style={{ width: '60px', height: '45px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                               <input
-                                type="file"
-                                accept="image/*"
-                                style={{ display: 'none' }}
-                                onChange={async (e) => {
-                                  const file = e.target.files[0];
-                                  if (file) {
-                                    const res = await uploadImageFile(file, admin.token);
-                                    const updated = [...zonesList];
-                                    updated[idx] = { ...updated[idx], img: res.url };
-                                    setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
-                                  }
+                                type="text"
+                                value={effectiveImg}
+                                onChange={(e) => {
+                                  const updated = [...zonesList];
+                                  updated[idx] = { ...updated[idx], img: e.target.value };
+                                  setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
                                 }}
+                                placeholder="Image URL or Asset Path"
+                                style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                               />
-                            </label>
+                              <label style={{ background: '#38bdf8', color: '#fff', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '800', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                <Upload style={{ width: '14px', height: '14px' }} /> Upload
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  style={{ display: 'none' }}
+                                  onChange={async (e) => {
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                      const res = await uploadImageFile(file, admin.token);
+                                      const updated = [...zonesList];
+                                      updated[idx] = { ...updated[idx], img: res.url };
+                                      setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                                    }
+                                  }}
+                                />
+                              </label>
+                            </div>
+                            <div style={{ marginTop: '4px' }}>
+                              <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
+                                🏷️ Zone Card Alt Text (SEO Keyword)
+                              </label>
+                              <input
+                                type="text"
+                                value={z.imgAlt || ''}
+                                onChange={(e) => {
+                                  const updated = [...zonesList];
+                                  updated[idx] = { ...updated[idx], imgAlt: e.target.value };
+                                  setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                                }}
+                                placeholder="e.g. Free Jump Zones Commercial Trampoline Setup - Winera"
+                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -22945,21 +25044,21 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Paragraph 1"
                       rows={3}
                       value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultTrampolineRoi.paragraph1}
-                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), paragraph1: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), paragraph1: val } }))}
+                      placeholder="Enter Paragraph 1..."
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Paragraph 2"
                       rows={3}
                       value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultTrampolineRoi.paragraph2}
-                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), paragraph2: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), paragraph2: val } }))}
+                      placeholder="Enter Paragraph 2..."
                     />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -23050,6 +25149,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Right Image Graphic Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), imgAlt: e.target.value } }))}
+                        placeholder="e.g. Trampoline Park ROI Report - Winera Turnkey Setup"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -23122,16 +25233,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             placeholder="Card Title"
                             style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', fontWeight: '700' }}
                           />
-                          <textarea
+                          <RichTextareaWithEditor
+                            label="Card Description"
                             rows={2}
                             value={item.desc}
-                            onChange={(e) => {
+                            onChange={(val) => {
                               const updated = [...itemsList];
-                              updated[idx] = { ...updated[idx], desc: e.target.value };
+                              updated[idx] = { ...updated[idx], desc: val };
                               setFormData(prev => ({ ...prev, trampolineWhyChoose: { ...(prev.trampolineWhyChoose || defaultTrampolineWhyChoose), items: updated } }));
                             }}
                             placeholder="Card Description"
-                            style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
                           />
                         </div>
                       ))}
@@ -23194,16 +25305,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         placeholder="Question"
                         style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', fontWeight: '700' }}
                       />
-                      <textarea
+                      <RichTextareaWithEditor
+                        label="Answer"
                         rows={3}
                         value={faq.a}
-                        onChange={(e) => {
+                        onChange={(val) => {
                           const updated = [...currentFaqs];
-                          updated[idx] = { ...updated[idx], a: e.target.value };
+                          updated[idx] = { ...updated[idx], a: val };
                           setFormData(prev => ({ ...prev, trampolineFaqs: updated }));
                         }}
                         placeholder="Answer"
-                        style={{ padding: '10px 14px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
                       />
                     </div>
                   ))}
@@ -23247,6 +25358,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
+                  </div>
+                  <div>
+                    <RichTextareaWithEditor
+                      label="CTA Banner Description"
+                      rows={2}
+                      value={(() => {
+                        if (currentSec.description !== undefined && currentSec.description !== '') return currentSec.description;
+                        const l1 = currentSec.descLine1 !== undefined ? currentSec.descLine1 : defaultTrampolineCta.descLine1;
+                        const l2 = currentSec.descLine2 !== undefined ? currentSec.descLine2 : defaultTrampolineCta.descLine2;
+                        return `${l1} ${l2}`.trim();
+                      })()}
+                      onChange={(val) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), description: val } }))}
+                      placeholder="Enter CTA banner description..."
+                    />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div>
@@ -23317,6 +25442,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Banner Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Plan Your Trampoline Park with Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -23377,6 +25514,75 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         src={getAdminValidImageUrl(currentSec.bgUrl, roiBgImage)}
                         alt="ROI Hero Preview"
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                      />
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Hero Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), bgAlt: e.target.value } }))}
+                        placeholder="e.g. FEC & Game Zone ROI Calculator - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Mobile Screen Hero Banner Upload & Preview */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgUrl !== undefined ? currentSec.mobileBgUrl : ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), mobileBgUrl: e.target.value } }))}
+                        placeholder="Mobile Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                      />
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                        <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            if (e.target.files?.[0]) {
+                              const res = await uploadImageFile(e.target.files[0], admin.token);
+                              setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), mobileBgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.mobileBgUrl, defaultGameZoneMobileBanner)}
+                        alt="ROI Mobile Hero Preview"
+                        style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                      />
+                      {currentSec.mobileBgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), mobileBgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), mobileBgAlt: e.target.value } }))}
+                        placeholder="e.g. FEC & Game Zone ROI Calculator Mobile Banner - Winera International"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
                     </div>
                   </div>
@@ -23442,19 +25648,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
                       value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultRoiIntro.paragraph1}
-                      onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), paragraph1: e.target.value } }))}
+                      onChange={(val) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), paragraph1: val } }))}
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.6 }}
                     />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
                       value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultRoiIntro.paragraph2}
-                      onChange={(e) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), paragraph2: e.target.value } }))}
+                      onChange={(val) => setFormData(prev => ({ ...prev, roiIntro: { ...(prev.roiIntro || defaultRoiIntro), paragraph2: val } }))}
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.6 }}
                     />
                   </div>
@@ -23496,7 +25702,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       })()}
                       onChange={(e) => {
                         const newMsg = e.target.value;
-                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                        const baseLink = (currentSec.buttonLink && currentSec.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                         const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                         setFormData(prev => ({
                           ...prev,
@@ -23543,6 +25749,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'contain', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '4px' }}
                       />
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.imageAlt !== undefined ? currentSec.imageAlt : (currentSec.imgAlt || '')}
+                        onChange={(e) => setFormData(prev => ({
+                          ...prev,
+                          roiIntro: {
+                            ...(prev.roiIntro || defaultRoiIntro),
+                            imageAlt: e.target.value,
+                            imgAlt: e.target.value
+                          }
+                        }))}
+                        placeholder="e.g. ROI Investment Growth & Commercial Game Zone Setup - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -23576,10 +25801,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle / Paragraph 1</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={2}
                       value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultRoiMatters.paragraph1}
-                      onChange={(e) => setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), paragraph1: e.target.value } }))}
+                      onChange={(val) => setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), paragraph1: val } }))}
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.6 }}
                     />
                   </div>
@@ -23602,18 +25827,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {cardsList.map((cardVal, idx) => (
-                        <div key={idx} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <span style={{ fontWeight: 'bold', fontSize: '13px', color: '#64748b', width: '20px' }}>{idx + 1}.</span>
-                          <input
-                            type="text"
-                            value={cardVal}
-                            onChange={(e) => {
-                              const copy = [...cardsList];
-                              copy[idx] = e.target.value;
-                              setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), cards: copy } }));
-                            }}
-                            style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
-                          />
+                        <div key={idx} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                          <span style={{ fontWeight: 'bold', fontSize: '13px', color: '#64748b', width: '20px', paddingTop: '10px' }}>{idx + 1}.</span>
+                          <div style={{ flex: 1 }}>
+                            <RichTextareaWithEditor
+                              rows={2}
+                              value={cardVal}
+                              onChange={(val) => {
+                                const copy = [...cardsList];
+                                copy[idx] = val;
+                                setFormData(prev => ({ ...prev, roiMatters: { ...(prev.roiMatters || defaultRoiMatters), cards: copy } }));
+                              }}
+                              style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
+                            />
+                          </div>
                           <button
                             type="button"
                             onClick={async () => {
@@ -23623,7 +25850,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               setFormData(prev => ({ ...prev, roiMatters: updatedSec }));
                               await persistSectionToDatabase('roiMatters', updatedSec);
                             }}
-                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer', marginTop: '6px' }}
                           >
                             <Trash2 style={{ width: '15px', height: '15px' }} />
                           </button>
@@ -23906,12 +26133,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         </div>
                         <div>
                           <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>Card Description</label>
-                          <textarea
+                          <RichTextareaWithEditor
                             rows={2}
                             value={card.desc}
-                            onChange={(e) => {
+                            onChange={(val) => {
                               const copy = [...cardsList];
-                              copy[idx] = { ...copy[idx], desc: e.target.value };
+                              copy[idx] = { ...copy[idx], desc: val };
                               setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
                             }}
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12.5px', lineHeight: 1.4 }}
@@ -23956,6 +26183,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             />
                           </div>
                         </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                            🏷️ Step Background Alt Text (SEO Keyword)
+                          </label>
+                          <input
+                            type="text"
+                            value={card.imgAlt || ''}
+                            onChange={(e) => {
+                              const copy = [...cardsList];
+                              copy[idx] = { ...copy[idx], imgAlt: e.target.value };
+                              setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                            }}
+                            placeholder={`e.g. ${card.title || 'Step ' + (idx + 1)} - Winera Game Zone Setup Process`}
+                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -23993,10 +26236,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </div>
                     <div>
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle Text</label>
-                      <input
-                        type="text"
+                      <RichTextareaWithEditor
+                        rows={2}
                         value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultRoiGet.subtitle}
-                        onChange={(e) => setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), subtitle: e.target.value } }))}
+                        onChange={(val) => setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), subtitle: val } }))}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                       />
                     </div>
@@ -24042,6 +26285,25 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           src={getAdminValidImageUrl(currentSec.image, roiBlock6)}
                           alt="ROI Get Preview"
                           style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'contain', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '4px' }}
+                        />
+                      </div>
+                      <div style={{ marginTop: '10px' }}>
+                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                          🏷️ Section Left Image Alt Text (SEO Keyword)
+                        </label>
+                        <input
+                          type="text"
+                          value={currentSec.imageAlt !== undefined ? currentSec.imageAlt : (currentSec.imgAlt || '')}
+                          onChange={(e) => setFormData(prev => ({
+                            ...prev,
+                            roiGet: {
+                              ...(prev.roiGet || defaultRoiGet),
+                              imageAlt: e.target.value,
+                              imgAlt: e.target.value
+                            }
+                          }))}
+                          placeholder="e.g. Winera Built for Profit - High ROI Commercial Entertainment Setup"
+                          style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                         />
                       </div>
                     </div>
@@ -24098,12 +26360,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             </div>
                             <div>
                               <label style={{ display: 'block', fontSize: '11px', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>Feature Description</label>
-                              <input
-                                type="text"
+                              <RichTextareaWithEditor
+                                rows={2}
                                 value={step.desc}
-                                onChange={(e) => {
+                                onChange={(val) => {
                                   const copy = [...steps];
-                                  copy[idx] = { ...copy[idx], desc: e.target.value };
+                                  copy[idx] = { ...copy[idx], desc: val };
                                   setFormData(prev => ({ ...prev, roiGet: { ...(prev.roiGet || defaultRoiGet), steps: copy } }));
                                 }}
                                 style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
@@ -24200,6 +26462,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
                       />
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Section Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), bgAlt: e.target.value } }))}
+                        placeholder="e.g. ROI Calculator Checklist Background - Winera Commercial Entertainment"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
@@ -24222,18 +26496,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {fitItems.map((item, idx) => (
-                          <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8' }}>{idx + 1}.</span>
-                            <input
-                              type="text"
-                              value={item}
-                              onChange={(e) => {
-                                const copy = [...fitItems];
-                                copy[idx] = e.target.value;
-                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), fitItems: copy } }));
-                              }}
-                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
-                            />
+                          <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8', paddingTop: '8px' }}>{idx + 1}.</span>
+                            <div style={{ flex: 1 }}>
+                              <RichTextareaWithEditor
+                                rows={2}
+                                value={item}
+                                onChange={(val) => {
+                                  const copy = [...fitItems];
+                                  copy[idx] = val;
+                                  setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), fitItems: copy } }));
+                                }}
+                                style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                              />
+                            </div>
                             <button
                               type="button"
                               onClick={async () => {
@@ -24243,7 +26519,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 setFormData(prev => ({ ...prev, roiChecklist: updatedSec }));
                                 await persistSectionToDatabase('roiChecklist', updatedSec);
                               }}
-                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer', marginTop: '4px' }}
                             >
                               <Trash2 style={{ width: '15px', height: '15px' }} />
                             </button>
@@ -24271,18 +26547,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {unfitItems.map((item, idx) => (
-                          <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8' }}>{idx + 1}.</span>
-                            <input
-                              type="text"
-                              value={item}
-                              onChange={(e) => {
-                                const copy = [...unfitItems];
-                                copy[idx] = e.target.value;
-                                setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), unfitItems: copy } }));
-                              }}
-                              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
-                            />
+                          <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                            <span style={{ fontWeight: 'bold', fontSize: '12px', color: '#94a3b8', paddingTop: '8px' }}>{idx + 1}.</span>
+                            <div style={{ flex: 1 }}>
+                              <RichTextareaWithEditor
+                                rows={2}
+                                value={item}
+                                onChange={(val) => {
+                                  const copy = [...unfitItems];
+                                  copy[idx] = val;
+                                  setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), unfitItems: copy } }));
+                                }}
+                                style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                              />
+                            </div>
                             <button
                               type="button"
                               onClick={async () => {
@@ -24292,7 +26570,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 setFormData(prev => ({ ...prev, roiChecklist: updatedSec }));
                                 await persistSectionToDatabase('roiChecklist', updatedSec);
                               }}
-                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                              style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px', borderRadius: '8px', cursor: 'pointer', marginTop: '4px' }}
                             >
                               <Trash2 style={{ width: '15px', height: '15px' }} />
                             </button>
@@ -24353,10 +26631,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Subtitle</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
                       value={currentSec.subtitle !== undefined ? currentSec.subtitle : defaultRoiCta.subtitle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), subtitle: e.target.value } }))}
+                      onChange={(val) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), subtitle: val } }))}
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', lineHeight: 1.6 }}
                     />
                   </div>
@@ -24410,6 +26688,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         src={getAdminValidImageUrl(currentSec.bgUrl, homeBlockBg)}
                         alt="CTA BG Preview"
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                      />
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Banner Background Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Commercial Entertainment Center ROI Calculator & Turnkey Consultation - Winera"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
                     </div>
                   </div>
@@ -24593,6 +26883,167 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             );
           })()}
 
+          {/* PRIVACY HERO BANNER FORM */}
+          {activeSection === 'privacyHero' && (() => {
+            const currentHero = formData.privacyHero || defaultPrivacyHero;
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Privacy Policy Hero Banner</h3>
+
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Hero Title (Use *word* for Yellow Highlight)
+                  </label>
+                  <input
+                    type="text"
+                    value={currentHero.title || 'Privacy *Policy*'}
+                    onChange={(e) => handleFieldChange('privacyHero', 'title', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      Breadcrumb Home Label
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.breadcrumbHome || 'Home'}
+                      onChange={(e) => handleFieldChange('privacyHero', 'breadcrumbHome', e.target.value)}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      Breadcrumb Active Page Text
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.breadcrumbText || 'Privacy Policy'}
+                      onChange={(e) => handleFieldChange('privacyHero', 'breadcrumbText', e.target.value)}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Desktop Screen Hero Banner */}
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Hero Banner Background Image (Desktop) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <input
+                      type="text"
+                      value={currentHero.bgUrl || ''}
+                      onChange={(e) => handleFieldChange('privacyHero', 'bgUrl', e.target.value)}
+                      placeholder="Image URL or Asset Path"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                    />
+                    <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                      <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                      Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          if (e.target.files?.[0]) {
+                            const res = await uploadImageFile(e.target.files[0], admin.token);
+                            handleFieldChange('privacyHero', 'bgUrl', res.url);
+                          }
+                        }}
+                      />
+                    </label>
+                    <img
+                      src={getAdminValidImageUrl(currentHero.bgUrl, aboutHeroBg)}
+                      alt="Privacy Hero Preview"
+                      style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                    />
+                  </div>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Hero Banner Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.bgAlt || ''}
+                      onChange={(e) => handleFieldChange('privacyHero', 'bgAlt', e.target.value)}
+                      placeholder="e.g. Privacy Policy - Winera International"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Mobile Screen Hero Banner */}
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <input
+                      type="text"
+                      value={currentHero.mobileBgUrl || ''}
+                      onChange={(e) => handleFieldChange('privacyHero', 'mobileBgUrl', e.target.value)}
+                      placeholder="Mobile Background Image URL"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                    />
+                    <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                      <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                      Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          if (e.target.files?.[0]) {
+                            const res = await uploadImageFile(e.target.files[0], admin.token);
+                            handleFieldChange('privacyHero', 'mobileBgUrl', res.url);
+                          }
+                        }}
+                      />
+                    </label>
+                    <img
+                      src={getAdminValidImageUrl(currentHero.mobileBgUrl, defaultGameZoneMobileBanner)}
+                      alt="Privacy Mobile Hero Preview"
+                      style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                    />
+                    {currentHero.mobileBgUrl && (
+                      <button
+                        type="button"
+                        onClick={() => handleFieldChange('privacyHero', 'mobileBgUrl', '')}
+                        style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                      >
+                        Reset Image
+                      </button>
+                    )}
+                  </div>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.mobileBgAlt || ''}
+                      onChange={(e) => handleFieldChange('privacyHero', 'mobileBgAlt', e.target.value)}
+                      placeholder="e.g. Privacy Policy Mobile Banner - Winera International"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <button
+                    onClick={() => persistSectionToDatabase('privacyHero', formData.privacyHero || defaultPrivacyHero)}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                  >
+                    Save Privacy Hero Banner
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* PRIVACY POLICY SECTIONS EDITOR */}
           {activeSection === 'privacySections' && (() => {
             const sectionsList = formData.privacySections || defaultPrivacySections;
@@ -24669,40 +27120,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </div>
 
                       <div style={{ marginBottom: '14px' }}>
-                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Subtitle / Intro (Optional)</label>
-                        <input
-                          type="text"
+                        <RichTextareaWithEditor
+                          label="Subtitle / Intro (Optional)"
+                          rows={2}
                           value={sec.subtitle || sec.intro || ''}
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const updated = [...sectionsList];
-                            updated[idx] = { ...updated[idx], subtitle: e.target.value, intro: e.target.value };
+                            updated[idx] = { ...updated[idx], subtitle: val, intro: val };
                             setFormData(prev => ({ ...prev, privacySections: updated }));
                           }}
                           placeholder="e.g. We collect the following types of information:"
-                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
                         />
                       </div>
 
                       <div style={{ marginBottom: '14px' }}>
-                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Paragraph Content (Paragraphs separated by line breaks)</label>
-                        <textarea
-                          rows={3}
+                        <RichTextareaWithEditor
+                          label="Paragraph Content (Paragraphs separated by line breaks)"
+                          rows={4}
                           value={Array.isArray(sec.content) ? sec.content.join('\n\n') : (sec.content || '')}
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const updated = [...sectionsList];
-                            const textVal = e.target.value;
-                            updated[idx] = { ...updated[idx], content: textVal.split('\n\n').filter(Boolean) };
+                            const paragraphs = val.includes('\n\n')
+                              ? val.split(/\n\s*\n/).filter(Boolean)
+                              : (val.trim() ? [val] : []);
+                            updated[idx] = { ...updated[idx], content: paragraphs };
                             setFormData(prev => ({ ...prev, privacySections: updated }));
                           }}
                           placeholder="Section main paragraph content..."
-                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
                         />
                       </div>
 
                       <div>
-                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Bullet Points (1 point per line)</label>
-                        <textarea
-                          rows={3}
+                        <RichTextareaWithEditor
+                          label="Bullet Points (1 point per line)"
+                          rows={4}
                           value={
                             sec.bulletsText
                               ? sec.bulletsText.join('\n')
@@ -24710,14 +27161,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 ? sec.bullets.map(b => `${b.label ? b.label + ': ' : ''}${b.text}`).join('\n')
                                 : ''
                           }
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const updated = [...sectionsList];
-                            const lines = e.target.value.split('\n').filter(l => l.trim().length > 0);
+                            const lines = val.split('\n').filter(l => l.trim().length > 0);
                             updated[idx] = { ...updated[idx], bulletsText: lines, bullets: undefined };
                             setFormData(prev => ({ ...prev, privacySections: updated }));
                           }}
                           placeholder="Enter each bullet point on a new line..."
-                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
                         />
                       </div>
                     </div>
@@ -24731,6 +27181,167 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       Save Privacy Policy Content
                     </button>
                   </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* TERMS HERO BANNER FORM */}
+          {activeSection === 'termsHero' && (() => {
+            const currentHero = formData.termsHero || defaultTermsHero;
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>Terms & Conditions Hero Banner</h3>
+
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Hero Title (Use *word* for Yellow Highlight)
+                  </label>
+                  <input
+                    type="text"
+                    value={currentHero.title || 'Terms & *Conditions*'}
+                    onChange={(e) => handleFieldChange('termsHero', 'title', e.target.value)}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                  />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      Breadcrumb Home Label
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.breadcrumbHome || 'Home'}
+                      onChange={(e) => handleFieldChange('termsHero', 'breadcrumbHome', e.target.value)}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                      Breadcrumb Active Page Text
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.breadcrumbText || 'Terms & Conditions'}
+                      onChange={(e) => handleFieldChange('termsHero', 'breadcrumbText', e.target.value)}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Desktop Screen Hero Banner */}
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Hero Banner Background Image (Desktop) <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📐 Recommended Size: 1920 × 600 px</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <input
+                      type="text"
+                      value={currentHero.bgUrl || ''}
+                      onChange={(e) => handleFieldChange('termsHero', 'bgUrl', e.target.value)}
+                      placeholder="Image URL or Asset Path"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                    />
+                    <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                      <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                      Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          if (e.target.files?.[0]) {
+                            const res = await uploadImageFile(e.target.files[0], admin.token);
+                            handleFieldChange('termsHero', 'bgUrl', res.url);
+                          }
+                        }}
+                      />
+                    </label>
+                    <img
+                      src={getAdminValidImageUrl(currentHero.bgUrl, aboutHeroBg)}
+                      alt="Terms Hero Preview"
+                      style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                    />
+                  </div>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Hero Banner Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.bgAlt || ''}
+                      onChange={(e) => handleFieldChange('termsHero', 'bgAlt', e.target.value)}
+                      placeholder="e.g. Terms & Conditions - Winera International"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Mobile Screen Hero Banner */}
+                <div>
+                  <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                    Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <input
+                      type="text"
+                      value={currentHero.mobileBgUrl || ''}
+                      onChange={(e) => handleFieldChange('termsHero', 'mobileBgUrl', e.target.value)}
+                      placeholder="Mobile Background Image URL"
+                      style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px' }}
+                    />
+                    <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                      <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                      Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={async (e) => {
+                          if (e.target.files?.[0]) {
+                            const res = await uploadImageFile(e.target.files[0], admin.token);
+                            handleFieldChange('termsHero', 'mobileBgUrl', res.url);
+                          }
+                        }}
+                      />
+                    </label>
+                    <img
+                      src={getAdminValidImageUrl(currentHero.mobileBgUrl, defaultGameZoneMobileBanner)}
+                      alt="Terms Mobile Hero Preview"
+                      style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                    />
+                    {currentHero.mobileBgUrl && (
+                      <button
+                        type="button"
+                        onClick={() => handleFieldChange('termsHero', 'mobileBgUrl', '')}
+                        style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                      >
+                        Reset Image
+                      </button>
+                    )}
+                  </div>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                      🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentHero.mobileBgAlt || ''}
+                      onChange={(e) => handleFieldChange('termsHero', 'mobileBgAlt', e.target.value)}
+                      placeholder="e.g. Terms & Conditions Mobile Banner - Winera International"
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <button
+                    onClick={() => persistSectionToDatabase('termsHero', formData.termsHero || defaultTermsHero)}
+                    style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
+                  >
+                    Save Terms Hero Banner
+                  </button>
                 </div>
               </div>
             );
@@ -24812,40 +27423,40 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       </div>
 
                       <div style={{ marginBottom: '14px' }}>
-                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Subtitle / Intro (Optional)</label>
-                        <input
-                          type="text"
+                        <RichTextareaWithEditor
+                          label="Subtitle / Intro (Optional)"
+                          rows={2}
                           value={sec.subtitle || sec.intro || ''}
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const updated = [...sectionsList];
-                            updated[idx] = { ...updated[idx], subtitle: e.target.value, intro: e.target.value };
+                            updated[idx] = { ...updated[idx], subtitle: val, intro: val };
                             setFormData(prev => ({ ...prev, termsSections: updated }));
                           }}
                           placeholder="e.g. Standard payment milestones are:"
-                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px' }}
                         />
                       </div>
 
                       <div style={{ marginBottom: '14px' }}>
-                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Paragraph Content (Paragraphs separated by line breaks)</label>
-                        <textarea
-                          rows={3}
+                        <RichTextareaWithEditor
+                          label="Paragraph Content (Paragraphs separated by line breaks)"
+                          rows={4}
                           value={Array.isArray(sec.content) ? sec.content.join('\n\n') : (sec.content || '')}
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const updated = [...sectionsList];
-                            const textVal = e.target.value;
-                            updated[idx] = { ...updated[idx], content: textVal.split('\n\n').filter(Boolean) };
+                            const paragraphs = val.includes('\n\n')
+                              ? val.split(/\n\s*\n/).filter(Boolean)
+                              : (val.trim() ? [val] : []);
+                            updated[idx] = { ...updated[idx], content: paragraphs };
                             setFormData(prev => ({ ...prev, termsSections: updated }));
                           }}
                           placeholder="Section main paragraph content..."
-                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
                         />
                       </div>
 
                       <div>
-                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Bullet Points (1 point per line)</label>
-                        <textarea
-                          rows={3}
+                        <RichTextareaWithEditor
+                          label="Bullet Points (1 point per line)"
+                          rows={4}
                           value={
                             sec.bulletsText
                               ? sec.bulletsText.join('\n')
@@ -24853,14 +27464,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 ? sec.bullets.map(b => `${b.label ? b.label + ': ' : ''}${b.text}`).join('\n')
                                 : ''
                           }
-                          onChange={(e) => {
+                          onChange={(val) => {
                             const updated = [...sectionsList];
-                            const lines = e.target.value.split('\n').filter(l => l.trim().length > 0);
+                            const lines = val.split('\n').filter(l => l.trim().length > 0);
                             updated[idx] = { ...updated[idx], bulletsText: lines, bullets: undefined };
                             setFormData(prev => ({ ...prev, termsSections: updated }));
                           }}
                           placeholder="Enter each bullet point on a new line..."
-                          style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
                         />
                       </div>
                     </div>
@@ -24924,6 +27534,75 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         src={getAdminValidImageUrl(currentSec.bgUrl, blogHeroBg)}
                         alt="Blog Hero Preview"
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                      />
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.bgAlt !== undefined ? currentSec.bgAlt : (defaultBlogHero.bgAlt || '')}
+                        onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), bgAlt: e.target.value } }))}
+                        placeholder="e.g. Winera International Game Zone & Entertainment Industry Insights"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Mobile Screen Hero Banner Upload & Preview */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                      Mobile Screen Hero Banner <span style={{ fontSize: '11.5px', color: '#0284c7', background: '#e0f2fe', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', marginLeft: '8px' }}>📱 Recommended Size: 941 × 550 px</span>
+                    </label>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgUrl !== undefined ? currentSec.mobileBgUrl : ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), mobileBgUrl: e.target.value } }))}
+                        placeholder="Mobile Background Image URL"
+                        style={{ flex: 1, padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', background: '#F5F5F9' }}
+                      />
+                      <label style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#38bdf8', color: '#ffffff', padding: '10px 20px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
+                        <Upload style={{ width: '16px', height: '16px', marginRight: '6px' }} />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={async (e) => {
+                            if (e.target.files?.[0]) {
+                              const res = await uploadImageFile(e.target.files[0], admin.token);
+                              setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), mobileBgUrl: res.url } }));
+                            }
+                          }}
+                        />
+                      </label>
+                      <img
+                        src={getAdminValidImageUrl(currentSec.mobileBgUrl, defaultGameZoneMobileBanner)}
+                        alt="Blog Mobile Hero Preview"
+                        style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
+                      />
+                      {currentSec.mobileBgUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), mobileBgUrl: '' } }))}
+                          style={{ background: '#fef2f2', color: '#dc2626', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          Reset Image
+                        </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), mobileBgAlt: e.target.value } }))}
+                        placeholder="e.g. Winera International Game Zone & Entertainment Industry Insights Mobile Banner"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
                     </div>
                   </div>
@@ -24991,6 +27670,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         />
                       </label>
                     </div>
+                    <div style={{ marginTop: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Header Logo Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.logoAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), logoAlt: e.target.value } }))}
+                        placeholder="e.g. Winera International - Commercial Game Zone Setup & Turnkey Solutions"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
 
                   {/* Social Profile URLs */}
@@ -25057,9 +27748,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     </label>
                     <input
                       type="text"
-                      value={currentSec.whatsappUrl || defaultHeaderData.whatsappUrl || 'https://wa.me/919428989488'}
+                      value={currentSec.whatsappUrl || defaultHeaderData.whatsappUrl || 'https://wa.me/919157873576'}
                       onChange={(e) => setFormData(prev => ({ ...prev, header: { ...(prev.header || defaultHeaderData), whatsappUrl: e.target.value } }))}
-                      placeholder="https://wa.me/919428989488"
+                      placeholder="https://wa.me/919157873576"
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px' }}
                     />
                   </div>
@@ -25115,6 +27806,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           }}
                         />
                       </label>
+                    </div>
+                    <div style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Footer Logo Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={currentSec.logoAlt || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), logoAlt: e.target.value } }))}
+                        placeholder="e.g. Winera International - Commercial Game Zone Developer & Manufacturer"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                     <div>
                       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>Footer About Tagline Paragraph</label>
@@ -25235,7 +27938,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             background: '#ffffff',
             borderRadius: '24px',
             width: '100%',
-            maxWidth: (activeSection === 'arcadeCategories' || activeSection === 'vrCategories' || activeSection === 'vrRange' || modalTargetSection === 'vrCategories' || modalTargetSection === 'vrRange') ? '760px' : activeSection === 'projectItems' ? '720px' : '560px',
+            maxWidth: (activeSection === 'projectItems' || modalTargetSection === 'projectItems')
+              ? '1150px'
+              : (activeSection === 'arcadeCategories' || activeSection === 'vrCategories' || activeSection === 'vrRange' || modalTargetSection === 'vrCategories' || modalTargetSection === 'vrRange')
+                ? '760px'
+                : '560px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             border: '1px solid #e2e8f0',
             overflow: 'hidden',
@@ -25244,7 +27951,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           }}>
             {/* Modal Header */}
             <div style={{
-              padding: '20px 24px',
+              padding: '20px 28px',
               background: '#0F172B',
               color: '#ffffff',
               display: 'flex',
@@ -25263,7 +27970,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             </div>
 
             {/* Modal Form Body */}
-            <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px', maxHeight: '70vh', overflowY: 'auto' }}>
+            <div style={{
+              padding: (activeSection === 'projectItems' || modalTargetSection === 'projectItems') ? '28px 32px' : '24px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
+              maxHeight: (activeSection === 'projectItems' || modalTargetSection === 'projectItems') ? '84vh' : '70vh',
+              overflowY: 'auto'
+            }}>
               {/* 1. STATS FIELDS */}
               {activeSection === 'stats' && (
                 <>
@@ -25332,6 +28046,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <img src={modalItemData.logoUrl} alt="" style={{ height: '40px', maxWidth: '100px', objectFit: 'contain', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '2px' }} />
                       )}
                     </div>
+                    <div style={{ marginTop: '8px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>🏷️ Logo Alt Text (SEO Keyword)</label>
+                      <input
+                        type="text"
+                        value={modalItemData.logoAlt || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, logoAlt: e.target.value }))}
+                        placeholder="e.g. Brand Name Logo - Winera Client"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
                   </div>
                 </>
               )}
@@ -25387,6 +28111,16 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       {(modalItemData.imageUrl || modalItemData.img) && (
                         <img src={modalItemData.imageUrl || modalItemData.img} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #38bdf8' }} />
                       )}
+                    </div>
+                    <div style={{ marginTop: '8px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>🏷️ Venue Photo Alt Text (SEO Keyword)</label>
+                      <input
+                        type="text"
+                        value={modalItemData.imgAlt || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
+                        placeholder="e.g. Hulaboo Game Zone Indoor Amusement Park Setup - Surat"
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
                     </div>
                   </div>
                 </>
@@ -25457,7 +28191,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       >
                         {((Array.isArray(formData.arcadeCategories?.categoriesList) && formData.arcadeCategories.categoriesList.length > 0)
                           ? formData.arcadeCategories.categoriesList
-                          : ["Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride", "Bike Racing Game", "Car Racing Game", "Shooting Games", "Strength Based Games"]
+                          : ["Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride", "Bike & Car Racing Games", "Shooting Games", "Strength Based Games"]
                         ).map((catName, cIdx) => (
                           <option key={cIdx} value={catName}>{catName}</option>
                         ))}
@@ -25486,13 +28220,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Product Tagline / Subtitle</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Product Tagline / Subtitle"
                       rows={2}
                       value={modalItemData.tagline || modalItemData.desc || ''}
-                      onChange={(e) => setModalItemData(prev => ({ ...prev, tagline: e.target.value, desc: e.target.value }))}
+                      onChange={(val) => setModalItemData(prev => ({ ...prev, tagline: val, desc: val }))}
                       placeholder="High-Performance Dual Player Commercial Motorbike Racing Simulator..."
-                      style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                     />
                   </div>
 
@@ -25638,6 +28371,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ flex: 1, padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px', minWidth: 0 }}
                       />
                     </div>
+                    <div style={{ marginTop: '8px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={modalItemData.imgAlt || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
+                        placeholder={`e.g. ${modalItemData.name || 'Commercial Arcade Game Machine'} - Winera International`}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                      />
+                    </div>
                   </div>
 
                   {/* Dynamic Gallery Thumbnails */}
@@ -25717,7 +28462,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                   onClick={() => {
                                     setModalItemData(prev => {
                                       const list = (prev.gallery || []).filter((_, i) => i !== thumbIdx);
-                                      return { ...prev, gallery: list };
+                                      const altList = (prev.galleryAlt || []).filter((_, i) => i !== thumbIdx);
+                                      return { ...prev, gallery: list, galleryAlt: altList };
                                     });
                                   }}
                                   style={{ background: 'none', border: 'none', color: '#ef4444', fontSize: '11px', fontWeight: '800', cursor: 'pointer', padding: 0 }}
@@ -25760,6 +28506,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                   />
                                 </div>
                               )}
+                            </div>
+                            <div style={{ marginTop: '6px' }}>
+                              <input
+                                type="text"
+                                value={Array.isArray(modalItemData.galleryAlt) ? (modalItemData.galleryAlt[thumbIdx] || '') : ''}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  setModalItemData(prev => {
+                                    const altList = Array.isArray(prev.galleryAlt) ? [...prev.galleryAlt] : [];
+                                    altList[thumbIdx] = val;
+                                    return { ...prev, galleryAlt: altList };
+                                  });
+                                }}
+                                placeholder={`🏷️ Thumbnail ${thumbIdx + 1} Alt Text (SEO Keyword)`}
+                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '11px' }}
+                              />
                             </div>
                           </div>
                         );
@@ -25817,7 +28579,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Base WhatsApp Link / URL</label>
                       <input
                         type="text"
-                        value={(modalItemData.quoteUrl && modalItemData.quoteUrl.split('?')[0]) || 'https://wa.me/919428989488'}
+                        value={(modalItemData.quoteUrl && modalItemData.quoteUrl.split('?')[0]) || 'https://wa.me/919157873576'}
                         onChange={(e) => {
                           const newBase = e.target.value;
                           setModalItemData(prev => {
@@ -25834,7 +28596,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             return { ...prev, quoteUrl: updatedUrl };
                           });
                         }}
-                        placeholder="https://wa.me/919428989488"
+                        placeholder="https://wa.me/919157873576"
                         style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
                     </div>
@@ -25859,7 +28621,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       onChange={(e) => {
                         const newMsg = e.target.value;
                         setModalItemData(prev => {
-                          const base = (prev.quoteUrl && prev.quoteUrl.split('?')[0]) || 'https://wa.me/919428989488';
+                          const base = (prev.quoteUrl && prev.quoteUrl.split('?')[0]) || 'https://wa.me/919157873576';
                           const updatedUrl = newMsg ? `${base}?text=${encodeURIComponent(newMsg)}` : base;
                           return {
                             ...prev,
@@ -25958,7 +28720,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     <div>
                       <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>VR Category Tab</label>
                       <select
-                        value={modalItemData.category || 'Bester VR'}
+                        value={modalItemData.category || 'VR 9D Cinema'}
                         onChange={(e) => setModalItemData(prev => ({ ...prev, category: e.target.value, tag: e.target.value, specsCategory: e.target.value }))}
                         style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px', fontWeight: '700', background: '#ffffff', color: '#0284c7' }}
                       >
@@ -25966,7 +28728,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           ? formData.vrCategories.categoriesList
                           : ((Array.isArray(formData.vrRange?.categoriesList) && formData.vrRange.categoriesList.length > 0)
                             ? formData.vrRange.categoriesList
-                            : (allVrGames?.categoriesList || ["All VR Games", "Bester VR", "Funin VR", "Movie Power", "Oculeap VR"]))
+                            : DEFAULT_VR_CATEGORIES)
                         ).map((catName, cIdx) => (
                           <option key={cIdx} value={catName}>{catName}</option>
                         ))}
@@ -26006,13 +28768,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Product Description / Overview</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Product Description / Overview"
                       rows={3}
                       value={modalItemData.desc || ''}
-                      onChange={(e) => setModalItemData(prev => ({ ...prev, desc: e.target.value }))}
+                      onChange={(val) => setModalItemData(prev => ({ ...prev, desc: val }))}
                       placeholder="Commercial description explaining simulator dynamics, motion freedom, guest excitement..."
-                      style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                     />
                   </div>
 
@@ -26150,6 +28911,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ flex: 1, padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px', minWidth: 0 }}
                       />
                     </div>
+                    <div style={{ marginTop: '8px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                        🏷️ VR Game Image Alt Text (SEO Keyword)
+                      </label>
+                      <input
+                        type="text"
+                        value={modalItemData.imgAlt || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
+                        placeholder={`e.g. ${modalItemData.name || 'Commercial VR Simulator'} - Winera International`}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                      />
+                    </div>
                   </div>
 
                   {/* Dynamic Gallery Thumbnails */}
@@ -26184,7 +28957,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 setModalItemData(prev => {
                                   const list = Array.isArray(prev.gallery) ? [...prev.gallery] : [];
                                   list.splice(thumbIdx, 1);
-                                  return { ...prev, gallery: list };
+                                  const altList = Array.isArray(prev.galleryAlt) ? [...prev.galleryAlt] : [];
+                                  altList.splice(thumbIdx, 1);
+                                  return { ...prev, gallery: list, galleryAlt: altList };
                                 });
                               }}
                               style={{ background: '#fee2e2', color: '#ef4444', border: 'none', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}
@@ -26227,6 +29002,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               </div>
                             )}
                           </div>
+                          <div style={{ marginTop: '6px' }}>
+                            <input
+                              type="text"
+                              value={Array.isArray(modalItemData.galleryAlt) ? (modalItemData.galleryAlt[thumbIdx] || '') : ''}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setModalItemData(prev => {
+                                  const altList = Array.isArray(prev.galleryAlt) ? [...prev.galleryAlt] : [];
+                                  altList[thumbIdx] = val;
+                                  return { ...prev, galleryAlt: altList };
+                                });
+                              }}
+                              placeholder={`🏷️ Photo #${thumbIdx + 1} Alt Text (SEO Keyword)`}
+                              style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '11px' }}
+                            />
+                          </div>
                         </div>
                       );
                     })}
@@ -26251,7 +29042,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Base WhatsApp Link</label>
                       <input
                         type="text"
-                        value={(modalItemData.quoteUrl && modalItemData.quoteUrl.split('?')[0]) || 'https://wa.me/919428989488'}
+                        value={(modalItemData.quoteUrl && modalItemData.quoteUrl.split('?')[0]) || 'https://wa.me/919157873576'}
                         onChange={(e) => {
                           const newBase = e.target.value;
                           setModalItemData(prev => {
@@ -26260,7 +29051,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             return { ...prev, quoteUrl: updatedUrl };
                           });
                         }}
-                        placeholder="https://wa.me/919428989488"
+                        placeholder="https://wa.me/919157873576"
                         style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
                     </div>
@@ -26408,6 +29199,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           style={{ flex: 1, padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                         />
                       </div>
+                      <div style={{ marginTop: '8px' }}>
+                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
+                          🏷️ Project Photo Alt Text (SEO Keyword)
+                        </label>
+                        <input
+                          type="text"
+                          value={modalItemData.imgAlt || ''}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
+                          placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Setup - Winera International`}
+                          style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
+                        />
+                      </div>
                     </div>
 
                     {/* CASE STUDY CONTENT FIELDS */}
@@ -26464,10 +29267,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                         <div>
                           <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Subheadline / Description Summary</label>
-                          <textarea
-                            rows={2}
+                          <RichTextareaWithEditor
+                            rows={3}
                             value={modalItemData.description || ''}
-                            onChange={(e) => setModalItemData(prev => ({ ...prev, description: e.target.value }))}
+                            onChange={(val) => setModalItemData(prev => ({ ...prev, description: val }))}
                             placeholder="e.g. How we designed and installed a professional-grade bowling alley across 3,000 sq. ft..."
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                           />
@@ -26492,9 +29295,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Button Base Link (WhatsApp URL)</label>
                             <input
                               type="text"
-                              value={modalItemData.buttonLink !== undefined ? modalItemData.buttonLink : 'https://wa.me/919428989488'}
+                              value={modalItemData.buttonLink !== undefined ? modalItemData.buttonLink : 'https://wa.me/919157873576'}
                               onChange={(e) => setModalItemData(prev => ({ ...prev, buttonLink: e.target.value }))}
-                              placeholder="https://wa.me/919428989488"
+                              placeholder="https://wa.me/919157873576"
                               style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                             />
                           </div>
@@ -26517,7 +29320,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             })()}
                             onChange={(e) => {
                               const newMsg = e.target.value;
-                              const baseLink = (modalItemData.buttonLink && modalItemData.buttonLink.split('?')[0]) || 'https://wa.me/919428989488';
+                              const baseLink = (modalItemData.buttonLink && modalItemData.buttonLink.split('?')[0]) || 'https://wa.me/919157873576';
                               const updatedLink = newMsg ? `${baseLink}?text=${encodeURIComponent(newMsg)}` : baseLink;
                               setModalItemData(prev => ({
                                 ...prev,
@@ -26559,6 +29362,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               <img src={modalItemData.basicInfoBg} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
                             )}
                           </div>
+                          <div style={{ marginTop: '6px' }}>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
+                              🏷️ Background Image Alt Text (SEO Keyword)
+                            </label>
+                            <input
+                              type="text"
+                              value={modalItemData.basicInfoBgAlt || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, basicInfoBgAlt: e.target.value }))}
+                              placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Setup Facility - Winera`}
+                              style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                            />
+                          </div>
                         </div>
                       </div>
 
@@ -26567,20 +29382,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>What The Client Wanted Section</h5>
                         <div>
                           <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Paragraph 1</label>
-                          <textarea
-                            rows={2}
+                          <RichTextareaWithEditor
+                            rows={3}
                             value={modalItemData.clientWanted1 || ''}
-                            onChange={(e) => setModalItemData(prev => ({ ...prev, clientWanted1: e.target.value }))}
+                            onChange={(val) => setModalItemData(prev => ({ ...prev, clientWanted1: val }))}
                             placeholder="The client had an empty 3,000 sq. ft. space in Katargam and a clear goal..."
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                           />
                         </div>
                         <div>
                           <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Paragraph 2</label>
-                          <textarea
-                            rows={2}
+                          <RichTextareaWithEditor
+                            rows={3}
                             value={modalItemData.clientWanted2 || ''}
-                            onChange={(e) => setModalItemData(prev => ({ ...prev, clientWanted2: e.target.value }))}
+                            onChange={(val) => setModalItemData(prev => ({ ...prev, clientWanted2: val }))}
                             placeholder="They didn't want a supplier who only supplied equipment. They wanted one partner..."
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                           />
@@ -26609,6 +29424,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             {(modalItemData.clientImg || modalItemData.clientImageUrl) && (
                               <img src={modalItemData.clientImg || modalItemData.clientImageUrl} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
                             )}
+                          </div>
+                          <div style={{ marginTop: '6px' }}>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
+                              🏷️ Client Photo Alt Text (SEO Keyword)
+                            </label>
+                            <input
+                              type="text"
+                              value={modalItemData.clientImgAlt || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, clientImgAlt: e.target.value }))}
+                              placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Client Requirement Setup - Winera`}
+                              style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                            />
                           </div>
                         </div>
                       </div>
@@ -26660,6 +29487,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             {(modalItemData.solutionImg || modalItemData.solutionImageUrl) && (
                               <img src={modalItemData.solutionImg || modalItemData.solutionImageUrl} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
                             )}
+                          </div>
+                          <div style={{ marginTop: '6px' }}>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
+                              🏷️ Solution Photo Alt Text (SEO Keyword)
+                            </label>
+                            <input
+                              type="text"
+                              value={modalItemData.solutionImgAlt || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, solutionImgAlt: e.target.value }))}
+                              placeholder={`e.g. ${modalItemData.name || 'Game Zone'} Turnkey Solution by Winera International`}
+                              style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                            />
                           </div>
                         </div>
                       </div>
@@ -26845,6 +29684,22 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                       style={{ flex: 1, minWidth: 0, padding: '6px 8px', borderRadius: '6px', border: '1.5px solid #cbd5e1', fontSize: '11px' }}
                                     />
                                   </div>
+                                  <div style={{ marginTop: '4px' }}>
+                                    <input
+                                      type="text"
+                                      value={Array.isArray(modalItemData.galleryImagesAlt) ? (modalItemData.galleryImagesAlt[idx] || '') : ''}
+                                      onChange={(e) => {
+                                        const val = e.target.value;
+                                        setModalItemData(prev => {
+                                          const altList = Array.isArray(prev.galleryImagesAlt) ? [...prev.galleryImagesAlt] : [];
+                                          altList[idx] = val;
+                                          return { ...prev, galleryImagesAlt: altList };
+                                        });
+                                      }}
+                                      placeholder={`🏷️ Gallery Photo #${idx + 1} Alt Text (SEO Keyword)`}
+                                      style={{ width: '100%', boxSizing: 'border-box', padding: '5px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '11px' }}
+                                    />
+                                  </div>
                                 </div>
                               ))}
                             </div>
@@ -26879,6 +29734,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             {(modalItemData.videoImg || modalItemData.videoCoverUrl) && (
                               <img src={modalItemData.videoImg || modalItemData.videoCoverUrl} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
                             )}
+                          </div>
+                          <div style={{ marginTop: '6px' }}>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
+                              🏷️ Video Cover Alt Text (SEO Keyword)
+                            </label>
+                            <input
+                              type="text"
+                              value={modalItemData.videoAlt || ''}
+                              onChange={(e) => setModalItemData(prev => ({ ...prev, videoAlt: e.target.value }))}
+                              placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Setup Video Tour - Winera`}
+                              style={{ width: '100%', boxSizing: 'border-box', padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                            />
                           </div>
                         </div>
                         <div>
@@ -26936,13 +29803,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Answer Text</label>
-                    <textarea
+                    <RichTextareaWithEditor
+                      label="Answer Text"
                       rows={4}
                       value={modalItemData.a || ''}
-                      onChange={(e) => setModalItemData(prev => ({ ...prev, a: e.target.value }))}
+                      onChange={(val) => setModalItemData(prev => ({ ...prev, a: val }))}
                       placeholder="Enter detailed answer..."
-                      style={{ width: '100%', padding: '12px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.5 }}
                     />
                   </div>
                 </>
@@ -27075,6 +29941,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           />
                         )}
                       </div>
+                      <div style={{ marginTop: '8px' }}>
+                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
+                          🏷️ Photo Alt Text (SEO Keyword)
+                        </label>
+                        <input
+                          type="text"
+                          value={modalItemData.founderImgAlt || modalItemData.imgAlt || ''}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, founderImgAlt: e.target.value, imgAlt: e.target.value }))}
+                          placeholder="e.g. Client Testimonial - Game Zone Owner"
+                          style={{ width: '100%', boxSizing: 'border-box', padding: '6px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px' }}
+                        />
+                      </div>
                     </div>
 
                     {/* Video Cover / Thumbnail Photo */}
@@ -27117,6 +29995,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             style={{ width: '38px', height: '38px', borderRadius: '8px', objectFit: 'cover', border: '2px solid #cbd5e1' }}
                           />
                         )}
+                      </div>
+                      <div style={{ marginTop: '8px' }}>
+                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
+                          🏷️ Video Thumbnail Alt Text (SEO Keyword)
+                        </label>
+                        <input
+                          type="text"
+                          value={modalItemData.videoImgAlt || ''}
+                          onChange={(e) => setModalItemData(prev => ({ ...prev, videoImgAlt: e.target.value }))}
+                          placeholder="e.g. Video Testimonial - Client Feedback Winera"
+                          style={{ width: '100%', boxSizing: 'border-box', padding: '6px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px' }}
+                        />
                       </div>
                     </div>
                   </div>

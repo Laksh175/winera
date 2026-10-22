@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/
 
-Sitemap: https://winerainternational.com/sitemap.xml
+Sitemap: https://winera.in/sitemap.xml

@@ -61,8 +61,19 @@ const seedDatabase = async () => {
     const insertedDocs = await VrGame.insertMany(formattedProducts, { ordered: false });
     console.log(`✅ Successfully inserted ${insertedDocs.length} documents into 'VrGame' collection!`);
 
-    // 2. Also update Content Collection (vrCategoriesData section)
-    console.log('🔄 Updating Content model (vrCategoriesData section)...');
+    // 2. Also update Content Collection (vrCategories & vrCategoriesData sections)
+    console.log('🔄 Updating Content model (vrCategories & vrCategoriesData sections)...');
+    await Content.findOneAndUpdate(
+      { sectionKey: 'vrCategories' },
+      {
+        sectionKey: 'vrCategories',
+        data: {
+          categoriesList,
+          cards: formattedProducts
+        }
+      },
+      { upsert: true, new: true }
+    );
     await Content.findOneAndUpdate(
       { sectionKey: 'vrCategoriesData' },
       {
@@ -74,7 +85,7 @@ const seedDatabase = async () => {
       },
       { upsert: true, new: true }
     );
-    console.log('✅ Content model vrCategoriesData updated successfully!');
+    console.log('✅ Content model vrCategories & vrCategoriesData updated successfully!');
 
     console.log('🎉 VR Games Seeding Complete!');
     process.exit(0);

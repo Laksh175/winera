@@ -7,6 +7,8 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
+import BrochureModal from '../components/BrochureModal';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 const ctaSoftplayBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345648/winera_uploads/w1m4przklz2qiyevbxtu.png";
 const bumpercarHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345639/winera_uploads/lvx7xnsguvre7w9uvoi6.png";
 const bumpercarCollageFrame = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345643/winera_uploads/bcia8d2o3cekiuknvaqv.png";
@@ -75,6 +77,7 @@ const formatComparisonPointText = (rawText) => {
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
 const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
+  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -95,7 +98,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => 
 
     if (isHighlighted) {
       return (
-        <span key={pIdx} style={{ color: highlightColor }}>
+        <span key={pIdx} style={{ color: actualHighlight }}>
           {renderedContent}
         </span>
       );
@@ -168,9 +171,9 @@ const BumperCarComparisonSlider = ({ features = [], electricPoints = [], battery
       >
         {/* Top Feature Name Header */}
         <div className="winera-comparison-card-header">
-          <h4 className="winera-comparison-feature-title">
+          <h3 className="winera-comparison-feature-title">
             {currentFeature}
-          </h4>
+          </h3>
         </div>
 
         {/* 1. Left Side Point: Electric Floor */}
@@ -257,7 +260,9 @@ export default function BumperCar({ siteData }) {
 
   const { header, footer } = siteData;
   const heroBgImage = getValidImageUrl(siteData?.bumpercarHero?.bgUrl, bumpercarHeroBg);
+  const mobileHeroBgImage = getValidImageUrl(siteData?.bumpercarHero?.mobileBgUrl, bumpercarMobileHeroBg);
   const [activeThrillIndex, setActiveThrillIndex] = React.useState(0);
+  const [isBrochureOpen, setIsBrochureOpen] = React.useState(false);
 
   const defaultThrillCards = [
     {
@@ -301,7 +306,7 @@ export default function BumperCar({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
-        '--winera-bumpercar-mobile-bg': `url("${bumpercarMobileHeroBg}")`,
+        '--winera-bumpercar-mobile-bg': `url("${mobileHeroBgImage}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -309,6 +314,11 @@ export default function BumperCar({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
+        <img
+          src={heroBgImage}
+          alt={siteData?.bumpercarHero?.bgAlt || "Commercial Bumper Cars Manufacturer - Winera International"}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Bumper Car */}
           <h1 className="winera-bumpercar-hero-h1" style={{
@@ -358,20 +368,22 @@ export default function BumperCar({ siteData }) {
                     ? "*Bumper Car* Manufacturer<br/>in India"
                     : siteData?.bumpercarIntro?.title,
                   "*Bumper Car* Manufacturer<br/>in India",
-                  '#38bdf8'
+                  '#0072b8'
                 )}
               </h2>
             </div>
 
             {/* Subtitle Description Paragraph */}
-            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '10px' }}>
-              {siteData?.bumpercarIntro?.desc || "India's ROI-first bumper car manufacturer — electric floor and battery-operated cars, installed by our own team across 50+ cities, with a free ROI report before you invest."}
-            </p>
+            <p style={{ fontSize: '13.5px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '10px' }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.bumpercarIntro?.desc || "India's ROI-first bumper car manufacturer — electric floor and battery-operated cars, installed by our own team across 50+ cities, with a free ROI report before you invest.").replace(/\n/g, '<br>'))
+              }}
+            />
 
             {/* Action Button: Get Quote From Expert */}
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
               {(() => {
-                const baseLink = siteData?.bumpercarIntro?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.bumpercarIntro?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.bumpercarIntro?.waMessage || "Hello Winera International! I want to get a quote and details for Bumper Car setup. Please share details. [Ref: Bumper Car Page]";
                 let hrefLink = baseLink;
                 if (!baseLink.includes('text=')) {
@@ -396,7 +408,7 @@ export default function BumperCar({ siteData }) {
           <div className="winera-bumpercar-supplier-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
               src={siteData?.bumpercarIntro?.mainImgUrl || bumpercarCollageFrame}
-              alt="Bumper Car Manufacturer in India"
+              alt={siteData?.bumpercarIntro?.mainImgAlt || siteData?.bumpercarIntro?.imgAlt || "Bumper Car Manufacturer in India - Winera International"}
               fetchPriority="high"
               decoding="async"
               width={560}
@@ -433,7 +445,7 @@ export default function BumperCar({ siteData }) {
               marginBottom: '20px',
               textAlign: 'center'
             }}>
-              {renderTitleMarkup(siteData?.bumpercarBanner?.title, "*Bumper Car* Manufacturer in India", '#38bdf8')}
+              {renderTitleMarkup(siteData?.bumpercarBanner?.title, "*Bumper Car* Manufacturer in India", '#0072b8')}
             </h2>
             <p style={{
               fontSize: '14px',
@@ -442,16 +454,18 @@ export default function BumperCar({ siteData }) {
               fontWeight: '500',
               margin: 0,
               textAlign: 'center'
-            }}>
-              {siteData?.bumpercarBanner?.desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading Bumper Car manufacturer in India and trusted Bumper Car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability."}
-            </p>
+            }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.bumpercarBanner?.desc || "Bumper cars have long held a special place in the hearts of amusement park enthusiasts, and at Winera International, we take immense pride in delivering high-quality options that enhance the overall park experience. As a leading Bumper Car manufacturer in India and trusted Bumper Car manufacturer, our creations are not just rides; they're an exhilarating blend of thrilling collisions and smooth handling, designed with a laser focus on safety and durability.").replace(/\n/g, '<br>'))
+              }}
+            />
           </div>
 
           {/* 20% Right Area: 3D Neon Bumper Car Image */}
           <div className="winera-bumpercar-intro-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
               src={getValidImageUrl(siteData?.bumpercarBanner?.imgUrl, bumpercar3dNeon)}
-              alt="Bumper Car 2026"
+              alt={siteData?.bumpercarBanner?.imgAlt || "Bumper Car Commercial Setup - Winera"}
               style={{
                 width: '100%',
                 maxWidth: '380px',
@@ -495,9 +509,11 @@ export default function BumperCar({ siteData }) {
           </div>
 
           {/* Subtitle Description */}
-          <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', marginBottom: '28px', minHeight: '65px' }}>
-            {currentThrillCard.desc}
-          </p>
+          <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, fontWeight: '500', marginBottom: '28px', minHeight: '65px' }}
+            dangerouslySetInnerHTML={{
+              __html: sanitizeAndFormatHtml((currentThrillCard.desc || '').replace(/\n/g, '<br>'))
+            }}
+          />
 
           {/* Dynamic Progress Indicator Bar */}
           <div style={{
@@ -577,6 +593,11 @@ export default function BumperCar({ siteData }) {
           flexDirection: 'column',
           justifyContent: 'space-between'
         }}>
+          <img
+            src={siteData?.bumpercarSpecs?.bgUrl || bumpercarSpecsBg}
+            alt={siteData?.bumpercarSpecs?.bgAlt || "Bumper Car Commercial Setup Technical Specifications - Winera"}
+            style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0.001, pointerEvents: 'none' }}
+          />
           {/* Top Title: Technical Specifications */}
           <div className="winera-bumpercar-specs-title-box" style={{ position: 'relative', display: 'inline-block', marginBottom: '30px' }}>
             <img
@@ -624,10 +645,9 @@ export default function BumperCar({ siteData }) {
 
           {/* Bottom Action Button: Download Our Brochure with Yellow Offset Tab Backdrop Wrapper */}
           <div>
-            <a
-              href={siteData?.bumpercarSpecs?.brochureUrl || siteData?.softplayTypes?.brochureUrl || "#"}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
+              onClick={() => setIsBrochureOpen(true)}
               aria-label="Download Our Brochure"
               style={{
                 display: 'inline-flex',
@@ -649,8 +669,8 @@ export default function BumperCar({ siteData }) {
                 cursor: 'pointer'
               }}
             >
-              {siteData?.bumpercarSpecs?.btnText || "Download Our Brochure"}
-            </a>
+              {siteData?.bumpercarSpecs?.btnText || siteData?.bumpercarSpecs?.buttonText || "Download Our Brochure"}
+            </button>
           </div>
         </div>
       </section>
@@ -681,7 +701,7 @@ export default function BumperCar({ siteData }) {
                 style={{ display: 'block', width: '65%', height: '9px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.bumpercarOptions?.title, "Indoor Bumper Car<br/>Options *for Your Venue*", '#38bdf8')}
+                {renderTitleMarkup(siteData?.bumpercarOptions?.title, "Indoor Bumper Car<br/>Options *for Your Venue*", '#0072b8')}
               </h2>
             </div>
 
@@ -697,9 +717,11 @@ export default function BumperCar({ siteData }) {
               marginBottom: '35px',
               width: '84%',
               textAlign: 'justify'
-            }}>
-              {siteData?.bumpercarOptions?.desc || "We supply two drive types for indoor bumper car attractions. The right choice depends on your floor infrastructure, venue flexibility, and operational model."}
-            </p>
+            }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.bumpercarOptions?.desc || "We supply two drive types for indoor bumper car attractions. The right choice depends on your floor infrastructure, venue flexibility, and operational model.").replace(/\n/g, '<br>'))
+              }}
+            />
 
             {/* Option 1: Electric Floor Bumper Cars (Contact Us Style with top-left cyan accent wing) */}
             <div style={{ position: 'relative', width: '100%', marginBottom: '35px' }}>
@@ -725,9 +747,9 @@ export default function BumperCar({ siteData }) {
                 boxShadow: 'none',
                 textAlign: 'left'
               }}>
-                <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px 0' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px 0' }}>
                   {siteData?.bumpercarOptions?.option1Title || "Electric Floor Bumper Cars"}
-                </h4>
+                </h3>
                 <p className="winera-bumpercar-option-desc" style={{
                   fontFamily: "'Open Sans', sans-serif",
                   fontWeight: '400',
@@ -737,9 +759,11 @@ export default function BumperCar({ siteData }) {
                   letterSpacing: '0px',
                   color: 'rgb(55, 62, 65)',
                   margin: 0
-                }}>
-                  {siteData?.bumpercarOptions?.option1Desc || "Powered through a conductive floor grid and ceiling contact system. Delivers consistent, uninterrupted power throughout operating hours with zero battery management. Best suited for permanent, fixed installations in amusement parks, large FECs, and dedicated entertainment venues where the infrastructure investment is justified by high daily footfall."}
-                </p>
+                }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml((siteData?.bumpercarOptions?.option1Desc || "Powered through a conductive floor grid and ceiling contact system. Delivers consistent, uninterrupted power throughout operating hours with zero battery management. Best suited for permanent, fixed installations in amusement parks, large FECs, and dedicated entertainment venues where the infrastructure investment is justified by high daily footfall.").replace(/\n/g, '<br>'))
+                  }}
+                />
               </div>
             </div>
 
@@ -767,9 +791,9 @@ export default function BumperCar({ siteData }) {
                 boxShadow: 'none',
                 textAlign: 'left'
               }}>
-                <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px 0' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px 0' }}>
                   {siteData?.bumpercarOptions?.option2Title || "Battery-Operated Bumper Cars"}
-                </h4>
+                </h3>
                 <p className="winera-bumpercar-option-desc" style={{
                   fontFamily: "'Open Sans', sans-serif",
                   fontWeight: '400',
@@ -779,9 +803,11 @@ export default function BumperCar({ siteData }) {
                   letterSpacing: '0px',
                   color: 'rgb(55, 62, 65)',
                   margin: 0
-                }}>
-                  {siteData?.bumpercarOptions?.option2Desc || "Self-contained rides running on rechargeable batteries — no floor grid or ceiling rig required. Ideal for malls, gaming zones, and temporary event setups where floor modification is not possible or where the operator wants the flexibility to relocate the attraction."}
-                </p>
+                }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml((siteData?.bumpercarOptions?.option2Desc || "Self-contained rides running on rechargeable batteries — no floor grid or ceiling rig required. Ideal for malls, gaming zones, and temporary event setups where floor modification is not possible or where the operator wants the flexibility to relocate the attraction.").replace(/\n/g, '<br>'))
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -790,7 +816,7 @@ export default function BumperCar({ siteData }) {
           <div className="winera-bumpercar-options-img" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '30px', marginLeft: '20px' }}>
             <img
               src={getValidImageUrl(siteData?.bumpercarOptions?.imgUrl, bumpercarOptionsCollage)}
-              alt="Bumper Car Options Collage"
+              alt={siteData?.bumpercarOptions?.imgAlt || siteData?.bumpercarOptions?.rightImgAlt || "Bumper Car Commercial Options & Models - Winera"}
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = bumpercarOptionsCollage;
@@ -818,7 +844,7 @@ export default function BumperCar({ siteData }) {
               style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.bumpercarComparison?.title, "*Quick Comparison* Table", '#38bdf8')}
+              {renderTitleMarkup(siteData?.bumpercarComparison?.title, "*Quick Comparison* Table", '#0072b8')}
             </h2>
           </div>
 
@@ -1083,7 +1109,7 @@ export default function BumperCar({ siteData }) {
           <div className="winera-bumpercar-investment-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
               src={getValidImageUrl(siteData?.bumpercarInvestment?.imgUrl, bumpercarInvestmentCollage)}
-              alt="Bumper Car Investment Collage"
+              alt={siteData?.bumpercarInvestment?.imgAlt || siteData?.bumpercarInvestment?.leftImgAlt || "Bumper Car Investment & ROI Setup - Winera"}
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = bumpercarInvestmentCollage;
@@ -1108,14 +1134,16 @@ export default function BumperCar({ siteData }) {
                 style={{ display: 'block', width: '80%', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.bumpercarInvestment?.title, "Is a Bumper Car Ride a <br/>Smart *Investment for <br/>Your Venue?*", '#38bdf8')}
+                {renderTitleMarkup(siteData?.bumpercarInvestment?.title, "Is a Bumper Car Ride a <br/>Smart *Investment for <br/>Your Venue?*", '#0072b8')}
               </h2>
             </div>
 
             {/* Intro Paragraph 1 */}
-            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '16px' }}>
-              {siteData?.bumpercarInvestment?.introText || "Most bumper car suppliers in India provide a catalogue price and leave the financial decision to you. As India's ROI-First Game Zone Developer, Winera International works differently."}
-            </p>
+            <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '16px' }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.bumpercarInvestment?.introText || "Most bumper car suppliers in India provide a catalogue price and leave the financial decision to you. As India's ROI-First Game Zone Developer, Winera International works differently.").replace(/\n/g, '<br>'))
+              }}
+            />
 
             {/* Subheading intro line */}
             <p style={{ fontSize: '14.5px', color: '#1e293b', lineHeight: 1.6, fontWeight: '500', marginBottom: '18px', width: '99%' }}>
@@ -1147,15 +1175,17 @@ export default function BumperCar({ siteData }) {
             </div>
 
             {/* Bottom Footnote Paragraph */}
-            <p style={{ fontSize: '13.5px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', marginBottom: '28px' }}>
-              {siteData?.bumpercarInvestment?.footerText || "Every figure is calculated around your actual floor size, daily footfall, and local entry pricing — not an industry average. This report is provided free, before you commit to anything."}
-            </p>
+            <p style={{ fontSize: '13.5px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', marginBottom: '28px' }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.bumpercarInvestment?.footerText || "Every figure is calculated around your actual floor size, daily footfall, and local entry pricing — not an industry average. This report is provided free, before you commit to anything.").replace(/\n/g, '<br>'))
+              }}
+            />
 
             {/* Plan Your Game Zone Button matching Figma Screenshot 1:1 */}
             <div>
               <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
                 {(() => {
-                  const baseLink = siteData?.bumpercarInvestment?.btnLink || siteData?.header?.whatsAppUrl || "https://wa.me/919428989488";
+                  const baseLink = siteData?.bumpercarInvestment?.btnLink || siteData?.header?.whatsAppUrl || "https://wa.me/919157873576";
                   const defaultMsg = siteData?.bumpercarInvestment?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Bumper Car setup & commercial ROI calculation. Please share details. [Ref: Bumper Car Page]";
                   let hrefLink = baseLink;
                   if (!baseLink.includes('text=')) {
@@ -1208,7 +1238,7 @@ export default function BumperCar({ siteData }) {
               style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.bumpercarWhyChoose?.title, "Why Choose *Winera International*", '#38bdf8')}
+              {renderTitleMarkup(siteData?.bumpercarWhyChoose?.title, "Why Choose *Winera International*", '#0072b8')}
             </h2>
           </div>
 
@@ -1291,7 +1321,7 @@ export default function BumperCar({ siteData }) {
                               whyChooseIcons[cIdx % whyChooseIcons.length]
                             )}
                           </div>
-                          <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                          <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                             {card.title && typeof card.title === 'string'
                               ? card.title.split(/<br\s*\/?>/i).map((line, lIdx) => (
                                 <React.Fragment key={lIdx}>
@@ -1300,17 +1330,12 @@ export default function BumperCar({ siteData }) {
                                 </React.Fragment>
                               ))
                               : card.title}
-                          </h4>
-                          <p style={{ fontSize: '15px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '340px' }}>
-                            {card.desc && typeof card.desc === 'string'
-                              ? card.desc.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                                <React.Fragment key={lIdx}>
-                                  {lIdx > 0 && <br />}
-                                  {line}
-                                </React.Fragment>
-                              ))
-                              : card.desc}
-                          </p>
+                          </h3>
+                          <p style={{ fontSize: '15px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '340px' }}
+                            dangerouslySetInnerHTML={{
+                              __html: sanitizeAndFormatHtml((card.desc || '').replace(/\n/g, '<br>'))
+                            }}
+                          />
                         </div>
                       ))}
                     </div>
@@ -1382,7 +1407,7 @@ export default function BumperCar({ siteData }) {
                                 whyChooseIcons[(topCards.length + bIdx) % whyChooseIcons.length]
                               )}
                             </div>
-                            <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                            <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                               {card.title && typeof card.title === 'string'
                                 ? card.title.split(/<br\s*\/?>/i).map((line, lIdx) => (
                                   <React.Fragment key={lIdx}>
@@ -1391,17 +1416,12 @@ export default function BumperCar({ siteData }) {
                                   </React.Fragment>
                                 ))
                                 : card.title}
-                            </h4>
-                            <p style={{ fontSize: '15px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '340px' }}>
-                              {card.desc && typeof card.desc === 'string'
-                                ? card.desc.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                                  <React.Fragment key={lIdx}>
-                                    {lIdx > 0 && <br />}
-                                    {line}
-                                  </React.Fragment>
-                                ))
-                                : card.desc}
-                            </p>
+                            </h3>
+                            <p style={{ fontSize: '15px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '340px' }}
+                              dangerouslySetInnerHTML={{
+                                __html: sanitizeAndFormatHtml((card.desc || '').replace(/\n/g, '<br>'))
+                              }}
+                            />
                           </div>
                         ))}
                       </div>
@@ -1431,7 +1451,7 @@ export default function BumperCar({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="View All Projects"
       />
@@ -1441,18 +1461,18 @@ export default function BumperCar({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 13. RELATED PRODUCTS CAROUSEL SECTION */}
-      <RelatedProductsSection sectionData={siteData?.bumpercarRelated || siteData?.softplayRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
+      <RelatedProductsSection sectionData={siteData?.bumpercarRelated || siteData?.softplayRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
 
       {/* 14. FREQUENTLY ASKED QUESTIONS SECTION (DYNAMIC BUMPER CAR FAQS) */}
       <FaqSection
         faqList={Array.isArray(siteData?.bumpercarFaqs) && siteData.bumpercarFaqs.length > 0 ? siteData.bumpercarFaqs : defaultBumperCarFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#38bdf8"
+        highlightColor="#0072b8"
       />
 
       {/* 15. CTA BANNER SECTION (MATCHING FIGMA SPEC EXACTLY) */}
@@ -1469,6 +1489,7 @@ export default function BumperCar({ siteData }) {
           subtitleFontWeight="400"
           bgUrl={siteData?.bumpercarCta?.bgUrl ? getValidImageUrl(siteData.bumpercarCta.bgUrl, ctaMainBanner) : null}
           bg={ctaMainBanner}
+          bgAlt={siteData?.bumpercarCta?.bgAlt || "Ready to Explore a Bumper Car Attraction for Your Venue - Winera"}
           leftImgUrl={siteData?.bumpercarCta?.leftImgUrl}
           leftImg={bumperCarCtaLeft}
           rightImgUrl={siteData?.bumpercarCta?.rightImgUrl}
@@ -1492,15 +1513,32 @@ export default function BumperCar({ siteData }) {
             </span>
           }
           subtitle={
-            siteData?.bumpercarCta?.subtitle || siteData?.bumpercarCta?.whiteText
-              ? siteData?.bumpercarCta?.subtitle || siteData?.bumpercarCta?.whiteText
-              : "Our team will assess your space, prepare a free ROI report,<br/>and recommend the right setup before you spend anything."
+            siteData?.bumpercarCta?.subtitle || siteData?.bumpercarCta?.whiteText ? (
+              <span dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.bumpercarCta?.subtitle || siteData?.bumpercarCta?.whiteText).replace(/\n/g, '<br/>')) }} />
+            ) : "Our team will assess your space, prepare a free ROI report,<br/>and recommend the right setup before you spend anything."
           }
           description={null}
           buttonText={siteData?.bumpercarCta?.buttonText || "Get a Quote From an Expert"}
-          buttonLink={siteData?.bumpercarCta?.buttonLink || "https://wa.me/919428989488"}
+          buttonLink={siteData?.bumpercarCta?.buttonLink || "https://wa.me/919157873576"}
         />
       </div>
+
+      {/* BROCHURE MODAL */}
+      <BrochureModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+        pdfUrl={
+          (() => {
+            const bUrl = siteData?.bumpercarSpecs?.brochureUrl;
+            if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '') return bUrl.trim();
+            const sUrl = siteData?.softplayTypes?.brochureUrl;
+            if (sUrl && typeof sUrl === 'string' && sUrl.trim() !== '#' && sUrl.trim() !== '') return sUrl.trim();
+            return "/pdf/Winera Softplay.pdf";
+          })()
+        }
+        title="Bumper Cars - Technical Specifications & Brochure"
+        fileName="Bumper Cars Brochure - Winera International.pdf"
+      />
 
       {/* FOOTER */}
       <Footer footerData={footer} />

@@ -96,14 +96,13 @@ select {
    Line-height: 26px
    Letter-spacing: 0px
    ========================================================================== */
-p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-sticky-register-card p):not(.winera-blog-sticky-register-card *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *),
-p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *) *:not(strong):not(b):not(em):not(i):not(u):not(a):not(del):not(s):not(strike):not(code),
+p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-sticky-register-card p):not(.winera-blog-sticky-register-card *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *):not(.winera-safety-accordion-wrapper *):not(.winera-safety-card-desc):not(.winera-safety-mobile-desc),
+p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *):not(.winera-safety-accordion-wrapper *):not(.winera-safety-card-desc):not(.winera-safety-mobile-desc) *:not(strong):not(b):not(em):not(i):not(u):not(a):not(del):not(s):not(strike):not(code),
 .lead,
 .winera-section-desc,
 .winera-card-desc,
 .winera-product-desc,
 .winera-about-desc,
-.winera-safety-card-desc,
 .winera-ar-feature-desc,
 .winera-vr-feature-desc,
 .winera-laser-feature-desc,
@@ -149,6 +148,11 @@ li b,
 .winera-admin-blog-preview * b {
   font-weight: 800 !important;
   color: #0f172a !important;
+  display: inline !important;
+  width: auto !important;
+  max-width: none !important;
+  float: none !important;
+  vertical-align: baseline !important;
 }
 
 em,
@@ -174,6 +178,7 @@ li i,
 .winera-admin-blog-preview * em,
 .winera-admin-blog-preview * i {
   font-style: italic !important;
+  display: inline !important;
 }
 
 u,
@@ -185,6 +190,7 @@ li u,
 .winera-blog-article-main-col u,
 .winera-admin-blog-preview u {
   text-decoration: underline !important;
+  display: inline !important;
 }
 
 /* Home Hero Subtitle Paragraph 16px Typography */
@@ -223,12 +229,29 @@ section.winera-bowling-roi-section p {
     color: #475569 !important;
   }
 
+  .winera-about-desc-p,
+  .winera-about-desc-p *,
   .winera-about-content-wrapper p,
   .winera-about-content-wrapper p *,
   #about .winera-about-content-wrapper p,
   #about p {
     font-size: 17px !important;
     line-height: 28px !important;
+  }
+
+  .winera-about-content-wrapper strong,
+  .winera-about-content-wrapper b,
+  .winera-about-desc-p strong,
+  .winera-about-desc-p b {
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    display: inline !important;
+  }
+
+  .winera-about-desc-p p {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
 
@@ -333,7 +356,61 @@ p.winera-testi-quote,
 .winera-partner-box-yellow p,
 .winera-partner-box-cyan p,
 .winera-vr-reliability p,
-.winera-about-content-wrapper p,
+.winera-about-content-wrapper p {
+  color: #475569;
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.65;
+}
+
+/* Base styles for inline bold/italic text in About and Soft Play sections */
+.winera-about-content-wrapper strong,
+.winera-about-content-wrapper b,
+.winera-about-desc-p strong,
+.winera-about-desc-p b,
+.winera-softplay-supplier-p strong,
+.winera-softplay-supplier-p b,
+.winera-softplay-intro-p strong,
+.winera-softplay-intro-p b,
+.winera-softplay-materials-desc strong,
+.winera-softplay-materials-desc b,
+.winera-softplay-roi-p strong,
+.winera-softplay-roi-p b,
+.winera-softplay-whyus-card strong,
+.winera-softplay-whyus-card b,
+.winera-softplay-timeline-section strong,
+.winera-softplay-timeline-section b {
+  font-weight: 800 !important;
+  color: inherit !important;
+  display: inline !important;
+  width: auto !important;
+  max-width: none !important;
+  float: none !important;
+}
+
+.winera-about-desc-p p,
+.winera-softplay-supplier-p p,
+.winera-softplay-intro-p p,
+.winera-softplay-materials-desc p,
+.winera-softplay-roi-p p {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.winera-arcade-intro-desc strong,
+.winera-arcade-intro-desc b,
+.winera-arcade-intro-desc a,
+.winera-arcade-intro-desc u {
+  display: inline !important;
+  font-weight: 800 !important;
+  width: auto !important;
+}
+
+.winera-arcade-intro-desc p {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
 /* VR Reliability Features Desktop & Base Styles */
 .winera-vr-reliability-features-list {
@@ -379,7 +456,7 @@ p.winera-testi-quote,
 .winera-projects-marquee-section .winera-projects-marquee-header p,
 .winera-section-heading-container p,
 .winera-section-heading-container .winera-section-subtitle,
-section:not([class*="hero"]):not([class*="footer"]):not([class*="cta"]):not([class*="bowling-roi"]):not(.winera-bowling-roi-section):not(.admin-content) p:not(.winera-hero-h1):not(.winera-hero-h2):not(.winera-hero-p):not([class*="hero"]):not([class*="badge"]):not([class*="tag"]):not([class*="btn"]):not([class*="nav"]):not(.footer-bottom-text):not(.admin-content *):not(.winera-cta-description):not(.winera-cta-banner-container *):not([class*="cta"] *):not(.winera-bowling-roi-text *):not(.winera-bowling-roi-text p):not(.winera-roi-checklist-card *):not(.winera-roi-checklist-card p):not(.winera-blog-right-sidebar-sticky *):not(.winera-blog-right-sidebar-sticky p):not(.winera-roi-process-card *):not(.winera-roi-process-card p):not(.winera-project-marquee-city):not(.winera-projects-marquee-track *):not(.winera-projects-marquee-track p):not(.winera-stats-card *):not(.winera-stats-card p):not(.winera-company-stats-grid *):not(.winera-company-stats-grid p):not(.winera-stats-card-label):not(.winera-project-card-location):not(.winera-project-card-location *),
+section:not([class*="hero"]):not([class*="footer"]):not([class*="cta"]):not([class*="bowling-roi"]):not(.winera-bowling-roi-section):not(.winera-safety-structure-section):not(.admin-content) p:not(.winera-hero-h1):not(.winera-hero-h2):not(.winera-hero-p):not([class*="hero"]):not([class*="badge"]):not([class*="tag"]):not([class*="btn"]):not([class*="nav"]):not(.footer-bottom-text):not(.admin-content *):not(.winera-cta-description):not(.winera-cta-banner-container *):not([class*="cta"] *):not(.winera-bowling-roi-text *):not(.winera-bowling-roi-text p):not(.winera-roi-checklist-card *):not(.winera-roi-checklist-card p):not(.winera-blog-right-sidebar-sticky *):not(.winera-blog-right-sidebar-sticky p):not(.winera-roi-process-card *):not(.winera-roi-process-card p):not(.winera-project-marquee-city):not(.winera-projects-marquee-track *):not(.winera-projects-marquee-track p):not(.winera-stats-card *):not(.winera-stats-card p):not(.winera-company-stats-grid *):not(.winera-company-stats-grid p):not(.winera-stats-card-label):not(.winera-project-card-location):not(.winera-project-card-location *):not(.winera-safety-accordion-wrapper *):not(.winera-safety-card-desc):not(.winera-safety-mobile-desc),
 .winera-content-paragraph {
   font-family: 'Open Sans', sans-serif !important;
   font-weight: 400 !important;
@@ -780,10 +857,15 @@ html {
 @media (max-width: 850px) {
 
   html,
-  body,
+  body {
+    overflow-x: clip !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
   #root,
   .App {
-    overflow-x: hidden !important;
+    overflow: visible !important;
     width: 100% !important;
     max-width: 100vw !important;
   }
@@ -824,7 +906,7 @@ html {
       background-repeat: no-repeat !important;
       aspect-ratio: 941 / 550 !important;
       height: auto !important;
-      min-height: 390px !important;
+      min-height: auto !important;
       padding-top: 55px !important;
       padding-bottom: 0 !important;
       display: flex !important;
@@ -1103,18 +1185,18 @@ html {
 
   @keyframes wineraPageHeroFade {
     0% {
-      opacity: 0;
-      transform: translateY(40px) scale(0.97);
+      opacity: 0.92;
+      transform: translateY(8px);
     }
 
     100% {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
     }
   }
 
   .winera-hero-animate {
-    animation: wineraPageHeroFade 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: wineraPageHeroFade 0.25s ease-out forwards;
     padding: 0 !important;
     padding-top: 27% !important;
   }
@@ -2310,8 +2392,19 @@ html {
     text-align: center !important;
   }
 
-  .winera-ar-earn-grid>div:last-child {
+  .winera-ar-earn-grid>div:last-child,
+  .winera-ar-earn-graphic-col {
     display: none !important;
+  }
+
+  .winera-ar-earn-content-wrap {
+    padding-right: 0 !important;
+    justify-content: center !important;
+  }
+
+  .winera-ar-earn-text-col {
+    max-width: 100% !important;
+    margin: 0 auto !important;
   }
 
   /* Why Choose Winera Section */
@@ -2426,7 +2519,7 @@ html {
 
   /* Arcade Game Hero Section – mobile adjustments */
   .winera-arcade-hero-section {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), url('./assets/arcade-mobile-image.png') !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-arcade-mobile-bg, url('./assets/arcade-mobile-image.png')) !important;
     background-size: 100% 100% !important;
     background-position: center top !important;
     background-repeat: no-repeat !important;
@@ -7589,21 +7682,49 @@ textarea::placeholder,
   z-index: 1;
 }
 
-.winera-safety-material-img {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  margin-left: -55%;
-  position: relative;
-  z-index: 10;
+@media (min-width: 1025px) {
+  .winera-safety-material-img {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-left: -64%;
+    position: relative;
+    z-index: 10;
+  }
+
+  .winera-safety-material-img img {
+    width: 160%;
+    max-width: 160%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
 }
 
-.winera-safety-material-img img {
-  width: 125%;
-  height: auto;
-  display: block;
-  object-fit: contain;
+@media (max-width: 1024px) {
+  .winera-safety-material-img {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin: 25px auto 0 auto !important;
+    position: relative !important;
+    z-index: 5 !important;
+    text-align: center !important;
+  }
+
+  .winera-safety-material-img img {
+    width: 100% !important;
+    max-width: 360px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+    object-fit: contain !important;
+  }
 }
 
 .winera-safety-why-matters-text {
@@ -7865,6 +7986,10 @@ textarea::placeholder,
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+  }
+
+  .winera-trampoline-custom-p-wrap {
+    padding-right: 0 !important;
   }
 
   .winera-trampoline-mascot-img {
@@ -8377,10 +8502,20 @@ img[src*="yellow-stroke"],
 img[src*="yellow-brush"],
 img.winera-yellow-stroke,
 .winera-yellow-stroke,
-.winera-section-heading-accent {
+img.winera-section-heading-accent {
   max-width: 100%;
-  height: 10px;
-  object-fit: fill;
+  height: auto;
+  max-height: 11px;
+  aspect-ratio: 492 / 10;
+  object-fit: contain;
+}
+
+.winera-section-heading-css-line {
+  display: block;
+  height: 4px !important;
+  min-height: 4px !important;
+  background-color: #ffcd00 !important;
+  border-radius: 999px !important;
 }
 
 @media (min-width: 769px) {
@@ -8389,12 +8524,13 @@ img.winera-yellow-stroke,
   img[src*="yellow-brush"]:not(.winera-admin-login-stroke):not(.winera-vr-intro-stroke):not(.winera-vr-attractions-stroke),
   img.winera-yellow-stroke:not(.winera-vr-intro-stroke):not(.winera-vr-attractions-stroke),
   .winera-yellow-stroke:not(.winera-vr-intro-stroke):not(.winera-vr-attractions-stroke),
-  .winera-section-heading-accent {
+  img.winera-section-heading-accent {
     width: 350px !important;
     max-width: 100% !important;
-    height: 10px !important;
-    min-height: 10px !important;
-    object-fit: fill !important;
+    height: auto !important;
+    max-height: 11px !important;
+    aspect-ratio: 492 / 10 !important;
+    object-fit: contain !important;
   }
 
   .winera-vr-intro-stroke,
@@ -8426,11 +8562,15 @@ img.winera-yellow-stroke,
 @media (max-width: 768px) {
 
   html,
-  body,
+  body {
+    overflow-x: clip !important;
+    width: 100% !important;
+  }
+
   #root,
   main,
   #main-content {
-    overflow-x: hidden !important;
+    overflow: visible !important;
     width: 100% !important;
   }
 
@@ -9402,18 +9542,26 @@ img.winera-yellow-stroke,
 .winera-policy-content-card,
 .winera-policy-content-card *,
 .winera-terms-content-card,
-.winera-terms-content-card * {
+.winera-terms-content-card *,
+.winera-policy-content-container,
+.winera-policy-content-container *,
+.winera-terms-content-container,
+.winera-terms-content-container * {
   text-align: left !important;
 }
 
 .winera-policy-content-card ul,
-.winera-terms-content-card ul {
+.winera-terms-content-card ul,
+.winera-policy-content-container ul,
+.winera-terms-content-container ul {
   text-align: left !important;
-  padding-left: 20px !important;
+  padding-left: 24px !important;
 }
 
 .winera-policy-content-card li,
-.winera-terms-content-card li {
+.winera-terms-content-card li,
+.winera-policy-content-container li,
+.winera-terms-content-container li {
   text-align: left !important;
 }
 
@@ -9558,7 +9706,7 @@ img.winera-yellow-stroke,
   }
 
   .winera-arcade-hero-section {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), url('./assets/arcade-mobile-image.png') !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 85%), var(--winera-arcade-mobile-bg, url('./assets/arcade-mobile-image.png')) !important;
     background-size: 100% 100% !important;
     background-position: center top !important;
     background-repeat: no-repeat !important;
@@ -10822,12 +10970,14 @@ span.winera-hero-highlight {
     max-width: 90% !important;
     min-width: unset !important;
     font-size: 14px !important;
-    padding: 4px 24px 4px 16px !important;
+    padding: 4px 20px !important;
     height: auto !important;
     min-height: 30px !important;
     line-height: 22px !important;
     margin: 0 auto 14px !important;
-    clip-path: polygon(0% 0%, calc(100% - 10px) 0%, 92% 50%, calc(100% - 12px) 100%, 0% 100%) !important;
+    border-radius: 4px !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6) !important;
+    clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%) !important;
   }
 
   .winera-hero-cta-wrapper {
@@ -12012,11 +12162,24 @@ button[style*="background:transparent"]:hover,
     font-size: clamp(2rem, 2.5vw, 2.4rem) !important;
   }
 
+  .winera-ar-earn-graphic-col img,
   .winera-ar-earn-grid img[src*="ar-earn-gamers"] {
     width: 100% !important;
-    max-width: 240px !important;
+    max-width: 190px !important;
     margin-right: 0 !important;
     margin-bottom: 0 !important;
+  }
+
+  .winera-ar-earn-graphic-col {
+    right: -15px !important;
+  }
+
+  .winera-ar-earn-content-wrap {
+    padding-right: 190px !important;
+  }
+
+  .winera-ar-earn-text-col {
+    max-width: 760px !important;
   }
 
   /* Bowling Alley Laptop Optimizations */
@@ -12131,6 +12294,7 @@ button[style*="background:transparent"]:hover,
     justify-content: flex-start !important;
     align-items: center !important;
     width: 100% !important;
+    margin-left: -64% !important;
     position: relative !important;
     z-index: 10 !important;
   }
@@ -12763,6 +12927,10 @@ button[style*="background:transparent"]:hover,
 
 /* Contact Page Full Width Cards for Tablet (768px - 1024px) & Mobile */
 @media (max-width: 1024px) {
+  .winera-ar-earn-graphic-col {
+    display: none !important;
+  }
+
   .winera-contact-locations-grid {
     display: flex !important;
     flex-direction: column !important;
@@ -17688,7 +17856,7 @@ button[style*="background:transparent"]:hover,
   line-height: 18px !important;
   font-weight: 600 !important;
   letter-spacing: normal !important;
-  color: #0284c7 !important;
+  color: #006aa8 !important;
 }
 
 /* Project Card Location & Load More Button Styles */
@@ -17913,116 +18081,92 @@ button[style*="background:transparent"]:hover,
   }
 }
 
-/* Safety Standards Play & Attraction Equipment Safety Mobile Slider */
-.winera-safety-standards-mobile-slider {
-  display: none !important;
+/* Safety Standards Play & Attraction Equipment Safety Sticky Stacking Cards (KriraAI Animation) */
+.winera-safety-sticky-container {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 52px !important;
+  position: relative !important;
+  width: 100% !important;
 }
 
-.winera-safety-standards-desktop-grid {
-  display: grid !important;
+.winera-safety-sticky-left {
+  flex: 0 0 42% !important;
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  align-self: flex-start !important;
+  padding-right: 18px !important;
+  z-index: 10 !important;
 }
 
-@media (max-width: 850px) {
-  .winera-safety-standards-desktop-grid {
-    display: none !important;
+.winera-safety-sticky-right {
+  flex: 0 0 calc(58% - 52px) !important;
+  position: relative !important;
+  min-width: 0 !important;
+}
+
+.winera-safety-stack-card {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.winera-safety-stack-card:hover {
+  box-shadow: 0 16px 36px rgba(2, 132, 199, 0.14), 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+@media (max-width: 900px) {
+  .winera-safety-standards-section {
+    overflow: visible !important;
   }
 
-  .winera-safety-standards-mobile-slider {
+  .winera-safety-sticky-container {
     display: block !important;
     width: 100% !important;
-    max-width: 440px !important;
+    overflow: visible !important;
+  }
+
+  .winera-safety-sticky-left {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding-right: 0 !important;
+    margin-bottom: 28px !important;
+  }
+
+  .winera-safety-sticky-left img {
+    margin: 0 auto 12px !important;
+  }
+
+  .winera-safety-sticky-left p {
+    margin: 0 auto 20px !important;
+    text-align: center !important;
+  }
+
+  .winera-safety-badges-wrap {
+    align-items: center !important;
+    justify-content: center !important;
     margin: 0 auto !important;
   }
 
-  .winera-safety-mobile-slider-wrapper {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
+  .winera-safety-sticky-right {
+    display: block !important;
+    position: relative !important;
     width: 100% !important;
+    overflow: visible !important;
   }
 
-  .winera-safety-slider-btn {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    border-radius: 50% !important;
-    background: #ffffff !important;
-    border: 1.5px solid #38bdf8 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2) !important;
-    flex-shrink: 0 !important;
-    padding: 0 !important;
-    transition: transform 0.2s ease !important;
-  }
-
-  .winera-safety-slider-btn:active {
-    transform: scale(0.92) !important;
-  }
-
-  .winera-safety-mobile-card-container {
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-    width: 100% !important;
-  }
-
-  .winera-safety-mobile-card {
-    background: linear-gradient(180deg, #d3ebff 0%, #ffffff 100%) !important;
-    border: 1.5px solid #bae6fd !important;
-    border-radius: 18px !important;
-    padding: 20px 16px !important;
-    text-align: center !important;
-    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.1) !important;
-    min-height: 220px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    box-sizing: border-box !important;
-  }
-
-  .winera-safety-mobile-card-title {
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    color: #0f172a !important;
-    margin: 0 0 8px 0 !important;
-    line-height: 1.35 !important;
-  }
-
-  .winera-safety-mobile-card-desc {
-    font-size: 13px !important;
-    color: #475569 !important;
-    line-height: 1.55 !important;
-    font-weight: 500 !important;
-    margin: 0 !important;
-  }
-
-  .winera-safety-slider-dots {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 6px !important;
-    margin-top: 14px !important;
-  }
-
-  .winera-safety-slider-dot {
-    width: 7px !important;
-    height: 7px !important;
-    border-radius: 50% !important;
-    background: #cbd5e1 !important;
-    border: none !important;
-    padding: 0 !important;
-    cursor: pointer !important;
-    transition: all 0.25s ease !important;
-  }
-
-  .winera-safety-slider-dot.is-active {
-    width: 20px !important;
-    border-radius: 10px !important;
-    background: #38bdf8 !important;
+  .winera-safety-stack-card {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    padding: 22px 20px !important;
+    border-radius: 20px !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 12px 32px rgba(2, 132, 199, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
   }
 }
 
@@ -18237,6 +18381,42 @@ button[style*="background:transparent"]:hover,
     border-radius: 10px !important;
     background: #0284c7 !important;
   }
+
+  /* Safety Standards Material Section - Perfectly Centered Image on Mobile */
+  .winera-safety-material-img {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 25px auto 0 auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+  }
+
+  .winera-safety-material-picture {
+    display: block !important;
+    width: 100% !important;
+    max-width: 330px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+
+  .winera-safety-material-picture img,
+  .winera-safety-material-img img {
+    width: 100% !important;
+    max-width: 330px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+    object-fit: contain !important;
+    transform: none !important;
+  }
 }
 
 /* ==========================================================================
@@ -18450,6 +18630,605 @@ button[style*="background:transparent"]:hover,
   .winera-safety-structure-dot.is-active {
     width: 22px !important;
     border-radius: 10px !important;
+  }
+}
+
+/* ==========================================================================
+   SAFETY STRUCTURE EXPANDING CARD ACCORDION (KRIRAAI STYLE ANIMATION)
+   ========================================================================== */
+.winera-safety-accordion-wrapper {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* Desktop & Tablet: Horizontal Expanding Cards */
+.winera-safety-accordion-desktop {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  height: 400px;
+  width: 100%;
+}
+
+.winera-safety-accordion-mobile {
+  display: none;
+}
+
+/* Base Card */
+.winera-safety-accordion-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  transition: flex 0.65s cubic-bezier(0.25, 1, 0.45, 1),
+              transform 0.4s ease,
+              box-shadow 0.4s ease,
+              border-color 0.4s ease,
+              background 0.4s ease;
+}
+
+/* Collapsed State Base */
+.winera-safety-accordion-card.is-collapsed {
+  flex: 0 0 85px;
+  background: #f0f8fd;
+  border: 1.5px solid #d0e7f8;
+  padding: 24px 10px 20px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.winera-safety-accordion-card.is-collapsed.theme-cyan {
+  background: #f0f8fd;
+  border: 1.5px solid #d0e7f8;
+}
+
+.winera-safety-accordion-card.is-collapsed.theme-cyan:hover {
+  background: #e3f2fd;
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(2, 132, 199, 0.15);
+}
+
+.winera-safety-accordion-card.is-collapsed.theme-cyan:hover .winera-safety-collapsed-title {
+  color: #0284c7;
+}
+
+.winera-safety-accordion-card.is-collapsed.theme-yellow {
+  background: #fdfbf2;
+  border: 1.5px solid #f9ecc2;
+}
+
+.winera-safety-accordion-card.is-collapsed.theme-yellow:hover {
+  background: #fef6dc;
+  border-color: #f59e0b;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(217, 119, 6, 0.15);
+}
+
+.winera-safety-accordion-card.is-collapsed.theme-yellow:hover .winera-safety-collapsed-title {
+  color: #b45309;
+}
+
+.winera-safety-card-collapsed-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.winera-safety-collapsed-title-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.winera-safety-collapsed-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.3px;
+  max-height: 260px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.winera-safety-collapsed-badge-num {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.winera-safety-collapsed-badge-num.badge-cyan {
+  background: #ffffff;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.winera-safety-accordion-card.is-collapsed.theme-cyan:hover .winera-safety-collapsed-badge-num.badge-cyan {
+  transform: scale(1.08);
+  background: #00aeef;
+  color: #ffffff;
+  border-color: #00aeef;
+}
+
+.winera-safety-collapsed-badge-num.badge-yellow {
+  background: #ffffff;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.winera-safety-accordion-card.is-collapsed.theme-yellow:hover .winera-safety-collapsed-badge-num.badge-yellow {
+  transform: scale(1.08);
+  background: #f59e0b;
+  color: #ffffff;
+  border-color: #f59e0b;
+}
+
+/* Expanded State */
+.winera-safety-accordion-card.is-expanded {
+  flex: 1;
+  background: linear-gradient(135deg, #0284c7 0%, #0099db 35%, #00aeef 70%, #38bdf8 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  padding: 34px 38px 36px 38px;
+  box-shadow: 0 20px 48px rgba(0, 174, 239, 0.28), 0 4px 16px rgba(0, 0, 0, 0.06);
+  cursor: default;
+}
+
+.winera-safety-accordion-card.is-expanded.theme-cyan {
+  background: linear-gradient(135deg, #0284c7 0%, #0099db 35%, #00aeef 70%, #38bdf8 100%);
+  box-shadow: 0 20px 48px rgba(0, 174, 239, 0.32), 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.winera-safety-accordion-card.is-expanded.theme-yellow {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 35%, #f59e0b 70%, #ffd400 100%);
+  box-shadow: 0 20px 48px rgba(217, 119, 6, 0.32), 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.winera-safety-card-expanded-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+  animation: wineraFadeInUp 0.45s ease forwards;
+}
+
+@keyframes wineraFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ambient Geometric Corner Arcs (Right-Top & Bottom-Left Half Circles) */
+.winera-safety-card-ambient-top {
+  position: absolute;
+  top: -180px;
+  right: -180px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.13);
+  border: none;
+  box-shadow: none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  pointer-events: none;
+  z-index: 1;
+  transform-origin: center center;
+  animation: wineraCircleEntranceTop 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards, wineraCircleFloatTop 7s ease-in-out 0.8s infinite alternate;
+  transition: background 0.4s ease;
+}
+
+.winera-safety-card-ambient-bottom {
+  position: absolute;
+  bottom: -170px;
+  left: -170px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.10);
+  border: none;
+  box-shadow: none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  pointer-events: none;
+  z-index: 1;
+  transform-origin: center center;
+  animation: wineraCircleEntranceBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards, wineraCircleFloatBottom 8s ease-in-out 0.95s infinite alternate;
+  transition: background 0.4s ease;
+}
+
+.winera-safety-accordion-card.is-expanded:hover .winera-safety-card-ambient-top {
+  background: rgba(255, 255, 255, 0.19);
+}
+
+.winera-safety-accordion-card.is-expanded:hover .winera-safety-card-ambient-bottom {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+@keyframes wineraCircleEntranceTop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes wineraCircleFloatTop {
+  0% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+}
+
+@keyframes wineraCircleEntranceBottom {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.05);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+}
+
+@keyframes wineraCircleFloatBottom {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+/* Topbar Badges */
+.winera-safety-card-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  z-index: 3;
+}
+
+.winera-safety-card-badge-shield {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1.5px solid rgba(255, 255, 255, 0.42);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+}
+
+/* Previous Style Giant Number on Right (Replacing the Arrow) */
+.winera-safety-watermark-num {
+  font-family: 'Open Sans', sans-serif;
+  font-size: clamp(3.8rem, 5.2vw, 5.6rem);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 0.82;
+  letter-spacing: -2px;
+  user-select: none;
+  pointer-events: none;
+  margin-top: -6px;
+  margin-right: -4px;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.14);
+  transition: transform 0.4s ease, color 0.4s ease;
+}
+
+.winera-safety-accordion-card.is-expanded:hover .winera-safety-watermark-num {
+  transform: scale(1.04);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Expanded Card Body */
+.winera-safety-card-body {
+  position: relative;
+  z-index: 3;
+  margin-top: auto;
+}
+
+.winera-safety-card-title {
+  font-family: 'Open Sans', sans-serif;
+  font-size: clamp(1.4rem, 2.1vw, 1.85rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+  margin: 0 0 12px 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.winera-safety-card-desc,
+.winera-safety-mobile-desc,
+.winera-safety-card-body p,
+.winera-safety-mobile-expanded-box p,
+.winera-safety-accordion-wrapper p,
+.winera-safety-accordion-wrapper p.winera-safety-card-desc,
+.winera-safety-accordion-wrapper p.winera-safety-mobile-desc,
+.winera-safety-structure-section .winera-safety-accordion-card p,
+.winera-safety-structure-section .winera-safety-mobile-accordion-card p,
+section.winera-safety-structure-section .winera-safety-accordion-wrapper .winera-safety-card-body p,
+section.winera-safety-structure-section .winera-safety-accordion-wrapper p.winera-safety-card-desc,
+section.winera-safety-structure-section .winera-safety-accordion-wrapper p.winera-safety-mobile-desc {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: clamp(13.5px, 1.05vw, 15px) !important;
+  font-weight: 500 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  line-height: 1.65 !important;
+  max-width: 720px;
+  margin: 0 !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15) !important;
+  opacity: 1 !important;
+}
+
+/* -------------------------------------------------------------
+   RESPONSIVE: Tablet (851px - 1024px)
+   ------------------------------------------------------------- */
+@media (max-width: 1024px) and (min-width: 851px) {
+  .winera-safety-accordion-desktop {
+    height: 380px;
+    gap: 12px;
+  }
+  .winera-safety-accordion-card.is-collapsed {
+    flex: 0 0 70px;
+    padding: 20px 8px 16px 8px;
+  }
+  .winera-safety-collapsed-title {
+    font-size: 14px;
+    max-height: 240px;
+  }
+  .winera-safety-accordion-card.is-expanded {
+    padding: 28px 26px 30px 26px;
+  }
+  .winera-safety-watermark-num {
+    font-size: clamp(3.2rem, 4.4vw, 4.2rem);
+  }
+}
+
+/* -------------------------------------------------------------
+   RESPONSIVE: Mobile & Small Tablet (<= 850px)
+   ------------------------------------------------------------- */
+@media (max-width: 850px) {
+  .winera-safety-accordion-desktop {
+    display: none !important;
+  }
+
+  .winera-safety-accordion-mobile {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .winera-safety-mobile-accordion-card {
+    width: 100% !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    transition: all 0.35s ease !important;
+  }
+
+  /* Collapsed Bar */
+  .winera-safety-mobile-collapsed-bar {
+    border-radius: 18px !important;
+    padding: 12px 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+  }
+
+  .winera-safety-mobile-collapsed-bar.bar-cyan {
+    background: #f0f8fd !important;
+    border: 1.5px solid #d0e7f8 !important;
+  }
+
+  .winera-safety-mobile-collapsed-bar.bar-yellow {
+    background: #fdfbf2 !important;
+    border: 1.5px solid #f9ecc2 !important;
+  }
+
+  .winera-safety-mobile-collapsed-bar:active {
+    transform: scale(0.99) !important;
+    filter: brightness(0.97) !important;
+  }
+
+  .winera-safety-mobile-pill-num {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .winera-safety-mobile-pill-num.num-cyan {
+    background: #ffffff !important;
+    color: #0284c7 !important;
+    border: 1px solid #bae6fd !important;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.12) !important;
+  }
+
+  .winera-safety-mobile-pill-num.num-yellow {
+    background: #ffffff !important;
+    color: #d97706 !important;
+    border: 1px solid #fde68a !important;
+    box-shadow: 0 2px 6px rgba(217, 119, 6, 0.12) !important;
+  }
+
+  .winera-safety-mobile-pill-title {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: left !important;
+  }
+
+  .winera-safety-mobile-pill-icon.icon-cyan {
+    color: #0284c7 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .winera-safety-mobile-pill-icon.icon-yellow {
+    color: #d97706 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Expanded Box */
+  .winera-safety-mobile-expanded-box {
+    border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
+    border-radius: 20px !important;
+    padding: 22px 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    animation: wineraFadeInUp 0.35s ease forwards !important;
+  }
+
+  .winera-safety-mobile-expanded-box .winera-safety-card-ambient-top {
+    width: 220px !important;
+    height: 220px !important;
+    top: -110px !important;
+    right: -110px !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .winera-safety-mobile-expanded-box .winera-safety-card-ambient-bottom {
+    width: 200px !important;
+    height: 200px !important;
+    bottom: -100px !important;
+    left: -100px !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .winera-safety-mobile-accordion-card.theme-cyan .winera-safety-mobile-expanded-box {
+    background: linear-gradient(135deg, #0284c7 0%, #0099db 35%, #00aeef 70%, #38bdf8 100%) !important;
+    box-shadow: 0 14px 34px rgba(0, 174, 239, 0.28) !important;
+  }
+
+  .winera-safety-mobile-accordion-card.theme-yellow .winera-safety-mobile-expanded-box {
+    background: linear-gradient(135deg, #b45309 0%, #d97706 35%, #f59e0b 70%, #ffd400 100%) !important;
+    box-shadow: 0 14px 34px rgba(217, 119, 6, 0.28) !important;
+  }
+
+  .winera-safety-mobile-topbar {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .winera-safety-mobile-watermark-num {
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: clamp(2.6rem, 7.5vw, 3.4rem) !important;
+    font-weight: 800 !important;
+    color: rgba(255, 255, 255, 0.42) !important;
+    line-height: 0.82 !important;
+    letter-spacing: -1.5px !important;
+    user-select: none !important;
+    pointer-events: none !important;
+    margin-top: -4px !important;
+    margin-right: -2px !important;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.14) !important;
+  }
+
+  .winera-safety-mobile-title {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+    position: relative !important;
+    z-index: 2 !important;
+    text-align: left !important;
+  }
+
+  .winera-safety-mobile-desc,
+  .winera-safety-accordion-mobile p.winera-safety-mobile-desc {
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+    position: relative !important;
+    z-index: 2 !important;
+    text-align: left !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15) !important;
+    opacity: 1 !important;
   }
 }
 
@@ -18751,4 +19530,111 @@ button[style*="background:transparent"]:hover,
 
 .winera-lasertag-roi-p {
   font-size: 16px !important;
+}
+
+/* ============================================================
+   UNIVERSAL YELLOW BRUSH STROKE / ACCENT LINE FIX
+   Properly centers in centered headers, left-aligns in left headers.
+   Zero stretching, authentic organic brush texture.
+   ============================================================ */
+img[src*="kllqvzchxecftuxi6zdn"],
+img[src*="oadq9n7rqdg5bs4u8eyo"],
+img.winera-yellow-stroke,
+.winera-section-heading-accent,
+.winera-yellow-stroke-line {
+  display: block !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 11px !important;
+  aspect-ratio: 492 / 10 !important;
+  object-fit: contain !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  margin-bottom: 10px !important;
+}
+
+/* 1. In Centered Headers / Containers: ALWAYS CENTER PROPERLY */
+[style*="text-align: center"] img[src*="kllqvzchxecftuxi6zdn"],
+[style*="text-align: center"] img[src*="oadq9n7rqdg5bs4u8eyo"],
+[style*="text-align:center"] img[src*="kllqvzchxecftuxi6zdn"],
+[style*="text-align:center"] img[src*="oadq9n7rqdg5bs4u8eyo"],
+[style*="text-align: center"] .winera-yellow-stroke,
+[style*="text-align:center"] .winera-yellow-stroke,
+.winera-roi-comparison-section img,
+.winera-roi-process-section img,
+.winera-roi-checklist-section img,
+.winera-roi-matrix-section img,
+.winera-roi-cta-section img,
+.winera-trampoline-roi-header img,
+.winera-trampoline-custom-container img,
+.winera-trampoline-custom-section img,
+.winera-hypergrid-whyus-section img,
+.winera-hypergrid-whyus-container img,
+.winera-bowling-premium-section img,
+.winera-softplay-custom-section img,
+.winera-amusement-banner-section img,
+.winera-section-heading-inner img,
+.winera-section-heading-container img {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 10px !important;
+}
+
+/* 2. In Left-Aligned Headers & Technical Specifications Cards: ALWAYS LEFT-ALIGN PROPERLY */
+[class*="-specs-title-box"] img,
+[class*="-specs-section"] [class*="-specs-title-box"] img,
+.winera-softplay-specs-title-box img,
+.winera-bumpercar-specs-title-box img,
+.winera-hypergrid-specs-title-box img,
+.winera-trampoline-specs-title-box img,
+.winera-lasertag-specs-title-box img,
+.winera-softplay-specs-section img,
+.winera-bumpercar-specs-section img,
+.winera-hypergrid-specs-section img,
+.winera-trampoline-specs-section img,
+.winera-lasertag-specs-section img,
+[style*="text-align: left"] img[src*="kllqvzchxecftuxi6zdn"],
+[style*="text-align: left"] img[src*="oadq9n7rqdg5bs4u8eyo"],
+[style*="text-align:left"] img[src*="kllqvzchxecftuxi6zdn"],
+[style*="text-align:left"] img[src*="oadq9n7rqdg5bs4u8eyo"],
+.winera-bowling-supplier-text img,
+.winera-softplay-supplier-text img,
+.winera-arcade-intro-section img[src*="kllqvzchxecftuxi6zdn"] {
+  display: block !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  margin-bottom: 10px !important;
+}
+
+@media (max-width: 768px) {
+  img[src*="kllqvzchxecftuxi6zdn"],
+  img[src*="oadq9n7rqdg5bs4u8eyo"],
+  img.winera-yellow-stroke,
+  .winera-section-heading-accent,
+  .winera-yellow-stroke-line,
+  .winera-bowling-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-bowling-supplier-text img[src*="oadq9n7rqdg5bs4u8eyo"],
+  .winera-softplay-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-softplay-intro-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-bumpercar-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-amusement-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-hypergrid-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-lasertag-supplier-text img[src*="kllqvzchxecftuxi6zdn"] {
+    width: 200px !important;
+    max-width: 65% !important;
+    height: auto !important;
+    max-height: 7.5px !important;
+    aspect-ratio: 492 / 10 !important;
+    object-fit: contain !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 8px !important;
+  }
+}
+
+/* FAQ SECTION TITLE CONTRAST FIX */
+.winera-faq-section .winera-section-heading-h2 span,
+.winera-faq-section h2 span,
+.winera-faq-section .winera-section-heading-inner span {
+  color: #0072b8 !important;
 }

@@ -25,7 +25,9 @@ const vrGameSchema = new mongoose.Schema({
   material: { type: String, default: 'Commercial Heavy-Duty Steel & High-Gloss Fiberglass' },
   img: { type: String, default: '' },
   imageUrl: { type: String, default: '' },
+  imgAlt: { type: String, default: '' },
   gallery: [{ type: String }],
+  galleryAlt: [{ type: String }],
   quoteUrl: { type: String, default: '' }
 }, { timestamps: true });
 

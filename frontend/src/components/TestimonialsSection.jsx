@@ -72,7 +72,7 @@ export default function TestimonialsSection({
   testimonials = defaultTestimonials,
   title = '*What Our* Clients Say',
   subtitle = "We are proud to have helped businesses across India build successful game zones. Here's what our clients say about our quality, service, and support.",
-  highlightColor = '#00a8ff',
+  highlightColor = '#0072b8',
   bg = '#F5F5F9',
   accentWidth = '465px',
   accentMaxWidth = '100%',
@@ -247,7 +247,7 @@ export default function TestimonialsSection({
                             bottom: 0,
                             background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, #ffffff 32%, #ffffff 100%)',
                             border: 'none',
-                            color: '#00a8ff',
+                            color: '#0072b8',
                             fontStyle: 'normal',
                             fontWeight: '700',
                             fontSize: '16.5px',
@@ -269,7 +269,7 @@ export default function TestimonialsSection({
                             setIsExpanded(false);
                           }}
                           style={{
-                            color: '#00a8ff',
+                            color: '#0072b8',
                             background: 'none',
                             border: 'none',
                             fontStyle: 'normal',
@@ -293,7 +293,7 @@ export default function TestimonialsSection({
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <img
                   src={currentItem.founderImage || currentItem.img || testiOwner}
-                  alt={currentItem.gameZoneName || currentItem.name}
+                  alt={currentItem.founderImgAlt || currentItem.imgAlt || currentItem.gameZoneName || currentItem.name || "Client Review"}
                   style={{
                     width: '48px',
                     height: '48px',
@@ -302,7 +302,7 @@ export default function TestimonialsSection({
                   }}
                 />
                 <div>
-                  <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#00a8ff', display: 'flex', alignItems: 'center', gap: '6px', margin: 0 }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0072b8', display: 'flex', alignItems: 'center', gap: '6px', margin: 0 }}>
                     <span>{currentItem.gameZoneName || currentItem.name}</span>
                     <span style={{
                       display: 'inline-flex',
@@ -316,7 +316,7 @@ export default function TestimonialsSection({
                       fontSize: '9px',
                       fontWeight: '900'
                     }}>✓</span>
-                  </h4>
+                  </h3>
                   <p style={{ fontSize: '12px', color: '#94a3b8', fontWeight: '600', margin: '2px 0 0' }}>
                     {currentItem.reviewerRole || currentItem.role || 'Surat'}
                   </p>
@@ -346,7 +346,7 @@ export default function TestimonialsSection({
                 }}>
                   <img
                     src={videoThumbnail}
-                    alt={currentItem.name || "Client Review"}
+                    alt={currentItem.videoImgAlt || `${currentItem.gameZoneName || currentItem.name || 'Client'} - Video Review`}
                     style={{
                       width: '100%',
                       height: '100%',
@@ -473,7 +473,7 @@ export default function TestimonialsSection({
                           bottom: 0,
                           background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, #ffffff 32%, #ffffff 100%)',
                           border: 'none',
-                          color: '#00a8ff',
+                          color: '#0072b8',
                           fontStyle: 'normal',
                           fontWeight: '700',
                           fontSize: '12.5px',
@@ -495,7 +495,7 @@ export default function TestimonialsSection({
                           setIsExpanded(false);
                         }}
                         style={{
-                          color: '#00a8ff',
+                          color: '#0072b8',
                           background: 'none',
                           border: 'none',
                           fontStyle: 'normal',
@@ -518,7 +518,7 @@ export default function TestimonialsSection({
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
                 <img
                   src={currentItem.founderImage || currentItem.img || testiOwner}
-                  alt={currentItem.gameZoneName || currentItem.name}
+                  alt={currentItem.founderImgAlt || currentItem.imgAlt || currentItem.gameZoneName || currentItem.name || "Client Review"}
                   style={{
                     width: '46px',
                     height: '46px',
@@ -528,7 +528,7 @@ export default function TestimonialsSection({
                   }}
                 />
                 <div>
-                  <h4 style={{ fontSize: '0.98rem', fontWeight: '800', color: '#00a8ff', margin: 0, display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <h3 style={{ fontSize: '0.98rem', fontWeight: '800', color: '#0072b8', margin: 0, display: 'flex', alignItems: 'center', gap: '5px' }}>
                     {currentItem.gameZoneName || currentItem.name}
                     <span style={{
                       display: 'inline-flex',
@@ -543,7 +543,7 @@ export default function TestimonialsSection({
                       fontWeight: '900',
                       flexShrink: 0
                     }}>✓</span>
-                  </h4>
+                  </h3>
                   <p style={{ fontSize: '11.5px', color: '#94a3b8', fontWeight: '600', margin: '2px 0 0' }}>
                     {currentItem.reviewerRole || currentItem.role || 'Surat'}
                   </p>
@@ -561,7 +561,7 @@ export default function TestimonialsSection({
               }}>
                 <img
                   src={videoThumbnail}
-                  alt={currentItem.name || "Client Review"}
+                  alt={currentItem.videoImgAlt || `${currentItem.gameZoneName || currentItem.name || 'Client'} - Video Review`}
                   style={{
                     width: '100%',
                     height: '100%',

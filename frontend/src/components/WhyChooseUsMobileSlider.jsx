@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { sanitizeAndFormatHtml } from '../utils/sanitizeHtml';
 const homeLeftArrow = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345664/winera_uploads/c1v6ksephaop0pt9laxi.png";
 const homeRightArrow = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345665/winera_uploads/irelt5fskkf6fydyofmp.png";
 const homeRightSign = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345665/winera_uploads/bt1fgaurbhpkmfhczato.png";
@@ -129,14 +130,14 @@ export default function WhyChooseUsMobileSlider({ items = [], customIcon, render
         >
           <div className="winera-why-us-card-header">
             {renderCardIcon()}
-            <h4 className="winera-why-us-card-title">
+            <h3 className="winera-why-us-card-title">
               {renderTextWithBreaks(currentItem.title)}
-            </h4>
+            </h3>
           </div>
 
-          <p className="winera-why-us-card-desc">
-            {renderTextWithBreaks(currentItem.desc || currentItem.description || currentItem.text)}
-          </p>
+          <p className="winera-why-us-card-desc"
+            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(currentItem.desc || currentItem.description || currentItem.text || '').replace(/\n/g, '<br>')) }}
+          />
         </div>
 
         <button

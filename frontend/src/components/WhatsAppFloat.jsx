@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export default function WhatsAppFloat({ whatsAppUrl }) {
   const [isHovered, setIsHovered] = useState(false);
-  const targetUrl = whatsAppUrl || 'https://wa.me/919428989488';
+  const targetUrl = whatsAppUrl || 'https://wa.me/919157873576';
 
   return (
     <div

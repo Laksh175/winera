@@ -5,8 +5,9 @@ import { BarChart2, Edit3, Shield, Database, Users, Settings, AlertTriangle, Tre
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
+import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 const roiBgImage = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345680/winera_uploads/mf1cwyxhxusz6bepq49z.png";
-const gameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345650/winera_uploads/eqjkboeokagpaus2ifxa.png";
+const gameZoneMobileBanner = projectPageMobileBanner;
 const roiImg1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345680/winera_uploads/atfyiiq3xfyaasg0knig.png";
 const roiImage3bg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345680/winera_uploads/ovcg4qswhsqxudtga429.png";
 const roiBlock5Img1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345678/winera_uploads/izqazydgn5rpfaztie6u.png";
@@ -22,9 +23,10 @@ const ctaMainBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 import TestimonialsSection from '../components/TestimonialsSection';
 import MotionCardFlip from '../components/MotionCardFlip';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 
 const getValidImageUrl = (url, fallback) => {
-  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
+  if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/') || url.includes('eqjkboeokagpaus2ifxa')) {
     return fallback;
   }
   if (url.includes('home-block') || url.includes('cta-consultations') || url.includes('cta-gamers')) {
@@ -63,7 +65,10 @@ export default function Roi({ siteData }) {
 
   const roiHero = siteData?.roiHero || {
     breadcrumbPage: "ROI",
-    bgUrl: roiBgImage
+    bgUrl: roiBgImage,
+    bgAlt: "ROI Consultation for Commercial Game Zone - Winera International",
+    mobileBgUrl: gameZoneMobileBanner,
+    mobileBgAlt: "FEC & Game Zone ROI Calculator Mobile Banner - Winera International"
   };
 
   const roiIntro = siteData?.roiIntro || {
@@ -74,12 +79,12 @@ export default function Roi({ siteData }) {
     paragraph1: "Anyone can fill a room with arcade machines. Very few build a game zone that pays back your investment and keeps printing profit month after month.",
     paragraph2: "Most game zone owners lose money in year one — not because gaming is dead, but because the setup, game mix, and management were wrong from day one.",
     buttonText: "Book Your Free ROI Consultation",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     waMessage: "Hello Winera International! I want to book a free ROI consultation. Please share details. [Ref: ROI Page]",
     image: roiImg1
   };
 
-  const rawRoiLink = roiIntro.buttonLink || "https://wa.me/919428989488";
+  const rawRoiLink = roiIntro.buttonLink || "https://wa.me/919157873576";
   let roiWaMsg = roiIntro.waMessage;
 
   const baseRoiLink = rawRoiLink.split('?')[0];
@@ -203,7 +208,7 @@ export default function Roi({ siteData }) {
     cyanText: "Numbers?",
     subtitle: "Book A Free Consultation With Winera International. We'll Walk You Through The ROI Projection For Your Space, Your Budget, And Your City — Before You Spend Anything.",
     buttonText: "Book Your Free ROI Call",
-    buttonLink: "https://wa.me/919428989488",
+    buttonLink: "https://wa.me/919157873576",
     bgUrl: homeBlockBg
   };
 
@@ -248,7 +253,7 @@ export default function Roi({ siteData }) {
         aspectRatio: isPhone ? '941 / 550' : 'auto',
         paddingTop: isPhone ? '55px' : '175px',
         paddingBottom: isPhone ? '0px' : '95px',
-        background: isPhone ? `url(${gameZoneMobileBanner}) center top / 100% 100% no-repeat` : `url(${getValidImageUrl(roiHero.bgUrl, roiBgImage)}) center top / 100% 100% no-repeat`,
+        background: isPhone ? `url(${getValidImageUrl(roiHero.mobileBgUrl, gameZoneMobileBanner)}) center top / 100% 100% no-repeat` : `url(${getValidImageUrl(roiHero.bgUrl, roiBgImage)}) center top / 100% 100% no-repeat`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -257,6 +262,11 @@ export default function Roi({ siteData }) {
         color: '#ffffff',
         overflow: 'hidden'
       }}>
+        <img
+          src={isPhone ? getValidImageUrl(roiHero.mobileBgUrl, gameZoneMobileBanner) : getValidImageUrl(roiHero.bgUrl, roiBgImage)}
+          alt={isPhone ? (roiHero?.mobileBgAlt || roiHero?.bgAlt || "ROI Consultation for Commercial Game Zone - Winera International") : (roiHero?.bgAlt || "ROI Consultation for Commercial Game Zone - Winera International")}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           <h1 className="winera-roi-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
@@ -322,29 +332,31 @@ export default function Roi({ siteData }) {
                 <span className="winera-roi-intro-line2">
                   {roiIntro.titleLine2 || "you need a"}{' '}
                 </span>
-                <span className="winera-roi-intro-line3" style={{ color: '#38bdf8' }}>
+                <span className="winera-roi-intro-line3" style={{ color: '#0072b8' }}>
                   {roiIntro.titleLine2Blue || "profit machine."}
                 </span>
               </h2>
 
-              <p style={{
-                fontSize: '15px',
-                color: '#475569',
-                lineHeight: 1.6,
-                marginBottom: '10px',
-                maxWidth: '560px'
-              }}>
-                {roiIntro.paragraph1}
-              </p>
-              <p style={{
-                fontSize: '15px',
-                color: '#475569',
-                lineHeight: 1.6,
-                marginBottom: '16px',
-                maxWidth: '560px'
-              }}>
-                {roiIntro.paragraph2}
-              </p>
+              <p
+                style={{
+                  fontSize: '15px',
+                  color: '#475569',
+                  lineHeight: 1.6,
+                  marginBottom: '10px',
+                  maxWidth: '560px'
+                }}
+                dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((roiIntro.paragraph1 || '').replace(/\n/g, '<br/>')) }}
+              />
+              <p
+                style={{
+                  fontSize: '15px',
+                  color: '#475569',
+                  lineHeight: 1.6,
+                  marginBottom: '16px',
+                  maxWidth: '560px'
+                }}
+                dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((roiIntro.paragraph2 || '').replace(/\n/g, '<br/>')) }}
+              />
 
               {/* CTA Button */}
               <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
@@ -375,7 +387,7 @@ export default function Roi({ siteData }) {
             >
               <img
                 src={getValidImageUrl(roiIntro.image || roiIntro.imgUrl, roiImg1)}
-                alt="ROI Investment Growth"
+                alt={roiIntro.imageAlt || roiIntro.imgAlt || "ROI Investment Growth - Commercial Game Zone Setup"}
                 style={{
                   width: '100%',
                   maxWidth: '460px',
@@ -427,20 +439,21 @@ export default function Roi({ siteData }) {
               }}>
                 <span className="winera-roi-pain-row1">Opening a game zone</span>
                 <span className="winera-roi-pain-row2">
-                  is easy. <span style={{ color: '#38bdf8' }}>Making it</span>
+                  is easy. <span style={{ color: '#0072b8' }}>Making it</span>
                 </span>
-                <span className="winera-roi-pain-row3" style={{ color: '#38bdf8' }}>
+                <span className="winera-roi-pain-row3" style={{ color: '#0072b8' }}>
                   profitable is a system.
                 </span>
               </h2>
-              <p style={{
-                fontSize: '15px',
-                color: '#475569',
-                lineHeight: 1.7,
-                maxWidth: '480px'
-              }}>
-                {roiMatters.paragraph1}
-              </p>
+              <p
+                style={{
+                  fontSize: '15px',
+                  color: '#475569',
+                  lineHeight: 1.7,
+                  maxWidth: '480px'
+                }}
+                dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((roiMatters.paragraph1 || '').replace(/\n/g, '<br/>')) }}
+              />
             </motion.div>
 
             {/* Right — Red Pain Point Cards */}
@@ -496,20 +509,22 @@ export default function Roi({ siteData }) {
                     ✕
                   </div>
                   {/* Card */}
-                  <div className="winera-roi-pain-card-inner" style={{
-                    flex: 1,
-                    background: '#fde8e8',
-                    borderRadius: '12px',
-                    padding: '14px 22px',
-                    fontSize: '14.5px',
-                    fontWeight: '600',
-                    color: '#1e293b',
-                    lineHeight: 1.5,
-                    marginLeft: '16px',
-                    border: '1px solid #fecaca'
-                  }}>
-                    {point}
-                  </div>
+                  <div
+                    className="winera-roi-pain-card-inner"
+                    style={{
+                      flex: 1,
+                      background: '#fde8e8',
+                      borderRadius: '12px',
+                      padding: '14px 22px',
+                      fontSize: '14.5px',
+                      fontWeight: '600',
+                      color: '#1e293b',
+                      lineHeight: 1.5,
+                      marginLeft: '16px',
+                      border: '1px solid #fecaca'
+                    }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((point || '').replace(/\n/g, '<br/>')) }}
+                  />
                 </div>
               ))}
 
@@ -559,7 +574,7 @@ export default function Roi({ siteData }) {
               {roiComparison.title && roiComparison.title.includes(' vs. ') ? (
                 <>
                   {roiComparison.title.split(' vs. ')[0]}<br />
-                  <span style={{ color: '#38bdf8' }}>vs. {roiComparison.title.split(' vs. ')[1]}</span>
+                  <span style={{ color: '#0072b8' }}>vs. {roiComparison.title.split(' vs. ')[1]}</span>
                 </>
               ) : (
                 roiComparison.title
@@ -889,15 +904,16 @@ export default function Roi({ siteData }) {
           </div>
 
           {/* Sub Caption */}
-          <p style={{
-            fontSize: '15px',
-            color: '#475569',
-            fontWeight: '600',
-            marginTop: '25px',
-            marginBottom: 0
-          }}>
-            {roiComparison.subCaption || "The difference isn't the games. It's the system behind them."}
-          </p>
+          <p
+            style={{
+              fontSize: '15px',
+              color: '#475569',
+              fontWeight: '600',
+              marginTop: '25px',
+              marginBottom: 0
+            }}
+            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((roiComparison.subCaption || "The difference isn't the games. It's the system behind them.").replace(/\n/g, '<br/>')) }}
+          />
         </div>
       </section>
 
@@ -925,7 +941,7 @@ export default function Roi({ siteData }) {
             }}>
               {roiProcess.title && roiProcess.title.includes("profit") ? (
                 <>
-                  <span style={{ color: '#38bdf8' }}>{roiProcess.title.split("profit")[0]}</span> profit<br />
+                  <span style={{ color: '#0072b8' }}>{roiProcess.title.split("profit")[0]}</span> profit<br />
                   {roiProcess.title.split("profit")[1]}
                 </>
               ) : roiProcess.title}
@@ -980,6 +996,21 @@ export default function Roi({ siteData }) {
                       justifyContent: 'flex-end'
                     }}
                   >
+                    {/* Underlying image element with SEO Alt Tag */}
+                    <img
+                      src={resolvedImg}
+                      alt={step.imgAlt || `${step.title} - Winera Game Zone Setup Process`}
+                      loading="lazy"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        zIndex: 0
+                      }}
+                    />
+
                     {/* Dark overlay for readability */}
                     <div style={{
                       position: 'absolute',
@@ -1004,15 +1035,16 @@ export default function Roi({ siteData }) {
                       }}>
                         {step.title}
                       </h3>
-                      <p style={{
-                        color: '#ffffff',
-                        fontSize: '13.5px',
-                        lineHeight: '1.5',
-                        margin: 0,
-                        fontFamily: "'Open Sans', sans-serif"
-                      }}>
-                        {step.desc}
-                      </p>
+                      <p
+                        style={{
+                          color: '#ffffff',
+                          fontSize: '13.5px',
+                          lineHeight: '1.5',
+                          margin: 0,
+                          fontFamily: "'Open Sans', sans-serif"
+                        }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((step.desc || '').replace(/\n/g, '<br/>')) }}
+                      />
                     </div>
                   </MotionCardFlip>
                 </motion.div>
@@ -1060,7 +1092,7 @@ export default function Roi({ siteData }) {
               }}>
                 <img
                   src={roiGet.image && (roiGet.image.startsWith('http') || roiGet.image.startsWith('data:')) ? roiGet.image : roiBlock6}
-                  alt="Winera Built for Profit"
+                  alt={roiGet.imageAlt || roiGet.imgAlt || "Winera Built for Profit - High ROI Commercial Entertainment"}
                   style={{
                     width: '210px',
                     height: '210px',
@@ -1136,12 +1168,13 @@ export default function Roi({ siteData }) {
                         {stepIcon}
                       </div>
                       <div className="winera-roi-get-step-text" style={{ textAlign: 'left', flex: 1 }}>
-                        <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', margin: '0 0 3px 0', fontFamily: "'Open Sans', sans-serif", textAlign: 'left' }}>
+                        <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', margin: '0 0 3px 0', fontFamily: "'Open Sans', sans-serif", textAlign: 'left' }}>
                           {step.title}
-                        </h4>
-                        <p style={{ fontSize: '12.5px', color: '#475569', margin: 0, fontFamily: "'Open Sans', sans-serif", textAlign: 'left' }}>
-                          {step.desc}
-                        </p>
+                        </h3>
+                        <p
+                          style={{ fontSize: '12.5px', color: '#475569', margin: 0, fontFamily: "'Open Sans', sans-serif", textAlign: 'left' }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((step.desc || '').replace(/\n/g, '<br/>')) }}
+                        />
                       </div>
                     </div>
                   );
@@ -1179,22 +1212,23 @@ export default function Roi({ siteData }) {
                     return (
                       <>
                         <span className="winera-roi-get-title-line1" style={{ display: 'block' }}>{mainBefore}{' '}</span>
-                        <span className="winera-roi-get-title-line2" style={{ color: '#38bdf8', display: 'block' }}>Winera {afterWinera}</span>
+                        <span className="winera-roi-get-title-line2" style={{ color: '#0072b8', display: 'block' }}>Winera {afterWinera}</span>
                       </>
                     );
                   }
                   return roiGet.title;
                 })()}
               </h2>
-              <p style={{
-                fontSize: '15px',
-                color: '#475569',
-                lineHeight: 1.6,
-                margin: 0,
-                fontFamily: "'Open Sans', sans-serif"
-              }}>
-                {roiGet.subtitle}
-              </p>
+              <p
+                style={{
+                  fontSize: '15px',
+                  color: '#475569',
+                  lineHeight: 1.6,
+                  margin: 0,
+                  fontFamily: "'Open Sans', sans-serif"
+                }}
+                dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((roiGet.subtitle || '').replace(/\n/g, '<br/>')) }}
+              />
             </motion.div>
           </div>
         </div>
@@ -1224,7 +1258,7 @@ export default function Roi({ siteData }) {
             }}>
               {roiChecklist.title && roiChecklist.title.includes("This is") ? (
                 <>
-                  <span style={{ color: '#38bdf8' }}>This is</span> {roiChecklist.title.split("This is")[1]}
+                  <span style={{ color: '#0072b8' }}>This is</span> {roiChecklist.title.split("This is")[1]}
                 </>
               ) : roiChecklist.title}
             </h2>
@@ -1341,17 +1375,18 @@ export default function Roi({ siteData }) {
                       }}>
                         {icon}
                       </div>
-                      <p style={{
-                        fontSize: '16px',
-                        color: '#ffffff',
-                        lineHeight: '1.45',
-                        fontWeight: '500',
-                        margin: '0px',
-                        textAlign: 'left',
-                        fontFamily: "'Open Sans', sans-serif"
-                      }}>
-                        {itemText}
-                      </p>
+                      <p
+                        style={{
+                          fontSize: '16px',
+                          color: '#ffffff',
+                          lineHeight: '1.45',
+                          fontWeight: '500',
+                          margin: '0px',
+                          textAlign: 'left',
+                          fontFamily: "'Open Sans', sans-serif"
+                        }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((itemText || '').replace(/\n/g, '<br/>')) }}
+                      />
                     </div>
                   );
                 })}
@@ -1447,17 +1482,18 @@ export default function Roi({ siteData }) {
                       }}>
                         {icon}
                       </div>
-                      <p style={{
-                        fontSize: '16px',
-                        color: '#ffffff',
-                        lineHeight: '1.45',
-                        fontWeight: '500',
-                        margin: '0px',
-                        textAlign: 'left',
-                        fontFamily: "'Open Sans', sans-serif"
-                      }}>
-                        {itemText}
-                      </p>
+                      <p
+                        style={{
+                          fontSize: '16px',
+                          color: '#ffffff',
+                          lineHeight: '1.45',
+                          fontWeight: '500',
+                          margin: '0px',
+                          textAlign: 'left',
+                          fontFamily: "'Open Sans', sans-serif"
+                        }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((itemText || '').replace(/\n/g, '<br/>')) }}
+                      />
                     </div>
                   );
                 })}
@@ -1541,27 +1577,29 @@ export default function Roi({ siteData }) {
           </h2>
 
           {/* Description */}
-          <p className="winera-cta-subtitle winera-roi-cta-sub" style={{
-            fontSize: '19px',
-            fontWeight: '400',
-            color: '#e2e8f0',
-            lineHeight: 1.5,
-            marginBottom: '26px',
-            maxWidth: '580px',
-            margin: '0 auto 26px',
-            letterSpacing: '0.5px',
-            textShadow: '0 2px 8px rgba(0,0,0,0.5)',
-            textTransform: 'none',
-            position: 'relative',
-            zIndex: 2
-          }}>
-            {roiCta.subtitle}
-          </p>
+          <p
+            className="winera-cta-subtitle winera-roi-cta-sub"
+            style={{
+              fontSize: '19px',
+              fontWeight: '400',
+              color: '#e2e8f0',
+              lineHeight: 1.5,
+              marginBottom: '26px',
+              maxWidth: '580px',
+              margin: '0 auto 26px',
+              letterSpacing: '0.5px',
+              textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+              textTransform: 'none',
+              position: 'relative',
+              zIndex: 2
+            }}
+            dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((roiCta.subtitle || '').replace(/\n/g, '<br/>')) }}
+          />
 
           {/* Styled Button offset wrap */}
           <div className="winera-cta-banner-btn-wrapper" style={{ position: 'relative', zIndex: 2 }}>
             <a
-              href="#"
+              href={roiCta.buttonLink || "/contact"}
               onClick={(e) => {
                 e.preventDefault();
                 setIsModalOpen(true);

@@ -61,7 +61,7 @@ function parseStarText(children) {
     if (index % 2 === 1) {
       return (
         <span key={index} style={{
-          color: '#00a8ff',
+          color: '#0072b8',
           fontFamily: "'Black Han Sans', sans-serif",
           fontWeight: '400',
           fontStyle: 'normal',
@@ -126,13 +126,17 @@ export default function SectionHeading({
               className="winera-section-heading-accent"
               src={yellowStrokeLine}
               alt=""
+              width="350"
+              height="10"
               style={{
                 display: 'block',
                 width: accentWidth,
                 maxWidth: accentMaxWidth,
-                height: accentHeight,
+                height: 'auto',
+                maxHeight: accentHeight || '10px',
+                aspectRatio: '492 / 10',
                 margin: `0 0 ${accentMarginBottom} 0`,
-                objectFit: 'fill',
+                objectFit: 'contain',
                 filter: accentFilter || 'none',
                 ...accentStyle
               }}
@@ -190,13 +194,17 @@ export default function SectionHeading({
             className="winera-section-heading-accent"
             src={yellowStrokeLine}
             alt=""
+            width="350"
+            height="10"
             style={{
               display: 'block',
               width: accentWidth,
               maxWidth: accentMaxWidth,
-              height: accentHeight,
+              height: 'auto',
+              maxHeight: accentHeight || '10px',
+              aspectRatio: '492 / 10',
               margin: isLeft ? `0 0 ${accentMarginBottom} 0` : `0 auto ${accentMarginBottom}`,
-              objectFit: 'fill',
+              objectFit: 'contain',
               filter: accentFilter || 'none',
               ...accentStyle
             }}

@@ -8,6 +8,7 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
+import { sanitizeAndFormatHtml } from './BlogDetail';
 const hypergridHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345665/winera_uploads/dazartbigth5uomw4l82.png";
 const hypergridMobileHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345666/winera_uploads/pbm1z3vndfr2wnyvlx8z.png";
 const hypergridSupplierCollage = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345665/winera_uploads/dzjrsas1qwrxj8qxlw45.png";
@@ -26,6 +27,7 @@ const downloadButtonImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_au
 const talkToRoiButtonImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345686/winera_uploads/p0ljiyl3jf6r3wvnzch1.png";
 const homePageIcon = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345656/winera_uploads/gp0aisnttd4hpnswmxu4.png";
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
+import BrochureModal from '../components/BrochureModal';
 
 const defaultHypergridWhyWineraItems = [
   {
@@ -94,7 +96,8 @@ const renderWhyWineraIcon = (iconName, idx) => {
 };
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => {
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
+  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
   let text = rawText || defaultText;
 
   // Sanitize line breaks and markup for Hypergrid page titles specifically
@@ -122,7 +125,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
         </React.Fragment>
       ));
       return isHighlight ? (
-        <span key={index} style={{ color: highlightColor }}>
+        <span key={index} style={{ color: actualHighlight }}>
           {content}{' '}
         </span>
       ) : (
@@ -131,7 +134,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#38bdf8') => 
     }
 
     return isHighlight ? (
-      <span key={index} style={{ color: highlightColor }}>
+      <span key={index} style={{ color: actualHighlight }}>
         {part}{' '}
       </span>
     ) : (
@@ -158,7 +161,9 @@ export default function Hypergrid({ siteData }) {
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
   const heroBgImage = getValidImageUrl(siteData?.hypergridHero?.bgUrl, hypergridHeroBg);
+  const mobileHeroBgImage = getValidImageUrl(siteData?.hypergridHero?.mobileBgUrl, hypergridMobileHeroBg);
   const [openWhyUsIndex, setOpenWhyUsIndex] = useState(0);
+  const [isBrochureOpen, setIsBrochureOpen] = useState(false);
 
   // SEO Title & Meta Description update
   useEffect(() => {
@@ -187,7 +192,7 @@ export default function Hypergrid({ siteData }) {
         paddingTop: '175px',
         paddingBottom: '95px',
         background: `url(${heroBgImage}) center top / 100% 100% no-repeat`,
-        '--winera-hypergrid-mobile-bg': `url("${hypergridMobileHeroBg}")`,
+        '--winera-hypergrid-mobile-bg': `url("${mobileHeroBgImage}")`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -195,6 +200,11 @@ export default function Hypergrid({ siteData }) {
         textAlign: 'center',
         color: '#ffffff'
       }}>
+        <img
+          src={heroBgImage}
+          alt={siteData?.hypergridHero?.bgAlt || "Hypergrid Game Supplier in India - Winera International"}
+          style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0.001, pointerEvents: 'none' }}
+        />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Hypergrid (Matching AR Games 1:1) */}
           <h1 className="winera-hypergrid-hero-title" style={{
@@ -232,7 +242,7 @@ export default function Hypergrid({ siteData }) {
           <div className="winera-hypergrid-supplier-img" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <img
               src={getValidImageUrl(siteData?.hypergridIntro?.mainImgUrl, hypergridSupplierCollage)}
-              alt="Hypergrid Game Supplier in India"
+              alt={siteData?.hypergridIntro?.mainImgAlt || siteData?.hypergridIntro?.imgAlt || "Hypergrid Game Supplier in India - Winera"}
               style={{
                 width: '100%',
                 maxWidth: '680px',
@@ -252,19 +262,22 @@ export default function Hypergrid({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game* Supplier<br/>in India", '#38bdf8')}
+                {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game* Supplier<br/>in India", '#0072b8')}
               </h2>
             </div>
 
             {/* Description Paragraph */}
-            <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '0px', maxWidth: '580px' }}>
-              {siteData?.hypergridIntro?.desc || "India's trusted Hypergrid game supplier commercial-grade interactive LED floor systems, installed and serviced by our own team across 50+ cities."}
-            </p>
+            <p
+              style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65, fontWeight: '500', marginBottom: '0px', maxWidth: '580px' }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.hypergridIntro?.desc || "India's trusted Hypergrid game supplier commercial-grade interactive LED floor systems, installed and serviced by our own team across 50+ cities.").replace(/\n/g, '<br>'))
+              }}
+            />
 
             {/* Action Button: Get A Quote */}
             <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
               {(() => {
-                const baseLink = siteData?.hypergridIntro?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.hypergridIntro?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.hypergridIntro?.waMessage || "Hello Winera International! I want to get a quote and details for Hypergrid LED Floor Game setup. Please share details. [Ref: Hypergrid Page]";
                 
                 let hrefLink = baseLink;
@@ -309,43 +322,27 @@ export default function Hypergrid({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, width: '1000px', maxWidth: '100%' }}>
-                {renderTitleMarkup(siteData?.hypergridBanner?.title, "Interactive LED Floor Games<br/>*for High-Footfall Venues*", '#38bdf8')}
+                {renderTitleMarkup(siteData?.hypergridBanner?.title, "Interactive LED Floor Games<br/>*for High-Footfall Venues*", '#0072b8')}
               </h2>
             </div>
 
             {/* Paragraphs with Mobile Expandable Text */}
             <MobileExpandableText
               preview={
-                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '20px', maxWidth: '905px' }}>
-                  {siteData?.hypergridBanner?.paragraph1 ? (
-                    typeof siteData.hypergridBanner.paragraph1 === 'string'
-                      ? siteData.hypergridBanner.paragraph1.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                          <React.Fragment key={lIdx}>
-                            {lIdx > 0 && <br />}
-                            {line}
-                          </React.Fragment>
-                        ))
-                      : siteData.hypergridBanner.paragraph1
-                  ) : (
-                    "Winera International is a trusted Hypergrid game supplier in India, sourcing and installing commercial Hypergrid interactive LED floor systems for malls, family entertainment centres, hotels, schools, trampoline parks, and bowling alleys since 2014. Every Hypergrid unit we supply is sourced from established global manufacturers — configured specifically for sustained daily commercial use in high-footfall Indian venues."
-                  )}
-                </p>
+                <p
+                  style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '20px', maxWidth: '905px' }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml((siteData?.hypergridBanner?.paragraph1 || "Winera International is a trusted Hypergrid game supplier in India, sourcing and installing commercial Hypergrid interactive LED floor systems for malls, family entertainment centres, hotels, schools, trampoline parks, and bowling alleys since 2014. Every Hypergrid unit we supply is sourced from established global manufacturers — configured specifically for sustained daily commercial use in high-footfall Indian venues.").replace(/\n/g, '<br>'))
+                  }}
+                />
               }
               expandedContent={
-                <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, maxWidth: '905px' }}>
-                  {siteData?.hypergridBanner?.paragraph2 ? (
-                    typeof siteData.hypergridBanner.paragraph2 === 'string'
-                      ? siteData.hypergridBanner.paragraph2.split(/<br\s*\/?>/i).map((line, lIdx) => (
-                          <React.Fragment key={lIdx}>
-                            {lIdx > 0 && <br />}
-                            {line}
-                          </React.Fragment>
-                        ))
-                      : siteData.hypergridBanner.paragraph2
-                  ) : (
-                    "As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order to opening day."
-                  )}
-                </p>
+                <p
+                  style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', margin: 0, maxWidth: '905px' }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml((siteData?.hypergridBanner?.paragraph2 || "As a direct Hypergrid business partner, our own team manages the complete process from space assessment and product configuration to installation, software setup, and after-sales support. One team, zero third-party contractors, from order to opening day.").replace(/\n/g, '<br>'))
+                  }}
+                />
               }
             />
           </div>
@@ -354,7 +351,7 @@ export default function Hypergrid({ siteData }) {
           <div className="winera-hypergrid-banner-img" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
             <img
               src={getValidImageUrl(siteData?.hypergridBanner?.imgUrl, hypergridBannerImg)}
-              alt="Interactive LED Floor Games for High-Footfall Venues"
+              alt={siteData?.hypergridBanner?.imgAlt || "Interactive LED Floor Games for High-Footfall Venues - Winera"}
               style={{
                 width: '150%',
                 maxWidth: '706px',
@@ -382,6 +379,11 @@ export default function Hypergrid({ siteData }) {
           flexDirection: 'column',
           justifyContent: 'space-between'
         }}>
+          <img
+            src={getValidImageUrl(siteData?.hypergridSpecs?.bgUrl, hypergridSpecsBg)}
+            alt={siteData?.hypergridSpecs?.bgAlt || "Hypergrid Commercial Interactive LED Gaming Floor Technical Specifications"}
+            style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0.001, pointerEvents: 'none' }}
+          />
           {/* Top Title: Technical Specifications */}
           <div className="winera-hypergrid-specs-title-box" style={{ position: 'relative', display: 'inline-block', marginBottom: '0px', padding: '30px 35px 10px' }}>
             <img
@@ -434,10 +436,9 @@ export default function Hypergrid({ siteData }) {
 
           {/* Bottom CTA Button: Download Our Brochure */}
           <div className="winera-hypergrid-specs-btn-wrapper" style={{ margin: '0 0 35px 35px' }}>
-            <a
-              href={siteData?.hypergridSpecs?.buttonLink || "https://wa.me/919428989488"}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
+              onClick={() => setIsBrochureOpen(true)}
               aria-label="Download Our Brochure"
               style={{
                 display: 'inline-flex',
@@ -452,14 +453,13 @@ export default function Hypergrid({ siteData }) {
                 fontWeight: '600',
                 textAlign: 'center',
                 lineHeight: 1,
-                textDecoration: 'none',
                 border: 'none',
                 outline: 'none',
                 cursor: 'pointer'
               }}
             >
               {siteData?.hypergridSpecs?.buttonText || "Download Our Brochure"}
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -487,11 +487,14 @@ export default function Hypergrid({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: '0 0 14px' }}>
-              {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid*<br/>*the Right Choice for Your Venue*", '#38bdf8')}
+              {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid*<br/>*the Right Choice for Your Venue*", '#0072b8')}
             </h2>
-            <p style={{ fontSize: '13.5px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}>
-              {siteData?.hypergridWhyUs?.subtitle || "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:"}
-            </p>
+            <p
+              style={{ fontSize: '13.5px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeAndFormatHtml((siteData?.hypergridWhyUs?.subtitle || "Every component in a Winera soft play structure is selected to perform reliably under heavy daily commercial use, not occasional play. Here is what goes into every build:").replace(/\n/g, '<br>'))
+              }}
+            />
           </div>
 
           {/* 2 Column Content Layout */}
@@ -506,7 +509,7 @@ export default function Hypergrid({ siteData }) {
             <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
               <img
                 src={getValidImageUrl(siteData?.hypergridWhyUs?.leftImgUrl, arImage)}
-                alt="What Makes Hypergrid the Right Choice for Your Venue"
+                alt={siteData?.hypergridWhyUs?.leftImgAlt || "What Makes Hypergrid the Right Choice for Your Venue - Winera"}
                 style={{
                   width: '170%',
                   maxWidth: '750px',
@@ -557,9 +560,12 @@ export default function Hypergrid({ siteData }) {
                         />
                       </div>
                       <div className="winera-hypergrid-whyus-desc-box">
-                        <p className="winera-hypergrid-whyus-desc">
-                          {card.desc}
-                        </p>
+                        <p
+                          className="winera-hypergrid-whyus-desc"
+                          dangerouslySetInnerHTML={{
+                            __html: sanitizeAndFormatHtml((card.desc || '').replace(/\n/g, '<br>'))
+                          }}
+                        />
                       </div>
                     </div>
                   </div>
@@ -581,7 +587,7 @@ export default function Hypergrid({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
-              {renderTitleMarkup(siteData?.hypergridRoi?.title, "Is Hypergrid a Smart <br/>*Investment for Your Venue?*", '#38bdf8')}
+              {renderTitleMarkup(siteData?.hypergridRoi?.title, "Is Hypergrid a Smart <br/>*Investment for Your Venue?*", '#0072b8')}
             </h2>
           </div>
 
@@ -597,19 +603,25 @@ export default function Hypergrid({ siteData }) {
               {/* Paragraphs with Mobile Expandable Text */}
               <MobileExpandableText
                 preview={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '22px', maxWidth: '620px', textAlign: 'justify' }}>
-                    {siteData?.hypergridRoi?.paragraph1 || "Most interactive LED floor game suppliers quote a unit price and leave the business decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any Hypergrid order, our team prepares a complete ROI report for your specific venue \u2014 covering equipment cost, projected daily sessions, estimated revenue per session, maintenance costs, and break-even timeline."}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '22px', maxWidth: '620px', textAlign: 'justify' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.hypergridRoi?.paragraph1 || "Most interactive LED floor game suppliers quote a unit price and leave the business decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any Hypergrid order, our team prepares a complete ROI report for your specific venue \u2014 covering equipment cost, projected daily sessions, estimated revenue per session, maintenance costs, and break-even timeline.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
                 expandedContent={
-                  <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '620px', textAlign: 'justify' }}>
-                    {siteData?.hypergridRoi?.paragraph2 || "Every figure is calculated around your venue type, daily footfall, and target visitor demographic \u2014 not an industry average. Very few Hypergrid game suppliers in India include this as a standard part of their process. For Winera, it is where every project starts."}
-                  </p>
+                  <p
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '620px', textAlign: 'justify' }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeAndFormatHtml((siteData?.hypergridRoi?.paragraph2 || "Every figure is calculated around your venue type, daily footfall, and target visitor demographic \u2014 not an industry average. Very few Hypergrid game suppliers in India include this as a standard part of their process. For Winera, it is where every project starts.").replace(/\n/g, '<br>'))
+                    }}
+                  />
                 }
               />
 
               {(() => {
-                const baseLink = siteData?.hypergridRoi?.buttonLink || "https://wa.me/919428989488";
+                const baseLink = siteData?.hypergridRoi?.buttonLink || "https://wa.me/919157873576";
                 const defaultMsg = siteData?.hypergridRoi?.waMessage || "Hello Winera International! I want to talk to an ROI Expert for Hypergrid LED Floor Game setup & commercial ROI calculation. Please share details. [Ref: Hypergrid Page]";
                 
                 let hrefLink = baseLink;
@@ -667,7 +679,7 @@ export default function Hypergrid({ siteData }) {
             <div className="winera-hypergrid-roi-img" style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginTop: '-20%' }}>
               <img
                 src={getValidImageUrl(siteData?.hypergridRoi?.imgUrl, hypergridImage)}
-                alt="Is Hypergrid a Smart Investment for Your Venue?"
+                alt={siteData?.hypergridRoi?.imgAlt || "Is Hypergrid a Smart Investment for Your Venue? - Winera LED Floor"}
                 style={{
                   width: '100%',
                   maxWidth: '380px',
@@ -693,7 +705,7 @@ export default function Hypergrid({ siteData }) {
               style={{ display: 'block', width: '350px', maxWidth: '100%', height: '10px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.hypergridWhyWinera?.title, "Why Choose *Winera International*", '#38bdf8')}
+              {renderTitleMarkup(siteData?.hypergridWhyWinera?.title, "Why Choose *Winera International*", '#0072b8')}
             </h2>
           </div>
 
@@ -764,12 +776,15 @@ export default function Hypergrid({ siteData }) {
                             renderWhyWineraIcon(card.icon, cIdx)
                           )}
                         </div>
-                        <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                        <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                           {card.title}
-                        </h4>
-                        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                          {card.desc || card.description}
-                        </p>
+                        </h3>
+                        <p
+                          style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                          dangerouslySetInnerHTML={{
+                            __html: sanitizeAndFormatHtml((card.desc || card.description || '').replace(/\n/g, '<br>'))
+                          }}
+                        />
                       </div>
                     ))}
                   </div>
@@ -836,12 +851,15 @@ export default function Hypergrid({ siteData }) {
                               renderWhyWineraIcon(card.icon, topCards.length + bIdx)
                             )}
                           </div>
-                          <h4 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
+                          <h3 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#0f172a', margin: '0 0 10px 0' }}>
                             {card.title}
-                          </h4>
-                          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}>
-                            {card.desc || card.description}
-                          </p>
+                          </h3>
+                          <p
+                            style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, fontWeight: '500', margin: 0, maxWidth: '280px' }}
+                            dangerouslySetInnerHTML={{
+                              __html: sanitizeAndFormatHtml((card.desc || card.description || '').replace(/\n/g, '<br>'))
+                            }}
+                          />
                         </div>
                       ))}
                     </div>
@@ -877,14 +895,14 @@ export default function Hypergrid({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#38bdf8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
       />
 
       {/* 10. WHAT OUR CLIENTS SAY (TESTIMONIALS) SECTION */}
       <TestimonialsSection siteData={siteData} />
 
       {/* 11. RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection sectionData={siteData?.hypergridRelated || siteData?.arcadeRelated} accentColor="#38bdf8" />
+      <RelatedProductsSection sectionData={siteData?.hypergridRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
 
       {/* 12. FAQ SECTION */}
       {(() => {
@@ -932,7 +950,7 @@ export default function Hypergrid({ siteData }) {
           <FaqSection
             faqList={faqs}
             faqsList={faqs}
-            highlightColor="#38bdf8"
+            highlightColor="#0072b8"
           />
         );
       })()}
@@ -950,10 +968,13 @@ export default function Hypergrid({ siteData }) {
           subtitleFontSize="16px"
           subtitleFontWeight="400"
           bgUrl={siteData?.hypergridCta?.bgUrl ? getValidImageUrl(siteData.hypergridCta.bgUrl, ctaMainBanner) : null}
+          bgAlt={siteData?.hypergridCta?.bgAlt || "Hypergrid Active Grid Game Turnkey Setup - Winera"}
           bg={ctaMainBanner}
           leftImgUrl={siteData?.hypergridCta?.leftImgUrl}
+          leftImgAlt={siteData?.hypergridCta?.leftImgAlt || "Hypergrid Game Room Installation"}
           leftImg={leftTiltedCard}
           rightImgUrl={siteData?.hypergridCta?.rightImgUrl}
+          rightImgAlt={siteData?.hypergridCta?.rightImgAlt || "Commercial Hypergrid Game Arena - Winera"}
           rightImg={rightTiltedCard}
           tagline={null}
           title={
@@ -962,20 +983,35 @@ export default function Hypergrid({ siteData }) {
               : "Ready To Add Hypergrid<br/>To Your Venue?"
           }
           subtitle={
-            siteData?.hypergridCta?.subtitle || siteData?.hypergridCta?.whiteText
-              ? siteData?.hypergridCta?.subtitle || siteData?.hypergridCta?.whiteText
-              : "Get In Touch With India's Trusted Hypergrid Game Supplier For A Free ROI Report,<br/>Space Assessment, And Project Quote."
+            siteData?.hypergridCta?.subtitle || siteData?.hypergridCta?.whiteText ? (
+              <span dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.hypergridCta?.subtitle || siteData?.hypergridCta?.whiteText).replace(/\n/g, '<br/>')) }} />
+            ) : "Get In Touch With India's Trusted Hypergrid Game Supplier For A Free ROI Report,<br/>Space Assessment, And Project Quote."
           }
           description={null}
           buttonText={siteData?.hypergridCta?.buttonText || "Talk to an ROI Expert"}
           buttonLink={
-            siteData?.hypergridCta?.buttonLink || siteData?.header?.whatsAppUrl || "https://wa.me/919428989488"
+            siteData?.hypergridCta?.buttonLink || siteData?.header?.whatsAppUrl || "https://wa.me/919157873576"
           }
         />
       </div>       
 
       {/* FOOTER */}
       <Footer footerData={footer} />
+
+      {/* BROCHURE PREVIEW & DOWNLOAD MODAL */}
+      <BrochureModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+        pdfUrl={
+          (() => {
+            const hUrl = siteData?.hypergridSpecs?.buttonLink;
+            if (hUrl && typeof hUrl === 'string' && hUrl.trim() !== '#' && hUrl.trim() !== '' && !hUrl.includes('wa.me')) return hUrl.trim();
+            return "/pdf/Hyper Grid.pdf";
+          })()
+        }
+        title="Hyper Grid - Technical Specifications & Brochure"
+        fileName="Hyper Grid Brochure - Winera International.pdf"
+      />
     </div>
   );
 }

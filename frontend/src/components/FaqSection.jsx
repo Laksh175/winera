@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
+import { sanitizeAndFormatHtml } from '../utils/sanitizeHtml';
 
 export default function FaqSection({
   faqList = [],
@@ -9,17 +10,19 @@ export default function FaqSection({
   id = 'faqs',
   title = 'Frequently Asked *Questions*',
   subtitle = null,
-  highlightColor = '#00a8ff',
+  highlightColor = '#0072b8',
   bg = '#F5F5F9',
-  accentWidth = '510px',
-  accentMaxWidth = '95%',
-  accentHeight = '11px',
+  accentWidth = '320px',
+  accentMaxWidth = '90%',
+  accentHeight = '10px',
   accentMarginBottom = '8px',
-  accentAlign = 'left-inline',
-  accentStyle = { margin: '0px 15% 8px' },
+  accentAlign = 'center',
+  accentStyle = {},
   padding = '70px 4vw 40px'
 }) {
   const [activeFaqIndex, setActiveFaqIndex] = useState(-1);
+
+  const safeHighlight = (!highlightColor || highlightColor === '#38bdf8' || highlightColor === '#00a8ff' || highlightColor === '#00a6ff' || highlightColor === '#00b0ff' || highlightColor === '#7dd3fc') ? '#0072b8' : highlightColor;
 
   const items = Array.isArray(faqsList) && faqsList.length > 0 ? faqsList : (Array.isArray(faqList) ? faqList : []);
   const col1 = items.slice(0, Math.ceil(items.length / 2));
@@ -36,7 +39,7 @@ export default function FaqSection({
             return parts.map((part, index) => {
               if (index % 2 === 1) {
                 return (
-                  <span key={index} style={{ color: highlightColor }}>
+                  <span key={index} style={{ color: safeHighlight }}>
                     {part}
                   </span>
                 );
@@ -47,9 +50,7 @@ export default function FaqSection({
         </SectionHeading>
 
         {subtitle && (
-          <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginBottom: '35px' }}>
-            {subtitle}
-          </p>
+          <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '600', marginBottom: '35px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(subtitle).replace(/\n/g, '<br>')) }} />
         )}
 
         <div className="winera-faq-grid" style={{
@@ -83,8 +84,8 @@ export default function FaqSection({
                     background: '#ffffff',
                     borderRadius: '16px',
                     padding: '20px 24px',
-                    border: isOpen ? `1.5px solid ${highlightColor}` : '1.5px solid #e2e8f0',
-                    boxShadow: isOpen ? '0 10px 30px rgba(0, 168, 255, 0.1)' : '0 4px 16px rgba(0,0,0,0.03)',
+                    border: isOpen ? `1.5px solid ${safeHighlight}` : '1.5px solid #e2e8f0',
+                    boxShadow: isOpen ? '0 10px 30px rgba(0, 114, 184, 0.15)' : '0 4px 16px rgba(0,0,0,0.03)',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
@@ -97,7 +98,7 @@ export default function FaqSection({
                       width: '28px',
                       height: '28px',
                       borderRadius: '50%',
-                      background: isOpen ? highlightColor : '#f1f5f9',
+                      background: isOpen ? safeHighlight : '#f1f5f9',
                       color: isOpen ? '#ffffff' : '#475569',
                       display: 'flex',
                       alignItems: 'center',
@@ -126,9 +127,7 @@ export default function FaqSection({
                       paddingTop: '0px',
                       borderTop: 'none',
                       textAlign: 'left'
-                    }}>
-                      {item.a || item.answer}
-                    </p>
+                    }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(item.a || item.answer || '').replace(/\n/g, '<br>')) }} />
                   )}
                 </div>
               );
@@ -202,9 +201,7 @@ export default function FaqSection({
                       paddingTop: '0px',
                       borderTop: 'none',
                       textAlign: 'left'
-                    }}>
-                      {item.a || item.answer}
-                    </p>
+                    }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(item.a || item.answer || '').replace(/\n/g, '<br>')) }} />
                   )}
                 </div>
               );

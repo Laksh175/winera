@@ -26,7 +26,7 @@ const resolveImgUrl = (url, fallback) => {
 
 export default function RelatedProductsSection({
   sectionData,
-  accentColor = '#38bdf8',
+  accentColor = '#0072b8',
   accentWidth = '370px',
   accentMaxWidth = '95%',
   accentHeight = '11px',
@@ -35,19 +35,19 @@ export default function RelatedProductsSection({
   accentStyle = {}
 }) {
   const defaultCategories = [
-    { title: "Arcade Games", link: "/products/arcade-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882222/winera_uploads/psq0lwhhp7kdasz18mhg.jpg" },
-    { title: "VR Games", link: "/products/vr-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881945/winera_uploads/ciltspbpf3nwcvcbu16m.jpg" },
-    { title: "AR Games", link: "/products/ar-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881961/winera_uploads/ucij9ckzxnlpskx6n0hj.png" },
-    { title: "Bowling Alley", link: "/products/bowling-alley", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881975/winera_uploads/bj0fjmjyi9ogxwme3hqc.jpg" },
-    { title: "Trampoline Park", link: "/products/trampoline-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881999/winera_uploads/yx5bfvbaexcazrkt331g.jpg" },
-    { title: "Soft Play", link: "/products/soft-play", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882021/winera_uploads/sxlzfslbp7mmm3avg0vq.jpg" },
-    { title: "Bumper Cars", link: "/products/bumper-cars", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882033/winera_uploads/goun29t9b7kopvwkfze9.jpg" },
-    { title: "Hypergrid", link: "/products/hypergrid", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882049/winera_uploads/jxgltybqdkbolwzlzcar.jpg" },
-    { title: "Laser Tag", link: "/products/laser-tag", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882062/winera_uploads/y7nkbq60c8siqqatkr36.jpg" },
-    { title: "Amusement Park", link: "/products/amusement-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882084/winera_uploads/tgofoefcimwe14lmqrso.jpg" },
-    { title: "Lights", link: "/products/lights", img: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80" },
-    { title: "Sculpture", link: "/products/sculpture", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751076/winera_uploads/r9m4zijctdjvzmbueeze.png" },
-    { title: "Reception Table", link: "/products/reception-table", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" }
+    { title: "Arcade Games", link: "/product/arcade-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882222/winera_uploads/psq0lwhhp7kdasz18mhg.jpg" },
+    { title: "VR Games", link: "/product/vr-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881945/winera_uploads/ciltspbpf3nwcvcbu16m.jpg" },
+    { title: "AR Games", link: "/product/ar-games", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881961/winera_uploads/ucij9ckzxnlpskx6n0hj.png" },
+    { title: "Bowling Alley", link: "/product/bowling-alley", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881975/winera_uploads/bj0fjmjyi9ogxwme3hqc.jpg" },
+    { title: "Trampoline Park", link: "/product/trampoline-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881999/winera_uploads/yx5bfvbaexcazrkt331g.jpg" },
+    { title: "Soft Play", link: "/product/soft-play", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882021/winera_uploads/sxlzfslbp7mmm3avg0vq.jpg" },
+    { title: "Bumper Cars", link: "/product/bumper-car", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882033/winera_uploads/goun29t9b7kopvwkfze9.jpg" },
+    { title: "Hypergrid", link: "/product/hypergrid", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882049/winera_uploads/jxgltybqdkbolwzlzcar.jpg" },
+    { title: "Laser Tag", link: "/product/laser-tag", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882062/winera_uploads/y7nkbq60c8siqqatkr36.jpg" },
+    { title: "Amusement Park", link: "/product/amusement-park", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882084/winera_uploads/tgofoefcimwe14lmqrso.jpg" },
+    { title: "Lights", link: "/product/lights", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791892550/winera_uploads/xzgzyyd26y9sukeicpd1.jpg", isActive: false, status: 'inactive' },
+    { title: "Sculpture", link: "/product/sculpture", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791893113/winera_uploads/llle0ckzymanfgvegqmw.jpg", isActive: false, status: 'inactive' },
+    { title: "Reception Table", link: "/product/reception-table", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791892969/winera_uploads/uswx6jond0sb102zq1k9.jpg", isActive: false, status: 'inactive' }
   ];
 
   const getFallbackImg = (item, idx) => {
@@ -62,13 +62,49 @@ export default function RelatedProductsSection({
     ? sectionData.items
     : defaultCategories;
 
-  const baseCategories = rawItems.map((item, idx) => {
+  // Filter only active items (hide inactive items like Lights, Sculpture, Reception Table)
+  const activeRawItems = rawItems.filter(item => {
+    if (!item) return false;
+    // Explicitly inactive
+    if (item.isActive === false || item.status === 'inactive') return false;
+
+    // By default, keep lights, sculpture, reception table inactive until admin explicitly sets them active
+    const cleanTitle = (item.title || '').trim().toLowerCase();
+    const isSpecialInactiveDefault = cleanTitle === 'lights' || cleanTitle === 'sculpture' || cleanTitle === 'reception table';
+    if (isSpecialInactiveDefault && item.isActive !== true && item.status !== 'active') {
+      return false;
+    }
+
+    return true;
+  });
+
+  // Legacy URL overrides so old Unsplash / deprecated URLs immediately update everywhere
+  const getUpgradedImg = (title, currentImg, fallback) => {
+    const clean = (title || '').trim().toLowerCase();
+    const resolved = resolveImgUrl(currentImg, fallback);
+    if (clean === 'lights' && (!resolved || resolved.includes('images.unsplash.com') || resolved.includes('1508739773434'))) {
+      return "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791892550/winera_uploads/xzgzyyd26y9sukeicpd1.jpg";
+    }
+    if (clean === 'sculpture' && (!resolved || resolved.includes('r9m4zijctdjvzmbueeze'))) {
+      return "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791893113/winera_uploads/llle0ckzymanfgvegqmw.jpg";
+    }
+    if (clean === 'reception table' && (!resolved || resolved.includes('images.unsplash.com') || resolved.includes('1497366216548'))) {
+      return "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791892969/winera_uploads/uswx6jond0sb102zq1k9.jpg";
+    }
+    return (resolved && resolved.trim() !== '') ? resolved : fallback;
+  };
+
+  const baseCategories = activeRawItems.map((item, idx) => {
     const fallback = getFallbackImg(item, idx);
-    const resolved = resolveImgUrl(item.img || item.image || item.imgUrl, fallback);
+    const finalImg = getUpgradedImg(item.title, item.img || item.image || item.imgUrl, fallback);
     return {
       title: item.title,
-      link: item.link || `/products/${(item.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-      img: (resolved && resolved.trim() !== '') ? resolved : fallback
+      link: item.link
+        ? item.link.replace(/^\/products\//, '/product/')
+        : `/product/${(item.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+      img: finalImg,
+      isActive: item.isActive !== false && item.status !== 'inactive',
+      status: item.status || 'active'
     };
   });
 
@@ -240,7 +276,7 @@ export default function RelatedProductsSection({
                       <img
                         src={item.img}
                         alt={item.title}
-                        loading="eager"
+                        loading="lazy"
                         decoding="async"
                         style={{
                           position: 'absolute',
