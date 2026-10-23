@@ -2180,14 +2180,27 @@ export const updateContent = async (req, res) => {
 
     if (sectionKey === 'projectItems' && Array.isArray(data)) {
       try {
+        const validSlugs = [];
         for (const projItem of data) {
+          if (!projItem) continue;
           const itemSlug = projItem.slug || (projItem.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-          await Project.findOneAndUpdate(
-            { $or: [{ slug: itemSlug }, { id: projItem.id || itemSlug }] },
-            { $set: { ...projItem, slug: itemSlug } },
-            { upsert: true }
-          );
+          if (itemSlug && itemSlug !== 'funfair' && itemSlug !== 'skidz-play-spaces') {
+            validSlugs.push(itemSlug);
+            await Project.findOneAndUpdate(
+              { $or: [{ slug: itemSlug }, { id: projItem.id || itemSlug }] },
+              { $set: { ...projItem, slug: itemSlug, id: projItem.id || itemSlug } },
+              { upsert: true }
+            );
+          }
         }
+
+        // Only purge obsolete dummy projects (Funfair & Skidz Play Spaces)
+        await Project.deleteMany({
+          $or: [
+            { slug: { $in: ['funfair', 'skidz-play-spaces'] } },
+            { name: { $regex: /^(funfair|skidz\s*play\s*spaces)$/i } }
+          ]
+        }).catch(() => {});
 
         // Also sync builtProjects collection with updated project active status and images
         const builtDoc = await Content.findOne({ sectionKey: 'builtProjects' });
@@ -2551,35 +2564,48 @@ export const mutateContentItem = async (req, res) => {
       contentDoc = await Content.create({ sectionKey, data: list });
     }
 
-    if (sectionKey === 'projectItems' && item) {
+    if (sectionKey === 'projectItems') {
       try {
-        const itemSlug = item.slug || (item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const itemSlug = item?.slug || (matchValue && typeof matchValue === 'string' ? matchValue : '') || (item?.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
         if (action === 'delete') {
-          await Project.deleteOne({ $or: [{ slug: itemSlug }, { id: item.id || itemSlug }] });
-        } else {
-          await Project.findOneAndUpdate(
-            { $or: [{ slug: itemSlug }, { id: item.id || itemSlug }] },
-            { $set: { ...item, slug: itemSlug } },
-            { upsert: true }
-          );
-        }
+          const deleteConditions = [];
+          if (itemSlug) deleteConditions.push({ slug: itemSlug }, { id: itemSlug });
+          if (matchValue && typeof matchValue === 'string') deleteConditions.push({ slug: matchValue }, { id: matchValue });
+          if (item?.name) deleteConditions.push({ name: item.name });
+          if (deleteConditions.length > 0) {
+            await Project.deleteMany({ $or: deleteConditions });
+          }
 
-        // Also sync builtProjects item status and image
-        const builtDoc = await Content.findOne({ sectionKey: 'builtProjects' });
-        if (builtDoc && Array.isArray(builtDoc.data)) {
-          const bIdx = builtDoc.data.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
-          if (bIdx !== -1) {
-            const isItemActive = item.isActive !== false && item.status !== 'inactive';
-            const newImg = item.img || item.imageUrl || builtDoc.data[bIdx].img;
-            builtDoc.data[bIdx] = {
-              ...builtDoc.data[bIdx],
-              img: newImg,
-              imageUrl: newImg,
-              isActive: isItemActive,
-              status: isItemActive ? 'active' : 'inactive'
-            };
+          const builtDoc = await Content.findOne({ sectionKey: 'builtProjects' });
+          if (builtDoc && Array.isArray(builtDoc.data)) {
+            builtDoc.data = builtDoc.data.filter(b => b.slug !== itemSlug && b.slug !== matchValue && b.id !== itemSlug);
             builtDoc.markModified('data');
             await builtDoc.save();
+          }
+        } else if (item) {
+          await Project.findOneAndUpdate(
+            { $or: [{ slug: itemSlug }, { id: item.id || itemSlug }] },
+            { $set: { ...item, slug: itemSlug, id: item.id || itemSlug } },
+            { upsert: true }
+          );
+
+          // Also sync builtProjects item status and image
+          const builtDoc = await Content.findOne({ sectionKey: 'builtProjects' });
+          if (builtDoc && Array.isArray(builtDoc.data)) {
+            const bIdx = builtDoc.data.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
+            if (bIdx !== -1) {
+              const isItemActive = item.isActive !== false && item.status !== 'inactive';
+              const newImg = item.img || item.imageUrl || builtDoc.data[bIdx].img;
+              builtDoc.data[bIdx] = {
+                ...builtDoc.data[bIdx],
+                img: newImg,
+                imageUrl: newImg,
+                isActive: isItemActive,
+                status: isItemActive ? 'active' : 'inactive'
+              };
+              builtDoc.markModified('data');
+              await builtDoc.save();
+            }
           }
         }
       } catch (err) {

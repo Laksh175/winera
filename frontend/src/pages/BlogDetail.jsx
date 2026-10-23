@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeadCaptureModal from '../components/LeadCaptureModal';
@@ -238,9 +238,18 @@ export default function BlogDetail({ siteData }) {
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const navPost = location.state?.post;
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [apiBlog, setApiBlog] = useState(null);
-  const [dynamicBlogPosts, setDynamicBlogPosts] = useState([]);
+  const [dynamicBlogPosts, setDynamicBlogPosts] = useState(() => {
+    try {
+      const cached = sessionStorage.getItem('winera_dynamic_blogs');
+      return cached ? JSON.parse(cached) : [];
+    } catch (e) {
+      return [];
+    }
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -297,9 +306,13 @@ export default function BlogDetail({ siteData }) {
     };
   });
 
-  // Find post from list or apiBlog
+  // Find post from list, apiBlog, or router state
   const foundInList = blogPosts.find(p => String(p.id) === String(id) || String(p.slug) === String(id));
-  const post = apiBlog || foundInList || blogPosts[0] || {};
+  const post = (apiBlog && (String(apiBlog.id) === String(id) || String(apiBlog.slug) === String(id)))
+    ? apiBlog
+    : (navPost && (String(navPost.id) === String(id) || String(navPost.slug) === String(id)))
+      ? navPost
+      : (foundInList || apiBlog || navPost || blogPosts[0] || {});
   const postImg = getValidImageUrl(post?.image || post?.imageUrl || post?.imgUrl, blogCardImg);
 
   // Recent/Related posts: Pick the NEXT 3 consecutive blogs after current blog
@@ -472,11 +485,13 @@ export default function BlogDetail({ siteData }) {
             <WineraImage
               src={postImg}
               alt={post.imageAlt || post.title}
+              targetWidth={1400}
+              loading="eager"
               style={{ width: '100%', display: 'block' }}
               imgStyle={{
                 width: '100%',
                 height: 'auto',
-                maxHeight: '520px',
+                maxHeight: '560px',
                 objectFit: 'cover',
                 display: 'block'
               }}
@@ -722,6 +737,7 @@ export default function BlogDetail({ siteData }) {
                   <Link
                     key={recPost.id}
                     to={`/blog/${recSlug}`}
+                    state={{ post: recPost }}
                     className="winera-blog-more-explore-card"
                     onClick={() => {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -751,10 +767,11 @@ export default function BlogDetail({ siteData }) {
                     }}
                   >
                     {/* Card Top Image */}
-                    <div style={{ width: '100%', height: '190px', borderRadius: '14px', overflow: 'hidden', flexShrink: 0, marginBottom: '14px', background: '#e0f2fe' }}>
+                    <div className="winera-blog-card-img-container" style={{ position: 'relative', width: '100%', height: '190px', borderRadius: '14px', overflow: 'hidden', flexShrink: 0, marginBottom: '14px', background: '#e0f2fe' }}>
                       <WineraImage
                         src={recImage}
                         alt={recPost.imageAlt || getFullTitle(recPost)}
+                        targetWidth={600}
                         style={{ width: '100%', height: '100%' }}
                         imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                       />
@@ -834,6 +851,46 @@ export default function BlogDetail({ siteData }) {
 
       {/* CSS Responsive Styles */}
       <style>{`
+        /* Shining Light Sweep Effect on Card Hover */
+        .winera-blog-card-img-container {
+          position: relative !important;
+          overflow: hidden !important;
+        }
+
+        .winera-blog-card-img-container::before {
+          content: "" !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: -150% !important;
+          width: 80% !important;
+          height: 100% !important;
+          background: linear-gradient(
+            120deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.25) 30%,
+            rgba(255, 255, 255, 0.8) 50%,
+            rgba(255, 255, 255, 0.25) 70%,
+            rgba(255, 255, 255, 0) 100%
+          ) !important;
+          transform: skewX(-25deg) !important;
+          pointer-events: none !important;
+          z-index: 10 !important;
+          transition: none !important;
+        }
+
+        .winera-blog-single-card:hover .winera-blog-card-img-container::before {
+          left: 180% !important;
+          transition: left 1.4s cubic-bezier(0.2, 0.8, 0.25, 1) !important;
+        }
+
+        .winera-blog-card-img-container img {
+          transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        .winera-blog-single-card:hover .winera-blog-card-img-container img {
+          transform: scale(1.06) !important;
+        }
+
         .winera-blog-article-main-col,
         .winera-blog-article-main-col *,
         .winera-blog-article-title,

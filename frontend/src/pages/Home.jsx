@@ -12,7 +12,7 @@ const ProjectsMarqueeSection = React.lazy(() => import('../components/ProjectsMa
 const FaqSection = React.lazy(() => import('../components/FaqSection'));
 const TestimonialsSection = React.lazy(() => import('../components/TestimonialsSection'));
 const CtaBanner = React.lazy(() => import('../components/CtaBanner'));
-const heroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345656/winera_uploads/jszelnb45kglcliprty7.png";
+const heroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_1920/v1791345656/winera_uploads/jszelnb45kglcliprty7.png";
 const gameZoneBgTransparent = "/assets/mobile-hero-banner.webp";
 const about1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345510/winera_uploads/wxqjmaw9a6bio8qwbeq4.png";
 const about2 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345511/winera_uploads/tqdmbldbsagsq6pylfq0.jpg";
@@ -67,13 +67,21 @@ const getValidImageUrl = (url, fallback, width) => {
   }
 
   if (finalUrl.includes('res.cloudinary.com') && finalUrl.includes('/image/upload/')) {
-    const targetW = width || 340;
-    if (finalUrl.includes('/image/upload/f_auto,q_auto,w_')) {
-      finalUrl = finalUrl.replace(/\/image\/upload\/f_auto,q_auto,w_\d+\//, `/image/upload/f_auto,q_auto:eco,w_${targetW}/`);
-    } else if (finalUrl.includes('/image/upload/f_auto,q_auto/')) {
-      finalUrl = finalUrl.replace('/image/upload/f_auto,q_auto/', `/image/upload/f_auto,q_auto:eco,w_${targetW}/`);
-    } else if (!finalUrl.includes('/w_')) {
-      finalUrl = finalUrl.replace('/image/upload/', `/image/upload/f_auto,q_auto:eco,w_${targetW}/`);
+    if (width) {
+      if (finalUrl.includes('/image/upload/f_auto,q_auto,w_') || finalUrl.includes('/w_')) {
+        finalUrl = finalUrl.replace(/\/image\/upload\/[^/]*w_\d+\//, `/image/upload/f_auto,q_auto,w_${width}/`);
+      } else if (finalUrl.includes('/image/upload/f_auto,q_auto/')) {
+        finalUrl = finalUrl.replace('/image/upload/f_auto,q_auto/', `/image/upload/f_auto,q_auto,w_${width}/`);
+      } else {
+        finalUrl = finalUrl.replace('/image/upload/', `/image/upload/f_auto,q_auto,w_${width}/`);
+      }
+    } else {
+      if (finalUrl.includes('q_auto:eco')) {
+        finalUrl = finalUrl.replace('q_auto:eco', 'q_auto');
+      }
+      if (finalUrl.includes(',w_340') || finalUrl.includes(',w_325') || finalUrl.includes('/w_340/') || finalUrl.includes('/w_325/')) {
+        finalUrl = finalUrl.replace(/,w_\d+/, '').replace(/\/w_\d+\//, '/');
+      }
     }
   }
 
@@ -144,6 +152,8 @@ const CountUpNumber = ({ targetText, duration = 1800 }) => {
 export default function Home({ siteData }) {
   const navigate = useNavigate();
   const [activeProductIndex, setActiveProductIndex] = React.useState(0);
+  const [isProductPaused, setIsProductPaused] = React.useState(false);
+  const hoverProductTimeoutRef = React.useRef(null);
   const [activeIndustryIndex, setActiveIndustryIndex] = React.useState(2);
   const [activeProcessStep, setActiveProcessStep] = React.useState(0);
   const [activeWhyUsIndex, setActiveWhyUsIndex] = React.useState(0);
@@ -155,6 +165,18 @@ export default function Home({ siteData }) {
   const [isPhone, setIsPhone] = React.useState(
     typeof window !== 'undefined' ? window.innerWidth < 768 : false
   );
+
+  const totalProductCards = (Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
+    ? siteData.productsHome.cardsList.length
+    : 10;
+
+  React.useEffect(() => {
+    if (isProductPaused || totalProductCards === 0) return;
+    const interval = setInterval(() => {
+      setActiveProductIndex(prev => (prev + 1) % totalProductCards);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isProductPaused, totalProductCards]);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -317,7 +339,7 @@ export default function Home({ siteData }) {
           aspectRatio: isPhone ? '1080 / 1685' : '1920 / 840',
           paddingTop: isPhone ? '0px' : '65px',
           paddingBottom: isPhone ? '0px' : '70px',
-          background: isPhone ? 'none' : `url(${getValidImageUrl(hero?.bgUrl, heroBg)}) center/100% 100% no-repeat`,
+          backgroundColor: 'rgb(245, 245, 249)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -341,11 +363,11 @@ export default function Home({ siteData }) {
               height={840}
             />
             <img
-              src={getValidImageUrl(hero?.mobileBgUrl || hero?.bgUrlMobile, gameZoneBgTransparent)}
+              src={isPhone ? getValidImageUrl(hero?.mobileBgUrl || hero?.bgUrlMobile, gameZoneBgTransparent) : getValidImageUrl(hero?.bgUrl, heroBg)}
               alt={hero?.mobileBgAlt || hero?.bgAlt || "Game Zone Setup & Commercial Equipment - Winera International"}
               className="winera-home-hero-bg-responsive"
-              width={480}
-              height={748}
+              width={isPhone ? 480 : 1920}
+              height={isPhone ? 748 : 840}
               fetchPriority="high"
               loading="eager"
               decoding="async"
@@ -809,15 +831,15 @@ export default function Home({ siteData }) {
                   alt={siteData?.aboutHome?.rightImgAlt || "About Winera International - Commercial Game Zone Developer & Turnkey Supplier"}
                   loading="lazy"
                   decoding="async"
-                  width={400}
-                  height={400}
+                  width={520}
+                  height={474}
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = "/assets/vr-game-images/Shape.png";
                   }}
                   style={{
                     width: '100%',
-                    maxWidth: '400px',
+                    maxWidth: '520px',
                     height: 'auto',
                     objectFit: 'contain',
                     display: 'block',
@@ -878,14 +900,22 @@ export default function Home({ siteData }) {
 
             <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '700', marginBottom: '40px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions").replace(/\n/g, '<br>')) }} />
 
-            <div className="winera-products-container" style={{
-              display: 'flex',
-              gap: '12px',
-              maxWidth: '1220px',
-              margin: '0 auto',
-              height: '460px',
-              alignItems: 'stretch'
-            }}>
+            <div
+              className="winera-products-container"
+              onMouseEnter={() => setIsProductPaused(true)}
+              onMouseLeave={() => {
+                if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
+                setIsProductPaused(false);
+              }}
+              style={{
+                display: 'flex',
+                gap: '12px',
+                maxWidth: '1220px',
+                margin: '0 auto',
+                height: '460px',
+                alignItems: 'stretch'
+              }}
+            >
               {(() => {
                 const defaultProductsCards = [
                   { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp", link: "/product/arcade-games" },
@@ -969,6 +999,8 @@ export default function Home({ siteData }) {
                       to={targetLink}
                       aria-expanded={isExpanded}
                       onClick={(e) => {
+                        if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
+                        setIsProductPaused(true);
                         if (!isExpanded) {
                           e.preventDefault();
                           setActiveProductIndex(idx);
@@ -976,13 +1008,24 @@ export default function Home({ siteData }) {
                       }}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
+                          if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
+                          setIsProductPaused(true);
                           if (!isExpanded) {
                             e.preventDefault();
                             setActiveProductIndex(idx);
                           }
                         }
                       }}
-                      onMouseEnter={() => setActiveProductIndex(idx)}
+                      onMouseEnter={() => {
+                        setIsProductPaused(true);
+                        if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
+                        hoverProductTimeoutRef.current = setTimeout(() => {
+                          setActiveProductIndex(idx);
+                        }, 100);
+                      }}
+                      onMouseLeave={() => {
+                        if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
+                      }}
                       className={`winera-product-card ${isExpanded ? 'is-expanded' : ''}`}
                       style={{
                         flex: isExpanded ? '0 0 340px' : '1',
@@ -990,7 +1033,7 @@ export default function Home({ siteData }) {
                         overflow: 'hidden',
                         position: 'relative',
                         cursor: 'pointer',
-                        transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
+                        transition: 'flex 0.85s cubic-bezier(0.25, 1, 0.35, 1), box-shadow 0.85s ease, transform 0.85s ease',
                         boxShadow: isExpanded ? '0 16px 36px rgba(2, 132, 199, 0.22)' : '0 4px 12px rgba(0,0,0,0.06)',
                         background: '#0f172a',
                         textDecoration: 'none',
@@ -1010,7 +1053,9 @@ export default function Home({ siteData }) {
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          zIndex: 0
+                          zIndex: 0,
+                          transform: isExpanded ? 'scale(1.06)' : 'scale(1)',
+                          transition: 'transform 0.9s cubic-bezier(0.25, 1, 0.35, 1)'
                         }}
                       />
 
@@ -1019,84 +1064,96 @@ export default function Home({ siteData }) {
                         position: 'absolute',
                         inset: 0,
                         background: isExpanded
-                          ? 'rgba(15, 23, 42, 0.2)'
+                          ? 'rgba(15, 23, 42, 0.22)'
                           : 'linear-gradient(180deg, rgba(30, 168, 243, 0.90) 0%, rgba(0, 137, 217, 0.95) 100%)',
-                        zIndex: 1
+                        zIndex: 1,
+                        transition: 'background 0.75s ease'
                       }} />
 
-                      {isExpanded ? (
-                        <div style={{
+                      {/* Collapsed Spine Title - Always mounted with smooth opacity & transform */}
+                      <div
+                        className="winera-collapsed-title winera-collapsed-title-anim"
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
                           width: '100%',
                           height: '100%',
                           display: 'flex',
                           flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          position: 'relative',
-                          zIndex: 2
-                        }}>
-                          <div style={{ flex: 1, minHeight: '120px' }}></div>
-                          <div
-                            className="winera-expanded-info-box"
-                            style={{
-                              background: '#ffffff',
-                              margin: '14px',
-                              padding: '16px 20px',
-                              borderRadius: '16px',
-                              textAlign: 'left',
-                              boxShadow: '0 10px 25px rgba(0,0,0,0.15)'
-                            }}
-                          >
-                            <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0072b8', marginBottom: '6px' }}>{prod.title}</h3>
-                            <p style={{ fontSize: '11.5px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((prod.desc || '').replace(/\n/g, '<br>')) }} />
-                            <span
-                              className="winera-product-view-more-link"
-                              style={{
-                                color: '#0072b8',
-                                fontSize: isMobile ? '14px' : '13.5px',
-                                fontWeight: '800',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                padding: '8px 18px',
-                                borderRadius: '24px',
-                                background: 'rgba(0, 114, 184, 0.08)',
-                                marginTop: '8px',
-                                marginBottom: '2px',
-                                textDecoration: 'none'
-                              }}
-                            >
-                              <span>View More Info</span>
-                              <ArrowRight style={{ width: isMobile ? '15px' : '14px', height: isMobile ? '15px' : '14px' }} />
-                            </span>
-                          </div>
-                        </div>
-                      ) : (
+                          alignItems: 'center',
+                          justifyContent: 'flex-start',
+                          writingMode: 'vertical-rl',
+                          transform: isExpanded ? 'rotate(180deg) translateY(-20px)' : 'rotate(180deg) translateY(0)',
+                          padding: cardStyle.padding,
+                          color: '#ffffff',
+                          fontWeight: '500',
+                          fontSize: cardStyle.fontSize,
+                          letterSpacing: cardStyle.letterSpacing,
+                          textShadow: 'none',
+                          whiteSpace: 'nowrap',
+                          zIndex: 2,
+                          opacity: isExpanded ? 0 : 1,
+                          pointerEvents: isExpanded ? 'none' : 'auto',
+                          transition: 'opacity 0.5s cubic-bezier(0.25, 1, 0.35, 1), transform 0.5s cubic-bezier(0.25, 1, 0.35, 1)'
+                        }}
+                      >
+                        {prod.title}
+                      </div>
+
+                      {/* Expanded Info Box - Always mounted with smooth opacity & transform */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          width: '100%',
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'flex-end',
+                          zIndex: 3,
+                          opacity: isExpanded ? 1 : 0,
+                          pointerEvents: isExpanded ? 'auto' : 'none',
+                          transform: isExpanded ? 'translateY(0) scale(1)' : 'translateY(22px) scale(0.96)',
+                          transition: isExpanded
+                            ? 'opacity 0.65s cubic-bezier(0.25, 1, 0.35, 1) 0.15s, transform 0.65s cubic-bezier(0.25, 1, 0.35, 1) 0.15s'
+                            : 'opacity 0.35s ease, transform 0.35s ease'
+                        }}
+                      >
                         <div
-                          className="winera-collapsed-title winera-collapsed-title-anim"
+                          className="winera-expanded-info-box"
                           style={{
-                            width: '100%',
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'flex-start',
-                            writingMode: 'vertical-rl',
-                            transform: 'rotate(180deg)',
-                            padding: cardStyle.padding,
-                            color: '#ffffff',
-                            fontWeight: '500',
-                            fontSize: cardStyle.fontSize,
-                            letterSpacing: cardStyle.letterSpacing,
-                            textShadow: 'none',
-                            whiteSpace: 'nowrap',
-                            zIndex: 2,
-                            position: 'relative',
-                            transition: 'all 0.4s ease'
+                            background: '#ffffff',
+                            margin: '14px',
+                            padding: '16px 20px',
+                            borderRadius: '16px',
+                            textAlign: 'left',
+                            boxShadow: '0 10px 25px rgba(0,0,0,0.15)'
                           }}
                         >
-                          {prod.title}
+                          <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0072b8', marginBottom: '6px' }}>{prod.title}</h3>
+                          <p style={{ fontSize: '11.5px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((prod.desc || '').replace(/\n/g, '<br>')) }} />
+                          <span
+                            className="winera-product-view-more-link"
+                            style={{
+                              color: '#0072b8',
+                              fontSize: isMobile ? '14px' : '13.5px',
+                              fontWeight: '800',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                              padding: '8px 18px',
+                              borderRadius: '24px',
+                              background: 'rgba(0, 114, 184, 0.08)',
+                              marginTop: '8px',
+                              marginBottom: '2px',
+                              textDecoration: 'none'
+                            }}
+                          >
+                            <span>View More Info</span>
+                            <ArrowRight style={{ width: isMobile ? '15px' : '14px', height: isMobile ? '15px' : '14px' }} />
+                          </span>
                         </div>
-                      )}
+                      </div>
                     </Link>
                   );
                 });

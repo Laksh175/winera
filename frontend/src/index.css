@@ -618,8 +618,8 @@ section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*
 
 .winera-clients-section img,
 .winera-clients-marquee-track img {
-  max-height: 110px !important;
-  max-width: 271px !important;
+  max-height: 125px !important;
+  max-width: 280px !important;
   object-fit: contain !important;
 }
 
@@ -1040,7 +1040,7 @@ html {
   }
 
   .winera-about-images-grid img {
-    max-width: min(100%, 380px) !important;
+    max-width: min(100%, 480px) !important;
     width: 100% !important;
     height: auto !important;
     margin: 0 auto !important;
@@ -1158,7 +1158,7 @@ html {
     flex: none !important;
     width: 100% !important;
     height: 52px !important;
-    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: height 0.65s cubic-bezier(0.25, 1, 0.35, 1) !important;
   }
 
   .winera-product-card.is-expanded {
@@ -10962,6 +10962,9 @@ span.winera-hero-highlight {
   .winera-hero-animate {
     padding: 0 !important;
     padding-top: 37% !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .winera-hero-badge,
@@ -11063,7 +11066,7 @@ span.winera-hero-highlight {
   }
 
   .winera-about-images-grid img {
-    max-width: min(100%, 380px) !important;
+    max-width: min(100%, 480px) !important;
     width: 100% !important;
     height: auto !important;
     margin: 0 auto !important;
@@ -12208,11 +12211,43 @@ button[style*="background:transparent"]:hover,
     gap: 18px !important;
   }
 
-  /* Blog Card Image 1024px Laptop View Fit */
+  /* Blog Card Image 1024px Laptop View Fit & Shining Sweep */
+  .winera-blog-card-img-container {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .winera-blog-card-img-container::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -150% !important;
+    width: 80% !important;
+    height: 100% !important;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.25) 30%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0.25) 70%,
+      rgba(255, 255, 255, 0) 100%
+    ) !important;
+    transform: skewX(-25deg) !important;
+    pointer-events: none !important;
+    z-index: 10 !important;
+    transition: none !important;
+  }
+  .winera-blog-single-card:hover .winera-blog-card-img-container::before {
+    left: 180% !important;
+    transition: left 1.4s cubic-bezier(0.2, 0.8, 0.25, 1) !important;
+  }
   .winera-blog-card-img-container img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .winera-blog-single-card:hover .winera-blog-card-img-container img {
+    transform: scale(1.06) !important;
   }
 
   .winera-ar-whyus-card,

@@ -47,6 +47,56 @@ export const getProjects = async (req, res) => {
   try {
     await ensureProjectsSeeded();
 
+    // 1. Purge legacy dummy projects (Funfair & Skidz Play Spaces)
+    try {
+      await Project.deleteMany({
+        $or: [
+          { slug: { $in: ['funfair', 'skidz-play-spaces'] } },
+          { name: { $regex: /^(funfair|skidz\s*play\s*spaces)$/i } }
+        ]
+      });
+    } catch (purgeErr) {
+      console.warn('Purge legacy projects warning:', purgeErr?.message);
+    }
+
+    // 2. Automatically synchronize Project collection with Content.projectItems (Admin source of truth)
+    try {
+      const contentDoc = await Content.findOne({ sectionKey: 'projectItems' });
+      if (Array.isArray(contentDoc?.data) && contentDoc.data.length > 0) {
+        const validItems = contentDoc.data.filter(p => {
+          if (!p) return false;
+          const s = (p.slug || '').toLowerCase();
+          const n = (p.name || '').toLowerCase();
+          return s !== 'funfair' && n !== 'funfair' && s !== 'skidz-play-spaces' && n !== 'skidz play spaces';
+        });
+
+        const validSlugs = validItems
+          .map(p => p.slug || (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''))
+          .filter(Boolean);
+
+        // Only remove obsolete dummy projects (Funfair & Skidz Play Spaces)
+        await Project.deleteMany({
+          $or: [
+            { slug: { $in: ['funfair', 'skidz-play-spaces'] } },
+            { name: { $regex: /^(funfair|skidz\s*play\s*spaces)$/i } }
+          ]
+        }).catch(() => {});
+
+        // Upsert items from Content.projectItems to Project collection
+        for (const item of validItems) {
+          const itemSlug = item.slug || (item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          if (!itemSlug) continue;
+          await Project.findOneAndUpdate(
+            { $or: [{ slug: itemSlug }, { id: item.id || itemSlug }] },
+            { $set: { ...item, slug: itemSlug, id: item.id || itemSlug } },
+            { upsert: true }
+          );
+        }
+      }
+    } catch (syncErr) {
+      console.warn('Sync Project with Content model notice:', syncErr?.message);
+    }
+
     const { category, search } = req.query;
     const query = { isActive: { $ne: false }, status: { $ne: 'inactive' } };
 

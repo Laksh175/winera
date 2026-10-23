@@ -71,7 +71,26 @@ export default function Blog({ siteData }) {
   const [isPhone, setIsPhone] = useState(
     typeof window !== 'undefined' ? window.innerWidth <= 768 : false
   );
-  const [dynamicBlogPosts, setDynamicBlogPosts] = useState([]);
+  const [dynamicBlogPosts, setDynamicBlogPosts] = useState(() => {
+    try {
+      const cached = sessionStorage.getItem('winera_dynamic_blogs');
+      return cached ? JSON.parse(cached) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  const prefetchBlogDetail = (p) => {
+    if (!p) return;
+    const rawUrl = p.image || p.imageUrl || p.imgUrl;
+    if (rawUrl && typeof rawUrl === 'string') {
+      const fullUrl = getValidImageUrl(rawUrl, blogCardImg);
+      const preloader = new Image();
+      preloader.src = fullUrl.includes('cloudinary.com')
+        ? fullUrl.replace(/\/image\/upload\/[^/]*/, '/image/upload/f_auto,q_auto,w_1400')
+        : fullUrl;
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -259,6 +278,7 @@ export default function Blog({ siteData }) {
                 >
                   <Link
                     to={`/blog/${postSlug}`}
+                    state={{ post }}
                     className="winera-blog-single-card"
                     style={{
                       textDecoration: 'none',
@@ -278,6 +298,7 @@ export default function Blog({ siteData }) {
                       e.currentTarget.style.transform = 'translateY(-6px)';
                       e.currentTarget.style.boxShadow = '0 14px 35px rgba(0, 0, 0, 0.08)';
                       e.currentTarget.style.borderColor = '#38bdf8';
+                      prefetchBlogDetail(post);
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = 'translateY(0)';
@@ -286,10 +307,11 @@ export default function Blog({ siteData }) {
                     }}
                   >
                     {/* Card Top Image */}
-                    <div className="winera-blog-card-img-container" style={{ width: '100%', borderRadius: '16px', overflow: 'hidden', height: '210px', flexShrink: 0, marginBottom: '16px', background: '#e0f2fe' }}>
+                    <div className="winera-blog-card-img-container" style={{ position: 'relative', width: '100%', borderRadius: '16px', overflow: 'hidden', height: '210px', flexShrink: 0, marginBottom: '16px', background: '#e0f2fe' }}>
                       <WineraImage
                         src={getValidImageUrl(post.image || post.imgUrl, blogCardImg, post.id, index)}
                         alt={post.imageAlt || getFullTitle(post)}
+                        targetWidth={600}
                         style={{ width: '100%', height: '100%' }}
                         imgStyle={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                       />
@@ -378,6 +400,46 @@ export default function Blog({ siteData }) {
 
       {/* Responsive Breakpoints */}
       <style>{`
+        /* Shining Light Sweep Effect on Card Hover */
+        .winera-blog-card-img-container {
+          position: relative !important;
+          overflow: hidden !important;
+        }
+
+        .winera-blog-card-img-container::before {
+          content: "" !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: -150% !important;
+          width: 80% !important;
+          height: 100% !important;
+          background: linear-gradient(
+            120deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.25) 30%,
+            rgba(255, 255, 255, 0.8) 50%,
+            rgba(255, 255, 255, 0.25) 70%,
+            rgba(255, 255, 255, 0) 100%
+          ) !important;
+          transform: skewX(-25deg) !important;
+          pointer-events: none !important;
+          z-index: 10 !important;
+          transition: none !important;
+        }
+
+        .winera-blog-single-card:hover .winera-blog-card-img-container::before {
+          left: 180% !important;
+          transition: left 1.4s cubic-bezier(0.2, 0.8, 0.25, 1) !important;
+        }
+
+        .winera-blog-card-img-container img {
+          transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        .winera-blog-single-card:hover .winera-blog-card-img-container img {
+          transform: scale(1.06) !important;
+        }
+
         .winera-blog-single-card,
         .winera-blog-single-card *,
         .winera-blog-card-title,

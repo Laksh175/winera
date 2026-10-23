@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="icon" type="image/jpeg" href="/winera-favicon.jpeg" />
   <link rel="apple-touch-icon" href="/winera-favicon.jpeg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,11 +17,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@400;500;600;700;800;900&family=Urbanist:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Open+Sans:wght@400;600;700&display=swap"
     media="print" onload="this.media='all'" />
   <noscript>
     <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@400;500;600;700;800;900&family=Urbanist:wght@400;500;600;700&display=swap" />
+      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Open+Sans:wght@400;600;700&display=swap" />
   </noscript>
 
   <link rel="preload" as="image" href="/assets/mobile-hero-banner.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high" />
@@ -28,20 +29,41 @@
   <!-- Google Site Verification -->
   <meta name="google-site-verification" content="VuErOzhPuE51dlKemAPYexEwyLfqVzFfkeZU5AtG6Cw" />
 
-  <!-- Google tag (gtag.js) - loaded after page load to avoid blocking initial render -->
+  <!-- Google tag (gtag.js) - loaded on first user interaction or idle to avoid blocking initial render -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    window.addEventListener('load', function() {
-      setTimeout(function() {
+    (function() {
+      var loaded = false;
+      function loadGtag() {
+        if (loaded) return;
+        loaded = true;
         var s = document.createElement('script');
         s.async = true;
         s.src = 'https://www.googletagmanager.com/gtag/js?id=G-J2L2TDBSJS';
         document.head.appendChild(s);
         gtag('js', new Date());
         gtag('config', 'G-J2L2TDBSJS');
-      }, 1500);
-    });
+      }
+      ['scroll', 'touchstart', 'mousemove', 'click', 'keydown'].forEach(function(evt) {
+        window.addEventListener(evt, loadGtag, { once: true, passive: true });
+      });
+      function loadSecondaryFonts() {
+        var f = document.createElement('link');
+        f.rel = 'stylesheet';
+        f.href = 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Urbanist:wght@500;600;700&display=swap';
+        document.head.appendChild(f);
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(function() {
+          setTimeout(loadGtag, 3500);
+          setTimeout(loadSecondaryFonts, 1800);
+        });
+      } else {
+        setTimeout(loadGtag, 4500);
+        setTimeout(loadSecondaryFonts, 2500);
+      }
+    })();
   </script>
 </head>
 

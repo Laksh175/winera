@@ -233,7 +233,8 @@ export default function ClientsMarqueeSection({
                             display: 'inline-flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            height: '115px',
+                            height: '145px',
+                            minWidth: '150px',
                             userSelect: 'none',
                             pointerEvents: 'none'
                           }}
@@ -244,31 +245,30 @@ export default function ClientsMarqueeSection({
                                 const u = client.logoUrl;
                                 if (!u || typeof u !== 'string') return u;
                                 if (u.includes('res.cloudinary.com') && u.includes('/upload/')) {
-                                  if (u.includes('/f_auto,q_auto,w_')) return u.replace(/\/f_auto,q_auto,w_\d+\//, '/f_auto,q_auto:eco,w_180/');
-                                  if (u.includes('/f_auto,q_auto/')) return u.replace('/upload/f_auto,q_auto/', '/upload/f_auto,q_auto:eco,w_180/');
-                                  return u.replace('/upload/', '/upload/f_auto,q_auto:eco,w_180/');
+                                  if (u.includes('/f_auto,q_auto,w_')) return u.replace(/\/f_auto,q_auto,w_\d+\//, '/f_auto,q_auto:eco,w_220/');
+                                  if (u.includes('/f_auto,q_auto/')) return u.replace('/upload/f_auto,q_auto/', '/upload/f_auto,q_auto:eco,w_220/');
+                                  return u.replace('/upload/', '/upload/f_auto,q_auto:eco,w_220/');
                                 }
                                 return u;
                               })()}
                               alt={client.logoAlt || `${client.name || 'Client'} Logo - Winera International`}
-                              width={220}
-                              height={100}
+                              width={280}
+                              height={135}
                               loading="lazy"
                               decoding="async"
                               draggable="false"
                               style={{
                                 width: 'auto',
                                 height: 'auto',
-                                maxHeight: '100px',
-                                maxWidth: '220px',
-                                aspectRatio: '220 / 100',
+                                maxHeight: '125px',
+                                maxWidth: '280px',
                                 objectFit: 'contain',
                                 userSelect: 'none',
                                 pointerEvents: 'none'
                               }}
                             />
                           ) : (
-                            <span style={{ fontSize: '2.1rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px', userSelect: 'none' }}>
+                            <span style={{ fontSize: '2.3rem', fontWeight: '900', color: '#1e293b', letterSpacing: '1px', userSelect: 'none' }}>
                               {client.name}
                             </span>
                           )}

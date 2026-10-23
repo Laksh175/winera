@@ -9,6 +9,7 @@ node_modules
 *.tar.gz
 *.docx
 *.pdf
+!frontend/public/pdf/*.pdf
 *.xls
 *.xlsx
 

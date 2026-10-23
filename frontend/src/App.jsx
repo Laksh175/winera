@@ -133,12 +133,18 @@ function GlobalScrollAnimation() {
       });
     };
 
-    scanAndObserve();
-
-    const timeout = setTimeout(scanAndObserve, 400);
+    let timeoutId;
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      window.requestIdleCallback(() => {
+        scanAndObserve();
+        timeoutId = setTimeout(scanAndObserve, 500);
+      }, { timeout: 1000 });
+    } else {
+      timeoutId = setTimeout(scanAndObserve, 300);
+    }
 
     return () => {
-      clearTimeout(timeout);
+      if (timeoutId) clearTimeout(timeoutId);
       observer.disconnect();
     };
   }, [pathname]);
@@ -248,15 +254,29 @@ function AppRoutes({ siteData, loadData }) {
 }
 
 export default function App() {
-  const [siteData, setSiteData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [siteData, setSiteData] = useState(() => {
+    try {
+      const cached = localStorage.getItem('winera_home_content');
+      return cached ? JSON.parse(cached) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+  const [loading, setLoading] = useState(false);
 
   const loadData = async (forceFull = false) => {
     try {
       const isHome = typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '');
       const pageParam = (!forceFull && isHome) ? 'home' : null;
       const data = await fetchSiteContent(pageParam);
-      setSiteData(data || {});
+      if (data && Object.keys(data).length > 0) {
+        setSiteData(data);
+        if (pageParam === 'home') {
+          try {
+            localStorage.setItem('winera_home_content', JSON.stringify(data));
+          } catch (e) {}
+        }
+      }
 
       // If we loaded lightweight homepage content first, silently fetch full site data in the background
       // so inner pages and administration are ready with zero delay and no data loss
@@ -274,7 +294,7 @@ export default function App() {
       }
     } catch (err) {
       console.error('Failed to load content from backend, fallback to local', err);
-      setSiteData({});
+      if (!siteData) setSiteData({});
     } finally {
       setLoading(false);
     }

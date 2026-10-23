@@ -181,25 +181,7 @@ export default function Header({ headerData }) {
         }
       `}</style>
 
-      <header className="winera-header" style={{
-        position: 'fixed',
-        top: '20px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: '92%',
-        maxWidth: '1240px',
-        zIndex: 1000,
-        background: '#ffffff',
-        borderRadius: '50px',
-        padding: '12px 28px',
-        boxShadow: '0 12px 35px rgba(0, 0, 0, 0.25)',
-        backdropFilter: 'blur(10px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        transition: 'all 0.3s ease',
-        fontFamily: "'Open Sans', sans-serif"
-      }}>
+      <header className="winera-header" style={{ position: 'fixed', top: '20px', left: '50%', transform: 'translateX(-50%)', width: '92%', maxWidth: '1240px', zIndex: 1000, background: '#ffffff', borderRadius: '50px', padding: '12px 28px', boxShadow: '0 12px 35px rgba(0, 0, 0, 0.25)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all 0.3s ease', fontFamily: "'Open Sans', sans-serif" }}>
         {/* 1. Official Winera Logo */}
         <Link to="/" onClick={() => setMobileMenuOpen(false)} aria-label="Winera International Home" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
           <img src={logoSrc} alt={headerData?.logoAlt || "Winera International Pvt. Ltd. - Commercial Game Zone Setup & Turnkey Equipment"} className="winera-logo-img" width="180" height="48" decoding="async" style={{ width: 'auto', aspectRatio: '180 / 48', objectFit: 'contain' }} />
@@ -208,23 +190,7 @@ export default function Header({ headerData }) {
         {/* 2. Navigation Menu (hidden on mobile) */}
         <nav className="winera-nav-desktop" style={{ gap: '22px', alignItems: 'center' }}>
           {/* Home Link */}
-          <Link
-            to="/"
-            style={{
-              fontSize: '14px',
-              fontWeight: '700',
-              letterSpacing: '0px',
-              color: isHomeActive ? '#38bdf8' : '#0f172a',
-              textShadow: isHomeActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none',
-              textDecoration: 'none',
-              position: 'relative',
-              padding: '6px 0',
-              display: 'inline-flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              transition: 'all 0.2s ease'
-            }}
-          >
+          <Link to="/" style={{ fontSize: '14px', fontWeight: '700', letterSpacing: '0px', color: isHomeActive ? '#38bdf8' : '#0f172a', textShadow: isHomeActive ? '0 0 6px rgba(56, 189, 248, 0.45)' : 'none', textDecoration: 'none', position: 'relative', padding: '6px 0', display: 'inline-flex', flexDirection: 'column', alignItems: 'center', transition: 'all 0.2s ease' }} >
             <span>Home</span>
             {isHomeActive && (
               <span style={{

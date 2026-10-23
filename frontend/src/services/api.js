@@ -304,9 +304,33 @@ export const deleteVrGameApi = async (id, token) => {
 };
 
 // Blog APIs
+const blogCache = new Map();
+
+export const clearBlogCache = () => {
+  blogCache.clear();
+  try {
+    sessionStorage.removeItem('winera_dynamic_blogs');
+  } catch (e) {}
+};
+
 export const fetchBlogs = async (params = {}) => {
+  const cacheKey = JSON.stringify(params);
+  if (blogCache.has(cacheKey)) {
+    return blogCache.get(cacheKey);
+  }
   try {
     const response = await axios.get(`${API_BASE_URL}/blogs`, { params, timeout: 10000 });
+    if (response?.data?.success) {
+      blogCache.set(cacheKey, response.data);
+      const blogs = response.data.blogs || response.data.posts || [];
+      blogs.forEach(b => {
+        if (b.slug) blogCache.set(`slug_${b.slug}`, { success: true, blog: b });
+        if (b.id) blogCache.set(`slug_${b.id}`, { success: true, blog: b });
+      });
+      try {
+        sessionStorage.setItem('winera_dynamic_blogs', JSON.stringify(blogs));
+      } catch (e) {}
+    }
     return response.data;
   } catch (err) {
     console.warn('Failed to fetch blogs from API:', err?.message);
@@ -315,8 +339,29 @@ export const fetchBlogs = async (params = {}) => {
 };
 
 export const fetchBlogBySlug = async (slug) => {
+  const cacheKey = `slug_${slug}`;
+  if (blogCache.has(cacheKey)) {
+    return blogCache.get(cacheKey);
+  }
+  // Check sessionStorage fallback for instant response
+  try {
+    const cachedBlogsStr = sessionStorage.getItem('winera_dynamic_blogs');
+    if (cachedBlogsStr) {
+      const cachedBlogs = JSON.parse(cachedBlogsStr);
+      const match = cachedBlogs.find(b => String(b.slug) === String(slug) || String(b.id) === String(slug));
+      if (match) {
+        const payload = { success: true, blog: match };
+        blogCache.set(cacheKey, payload);
+        return payload;
+      }
+    }
+  } catch (e) {}
+
   try {
     const response = await axios.get(`${API_BASE_URL}/blogs/${slug}`, { timeout: 8000 });
+    if (response?.data?.success) {
+      blogCache.set(cacheKey, response.data);
+    }
     return response.data;
   } catch (err) {
     console.warn(`Failed to fetch blog by slug (${slug}):`, err?.message);
@@ -325,6 +370,7 @@ export const fetchBlogBySlug = async (slug) => {
 };
 
 export const createBlogApi = async (data, token) => {
+  clearBlogCache();
   let authToken = token;
   if (!authToken) {
     try {
@@ -339,6 +385,7 @@ export const createBlogApi = async (data, token) => {
 };
 
 export const updateBlogApi = async (id, data, token) => {
+  clearBlogCache();
   let authToken = token;
   if (!authToken) {
     try {
@@ -353,6 +400,7 @@ export const updateBlogApi = async (id, data, token) => {
 };
 
 export const deleteBlogApi = async (id, token) => {
+  clearBlogCache();
   let authToken = token;
   if (!authToken) {
     try {

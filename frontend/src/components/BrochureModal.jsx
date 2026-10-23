@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { X, FileText, Download, ExternalLink } from 'lucide-react';
+import { X, FileText, ExternalLink } from 'lucide-react';
 
 const BrochureModal = ({
   isOpen,
@@ -36,6 +36,11 @@ const BrochureModal = ({
       }
       return `http://${hostname}:5001${trimmed}`;
     }
+
+    if (trimmed.startsWith('/') && trimmed.includes(' ')) {
+      return encodeURI(trimmed);
+    }
+
     return trimmed;
   };
 
@@ -76,8 +81,6 @@ const BrochureModal = ({
   }, [isOpen, onClose]);
 
   if (!isOpen || !mounted) return null;
-
-  const downloadName = fileName || (pdfUrl ? pdfUrl.split('/').pop() : 'Winera-Brochure.pdf');
 
   return createPortal(
     <div
@@ -196,35 +199,8 @@ const BrochureModal = ({
             </div>
           </div>
 
-          {/* Action Buttons: Download PDF & Close */}
+          {/* Close Button */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-            {resolvedPdfUrl && (
-              <a
-                href={resolvedPdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                download={downloadName}
-                aria-label="Download PDF"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'linear-gradient(135deg, #0284c7, #38bdf8)',
-                  color: '#ffffff',
-                  padding: '8px 14px',
-                  borderRadius: '10px',
-                  fontSize: '12px',
-                  fontWeight: '800',
-                  textDecoration: 'none',
-                  boxShadow: '0 2px 10px rgba(56, 189, 248, 0.35)',
-                  transition: 'all 0.2s ease',
-                  cursor: 'pointer'
-                }}
-              >
-                <Download style={{ width: '14px', height: '14px' }} />
-                <span>Download PDF</span>
-              </a>
-            )}
             <button
               type="button"
               onClick={onClose}
@@ -324,7 +300,7 @@ const BrochureModal = ({
             gap: '8px'
           }}
         >
-          <span>✨ Use viewer controls, or click &quot;Download PDF&quot; to save the file.</span>
+          <span>✨ Use built-in viewer controls to zoom, print, or save the file.</span>
           {resolvedPdfUrl && (
             <a
               href={resolvedPdfUrl}

@@ -194,7 +194,15 @@ export default function Project({ siteData }) {
   );
 
   const rawProjectList = allRawItems
-    .filter(p => p.isActive !== false && p.status !== 'inactive')
+    .filter(p => {
+      if (!p) return false;
+      if (p.isActive === false || p.status === 'inactive') return false;
+      const cleanSlug = (p.slug || '').toLowerCase();
+      const cleanName = (p.name || '').toLowerCase();
+      if (cleanSlug === 'funfair' || cleanName === 'funfair' || cleanSlug.includes('funfair')) return false;
+      if (cleanSlug === 'skidz-play-spaces' || cleanName === 'skidz play spaces' || cleanSlug.includes('skidz')) return false;
+      return true;
+    })
     .map((p, idx) => {
       const cleanSlug = (p.slug && p.slug !== 'new-turnkey-project')
         ? normalizeSlug(p.slug)

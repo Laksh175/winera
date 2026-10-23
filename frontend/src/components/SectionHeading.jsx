@@ -194,7 +194,7 @@ export default function SectionHeading({
             className="winera-section-heading-accent"
             src={yellowStrokeLine}
             alt=""
-            width="350"
+            width="492"
             height="10"
             style={{
               display: 'block',

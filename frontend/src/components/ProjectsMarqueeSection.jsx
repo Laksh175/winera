@@ -338,9 +338,9 @@ export default function ProjectsMarqueeSection({
                   const optimizedProjectSrc = (() => {
                     if (!finalImgSrc || typeof finalImgSrc !== 'string') return finalImgSrc;
                     if (finalImgSrc.includes('res.cloudinary.com') && finalImgSrc.includes('/upload/')) {
-                      if (finalImgSrc.includes('/f_auto,q_auto,w_')) return finalImgSrc.replace(/\/f_auto,q_auto,w_\d+\//, '/f_auto,q_auto:eco,w_325/');
-                      if (finalImgSrc.includes('/f_auto,q_auto/')) return finalImgSrc.replace('/upload/f_auto,q_auto/', '/upload/f_auto,q_auto:eco,w_325/');
-                      return finalImgSrc.replace('/upload/', '/upload/f_auto,q_auto:eco,w_325/');
+                      return finalImgSrc
+                        .replace('q_auto:eco', 'q_auto')
+                        .replace(/\/upload\/(?:[a-zA-Z0-9_:,.-]+\/)?(?=v\d+\/|[a-zA-Z0-9_-]+\.[a-zA-Z]+)/, '/upload/f_auto,q_auto,w_800/');
                     }
                     return finalImgSrc;
                   })();

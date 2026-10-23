@@ -375,381 +375,6 @@ export default function ProjectDetail({ siteData }) {
   const header = siteData?.header || null;
   const footer = siteData?.footer || null;
 
-  // Case Studies Database mapping all detailed case studies
-  const caseStudies = {
-    'fifthalley-sport-bowling': {
-      name: "FifthAlley Sport Bowling",
-      titleLine1: "FifthAlley Sport Bowling: A",
-      titleLine2: "Complete ",
-      titleLine2Black: "Bowling Alley Setup",
-      titleLine3: "in the Heart of Surat",
-      description: "How we designed and installed a professional-grade bowling alley across 3,000 sq. ft., transforming an empty space in Katargam into a destination entertainment venue in Surat.",
-      metaTitle: "FifthAlley Sport Bowling Setup in Surat | Winera International",
-      metaDescription: "Explore FifthAlley Sport Bowling in Surat by Winera International — a 3,000 sq. ft. complete bowling alley setup delivered from empty space to ready venue.",
-      type: "Bowling Alley Setup",
-      location: "Surat, Gujarat",
-      area: "3,000 sq. ft.",
-      clientWanted1: "The client had an empty 3,000 sq. ft. space in Katargam and a clear goal: to open a professional bowling venue.",
-      clientWanted2: "They didn't want a supplier who only supplied the equipment. They wanted one partner to handle everything, plan the space, install the lanes, and hand over a venue that was ready for opening day. In short, they needed one team they could trust from start to finish.",
-      solution1: "We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue. Across the 3,000 sq. ft. space in Katargam, we planned the layout so the professional lanes had enough room around them for people to walk, sit, and relax.",
-      solution2: "The result is a venue that is fun to play in and comfortable to spend time in — just like a good family entertainment center should feel.",
-      mainImg: "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg",
-      bannerImg: "/assets/FifthAlley-Sport-Bowling/fifthalley-sport-bowling.jpg",
-      basicInfoBg: "/assets/FifthAlley-Sport-Bowling/basic-information.jpg",
-      clientImg: "/assets/FifthAlley-Sport-Bowling/what-the-client-wanted.jpg",
-      solutionImg: "/assets/FifthAlley-Sport-Bowling/what-solution-we-provide.jpg",
-      galleryImages: [
-        "/assets/FifthAlley-Sport-Bowling/gallery-1.jpg",
-        "/assets/FifthAlley-Sport-Bowling/gallery-2.webp",
-        "/assets/FifthAlley-Sport-Bowling/gallery-3.jpg",
-        "/assets/FifthAlley-Sport-Bowling/gallery-4.jpg",
-        "/assets/FifthAlley-Sport-Bowling/gallery-5.webp",
-        "/assets/FifthAlley-Sport-Bowling/gallery-6.webp"
-      ]
-    },
-    'hulaboo': {
-      name: "Hulaboo Game Zone",
-      titleLine1: "Hulaboo: How We Turned an Empty",
-      titleLine2: "Space Into Surat's ",
-      titleLine2Black: "Buzziest Game Zone",
-      titleLine3: "for Families",
-      description: "From a vacant commercial floor to a high-energy family entertainment center featuring redemption arcades, VR simulators, and kiddy rides.",
-      metaTitle: "Hulaboo Game Zone Setup in Surat | Winera International",
-      metaDescription: "Discover Hulaboo Game Zone in Surat built by Winera International across 7,000 sq. ft. Complete turnkey arcade and FEC design.",
-      type: "Game Zone Setup",
-      location: "Surat, Gujarat",
-      area: "7,000 sq. ft.",
-      clientWanted1: "The client wanted to create an unforgettable family game zone in Surat that attracts repeat visits from youngsters and families. They needed a high-earning attraction mix with strong commercial reliability.",
-      clientWanted2: "They trusted Winera International as their single turnkey developer to handle architectural layout planning, equipment sourcing, installation, and staff operation training.",
-      solution1: "We zoned the 7,000 sq. ft. area into high-intensity arcade racing, VR motion pods, interactive claw machines, and a dedicated redemption counter that drives player excitement.",
-      solution2: "Clear navigational aisles and vibrant LED aesthetic treatments created an unforgettable guest experience, resulting in high daily footfall from day one.",
-      mainImg: "/assets/Hulaboo ( Surat )/1st Image.jpg",
-      basicInfoBg: "/assets/Hulaboo ( Surat )/Basic Information.jpg",
-      clientImg: "/assets/Hulaboo ( Surat )/What the Client Wanted.jpg",
-      solutionImg: "/assets/Hulaboo ( Surat )/What Solution We Provide.webp",
-      galleryImages: [
-        "/assets/Hulaboo ( Surat )/Gallery 1.jpg",
-        "/assets/Hulaboo ( Surat )/Gallery 2.webp",
-        "/assets/Hulaboo ( Surat )/Gallery 3.jpg",
-        "/assets/Hulaboo ( Surat )/Gallery 4.jpg",
-        "/assets/Hulaboo ( Surat )/Gallery 5.jpg",
-        "/assets/Hulaboo ( Surat )/Gallery 6.jpg"
-      ]
-    },
-    'playzonia': {
-      name: "Playzonia Kids Play Area",
-      titleLine1: "Playzonia: A Safe and Playful",
-      titleLine2: "World Built Just ",
-      titleLine2Black: "For Little Ones",
-      titleLine3: "in Surat",
-      description: "We created a soft play area in Surat where small children can climb, bounce, and explore freely — in a space designed around their safety and their fun.",
-      metaTitle: "Playzonia Kids Soft Play Area in Surat | Winera International",
-      metaDescription: "See how Winera International designed & installed Playzonia, a 1,500 sq. ft. safe and playful soft play area for young children in Surat.",
-      type: "Soft Play Area",
-      location: "Surat, Gujarat",
-      area: "1,500 sq. ft.",
-      clientWanted1: "The client came to us with one clear vision to create a kids play area in Surat. Not just a room with a few toys, but a real space where young children could play, laugh, and move around freely — and where parents could bring them without a single worry.",
-      clientWanted2: "For them, safety and comfort mattered above everything. They wanted a place families would trust and keep coming back to.",
-      solution1: "At Winera International, we designed and built the entire soft play area from the ground up shaping it completely around what young children need.",
-      solution2: "Everything started with safety. We used soft, cushioned flooring so falls never hurt, and chose play structures with smooth, rounded edges that little hands and feet could enjoy without risk. From there, we added the fun gentle slides, climbing sections, and soft play elements that keep children active and curious. We also thought about the parents. The space was kept open and easy to see across, so parents could relax nearby while still keeping their little ones in sight at all times. The outcome is a warm, cheerful space that feels made for children — a place where kids lose track of time having fun, and parents feel completely at ease letting them play.",
-      mainImg: projSoft1,
-      clientImg: projSoft1,
-      solutionImg: projectImage4
-    },
-    'lanex-bowling-alley': {
-      name: "LaneX Bowling Alley",
-      titleLine1: "LaneX Bowling Alley: Bringing",
-      titleLine2: "Pro-Style Bowling ",
-      titleLine2Black: "In Surat",
-      titleLine3: "At AR Mall",
-      description: "We designed and set up a full bowling alley at AR Mall. Turning an open floor into one of Surat's most exciting spots to bowl, hang out, and have fun.",
-      metaTitle: "Bowling Alley Setup in Surat – LaneX at AR Mall | Winera International",
-      metaDescription: "See how Winera International built LaneX Bowling Alley in Surat. A Complete 4,800 sq. ft. bowling setup, planned and installed from empty floor to opening day.",
-      type: "Bowling Alley",
-      location: "Surat, Gujarat",
-      area: "4,800 sq. ft.",
-      clientWanted1: "The client wanted to open a proper bowling alley in Surat. A place where friends, families, and groups could come together, roll a few games, and enjoy their time out. Located inside AR Mall in Mota Varachha, the venue needed to feel modern, lively, and welcoming to everyone, whether they bowl often or are picking up a ball for the first time.",
-      clientWanted2: "They also wanted one team to look after the whole thing. Instead of managing different people for design, equipment, and setup, they were looking for a single partner who could take the empty floor and turn it into a finished, ready-to-play venue.",
-      solution1: "At Winera International, we handled the complete bowling alley setup from the first layout plan to the final working lane.",
-      solution2: "The main goal was to make the 4,800 sq. ft. floor feel right. Bowling lanes need proper spacing, so we planned the layout with care giving the lanes their room while leaving space for seating, walkways, and spots where people could relax between games. We installed the lanes to professional standards, so every roll feels smooth. Around them, we shaped a comfortable space where groups can gather, cheer, and enjoy the whole outing. The result is a venue that's fun to play in and ready to welcome guests.",
-      mainImg: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80",
-      clientImg: projectImage3,
-      solutionImg: projectImage4
-    },
-    'funfair': {
-      name: "Funfair Game Zone",
-      titleLine1: "Funfair: A Game Zone Made",
-      titleLine2: "For Non-Stop Fun ",
-      titleLine2Black: "In Surat",
-      titleLine3: "Across 10,000 Sq. Ft.",
-      description: "We took a wide open space in Surat and shaped it into Funfair. A lively game zone where kids, teens, and families can play, compete, and enjoy a full day out together.",
-      metaTitle: "Funfair Game Zone Setup in Surat | Winera International",
-      metaDescription: "See how Winera International built Funfair a complete 10,000 sq. ft. game zone in Surat, planned and set up from start to finish, ready to welcome families.",
-      type: "Game Zone",
-      location: "Surat, Gujarat",
-      area: "10,000 sq. ft.",
-      clientWanted1: "The client came to us with a simple wish to open a game zone in Surat where people of all ages could come and have a good time. Not just a place with a few machines, but a spot that families would choose again and again for weekends, birthdays, and evenings out.",
-      clientWanted2: "They also wanted the whole thing handled by one team. Rather than running around to different suppliers, they were looking for a single partner to plan the space, set everything up, and hand over a venue that was ready to open its doors.",
-      solution1: "At Winera International, we handled the full game zone setup from start to finish. A 10,000 sq. ft. floor gives you room to do a lot, but the layout is what makes or breaks it. So we planned each area with care, placing the louder, faster games where the energy could build, and keeping calmer spots for younger kids and families to settle in.",
-      solution2: "We left proper room for walkways, seating, and open areas so the space never felt tight. The result is a game zone that flows smoothly from one corner to the next, ready to keep guests coming back.",
-      mainImg: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
-      clientImg: projNeon1,
-      solutionImg: projectImage4
-    },
-    'rock-and-bowl': {
-      name: "Rock and Bowl",
-      titleLine1: "Rock and Bowl: Strikes, Games",
-      titleLine2: "and Good Times ",
-      titleLine2Black: "in Vapi",
-      titleLine3: "Across 6,000 Sq. Ft.",
-      description: "We took a compact 6,000 sq. ft. space in Vapi and filled it with bowling, gaming and a cosy cafe. Rock and Bowl is now a favourite hangout for families, friends and kids alike.",
-      metaTitle: "Rock and Bowl Game Zone Setup in Vapi | Winera International",
-      metaDescription: "See how Winera International designed and installed Rock and Bowl in Vapi across 6,000 sq. ft. Turnkey bowling alley and game zone.",
-      type: "Game Zone & Bowling Setup",
-      location: "Vapi, Gujarat",
-      area: "6,000 sq. ft.",
-      clientWanted1: "The client wanted to give Vapi a place with more than one reason to visit. Bowling for groups of friends, games for teens, a safe play spot for young children and a cafe where everyone could sit together. With so much on offer, every outing could feel a little different, and that would keep people coming back.",
-      clientWanted2: "Fitting all of this into one venue needed careful planning. The client wanted a single team to own the whole job, from the first layout drawing to installing the last machine, and hand over a venue ready to welcome guests.",
-      solution1: "At Winera International, we knew every part of the 6,000 sq. ft. floor had to work hard to hold this many attractions. For this game zone setup in Vapi, we gave the bowling area its own stretch of the floor, since it needs length and space to play well. The arcade, VR and pool table sit close by, creating one lively zone for teens and young adults.",
-      solution2: "The kids' soft play area sits away from the action, so little ones can play safely while parents relax at the cafe nearby. We kept walkways clear between each zone and added enough seating for groups to take a break. The result is a compact venue that never feels cramped and keeps guests returning.",
-      mainImg: "/assets/Rock And Bowl ( Vapi )/1st Image.jpg",
-      bannerImg: "/assets/Rock And Bowl ( Vapi )/1st Image.jpg",
-      basicInfoBg: "/assets/Rock And Bowl ( Vapi )/Basic Information.jpg",
-      clientImg: "/assets/Rock And Bowl ( Vapi )/What the Client Wanted.webp",
-      solutionImg: "/assets/Rock And Bowl ( Vapi )/What Solution We Provide.jpg",
-      galleryImages: [
-        "/assets/Rock And Bowl ( Vapi )/Gallery 1.jpg",
-        "/assets/Rock And Bowl ( Vapi )/Gallery 2.webp",
-        "/assets/Rock And Bowl ( Vapi )/Galley 3.jpg",
-        "/assets/Rock And Bowl ( Vapi )/Gallery 4.jpg",
-        "/assets/Rock And Bowl ( Vapi )/Gallery 5.jpg",
-        "/assets/Rock And Bowl ( Vapi )/Gallery 6.webp",
-        "/assets/Rock And Bowl ( Vapi )/galley 7.jpg"
-      ]
-    },
-    'level-up': {
-      name: "Level Up Game Zone",
-      titleLine1: "Level Up: Every Visit Feels",
-      titleLine2: "Like a New High ",
-      titleLine2Black: "Score in Morbi",
-      titleLine3: "Across 15,000 Sq. Ft.",
-      description: "We took a 15,000 sq. ft. space in Morbi and built Level Up from the ground up. Today it’s a go-to game zone for kids, teens and families looking for a fun day out.",
-      metaTitle: "Level Up Game Zone Setup in Morbi | Winera International",
-      metaDescription: "Turnkey game zone setup at Level Up in Morbi across 15,000 sq. ft. designed and installed by Winera International.",
-      type: "Game Zone",
-      location: "Morbi, Gujarat",
-      area: "15,000 sq. ft.",
-      clientWanted1: "The client saw that Morbi needed a proper place for families to spend their free time. They wanted a game zone where children, teenagers and parents could all find something they enjoy, so no one in the group feels left out. Most of all, they wanted guests to walk out already planning their next visit.",
-      clientWanted2: "Instead of hiring separate vendors for design, equipment and installation, the client wanted a single partner. One team to plan the space, manage the setup and hand over a venue ready for opening day. That way, every decision stayed in one place and nothing slipped through the cracks.",
-      solution1: "At Winera International, we began by studying how people would move across the 15,000 sq. ft. floor. For this game zone setup in Morbi, we divided the venue into clear zones. Faster, louder games sit together on one side, where players can enjoy the action without disturbing others. Softer play spots for little ones sit in a quieter corner, with seating close by so parents can keep an eye on them.",
-      solution2: "Between these zones, we kept walkways wide and left open pockets where friends and families can pause and regroup. Every part of the floor has a purpose, so the space feels full of life but never crowded. The result is a game zone that guests find easy to enjoy and keep returning to.",
-      mainImg: "/assets/Level Up ( Morbi )/1st Image.jpg",
-      bannerImg: "/assets/Level Up ( Morbi )/1st Image.jpg",
-      basicInfoBg: "/assets/Level Up ( Morbi )/Basic Information.jpg",
-      clientImg: "/assets/Level Up ( Morbi )/What the Client Wanted.jpg",
-      solutionImg: "/assets/Level Up ( Morbi )/What Solution We Provide.webp",
-      galleryImages: [
-        "/assets/Level Up ( Morbi )/gallery 1.jpg",
-        "/assets/Level Up ( Morbi )/Gallery 2.jpg",
-        "/assets/Level Up ( Morbi )/Gallery 3.webp",
-        "/assets/Level Up ( Morbi )/Gallery 4.webp",
-        "/assets/Level Up ( Morbi )/Gallery 5.webp",
-        "/assets/Level Up ( Morbi )/Gallery 6.webp"
-      ]
-    },
-    'rumble-zone': {
-      name: "Rumble Zone",
-      titleLine1: "Rumble Zone: Big Energy, Bold",
-      titleLine2: "Games and Loud ",
-      titleLine2Black: "Cheers in Gurugram",
-      titleLine3: "Across 15,000 Sq. Ft.",
-      description: "We turned a 15,000 sq. ft. space in Gurugram into Rumble Zone. It’s an action-filled game zone where kids, teens and families come to switch off and play.",
-      metaTitle: "Rumble Zone Game Zone in Gurugram | Winera International",
-      metaDescription: "See how Winera International designed and installed Rumble Zone in Gurugram across 15,000 sq. ft. Turnkey game zone setup.",
-      type: "Game Zone",
-      location: "Gurugram, Haryana",
-      area: "15,000 sq. ft.",
-      clientWanted1: "The client wanted to bring Gurugram a game zone with real energy. Somewhere friends could meet after a long week, kids could burn off steam, and families could plan a full outing without going anywhere else. The aim was a venue that feels exciting every single time, not just on the first visit.",
-      clientWanted2: "With a project of this scale, the client did not want to juggle designers, suppliers and installers separately. They asked for one partner to take full responsibility, from shaping the layout to setting up every zone, so they could focus on opening day.",
-      solution1: "At Winera International, we planned the 15,000 sq. ft. floor around one idea: let the excitement build as guests walk in. Our game zone setup in Gurugram places the most action-packed games deeper inside the venue, drawing people forward and keeping the noise contained. Areas for younger children sit nearer the entrance, in a calmer part of the floor with comfortable seating for parents.",
-      solution2: "We also gave the venue enough breathing room. Walkways are wide enough for busy weekends, and there are spots to sit, chat and cheer on friends between games. The result is a game zone that is easy to explore and gives every visitor a reason to plan the next trip.",
-      mainImg: "/assets/Rumble Zone ( Gurugram )/1st Image.jpg",
-      bannerImg: "/assets/Rumble Zone ( Gurugram )/1st Image.jpg",
-      basicInfoBg: "/assets/Rumble Zone ( Gurugram )/Basic information.jpg",
-      clientImg: "/assets/Rumble Zone ( Gurugram )/What the Client Wanted.jpg",
-      solutionImg: "/assets/Rumble Zone ( Gurugram )/What Solution We Provide.jpg",
-      galleryImages: [
-        "/assets/Rumble Zone ( Gurugram )/gallery 1.webp",
-        "/assets/Rumble Zone ( Gurugram )/gallery 2.webp",
-        "/assets/Rumble Zone ( Gurugram )/Gallery 3.webp",
-        "/assets/Rumble Zone ( Gurugram )/gallery 4.webp",
-        "/assets/Rumble Zone ( Gurugram )/Gallery 5.webp",
-        "/assets/Rumble Zone ( Gurugram )/Gallery 6.webp"
-      ]
-    },
-    'the-fun-factory': {
-      name: "The Fun Factory",
-      titleLine1: "The Fun Factory: Big Smiles",
-      titleLine2: "for Little Ones in ",
-      titleLine2Black: "Vasai-Virar & Badlapur",
-      titleLine3: "Across 2,400 Sq. Ft.",
-      description: "We took a 2,400 sq. ft. space in Nallasopara West and turned it into The Fun Factory. A lively, safe play venue made for children aged 2 to 10 and their families.",
-      metaTitle: "The Fun Factory Soft Play Setup in Nallasopara | Winera International",
-      metaDescription: "See how Winera International designed and installed The Fun Factory in Nallasopara across 2,400 sq. ft. Turnkey indoor playground.",
-      type: "Soft Play",
-      location: "Nallasopara, Maharashtra",
-      area: "2,400 sq. ft.",
-      clientWanted1: "The client wanted a play area where families in Vasai-Virar and Badlapur could bring their young children without having to travel into central Mumbai. The space had to be safe, colourful and packed with enough variety that kids aged 2 to 10 would stay happily busy for hours.",
-      clientWanted2: "The client also wanted an easy journey from idea to opening. Instead of talking to different people for design, equipment and fitting, they chose one team to manage everything and hand over a play area ready for kids on day one.",
-      solution1: "At Winera International, we planned every part of the 2,400 sq. ft. floor so no space was wasted. For this soft play setup in Vasai-Virar and Badlapur, we gave the soft play zone the biggest share of the room. Kids get lots of space to climb, jump and explore, and padded surfaces keep them safe while they play.",
-      solution2: "We placed parent seating where they can see the whole play area at a glance, so they can relax without worry. Paths around the zone are kept open, making it easy for kids and parents to move in and out. The result is a happy, easy-to-use play space that families keep visiting.",
-      mainImg: "/assets/The Fun Factory ( Nalasopara )/1st image.jpg",
-      bannerImg: "/assets/The Fun Factory ( Nalasopara )/1st image.jpg",
-      basicInfoBg: "/assets/The Fun Factory ( Nalasopara )/Basic Information.jpg",
-      clientImg: "/assets/The Fun Factory ( Nalasopara )/what the client wanted.jpg",
-      solutionImg: "/assets/The Fun Factory ( Nalasopara )/What Solution We Provide.jpg",
-      galleryImages: [
-        "/assets/The Fun Factory ( Nalasopara )/Gallery 1.jpg",
-        "/assets/The Fun Factory ( Nalasopara )/Gallery 2.jpeg",
-        "/assets/The Fun Factory ( Nalasopara )/Gallery 3.jpg",
-        "/assets/The Fun Factory ( Nalasopara )/Gallery 4.jpg",
-        "/assets/The Fun Factory ( Nalasopara )/Gallery 5.jpg",
-        "/assets/The Fun Factory ( Nalasopara )/Gallery 6.jpg"
-      ]
-    },
-    'pop-a-puddle': {
-      name: "Pop A Puddle",
-      titleLine1: "Pop A Puddle: Where Kids",
-      titleLine2: "Play and Parents Sip ",
-      titleLine2Black: "in Bangalore",
-      titleLine3: "Across 4,800 Sq. Ft.",
-      description: "We took a 4,800 sq. ft. space in Bangalore and turned it into Pop A Puddle, a soft play area with a family café. Kids aged 3 to 12 play freely, while parents relax at the café close by.",
-      metaTitle: "Pop A Puddle Play Area and Café in Bangalore | Winera International",
-      metaDescription: "See how Winera International designed and built Pop A Puddle in Bangalore across 4,800 sq. ft. Soft play and family play café setup.",
-      type: "Soft Play / Family Play Café",
-      location: "Bangalore, Karnataka",
-      area: "4,800 sq. ft.",
-      clientWanted1: "The client wanted a place where the whole family could spend time together, not just the kids. Children aged 3 to 12 needed a safe and exciting soft play area, and parents needed a comfortable café where they could sit, chat and unwind. When both kids and parents enjoy the visit, they naturally want to come back.",
-      clientWanted2: "Building a play area and a café together means many moving parts. So the client wanted one team to handle it all, from planning the layout to fitting the equipment, and handing over a space that was ready to open.",
-      solution1: "At Winera International, we used the 4,800 sq. ft. floor to bring play and rest together in one space. For this play café setup in Bangalore, we gave the soft play zone a large, open area where kids can climb, slide and explore. The padded play setup keeps every jump and tumble safe.",
-      solution2: "We placed the café right next to the play area, so parents can enjoy their time while still keeping an eye on their children. Clear walkways connect both spaces, and seating is spread out so families never feel squeezed. The result is a warm, easy-going venue where kids play happily and parents feel at home.",
-      mainImg: "/assets/Pop A Puddle ( Bengaluru )/1st image.jpg",
-      bannerImg: "/assets/Pop A Puddle ( Bengaluru )/1st image.jpg",
-      basicInfoBg: "/assets/Pop A Puddle ( Bengaluru )/Basic Detail.jpg",
-      clientImg: "/assets/Pop A Puddle ( Bengaluru )/What the client Wanted.webp",
-      solutionImg: "/assets/Pop A Puddle ( Bengaluru )/What Solution We Provide.jpg",
-      galleryImages: [
-        "/assets/Pop A Puddle ( Bengaluru )/Gallery 1.webp",
-        "/assets/Pop A Puddle ( Bengaluru )/Gallery 2.jpg",
-        "/assets/Pop A Puddle ( Bengaluru )/gallery 3.jpg",
-        "/assets/Pop A Puddle ( Bengaluru )/Gallery 4.jpg",
-        "/assets/Pop A Puddle ( Bengaluru )/Gallery 5.jpg",
-        "/assets/Pop A Puddle ( Bengaluru )/gallery 6.jpg",
-        "/assets/Pop A Puddle ( Bengaluru )/Gallery 7.webp",
-        "/assets/Pop A Puddle ( Bengaluru )/Gallary 8.webp",
-        "/assets/Pop A Puddle ( Bengaluru )/Gallery 9.webp",
-        "/assets/Pop A Puddle ( Bengaluru )/Gallery 10.webp",
-        "/assets/Pop A Puddle ( Bengaluru )/gallery 11.webp"
-      ]
-    },
-    'skadoosh-play-area': {
-      name: "Skadoosh Play Area",
-      titleLine1: "Skadoosh Play Area: Endless",
-      titleLine2: "Giggles and Adventures in ",
-      titleLine2Black: "Haralur & Varthur",
-      titleLine3: "Across 7,000 Sq. Ft.",
-      description: "We took a 7,000 sq. ft. space and turned it into Skadoosh Play Area, a fun-filled kids play area in Bangalore. It’s made for children aged 3 to 12 and for parents in Haralur and Varthur who want a safe place to play nearby.",
-      metaTitle: "Skadoosh Kids Play Area in Bangalore | Winera International",
-      metaDescription: "See how Winera International built Skadoosh Play Area across 7,000 sq. ft. in Haralur and Varthur, Bangalore. Turnkey play area setup.",
-      type: "Kids Play Area",
-      location: "Bangalore, Karnataka",
-      area: "7,000 sq. ft.",
-      clientWanted1: "The client wanted a play area that kids would beg to visit. A cheerful, safe space in Haralur and Varthur where children aged 3 to 12 could spend hours playing, and where parents could feel at ease the whole time. They wanted every visit to be full of fun, so families would make it part of their routine.",
-      clientWanted2: "To get there, the client needed a partner who could take care of the full project. They wanted one team to plan the layout, source and install the play equipment, and hand over a play area ready for its first little visitors.",
-      solution1: "At Winera International, we saw the 7,000 sq. ft. floor as one big playground waiting to happen. For this kids play area in Bangalore, we kept the busiest, most active play sections in the centre, where kids can run, climb and jump freely. Gentler spots for the youngest children sit to the side, away from the rush, so they can play at their own pace.",
-      solution2: "Parent seating wraps around the play area, giving a clear view from every seat. We kept the walkways wide and the open areas free, so kids can move from one section to another without bumping into each other. The result is a happy, well-organised play area that families in Haralur and Varthur love to visit again.",
-      mainImg: "/assets/Skadoosh ( Bengaluru )/1st image.jpg",
-      bannerImg: "/assets/Skadoosh ( Bengaluru )/1st image.jpg",
-      basicInfoBg: "/assets/Skadoosh ( Bengaluru )/Basic Information.jpg",
-      clientImg: "/assets/Skadoosh ( Bengaluru )/What the Client Wanted.jpg",
-      solutionImg: "/assets/Skadoosh ( Bengaluru )/What Solution We Provide.webp",
-      galleryImages: [
-        "/assets/Skadoosh ( Bengaluru )/Gallery 1.jpg",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 2.jpg",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 3.jpg",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 4.webp",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 5.jpg",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 6.jpg",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 7.webp",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 8.webp",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 9.webp",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 10.webp",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 11.webp",
-        "/assets/Skadoosh ( Bengaluru )/Gallery 12.webp"
-      ]
-    },
-    'vr-360-game-zone': {
-      name: "VR 360 Game Zone",
-      titleLine1: "VR 360 Game Zone: Step Into",
-      titleLine2: "New Worlds Right ",
-      titleLine2Black: "Here in Gandhidham",
-      titleLine3: "Across 2,000 Sq. Ft.",
-      description: "We took a 2,000 sq. ft. space in Gandhidham and turned it into VR 360 Game Zone. It’s a fun, modern hangout where teens, young adults and families can try virtual reality and play together.",
-      metaTitle: "VR 360 Game Zone in Gandhidham | Winera International",
-      metaDescription: "See how Winera International designed and installed VR 360 Game Zone across 2,000 sq. ft. in Gandhidham. Turnkey virtual reality setup.",
-      type: "Game Zone",
-      location: "Gandhidham, Gujarat",
-      area: "2,000 sq. ft.",
-      clientWanted1: "The client wanted to bring something fresh to Gandhidham. A game zone built around virtual reality, where teens and young adults could hang out with friends, and families could try something new together. They wanted a place exciting enough that guests would keep coming back with their friends.",
-      clientWanted2: "Virtual reality equipment needs careful layout and the right technical setup to run well. The client wanted one experienced partner to design the floor, source and install the machines, and hand over a space that was ready to welcome visitors on day one.",
-      solution1: "At Winera International, we used every foot of the 2,000 sq. ft. floor to create an immersive experience. For this game zone setup in Gandhidham, we gave each VR attraction its own designated space so players can move and enjoy the action safely without crowding each other.",
-      solution2: "We set up clear walking paths and added seating where friends can watch each other play and wait for their turn. The result is a sleek, modern game zone that draws regular crowds and keeps players coming back for another round.",
-      mainImg: "/assets/VR 360 Game  Zone ( Gandhidham )/1st image.png",
-      bannerImg: "/assets/VR 360 Game  Zone ( Gandhidham )/1st image.png",
-      basicInfoBg: "/assets/VR 360 Game  Zone ( Gandhidham )/Basic Information.jpg",
-      clientImg: "/assets/VR 360 Game  Zone ( Gandhidham )/What the Client Wanted.webp",
-      solutionImg: "/assets/VR 360 Game  Zone ( Gandhidham )/What Solution We Provide.jpg",
-      galleryImages: [
-        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 1.jpg",
-        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 2.webp",
-        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 3.webp",
-        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 4.webp",
-        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 5.webp",
-        "/assets/VR 360 Game  Zone ( Gandhidham )/Gallery 6.jpg"
-      ]
-    },
-    'altitude-ball-in-ball-out': {
-      name: "Altitude Ball in Ball Out",
-      titleLine1: "Altitude Ball in Ball Out: Every",
-      titleLine2: "Roll Brings Friends ",
-      titleLine2Black: "Closer in Mumbai",
-      titleLine3: "Across 8,000 Sq. Ft.",
-      description: "We took an 8,000 sq. ft. space in Mumbai and turned it into Altitude Ball in Ball Out, a lively bowling alley. It’s a place where teens, young adults and families come to play, compete and spend good time together.",
-      metaTitle: "Altitude Ball in Ball Out Bowling Alley in Mumbai | Winera International",
-      metaDescription: "See how Winera International designed and installed Altitude Ball in Ball Out across 8,000 sq. ft. in Mumbai. Turnkey bowling alley setup.",
-      type: "Bowling Alley",
-      location: "Mumbai, Maharashtra",
-      area: "8,000 sq. ft.",
-      clientWanted1: "The client wanted a bowling alley in Mumbai that feels fun as soon as people walk in. A place where friends can play against each other and families can laugh and enjoy a game together. They wanted guests to go home and plan their next visit right away.",
-      clientWanted2: "A bowling alley needs exact planning, from the lane area to the seating around it. The client wanted one team to manage the whole project, from layout and installation to the final handover, so they did not have to deal with several suppliers at once.",
-      solution1: "At Winera International, we started by giving the bowling lanes the space they need. Lanes need length, so we planned the 8,000 sq. ft. floor with the bowling area as its main feature. For this bowling alley setup in Mumbai, we made sure every lane is easy to see and reach, so the whole venue feels connected to the action.",
-      solution2: "Behind the lanes, we added comfortable seating where players can relax, keep score and cheer each other on. Clear walkways let guests move around without crossing into the play area, and open spaces give groups room to gather between games. The result is an easy-to-enjoy bowling alley that brings friends and families back for one more game.",
-      mainImg: "/assets/Altitude ball in ball out ( Mumbai )/1st Image.png",
-      bannerImg: "/assets/Altitude ball in ball out ( Mumbai )/1st Image.png",
-      basicInfoBg: "/assets/Altitude ball in ball out ( Mumbai )/Basic Information.jpg",
-      clientImg: "/assets/Altitude ball in ball out ( Mumbai )/What the Client Wanted.jpg",
-      solutionImg: "/assets/Altitude ball in ball out ( Mumbai )/What Solution We Provide.jpg",
-      galleryImages: [
-        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 1.jpg",
-        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 2.jpg",
-        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 3.jpg",
-        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 4.webp",
-        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 5.webp",
-        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 6.jpg",
-        "/assets/Altitude ball in ball out ( Mumbai )/Gallery 7.webp"
-      ]
-    }
-  };
 
   const normalizeSlug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const cleanAlpha = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -757,11 +382,21 @@ export default function ProjectDetail({ siteData }) {
   const targetSlug = normalizeSlug(slug);
   const targetAlpha = cleanAlpha(slug);
 
-  const allProjectsList = (dynamicProjects.length > 0)
+  const rawList = (dynamicProjects.length > 0)
     ? dynamicProjects
     : (Array.isArray(siteData?.projectItems) && siteData.projectItems.length > 0)
       ? siteData.projectItems
       : [];
+
+  const allProjectsList = rawList.filter(p => {
+    if (!p) return false;
+    if (p.isActive === false || p.status === 'inactive') return false;
+    const cleanSlug = (p.slug || '').toLowerCase();
+    const cleanName = (p.name || '').toLowerCase();
+    if (cleanSlug === 'funfair' || cleanName === 'funfair' || cleanSlug.includes('funfair')) return false;
+    if (cleanSlug === 'skidz-play-spaces' || cleanName === 'skidz play spaces' || cleanSlug.includes('skidz')) return false;
+    return true;
+  });
 
   const cmsItem = allProjectsList.find(p => {
         const itemSlug = (p.slug && p.slug !== 'new-turnkey-project') ? normalizeSlug(p.slug) : normalizeSlug(p.name);
@@ -831,7 +466,7 @@ export default function ProjectDetail({ siteData }) {
     return itemSlug === targetSlug || itemAlpha === targetAlpha;
   });
 
-  const defaultProject = staticDocProject || caseStudies[slug] || {
+  const defaultProject = staticDocProject || {
     name: slug ? slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Featured Winera Project",
     titleLine1: `${slug ? slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Winera Project"}: A`,
     titleLine2: "Turnkey ",
@@ -943,12 +578,7 @@ export default function ProjectDetail({ siteData }) {
   }
 
   const buttonLink = `${baseLink}?text=${encodeURIComponent(waMsg)}`;
-  const caseStudy = caseStudies[slug] || caseStudies[targetSlug]
-    || Object.entries(caseStudies).find(([k]) => {
-      const cleanK = cleanAlpha(k);
-      return cleanK === targetAlpha || (targetAlpha.length >= 4 && (cleanK.includes(targetAlpha) || targetAlpha.includes(cleanK)));
-    })?.[1]
-    || null;
+  const caseStudy = resolvedItem;
 
   const mainImage = isHulaboo
     ? "/assets/Hulaboo ( Surat )/1st Image.jpg"

@@ -8,8 +8,17 @@ const optimizeCloudinaryUrl = (url, width) => {
   if (!url || typeof url !== 'string') return url;
   if (!url.includes('cloudinary.com') || !url.includes('/image/upload/')) return url;
   
+  // If url already has w_\d+, update it or remove if width is false/null
+  if (url.match(/\/image\/upload\/[^/]*w_\d+/)) {
+    if (width) {
+      return url.replace(/w_\d+/, `w_${width}`);
+    } else {
+      return url.replace(/,w_\d+/, '').replace(/w_\d+,?/, '');
+    }
+  }
+
   if (url.includes('f_auto') && url.includes('q_auto')) {
-    if (width && !url.includes('w_')) {
+    if (width) {
       return url.replace('/image/upload/f_auto,q_auto/', `/image/upload/f_auto,q_auto,w_${width}/`);
     }
     return url;

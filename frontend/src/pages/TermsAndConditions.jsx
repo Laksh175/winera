@@ -343,7 +343,7 @@ export default function TermsAndConditions({ siteData }) {
               Winera International Pvt. Ltd.
             </h2>
             <p style={{ fontSize: isPhone ? '15px' : '16px', color: '#334155', lineHeight: 1.85, margin: 0, fontWeight: '400' }}>
-              These Terms and Conditions (“Agreement”, “Terms”) govern your (“you”, “your”, “client”, “customer”) access to and use of the website <a href="http://www.winera.in" target="_blank" rel="noreferrer" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>www.winera.in</a> (the “Site”), and the products and services (“Services”) offered by Winera International Pvt. Ltd. (“Company”, “Winera”, “we”, “our”, or “us”). By accessing or using our Site and/or Services, you agree to be legally bound by these Terms. If you do not agree, please do not use this Site or engage with our services.
+              These Terms and Conditions (“Agreement”, “Terms”) govern your (“you”, “your”, “client”, “customer”) access to and use of the website <a href="https://www.winera.in" target="_blank" rel="noreferrer" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>www.winera.in</a> (the “Site”), and the products and services (“Services”) offered by Winera International Pvt. Ltd. (“Company”, “Winera”, “we”, “our”, or “us”). By accessing or using our Site and/or Services, you agree to be legally bound by these Terms. If you do not agree, please do not use this Site or engage with our services.
             </p>
           </div>
 

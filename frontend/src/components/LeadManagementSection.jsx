@@ -1,28 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Search,
-  Filter,
-  Download,
-  Trash2,
-  ExternalLink,
-  MessageSquare,
-  RefreshCw,
-  Save,
-  CheckCircle,
-  AlertCircle,
-  Users,
-  CheckSquare,
-  Square,
-  FileSpreadsheet,
-  Globe,
-  FileText
-} from 'lucide-react';
-import {
-  fetchLeadsApi,
-  deleteLeadApi,
-  bulkDeleteLeadsApi,
-  updateLeadStatusApi
-} from '../services/api';
+import { Search, Filter, Download, Trash2, ExternalLink, MessageSquare, RefreshCw, Save, CheckCircle, AlertCircle, Users, CheckSquare, Square, FileSpreadsheet, Globe, FileText } from 'lucide-react';
+import { fetchLeadsApi, deleteLeadApi, bulkDeleteLeadsApi, updateLeadStatusApi } from '../services/api';
 
 export default function LeadManagementSection({ siteData, onUpdateSiteData, authToken }) {
   const [leads, setLeads] = useState([]);
