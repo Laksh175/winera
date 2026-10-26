@@ -26,7 +26,7 @@ const resolveImgUrl = (url, fallback) => {
 
 export default function RelatedProductsSection({
   sectionData,
-  accentColor = '#0072b8',
+  accentColor = '#00a8ff',
   accentWidth = '370px',
   accentMaxWidth = '95%',
   accentHeight = '11px',

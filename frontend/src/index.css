@@ -1158,7 +1158,7 @@ html {
     flex: none !important;
     width: 100% !important;
     height: 52px !important;
-    transition: height 0.65s cubic-bezier(0.25, 1, 0.35, 1) !important;
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 
   .winera-product-card.is-expanded {
@@ -2017,10 +2017,10 @@ html {
   .winera-arcade-why-section img,
   .winera-bowling-whyus-section img.winera-yellow-stroke {
     margin: 0 auto 8px !important;
-    width: 200px !important;
-    max-width: 200px !important;
-    min-width: 120px !important;
-    height: 9px !important;
+    width: 280px !important;
+    max-width: 85% !important;
+    min-width: 200px !important;
+    height: 10px !important;
     object-fit: fill !important;
     display: block !important;
   }
@@ -2560,7 +2560,8 @@ html {
     gap: 16px !important;
   }
 
-  .winera-arcade-intro-section>div>div {
+  .winera-arcade-intro-section>div>div,
+  .winera-arcade-intro-text {
     text-align: center !important;
   }
 
@@ -8579,6 +8580,10 @@ img.winera-section-heading-accent {
     box-sizing: border-box !important;
     width: 100% !important;
     max-width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .winera-section-heading-inner,
@@ -8590,28 +8595,31 @@ img.winera-section-heading-accent {
     margin: 0 auto !important;
   }
 
-  .winera-section-heading-container img,
+  .winera-section-heading-container img.winera-section-heading-accent,
+  .winera-section-heading-container img[src*="kllqvzchxecftuxi6zdn"],
   .winera-section-heading-accent,
-  .winera-section-heading-container>div>img,
-  .winera-section-heading-container>div>div,
   .winera-yellow-stroke,
   img.winera-yellow-stroke,
-  .winera-ar-whyus-section img,
-  .winera-vr-whyus-section img,
-  .winera-bumpercar-whyus-section img,
-  .winera-softplay-whyus-section img,
-  .winera-amusement-whyus-section img,
-  .winera-hypergrid-whywinera-section img,
-  .winera-trampoline-why-choose-section img,
-  .winera-arcade-why-section img,
+  .winera-ar-whyus-section img.winera-yellow-stroke,
+  .winera-vr-whyus-section img.winera-yellow-stroke,
+  .winera-bumpercar-whyus-section img.winera-yellow-stroke,
+  .winera-softplay-whyus-section img.winera-yellow-stroke,
+  .winera-amusement-whyus-section img.winera-yellow-stroke,
+  .winera-hypergrid-whywinera-section img.winera-yellow-stroke,
+  .winera-trampoline-why-choose-section img.winera-yellow-stroke,
+  .winera-arcade-why-section img.winera-yellow-stroke,
   .winera-bowling-whyus-section img.winera-yellow-stroke,
   img[src*="yellow-stroke-line"],
   img[src*="yellow-stroke"],
-  img[src*="stroke-line"] {
-    width: 200px !important;
-    max-width: 200px !important;
-    min-width: 120px !important;
-    height: 9px !important;
+  img[src*="stroke-line"],
+  img[src*="kllqvzchxecftuxi6zdn"],
+  img[src*="oadq9n7rqdg5bs4u8eyo"] {
+    width: 280px !important;
+    max-width: 85% !important;
+    min-width: 200px !important;
+    height: 10px !important;
+    min-height: 10px !important;
+    aspect-ratio: auto !important;
     object-fit: fill !important;
     margin-left: auto !important;
     margin-right: auto !important;
@@ -16027,22 +16035,26 @@ button[style*="background:transparent"]:hover,
   .winera-company-stats-section .winera-section-heading-accent,
   .winera-yellow-stroke,
   img.winera-yellow-stroke,
-  .winera-ar-whyus-section img,
-  .winera-vr-whyus-section img,
-  .winera-bumpercar-whyus-section img,
-  .winera-softplay-whyus-section img,
-  .winera-amusement-whyus-section img,
-  .winera-hypergrid-whywinera-section img,
-  .winera-trampoline-why-choose-section img,
-  .winera-arcade-why-section img,
+  .winera-ar-whyus-section img.winera-yellow-stroke,
+  .winera-vr-whyus-section img.winera-yellow-stroke,
+  .winera-bumpercar-whyus-section img.winera-yellow-stroke,
+  .winera-softplay-whyus-section img.winera-yellow-stroke,
+  .winera-amusement-whyus-section img.winera-yellow-stroke,
+  .winera-hypergrid-whywinera-section img.winera-yellow-stroke,
+  .winera-trampoline-why-choose-section img.winera-yellow-stroke,
+  .winera-arcade-why-section img.winera-yellow-stroke,
   .winera-bowling-whyus-section img.winera-yellow-stroke,
   img[src*="yellow-stroke-line"],
   img[src*="yellow-stroke"],
-  img[src*="stroke-line"] {
-    width: 200px !important;
-    max-width: 200px !important;
-    min-width: 120px !important;
-    height: 9px !important;
+  img[src*="stroke-line"],
+  img[src*="kllqvzchxecftuxi6zdn"],
+  img[src*="oadq9n7rqdg5bs4u8eyo"] {
+    width: 280px !important;
+    max-width: 85% !important;
+    min-width: 200px !important;
+    height: 10px !important;
+    min-height: 10px !important;
+    aspect-ratio: auto !important;
     object-fit: fill !important;
     margin: 0 auto 8px auto !important;
     display: block !important;
@@ -19615,55 +19627,128 @@ img.winera-yellow-stroke,
   margin-bottom: 10px !important;
 }
 
-/* 2. In Left-Aligned Headers & Technical Specifications Cards: ALWAYS LEFT-ALIGN PROPERLY */
-[class*="-specs-title-box"] img,
-[class*="-specs-section"] [class*="-specs-title-box"] img,
-.winera-softplay-specs-title-box img,
-.winera-bumpercar-specs-title-box img,
-.winera-hypergrid-specs-title-box img,
-.winera-trampoline-specs-title-box img,
-.winera-lasertag-specs-title-box img,
-.winera-softplay-specs-section img,
-.winera-bumpercar-specs-section img,
-.winera-hypergrid-specs-section img,
-.winera-trampoline-specs-section img,
-.winera-lasertag-specs-section img,
-[style*="text-align: left"] img[src*="kllqvzchxecftuxi6zdn"],
-[style*="text-align: left"] img[src*="oadq9n7rqdg5bs4u8eyo"],
-[style*="text-align:left"] img[src*="kllqvzchxecftuxi6zdn"],
-[style*="text-align:left"] img[src*="oadq9n7rqdg5bs4u8eyo"],
-.winera-bowling-supplier-text img,
-.winera-softplay-supplier-text img,
-.winera-arcade-intro-section img[src*="kllqvzchxecftuxi6zdn"] {
-  display: block !important;
-  margin-left: 0 !important;
-  margin-right: auto !important;
-  margin-bottom: 10px !important;
+/* 2. In Left-Aligned Headers & Technical Specifications Cards: ALWAYS LEFT-ALIGN ON DESKTOP */
+@media (min-width: 769px) {
+  [class*="-specs-title-box"] img,
+  [class*="-specs-section"] [class*="-specs-title-box"] img,
+  .winera-softplay-specs-title-box img,
+  .winera-bumpercar-specs-title-box img,
+  .winera-hypergrid-specs-title-box img,
+  .winera-trampoline-specs-title-box img,
+  .winera-lasertag-specs-title-box img,
+  .winera-softplay-specs-section img,
+  .winera-bumpercar-specs-section img,
+  .winera-hypergrid-specs-section img,
+  .winera-trampoline-specs-section img,
+  .winera-lasertag-specs-section img,
+  [style*="text-align: left"] img[src*="kllqvzchxecftuxi6zdn"],
+  [style*="text-align: left"] img[src*="oadq9n7rqdg5bs4u8eyo"],
+  [style*="text-align:left"] img[src*="kllqvzchxecftuxi6zdn"],
+  [style*="text-align:left"] img[src*="oadq9n7rqdg5bs4u8eyo"],
+  .winera-bowling-supplier-text img,
+  .winera-softplay-supplier-text img,
+  .winera-arcade-intro-section img[src*="kllqvzchxecftuxi6zdn"] {
+    display: block !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    margin-bottom: 10px !important;
+  }
 }
 
+/* 3. UNIVERSAL MOBILE SCREEN CENTERING FOR YELLOW STROKE ACCENT LINES ACROSS ALL PAGES & SECTIONS */
 @media (max-width: 768px) {
+  /* Make sure every section heading container & inner wrapper is centered on mobile */
+  .winera-section-heading-container,
+  .winera-section-heading-container > div,
+  .winera-section-heading-inner,
+  .winera-arcade-intro-section .winera-section-heading-container,
+  .winera-commercial-section .winera-section-heading-container,
+  .winera-commercial-text-container .winera-section-heading-container,
+  .winera-related-section .winera-section-heading-container,
+  .winera-related-section .winera-section-heading-inner,
+  .winera-related-section .winera-section-heading-container > div {
+    text-align: center !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Universal Yellow Line & Brush Stroke Centering across all pages and sections on Mobile */
   img[src*="kllqvzchxecftuxi6zdn"],
   img[src*="oadq9n7rqdg5bs4u8eyo"],
   img.winera-yellow-stroke,
+  .winera-yellow-stroke,
   .winera-section-heading-accent,
+  img.winera-section-heading-accent,
+  div.winera-section-heading-accent,
   .winera-yellow-stroke-line,
+  /* High-specificity overrides to override any left-alignment rules from inline styles or sections */
+  [style*="text-align: left"] img[src*="kllqvzchxecftuxi6zdn"],
+  [style*="text-align: left"] img[src*="oadq9n7rqdg5bs4u8eyo"],
+  [style*="text-align:left"] img[src*="kllqvzchxecftuxi6zdn"],
+  [style*="text-align:left"] img[src*="oadq9n7rqdg5bs4u8eyo"],
+  [style*="text-align: left"] .winera-section-heading-accent,
+  [style*="text-align:left"] .winera-section-heading-accent,
+  [style*="text-align: left"] .winera-yellow-stroke,
+  [style*="text-align:left"] .winera-yellow-stroke,
+  [style*="text-align: left"] img.winera-yellow-stroke,
+  [style*="text-align:left"] img.winera-yellow-stroke,
+  .winera-arcade-intro-section img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-arcade-intro-section .winera-section-heading-accent,
+  .winera-arcade-intro-section .winera-yellow-stroke,
+  .winera-commercial-section img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-commercial-section .winera-section-heading-accent,
+  .winera-commercial-text-container img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-commercial-text-container .winera-section-heading-accent,
+  .winera-related-section img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-related-section .winera-section-heading-accent,
   .winera-bowling-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
   .winera-bowling-supplier-text img[src*="oadq9n7rqdg5bs4u8eyo"],
   .winera-softplay-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
   .winera-softplay-intro-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-softplay-materials-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-softplay-roi-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-softplay-specs-section img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-softplay-specs-title-box img[src*="kllqvzchxecftuxi6zdn"],
   .winera-bumpercar-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-bumpercar-options-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-bumpercar-specs-section img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-bumpercar-specs-title-box img[src*="kllqvzchxecftuxi6zdn"],
   .winera-amusement-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-amusement-banner-text img[src*="kllqvzchxecftuxi6zdn"],
   .winera-hypergrid-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
-  .winera-lasertag-supplier-text img[src*="kllqvzchxecftuxi6zdn"] {
-    width: 200px !important;
-    max-width: 65% !important;
-    height: auto !important;
-    max-height: 7.5px !important;
-    aspect-ratio: 492 / 10 !important;
-    object-fit: contain !important;
+  .winera-hypergrid-specs-section img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-hypergrid-specs-title-box img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-lasertag-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-lasertag-specs-section img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-lasertag-specs-title-box img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-trampoline-intro-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-trampoline-specs-section img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-trampoline-specs-title-box img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-ar-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-vr-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-vr-intro-stroke,
+  .winera-vr-attractions-stroke,
+  .winera-project-block-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-safety-intro-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-roi-intro-text img[src*="kllqvzchxecftuxi6zdn"],
+  .winera-roi-intro-stroke {
+    width: 280px !important;
+    max-width: 85% !important;
+    min-width: 200px !important;
+    height: 10px !important;
+    min-height: 10px !important;
+    aspect-ratio: auto !important;
+    object-fit: fill !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    margin-top: 0 !important;
     margin-bottom: 8px !important;
+    display: block !important;
+    align-self: center !important;
+    float: none !important;
   }
 }
 
@@ -19671,5 +19756,78 @@ img.winera-yellow-stroke,
 .winera-faq-section .winera-section-heading-h2 span,
 .winera-faq-section h2 span,
 .winera-faq-section .winera-section-heading-inner span {
-  color: #0072b8 !important;
+  color: #00a8ff !important;
+}
+
+/* BLOG PAGE HEADING YELLOW STROKE PROPORTION FIX */
+.winera-blog-heading-stroke,
+.winera-blog-heading-container img.winera-blog-heading-stroke,
+.winera-blog-heading-container img[src*="kllqvzchxecftuxi6zdn"] {
+  width: 200px !important;
+  max-width: 100% !important;
+  height: 10px !important;
+  min-height: 10px !important;
+  object-fit: fill !important;
+  margin: 0 auto 8px auto !important;
+  display: block !important;
+}
+
+@media (max-width: 768px) {
+  .winera-blog-heading-stroke,
+  .winera-blog-heading-container img.winera-blog-heading-stroke,
+  .winera-blog-heading-container img[src*="kllqvzchxecftuxi6zdn"] {
+    width: 180px !important;
+    max-width: 70% !important;
+    min-width: 150px !important;
+    height: 10px !important;
+    min-height: 10px !important;
+    aspect-ratio: auto !important;
+    object-fit: fill !important;
+    margin: 0 auto 8px auto !important;
+    display: block !important;
+  }
+}
+
+/* ARCADE GAME DETAIL PAGE HEADING STROKE & TIGHT SPACING FIX */
+.winera-arcade-title-box {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.winera-arcade-detail-stroke,
+.winera-arcade-title-box img.winera-arcade-detail-stroke,
+.winera-arcade-details-col img.winera-arcade-detail-stroke {
+  width: 220px !important;
+  max-width: 85% !important;
+  height: 10px !important;
+  min-height: 10px !important;
+  object-fit: fill !important;
+  margin: 0 auto 4px 0 !important;
+  display: block !important;
+}
+
+@media (max-width: 768px) {
+  .winera-arcade-title-box {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .winera-arcade-detail-stroke,
+  .winera-arcade-title-box img.winera-arcade-detail-stroke,
+  .winera-arcade-details-col img.winera-arcade-detail-stroke {
+    width: 210px !important;
+    max-width: 80% !important;
+    min-width: 170px !important;
+    height: 10px !important;
+    min-height: 10px !important;
+    aspect-ratio: auto !important;
+    object-fit: fill !important;
+    margin: 0 auto 4px auto !important;
+    display: block !important;
+  }
 }

@@ -5,7 +5,8 @@ import Footer from '../components/Footer';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import FaqSection from '../components/FaqSection';
-import { Phone, Mail, Building2, Globe, CheckCircle2, MapPin } from 'lucide-react';
+import { Phone, Mail, Building2, Globe, CheckCircle2, MapPin, MessageCircle } from 'lucide-react';
+import { submitLeadApi } from '../services/api';
 import { sanitizeAndFormatHtml } from './BlogDetail';
 import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 const contactUsHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/z2qo5dtx8u7tyfvzjhmr.png";
@@ -35,6 +36,8 @@ export default function ContactUs({ siteData }) {
     inquiry: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [waLink, setWaLink] = useState('');
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 850 : false);
   const [isPhone, setIsPhone] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
 
@@ -48,9 +51,62 @@ export default function ContactUs({ siteData }) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.name.trim() || !formData.phone.trim()) return;
+
+    setSubmitting(true);
+    try {
+      await submitLeadApi({
+        name: formData.name.trim(),
+        countryCode: '+91',
+        phone: formData.phone.trim(),
+        pageSource: `Contact Us Page${formData.inquiry ? ': ' + formData.inquiry.substring(0, 100) : ''}`,
+        pageUrl: typeof window !== 'undefined' ? window.location.href : '/contact-us'
+      });
+    } catch (err) {
+      console.error('Lead submission error:', err);
+    }
+
+    const targetPhone = '919157873576';
+    const fullPageUrl = typeof window !== 'undefined' && window.location.href.startsWith('http')
+      ? window.location.href
+      : 'https://winerainternational.com/contact-us';
+
+    const customerMessage = formData.inquiry.trim()
+      ? formData.inquiry.trim()
+      : 'Interested in commercial Game Zone setup, turnkey consultation & project quotation.';
+
+    const messageLines = [
+      'Hello Winera International! 👋',
+      '',
+      '*New Contact Inquiry:*',
+      `👤 *Name:* ${formData.name.trim()}`,
+      `📞 *Phone:* ${formData.phone.trim()}`,
+      formData.email ? `✉️ *Email:* ${formData.email.trim()}` : null,
+      `📌 *Interest:* Commercial Game Zone Setup`,
+      `💬 *Message:* ${customerMessage}`,
+      `🌐 *Page Link:* ${fullPageUrl}`
+    ].filter(Boolean);
+
+    const rawContactMsg = messageLines.join('\n');
+    const generatedWaUrl = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(rawContactMsg)}`;
+
+    setWaLink(generatedWaUrl);
     setSubmitted(true);
+    setSubmitting(false);
+
+    // Auto open WhatsApp
+    setTimeout(() => {
+      try {
+        const newWin = window.open(generatedWaUrl, '_blank');
+        if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+          window.location.href = generatedWaUrl;
+        }
+      } catch (err) {
+        window.location.href = generatedWaUrl;
+      }
+    }, 900);
   };
 
   const contactSeo = siteData?.contactSeo || {
@@ -176,7 +232,7 @@ export default function ContactUs({ siteData }) {
                             );
                           }
                           return (
-                            <span key={pIdx} className="winera-contact-title-cyan" style={{ color: '#0072b8' }}>
+                            <span key={pIdx} className="winera-contact-title-cyan" style={{ color: '#00a8ff' }}>
                               {part}
                             </span>
                           );
@@ -386,13 +442,45 @@ export default function ContactUs({ siteData }) {
                 textAlign: 'center'
               }}>
                 <CheckCircle2 style={{ width: '50px', height: '50px', color: '#16a34a', margin: '0 auto 14px' }} />
-                <h4 style={{ fontSize: '1.2rem', fontWeight: '900', color: '#14532d', marginBottom: '8px' }}>Inquiry Submitted!</h4>
-                <p style={{ color: '#166534', fontSize: '13.5px', lineHeight: 1.6, margin: '0 auto 18px' }}>
-                  Thank you for reaching out. Our specialist will contact you shortly.
+                <h4 style={{ fontSize: '1.3rem', fontWeight: '900', color: '#14532d', marginBottom: '8px' }}>Inquiry Submitted!</h4>
+                <p style={{ color: '#475569', fontSize: '14px', lineHeight: 1.6, margin: '0 auto 16px' }}>
+                  Thank you for reaching out, <strong>{formData.name}</strong>. Your inquiry has been received by our admin team.
                 </p>
+                <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '12px', padding: '12px 16px', margin: '0 auto 18px', maxWidth: '380px' }}>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#166534', fontWeight: '600' }}>
+                    Connecting directly to our specialist on WhatsApp (+91 91578 73576)...
+                  </p>
+                </div>
+                {waLink && (
+                  <div style={{ marginBottom: '20px' }}>
+                    <a
+                      href={waLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        background: '#25D366',
+                        color: '#ffffff',
+                        padding: '12px 24px',
+                        borderRadius: '12px',
+                        fontWeight: '800',
+                        fontSize: '14px',
+                        textDecoration: 'none',
+                        boxShadow: '0 4px 14px rgba(37, 211, 102, 0.35)',
+                        transition: 'transform 0.2s ease'
+                      }}
+                    >
+                      <MessageCircle style={{ width: '18px', height: '18px' }} />
+                      Open WhatsApp Chat Now
+                    </a>
+                  </div>
+                )}
                 <button
                   onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', email: '', inquiry: '' }); }}
-                  style={{ background: '#38bdf8', color: '#fff', border: 'none', padding: '10px 22px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer' }}
+                  style={{ background: 'transparent', color: '#64748b', border: 'none', padding: '8px 16px', borderRadius: '10px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', textDecoration: 'underline' }}
                 >
                   Send Another Message
                 </button>
@@ -470,10 +558,11 @@ export default function ContactUs({ siteData }) {
                   <div className="winera-cyan-cta-wrapper">
                     <button
                       type="submit"
+                      disabled={submitting}
                       className="winera-cyan-cta-btn"
-                      style={{ border: 'none', cursor: 'pointer', padding: '13px 32px', fontSize: '15.5px', borderRadius: '14px' }}
+                      style={{ border: 'none', cursor: submitting ? 'not-allowed' : 'pointer', padding: '13px 32px', fontSize: '15.5px', borderRadius: '14px', opacity: submitting ? 0.7 : 1 }}
                     >
-                      <span>{siteData?.contactPage?.formBtnText || "Request Free Consultation"}</span>
+                      <span>{submitting ? 'Submitting...' : (siteData?.contactPage?.formBtnText || "Request Free Consultation")}</span>
                     </button>
                   </div>
                 </div>
@@ -487,7 +576,7 @@ export default function ContactUs({ siteData }) {
           <div style={{ marginBottom: isMobile ? '40px' : '80px', textAlign: 'center' }}>
             <SectionHeading align="center" marginBottom="28px" accentWidth="240px" accentMaxWidth="400px">
               <span style={{ color: '#0f172a' }}>Where We’re </span>
-              <span style={{ color: '#0072b8' }}>Globally Present</span>
+              <span style={{ color: '#00a8ff' }}>Globally Present</span>
             </SectionHeading>
             <div className="winera-contact-locations-grid" style={{
               display: 'grid',
@@ -641,7 +730,7 @@ export default function ContactUs({ siteData }) {
           {/* Location Map */}
           <div style={{ textAlign: 'center', marginTop: isMobile ? '40px' : '80px' }}>
             <SectionHeading align="center" marginBottom="28px" accentWidth="220px" accentMaxWidth="360px">
-              <span style={{ color: '#0072b8' }}>Discover Our </span>
+              <span style={{ color: '#00a8ff' }}>Discover Our </span>
               <span style={{ color: '#0f172a' }}>Locations</span>
             </SectionHeading>
 

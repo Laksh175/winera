@@ -2166,9 +2166,17 @@ export const updateContent = async (req, res) => {
     if (sectionKey === 'blogPosts' && Array.isArray(data)) {
       try {
         for (const blogItem of data) {
+          if (!blogItem) continue;
           const itemSlug = blogItem.slug || (blogItem.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          const orConditions = [{ slug: itemSlug }];
+          if (blogItem._id && String(blogItem._id).match(/^[0-9a-fA-F]{24}$/)) {
+            orConditions.push({ _id: blogItem._id });
+          }
+          if (blogItem.id && !isNaN(Number(blogItem.id))) {
+            orConditions.push({ id: Number(blogItem.id) });
+          }
           await Blog.findOneAndUpdate(
-            { $or: [{ slug: itemSlug }, { id: blogItem.id || itemSlug }] },
+            { $or: orConditions },
             { $set: { ...blogItem, slug: itemSlug } },
             { upsert: true }
           );

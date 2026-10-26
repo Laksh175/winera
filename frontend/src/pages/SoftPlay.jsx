@@ -40,8 +40,8 @@ import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 
 // Helper function to render title with *word* highlights and <br/> linebreaks (supporting * across breaks)
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
-  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#0072b8') ? '#00a8ff' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -215,7 +215,7 @@ export default function SoftPlay({ siteData }) {
                 style={{ display: 'block', width: '280px', maxWidth: '75%', height: 'auto', maxHeight: '10px', aspectRatio: '492 / 10', marginBottom: '10px', objectFit: 'contain' }}
               />
               <h2 className="winera-softplay-supplier-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                <span style={{ color: '#0072b8' }}>Indoor Soft Play</span>
+                <span style={{ color: '#00a8ff' }}>Indoor Soft Play</span>
                 <br />
                 <span>Equipment Manufacturer in India</span>
               </h2>
@@ -1238,7 +1238,7 @@ export default function SoftPlay({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
       />
 
       {/* 11. WHAT OUR CLIENTS SAY SECTION (PERSISTED TESTIMONIALS DATA) */}
@@ -1246,18 +1246,18 @@ export default function SoftPlay({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 12. RELATED PRODUCTS CAROUSEL SECTION */}
-      <RelatedProductsSection sectionData={siteData?.softplayRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
+      <RelatedProductsSection sectionData={siteData?.softplayRelated || siteData?.arcadeRelated} accentColor="#00a8ff" />
 
       {/* 13. FREQUENTLY ASKED QUESTIONS SECTION (DYNAMIC SOFT PLAY FAQS) */}
       <FaqSection
         faqList={Array.isArray(siteData?.softplayFaqs) && siteData.softplayFaqs.length > 0 ? siteData.softplayFaqs : defaultSoftPlayFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 14. READY TO BUILD YOUR SOFT PLAY ZONE CTA BANNER SECTION */}

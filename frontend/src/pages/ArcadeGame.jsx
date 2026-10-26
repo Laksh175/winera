@@ -63,11 +63,11 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => {
   let text = rawText || defaultText;
   if (!text) return null;
 
-  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#00a6ff' || highlightColor === '#00b0ff') ? '#0072b8' : highlightColor;
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#0072b8' || highlightColor === '#00a6ff' || highlightColor === '#00b0ff') ? '#00a8ff' : highlightColor;
 
   // Auto-accent "Winera International" if user entered plain text without asterisks
   if (!text.includes('*') && text.includes('Winera International')) {
@@ -418,7 +418,7 @@ export default function ArcadeGame({ siteData }) {
           </div>
 
           {/* Right Text & Features Block */}
-          <div style={{ textAlign: 'left' }}>
+          <div className="winera-arcade-intro-text" style={{ textAlign: 'left' }}>
             {/* Title Header with yellow brush accent */}
             <SectionHeading align="left" marginBottom="20px" accentWidth="75%" accentMaxWidth="300px">
               {(() => {
@@ -427,7 +427,7 @@ export default function ArcadeGame({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );
@@ -1424,7 +1424,7 @@ export default function ArcadeGame({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );
@@ -1475,7 +1475,7 @@ export default function ArcadeGame({ siteData }) {
               return (
                 <div key={pIdx} style={{ marginBottom: pIdx === 0 ? '22px' : '30px' }}>
                   <div className="winera-commercial-point-title" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '8px', textAlign: 'left' }}>
-                    <CheckCheck style={{ width: '22px', height: '22px', color: '#0072b8', strokeWidth: 3, flexShrink: 0, marginTop: '2px' }} />
+                    <CheckCheck style={{ width: '22px', height: '22px', color: '#00a8ff', strokeWidth: 3, flexShrink: 0, marginTop: '2px' }} />
                     <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#0f172a', margin: 0, lineHeight: 1.35, textAlign: 'left' }}>
                       {point.title}
                     </h3>
@@ -1600,7 +1600,7 @@ export default function ArcadeGame({ siteData }) {
               style={{ display: 'block', width: '200px', maxWidth: '100%', height: 'auto', maxHeight: '9px', aspectRatio: '492 / 10', marginBottom: '8px', objectFit: 'contain', margin: '0 auto 8px' }}
             />
             <h2 className="winera-arcade-why-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.arcadeWhyUs?.title, "Why Choose *Winera International*", '#0072b8')}
+              {renderTitleMarkup(siteData?.arcadeWhyUs?.title, "Why Choose *Winera International*", '#00a8ff')}
             </h2>
           </div>
 
@@ -1854,7 +1854,7 @@ export default function ArcadeGame({ siteData }) {
       <ProjectsMarqueeSection
         siteData={siteData}
         showTopHeader={true}
-        title={<><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>GAME ZONES WE HAVE</span><br /><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>BUILT <span style={{ color: '#0072b8' }}>ACROSS INDIA</span></span></>}
+        title={<><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>GAME ZONES WE HAVE</span><br /><span style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>BUILT <span style={{ color: '#00a8ff' }}>ACROSS INDIA</span></span></>}
         subtext="Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers."
         projects={siteData?.builtProjects}
       />
@@ -1864,18 +1864,18 @@ export default function ArcadeGame({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 9. RELATED PRODUCTS CAROUSEL SECTION */}
-      <RelatedProductsSection sectionData={siteData?.arcadeRelated} accentColor="#0072b8" />
+      <RelatedProductsSection sectionData={siteData?.arcadeRelated} accentColor="#00a8ff" />
 
       {/* 10. FREQUENTLY ASKED QUESTIONS SECTION (DYNAMIC PAGE FAQS WITH DEFAULT FALLBACK) */}
       <FaqSection
         faqList={Array.isArray(siteData?.arcadeFaqs) && siteData.arcadeFaqs.length > 0 ? siteData.arcadeFaqs : arcadeFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 11. CTA BANNER SECTION (DYNAMIC MONGO PERSISTED DATA) */}

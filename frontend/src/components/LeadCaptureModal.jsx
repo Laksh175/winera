@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { X, CheckCircle2, Phone, User, Globe, Send, Loader2, ChevronDown } from 'lucide-react';
+import { X, CheckCircle2, Phone, User, Globe, Send, Loader2, ChevronDown, MessageCircle } from 'lucide-react';
 import { submitLeadApi } from '../services/api';
 
 const COUNTRY_CODES = [
@@ -79,32 +79,127 @@ const resolvePageName = (passedSource, pageUrl) => {
   }
 
   // Exact Page URL Mapping
-  if (!url || url === '/') return 'Home Page';
-  if (url.includes('/arcade-game')) return 'Arcade Games Page';
-  if (url.includes('/bowling-alley')) return 'Bowling Alley Page';
-  if (url.includes('/soft-play')) return 'Soft Play Page';
-  if (url.includes('/trampoline-park')) return 'Trampoline Park Page';
-  if (url.includes('/amusement-park')) return 'Amusement Park Page';
-  if (url.includes('/hypergrid')) return 'Hypergrid Page';
-  if (url.includes('/bumper-car')) return 'Bumper Car Page';
-  if (url.includes('/vr-games')) return 'VR Games Page';
-  if (url.includes('/ar-games')) return 'AR Games Page';
-  if (url.includes('/project')) return 'Projects Page';
-  if (url.includes('/roi')) return 'ROI Calculator Page';
-  if (url.includes('/blog')) return 'Blog Page';
-  if (url.includes('/about') || url.includes('/why-us') || url.includes('/why')) return 'About Us Page';
-  if (url.includes('/contact')) return 'Contact Us Page';
-  if (url.includes('/safety-standards')) return 'Safety Standards Page';
+  if (!url || url === '/') return 'Home';
+  if (url.includes('/arcade-game')) return 'Arcade Games';
+  if (url.includes('/bowling-alley')) return 'Bowling Alley';
+  if (url.includes('/soft-play')) return 'Soft Play';
+  if (url.includes('/trampoline-park')) return 'Trampoline Park';
+  if (url.includes('/amusement-park')) return 'Amusement Park';
+  if (url.includes('/hypergrid')) return 'Hypergrid';
+  if (url.includes('/bumper-car')) return 'Bumper Cars';
+  if (url.includes('/vr-games')) return 'VR Games';
+  if (url.includes('/ar-games')) return 'AR Games';
+  if (url.includes('/laser-tag')) return 'Laser Tag';
+  if (url.includes('/project')) return 'Turnkey Projects';
+  if (url.includes('/roi')) return 'ROI Calculator';
+  if (url.includes('/blog')) return 'Blog';
+  if (url.includes('/about') || url.includes('/why-us') || url.includes('/why')) return 'About Us';
+  if (url.includes('/contact')) return 'Contact Us';
+  if (url.includes('/safety-standards')) return 'Safety Standards';
 
   if (passedSource && (
     passedSource.toLowerCase().includes('page') ||
     passedSource.toLowerCase().includes('home') ||
     passedSource.toLowerCase().includes('about')
   )) {
-    return cleanSourceText(passedSource);
+    return cleanSourceText(passedSource).replace(/\s*page\s*$/i, '');
   }
 
-  return cleanSourceText(passedSource) || 'Website Page';
+  return (cleanSourceText(passedSource) || 'Game Zone Consultation').replace(/\s*page\s*$/i, '');
+};
+
+export const getProfessionalInquiryDetails = (sourceName, url = '') => {
+  const cleanSource = (sourceName || '').replace(/\s*page\s*$/i, '').trim();
+  const lowerUrl = (url || '').toLowerCase();
+  const lowerSource = cleanSource.toLowerCase();
+
+  // If specific product (e.g. category › product)
+  if (cleanSource.includes('›')) {
+    const parts = cleanSource.split('›').map(s => s.trim());
+    const prodName = parts[parts.length - 1];
+    return {
+      interest: cleanSource,
+      message: `Looking for pricing, technical specifications & quotation for "${prodName}".`
+    };
+  }
+
+  if (lowerUrl.includes('/trampoline-park') || lowerSource.includes('trampoline')) {
+    return {
+      interest: 'Trampoline Park',
+      message: 'Interested in Trampoline Park setup, design & project quotation.'
+    };
+  }
+  if (lowerUrl.includes('/arcade-game') || lowerSource.includes('arcade')) {
+    return {
+      interest: 'Arcade Games',
+      message: 'Looking for Arcade Game machines catalog, pricing & commercial setup.'
+    };
+  }
+  if (lowerUrl.includes('/soft-play') || lowerSource.includes('soft play')) {
+    return {
+      interest: 'Soft Play Area',
+      message: 'Interested in Indoor Soft Play Area design, equipment & project quotation.'
+    };
+  }
+  if (lowerUrl.includes('/bowling-alley') || lowerSource.includes('bowling')) {
+    return {
+      interest: 'Bowling Alley',
+      message: 'Looking for Bowling Alley lane installation, specifications & quotation.'
+    };
+  }
+  if (lowerUrl.includes('/vr-games') || lowerSource.includes('vr')) {
+    return {
+      interest: 'VR Games',
+      message: 'Interested in VR Gaming equipment setup, pricing & commercial catalog.'
+    };
+  }
+  if (lowerUrl.includes('/ar-games') || lowerSource.includes('ar')) {
+    return {
+      interest: 'AR Games',
+      message: 'Interested in AR Interactive Games setup & project quotation.'
+    };
+  }
+  if (lowerUrl.includes('/amusement-park') || lowerSource.includes('amusement')) {
+    return {
+      interest: 'Amusement Park',
+      message: 'Looking for Amusement Park rides, equipment & turnkey project quotation.'
+    };
+  }
+  if (lowerUrl.includes('/bumper-car') || lowerSource.includes('bumper')) {
+    return {
+      interest: 'Bumper Cars',
+      message: 'Interested in Bumper Car setup, arena tracks & equipment pricing.'
+    };
+  }
+  if (lowerUrl.includes('/laser-tag') || lowerSource.includes('laser')) {
+    return {
+      interest: 'Laser Tag Arena',
+      message: 'Looking for Laser Tag arena design, equipment & project quotation.'
+    };
+  }
+  if (lowerUrl.includes('/hypergrid') || lowerSource.includes('hypergrid')) {
+    return {
+      interest: 'Hypergrid LED Floor',
+      message: 'Interested in Hypergrid interactive LED floor game setup & quotation.'
+    };
+  }
+  if (lowerUrl.includes('/roi') || lowerSource.includes('roi')) {
+    return {
+      interest: 'ROI & Project Planning',
+      message: 'Looking for investment guidance & ROI calculation for Game Zone setup.'
+    };
+  }
+  if (lowerUrl.includes('/project') || lowerSource.includes('project')) {
+    return {
+      interest: 'Turnkey Projects',
+      message: 'Interested in turnkey Game Zone setup and past project portfolio details.'
+    };
+  }
+
+  return {
+    interest: cleanSource || 'Game Zone Consultation',
+    message: 'Looking for commercial Game Zone setup, consultation & project quotation.'
+  };
 };
 
 export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl }) {
@@ -113,6 +208,7 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [waLink, setWaLink] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -154,6 +250,7 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
       setName('');
       setPhone('');
       setSubmitted(false);
+      setWaLink('');
       setErrorMsg('');
       setIsCountryDropdownOpen(false);
     }
@@ -195,19 +292,55 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
     setErrorMsg('');
 
     try {
+      const inquiryDetails = getProfessionalInquiryDetails(currentSource, currentUrl);
+
       const resData = await submitLeadApi({
         name: name.trim(),
         countryCode,
         phone: phone.trim(),
-        pageSource: currentSource,
+        pageSource: `${inquiryDetails.interest} - ${inquiryDetails.message}`,
         pageUrl: currentUrl
       });
 
       if (resData && resData.success) {
+        const targetPhone = '919157873576';
+        const fullPhoneNum = `${countryCode} ${phone.trim()}`;
+        const fullPageUrl = typeof window !== 'undefined' && window.location.href.startsWith('http')
+          ? window.location.href
+          : (currentUrl.startsWith('http') ? currentUrl : `https://winerainternational.com${currentUrl}`);
+
+        const messageLines = [
+          'Hello Winera International! 👋',
+          '',
+          '*New Website Inquiry:*',
+          `👤 *Name:* ${name.trim()}`,
+          `📞 *Phone:* ${fullPhoneNum}`,
+          `📌 *Interest:* ${inquiryDetails.interest}`,
+          `💬 *Message:* ${inquiryDetails.message}`,
+          `🌐 *Page Link:* ${fullPageUrl}`
+        ];
+
+        const rawWaText = messageLines.join('\n');
+        const generatedWaUrl = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(rawWaText)}`;
+
+        setWaLink(generatedWaUrl);
         setSubmitted(true);
+
+        // Auto open WhatsApp
+        setTimeout(() => {
+          try {
+            const newWin = window.open(generatedWaUrl, '_blank');
+            if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+              window.location.href = generatedWaUrl;
+            }
+          } catch (e) {
+            window.location.href = generatedWaUrl;
+          }
+        }, 900);
+
         setTimeout(() => {
           onClose();
-        }, 2200);
+        }, 5500);
       } else {
         setErrorMsg(resData.message || 'Failed to submit inquiry. Please try again.');
       }
@@ -256,50 +389,117 @@ export default function LeadCaptureModal({ isOpen, onClose, pageSource, pageUrl 
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          style={{
-            position: 'absolute',
-            top: '20px',
-            right: '20px',
-            background: '#f1f5f9',
-            border: 'none',
-            borderRadius: '50%',
-            width: '34px',
-            height: '34px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#64748b',
-            cursor: 'pointer',
-            transition: 'all 0.2s'
-          }}
-          aria-label="Close Modal"
-        >
-          <X style={{ width: '18px', height: '18px' }} />
-        </button>
+        {/* Top Header Row with Ref Badge (Left) & Close Button (Right) - No overlapping! */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: submitted ? 'flex-end' : 'space-between',
+          gap: '12px',
+          marginBottom: submitted ? '0' : '14px',
+          width: '100%',
+          minHeight: '34px'
+        }}>
+          {!submitted && (
+            <div
+              title={`Ref: ${currentSource}`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                background: '#e0f2fe',
+                color: '#0284c7',
+                padding: '4px 10px',
+                borderRadius: '20px',
+                fontSize: '11px',
+                fontWeight: '700',
+                letterSpacing: '0.3px',
+                maxWidth: 'calc(100% - 44px)',
+                minWidth: 0,
+                boxSizing: 'border-box'
+              }}
+            >
+              <Globe style={{ width: '13px', height: '13px', flexShrink: 0 }} />
+              <span style={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                display: 'inline-block'
+              }}>
+                Ref: {currentSource}
+              </span>
+            </div>
+          )}
+
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            style={{
+              background: '#f1f5f9',
+              border: 'none',
+              borderRadius: '50%',
+              width: '32px',
+              height: '32px',
+              flexShrink: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#64748b',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              marginLeft: 'auto'
+            }}
+            aria-label="Close Modal"
+          >
+            <X style={{ width: '16px', height: '16px' }} />
+          </button>
+        </div>
 
         {submitted ? (
-          <div style={{ textAlign: 'center', padding: '20px 10px' }}>
+          <div style={{ textAlign: 'center', padding: '24px 12px' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '64px', height: '64px', borderRadius: '50%', background: '#dcfce7', color: '#16a34a', marginBottom: '16px' }}>
               <CheckCircle2 style={{ width: '38px', height: '38px' }} />
             </div>
             <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: '#0f172a', marginBottom: '8px' }}>
               Thank You, {name}!
             </h3>
-            <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.5 }}>
-              Your inquiry has been received. Our team will contact you shortly on <strong>{countryCode} {phone}</strong>.
+            <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.5, marginBottom: '16px' }}>
+              Your inquiry has been received by our admin team.
             </p>
+            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '12px', padding: '12px 14px', marginBottom: '18px' }}>
+              <p style={{ margin: 0, fontSize: '13px', color: '#166534', fontWeight: '600' }}>
+                Connecting directly to our specialist on WhatsApp (+91 91578 73576)...
+              </p>
+            </div>
+            {waLink && (
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  background: '#25D366',
+                  color: '#ffffff',
+                  padding: '12px 24px',
+                  borderRadius: '12px',
+                  fontWeight: '800',
+                  fontSize: '14px',
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 14px rgba(37, 211, 102, 0.35)',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <MessageCircle style={{ width: '18px', height: '18px' }} />
+                Open WhatsApp Chat Now
+              </a>
+            )}
           </div>
         ) : (
           <>
             {/* Header */}
-            <div style={{ marginBottom: '22px' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#e0f2fe', color: '#0284c7', padding: '4px 12px', borderRadius: '20px', fontSize: '11.5px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>
-                <Globe style={{ width: '13px', height: '13px' }} />
-                Ref: {currentSource}
-              </div>
+            <div style={{ marginBottom: '20px' }}>
               <h3 style={{ fontSize: '1.35rem', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.25 }}>
                 Get In Touch With Winera
               </h3>

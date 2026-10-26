@@ -332,7 +332,7 @@ export default function Roi({ siteData }) {
                 <span className="winera-roi-intro-line2">
                   {roiIntro.titleLine2 || "you need a"}{' '}
                 </span>
-                <span className="winera-roi-intro-line3" style={{ color: '#0072b8' }}>
+                <span className="winera-roi-intro-line3" style={{ color: '#00a8ff' }}>
                   {roiIntro.titleLine2Blue || "profit machine."}
                 </span>
               </h2>
@@ -439,9 +439,9 @@ export default function Roi({ siteData }) {
               }}>
                 <span className="winera-roi-pain-row1">Opening a game zone</span>
                 <span className="winera-roi-pain-row2">
-                  is easy. <span style={{ color: '#0072b8' }}>Making it</span>
+                  is easy. <span style={{ color: '#00a8ff' }}>Making it</span>
                 </span>
-                <span className="winera-roi-pain-row3" style={{ color: '#0072b8' }}>
+                <span className="winera-roi-pain-row3" style={{ color: '#00a8ff' }}>
                   profitable is a system.
                 </span>
               </h2>
@@ -574,7 +574,7 @@ export default function Roi({ siteData }) {
               {roiComparison.title && roiComparison.title.includes(' vs. ') ? (
                 <>
                   {roiComparison.title.split(' vs. ')[0]}<br />
-                  <span style={{ color: '#0072b8' }}>vs. {roiComparison.title.split(' vs. ')[1]}</span>
+                  <span style={{ color: '#00a8ff' }}>vs. {roiComparison.title.split(' vs. ')[1]}</span>
                 </>
               ) : (
                 roiComparison.title
@@ -941,7 +941,7 @@ export default function Roi({ siteData }) {
             }}>
               {roiProcess.title && roiProcess.title.includes("profit") ? (
                 <>
-                  <span style={{ color: '#0072b8' }}>{roiProcess.title.split("profit")[0]}</span> profit<br />
+                  <span style={{ color: '#00a8ff' }}>{roiProcess.title.split("profit")[0]}</span> profit<br />
                   {roiProcess.title.split("profit")[1]}
                 </>
               ) : roiProcess.title}
@@ -1212,7 +1212,7 @@ export default function Roi({ siteData }) {
                     return (
                       <>
                         <span className="winera-roi-get-title-line1" style={{ display: 'block' }}>{mainBefore}{' '}</span>
-                        <span className="winera-roi-get-title-line2" style={{ color: '#0072b8', display: 'block' }}>Winera {afterWinera}</span>
+                        <span className="winera-roi-get-title-line2" style={{ color: '#00a8ff', display: 'block' }}>Winera {afterWinera}</span>
                       </>
                     );
                   }
@@ -1258,7 +1258,7 @@ export default function Roi({ siteData }) {
             }}>
               {roiChecklist.title && roiChecklist.title.includes("This is") ? (
                 <>
-                  <span style={{ color: '#0072b8' }}>This is</span> {roiChecklist.title.split("This is")[1]}
+                  <span style={{ color: '#00a8ff' }}>This is</span> {roiChecklist.title.split("This is")[1]}
                 </>
               ) : roiChecklist.title}
             </h2>

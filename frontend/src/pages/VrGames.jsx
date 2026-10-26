@@ -65,8 +65,8 @@ const amusementParkCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_a
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
-  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#0072b8') ? '#00a8ff' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -321,7 +321,7 @@ export default function VrGames({ siteData }) {
                 style={{ display: 'block', width: '260px', maxWidth: '100%', height: '10px', marginBottom: '10px', objectFit: 'fill', margin: '0 0 10px 0' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.vrIntro?.title, "*VR Gaming Machine*<br/>supplier in India", '#0072b8')}
+                {renderTitleMarkup(siteData?.vrIntro?.title, "*VR Gaming Machine*<br/>supplier in India", '#00a8ff')}
               </h2>
             </div>
 
@@ -389,7 +389,7 @@ export default function VrGames({ siteData }) {
                 {renderTitleMarkup(
                   siteData?.vrMatchedVenue?.title || (siteData?.vrMatchedVenue?.titleLine1 ? `${siteData.vrMatchedVenue.titleLine1}<br/>${siteData.vrMatchedVenue.titleLine2 || ''}` : null),
                   "*Commercial VR Machines,*<br/>Matched to Your Venue",
-                  '#0072b8'
+                  '#00a8ff'
                 )}
               </h2>
             </div>
@@ -1467,7 +1467,7 @@ export default function VrGames({ siteData }) {
                 width: '100%',
                 maxWidth: '100%'
               }}>
-                {renderTitleMarkup(siteData?.vrReliability?.title, "*Commercial-Grade Quality*<br/>and Reliability", '#0072b8')}
+                {renderTitleMarkup(siteData?.vrReliability?.title, "*Commercial-Grade Quality*<br/>and Reliability", '#00a8ff')}
               </h2>
             </div>
 
@@ -1581,7 +1581,7 @@ export default function VrGames({ siteData }) {
                 {renderTitleMarkup(
                   siteData?.vrEarn?.title || (siteData?.vrEarn?.titleLine1 ? `${siteData.vrEarn.titleLine1}<br/>${siteData.vrEarn.titleLine2 || ''}` : null),
                   "What Will Your VR Gaming<br/>*Zone Actually Earn?*",
-                  '#0072b8'
+                  '#00a8ff'
                 )}
               </h2>
             </div>
@@ -1686,7 +1686,7 @@ export default function VrGames({ siteData }) {
               style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 className="winera-vr-whyus-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.vrWhyUs?.title, "Why Choose *Winera International*", '#0072b8')}
+              {renderTitleMarkup(siteData?.vrWhyUs?.title, "Why Choose *Winera International*", '#00a8ff')}
             </h2>
           </div>
 
@@ -1916,7 +1916,7 @@ export default function VrGames({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="Know More"
       />
@@ -1926,18 +1926,18 @@ export default function VrGames({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 11. RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection sectionData={siteData?.vrRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
+      <RelatedProductsSection sectionData={siteData?.vrRelated || siteData?.arcadeRelated} accentColor="#00a8ff" />
 
       {/* 12. FAQ SECTION */}
       <FaqSection
         faqList={Array.isArray(siteData?.vrFaqs) && siteData.vrFaqs.length > 0 ? siteData.vrFaqs : defaultVrFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 9. NEED ANY CONSULTATIONS CTA BANNER SECTION */}

@@ -76,8 +76,8 @@ const formatComparisonPointText = (rawText) => {
 };
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
-  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#0072b8') ? '#00a8ff' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -368,7 +368,7 @@ export default function BumperCar({ siteData }) {
                     ? "*Bumper Car* Manufacturer<br/>in India"
                     : siteData?.bumpercarIntro?.title,
                   "*Bumper Car* Manufacturer<br/>in India",
-                  '#0072b8'
+                  '#00a8ff'
                 )}
               </h2>
             </div>
@@ -445,7 +445,7 @@ export default function BumperCar({ siteData }) {
               marginBottom: '20px',
               textAlign: 'center'
             }}>
-              {renderTitleMarkup(siteData?.bumpercarBanner?.title, "*Bumper Car* Manufacturer in India", '#0072b8')}
+              {renderTitleMarkup(siteData?.bumpercarBanner?.title, "*Bumper Car* Manufacturer in India", '#00a8ff')}
             </h2>
             <p style={{
               fontSize: '14px',
@@ -701,7 +701,7 @@ export default function BumperCar({ siteData }) {
                 style={{ display: 'block', width: '65%', height: '9px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.bumpercarOptions?.title, "Indoor Bumper Car<br/>Options *for Your Venue*", '#0072b8')}
+                {renderTitleMarkup(siteData?.bumpercarOptions?.title, "Indoor Bumper Car<br/>Options *for Your Venue*", '#00a8ff')}
               </h2>
             </div>
 
@@ -844,7 +844,7 @@ export default function BumperCar({ siteData }) {
               style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.bumpercarComparison?.title, "*Quick Comparison* Table", '#0072b8')}
+              {renderTitleMarkup(siteData?.bumpercarComparison?.title, "*Quick Comparison* Table", '#00a8ff')}
             </h2>
           </div>
 
@@ -1134,7 +1134,7 @@ export default function BumperCar({ siteData }) {
                 style={{ display: 'block', width: '80%', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.bumpercarInvestment?.title, "Is a Bumper Car Ride a <br/>Smart *Investment for <br/>Your Venue?*", '#0072b8')}
+                {renderTitleMarkup(siteData?.bumpercarInvestment?.title, "Is a Bumper Car Ride a <br/>Smart *Investment for <br/>Your Venue?*", '#00a8ff')}
               </h2>
             </div>
 
@@ -1238,7 +1238,7 @@ export default function BumperCar({ siteData }) {
               style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.bumpercarWhyChoose?.title, "Why Choose *Winera International*", '#0072b8')}
+              {renderTitleMarkup(siteData?.bumpercarWhyChoose?.title, "Why Choose *Winera International*", '#00a8ff')}
             </h2>
           </div>
 
@@ -1451,7 +1451,7 @@ export default function BumperCar({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="View All Projects"
       />
@@ -1461,18 +1461,18 @@ export default function BumperCar({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 13. RELATED PRODUCTS CAROUSEL SECTION */}
-      <RelatedProductsSection sectionData={siteData?.bumpercarRelated || siteData?.softplayRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
+      <RelatedProductsSection sectionData={siteData?.bumpercarRelated || siteData?.softplayRelated || siteData?.arcadeRelated} accentColor="#00a8ff" />
 
       {/* 14. FREQUENTLY ASKED QUESTIONS SECTION (DYNAMIC BUMPER CAR FAQS) */}
       <FaqSection
         faqList={Array.isArray(siteData?.bumpercarFaqs) && siteData.bumpercarFaqs.length > 0 ? siteData.bumpercarFaqs : defaultBumperCarFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 15. CTA BANNER SECTION (MATCHING FIGMA SPEC EXACTLY) */}

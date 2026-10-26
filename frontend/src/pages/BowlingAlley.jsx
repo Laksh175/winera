@@ -69,8 +69,8 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 // Helper function to render title with *word* highlights, <cyan>cyan words</cyan> and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => {
-  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#00a8ff') ? '#0072b8' : highlightColor;
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#0072b8') ? '#00a8ff' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -94,7 +94,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#ffcd00') => 
       ));
 
       if (isCyan) {
-        return <span key={sIdx} style={{ color: '#0072b8' }}>{lineElements}</span>;
+        return <span key={sIdx} style={{ color: '#00a8ff' }}>{lineElements}</span>;
       }
       return <React.Fragment key={sIdx}>{lineElements}</React.Fragment>;
     });
@@ -311,7 +311,7 @@ export default function BowlingAlley({ siteData }) {
                   return parts.map((part, index) => {
                     if (index % 2 === 1) {
                       return (
-                        <span key={index} style={{ color: '#0072b8' }}>
+                        <span key={index} style={{ color: '#00a8ff' }}>
                           {part}
                         </span>
                       );
@@ -417,7 +417,7 @@ export default function BowlingAlley({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );
@@ -502,7 +502,7 @@ export default function BowlingAlley({ siteData }) {
                     if (!titleStr || titleStr === "*Free-Fall Bowling:* Give the Full Professional Experience" || titleStr.includes("Give the Full<br/>Professional Experience") || titleStr.includes("Give the Full<br />Professional Experience")) {
                       titleStr = "*Free-Fall Bowling:*<br/>Give the Full Professional Experience";
                     }
-                    return renderTitleMarkup(titleStr, "*Free-Fall Bowling:*<br/>Give the Full Professional Experience", '#0072b8');
+                    return renderTitleMarkup(titleStr, "*Free-Fall Bowling:*<br/>Give the Full Professional Experience", '#00a8ff');
                   })()}
                 </h2>
               </div>
@@ -954,7 +954,7 @@ export default function BowlingAlley({ siteData }) {
                     if (!titleStr || titleStr.includes("String Bowling") || titleStr.includes("Every Venue")) {
                       titleStr = "String Bowling Machines:<br/>*Affordable Bowling Setup*<br/>*for Every Venue*";
                     }
-                    return renderTitleMarkup(titleStr, "String Bowling Machines:<br/>*Affordable Bowling Setup*<br/>*for Every Venue*", '#0072b8');
+                    return renderTitleMarkup(titleStr, "String Bowling Machines:<br/>*Affordable Bowling Setup*<br/>*for Every Venue*", '#00a8ff');
                   })()}
                 </h2>
               </div>
@@ -1039,7 +1039,7 @@ export default function BowlingAlley({ siteData }) {
                   return parts.map((part, index) => {
                     if (index % 2 === 1) {
                       return (
-                        <span key={index} style={{ color: '#0072b8' }}>
+                        <span key={index} style={{ color: '#00a8ff' }}>
                           {part}
                         </span>
                       );
@@ -1225,7 +1225,7 @@ export default function BowlingAlley({ siteData }) {
                 margin: '0 0 20px',
                 letterSpacing: '-0.5px'
               }}>
-                {renderTitleMarkup(siteData?.bowlingWhyUs?.title, "Why Choose *Winera International*", '#0072b8')}
+                {renderTitleMarkup(siteData?.bowlingWhyUs?.title, "Why Choose *Winera International*", '#00a8ff')}
               </h2>
               <MobileExpandableText
                 preview={
@@ -1255,7 +1255,7 @@ export default function BowlingAlley({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="Know More"
       />
@@ -1265,13 +1265,13 @@ export default function BowlingAlley({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 9. RELATED PRODUCTS CAROUSEL SECTION */}
       <RelatedProductsSection
         sectionData={siteData?.bowlingRelated || siteData?.arcadeRelated}
-        accentColor="#0072b8"
+        accentColor="#00a8ff"
         accentWidth="370px"
         accentMaxWidth="95%"
         accentHeight="11px"
@@ -1284,7 +1284,7 @@ export default function BowlingAlley({ siteData }) {
         faqList={Array.isArray(siteData?.bowlingFaqs) && siteData.bowlingFaqs.length >= 8 ? siteData.bowlingFaqs : defaultBowlingFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
         accentWidth="510px"
         accentMaxWidth="95%"
         accentHeight="11px"

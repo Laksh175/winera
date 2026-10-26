@@ -283,7 +283,7 @@ export default function AboutUs({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );
@@ -544,7 +544,7 @@ export default function AboutUs({ siteData }) {
               return parts.map((part, index) => {
                 if (index % 2 === 1) {
                   return (
-                    <span key={index} style={{ color: '#0072b8' }}>
+                    <span key={index} style={{ color: '#00a8ff' }}>
                       {part}
                     </span>
                   );
@@ -936,7 +936,7 @@ export default function AboutUs({ siteData }) {
                       return parts.map((part, index) => {
                         if (index % 2 === 1) {
                           return (
-                            <span key={index} style={{ color: '#0072b8' }}>
+                            <span key={index} style={{ color: '#00a8ff' }}>
                               {part}
                             </span>
                           );

@@ -72,7 +72,7 @@ export default function TestimonialsSection({
   testimonials = defaultTestimonials,
   title = '*What Our* Clients Say',
   subtitle = "We are proud to have helped businesses across India build successful game zones. Here's what our clients say about our quality, service, and support.",
-  highlightColor = '#0072b8',
+  highlightColor = '#00a8ff',
   bg = '#F5F5F9',
   accentWidth = '465px',
   accentMaxWidth = '100%',
@@ -247,7 +247,7 @@ export default function TestimonialsSection({
                             bottom: 0,
                             background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, #ffffff 32%, #ffffff 100%)',
                             border: 'none',
-                            color: '#0072b8',
+                            color: '#00a8ff',
                             fontStyle: 'normal',
                             fontWeight: '700',
                             fontSize: '16.5px',
@@ -269,7 +269,7 @@ export default function TestimonialsSection({
                             setIsExpanded(false);
                           }}
                           style={{
-                            color: '#0072b8',
+                            color: '#00a8ff',
                             background: 'none',
                             border: 'none',
                             fontStyle: 'normal',
@@ -302,7 +302,7 @@ export default function TestimonialsSection({
                   }}
                 />
                 <div>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0072b8', display: 'flex', alignItems: 'center', gap: '6px', margin: 0 }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: '#00a8ff', display: 'flex', alignItems: 'center', gap: '6px', margin: 0 }}>
                     <span>{currentItem.gameZoneName || currentItem.name}</span>
                     <span style={{
                       display: 'inline-flex',
@@ -473,7 +473,7 @@ export default function TestimonialsSection({
                           bottom: 0,
                           background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, #ffffff 32%, #ffffff 100%)',
                           border: 'none',
-                          color: '#0072b8',
+                          color: '#00a8ff',
                           fontStyle: 'normal',
                           fontWeight: '700',
                           fontSize: '12.5px',
@@ -495,7 +495,7 @@ export default function TestimonialsSection({
                           setIsExpanded(false);
                         }}
                         style={{
-                          color: '#0072b8',
+                          color: '#00a8ff',
                           background: 'none',
                           border: 'none',
                           fontStyle: 'normal',
@@ -528,7 +528,7 @@ export default function TestimonialsSection({
                   }}
                 />
                 <div>
-                  <h3 style={{ fontSize: '0.98rem', fontWeight: '800', color: '#0072b8', margin: 0, display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <h3 style={{ fontSize: '0.98rem', fontWeight: '800', color: '#00a8ff', margin: 0, display: 'flex', alignItems: 'center', gap: '5px' }}>
                     {currentItem.gameZoneName || currentItem.name}
                     <span style={{
                       display: 'inline-flex',

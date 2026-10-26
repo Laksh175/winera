@@ -306,7 +306,7 @@ export default function SafetyStandards({ siteData }) {
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {siteData?.safetyIntro?.titleLine1 || "Game Zone & Kids Play"}<br />
-                <span style={{ color: '#0072b8' }}>{siteData?.safetyIntro?.titleLine2 || "Equipment Safety Standards"}</span>
+                <span style={{ color: '#00a8ff' }}>{siteData?.safetyIntro?.titleLine2 || "Equipment Safety Standards"}</span>
               </h2>
             </div>
 
@@ -374,7 +374,7 @@ export default function SafetyStandards({ siteData }) {
                 letterSpacing: '-0.5px'
               }}>
                 <span>{siteData?.safetyCertifications?.title1 || "Play & Attraction"}</span><br />
-                <span style={{ color: '#0072b8' }}>{siteData?.safetyCertifications?.title2 || "Equipment Safety"}</span>
+                <span style={{ color: '#00a8ff' }}>{siteData?.safetyCertifications?.title2 || "Equipment Safety"}</span>
               </h2>
               <p
                 style={{
@@ -470,7 +470,7 @@ export default function SafetyStandards({ siteData }) {
               margin: '0 0 12px',
               lineHeight: 1.2
             }}>
-              <span style={{ color: '#0072b8' }}>{siteData?.safetyMaterials?.title1 || "Material &"}</span>{' '}
+              <span style={{ color: '#00a8ff' }}>{siteData?.safetyMaterials?.title1 || "Material &"}</span>{' '}
               <span>{siteData?.safetyMaterials?.title2 || "Fire Safety"}</span>
             </h2>
             <p
@@ -607,7 +607,7 @@ export default function SafetyStandards({ siteData }) {
               lineHeight: 1.2
             }}>
               <span>{siteData?.safetyElectrical?.title1 || "Electrical &"}</span>{' '}
-              <span style={{ color: '#0072b8' }}>{siteData?.safetyElectrical?.title2 || "Machine Safety"}</span>
+              <span style={{ color: '#00a8ff' }}>{siteData?.safetyElectrical?.title2 || "Machine Safety"}</span>
             </h2>
             <p
               className="winera-safety-electrical-desc"
@@ -823,7 +823,7 @@ export default function SafetyStandards({ siteData }) {
               lineHeight: 1.2,
               textAlign: 'center'
             }}>
-              <span style={{ color: '#0072b8' }}>{siteData?.safetyStructure?.title1 || "Structure, Installation &"}</span>
+              <span style={{ color: '#00a8ff' }}>{siteData?.safetyStructure?.title1 || "Structure, Installation &"}</span>
               <br />
               <span style={{ color: '#0f172a' }}>{siteData?.safetyStructure?.title2 || "Operational Safety"}</span>
             </h2>
@@ -874,7 +874,7 @@ export default function SafetyStandards({ siteData }) {
               lineHeight: 1.2,
               textAlign: 'center'
             }}>
-              <span style={{ color: '#0072b8' }}>{(siteData?.safetyWhyMatters?.title1 || "Why This Matters").trim()}{' '}</span>
+              <span style={{ color: '#00a8ff' }}>{(siteData?.safetyWhyMatters?.title1 || "Why This Matters").trim()}{' '}</span>
               <span style={{ color: '#0f172a' }}>{(siteData?.safetyWhyMatters?.title2 || "for Your Business").trim()}</span>
             </h2>
             <p

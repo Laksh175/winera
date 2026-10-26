@@ -79,9 +79,8 @@ const getValidImageUrl = (url, fallback, width) => {
       if (finalUrl.includes('q_auto:eco')) {
         finalUrl = finalUrl.replace('q_auto:eco', 'q_auto');
       }
-      if (finalUrl.includes(',w_340') || finalUrl.includes(',w_325') || finalUrl.includes('/w_340/') || finalUrl.includes('/w_325/')) {
-        finalUrl = finalUrl.replace(/,w_\d+/, '').replace(/\/w_\d+\//, '/');
-      }
+      finalUrl = finalUrl.replace(/\/image\/upload\/f_auto,q_auto,w_\d+\//, '/image/upload/f_auto,q_auto/');
+      finalUrl = finalUrl.replace(/,w_\d+/, '').replace(/\/w_\d+\//, '/');
     }
   }
 
@@ -152,8 +151,6 @@ const CountUpNumber = ({ targetText, duration = 1800 }) => {
 export default function Home({ siteData }) {
   const navigate = useNavigate();
   const [activeProductIndex, setActiveProductIndex] = React.useState(0);
-  const [isProductPaused, setIsProductPaused] = React.useState(false);
-  const hoverProductTimeoutRef = React.useRef(null);
   const [activeIndustryIndex, setActiveIndustryIndex] = React.useState(2);
   const [activeProcessStep, setActiveProcessStep] = React.useState(0);
   const [activeWhyUsIndex, setActiveWhyUsIndex] = React.useState(0);
@@ -165,18 +162,6 @@ export default function Home({ siteData }) {
   const [isPhone, setIsPhone] = React.useState(
     typeof window !== 'undefined' ? window.innerWidth < 768 : false
   );
-
-  const totalProductCards = (Array.isArray(siteData?.productsHome?.cardsList) && siteData.productsHome.cardsList.length > 0)
-    ? siteData.productsHome.cardsList.length
-    : 10;
-
-  React.useEffect(() => {
-    if (isProductPaused || totalProductCards === 0) return;
-    const interval = setInterval(() => {
-      setActiveProductIndex(prev => (prev + 1) % totalProductCards);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [isProductPaused, totalProductCards]);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -511,7 +496,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );
@@ -633,7 +618,7 @@ export default function Home({ siteData }) {
                       fontSize: '46.72px',
                       lineHeight: '51.39px',
                       letterSpacing: '-1.4px',
-                      color: '#0072b8',
+                      color: '#00a8ff',
                       marginBottom: '4px',
                       textAlign: 'left'
                     }}>
@@ -691,7 +676,7 @@ export default function Home({ siteData }) {
                   fontSize: '28px',
                   fontWeight: 400,
                   lineHeight: '32px',
-                  color: '#0072b8',
+                  color: '#00a8ff',
                   margin: '2px 0 6px',
                   textAlign: 'left'
                 }}>
@@ -730,7 +715,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );
@@ -888,7 +873,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );
@@ -900,34 +885,26 @@ export default function Home({ siteData }) {
 
             <p style={{ color: '#64748b', fontSize: '13px', fontWeight: '700', marginBottom: '40px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((siteData?.productsHome?.subtitle || "Our Complete Game Zone Equipment & Setup Solutions").replace(/\n/g, '<br>')) }} />
 
-            <div
-              className="winera-products-container"
-              onMouseEnter={() => setIsProductPaused(true)}
-              onMouseLeave={() => {
-                if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
-                setIsProductPaused(false);
-              }}
-              style={{
-                display: 'flex',
-                gap: '12px',
-                maxWidth: '1220px',
-                margin: '0 auto',
-                height: '460px',
-                alignItems: 'stretch'
-              }}
-            >
+            <div className="winera-products-container" style={{
+              display: 'flex',
+              gap: '12px',
+              maxWidth: '1220px',
+              margin: '0 auto',
+              height: '460px',
+              alignItems: 'stretch'
+            }}>
               {(() => {
                 const defaultProductsCards = [
-                  { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp", link: "/product/arcade-games" },
-                  { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg", link: "/product/vr-games" },
-                  { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg", link: "/product/ar-games" },
-                  { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp", link: "/product/bowling-alley" },
-                  { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp", link: "/product/soft-play" },
-                  { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp", link: "/product/trampoline-park" },
-                  { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg", link: "/product/hypergrid" },
-                  { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg", link: "/product/amusement-park" },
-                  { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp", link: "/product/bumper-car" },
-                  { id: "lasertag", title: "Laser Tag", desc: "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.", img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_400/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp", link: "/product/laser-tag" }
+                  { id: "arcade", title: "Arcade Game", desc: "Discover endless fun with our innovative indoor arcade games, merging excitement and fitness seamlessly.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp", link: "/product/arcade-games" },
+                  { id: "vr", title: "VR GAME", desc: "Immersive commercial VR gaming machines delivering thrilling virtual reality experiences.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885831/winera_uploads/qn3tburs6dlxuicvosja.jpg", link: "/product/vr-games" },
+                  { id: "ar", title: "AR GAME", desc: "Interactive AR gaming solutions blending technology and entertainment — sports simulators and more.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/bzlewlk9vatvganrelqw.jpg", link: "/product/ar-games" },
+                  { id: "bowling", title: "Bowling Alley", desc: "The Brunswick bowling equipment with stable mechanical capacity popular across global entertainment hubs.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/pyhvat8io2c6uyzu7soz.webp", link: "/product/bowling-alley" },
+                  { id: "softplay", title: "Soft Play", desc: "Indoor playgrounds designed specifically for children aged 3-15 years of indoor game venues.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp", link: "/product/soft-play" },
+                  { id: "trampoline", title: "Trampoline Park", desc: "Physical fitness and active fun combined in safe high-capacity commercial trampoline layouts.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp", link: "/product/trampoline-park" },
+                  { id: "hypergrid", title: "Hyper Grid", desc: "Interactive LED floor game where players compete across pressure-sensitive glowing tiles.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/lx7y9w1twhlcosdziwgc.jpg", link: "/product/hypergrid" },
+                  { id: "amusement", title: "Amusement Park", desc: "Our amusement park rides are designed with high safety standards and exciting gameplay for all ages.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885835/winera_uploads/c8exrz7etlhipy1tvxcb.jpg", link: "/product/amusement-park" },
+                  { id: "bumpercar", title: "Bumper Cars", desc: "Our bumper cars are an exhilarating blend of thrilling collisions and smooth handling.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885833/winera_uploads/uy7o5lq9mrstb8bztnev.webp", link: "/product/bumper-car" },
+                  { id: "lasertag", title: "Laser Tag", desc: "Action-packed laser tag arenas designed for competitive multiplayer gaming experiences.", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885837/winera_uploads/yojhbga8phmg8eavyb2f.webp", link: "/product/laser-tag" }
                 ];
 
                 const getCustomTitleStyle = (prod) => {
@@ -999,8 +976,6 @@ export default function Home({ siteData }) {
                       to={targetLink}
                       aria-expanded={isExpanded}
                       onClick={(e) => {
-                        if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
-                        setIsProductPaused(true);
                         if (!isExpanded) {
                           e.preventDefault();
                           setActiveProductIndex(idx);
@@ -1008,24 +983,13 @@ export default function Home({ siteData }) {
                       }}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
-                          if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
-                          setIsProductPaused(true);
                           if (!isExpanded) {
                             e.preventDefault();
                             setActiveProductIndex(idx);
                           }
                         }
                       }}
-                      onMouseEnter={() => {
-                        setIsProductPaused(true);
-                        if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
-                        hoverProductTimeoutRef.current = setTimeout(() => {
-                          setActiveProductIndex(idx);
-                        }, 100);
-                      }}
-                      onMouseLeave={() => {
-                        if (hoverProductTimeoutRef.current) clearTimeout(hoverProductTimeoutRef.current);
-                      }}
+                      onMouseEnter={() => setActiveProductIndex(idx)}
                       className={`winera-product-card ${isExpanded ? 'is-expanded' : ''}`}
                       style={{
                         flex: isExpanded ? '0 0 340px' : '1',
@@ -1033,7 +997,7 @@ export default function Home({ siteData }) {
                         overflow: 'hidden',
                         position: 'relative',
                         cursor: 'pointer',
-                        transition: 'flex 0.85s cubic-bezier(0.25, 1, 0.35, 1), box-shadow 0.85s ease, transform 0.85s ease',
+                        transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
                         boxShadow: isExpanded ? '0 16px 36px rgba(2, 132, 199, 0.22)' : '0 4px 12px rgba(0,0,0,0.06)',
                         background: '#0f172a',
                         textDecoration: 'none',
@@ -1043,7 +1007,7 @@ export default function Home({ siteData }) {
                     >
                       {/* Product Card Image with Native Lazy Loading */}
                       <img
-                        src={getValidImageUrl(prod.img, '', isPhone ? 280 : 340)}
+                        src={getValidImageUrl(prod.img, '')}
                         alt={prod.imgAlt || `${prod.title} Commercial Equipment - Winera`}
                         loading="lazy"
                         decoding="async"
@@ -1053,9 +1017,7 @@ export default function Home({ siteData }) {
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          zIndex: 0,
-                          transform: isExpanded ? 'scale(1.06)' : 'scale(1)',
-                          transition: 'transform 0.9s cubic-bezier(0.25, 1, 0.35, 1)'
+                          zIndex: 0
                         }}
                       />
 
@@ -1064,96 +1026,84 @@ export default function Home({ siteData }) {
                         position: 'absolute',
                         inset: 0,
                         background: isExpanded
-                          ? 'rgba(15, 23, 42, 0.22)'
+                          ? 'rgba(15, 23, 42, 0.2)'
                           : 'linear-gradient(180deg, rgba(30, 168, 243, 0.90) 0%, rgba(0, 137, 217, 0.95) 100%)',
-                        zIndex: 1,
-                        transition: 'background 0.75s ease'
+                        zIndex: 1
                       }} />
 
-                      {/* Collapsed Spine Title - Always mounted with smooth opacity & transform */}
-                      <div
-                        className="winera-collapsed-title winera-collapsed-title-anim"
-                        style={{
-                          position: 'absolute',
-                          inset: 0,
+                      {isExpanded ? (
+                        <div style={{
                           width: '100%',
                           height: '100%',
                           display: 'flex',
                           flexDirection: 'column',
-                          alignItems: 'center',
-                          justifyContent: 'flex-start',
-                          writingMode: 'vertical-rl',
-                          transform: isExpanded ? 'rotate(180deg) translateY(-20px)' : 'rotate(180deg) translateY(0)',
-                          padding: cardStyle.padding,
-                          color: '#ffffff',
-                          fontWeight: '500',
-                          fontSize: cardStyle.fontSize,
-                          letterSpacing: cardStyle.letterSpacing,
-                          textShadow: 'none',
-                          whiteSpace: 'nowrap',
-                          zIndex: 2,
-                          opacity: isExpanded ? 0 : 1,
-                          pointerEvents: isExpanded ? 'none' : 'auto',
-                          transition: 'opacity 0.5s cubic-bezier(0.25, 1, 0.35, 1), transform 0.5s cubic-bezier(0.25, 1, 0.35, 1)'
-                        }}
-                      >
-                        {prod.title}
-                      </div>
-
-                      {/* Expanded Info Box - Always mounted with smooth opacity & transform */}
-                      <div
-                        style={{
-                          position: 'absolute',
-                          inset: 0,
-                          width: '100%',
-                          height: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'flex-end',
-                          zIndex: 3,
-                          opacity: isExpanded ? 1 : 0,
-                          pointerEvents: isExpanded ? 'auto' : 'none',
-                          transform: isExpanded ? 'translateY(0) scale(1)' : 'translateY(22px) scale(0.96)',
-                          transition: isExpanded
-                            ? 'opacity 0.65s cubic-bezier(0.25, 1, 0.35, 1) 0.15s, transform 0.65s cubic-bezier(0.25, 1, 0.35, 1) 0.15s'
-                            : 'opacity 0.35s ease, transform 0.35s ease'
-                        }}
-                      >
-                        <div
-                          className="winera-expanded-info-box"
-                          style={{
-                            background: '#ffffff',
-                            margin: '14px',
-                            padding: '16px 20px',
-                            borderRadius: '16px',
-                            textAlign: 'left',
-                            boxShadow: '0 10px 25px rgba(0,0,0,0.15)'
-                          }}
-                        >
-                          <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0072b8', marginBottom: '6px' }}>{prod.title}</h3>
-                          <p style={{ fontSize: '11.5px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((prod.desc || '').replace(/\n/g, '<br>')) }} />
-                          <span
-                            className="winera-product-view-more-link"
+                          justifyContent: 'space-between',
+                          position: 'relative',
+                          zIndex: 2
+                        }}>
+                          <div style={{ flex: 1, minHeight: '120px' }}></div>
+                          <div
+                            className="winera-expanded-info-box"
                             style={{
-                              color: '#0072b8',
-                              fontSize: isMobile ? '14px' : '13.5px',
-                              fontWeight: '800',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '8px',
-                              padding: '8px 18px',
-                              borderRadius: '24px',
-                              background: 'rgba(0, 114, 184, 0.08)',
-                              marginTop: '8px',
-                              marginBottom: '2px',
-                              textDecoration: 'none'
+                              background: '#ffffff',
+                              margin: '14px',
+                              padding: '16px 20px',
+                              borderRadius: '16px',
+                              textAlign: 'left',
+                              boxShadow: '0 10px 25px rgba(0,0,0,0.15)'
                             }}
                           >
-                            <span>View More Info</span>
-                            <ArrowRight style={{ width: isMobile ? '15px' : '14px', height: isMobile ? '15px' : '14px' }} />
-                          </span>
+                            <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#00a8ff', marginBottom: '6px' }}>{prod.title}</h3>
+                            <p style={{ fontSize: '11.5px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }} dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml((prod.desc || '').replace(/\n/g, '<br>')) }} />
+                            <span
+                              className="winera-product-view-more-link"
+                              style={{
+                                color: '#00a8ff',
+                                fontSize: isMobile ? '14px' : '13.5px',
+                                fontWeight: '800',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                padding: '8px 18px',
+                                borderRadius: '24px',
+                                background: 'rgba(0, 168, 255, 0.08)',
+                                marginTop: '8px',
+                                marginBottom: '2px',
+                                textDecoration: 'none'
+                              }}
+                            >
+                              <span>View More Info</span>
+                              <ArrowRight style={{ width: isMobile ? '15px' : '14px', height: isMobile ? '15px' : '14px' }} />
+                            </span>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        <div
+                          className="winera-collapsed-title winera-collapsed-title-anim"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'flex-start',
+                            writingMode: 'vertical-rl',
+                            transform: 'rotate(180deg)',
+                            padding: cardStyle.padding,
+                            color: '#ffffff',
+                            fontWeight: '500',
+                            fontSize: cardStyle.fontSize,
+                            letterSpacing: cardStyle.letterSpacing,
+                            textShadow: 'none',
+                            whiteSpace: 'nowrap',
+                            zIndex: 2,
+                            position: 'relative',
+                            transition: 'all 0.4s ease'
+                          }}
+                        >
+                          {prod.title}
+                        </div>
+                      )}
                     </Link>
                   );
                 });
@@ -1212,7 +1162,7 @@ export default function Home({ siteData }) {
                     return parts.map((part, index) => {
                       if (index % 2 === 1) {
                         return (
-                          <span key={index} style={{ color: '#0072b8' }}>
+                          <span key={index} style={{ color: '#00a8ff' }}>
                             {part}
                           </span>
                         );
@@ -1229,7 +1179,7 @@ export default function Home({ siteData }) {
                   return (
                     <span className="winera-partner-title-block">
                       <span className="winera-partner-line winera-partner-line-1">
-                        <span style={{ color: '#0072b8' }}>Your Partner</span> {isMobile ? "In" : "in"}
+                        <span style={{ color: '#00a8ff' }}>Your Partner</span> {isMobile ? "In" : "in"}
                       </span>
                       <span className="winera-partner-line winera-partner-line-2">
                         {isMobile ? "Building A Profitable" : "Building a Profitable"}
@@ -1348,7 +1298,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );
@@ -1504,7 +1454,7 @@ export default function Home({ siteData }) {
                             textAlign: 'left',
                             boxShadow: '0 12px 30px rgba(0,0,0,0.25)'
                           }}>
-                            <h3 style={{ fontSize: '1.2rem', fontWeight: '900', color: '#0072b8', margin: 0 }}>
+                            <h3 style={{ fontSize: '1.2rem', fontWeight: '900', color: '#00a8ff', margin: 0 }}>
                               {ind.title}
                             </h3>
                           </div>
@@ -1557,7 +1507,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );
@@ -1762,7 +1712,7 @@ export default function Home({ siteData }) {
                                   gap: '8px',
                                   paddingBottom: isLastInCard45 ? '6px' : '0px'
                                 }}>
-                                  <span style={{ color: isYellow ? '#eab308' : '#0072b8', fontSize: '15px', fontWeight: '900', marginTop: '-1px', flexShrink: 0 }}>•</span>
+                                  <span style={{ color: isYellow ? '#eab308' : '#00a8ff', fontSize: '15px', fontWeight: '900', marginTop: '-1px', flexShrink: 0 }}>•</span>
                                   <span dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(pt) }} />
                                 </li>
                               );
@@ -1828,7 +1778,7 @@ export default function Home({ siteData }) {
                                 width: activeProcessStep === dotIdx ? '28px' : '8px',
                                 height: '8px',
                                 borderRadius: '10px',
-                                background: activeProcessStep === dotIdx ? '#0072b8' : '#cbd5e1',
+                                background: activeProcessStep === dotIdx ? '#00a8ff' : '#cbd5e1',
                                 transition: 'all 0.3s ease'
                               }}
                             />
@@ -1899,7 +1849,7 @@ export default function Home({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#0072b8' }}>
+                      <span key={index} style={{ color: '#00a8ff' }}>
                         {part}
                       </span>
                     );

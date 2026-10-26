@@ -96,8 +96,8 @@ const renderWhyWineraIcon = (iconName, idx) => {
 };
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
-  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#0072b8') ? '#00a8ff' : highlightColor;
   let text = rawText || defaultText;
 
   // Sanitize line breaks and markup for Hypergrid page titles specifically
@@ -262,7 +262,7 @@ export default function Hypergrid({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game* Supplier<br/>in India", '#0072b8')}
+                {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game* Supplier<br/>in India", '#00a8ff')}
               </h2>
             </div>
 
@@ -322,7 +322,7 @@ export default function Hypergrid({ siteData }) {
                 style={{ display: 'block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, width: '1000px', maxWidth: '100%' }}>
-                {renderTitleMarkup(siteData?.hypergridBanner?.title, "Interactive LED Floor Games<br/>*for High-Footfall Venues*", '#0072b8')}
+                {renderTitleMarkup(siteData?.hypergridBanner?.title, "Interactive LED Floor Games<br/>*for High-Footfall Venues*", '#00a8ff')}
               </h2>
             </div>
 
@@ -487,7 +487,7 @@ export default function Hypergrid({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: '0 0 14px' }}>
-              {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid*<br/>*the Right Choice for Your Venue*", '#0072b8')}
+              {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid*<br/>*the Right Choice for Your Venue*", '#00a8ff')}
             </h2>
             <p
               style={{ fontSize: '13.5px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}
@@ -587,7 +587,7 @@ export default function Hypergrid({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
-              {renderTitleMarkup(siteData?.hypergridRoi?.title, "Is Hypergrid a Smart <br/>*Investment for Your Venue?*", '#0072b8')}
+              {renderTitleMarkup(siteData?.hypergridRoi?.title, "Is Hypergrid a Smart <br/>*Investment for Your Venue?*", '#00a8ff')}
             </h2>
           </div>
 
@@ -705,7 +705,7 @@ export default function Hypergrid({ siteData }) {
               style={{ display: 'block', width: '350px', maxWidth: '100%', height: '10px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.hypergridWhyWinera?.title, "Why Choose *Winera International*", '#0072b8')}
+              {renderTitleMarkup(siteData?.hypergridWhyWinera?.title, "Why Choose *Winera International*", '#00a8ff')}
             </h2>
           </div>
 
@@ -895,14 +895,14 @@ export default function Hypergrid({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
       />
 
       {/* 10. WHAT OUR CLIENTS SAY (TESTIMONIALS) SECTION */}
       <TestimonialsSection siteData={siteData} />
 
       {/* 11. RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection sectionData={siteData?.hypergridRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
+      <RelatedProductsSection sectionData={siteData?.hypergridRelated || siteData?.arcadeRelated} accentColor="#00a8ff" />
 
       {/* 12. FAQ SECTION */}
       {(() => {
@@ -950,7 +950,7 @@ export default function Hypergrid({ siteData }) {
           <FaqSection
             faqList={faqs}
             faqsList={faqs}
-            highlightColor="#0072b8"
+            highlightColor="#00a8ff"
           />
         );
       })()}

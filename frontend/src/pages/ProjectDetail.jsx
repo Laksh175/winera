@@ -849,7 +849,7 @@ export default function ProjectDetail({ siteData }) {
                 const blackPart = [titleLine2Black, titleLine3].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
                 return (
                   <>
-                    <span style={{ color: '#0072b8' }}>{cyanPart} </span>
+                    <span style={{ color: '#00a8ff' }}>{cyanPart} </span>
                     <span style={{ color: '#0f172a' }}>{blackPart}</span>
                   </>
                 );
@@ -1003,7 +1003,7 @@ export default function ProjectDetail({ siteData }) {
             lineHeight: 1.15
           }}>
             <span>{clientTitlePrefix}</span>
-            <span style={{ color: '#0072b8' }}>{clientTitleCyan}</span>
+            <span style={{ color: '#00a8ff' }}>{clientTitleCyan}</span>
           </h2>
         </div>
 
@@ -1080,7 +1080,7 @@ export default function ProjectDetail({ siteData }) {
             margin: 0,
             lineHeight: 1.15
           }}>
-            <span style={{ color: '#0072b8' }}>{solutionTitleCyan}</span>
+            <span style={{ color: '#00a8ff' }}>{solutionTitleCyan}</span>
             <span>{solutionTitleSuffix}</span>
           </h2>
         </div>
@@ -1199,7 +1199,7 @@ export default function ProjectDetail({ siteData }) {
               style={{ display: 'inline-block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '8px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: '42px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
-              <span style={{ color: '#0072b8' }}>{galleryTitleCyan}</span>
+              <span style={{ color: '#00a8ff' }}>{galleryTitleCyan}</span>
               <span>{galleryTitleDark}</span>
             </h2>
           </motion.div>
@@ -1375,7 +1375,7 @@ export default function ProjectDetail({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
         showBottomButton={true}
         buttonText="View All Projects"
       />

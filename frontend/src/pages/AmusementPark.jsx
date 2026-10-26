@@ -25,8 +25,8 @@ const talkToRoiButtonImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_a
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
-  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#0072b8') ? '#00a8ff' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -758,11 +758,11 @@ export default function AmusementPark({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
       />
       <TestimonialsSection siteData={siteData} />
-      <RelatedProductsSection sectionData={siteData?.amusementRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
-      <FaqSection faqsList={(Array.isArray(siteData?.amusementFaqs) && siteData.amusementFaqs.length >= 7) ? siteData.amusementFaqs : defaultAmusementFaqs} highlightColor="#0072b8" />
+      <RelatedProductsSection sectionData={siteData?.amusementRelated || siteData?.arcadeRelated} accentColor="#00a8ff" />
+      <FaqSection faqsList={(Array.isArray(siteData?.amusementFaqs) && siteData.amusementFaqs.length >= 7) ? siteData.amusementFaqs : defaultAmusementFaqs} highlightColor="#00a8ff" />
 
       {/* CTA BANNER SECTION WITH DYNAMIC CONTENT & EXACT TILTED CARDS MATCHING UI 1:1 */}
       <div className="winera-amusement-cta-wrapper">

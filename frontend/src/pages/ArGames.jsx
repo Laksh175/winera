@@ -38,8 +38,8 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
-  const actualHighlight = highlightColor === '#38bdf8' ? '#0072b8' : highlightColor;
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#0072b8') ? '#00a8ff' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -169,7 +169,7 @@ export default function ArGames({ siteData }) {
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                {renderTitleMarkup(siteData?.arIntro?.title, "*AR Games* Supplier<br/>in India", '#0072b8')}
+                {renderTitleMarkup(siteData?.arIntro?.title, "*AR Games* Supplier<br/>in India", '#00a8ff')}
               </h2>
             </div>
 
@@ -263,7 +263,7 @@ export default function ArGames({ siteData }) {
                 {renderTitleMarkup(
                   siteData?.arMatchedVenue?.title,
                   "Interactive AR Attractions,<br/>*Built for Your Venue*",
-                  '#0072b8'
+                  '#00a8ff'
                 )}
               </h2>
             </div>
@@ -349,7 +349,7 @@ export default function ArGames({ siteData }) {
                   style={{ display: 'block', width: '260px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
                 />
                 <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
-                  {renderTitleMarkup(siteData?.arFeatures?.f1Title, "*Exciting* Attractions", '#0072b8')}
+                  {renderTitleMarkup(siteData?.arFeatures?.f1Title, "*Exciting* Attractions", '#00a8ff')}
                 </h2>
               </div>
               <p
@@ -396,7 +396,7 @@ export default function ArGames({ siteData }) {
                   style={{ display: 'block', width: '260px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
                 />
                 <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
-                  {renderTitleMarkup(siteData?.arFeatures?.f2Title, "High-Quality *Equipment*", '#0072b8')}
+                  {renderTitleMarkup(siteData?.arFeatures?.f2Title, "High-Quality *Equipment*", '#00a8ff')}
                 </h2>
               </div>
               <p
@@ -425,7 +425,7 @@ export default function ArGames({ siteData }) {
                   style={{ display: 'block', width: '280px', height: '10px', marginBottom: '8px', objectFit: 'fill' }}
                 />
                 <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.15 }}>
-                  {renderTitleMarkup(siteData?.arFeatures?.f3Title, "*Budget-Friendly AR*<br/>Entertainment Setup", '#0072b8')}
+                  {renderTitleMarkup(siteData?.arFeatures?.f3Title, "*Budget-Friendly AR*<br/>Entertainment Setup", '#00a8ff')}
                 </h2>
               </div>
               <p
@@ -481,7 +481,7 @@ export default function ArGames({ siteData }) {
               {renderTitleMarkup(
                 siteData?.arEarn?.title,
                 "*Know Your Returns Before* You Invest in<br/>AR Gaming Equipment",
-                '#0072b8'
+                '#00a8ff'
               )}
             </h2>
           </div>
@@ -563,7 +563,7 @@ export default function ArGames({ siteData }) {
               style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 className="winera-ar-whyus-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.arWhyUs?.title, "Why Choose *Winera International*", '#0072b8')}
+              {renderTitleMarkup(siteData?.arWhyUs?.title, "Why Choose *Winera International*", '#00a8ff')}
             </h2>
           </div>
 
@@ -781,14 +781,14 @@ export default function ArGames({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#0072b8' }}>Recent Projects</span></>}
+        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
       />
 
       {/* 10. WHAT OUR CLIENTS SAY (TESTIMONIALS) SECTION */}
       <TestimonialsSection siteData={siteData} />
 
       {/* 11. RELATED PRODUCTS SECTION */}
-      <RelatedProductsSection sectionData={siteData?.arRelated || siteData?.arcadeRelated} accentColor="#0072b8" />
+      <RelatedProductsSection sectionData={siteData?.arRelated || siteData?.arcadeRelated} accentColor="#00a8ff" />
 
       {/* 12. FAQ SECTION */}
       <FaqSection

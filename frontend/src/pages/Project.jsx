@@ -133,7 +133,7 @@ export default function Project({ siteData }) {
     return fallback;
   };
 
-  const renderTitleMarkup = (titleText, fallbackMarkup, accentColor = '#0072b8') => {
+  const renderTitleMarkup = (titleText, fallbackMarkup, accentColor = '#00a8ff') => {
     const text = titleText !== undefined && titleText !== null && titleText !== '' ? titleText : fallbackMarkup;
     if (typeof text !== 'string') return text;
 
@@ -364,8 +364,8 @@ export default function Project({ siteData }) {
         {/* Title: Crafting India's Best Play Destinations */}
         <div className="winera-project-heading-wrapper">
           <SectionHeading marginBottom="45px" accentWidth="220px" accentMaxWidth="260px">
-            <span className="winera-project-heading-line1">Crafting <span style={{ color: '#0072b8' }}>India's Best</span></span>{' '}
-            <span className="winera-project-heading-line2" style={{ color: '#0072b8' }}>Play Destinations</span>
+            <span className="winera-project-heading-line1">Crafting <span style={{ color: '#00a8ff' }}>India's Best</span></span>{' '}
+            <span className="winera-project-heading-line2" style={{ color: '#00a8ff' }}>Play Destinations</span>
           </SectionHeading>
         </div>
 

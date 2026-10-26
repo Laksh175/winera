@@ -293,11 +293,22 @@ export default function BlogDetail({ siteData }) {
     siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
   );
 
-  const rawPosts = (dynamicBlogPosts.length > 0)
-    ? dynamicBlogPosts
-    : (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
-      ? siteData.blogPosts
-      : [];
+  const sitePosts = (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
+    ? siteData.blogPosts
+    : [];
+
+  const rawPosts = (() => {
+    if (dynamicBlogPosts.length === 0) return sitePosts;
+    const merged = dynamicBlogPosts.map(dp => {
+      const match = sitePosts.find(sp => (sp.slug && dp.slug && sp.slug === dp.slug) || (sp.id && dp.id && String(sp.id) === String(dp.id)));
+      return match ? { ...dp, ...match, author: match.author || dp.author } : dp;
+    });
+    sitePosts.forEach(sp => {
+      const exists = merged.some(m => (m.slug && sp.slug && m.slug === sp.slug) || (m.id && sp.id && String(m.id) === String(sp.id)));
+      if (!exists) merged.push(sp);
+    });
+    return merged;
+  })();
 
   const blogPosts = rawPosts.map((p) => {
     return {
@@ -308,11 +319,12 @@ export default function BlogDetail({ siteData }) {
 
   // Find post from list, apiBlog, or router state
   const foundInList = blogPosts.find(p => String(p.id) === String(id) || String(p.slug) === String(id));
-  const post = (apiBlog && (String(apiBlog.id) === String(id) || String(apiBlog.slug) === String(id)))
-    ? apiBlog
+  const rawPost = (apiBlog && (String(apiBlog.id) === String(id) || String(apiBlog.slug) === String(id)))
+    ? (foundInList ? { ...apiBlog, ...foundInList, author: foundInList.author || apiBlog.author } : apiBlog)
     : (navPost && (String(navPost.id) === String(id) || String(navPost.slug) === String(id)))
       ? navPost
       : (foundInList || apiBlog || navPost || blogPosts[0] || {});
+  const post = foundInList ? { ...rawPost, ...foundInList, author: foundInList.author || rawPost.author } : rawPost;
   const postImg = getValidImageUrl(post?.image || post?.imageUrl || post?.imgUrl, blogCardImg);
 
   // Recent/Related posts: Pick the NEXT 3 consecutive blogs after current blog

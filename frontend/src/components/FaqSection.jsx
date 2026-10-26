@@ -10,7 +10,7 @@ export default function FaqSection({
   id = 'faqs',
   title = 'Frequently Asked *Questions*',
   subtitle = null,
-  highlightColor = '#0072b8',
+  highlightColor = '#00a8ff',
   bg = '#F5F5F9',
   accentWidth = '320px',
   accentMaxWidth = '90%',
@@ -22,7 +22,7 @@ export default function FaqSection({
 }) {
   const [activeFaqIndex, setActiveFaqIndex] = useState(-1);
 
-  const safeHighlight = (!highlightColor || highlightColor === '#38bdf8' || highlightColor === '#00a8ff' || highlightColor === '#00a6ff' || highlightColor === '#00b0ff' || highlightColor === '#7dd3fc') ? '#0072b8' : highlightColor;
+  const safeHighlight = (!highlightColor || highlightColor === '#0072b8') ? '#00a8ff' : highlightColor;
 
   const items = Array.isArray(faqsList) && faqsList.length > 0 ? faqsList : (Array.isArray(faqList) ? faqList : []);
   const col1 = items.slice(0, Math.ceil(items.length / 2));

@@ -61,7 +61,7 @@ function parseStarText(children) {
     if (index % 2 === 1) {
       return (
         <span key={index} style={{
-          color: '#0072b8',
+          color: '#00a8ff',
           fontFamily: "'Black Han Sans', sans-serif",
           fontWeight: '400',
           fontStyle: 'normal',
@@ -104,7 +104,7 @@ export default function SectionHeading({
         width: '100%',
         ...style
       }}>
-        <div style={{ display: 'inline-block', textAlign: 'left', maxWidth: '100%' }}>
+        <div className="winera-section-heading-inner" style={{ display: 'inline-block', textAlign: 'left', maxWidth: '100%' }}>
           {accentColor ? (
             <div className="winera-section-heading-accent" style={{
               display: 'block',

@@ -133,11 +133,22 @@ export default function Blog({ siteData }) {
     siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
   );
 
-  const rawPosts = (dynamicBlogPosts.length > 0)
-    ? dynamicBlogPosts
-    : (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
-      ? siteData.blogPosts
-      : [];
+  const sitePosts = (Array.isArray(siteData?.blogPosts) && siteData.blogPosts.length > 0 && !isDummyPosts)
+    ? siteData.blogPosts
+    : [];
+
+  const rawPosts = (() => {
+    if (dynamicBlogPosts.length === 0) return sitePosts;
+    const merged = dynamicBlogPosts.map(dp => {
+      const match = sitePosts.find(sp => (sp.slug && dp.slug && sp.slug === dp.slug) || (sp.id && dp.id && String(sp.id) === String(dp.id)));
+      return match ? { ...dp, ...match, author: match.author || dp.author } : dp;
+    });
+    sitePosts.forEach(sp => {
+      const exists = merged.some(m => (m.slug && sp.slug && m.slug === sp.slug) || (m.id && sp.id && String(m.id) === String(sp.id)));
+      if (!exists) merged.push(sp);
+    });
+    return merged;
+  })();
 
   const blogPosts = rawPosts.map((post) => {
     return {
@@ -240,10 +251,17 @@ export default function Blog({ siteData }) {
               src={yellowStrokeLine}
               alt=""
               className="winera-blog-heading-stroke"
-              style={{ display: 'block', width: '240px', height: '10px', margin: '0 auto 8px', objectFit: 'fill' }}
+              style={{
+                display: 'block',
+                width: isPhone ? '180px' : '200px',
+                maxWidth: '75%',
+                height: '10px',
+                margin: '0 auto 8px',
+                objectFit: 'fill'
+              }}
             />
-            <h2 className="winera-blog-heading-title" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
-              our <span style={{ color: '#0072b8' }}>Blogs</span>
+            <h2 className="winera-blog-heading-title" style={{ fontSize: isPhone ? '28px' : '35px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
+              our <span style={{ color: '#00a8ff' }}>Blogs</span>
             </h2>
           </motion.div>
 

@@ -50,8 +50,8 @@ const getValidImageUrl = (url, fallback) => {
 };
 
 // Helper function to render title with *word* highlights and <br/> linebreaks
-const renderTitleMarkup = (rawText, defaultText, highlightColor = '#0072b8') => {
-  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#00a6ff' || highlightColor === '#00b0ff') ? '#0072b8' : highlightColor;
+const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => {
+  const actualHighlight = (highlightColor === '#38bdf8' || highlightColor === '#0072b8' || highlightColor === '#00a6ff' || highlightColor === '#00b0ff') ? '#00a8ff' : highlightColor;
   let text = rawText || defaultText;
   if (!text) return null;
 
@@ -453,9 +453,9 @@ export default function LaserTag({ siteData }) {
                 if (highlight.trim() === "Laser Tag Gaming Equipment" && normal.trim() === "& Laser Spy Supplier in India") {
                   return (
                     <>
-                      <span style={{ color: '#0072b8' }}>Laser Tag Gaming</span>
+                      <span style={{ color: '#00a8ff' }}>Laser Tag Gaming</span>
                       <br />
-                      <span style={{ color: '#0072b8' }}>Equipment </span>
+                      <span style={{ color: '#00a8ff' }}>Equipment </span>
                       <span style={{ color: '#0f172a' }}>& Laser Spy</span>
                       <br />
                       <span style={{ color: '#0f172a' }}>Supplier in India</span>
@@ -465,7 +465,7 @@ export default function LaserTag({ siteData }) {
 
                 return (
                   <>
-                    <span style={{ color: '#0072b8' }}>
+                    <span style={{ color: '#00a8ff' }}>
                       {highlight.split('\n').map((hLine, hIdx) => (
                         <React.Fragment key={hIdx}>
                           {hIdx > 0 && <br />}
@@ -648,7 +648,7 @@ export default function LaserTag({ siteData }) {
                       <span style={{ color: '#0f172a' }}>One Team for Your Whole</span>
                       <br />
                       <span style={{ color: '#0f172a' }}>Laser </span>
-                      <span style={{ color: '#0072b8' }}>Tag & Laser Spy Setup</span>
+                      <span style={{ color: '#00a8ff' }}>Tag & Laser Spy Setup</span>
                     </>
                   );
                 }
@@ -664,7 +664,7 @@ export default function LaserTag({ siteData }) {
                       ))}
                     </span>
                     {' '}
-                    <span style={{ color: '#0072b8' }}>
+                    <span style={{ color: '#00a8ff' }}>
                       {highlight.split('\n').map((hLine, hIdx) => (
                         <React.Fragment key={hIdx}>
                           {hIdx > 0 && <br />}
@@ -755,7 +755,7 @@ export default function LaserTag({ siteData }) {
               lineHeight: 1.2,
               margin: '0 0 12px 0'
             }}>
-              <span style={{ color: '#0072b8' }}>
+              <span style={{ color: '#00a8ff' }}>
                 {siteData?.lasertagGroups?.titleHighlight || "Laser Tag - "}
               </span>
               <span style={{ color: '#0f172a' }}>
@@ -1073,7 +1073,7 @@ export default function LaserTag({ siteData }) {
                   lineHeight: 1.2,
                   margin: '0 0 10px 0'
                 }}>
-                  <span style={{ color: '#0072b8' }}>
+                  <span style={{ color: '#00a8ff' }}>
                     {siteData?.lasertagSpace?.titleHighlight || "How Much Space"}
                   </span>
                   {' '}
@@ -1435,7 +1435,7 @@ export default function LaserTag({ siteData }) {
                 <span style={{ color: '#0f172a' }}>
                   {siteData?.lasertagSpy?.titleDark || "Laser Spy — Laser "}
                 </span>
-                <span style={{ color: '#0072b8' }}>
+                <span style={{ color: '#00a8ff' }}>
                   {siteData?.lasertagSpy?.titleCyan || "Beam Game That Fits in a Small Room"}
                 </span>
               </h2>
@@ -1713,7 +1713,7 @@ export default function LaserTag({ siteData }) {
               style={{ display: 'block', width: isPhone ? '240px' : '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
             <h2 style={{ fontSize: isPhone ? '25px' : '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.lasertagComparison?.title, "*Which Game Is* Right for Your Venue?", '#0072b8')}
+              {renderTitleMarkup(siteData?.lasertagComparison?.title, "*Which Game Is* Right for Your Venue?", '#00a8ff')}
             </h2>
           </div>
 
@@ -2028,7 +2028,7 @@ export default function LaserTag({ siteData }) {
       <section className="winera-lasertag-roi-section" style={{
         width: '100%',
         padding: isPhone ? '15px 16px 20px' : '15px 4vw 20px',
-        background: '#f8fafc',
+        background: '#F5F5F9',
         boxSizing: 'border-box'
       }}>
         <div className="winera-lasertag-roi-card" style={{
@@ -2080,7 +2080,7 @@ export default function LaserTag({ siteData }) {
               margin: '0 0 12px 0',
               fontFamily: "var(--font-heading, 'Outfit', 'Montserrat', sans-serif)"
             }}>
-              {renderTitleMarkup(siteData?.lasertagRoi?.title, "Know Your Numbers<br/>*Before You Spend*", "#0072b8")}
+              {renderTitleMarkup(siteData?.lasertagRoi?.title, "Know Your Numbers<br/>*Before You Spend*", "#00a8ff")}
             </h2>
 
             {/* Paragraphs with Mobile Expandable Text */}
@@ -2250,7 +2250,7 @@ export default function LaserTag({ siteData }) {
               style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
             />
             <h2 className="winera-ar-whyus-h2" style={{ fontSize: isPhone ? '26px' : '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-              {renderTitleMarkup(siteData?.lasertagWhyUs?.title, "Why Choose *Winera International*", '#0072b8')}
+              {renderTitleMarkup(siteData?.lasertagWhyUs?.title, "Why Choose *Winera International*", '#00a8ff')}
             </h2>
           </div>
 
@@ -2271,15 +2271,15 @@ export default function LaserTag({ siteData }) {
 
               const iconsList = [
                 // 1. Complete Arena Setup (User with stars & experience)
-                <svg key={0} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 2l.6 1.2 1.4.2-1 1 .2 1.4-1.2-.6-1.2.6.2-1.4-1-1 1.4-.2z"/></svg>,
+                <svg key={0} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /><path d="M12 2l.6 1.2 1.4.2-1 1 .2 1.4-1.2-.6-1.2.6.2-1.4-1-1 1.4-.2z" /></svg>,
                 // 2. Revenue Calculated (Gear with checkmark)
-                <svg key={1} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><polyline points="9 12 11 14 15 10"/></svg>,
+                <svg key={1} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><polyline points="9 12 11 14 15 10" /></svg>,
                 // 3. Low Running Cost (Database / Coins stack)
-                <svg key={2} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>,
+                <svg key={2} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></svg>,
                 // 4. Built for Your Space (Headset / Support)
-                <svg key={3} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>,
+                <svg key={3} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6" /><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" /></svg>,
                 // 5. Direct After-Sales Support (Calendar / Maintenance Support)
-                <svg key={4} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>
+                <svg key={4} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01" /></svg>
               ];
 
               let topCount = 3;
@@ -2465,7 +2465,7 @@ export default function LaserTag({ siteData }) {
       {/* 3. RELATED PRODUCTS CAROUSEL SECTION */}
       <RelatedProductsSection
         sectionData={siteData?.lasertagRelated || siteData?.arcadeRelated}
-        accentColor="#0072b8"
+        accentColor="#00a8ff"
       />
 
       {/* 4. WHAT OUR CLIENTS SAY SECTION (TESTIMONIALS) */}
@@ -2473,14 +2473,14 @@ export default function LaserTag({ siteData }) {
         testimonials={siteData?.testimonials}
         title={siteData?.testimonialsHeader?.title}
         subtitle={siteData?.testimonialsHeader?.subtitle}
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 5. FREQUENTLY ASKED QUESTIONS SECTION */}
       <FaqSection
         faqList={(Array.isArray(siteData?.lasertagFaqs) && siteData.lasertagFaqs.length > 0) ? siteData.lasertagFaqs : defaultLaserTagFaqs}
         title="Frequently Asked *Questions*"
-        highlightColor="#0072b8"
+        highlightColor="#00a8ff"
       />
 
       {/* 5.5. CTA BANNER SECTION */}

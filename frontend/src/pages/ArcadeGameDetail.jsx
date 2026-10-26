@@ -1163,34 +1163,35 @@ export default function ArcadeGameDetail({ siteData }) {
 
               {/* 3. Right Details & Specifications */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingLeft: '8px' }} className="winera-arcade-details-col">
-                {/* Yellow Brush Stroke Line Accent */}
-                <img
-                  src={yellowBrushAccent}
-                  alt=""
-                  className="winera-yellow-stroke"
-                  style={{
-                    width: '180px',
-                    maxWidth: '85%',
-                    height: 'auto',
-                    aspectRatio: '492 / 10',
-                    objectFit: 'contain',
-                    marginBottom: '6px',
-                    marginLeft: 0,
-                    marginRight: 'auto',
-                    display: 'block'
-                  }}
-                />
+                {/* Title Box containing Yellow Stroke & Heading with tight spacing */}
+                <div className="winera-arcade-title-box" style={{ display: 'flex', flexDirection: 'column', width: '100%', margin: 0, padding: 0 }}>
+                  <img
+                    src={yellowBrushAccent}
+                    alt=""
+                    className="winera-yellow-stroke winera-arcade-detail-stroke"
+                    style={{
+                      width: '210px',
+                      maxWidth: '85%',
+                      height: '10px',
+                      objectFit: 'fill',
+                      marginBottom: '4px',
+                      marginLeft: 0,
+                      marginRight: 'auto',
+                      display: 'block'
+                    }}
+                  />
 
-                {/* Title */}
-                <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
-                  {product.nameBase || product.name || "Parkour Motor "}
-                  {product.nameHighlight ? (
-                    <>
-                      {(!String(product.nameBase || product.name || '').endsWith(' ') && !String(product.nameHighlight || '').startsWith(' ')) ? ' ' : ''}
-                      <span style={{ color: '#0072b8' }}>{product.nameHighlight}</span>
-                    </>
-                  ) : null}
-                </h2>
+                  {/* Title */}
+                  <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                    {product.nameBase || product.name || "Parkour Motor "}
+                    {product.nameHighlight ? (
+                      <>
+                        {(!String(product.nameBase || product.name || '').endsWith(' ') && !String(product.nameHighlight || '').startsWith(' ')) ? ' ' : ''}
+                        <span style={{ color: '#00a8ff' }}>{product.nameHighlight}</span>
+                      </>
+                    ) : null}
+                  </h2>
+                </div>
 
                 {/* Specification Long Banner */}
                 <div style={{
@@ -1401,7 +1402,7 @@ export default function ArcadeGameDetail({ siteData }) {
                 }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
-                Specification <span style={{ color: '#0072b8' }}>Detail</span>
+                Specification <span style={{ color: '#00a8ff' }}>Detail</span>
               </h2>
             </div>
 

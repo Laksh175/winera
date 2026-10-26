@@ -25,7 +25,7 @@ const defaultProjects = [
 
 export default function ProjectsMarqueeSection({
   id = 'projects',
-  title = <><span>GAME ZONES WE HAVE</span><br /><span>BUILT <span style={{ color: '#0072b8' }}>ACROSS INDIA</span></span></>,
+  title = <><span>GAME ZONES WE HAVE</span><br /><span>BUILT <span style={{ color: '#00a8ff' }}>ACROSS INDIA</span></span></>,
   simpleTitle = null,
   showTopHeader = true,
   subtext = "Explore our successfully completed projects delivered across India from small indoor game zones to large family entertainment centers.",
@@ -231,7 +231,7 @@ export default function ProjectsMarqueeSection({
                           <span>Game Zones We Have</span>
                           <br />
                           <span>
-                            Built <span style={{ color: '#0072b8' }}>Across India</span>
+                            Built <span style={{ color: '#00a8ff' }}>Across India</span>
                           </span>
                         </>
                       );
@@ -240,7 +240,7 @@ export default function ProjectsMarqueeSection({
                     return parts.map((part, index) => {
                       if (index % 2 === 1) {
                         return (
-                          <span key={index} style={{ color: '#0072b8' }}>
+                          <span key={index} style={{ color: '#00a8ff' }}>
                             {part}
                           </span>
                         );

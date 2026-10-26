@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit, Upload, Eye, ArrowLeft, Calendar, Clock, User, PenTool, Search, CheckCircle, AlertCircle, MoveUp, MoveDown } from 'lucide-react';
 import RichTextareaWithEditor from './RichTextareaWithEditor';
 import { sanitizeAndFormatHtml } from '../pages/BlogDetail';
-import { fetchBlogs, createBlogApi, updateBlogApi, deleteBlogApi } from '../services/api';
+import { fetchBlogs, createBlogApi, updateBlogApi, deleteBlogApi, clearBlogCache } from '../services/api';
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 
 const getValidImageUrl = (url, fallback) => {
@@ -274,6 +274,7 @@ export default function BlogAdminManagement({
     }
 
     setFormData(prev => ({ ...prev, blogPosts: updatedList }));
+    clearBlogCache();
     await persistSectionToDatabase('blogPosts', updatedList);
     try {
       if (activeView === 'create' || currentEditIndex === null) {
@@ -285,6 +286,7 @@ export default function BlogAdminManagement({
     } catch (apiErr) {
       console.warn('Direct blog API sync notice:', apiErr);
     }
+    clearBlogCache();
     alert('Blog post saved successfully! Changes are live on the website.');
     setActiveView('list');
     setEditingBlog(null);
