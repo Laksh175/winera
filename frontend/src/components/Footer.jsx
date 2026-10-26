@@ -115,8 +115,16 @@ export default function Footer({ footerData }) {
             <div
               className={`winera-footer-col-header ${openSections.product ? 'is-open' : 'is-closed'}`}
               onClick={() => toggleSection('product')}
+              onMouseDown={(e) => e.preventDefault()}
+              style={{
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                WebkitTapHighlightColor: 'transparent',
+                outline: 'none',
+                cursor: 'pointer'
+              }}
             >
-              <h3 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+              <h3 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px', userSelect: 'none', WebkitUserSelect: 'none' }}>
                 Product
               </h3>
               {isMobile && (
@@ -127,7 +135,9 @@ export default function Footer({ footerData }) {
                     height: '18px',
                     transform: openSections.product ? 'rotate(180deg)' : 'rotate(0deg)',
                     transition: 'transform 0.25s ease',
-                    color: '#0284c7'
+                    color: '#0284c7',
+                    pointerEvents: 'none',
+                    userSelect: 'none'
                   }}
                 />
               )}
@@ -167,8 +177,16 @@ export default function Footer({ footerData }) {
             <div
               className={`winera-footer-col-header ${openSections.quick ? 'is-open' : 'is-closed'}`}
               onClick={() => toggleSection('quick')}
+              onMouseDown={(e) => e.preventDefault()}
+              style={{
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                WebkitTapHighlightColor: 'transparent',
+                outline: 'none',
+                cursor: 'pointer'
+              }}
             >
-              <h3 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+              <h3 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px', userSelect: 'none', WebkitUserSelect: 'none' }}>
                 Quick Links
               </h3>
               {isMobile && (
@@ -179,7 +197,9 @@ export default function Footer({ footerData }) {
                     height: '18px',
                     transform: openSections.quick ? 'rotate(180deg)' : 'rotate(0deg)',
                     transition: 'transform 0.25s ease',
-                    color: '#0284c7'
+                    color: '#0284c7',
+                    pointerEvents: 'none',
+                    userSelect: 'none'
                   }}
                 />
               )}
@@ -220,8 +240,16 @@ export default function Footer({ footerData }) {
             <div
               className={`winera-footer-col-header ${openSections.resource ? 'is-open' : 'is-closed'}`}
               onClick={() => toggleSection('resource')}
+              onMouseDown={(e) => e.preventDefault()}
+              style={{
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                WebkitTapHighlightColor: 'transparent',
+                outline: 'none',
+                cursor: 'pointer'
+              }}
             >
-              <h3 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px' }}>
+              <h3 style={{ fontSize: isMobile ? '18px' : '1.05rem', fontWeight: '800', color: '#0f172a', margin: 0, marginBottom: isMobile ? 0 : '18px', userSelect: 'none', WebkitUserSelect: 'none' }}>
                 Resources
               </h3>
               {isMobile && (
@@ -232,7 +260,9 @@ export default function Footer({ footerData }) {
                     height: '18px',
                     transform: openSections.resource ? 'rotate(180deg)' : 'rotate(0deg)',
                     transition: 'transform 0.25s ease',
-                    color: '#0284c7'
+                    color: '#0284c7',
+                    pointerEvents: 'none',
+                    userSelect: 'none'
                   }}
                 />
               )}

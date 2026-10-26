@@ -171,6 +171,7 @@ export default function TestimonialsSection({
             {hasMultipleTestimonials && (
               <button
                 onClick={goPrev}
+                onMouseDown={(e) => e.preventDefault()}
                 aria-label="Previous Testimonial"
                 className="winera-testi-nav-btn winera-testi-btn-prev"
                 style={{
@@ -178,10 +179,14 @@ export default function TestimonialsSection({
                   left: '-24px',
                   zIndex: 30,
                   width: '48px',
-                  height: '48px'
+                  height: '48px',
+                  outline: 'none',
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                  WebkitTapHighlightColor: 'transparent'
                 }}
               >
-                <ChevronLeft style={{ width: '26px', height: '26px', strokeWidth: 2 }} />
+                <ChevronLeft style={{ width: '26px', height: '26px', strokeWidth: 2, pointerEvents: 'none', userSelect: 'none' }} />
               </button>
             )}
 
@@ -403,6 +408,7 @@ export default function TestimonialsSection({
             {hasMultipleTestimonials && (
               <button
                 onClick={goNext}
+                onMouseDown={(e) => e.preventDefault()}
                 aria-label="Next Testimonial"
                 className="winera-testi-nav-btn winera-testi-btn-next"
                 style={{
@@ -410,10 +416,14 @@ export default function TestimonialsSection({
                   right: '-24px',
                   zIndex: 30,
                   width: '48px',
-                  height: '48px'
+                  height: '48px',
+                  outline: 'none',
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                  WebkitTapHighlightColor: 'transparent'
                 }}
               >
-                <ChevronRight style={{ width: '26px', height: '26px', strokeWidth: 2 }} />
+                <ChevronRight style={{ width: '26px', height: '26px', strokeWidth: 2, pointerEvents: 'none', userSelect: 'none' }} />
               </button>
             )}
           </div>
@@ -618,34 +628,47 @@ export default function TestimonialsSection({
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '20px',
-                marginTop: '20px'
+                marginTop: '20px',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                touchAction: 'manipulation'
               }}>
                 <button
                   onClick={goPrev}
+                  onMouseDown={(e) => e.preventDefault()}
                   aria-label="Previous Testimonial"
                   className="winera-testi-nav-btn winera-testi-btn-prev"
                   style={{
                     width: '44px',
-                    height: '44px'
+                    height: '44px',
+                    outline: 'none',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    WebkitTapHighlightColor: 'transparent'
                   }}
                 >
-                  <ChevronLeft aria-hidden="true" style={{ width: '22px', height: '22px' }} />
+                  <ChevronLeft aria-hidden="true" style={{ width: '22px', height: '22px', pointerEvents: 'none', userSelect: 'none' }} />
                 </button>
 
-                <span style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a' }}>
+                <span style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', userSelect: 'none', WebkitUserSelect: 'none' }}>
                   {activeIndex + 1} / {list.length}
                 </span>
 
                 <button
                   onClick={goNext}
+                  onMouseDown={(e) => e.preventDefault()}
                   aria-label="Next Testimonial"
                   className="winera-testi-nav-btn winera-testi-btn-next"
                   style={{
                     width: '44px',
-                    height: '44px'
+                    height: '44px',
+                    outline: 'none',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    WebkitTapHighlightColor: 'transparent'
                   }}
                 >
-                  <ChevronRight aria-hidden="true" style={{ width: '22px', height: '22px' }} />
+                  <ChevronRight aria-hidden="true" style={{ width: '22px', height: '22px', pointerEvents: 'none', userSelect: 'none' }} />
                 </button>
               </div>
             )}

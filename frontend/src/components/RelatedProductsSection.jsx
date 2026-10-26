@@ -203,10 +203,12 @@ export default function RelatedProductsSection({
             {/* Previous Button */}
             <button
               aria-label="Previous Related Products"
+              className="winera-related-nav-btn winera-related-btn-prev"
               onClick={() => {
                 setIsTransitioning(true);
                 setRelatedIndex((prev) => prev - 1);
               }}
+              onMouseDown={(e) => e.preventDefault()}
               style={{
                 width: '36px',
                 height: '36px',
@@ -220,10 +222,14 @@ export default function RelatedProductsSection({
                 cursor: 'pointer',
                 boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
                 flexShrink: 0,
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                outline: 'none',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                WebkitTapHighlightColor: 'transparent'
               }}
             >
-              <ChevronLeft style={{ width: '20px', height: '20px' }} />
+              <ChevronLeft style={{ width: '20px', height: '20px', pointerEvents: 'none', userSelect: 'none' }} />
             </button>
 
             {/* Sliding Track Container */}
@@ -334,10 +340,12 @@ export default function RelatedProductsSection({
             {/* Next Button */}
             <button
               aria-label="Next Related Products"
+              className="winera-related-nav-btn winera-related-btn-next"
               onClick={() => {
                 setIsTransitioning(true);
                 setRelatedIndex((prev) => prev + 1);
               }}
+              onMouseDown={(e) => e.preventDefault()}
               style={{
                 width: '36px',
                 height: '36px',
@@ -351,10 +359,14 @@ export default function RelatedProductsSection({
                 cursor: 'pointer',
                 boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
                 flexShrink: 0,
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                outline: 'none',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                WebkitTapHighlightColor: 'transparent'
               }}
             >
-              <ChevronRight style={{ width: '20px', height: '20px' }} />
+              <ChevronRight style={{ width: '20px', height: '20px', pointerEvents: 'none', userSelect: 'none' }} />
             </button>
           </div>
         </div>

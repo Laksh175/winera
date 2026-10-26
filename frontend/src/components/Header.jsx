@@ -579,6 +579,7 @@ export default function Header({ headerData }) {
           {/* Mobile Hamburger Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onMouseDown={(e) => e.preventDefault()}
             className="winera-hamburger mobile-hamburger-btn"
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
@@ -594,7 +595,11 @@ export default function Header({ headerData }) {
               justifyContent: 'center',
               cursor: 'pointer',
               marginLeft: '6px',
-              flexShrink: 0
+              flexShrink: 0,
+              outline: 'none',
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              WebkitTapHighlightColor: 'transparent'
             }}
           >
             {mobileMenuOpen ? '✕' : '☰'}

@@ -331,6 +331,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
         {/* Previous Button */}
         <button
           onClick={handlePrev}
+          onMouseDown={(e) => e.preventDefault()}
           disabled={cards.length <= 1}
           aria-label="Previous Game"
           style={{
@@ -345,10 +346,14 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
             justifyContent: 'center',
             boxShadow: '0 4px 12px rgba(56, 189, 248, 0.18)',
             cursor: 'pointer',
-            transition: 'all 0.15s ease'
+            transition: 'all 0.15s ease',
+            outline: 'none',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            WebkitTapHighlightColor: 'transparent'
           }}
         >
-          <ChevronLeft style={{ width: '22px', height: '22px', strokeWidth: 2.5 }} />
+          <ChevronLeft style={{ width: '22px', height: '22px', strokeWidth: 2.5, pointerEvents: 'none', userSelect: 'none' }} />
         </button>
 
         {/* Counter & Progress Dots */}
@@ -356,7 +361,9 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '4px'
+          gap: '4px',
+          userSelect: 'none',
+          WebkitUserSelect: 'none'
         }}>
           <div style={{
             background: '#e0f2fe',
@@ -365,7 +372,9 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
             borderRadius: '16px',
             fontSize: '12px',
             fontWeight: '900',
-            border: '1px solid #bae6fd'
+            border: '1px solid #bae6fd',
+            userSelect: 'none',
+            WebkitUserSelect: 'none'
           }}>
             {currentIndex + 1} / {cards.length}
           </div>
@@ -394,6 +403,7 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
         {/* Next Button */}
         <button
           onClick={handleNext}
+          onMouseDown={(e) => e.preventDefault()}
           disabled={cards.length <= 1}
           aria-label="Next Game"
           style={{
@@ -408,10 +418,14 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
             justifyContent: 'center',
             boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)',
             cursor: 'pointer',
-            transition: 'all 0.15s ease'
+            transition: 'all 0.15s ease',
+            outline: 'none',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            WebkitTapHighlightColor: 'transparent'
           }}
         >
-          <ChevronRight style={{ width: '22px', height: '22px', strokeWidth: 2.5 }} />
+          <ChevronRight style={{ width: '22px', height: '22px', strokeWidth: 2.5, pointerEvents: 'none', userSelect: 'none' }} />
         </button>
       </div>
     </div>

@@ -26,6 +26,7 @@
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 html,
@@ -37,7 +38,50 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent !important;
 }
+
+/* Universal suppression of default outline, focus-ring, and tap-highlight on clickable elements */
+*:focus:not(input):not(textarea):not(select),
+*:focus-visible:not(input):not(textarea):not(select),
+*:active:not(input):not(textarea):not(select) {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+button,
+a,
+[role="button"],
+input[type="button"],
+input[type="submit"] {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+button:focus,
+button:focus-visible,
+button:active,
+a:focus,
+a:focus-visible,
+a:active,
+[role="button"]:focus,
+[role="button"]:focus-visible,
+[role="button"]:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+img,
+svg {
+  -webkit-user-drag: none !important;
+  -webkit-touch-callout: none !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 
 /* Master Section Title h2 Desktop Font Size */
 h2,
@@ -296,6 +340,13 @@ section.winera-bowling-roi-section p {
   justify-content: center !important;
   cursor: pointer !important;
   transition: all 0.25s ease !important;
+  outline: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 .winera-testi-nav-btn:hover {
@@ -306,10 +357,35 @@ section.winera-bowling-roi-section p {
   transform: scale(1.08) !important;
 }
 
-.winera-testi-nav-btn svg {
+.winera-testi-nav-btn:focus,
+.winera-testi-nav-btn:focus-visible,
+.winera-testi-nav-btn:active,
+.winera-related-nav-btn:focus,
+.winera-related-nav-btn:focus-visible,
+.winera-related-nav-btn:active {
+  outline: none !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+}
+
+.winera-related-nav-btn {
+  outline: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.winera-testi-nav-btn svg,
+.winera-related-nav-btn svg {
   color: inherit !important;
   stroke: currentColor !important;
   transition: color 0.25s ease !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-user-drag: none !important;
 }
 
 /* ==========================================================================
@@ -16776,6 +16852,8 @@ button[style*="background:transparent"]:hover,
     cursor: pointer !important;
     background: transparent !important;
     border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     padding: 2px !important;
     margin: 0 !important;
     flex: 0 0 28px !important;
@@ -16785,6 +16863,21 @@ button[style*="background:transparent"]:hover,
     max-width: 28px !important;
     box-sizing: border-box !important;
     z-index: 5 !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+  }
+
+  .winera-why-us-btn-left:focus,
+  .winera-why-us-btn-right:focus,
+  .winera-why-us-btn-left:focus-visible,
+  .winera-why-us-btn-right:focus-visible,
+  .winera-why-us-btn-left:active,
+  .winera-why-us-btn-right:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .winera-why-us-btn-left img,
@@ -16796,6 +16889,16 @@ button[style*="background:transparent"]:hover,
     object-fit: contain !important;
     display: block !important;
     pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+  }
+
+  .winera-why-us-mobile-slider,
+  .winera-why-us-mobile-card {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 }
 
@@ -19872,4 +19975,157 @@ img.winera-yellow-stroke,
     margin: 0 auto 4px auto !important;
     display: block !important;
   }
+}
+
+/* ==========================================================================
+   GLOBAL SLIDER & CAROUSEL NAVIGATION ARROW NO-OUTLINE / NO-SELECTION
+   Prevents blue selection lines, browser focus boxes, and tap highlights on click
+   ========================================================================== */
+.winera-testi-nav-btn,
+.winera-related-nav-btn,
+.winera-why-us-btn-left,
+.winera-why-us-btn-right {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.winera-testi-nav-btn:focus,
+.winera-testi-nav-btn:focus-visible,
+.winera-testi-nav-btn:active,
+.winera-related-nav-btn:focus,
+.winera-related-nav-btn:focus-visible,
+.winera-related-nav-btn:active,
+.winera-why-us-btn-left:focus,
+.winera-why-us-btn-right:focus,
+.winera-why-us-btn-left:focus-visible,
+.winera-why-us-btn-right:focus-visible,
+.winera-why-us-btn-left:active,
+.winera-why-us-btn-right:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.winera-testi-nav-btn svg,
+.winera-related-nav-btn svg,
+.winera-why-us-btn-left img,
+.winera-why-us-btn-right img {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+/* ==========================================================================
+   MOBILE VIEW NO-SELECT & NO-OUTLINE SUPPRESSION
+   Completely stops blue text selection boxes, focus rings, and tap overlays
+   when clicking or tapping anywhere on mobile devices.
+   ========================================================================== */
+@media (max-width: 900px) {
+  html,
+  body {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  /* Specifically preserve text selection only for input forms and blog reading */
+  input,
+  textarea,
+  [contenteditable="true"],
+  .winera-blog-detail,
+  .winera-blog-detail * {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+  }
+
+  /* Suppress blue selection background on mobile so tap never highlights text */
+  *:not(input):not(textarea):not(.winera-blog-detail)::selection {
+    background: transparent !important;
+    color: inherit !important;
+  }
+  *:not(input):not(textarea):not(.winera-blog-detail)::-moz-selection {
+    background: transparent !important;
+    color: inherit !important;
+  }
+}
+
+/* Footer Universal No-Select & No-Tap-Highlight */
+.winera-footer,
+.winera-footer-section,
+.winera-footer-grid,
+.winera-footer-col,
+.winera-footer-col-header,
+.winera-footer-col-header h3,
+.winera-footer-col-header h4,
+.winera-footer-col-header *,
+.winera-footer-dropdown-content,
+.winera-footer-menu-grid,
+.winera-footer-menu-grid a,
+.winera-footer a,
+.winera-footer button {
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  outline: none !important;
+}
+
+.winera-footer a:focus,
+.winera-footer a:active,
+.winera-footer button:focus,
+.winera-footer button:active,
+.winera-footer-col-header:focus,
+.winera-footer-col-header:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* FAQ Cards Universal No-Select & No-Tap-Highlight */
+.winera-faq-card,
+div[role="button"][aria-label*="Toggle FAQ"],
+div[role="button"][aria-label*="Toggle FAQ"] * {
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  outline: none !important;
+}
+
+div[role="button"][aria-label*="Toggle FAQ"]:focus,
+div[role="button"][aria-label*="Toggle FAQ"]:focus-visible,
+div[role="button"][aria-label*="Toggle FAQ"]:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Floating WhatsApp button & Header Hamburger */
+.winera-wa-float-btn,
+.winera-wa-float-btn *,
+.winera-hamburger,
+.winera-hamburger * {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.winera-wa-float-btn:focus,
+.winera-wa-float-btn:active,
+.winera-hamburger:focus,
+.winera-hamburger:active {
+  outline: none !important;
+  box-shadow: none !important;
 }

@@ -104,18 +104,32 @@ export default function WhyChooseUsMobileSlider({ items = [], customIcon, render
 
   return (
     <div className="winera-why-us-mobile-slider-container">
-      <div className="winera-why-us-mobile-slider">
+      <div className="winera-why-us-mobile-slider" style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
         <button
           type="button"
           onClick={handlePrev}
+          onMouseDown={(e) => e.preventDefault()}
           className="winera-why-us-btn-left"
           aria-label="Previous Point"
+          style={{
+            outline: 'none',
+            border: 'none',
+            boxShadow: 'none',
+            WebkitTapHighlightColor: 'transparent',
+            userSelect: 'none'
+          }}
         >
-          <img src={homeLeftArrow} alt="Previous" />
+          <img
+            src={homeLeftArrow}
+            alt="Previous"
+            draggable={false}
+            style={{ pointerEvents: 'none', userSelect: 'none', WebkitUserSelect: 'none' }}
+          />
         </button>
 
         <div
           className="winera-why-us-mobile-card"
+          style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
           onTouchStart={(e) => {
             touchStartRef.current = e.touches[0].clientX;
           }}
@@ -143,10 +157,23 @@ export default function WhyChooseUsMobileSlider({ items = [], customIcon, render
         <button
           type="button"
           onClick={handleNext}
+          onMouseDown={(e) => e.preventDefault()}
           className="winera-why-us-btn-right"
           aria-label="Next Point"
+          style={{
+            outline: 'none',
+            border: 'none',
+            boxShadow: 'none',
+            WebkitTapHighlightColor: 'transparent',
+            userSelect: 'none'
+          }}
         >
-          <img src={homeRightArrow} alt="Next" />
+          <img
+            src={homeRightArrow}
+            alt="Next"
+            draggable={false}
+            style={{ pointerEvents: 'none', userSelect: 'none', WebkitUserSelect: 'none' }}
+          />
         </button>
       </div>
     </div>

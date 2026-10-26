@@ -72,8 +72,10 @@ export default function FaqSection({
                   role="button"
                   tabIndex={0}
                   aria-expanded={isOpen}
+                  className="winera-faq-card"
                   aria-label={`Toggle FAQ: ${item.q || item.question}`}
                   onClick={() => setActiveFaqIndex(isOpen ? -1 : globalIdx)}
+                  onMouseDown={(e) => e.preventDefault()}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
@@ -87,7 +89,11 @@ export default function FaqSection({
                     border: isOpen ? `1.5px solid ${safeHighlight}` : '1.5px solid #e2e8f0',
                     boxShadow: isOpen ? '0 10px 30px rgba(0, 114, 184, 0.15)' : '0 4px 16px rgba(0,0,0,0.03)',
                     cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    outline: 'none',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    WebkitTapHighlightColor: 'transparent'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', textAlign: 'left' }}>
@@ -146,8 +152,10 @@ export default function FaqSection({
                   role="button"
                   tabIndex={0}
                   aria-expanded={isOpen}
+                  className="winera-faq-card"
                   aria-label={`Toggle FAQ: ${item.q || item.question}`}
                   onClick={() => setActiveFaqIndex(isOpen ? -1 : globalIdx)}
+                  onMouseDown={(e) => e.preventDefault()}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
@@ -161,7 +169,11 @@ export default function FaqSection({
                     border: isOpen ? `1.5px solid ${highlightColor}` : '1.5px solid #e2e8f0',
                     boxShadow: isOpen ? '0 10px 30px rgba(0, 168, 255, 0.1)' : '0 4px 16px rgba(0,0,0,0.03)',
                     cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    outline: 'none',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    WebkitTapHighlightColor: 'transparent'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', textAlign: 'left' }}>
