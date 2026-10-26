@@ -4852,7 +4852,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontFamily: 'inherit' }}
                     />
                     <div style={{ marginTop: '6px', fontSize: '11.5px', color: '#64748b', background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0', lineHeight: 1.5 }}>
-                      💡 <strong>SEO Guide:</strong> Ye Google ko batata hai ki is page ka official original URL kaunsa hai (Default: <code>{defaultObj.canonicalUrl || 'https://winera.in'}</code>). Yahan hamesha live open hone waala clean URL hi rakhein.
+                      💡 <strong>Tip:</strong> Sets the primary official URL for search engines. Always enter a live, valid URL.
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
