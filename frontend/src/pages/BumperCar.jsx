@@ -7,7 +7,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
-import BrochureModal from '../components/BrochureModal';
+import BrochureModal, { openBrochure } from '../components/BrochureModal';
 import { sanitizeAndFormatHtml } from './BlogDetail';
 const ctaSoftplayBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345648/winera_uploads/w1m4przklz2qiyevbxtu.png";
 const bumpercarHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345639/winera_uploads/lvx7xnsguvre7w9uvoi6.png";
@@ -647,7 +647,16 @@ export default function BumperCar({ siteData }) {
           <div>
             <button
               type="button"
-              onClick={() => setIsBrochureOpen(true)}
+              onClick={() => openBrochure(
+                (() => {
+                  const bUrl = siteData?.bumpercarSpecs?.brochureUrl;
+                  if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '') return bUrl.trim();
+                  const sUrl = siteData?.softplayTypes?.brochureUrl;
+                  if (sUrl && typeof sUrl === 'string' && sUrl.trim() !== '#' && sUrl.trim() !== '') return sUrl.trim();
+                  return "/pdf/Winera Softplay.pdf";
+                })(),
+                () => setIsBrochureOpen(true)
+              )}
               aria-label="Download Our Brochure"
               style={{
                 display: 'inline-flex',

@@ -56,6 +56,13 @@ export default function ArcadeSwipeCardDeck({ cards = [], getCardSlug, isClickab
     const deltaX = touch.clientX - startPosRef.current.x;
     const deltaY = touch.clientY - startPosRef.current.y;
 
+    // If vertical page scrolling is detected, cancel card dragging immediately to let page scroll
+    if (Math.abs(deltaY) >= Math.abs(deltaX) && Math.abs(deltaY) > 8) {
+      setIsDragging(false);
+      setDragOffset({ x: 0, y: 0 });
+      return;
+    }
+
     // If mainly horizontal swipe, prevent vertical page scroll
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
       if (e.cancelable) e.preventDefault();

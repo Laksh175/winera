@@ -29,16 +29,27 @@
   -webkit-tap-highlight-color: transparent !important;
 }
 
-html,
+html {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
 body {
   background-color: var(--bg-main);
   color: var(--text-dark);
   letter-spacing: 0px;
-  overflow-x: clip;
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+  min-height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   -webkit-tap-highlight-color: transparent !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Universal suppression of default outline, focus-ring, and tap-highlight on clickable elements */
@@ -934,9 +945,10 @@ html {
 
   html,
   body {
-    overflow-x: clip !important;
+    overflow-x: hidden !important;
     width: 100% !important;
     max-width: 100vw !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   #root,
@@ -4192,23 +4204,35 @@ html {
   /* 1. Supplier Section */
   section.winera-bowling-supplier-section,
   .winera-bowling-supplier-section {
-    padding: 15px 16px 10px !important;
-    padding-bottom: 10px !important;
+    padding: 22px 16px 2px !important;
+    padding-bottom: 2px !important;
+    margin-bottom: 0 !important;
   }
 
   .winera-bowling-supplier-grid {
     grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    gap: 14px !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .winera-bowling-supplier-img,
   .winera-bowling-supplier-grid>div:last-child {
     order: 2 !important;
     height: auto !important;
-    max-height: 280px !important;
+    max-height: none !important;
     width: 100% !important;
-    max-width: 380px !important;
-    margin: 16px auto 0 !important;
+    max-width: 360px !important;
+    margin: 12px auto 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .winera-bowling-supplier-img img {
+    max-height: 250px !important;
+    height: auto !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    display: block !important;
   }
 
   .winera-bowling-supplier-text {
@@ -4219,16 +4243,24 @@ html {
     align-items: center !important;
   }
 
+  .winera-bowling-intro-stroke,
+  .winera-bowling-supplier-text img.winera-yellow-stroke,
+  .winera-bowling-supplier-text img.winera-bowling-intro-stroke,
+  .winera-bowling-supplier-text .winera-yellow-stroke,
   .winera-bowling-supplier-text img[src*="stroke"] {
-    width: 200px !important;
+    width: 160px !important;
+    max-width: 55% !important;
+    min-width: 130px !important;
     height: 8px !important;
-    margin: 0 auto 6px !important;
+    margin: 0 auto 2px !important;
+    display: block !important;
   }
 
   .winera-bowling-supplier-text h2 {
     font-size: 1.45rem !important;
     line-height: 1.25 !important;
     text-align: center !important;
+    margin-top: 0 !important;
   }
 
   .winera-bowling-supplier-text p {
@@ -4243,23 +4275,32 @@ html {
   }
 
   /* 2. Premium Section */
+  section.winera-bowling-premium-section,
   .winera-bowling-premium-section {
-    padding: 20px 16px 15px !important;
+    padding: 8px 16px 15px !important;
+    margin-top: 0 !important;
   }
 
   .winera-bowling-premium-container {
     text-align: center !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 
+  .winera-bowling-premium-title-box,
+  .winera-bowling-premium-container>div:first-child,
   .winera-bowling-premium-container>div[style*="marginBottom: '32px'"],
   .winera-bowling-premium-container>div[style*="margin-bottom: 32px"] {
+    margin-top: 0 !important;
     margin-bottom: 12px !important;
   }
 
+  .winera-bowling-premium-stroke,
   .winera-bowling-premium-container img[src*="stroke"] {
-    width: 200px !important;
+    width: 240px !important;
+    max-width: 75% !important;
     height: 8px !important;
-    margin: 0 auto 4px !important;
+    margin: 0 auto 2px !important;
   }
 
   .winera-bowling-premium-title {
@@ -4268,6 +4309,7 @@ html {
     text-align: center !important;
     white-space: normal !important;
     word-break: break-word !important;
+    margin-top: 0 !important;
   }
 
   .winera-bowling-premium-container>div[style*="display: flex"] {
@@ -8235,10 +8277,10 @@ textarea::placeholder,
 
   .winera-trampoline-specs-card h2,
   .winera-trampoline-specs-h2 {
-    font-size: clamp(18px, 5.2vw, 24px) !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    line-height: 1.2 !important;
+    font-size: clamp(16px, 5.2vw, 24px) !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    line-height: 1.15 !important;
     margin-bottom: 16px !important;
   }
 
@@ -17020,13 +17062,20 @@ button[style*="background:transparent"]:hover,
 
   .winera-softplay-specs-container h2,
   .winera-softplay-specs-h2 {
-    font-size: clamp(17px, 5.2vw, 28px) !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-    line-height: 1.2 !important;
+    font-size: clamp(16px, 5.2vw, 24px) !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    line-height: 1.15 !important;
     margin-bottom: 20px !important;
     text-align: center !important;
+  }
+
+  .winera-softplay-specs-container h2 span,
+  .winera-softplay-specs-h2 span {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    display: inline !important;
   }
 
   .winera-softplay-specs-title-box {
@@ -17049,10 +17098,10 @@ button[style*="background:transparent"]:hover,
 
   .winera-softplay-specs-container h2,
   .winera-softplay-specs-h2 {
-    font-size: clamp(15px, 4.8vw, 22px) !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
+    font-size: clamp(15px, 4.8vw, 21px) !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
   }
 }
 
@@ -17061,9 +17110,9 @@ button[style*="background:transparent"]:hover,
   .winera-softplay-specs-container h2,
   .winera-softplay-specs-h2 {
     font-size: 14.5px !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
   }
 }
 
@@ -17171,13 +17220,20 @@ button[style*="background:transparent"]:hover,
 
   .winera-bumpercar-specs-container h2,
   .winera-bumpercar-specs-h2 {
-    font-size: clamp(17px, 5.2vw, 28px) !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-    line-height: 1.2 !important;
+    font-size: clamp(16px, 5.2vw, 24px) !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    line-height: 1.15 !important;
     margin-bottom: 20px !important;
     text-align: center !important;
+  }
+
+  .winera-bumpercar-specs-container h2 span,
+  .winera-bumpercar-specs-h2 span {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    display: inline !important;
   }
 
   .winera-bumpercar-specs-title-box {
@@ -17646,23 +17702,24 @@ button[style*="background:transparent"]:hover,
   .winera-hypergrid-specs-h2,
   .winera-hypergrid-specs-section h2,
   .winera-hypergrid-specs-container h2 {
-    font-size: clamp(15px, 4.6vw, 21px) !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
+    font-size: clamp(16px, 5.2vw, 24px) !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
     color: #ffffff !important;
     text-align: center !important;
-    line-height: 1.2 !important;
+    line-height: 1.15 !important;
     margin: 0 auto !important;
-    display: block !important;
-    width: 100% !important;
+    display: inline-block !important;
+    width: auto !important;
+    max-width: 100% !important;
   }
 
   .winera-hypergrid-specs-h2 span,
   .winera-hypergrid-specs-section h2 span,
   .winera-hypergrid-specs-container h2 span {
-    white-space: normal !important;
-    word-break: break-word !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
     display: inline !important;
   }
 
@@ -19846,11 +19903,8 @@ img.winera-yellow-stroke,
   .winera-commercial-section img[src*="kllqvzchxecftuxi6zdn"],
   .winera-commercial-section .winera-section-heading-accent,
   .winera-commercial-text-container img[src*="kllqvzchxecftuxi6zdn"],
-  .winera-commercial-text-container .winera-section-heading-accent,
   .winera-related-section img[src*="kllqvzchxecftuxi6zdn"],
   .winera-related-section .winera-section-heading-accent,
-  .winera-bowling-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
-  .winera-bowling-supplier-text img[src*="oadq9n7rqdg5bs4u8eyo"],
   .winera-softplay-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
   .winera-softplay-intro-text img[src*="kllqvzchxecftuxi6zdn"],
   .winera-softplay-materials-text img[src*="kllqvzchxecftuxi6zdn"],
@@ -19894,6 +19948,115 @@ img.winera-yellow-stroke,
     display: block !important;
     align-self: center !important;
     float: none !important;
+  }
+}
+
+/* BOWLING ALLEY: FIRST SECTION YELLOW STROKE (SHORTER ON MOBILE) & SECTION 1-2 SPACE REDUCTION */
+@media (max-width: 768px) {
+  /* First section yellow brush stroke line: shorter on mobile to match "Bowling Alley" */
+  .winera-bowling-intro-stroke,
+  .winera-bowling-supplier-text img.winera-yellow-stroke,
+  .winera-bowling-supplier-text img.winera-bowling-intro-stroke,
+  .winera-bowling-supplier-text .winera-yellow-stroke,
+  .winera-bowling-supplier-text img[src*="stroke"],
+  .winera-bowling-supplier-text img[src*="oadq9n7rqdg5bs4u8eyo"],
+  .winera-bowling-supplier-text img[src*="kllqvzchxecftuxi6zdn"],
+  [style*="text-align: left"] .winera-bowling-intro-stroke,
+  [style*="text-align:left"] .winera-bowling-intro-stroke,
+  [style*="text-align: center"] .winera-bowling-intro-stroke,
+  [style*="text-align:center"] .winera-bowling-intro-stroke {
+    width: 160px !important;
+    max-width: 55% !important;
+    min-width: 130px !important;
+    height: 8px !important;
+    min-height: 8px !important;
+    aspect-ratio: auto !important;
+    object-fit: fill !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 2px !important;
+    display: block !important;
+    align-self: center !important;
+    float: none !important;
+  }
+
+  /* Spacing between Bowling Alley Section 1 (Supplier) and Section 2 (Premium) */
+  section.winera-bowling-supplier-section,
+  .winera-bowling-supplier-section {
+    padding-top: 22px !important;
+    padding-bottom: 2px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .winera-bowling-supplier-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .winera-bowling-supplier-img,
+  .winera-bowling-supplier-grid > div:last-child {
+    margin: 12px auto 0 !important;
+    padding-bottom: 0 !important;
+    max-height: none !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 360px !important;
+  }
+
+  .winera-bowling-supplier-img img {
+    margin-bottom: 0 !important;
+    max-height: 250px !important;
+    height: auto !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
+  section.winera-bowling-premium-section,
+  .winera-bowling-premium-section {
+    padding-top: 8px !important;
+    padding-bottom: 18px !important;
+    margin-top: 0 !important;
+  }
+
+  .winera-bowling-premium-container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .winera-bowling-premium-title-box,
+  .winera-bowling-premium-container > div:first-child,
+  .winera-bowling-premium-container > div[style*="marginBottom: '32px'"],
+  .winera-bowling-premium-container > div[style*="margin-bottom: 32px"] {
+    margin-top: 0 !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Mobile screen: Bowling Alley page yellow stroke line tight spacing directly above title */
+  .winera-bowling-page .winera-yellow-stroke,
+  .winera-bowling-page img.winera-yellow-stroke,
+  .winera-bowling-page .winera-bowling-premium-stroke,
+  .winera-bowling-page .winera-bowling-intro-stroke,
+  .winera-bowling-page .winera-bowling-premium-title-box img,
+  .winera-bowling-page .winera-bowling-supplier-text img,
+  .winera-bowling-page .winera-bowling-types-text img[src*="stroke"],
+  .winera-bowling-page .winera-bowling-roi-text img[src*="stroke"],
+  .winera-bowling-page .winera-bowling-whyus-text img[src*="stroke"],
+  .winera-bowling-premium-stroke,
+  .winera-bowling-premium-container img[src*="stroke"],
+  .winera-bowling-premium-title-box img[src*="stroke"] {
+    margin-bottom: 2px !important;
+  }
+
+  .winera-bowling-page .winera-bowling-premium-title,
+  .winera-bowling-page .winera-bowling-supplier-text h2,
+  .winera-bowling-page .winera-bowling-types-text h2,
+  .winera-bowling-page .winera-bowling-roi-text h2,
+  .winera-bowling-page .winera-bowling-whyus-text h2,
+  .winera-bowling-premium-title {
+    margin-top: 0 !important;
   }
 }
 
@@ -20128,4 +20291,143 @@ div[role="button"][aria-label*="Toggle FAQ"]:active {
 .winera-hamburger:active {
   outline: none !important;
   box-shadow: none !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE VIDEO MODAL (PORTRAIT 9:16 SHORTS & LANDSCAPE 16:9)
+   Optimized for mobile screens: Fills vertical video properly with zero letterbox
+   ========================================================================== */
+@media (max-width: 600px) {
+  .winera-video-dialog-backdrop {
+    padding: 8px !important;
+  }
+  .winera-video-modal-card.is-vertical-video {
+    max-width: min(95vw, 400px) !important;
+    max-height: 95vh !important;
+    border-radius: 18px !important;
+  }
+  .winera-video-modal-card.is-landscape-video {
+    max-width: calc(100vw - 16px) !important;
+    border-radius: 16px !important;
+  }
+}
+
+/* ==========================================================================
+   TECHNICAL SPECIFICATIONS SECTION HEADING 1-LINE ENFORCEMENT ON MOBILE
+   Ensures "Technical Specifications" ALWAYS stays on a single line on all pages
+   ========================================================================== */
+@media (max-width: 850px) {
+  .winera-lasertag-specs-h2,
+  .winera-lasertag-specs-section h2,
+  .winera-lasertag-specs-container h2,
+  .winera-softplay-specs-h2,
+  .winera-softplay-specs-section h2,
+  .winera-softplay-specs-container h2,
+  .winera-bumpercar-specs-h2,
+  .winera-bumpercar-specs-section h2,
+  .winera-bumpercar-specs-container h2,
+  .winera-hypergrid-specs-h2,
+  .winera-hypergrid-specs-section h2,
+  .winera-hypergrid-specs-container h2,
+  .winera-trampoline-specs-h2,
+  .winera-trampoline-specs-section h2,
+  .winera-trampoline-specs-container h2,
+  .winera-trampoline-specs-card h2,
+  [class*="-specs-section"] h2,
+  [class*="-specs-container"] h2,
+  [class*="-specs-card"] h2,
+  [class*="-specs-title-box"] h2 {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    font-size: clamp(16px, 5.2vw, 24px) !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    width: auto !important;
+    max-width: 100% !important;
+    display: inline-block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .winera-lasertag-specs-h2 span,
+  .winera-lasertag-specs-section h2 span,
+  .winera-lasertag-specs-container h2 span,
+  .winera-softplay-specs-h2 span,
+  .winera-softplay-specs-section h2 span,
+  .winera-softplay-specs-container h2 span,
+  .winera-bumpercar-specs-h2 span,
+  .winera-bumpercar-specs-section h2 span,
+  .winera-bumpercar-specs-container h2 span,
+  .winera-hypergrid-specs-h2 span,
+  .winera-hypergrid-specs-section h2 span,
+  .winera-hypergrid-specs-container h2 span,
+  .winera-trampoline-specs-h2 span,
+  .winera-trampoline-specs-section h2 span,
+  .winera-trampoline-specs-container h2 span,
+  .winera-trampoline-specs-card h2 span,
+  [class*="-specs-section"] h2 span,
+  [class*="-specs-container"] h2 span,
+  [class*="-specs-card"] h2 span,
+  [class*="-specs-title-box"] h2 span {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    display: inline !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .winera-lasertag-specs-h2,
+  .winera-lasertag-specs-section h2,
+  .winera-lasertag-specs-container h2,
+  .winera-softplay-specs-h2,
+  .winera-softplay-specs-section h2,
+  .winera-softplay-specs-container h2,
+  .winera-bumpercar-specs-h2,
+  .winera-bumpercar-specs-section h2,
+  .winera-bumpercar-specs-container h2,
+  .winera-hypergrid-specs-h2,
+  .winera-hypergrid-specs-section h2,
+  .winera-hypergrid-specs-container h2,
+  .winera-trampoline-specs-h2,
+  .winera-trampoline-specs-section h2,
+  .winera-trampoline-specs-container h2,
+  .winera-trampoline-specs-card h2,
+  [class*="-specs-section"] h2,
+  [class*="-specs-container"] h2,
+  [class*="-specs-card"] h2,
+  [class*="-specs-title-box"] h2 {
+    font-size: clamp(15px, 4.8vw, 21px) !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .winera-lasertag-specs-h2,
+  .winera-lasertag-specs-section h2,
+  .winera-lasertag-specs-container h2,
+  .winera-softplay-specs-h2,
+  .winera-softplay-specs-section h2,
+  .winera-softplay-specs-container h2,
+  .winera-bumpercar-specs-h2,
+  .winera-bumpercar-specs-section h2,
+  .winera-bumpercar-specs-container h2,
+  .winera-hypergrid-specs-h2,
+  .winera-hypergrid-specs-section h2,
+  .winera-hypergrid-specs-container h2,
+  .winera-trampoline-specs-h2,
+  .winera-trampoline-specs-section h2,
+  .winera-trampoline-specs-container h2,
+  .winera-trampoline-specs-card h2,
+  [class*="-specs-section"] h2,
+  [class*="-specs-container"] h2,
+  [class*="-specs-card"] h2,
+  [class*="-specs-title-box"] h2 {
+    font-size: 14.5px !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+  }
 }

@@ -369,7 +369,8 @@ export default function TestimonialsSection({
                   />
                   {Boolean(activeVideoUrl && String(activeVideoUrl).trim()) && (
                     <button
-                      onClick={() => openVideoModal(activeVideoUrl, `${currentItem.gameZoneName || currentItem.name || 'Client'} - Video Review`)}
+                      onClick={() => openVideoModal(activeVideoUrl, `${currentItem.gameZoneName || currentItem.name || 'Client'} - Video Review`, { isVertical: true })}
+                      onMouseDown={(e) => e.preventDefault()}
                       aria-label="Watch Review Video"
                       title="Watch Review Video"
                       style={{
@@ -589,7 +590,9 @@ export default function TestimonialsSection({
                 />
                 {Boolean(currentItem.youtubeVideoUrl && String(currentItem.youtubeVideoUrl).trim()) && (
                   <button
-                    onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`)}
+                    onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`, { isVertical: true })}
+                    onMouseDown={(e) => e.preventDefault()}
+                    aria-label="Watch Review Video"
                     title="Watch Review Video"
                     style={{
                       position: 'absolute',

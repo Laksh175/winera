@@ -69,6 +69,8 @@ export default function ProjectsMarqueeSection({
   const isDraggingRef = useRef(false);
   const isInteractingRef = useRef(false);
   const startXRef = useRef(0);
+  const touchStartRef = useRef({ x: 0, y: 0 });
+  const touchDirectionRef = useRef(null); // 'h' | 'v' | null
   const dragStartCurrentXRef = useRef(0);
   const hasMovedRef = useRef(false);
   const lastTouchTimeRef = useRef(0);
@@ -135,24 +137,24 @@ export default function ProjectsMarqueeSection({
     };
   }, [items]);
 
-  // Touch & Pointer gesture handlers for manual scrolling
-  const handleStart = (clientX) => {
+  // Mouse drag handlers (desktop)
+  const handleMouseDown = (e) => {
     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     isInteractingRef.current = true;
     isDraggingRef.current = true;
     hasMovedRef.current = false;
     velocityRef.current = 0;
 
-    startXRef.current = clientX;
-    lastTouchXRef.current = clientX;
+    startXRef.current = e.clientX;
+    lastTouchXRef.current = e.clientX;
     lastTouchTimeRef.current = performance.now();
     dragStartCurrentXRef.current = currentXRef.current;
     setIsGrabbing(true);
   };
 
-  const handleMove = (clientX) => {
+  const handleMouseMove = (e) => {
     if (!isDraggingRef.current) return;
-    const deltaX = clientX - startXRef.current;
+    const deltaX = e.clientX - startXRef.current;
 
     if (Math.abs(deltaX) > 4) {
       hasMovedRef.current = true;
@@ -161,8 +163,8 @@ export default function ProjectsMarqueeSection({
     const now = performance.now();
     const timeDiff = now - lastTouchTimeRef.current;
     if (timeDiff > 10) {
-      velocityRef.current = ((clientX - lastTouchXRef.current) / timeDiff) * 16;
-      lastTouchXRef.current = clientX;
+      velocityRef.current = ((e.clientX - lastTouchXRef.current) / timeDiff) * 16;
+      lastTouchXRef.current = e.clientX;
       lastTouchTimeRef.current = now;
     }
 
@@ -173,18 +175,102 @@ export default function ProjectsMarqueeSection({
     }
   };
 
-  const handleEnd = () => {
+  const handleMouseEnd = () => {
+    if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
     setIsGrabbing(false);
 
-    // Limit max fling velocity
     velocityRef.current = Math.max(-25, Math.min(25, velocityRef.current));
 
     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     resumeTimeoutRef.current = setTimeout(() => {
       isInteractingRef.current = false;
       velocityRef.current = 0;
-    }, 800); // Resumes smooth auto-scroll 800ms after user releases
+    }, 800);
+
+    setTimeout(() => {
+      hasMovedRef.current = false;
+    }, 80);
+  };
+
+  // Direction-aware touch handlers (mobile) - never blocks vertical page scrolling!
+  const handleTouchStart = (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    touchDirectionRef.current = null;
+    isDraggingRef.current = false;
+    hasMovedRef.current = false;
+    velocityRef.current = 0;
+    startXRef.current = touch.clientX;
+    lastTouchXRef.current = touch.clientX;
+    lastTouchTimeRef.current = performance.now();
+    dragStartCurrentXRef.current = currentXRef.current;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStartRef.current.x;
+    const deltaY = touch.clientY - touchStartRef.current.y;
+
+    // Determine gesture direction on first significant movement
+    if (touchDirectionRef.current === null) {
+      // If user is moving vertically, DO NOT hijack! Let native window scroll handle it smoothly
+      if (Math.abs(deltaY) >= Math.abs(deltaX) && Math.abs(deltaY) > 6) {
+        touchDirectionRef.current = 'v';
+        isDraggingRef.current = false;
+        isInteractingRef.current = false;
+        return;
+      }
+      // If user is intentionally moving horizontally, engage horizontal drag
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 6) {
+        touchDirectionRef.current = 'h';
+        isDraggingRef.current = true;
+        isInteractingRef.current = true;
+        setIsGrabbing(true);
+        if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+      }
+    }
+
+    if (touchDirectionRef.current === 'v') {
+      return;
+    }
+
+    if (touchDirectionRef.current === 'h' && isDraggingRef.current) {
+      if (Math.abs(deltaX) > 4) {
+        hasMovedRef.current = true;
+      }
+
+      const now = performance.now();
+      const timeDiff = now - lastTouchTimeRef.current;
+      if (timeDiff > 10) {
+        velocityRef.current = ((touch.clientX - lastTouchXRef.current) / timeDiff) * 16;
+        lastTouchXRef.current = touch.clientX;
+        lastTouchTimeRef.current = now;
+      }
+
+      currentXRef.current = dragStartCurrentXRef.current + deltaX;
+
+      if (trackRef.current) {
+        trackRef.current.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (touchDirectionRef.current === 'h') {
+      velocityRef.current = Math.max(-25, Math.min(25, velocityRef.current));
+      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+      resumeTimeoutRef.current = setTimeout(() => {
+        isInteractingRef.current = false;
+        velocityRef.current = 0;
+      }, 800);
+    }
+
+    touchDirectionRef.current = null;
+    isDraggingRef.current = false;
+    setIsGrabbing(false);
 
     setTimeout(() => {
       hasMovedRef.current = false;
@@ -275,14 +361,14 @@ export default function ProjectsMarqueeSection({
 
         {/* Continuous Auto-Scroll & Manual Touch/Drag Infinite Marquee Projects Showcase */}
         <div
-          onTouchStart={(e) => handleStart(e.touches[0].clientX)}
-          onTouchMove={(e) => handleMove(e.touches[0].clientX)}
-          onTouchEnd={handleEnd}
-          onTouchCancel={handleEnd}
-          onMouseDown={(e) => handleStart(e.clientX)}
-          onMouseMove={(e) => handleMove(e.clientX)}
-          onMouseUp={handleEnd}
-          onMouseLeave={handleEnd}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseEnd}
+          onMouseLeave={handleMouseEnd}
           style={{
             width: '100%',
             maxWidth: '100vw',

@@ -8,7 +8,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import CtaBanner from '../components/CtaBanner';
 import RelatedProductsSection from '../components/RelatedProductsSection';
 import MobileExpandableText from '../components/MobileExpandableText';
-import BrochureModal from '../components/BrochureModal';
+import BrochureModal, { openBrochure } from '../components/BrochureModal';
 import { sanitizeAndFormatHtml } from './BlogDetail';
 
 const wineraLogo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png";
@@ -293,8 +293,8 @@ export default function BowlingAlley({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                className="winera-yellow-stroke"
-                style={{ display: 'block', width: '280px', maxWidth: '75%', height: 'auto', maxHeight: '10px', aspectRatio: '492 / 10', marginBottom: '10px', objectFit: 'contain' }}
+                className="winera-yellow-stroke winera-bowling-intro-stroke"
+                style={{ display: 'block', width: '280px', maxWidth: '75%', height: 'auto', maxHeight: '10px', aspectRatio: '492 / 10', marginBottom: '3px', objectFit: 'contain' }}
               />
               <h2 style={{
                 fontSize: '35px',
@@ -394,11 +394,12 @@ export default function BowlingAlley({ siteData }) {
       <section className="winera-bowling-premium-section" style={{ padding: '45px 4vw 50px', background: '#F5F5F9', position: 'relative', overflow: 'hidden' }}>
         <div className="winera-bowling-premium-container" style={{ maxWidth: '1280px', margin: '0 auto' }}>
           {/* Section Title with Yellow Brush Accent Line in 1 Single Line */}
-          <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px', textAlign: 'center', width: '100%' }}>
+          <div className="winera-bowling-premium-title-box" style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px', textAlign: 'center', width: '100%' }}>
             <img
               src={yellowStrokeLine}
               alt=""
-              style={{ display: 'block', width: '380px', height: '12px', marginBottom: '8px', objectFit: 'fill' }}
+              className="winera-yellow-stroke winera-bowling-premium-stroke"
+              style={{ display: 'block', width: '380px', height: '12px', marginBottom: '3px', objectFit: 'fill' }}
             />
             <h2 className="winera-bowling-premium-title" style={{
               fontSize: '35px',
@@ -494,7 +495,7 @@ export default function BowlingAlley({ siteData }) {
                   src={yellowStrokeLine}
                   alt=""
                   className="winera-yellow-stroke"
-                  style={{ display: 'block', width: '200px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
+                  style={{ display: 'block', width: '200px', height: '8px', marginBottom: '3px', objectFit: 'fill' }}
                 />
                 <h2 style={{ fontSize: 'clamp(27px, 2.25vw, 35px)', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
                   {(() => {
@@ -946,7 +947,7 @@ export default function BowlingAlley({ siteData }) {
                   src={yellowStrokeLine}
                   alt=""
                   className="winera-yellow-stroke"
-                  style={{ display: 'block', width: '200px', height: '8px', marginBottom: '10px', objectFit: 'fill' }}
+                  style={{ display: 'block', width: '200px', height: '8px', marginBottom: '3px', objectFit: 'fill' }}
                 />
                 <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                   {(() => {
@@ -984,7 +985,14 @@ export default function BowlingAlley({ siteData }) {
               <div className="winera-bowling-types-btn-row" style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '45px' }}>
                 <button
                   type="button"
-                  onClick={() => setIsBrochureOpen(true)}
+                  onClick={() => openBrochure(
+                    (() => {
+                      const bUrl = siteData?.bowlingString?.brochureUrl;
+                      if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '') return bUrl.trim();
+                      return "/pdf/Bowling Catalogue.pdf";
+                    })(),
+                    () => setIsBrochureOpen(true)
+                  )}
                   aria-label="Download String Bowling Brochure"
                   style={{
                     display: 'inline-flex',
@@ -1030,7 +1038,7 @@ export default function BowlingAlley({ siteData }) {
               <img
                 src={yellowStrokeLine}
                 alt=""
-                style={{ display: 'block', width: '320px', height: '14px', marginBottom: '8px', objectFit: 'fill' }}
+                style={{ display: 'block', width: '320px', height: '14px', marginBottom: '3px', objectFit: 'fill' }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.1, margin: 0 }}>
                 {(() => {
@@ -1214,7 +1222,7 @@ export default function BowlingAlley({ siteData }) {
                 src={yellowStrokeLine}
                 alt=""
                 className="winera-yellow-stroke"
-                style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '8px', objectFit: 'fill', margin: '0 auto 8px' }}
+                style={{ display: 'block', width: '200px', maxWidth: '100%', height: '8px', marginBottom: '3px', objectFit: 'fill', margin: '0 auto 3px' }}
               />
               {/* Single-line title */}
               <h2 style={{

@@ -886,10 +886,11 @@ export default function LaserTag({ siteData }) {
             style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0.001, pointerEvents: 'none' }}
           />
           {/* Top Title: Technical Specifications with Yellow Accent Stroke */}
-          <div style={{ position: 'relative', display: isPhone ? 'flex' : 'inline-block', flexDirection: isPhone ? 'column' : 'initial', alignItems: isPhone ? 'center' : 'flex-start', textAlign: isPhone ? 'center' : 'left', marginBottom: isPhone ? '20px' : '28px' }}>
+          <div className="winera-lasertag-specs-title-box" style={{ position: 'relative', display: isPhone ? 'flex' : 'inline-block', flexDirection: isPhone ? 'column' : 'initial', alignItems: isPhone ? 'center' : 'flex-start', textAlign: isPhone ? 'center' : 'left', marginBottom: isPhone ? '20px' : '28px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
+              className="winera-yellow-stroke"
               style={{
                 display: 'block',
                 maxWidth: '100%',
@@ -901,18 +902,19 @@ export default function LaserTag({ siteData }) {
                 marginRight: isPhone ? 'auto' : '0'
               }}
             />
-            <h2 style={{
-              fontSize: isPhone ? '26px' : '36px',
+            <h2 className="winera-lasertag-specs-h2" style={{
+              fontSize: isPhone ? 'clamp(17px, 5.2vw, 24px)' : '36px',
               fontWeight: '900',
               color: '#ffffff',
               lineHeight: 1.15,
-              margin: 0
+              margin: 0,
+              whiteSpace: 'nowrap'
             }}>
-              <span style={{ color: '#ffcd00' }}>
+              <span style={{ color: '#ffcd00', whiteSpace: 'nowrap' }}>
                 {siteData?.lasertagSpecs?.titleHighlight || "Technical"}
               </span>
               {' '}
-              <span style={{ color: '#ffffff' }}>
+              <span style={{ color: '#ffffff', whiteSpace: 'nowrap' }}>
                 {siteData?.lasertagSpecs?.titleNormal || "Specifications"}
               </span>
             </h2>
@@ -1553,10 +1555,11 @@ export default function LaserTag({ siteData }) {
           boxSizing: 'border-box'
         }}>
           {/* Top Title: Technical Specifications with Yellow Accent Stroke */}
-          <div style={{ position: 'relative', display: isPhone ? 'flex' : 'inline-block', flexDirection: isPhone ? 'column' : 'initial', alignItems: isPhone ? 'center' : 'flex-start', textAlign: isPhone ? 'center' : 'left', marginBottom: isPhone ? '20px' : '28px' }}>
+          <div className="winera-lasertag-specs-title-box" style={{ position: 'relative', display: isPhone ? 'flex' : 'inline-block', flexDirection: isPhone ? 'column' : 'initial', alignItems: isPhone ? 'center' : 'flex-start', textAlign: isPhone ? 'center' : 'left', marginBottom: isPhone ? '20px' : '28px' }}>
             <img
               src={yellowStrokeLine}
               alt=""
+              className="winera-yellow-stroke"
               style={{
                 display: 'block',
                 maxWidth: '100%',
@@ -1568,18 +1571,19 @@ export default function LaserTag({ siteData }) {
                 marginRight: isPhone ? 'auto' : '0'
               }}
             />
-            <h2 style={{
-              fontSize: isPhone ? '26px' : '36px',
+            <h2 className="winera-lasertag-specs-h2" style={{
+              fontSize: isPhone ? 'clamp(17px, 5.2vw, 24px)' : '36px',
               fontWeight: '900',
               color: '#ffffff',
               lineHeight: 1.15,
-              margin: 0
+              margin: 0,
+              whiteSpace: 'nowrap'
             }}>
-              <span style={{ color: '#ffcd00' }}>
+              <span style={{ color: '#ffcd00', whiteSpace: 'nowrap' }}>
                 {siteData?.lasertagSpySpecs?.titleHighlight || "Technical"}
               </span>
               {' '}
-              <span style={{ color: '#ffffff' }}>
+              <span style={{ color: '#ffffff', whiteSpace: 'nowrap' }}>
                 {siteData?.lasertagSpySpecs?.titleNormal || "Specifications"}
               </span>
             </h2>

@@ -27,7 +27,7 @@ const downloadButtonImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_au
 const talkToRoiButtonImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345686/winera_uploads/p0ljiyl3jf6r3wvnzch1.png";
 const homePageIcon = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345656/winera_uploads/gp0aisnttd4hpnswmxu4.png";
 import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
-import BrochureModal from '../components/BrochureModal';
+import BrochureModal, { openBrochure } from '../components/BrochureModal';
 
 const defaultHypergridWhyWineraItems = [
   {
@@ -438,7 +438,14 @@ export default function Hypergrid({ siteData }) {
           <div className="winera-hypergrid-specs-btn-wrapper" style={{ margin: '0 0 35px 35px' }}>
             <button
               type="button"
-              onClick={() => setIsBrochureOpen(true)}
+              onClick={() => openBrochure(
+                (() => {
+                  const hUrl = siteData?.hypergridSpecs?.brochureUrl;
+                  if (hUrl && typeof hUrl === 'string' && hUrl.trim() !== '#' && hUrl.trim() !== '') return hUrl.trim();
+                  return "/pdf/Hyper Grid.pdf";
+                })(),
+                () => setIsBrochureOpen(true)
+              )}
               aria-label="Download Our Brochure"
               style={{
                 display: 'inline-flex',

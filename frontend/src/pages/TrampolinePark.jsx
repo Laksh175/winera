@@ -8,7 +8,7 @@ import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import LeadCaptureModal from '../components/LeadCaptureModal';
 import MobileExpandableText from '../components/MobileExpandableText';
-import BrochureModal from '../components/BrochureModal';
+import BrochureModal, { openBrochure } from '../components/BrochureModal';
 import { sanitizeAndFormatHtml } from './BlogDetail';
 const trampolineParkBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345688/winera_uploads/nri2vtjcndonajowvvqw.png";
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
@@ -643,7 +643,14 @@ export default function TrampolinePark({ siteData }) {
               <div>
                 <button
                   type="button"
-                  onClick={() => setIsBrochureOpen(true)}
+                  onClick={() => openBrochure(
+                    (() => {
+                      const tUrl = siteData?.trampolineSpecs?.buttonLink || siteData?.trampolineSpecs?.brochureLink || siteData?.trampolineSpecs?.brochureUrl;
+                      if (tUrl && typeof tUrl === 'string' && tUrl.trim() !== '#' && tUrl.trim() !== '' && !tUrl.includes('wa.me')) return tUrl.trim();
+                      return "/pdf/Trampoline Catalogue.pdf";
+                    })(),
+                    () => setIsBrochureOpen(true)
+                  )}
                   aria-label="Download Our Brochure"
                   style={{
                     display: 'inline-flex',

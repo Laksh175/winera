@@ -9,7 +9,7 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
-import BrochureModal from '../components/BrochureModal';
+import BrochureModal, { openBrochure } from '../components/BrochureModal';
 import { sanitizeAndFormatHtml } from './BlogDetail';
 const needConsultationsBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
 const softplayCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345683/winera_uploads/onngsoz46k1mgxbyi6n1.png";
@@ -871,7 +871,16 @@ export default function SoftPlay({ siteData }) {
             <div>
               <button
                 type="button"
-                onClick={() => setIsBrochureOpen(true)}
+                onClick={() => openBrochure(
+                  (() => {
+                    const sUrl = siteData?.softplaySpecs?.brochureUrl;
+                    if (sUrl && typeof sUrl === 'string' && sUrl.trim() !== '#' && sUrl.trim() !== '') return sUrl.trim();
+                    const tUrl = siteData?.softplayTypes?.brochureUrl;
+                    if (tUrl && typeof tUrl === 'string' && tUrl.trim() !== '#' && tUrl.trim() !== '') return tUrl.trim();
+                    return "/pdf/Winera Softplay.pdf";
+                  })(),
+                  () => setIsBrochureOpen(true)
+                )}
                 aria-label="Download Our Brochure"
                 style={{
                   display: 'inline-flex',

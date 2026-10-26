@@ -6,16 +6,19 @@ export function VideoModalProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
   const [videoTitle, setVideoTitle] = useState('Video Showcase');
+  const [videoOptions, setVideoOptions] = useState({});
 
-  const openVideoModal = (url, title = 'Winera Video Showcase') => {
+  const openVideoModal = (url, title = 'Winera Video Showcase', options = {}) => {
     setVideoUrl(url || '');
     setVideoTitle(title);
+    setVideoOptions(typeof options === 'object' && options !== null ? options : {});
     setIsOpen(true);
   };
 
   const closeVideoModal = () => {
     setIsOpen(false);
     setVideoUrl('');
+    setVideoOptions({});
   };
 
   // Close on Escape key press
@@ -42,9 +45,16 @@ export function VideoModalProvider({ children }) {
   }, [isOpen]);
 
   return (
-    <VideoModalContext.Provider value={{ isOpen, videoUrl, videoTitle, openVideoModal, closeVideoModal }}>
+    <VideoModalContext.Provider value={{ isOpen, videoUrl, videoTitle, videoOptions, openVideoModal, closeVideoModal }}>
       {children}
-      {isOpen && <VideoModalDialog videoUrl={videoUrl} title={videoTitle} onClose={closeVideoModal} />}
+      {isOpen && (
+        <VideoModalDialog
+          videoUrl={videoUrl}
+          title={videoTitle}
+          options={videoOptions}
+          onClose={closeVideoModal}
+        />
+      )}
     </VideoModalContext.Provider>
   );
 }
@@ -58,7 +68,24 @@ export function useVideoModal() {
 }
 
 // Internal Modal Dialog Component
-function VideoModalDialog({ videoUrl, title, onClose }) {
+function VideoModalDialog({ videoUrl, title, options = {}, onClose }) {
+  const trimmed = typeof videoUrl === 'string' ? videoUrl.trim() : '';
+  const isVerticalDetected = Boolean(
+    options?.isVertical ||
+    trimmed.includes('/shorts/') ||
+    trimmed.includes('shorts/') ||
+    trimmed.includes('reel') ||
+    trimmed.includes('tiktok') ||
+    trimmed.includes('vertical=true') ||
+    (typeof title === 'string' && title.toLowerCase().includes('review'))
+  );
+
+  const [isVertical, setIsVertical] = useState(isVerticalDetected);
+
+  useEffect(() => {
+    setIsVertical(isVerticalDetected);
+  }, [videoUrl, isVerticalDetected]);
+
   // Helper to parse YouTube URL and extract video ID
   const getEmbedInfo = (url) => {
     // Default Twinkle Twinkle Little Star nursery rhyme video fallback
@@ -68,16 +95,16 @@ function VideoModalDialog({ videoUrl, title, onClose }) {
       return { type: 'youtube', embedUrl: defaultKidsVideoEmbed };
     }
 
-    const trimmed = url.trim();
+    const clean = url.trim();
 
     // Direct MP4 / WebM video file
-    if (trimmed.match(/\.(mp4|webm|ogg)($|\?)/i)) {
-      return { type: 'direct', url: trimmed };
+    if (clean.match(/\.(mp4|webm|ogg)($|\?)/i)) {
+      return { type: 'direct', url: clean };
     }
 
     // YouTube regex patterns (supports standard, shorts, embed, youtu.be, and query parameters)
     const ytReg = /(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/))([^"&?\/\s]{11})/i;
-    const match = trimmed.match(ytReg);
+    const match = clean.match(ytReg);
 
     if (match && match[1]) {
       const videoId = match[1];
@@ -88,11 +115,11 @@ function VideoModalDialog({ videoUrl, title, onClose }) {
     }
 
     // If it's already an embed link
-    if (trimmed.includes('youtube.com/embed/')) {
-      const separator = trimmed.includes('?') ? '&' : '?';
+    if (clean.includes('youtube.com/embed/')) {
+      const separator = clean.includes('?') ? '&' : '?';
       return {
         type: 'youtube',
-        embedUrl: `${trimmed}${separator}autoplay=1&rel=0&modestbranding=1&controls=1`
+        embedUrl: `${clean}${separator}autoplay=1&rel=0&modestbranding=1&controls=1`
       };
     }
 
@@ -107,6 +134,7 @@ function VideoModalDialog({ videoUrl, title, onClose }) {
 
   return (
     <div
+      className="winera-video-dialog-backdrop"
       onClick={onClose}
       style={{
         position: 'fixed',
@@ -115,13 +143,13 @@ function VideoModalDialog({ videoUrl, title, onClose }) {
         right: 0,
         bottom: 0,
         zIndex: 999999,
-        background: 'rgba(15, 23, 42, 0.88)',
+        background: 'rgba(15, 23, 42, 0.92)',
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '20px',
+        padding: '12px',
         animation: 'wineraFadeIn 0.25s ease'
       }}
     >
@@ -133,18 +161,21 @@ function VideoModalDialog({ videoUrl, title, onClose }) {
       `}</style>
 
       <div
+        className={`winera-video-modal-card ${isVertical ? 'is-vertical-video' : 'is-landscape-video'}`}
         onClick={(e) => e.stopPropagation()}
         style={{
           width: '100%',
-          maxWidth: '860px',
+          maxWidth: isVertical ? '420px' : '880px',
           background: '#0f172a',
-          borderRadius: '24px',
+          borderRadius: '22px',
           border: '1.5px solid #38bdf8',
           overflow: 'hidden',
-          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.6)',
+          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.75)',
           display: 'flex',
           flexDirection: 'column',
-          position: 'relative'
+          position: 'relative',
+          maxHeight: '94vh',
+          transition: 'max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
         }}
       >
         {/* Modal Top Bar */}
@@ -152,69 +183,120 @@ function VideoModalDialog({ videoUrl, title, onClose }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '14px 22px',
+          padding: '10px 16px',
           background: '#1e293b',
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-          color: '#ffffff'
+          color: '#ffffff',
+          gap: '10px',
+          flexShrink: 0
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
             <span style={{
-              width: '10px',
-              height: '10px',
+              width: '8px',
+              height: '8px',
               borderRadius: '50%',
               background: '#38bdf8',
-              boxShadow: '0 0 8px #38bdf8'
+              boxShadow: '0 0 8px #38bdf8',
+              flexShrink: 0
             }} />
-            <h4 style={{ fontSize: '15px', fontWeight: '800', margin: 0, color: '#ffffff' }}>
+            <h4 style={{
+              fontSize: '13.5px',
+              fontWeight: '700',
+              margin: 0,
+              color: '#ffffff',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}>
               {title}
             </h4>
           </div>
 
-          <button
-            onClick={onClose}
-            aria-label="Close Video Modal"
-            style={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              border: 'none',
-              color: '#ffffff',
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              fontSize: '18px',
-              fontWeight: '700',
-              transition: 'background 0.2s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = '#ef4444'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
-          >
-            ✕
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+            {/* Aspect Ratio Toggle (9:16 Shorts vs 16:9 Landscape) */}
+            <button
+              onClick={() => setIsVertical((prev) => !prev)}
+              aria-label={isVertical ? "Switch to Landscape View (16:9)" : "Switch to Portrait View (9:16)"}
+              title={isVertical ? "Switch to Wide View (16:9)" : "Switch to Portrait View (9:16)"}
+              style={{
+                background: isVertical ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255, 255, 255, 0.1)',
+                border: isVertical ? '1px solid #38bdf8' : '1px solid rgba(255, 255, 255, 0.2)',
+                color: isVertical ? '#38bdf8' : '#e2e8f0',
+                padding: '4px 9px',
+                borderRadius: '16px',
+                fontSize: '11px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                outline: 'none',
+                userSelect: 'none',
+                WebkitTapHighlightColor: 'transparent',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <span>{isVertical ? '📱 9:16' : '🖥️ 16:9'}</span>
+            </button>
+
+            {/* Close Button */}
+            <button
+              onClick={onClose}
+              aria-label="Close Video Modal"
+              style={{
+                background: 'rgba(255, 255, 255, 0.12)',
+                border: 'none',
+                color: '#ffffff',
+                width: '30px',
+                height: '30px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                fontSize: '16px',
+                fontWeight: '700',
+                outline: 'none',
+                userSelect: 'none',
+                WebkitTapHighlightColor: 'transparent',
+                transition: 'background 0.2s ease'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = '#ef4444'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)'}
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
-        {/* Video Player Frame Container (16:9 Aspect Ratio) */}
+        {/* Video Player Frame Container (Responsive 9:16 for Shorts / 16:9 for Wide) */}
         <div style={{
           position: 'relative',
           width: '100%',
-          paddingBottom: '56.25%',
-          height: 0,
-          background: '#000000'
+          background: '#000000',
+          overflow: 'hidden',
+          ...(isVertical ? {
+            aspectRatio: '9 / 16',
+            maxHeight: 'calc(94vh - 52px)',
+            margin: '0 auto'
+          } : {
+            aspectRatio: '16 / 9',
+            width: '100%'
+          })
         }}>
           {embedInfo.type === 'direct' ? (
             <video
               src={embedInfo.url}
               controls
               autoPlay
+              playsInline
               style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 width: '100%',
                 height: '100%',
-                objectFit: 'contain'
+                objectFit: isVertical ? 'contain' : 'cover'
               }}
             />
           ) : (
