@@ -152,6 +152,64 @@ function GlobalScrollAnimation() {
   return null;
 }
 
+// Centralized Canonical Tag Manager that syncs with Admin Dashboard SEO settings
+function GlobalCanonicalTag({ siteData }) {
+  const location = useLocation();
+  const { pathname } = location;
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    // Do not set or modify canonical on internal admin routes
+    if (pathname.startsWith('/admin')) return;
+
+    const routeSeoKeyMap = {
+      '/': 'homeSeo',
+      '/why-us': 'aboutSeo',
+      '/blog': 'blogSeo',
+      '/product/arcade-games': 'arcadeSeo',
+      '/product/bowling-alley': 'bowlingSeo',
+      '/product/soft-play': 'softplaySeo',
+      '/product/trampoline-park': 'trampolineSeo',
+      '/product/vr-games': 'vrSeo',
+      '/product/bumper-car': 'bumpercarSeo',
+      '/product/amusement-park': 'amusementSeo',
+      '/product/ar-games': 'arSeo',
+      '/product/hypergrid': 'hypergridSeo',
+      '/product/laser-tag': 'lasertagSeo',
+      '/resource/safety-standards': 'safetySeo',
+      '/resource/roi': 'roiSeo',
+      '/project': 'projectSeo',
+      '/contact': 'contactSeo',
+      '/privacy-policy': 'privacySeo',
+      '/terms-and-conditions': 'termsSeo'
+    };
+
+    const seoKey = routeSeoKeyMap[pathname];
+    let customCanonical = '';
+    if (seoKey && siteData && siteData[seoKey]) {
+      customCanonical = siteData[seoKey].canonicalUrl || '';
+    } else if (pathname === '/product/bumper-car' && siteData?.bumperSeo?.canonicalUrl) {
+      customCanonical = siteData.bumperSeo.canonicalUrl;
+    }
+
+    // Determine target URL: Admin configured custom URL or clean standard live URL
+    const targetUrl = customCanonical && customCanonical.trim() !== ''
+      ? customCanonical.trim()
+      : `https://winera.in${pathname === '/' ? '/' : pathname}`;
+
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', targetUrl);
+  }, [pathname, siteData]);
+
+  return null;
+}
+
 import { VideoModalProvider } from './context/VideoModalContext';
 import WhatsAppFloat from './components/WhatsAppFloat';
 
@@ -161,6 +219,7 @@ function AppRoutes({ siteData, loadData }) {
   return (
     <ErrorBoundary>
       <GlobalScrollAnimation />
+      <GlobalCanonicalTag siteData={siteData} />
       <WhatsAppFloat whatsAppUrl={siteData?.header?.whatsAppUrl} />
       <Suspense fallback={
         <div style={{

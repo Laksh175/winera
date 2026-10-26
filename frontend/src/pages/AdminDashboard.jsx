@@ -1691,14 +1691,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           setArcadeMasterCards(res.cards || res.products);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
     fetchVrGames({ limit: 'all' })
       .then(res => {
         if (isMounted && res?.success && Array.isArray(res.cards)) {
           setVrMasterCards(res.cards);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
     return () => { isMounted = false; };
   }, []);
 
@@ -4662,91 +4662,112 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             const defaultSeoMap = {
               homeSeo: {
                 pageTitle: "Game Zone Equipment Manufacturer in India | Winera International",
-                metaDescription: "Winera International is your trusted Game Zone Equipment Manufacturer and Indoor Play Equipment Manufacturer in India since 2014. Get Amazing deals!"
+                metaDescription: "Winera International is your trusted Game Zone Equipment Manufacturer and Indoor Play Equipment Manufacturer in India since 2014. Get Amazing deals!",
+                canonicalUrl: "https://winera.in/"
               },
               blogSeo: {
                 pageTitle: "Winera International Blog | Winera International",
-                metaDescription: "Explore expert insights, trends, and ideas from Winera International to elevate your entertainment venue and create unforgettable guest experiences."
+                metaDescription: "Explore expert insights, trends, and ideas from Winera International to elevate your entertainment venue and create unforgettable guest experiences.",
+                canonicalUrl: "https://winera.in/blog"
               },
               aboutSeo: {
                 pageTitle: "The Right Choice for Your Business | Winera International",
-                metaDescription: "Winera delivers more than promises trusted expertise, customer care, and quality solutions that set us apart. Discover why clients choose us."
+                metaDescription: "Winera delivers more than promises trusted expertise, customer care, and quality solutions that set us apart. Discover why clients choose us.",
+                canonicalUrl: "https://winera.in/why-us"
               },
               arcadeSeo: {
                 pageTitle: "Arcade Games Manufacturer in India | Winera International",
-                metaDescription: "Looking for arcade game machines in India? Winera International offers redemption games, kiddie rides, racing simulators, and more at direct factory prices."
+                metaDescription: "Looking for arcade game machines in India? Winera International offers redemption games, kiddie rides, racing simulators, and more at direct factory prices.",
+                canonicalUrl: "https://winera.in/product/arcade-games"
               },
               bowlingSeo: {
                 pageTitle: "Bowling Alley Manufacturer in India | Winera International",
-                metaDescription: "Looking for a bowling alley manufacturer in India? Winera International supplies premium new and refurbished Brunswick systems, with 15+ years of expertise."
+                metaDescription: "Looking for a bowling alley manufacturer in India? Winera International supplies premium new and refurbished Brunswick systems, with 15+ years of expertise.",
+                canonicalUrl: "https://winera.in/product/bowling-alley"
               },
               softplaySeo: {
                 pageTitle: "Top Soft Play Equipment Manufacturers in India | Winera International",
-                metaDescription: "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget."
+                metaDescription: "As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget.",
+                canonicalUrl: "https://winera.in/product/soft-play"
               },
               trampolineSeo: {
                 pageTitle: "Trampoline Park Manufacturer in India | Winera International",
-                metaDescription: "Looking for a trampoline park manufacturer in India? Winera International designs and installs custom trampoline parks to your space, vision, and budget."
+                metaDescription: "Looking for a trampoline park manufacturer in India? Winera International designs and installs custom trampoline parks to your space, vision, and budget.",
+                canonicalUrl: "https://winera.in/product/trampoline-park"
               },
               vrSeo: {
                 pageTitle: "VR Gaming Machine Manufacturer in India | Winera International",
-                metaDescription: "Winera International is a leading VR gaming machine manufacturer in India, offering immersive virtual reality attractions built for arcades and FEC centers."
+                metaDescription: "Winera International is a leading VR gaming machine manufacturer in India, offering immersive virtual reality attractions built for arcades and FEC centers.",
+                canonicalUrl: "https://winera.in/product/vr-games"
               },
               bumpercarSeo: {
                 pageTitle: "Bumper Car Manufacturer in India | Winera International",
-                metaDescription: "As a leading bumper car manufacturer in India, Winera International builds safe, durable, and thrilling bumper cars for amusement parks and FEC centers."
+                metaDescription: "As a leading bumper car manufacturer in India, Winera International builds safe, durable, and thrilling bumper cars for amusement parks and FEC centers.",
+                canonicalUrl: "https://winera.in/product/bumper-car"
               },
               bumperSeo: {
                 pageTitle: "Bumper Car Manufacturer in India | Winera International",
-                metaDescription: "As a leading bumper car manufacturer in India, Winera International builds safe, durable, and thrilling bumper cars for amusement parks and FEC centers."
+                metaDescription: "As a leading bumper car manufacturer in India, Winera International builds safe, durable, and thrilling bumper cars for amusement parks and FEC centers.",
+                canonicalUrl: "https://winera.in/product/bumper-car"
               },
               amusementSeo: {
                 pageTitle: "Amusement Park Manufacturer in India | Winera International",
-                metaDescription: "Winera International is a premier amusement park manufacturer in India, delivering innovative, safe rides and equipment tailored to your game zone and venue space."
+                metaDescription: "Winera International is a premier amusement park manufacturer in India, delivering innovative, safe rides and equipment tailored to your game zone and venue space.",
+                canonicalUrl: "https://winera.in/product/amusement-park"
               },
               arSeo: {
                 pageTitle: "AR Games Supplier in India | Winera International",
-                metaDescription: "Winera International is a leading AR games supplier in India, sourcing and installing sports simulators, interactive floors, and immersive gaming attractions."
+                metaDescription: "Winera International is a leading AR games supplier in India, sourcing and installing sports simulators, interactive floors, and immersive gaming attractions.",
+                canonicalUrl: "https://winera.in/product/ar-games"
               },
               hypergridSeo: {
                 pageTitle: "Hypergrid Game Supplier in India | Winera International",
-                metaDescription: "Winera International is a trusted Hypergrid game supplier in India, installing commercial interactive LED floor systems for malls, FECs, and trampoline parks."
+                metaDescription: "Winera International is a trusted Hypergrid game supplier in India, installing commercial interactive LED floor systems for malls, FECs, and trampoline parks.",
+                canonicalUrl: "https://winera.in/product/hypergrid"
               },
               lasertagSeo: {
                 pageTitle: "Laser Tag Equipment Supplier in India | Winera International",
-                metaDescription: "Want to add laser tag or laser spy to your venue? Winera International handles the full setup, from arena design and gear to software and staff training."
+                metaDescription: "Want to add laser tag or laser spy to your venue? Winera International handles the full setup, from arena design and gear to software and staff training.",
+                canonicalUrl: "https://winera.in/product/laser-tag"
               },
               safetySeo: {
                 pageTitle: "Where Game Zone Safety Comes First | Winera International",
-                metaDescription: "Safety comes first at Winera International. Every ride, play structure, and machine we install meets global safety standards, so your venue opens ready to run."
+                metaDescription: "Safety comes first at Winera International. Every ride, play structure, and machine we install meets global safety standards, so your venue opens ready to run.",
+                canonicalUrl: "https://winera.in/resource/safety-standards"
               },
               roiSeo: {
                 pageTitle: "Know Your Game Zone ROI Before You Invest | Winera International",
-                metaDescription: "Opening a game zone is easy, making it profitable is a system. Winera International models your ROI around your space and budget before you invest a rupee."
+                metaDescription: "Opening a game zone is easy, making it profitable is a system. Winera International models your ROI around your space and budget before you invest a rupee.",
+                canonicalUrl: "https://winera.in/resource/roi"
               },
               projectSeo: {
                 pageTitle: "Our Projects | Game Zones Built | Winera International",
-                metaDescription: "Explore Winera International's completed projects across India. Real play destinations we've designed, built, and installed for venues of every size and type."
+                metaDescription: "Explore Winera International's completed projects across India. Real play destinations we've designed, built, and installed for venues of every size and type.",
+                canonicalUrl: "https://winera.in/project"
               },
               privacySeo: {
                 pageTitle: "Winera International Privacy Policy for Game Zone Solutions",
-                metaDescription: "Learn how Winera International collects, uses, and protects the information you share when enquiring about our game zone equipment and setup services in India."
+                metaDescription: "Learn how Winera International collects, uses, and protects the information you share when enquiring about our game zone equipment and setup services in India.",
+                canonicalUrl: "https://winera.in/privacy-policy"
               },
               termsSeo: {
                 pageTitle: "Terms of Service | Winera International",
-                metaDescription: "Read Winera International's Terms of Service outlining your rights, responsibilities, and guidelines for using our game zone equipment and setup in India."
+                metaDescription: "Read Winera International's Terms of Service outlining your rights, responsibilities, and guidelines for using our game zone equipment and setup in India.",
+                canonicalUrl: "https://winera.in/terms-and-conditions"
               },
               contactSeo: {
                 pageTitle: "Contact Winera International | Game Zone Equipment Setup",
-                metaDescription: "Contact Winera International for game zone equipment setup, bowling alley installation, soft play, trampoline park & VR gaming inquiries in India."
+                metaDescription: "Contact Winera International for game zone equipment setup, bowling alley installation, soft play, trampoline park & VR gaming inquiries in India.",
+                canonicalUrl: "https://winera.in/contact"
               }
             };
 
-            const defaultObj = defaultSeoMap[activeSection] || { pageTitle: '', metaDescription: '' };
+            const defaultObj = defaultSeoMap[activeSection] || { pageTitle: '', metaDescription: '', canonicalUrl: '' };
             const currentSec = formData[activeSection] || defaultObj;
 
             const pageTitleVal = currentSec.pageTitle !== undefined ? currentSec.pageTitle : (currentSec.title !== undefined ? currentSec.title : defaultObj.pageTitle);
             const metaDescVal = currentSec.metaDescription !== undefined ? currentSec.metaDescription : (currentSec.description !== undefined ? currentSec.description : defaultObj.metaDescription);
+            const canonicalUrlVal = currentSec.canonicalUrl !== undefined ? currentSec.canonicalUrl : (defaultObj.canonicalUrl || '');
 
             return (
               <div style={{ background: '#ffffff', borderRadius: '24px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0' }}>
@@ -4761,7 +4782,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
                 {/* Google Search Result Live Preview Card */}
                 <div style={{ background: '#f8fafc', borderRadius: '16px', padding: '16px 20px', marginBottom: '24px', border: '1px solid #cbd5e1' }}>
-                  <div style={{ fontSize: '12px', color: '#475569', marginBottom: '4px' }}>https://winera.in › ...</div>
+                  <div style={{ fontSize: '12px', color: '#475569', marginBottom: '4px', wordBreak: 'break-all' }}>
+                    {canonicalUrlVal || 'https://winera.in'}
+                  </div>
                   <div style={{ fontSize: '18px', fontWeight: '600', color: '#1a0dab', marginBottom: '6px', lineHeight: 1.3, cursor: 'pointer' }}>
                     {pageTitleVal || 'Page Title Tag Placeholder'}
                   </div>
@@ -4808,6 +4831,29 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       }))}
                       style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6, fontFamily: 'inherit' }}
                     />
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>
+                        🔗 Canonical URL Tag (<code style={{ fontWeight: '700', background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', color: '#0284c7' }}>&lt;link rel="canonical"&gt;</code>)
+                      </label>
+                    </div>
+                    <input
+                      type="url"
+                      value={canonicalUrlVal || ''}
+                      onChange={(e) => setFormData(prev => ({
+                        ...prev,
+                        [activeSection]: {
+                          ...(prev[activeSection] || defaultObj),
+                          canonicalUrl: e.target.value
+                        }
+                      }))}
+                      placeholder={`e.g. ${defaultObj.canonicalUrl || 'https://winera.in'}`}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '14px', fontFamily: 'inherit' }}
+                    />
+                    <div style={{ marginTop: '6px', fontSize: '11.5px', color: '#64748b', background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0', lineHeight: 1.5 }}>
+                      💡 <strong>SEO Guide:</strong> Ye Google ko batata hai ki is page ka official original URL kaunsa hai (Default: <code>{defaultObj.canonicalUrl || 'https://winera.in'}</code>). Yahan hamesha live open hone waala clean URL hi rakhein.
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
