@@ -7861,18 +7861,52 @@ textarea::placeholder,
     gap: 20px !important;
   }
 
-  .winera-cta-banner-container {
-    padding: 40px 16px !important;
-    min-height: auto !important;
-  }
-
+  .winera-safety-why-matters-section .winera-cta-side-img,
+  .winera-safety-why-matters-section .winera-safety-cta-card-left,
+  .winera-safety-why-matters-section .winera-safety-cta-card-right,
   .winera-cta-banner-container img[alt*="Build Yours Now"] {
     display: none !important;
   }
 
-  .winera-cta-banner-container h2 {
-    font-size: 2rem !important;
-    margin-bottom: 20px !important;
+  .winera-safety-why-matters-section .winera-cta-banner-container,
+  .winera-cta-banner-container {
+    padding: 38px 20px 42px !important;
+    min-height: auto !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  .winera-safety-why-matters-section .winera-cta-title,
+  .winera-safety-why-matters-section .winera-cta-banner-container h2 {
+    font-size: clamp(21px, 5.5vw, 26px) !important;
+    line-height: 1.25 !important;
+    margin: 0 auto 10px auto !important;
+    text-align: center !important;
+    max-width: 320px !important;
+    width: 100% !important;
+  }
+
+  .winera-safety-why-matters-section .winera-cta-subtitle,
+  .winera-safety-why-matters-section .winera-cta-banner-container p {
+    font-size: 14.5px !important;
+    line-height: 1.45 !important;
+    color: #f8fafc !important;
+    opacity: 0.95 !important;
+    margin: 0 auto 20px auto !important;
+    max-width: 300px !important;
+    text-align: center !important;
+  }
+
+  .winera-safety-why-matters-section .winera-cta-banner-btn-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-safety-why-matters-section .winera-cta-banner-btn {
+    padding: 12px 28px !important;
+    font-size: 14.5px !important;
   }
 }
 
@@ -7909,8 +7943,16 @@ textarea::placeholder,
     font-size: 5.5rem !important;
   }
 
+  .winera-safety-why-matters-section .winera-cta-title,
   .winera-cta-banner-container h2 {
-    font-size: 1.65rem !important;
+    font-size: 1.55rem !important;
+    margin-bottom: 8px !important;
+  }
+
+  .winera-safety-why-matters-section .winera-cta-subtitle {
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 18px !important;
   }
 
   .winera-cta-banner-container a:not(.winera-cta-banner-btn-white):not(.winera-cta-banner-btn) {

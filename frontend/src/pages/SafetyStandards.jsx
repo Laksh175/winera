@@ -932,6 +932,7 @@ export default function SafetyStandards({ siteData }) {
             <img
               src={getValidImageUrl(siteData?.safetyWhyMatters?.leftImgUrl, rightTiltedCard)}
               alt={siteData?.safetyWhyMatters?.leftImgAlt || "Build Your Game Zone - Commercial Setup Winera"}
+              className="winera-cta-side-img winera-safety-cta-card-left"
               style={{
                 position: 'absolute',
                 left: '15px',
@@ -949,6 +950,7 @@ export default function SafetyStandards({ siteData }) {
             <img
               src={getValidImageUrl(siteData?.safetyWhyMatters?.rightImgUrl, leftTiltedCard)}
               alt={siteData?.safetyWhyMatters?.rightImgAlt || "Safety Standard Certified Game Zone Equipment - Winera"}
+              className="winera-cta-side-img winera-safety-cta-card-right"
               style={{
                 position: 'absolute',
                 right: '15px',
