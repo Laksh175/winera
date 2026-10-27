@@ -1,6 +1,7 @@
 import React from 'react';
 import { Plus, Trash2, Edit2, Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const heroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345656/winera_uploads/jszelnb45kglcliprty7.png";
@@ -175,18 +176,12 @@ export default function HomeDashboard({
                 </button>
               )}
             </div>
-            <div style={{ marginTop: '10px' }}>
-              <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                🏷️ Hero Image Alt Text (SEO Keyword)
-              </label>
-              <input
-                type="text"
-                value={formData.hero?.bgAlt || ''}
-                onChange={(e) => handleFieldChange('hero', 'bgAlt', e.target.value)}
-                placeholder="e.g. Commercial Game Zone Setup & Turnkey Equipment Manufacturer - Winera"
-                style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-              />
-            </div>
+            <AdminAltInput
+              label="🏷️ Hero Image Alt Text (SEO Keyword)"
+              value={formData.hero?.bgAlt || ''}
+              onChange={(e) => handleFieldChange('hero', 'bgAlt', e.target.value)}
+              placeholder="e.g. Commercial Game Zone Setup & Turnkey Equipment Manufacturer - Winera"
+            />
           </div>
 
           <div>
@@ -229,18 +224,12 @@ export default function HomeDashboard({
                 </button>
               )}
             </div>
-            <div style={{ marginTop: '10px' }}>
-              <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                🏷️ Mobile Hero Image Alt Text (SEO Keyword)
-              </label>
-              <input
-                type="text"
-                value={formData.hero?.mobileBgAlt || ''}
-                onChange={(e) => handleFieldChange('hero', 'mobileBgAlt', e.target.value)}
-                placeholder="e.g. Commercial Game Zone Setup Mobile Banner - Winera"
-                style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-              />
-            </div>
+            <AdminAltInput
+              label="🏷️ Mobile Hero Image Alt Text (SEO Keyword)"
+              value={formData.hero?.mobileBgAlt || ''}
+              onChange={(e) => handleFieldChange('hero', 'mobileBgAlt', e.target.value)}
+              placeholder="e.g. Commercial Game Zone Setup Mobile Banner - Winera"
+            />
           </div>
 
           <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -408,18 +397,12 @@ export default function HomeDashboard({
                 />
               </label>
             </div>
-            <div style={{ marginTop: '10px' }}>
-              <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                🏷️ About Photo Alt Text (SEO Keyword)
-              </label>
-              <input
-                type="text"
-                value={formData.aboutHome?.rightImgAlt || ''}
-                onChange={(e) => handleFieldChange('aboutHome', 'rightImgAlt', e.target.value)}
-                placeholder="e.g. About Winera International - Commercial Game Zone Developer & Turnkey Supplier"
-                style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-              />
-            </div>
+            <AdminAltInput
+              label="🏷️ About Photo Alt Text (SEO Keyword)"
+              value={formData.aboutHome?.rightImgAlt || ''}
+              onChange={(e) => handleFieldChange('aboutHome', 'rightImgAlt', e.target.value)}
+              placeholder="e.g. About Winera International - Commercial Game Zone Developer & Turnkey Supplier"
+            />
           </div>
 
           <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -652,22 +635,17 @@ export default function HomeDashboard({
                             style={{ fontSize: '12px' }}
                           />
                         </div>
-                        <div style={{ marginTop: '8px' }}>
-                          <label style={{ display: 'block', fontSize: '10px', fontWeight: '800', color: '#64748b', marginBottom: '2px' }}>
-                            🏷️ Image Alt Text (SEO Keyword)
-                          </label>
-                          <input
-                            type="text"
-                            value={card.imgAlt || ''}
-                            onChange={(e) => {
-                              const list = [...getList()];
-                              list[idx] = { ...list[idx], imgAlt: e.target.value };
-                              handleFieldChange('productsHome', 'cardsList', list);
-                            }}
-                            placeholder={`e.g. ${card.title || 'Product'} Commercial Equipment - Winera`}
-                            style={{ width: '100%', padding: '6px 10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '11.5px' }}
-                          />
-                        </div>
+                        <AdminAltInput
+                          label="🏷️ Image Alt Text (SEO Keyword)"
+                          value={card.imgAlt || ''}
+                          onChange={(e) => {
+                            const list = [...getList()];
+                            list[idx] = { ...list[idx], imgAlt: e.target.value };
+                            handleFieldChange('productsHome', 'cardsList', list);
+                          }}
+                          placeholder={`e.g. ${card.title || 'Product'} Commercial Equipment - Winera`}
+                          compact={true}
+                        />
                       </div>
                     </div>
                   );
@@ -976,22 +954,17 @@ export default function HomeDashboard({
                               style={{ fontSize: '12px' }}
                             />
                           </div>
-                          <div style={{ marginTop: '8px' }}>
-                            <label style={{ display: 'block', fontSize: '10px', fontWeight: '800', color: '#64748b', marginBottom: '2px' }}>
-                              🏷️ Image Alt Text (SEO Keyword)
-                            </label>
-                            <input
-                              type="text"
-                              value={item.imgAlt || ''}
-                              onChange={(e) => {
-                                const list = [...currentItemsList];
-                                list[idx] = { ...list[idx], imgAlt: e.target.value };
-                                handleFieldChange('industriesHeader', 'items', list);
-                              }}
-                              placeholder={`e.g. ${item.title || 'Industry'} Game Zone Setup & Turnkey Solutions - Winera`}
-                              style={{ width: '100%', padding: '6px 10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '11.5px' }}
-                            />
-                          </div>
+                          <AdminAltInput
+                            label="🏷️ Image Alt Text (SEO Keyword)"
+                            value={item.imgAlt || ''}
+                            onChange={(e) => {
+                              const list = [...currentItemsList];
+                              list[idx] = { ...list[idx], imgAlt: e.target.value };
+                              handleFieldChange('industriesHeader', 'items', list);
+                            }}
+                            placeholder={`e.g. ${item.title || 'Industry'} Game Zone Setup & Turnkey Solutions - Winera`}
+                            compact={true}
+                          />
                         </div>
                       </div>
                     ))}
@@ -2364,18 +2337,12 @@ export default function HomeDashboard({
                 </button>
               )}
             </div>
-            <div style={{ marginTop: '10px' }}>
-              <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                🏷️ Banner Image Alt Text (SEO Keyword)
-              </label>
-              <input
-                type="text"
-                value={formData.ctaBanner?.bgAlt || ''}
-                onChange={(e) => handleFieldChange('ctaBanner', 'bgAlt', e.target.value)}
-                placeholder="e.g. Commercial Game Zone Turnkey Setup & ROI Consultation - Winera"
-                style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-              />
-            </div>
+            <AdminAltInput
+              label="🏷️ Banner Image Alt Text (SEO Keyword)"
+              value={formData.ctaBanner?.bgAlt || ''}
+              onChange={(e) => handleFieldChange('ctaBanner', 'bgAlt', e.target.value)}
+              placeholder="e.g. Commercial Game Zone Turnkey Setup & ROI Consultation - Winera"
+            />
           </div>
 
           <div style={{ textAlign: 'right', marginTop: '10px' }}>
