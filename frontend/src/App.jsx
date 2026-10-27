@@ -212,6 +212,7 @@ function GlobalCanonicalTag({ siteData }) {
 
 import { VideoModalProvider } from './context/VideoModalContext';
 import WhatsAppFloat from './components/WhatsAppFloat';
+import GlobalSeoSchema from './components/GlobalSeoSchema';
 
 function AppRoutes({ siteData, loadData }) {
   const location = useLocation();
@@ -227,6 +228,7 @@ function AppRoutes({ siteData, loadData }) {
     <ErrorBoundary>
       <GlobalScrollAnimation />
       <GlobalCanonicalTag siteData={siteData} />
+      <GlobalSeoSchema />
       <WhatsAppFloat whatsAppUrl={siteData?.header?.whatsAppUrl} />
       <Suspense fallback={
         <div style={{
