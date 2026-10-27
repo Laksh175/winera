@@ -390,7 +390,7 @@ export default function BlogDetail({ siteData }) {
   const headings = extractHeadings(rawArticleContent);
 
   return (
-    <div style={{ background: '#F5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif", overflowX: 'clip' }}>
+    <div style={{ background: '#F5F5F9', color: '#0f172a', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif" }}>
       {/* 1. HEADER */}
       <Header headerData={header} />
 
@@ -437,7 +437,7 @@ export default function BlogDetail({ siteData }) {
       </section>
 
       {/* 3. 3-COLUMN MAIN ARTICLE SECTION */}
-      <section style={{ padding: '45px 3vw 70px', background: '#F5F5F9' }}>
+      <section data-no-auto-reveal="true" className="winera-blog-main-article-section" style={{ padding: '45px 3vw 70px', background: '#F5F5F9', overflow: 'visible' }}>
         <div style={{ maxWidth: '1360px', margin: '0 auto' }}>
           
           {/* ── TOP BANNER: TITLE & META BAR ── */}
@@ -521,7 +521,9 @@ export default function BlogDetail({ siteData }) {
             <div className="winera-blog-left-toc-sticky" style={{
               position: 'sticky',
               top: '110px',
-              alignSelf: 'start'
+              alignSelf: 'start',
+              height: 'fit-content',
+              zIndex: 10
             }}>
               <div style={{
                 background: '#ffffff',
@@ -609,7 +611,9 @@ export default function BlogDetail({ siteData }) {
             <div className="winera-blog-right-sidebar-sticky" style={{
               position: 'sticky',
               top: '110px',
-              alignSelf: 'start'
+              alignSelf: 'start',
+              height: 'fit-content',
+              zIndex: 10
             }}>
               <div className="winera-blog-sticky-register-card" style={{
                 background: 'linear-gradient(150deg, #0f172a 0%, #1e293b 100%)',

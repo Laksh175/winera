@@ -20431,3 +20431,14 @@ div[role="button"][aria-label*="Toggle FAQ"]:active {
     overflow-wrap: normal !important;
   }
 }
+
+/* ── Blog Detail Sticky Sidebars ── */
+.winera-blog-left-toc-sticky,
+.winera-blog-right-sidebar-sticky {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 110px !important;
+  align-self: flex-start !important;
+  height: fit-content !important;
+  z-index: 20 !important;
+}

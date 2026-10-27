@@ -121,8 +121,11 @@ function GlobalScrollAnimation() {
           return;
         }
 
-        // If section contains explicit side-slide elements or framer motion elements, do not force section-wide winera-reveal
-        if (el.tagName === 'SECTION' && el.querySelector('.winera-reveal-left, .winera-reveal-right, [data-framer-motion="true"]')) {
+        // If section contains sticky sidebars, explicit side-slide elements or framer motion elements, do not force section-wide winera-reveal
+        if (el.tagName === 'SECTION' && (
+          el.querySelector('.winera-reveal-left, .winera-reveal-right, [data-framer-motion="true"], .winera-blog-left-toc-sticky, .winera-blog-right-sidebar-sticky, [style*="position: sticky"], [style*="position:sticky"]') ||
+          el.dataset.noAutoReveal === 'true'
+        )) {
           return;
         }
         if (!el.classList.contains('winera-reveal') && !el.classList.contains('winera-animate-block') && !el.classList.contains('winera-reveal-left') && !el.classList.contains('winera-reveal-right')) {
