@@ -812,7 +812,7 @@ export default function Home({ siteData }) {
               {/* Right Side Single Composite Collage Image */}
               <div className="winera-about-images-grid winera-reveal-right" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <img
-                  src={siteData?.aboutHome?.rightImgUrl || aboutCollage}
+                  src={getValidImageUrl(siteData?.aboutHome?.rightImgUrl || aboutCollage, aboutCollage, 600)}
                   alt={siteData?.aboutHome?.rightImgAlt || "About Winera International - Commercial Game Zone Developer & Turnkey Supplier"}
                   loading="lazy"
                   decoding="async"
@@ -1007,7 +1007,7 @@ export default function Home({ siteData }) {
                     >
                       {/* Product Card Image with Native Lazy Loading */}
                       <img
-                        src={getValidImageUrl(prod.img, '')}
+                        src={getValidImageUrl(prod.img, '', 480)}
                         alt={prod.imgAlt || `${prod.title} Commercial Equipment - Winera`}
                         loading="lazy"
                         decoding="async"

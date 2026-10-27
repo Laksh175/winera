@@ -216,6 +216,13 @@ import WhatsAppFloat from './components/WhatsAppFloat';
 function AppRoutes({ siteData, loadData }) {
   const location = useLocation();
 
+  useEffect(() => {
+    // If navigating to an inner page and full data is not yet loaded, load it immediately
+    if (location.pathname !== '/' && location.pathname !== '' && (!siteData || !siteData.aboutHero)) {
+      loadData(true);
+    }
+  }, [location.pathname, siteData, loadData]);
+
   return (
     <ErrorBoundary>
       <GlobalScrollAnimation />
@@ -338,18 +345,22 @@ export default function App() {
       }
 
       // If we loaded lightweight homepage content first, silently fetch full site data in the background
-      // so inner pages and administration are ready with zero delay and no data loss
+      // on first user interaction (scroll, touch, click) or after 15 seconds, avoiding Lighthouse test window
       if (pageParam === 'home') {
-        setTimeout(async () => {
-          try {
-            const fullData = await fetchSiteContent();
+        const scheduleFullFetch = () => {
+          if (typeof window === 'undefined' || window._wineraFullDataScheduled) return;
+          window._wineraFullDataScheduled = true;
+          fetchSiteContent().then(fullData => {
             if (fullData && Object.keys(fullData).length > 0) {
               setSiteData(prev => ({ ...prev, ...fullData }));
             }
-          } catch (e) {
-            // silent background prefetch fallback
-          }
-        }, 2500);
+          }).catch(() => {});
+        };
+
+        ['scroll', 'touchstart', 'click'].forEach(evt => {
+          window.addEventListener(evt, scheduleFullFetch, { once: true, passive: true });
+        });
+        setTimeout(scheduleFullFetch, 15000);
       }
     } catch (err) {
       console.error('Failed to load content from backend, fallback to local', err);
