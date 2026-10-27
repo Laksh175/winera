@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload, Plus, Trash2 } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const defaultGameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345484/winera_uploads/cjhcvoxksmptc84yslh2.png";
@@ -229,18 +230,13 @@ export default function RoiDashboard({
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
                       />
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Hero Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), bgAlt: e.target.value } }))}
-                        placeholder="e.g. FEC & Game Zone ROI Calculator - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Hero Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), bgAlt: e.target.value } }))}
+                      placeholder="e.g. FEC & Game Zone ROI Calculator - Winera International"
+                    />
                   </div>
 
                   {/* Mobile Screen Hero Banner Upload & Preview */}
@@ -287,18 +283,13 @@ export default function RoiDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), mobileBgAlt: e.target.value } }))}
-                        placeholder="e.g. FEC & Game Zone ROI Calculator Mobile Banner - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiHero: { ...(prev.roiHero || defaultRoiHero), mobileBgAlt: e.target.value } }))}
+                      placeholder="e.g. FEC & Game Zone ROI Calculator Mobile Banner - Winera International"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -464,25 +455,20 @@ export default function RoiDashboard({
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'contain', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '4px' }}
                       />
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imageAlt !== undefined ? currentSec.imageAlt : (currentSec.imgAlt || '')}
-                        onChange={(e) => setFormData(prev => ({
-                          ...prev,
-                          roiIntro: {
-                            ...(prev.roiIntro || defaultRoiIntro),
-                            imageAlt: e.target.value,
-                            imgAlt: e.target.value
-                          }
-                        }))}
-                        placeholder="e.g. ROI Investment Growth & Commercial Game Zone Setup - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Image Alt Text (SEO Keyword)"
+                      value={currentSec.imageAlt !== undefined ? currentSec.imageAlt : (currentSec.imgAlt || '')}
+                      onChange={(e) => setFormData(prev => ({
+                        ...prev,
+                        roiIntro: {
+                          ...(prev.roiIntro || defaultRoiIntro),
+                          imageAlt: e.target.value,
+                          imgAlt: e.target.value
+                        }
+                      }))}
+                      placeholder="e.g. ROI Investment Growth & Commercial Game Zone Setup - Winera"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -899,22 +885,17 @@ export default function RoiDashboard({
                             />
                           </div>
                         </div>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                            🏷️ Step Background Alt Text (SEO Keyword)
-                          </label>
-                          <input
-                            type="text"
-                            value={card.imgAlt || ''}
-                            onChange={(e) => {
-                              const copy = [...cardsList];
-                              copy[idx] = { ...copy[idx], imgAlt: e.target.value };
-                              setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
-                            }}
-                            placeholder={`e.g. ${card.title || 'Step ' + (idx + 1)} - Winera Game Zone Setup Process`}
-                            style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
-                          />
-                        </div>
+                        <AdminAltInput
+                          compact
+                          label="🏷️ Step Background Alt Text (SEO Keyword)"
+                          value={card.imgAlt || ''}
+                          onChange={(e) => {
+                            const copy = [...cardsList];
+                            copy[idx] = { ...copy[idx], imgAlt: e.target.value };
+                            setFormData(prev => ({ ...prev, roiProcess: { ...(prev.roiProcess || defaultRoiProcess), cards: copy } }));
+                          }}
+                          placeholder={`e.g. ${card.title || 'Step ' + (idx + 1)} - Winera Game Zone Setup Process`}
+                        />
                       </div>
                     ))}
                   </div>
@@ -1004,25 +985,20 @@ export default function RoiDashboard({
                           style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'contain', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '4px' }}
                         />
                       </div>
-                      <div style={{ marginTop: '10px' }}>
-                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                          🏷️ Section Left Image Alt Text (SEO Keyword)
-                        </label>
-                        <input
-                          type="text"
-                          value={currentSec.imageAlt !== undefined ? currentSec.imageAlt : (currentSec.imgAlt || '')}
-                          onChange={(e) => setFormData(prev => ({
-                            ...prev,
-                            roiGet: {
-                              ...(prev.roiGet || defaultRoiGet),
-                              imageAlt: e.target.value,
-                              imgAlt: e.target.value
-                            }
-                          }))}
-                          placeholder="e.g. Winera Built for Profit - High ROI Commercial Entertainment Setup"
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                        />
-                      </div>
+                      <AdminAltInput
+                        compact
+                        label="🏷️ Section Left Image Alt Text (SEO Keyword)"
+                        value={currentSec.imageAlt !== undefined ? currentSec.imageAlt : (currentSec.imgAlt || '')}
+                        onChange={(e) => setFormData(prev => ({
+                          ...prev,
+                          roiGet: {
+                            ...(prev.roiGet || defaultRoiGet),
+                            imageAlt: e.target.value,
+                            imgAlt: e.target.value
+                          }
+                        }))}
+                        placeholder="e.g. Winera Built for Profit - High ROI Commercial Entertainment Setup"
+                      />
                     </div>
                   </div>
 
@@ -1180,18 +1156,13 @@ export default function RoiDashboard({
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
                       />
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Section Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), bgAlt: e.target.value } }))}
-                        placeholder="e.g. ROI Calculator Checklist Background - Winera Commercial Entertainment"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Section Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiChecklist: { ...(prev.roiChecklist || defaultRoiChecklist), bgAlt: e.target.value } }))}
+                      placeholder="e.g. ROI Calculator Checklist Background - Winera Commercial Entertainment"
+                    />
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
@@ -1409,18 +1380,13 @@ export default function RoiDashboard({
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
                       />
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Banner Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Commercial Entertainment Center ROI Calculator & Turnkey Consultation - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Banner Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, roiCta: { ...(prev.roiCta || defaultRoiCta), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Commercial Entertainment Center ROI Calculator & Turnkey Consultation - Winera"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button

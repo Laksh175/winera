@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload, Plus, Trash2 } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const defaultGameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345484/winera_uploads/cjhcvoxksmptc84yslh2.png";
@@ -158,18 +159,13 @@ export default function AboutDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '12px' }}>
-                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Background Banner Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.aboutCta?.bgAlt !== undefined ? formData.aboutCta.bgAlt : ''}
-                    onChange={(e) => handleFieldChange('aboutCta', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Take The Next Step Towards Your Perfect Game Zone - Winera International"
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Background Banner Alt Text (SEO Keyword)"
+                  value={formData.aboutCta?.bgAlt !== undefined ? formData.aboutCta.bgAlt : ''}
+                  onChange={(e) => handleFieldChange('aboutCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Take The Next Step Towards Your Perfect Game Zone - Winera International"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -252,18 +248,13 @@ export default function AboutDashboard({
                     style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
                   />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Hero Banner Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.aboutHero?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('aboutHero', 'bgAlt', e.target.value)}
-                    placeholder="e.g. About Winera International - Commercial Entertainment Solutions"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Hero Banner Alt Text (SEO Keyword)"
+                  value={formData.aboutHero?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('aboutHero', 'bgAlt', e.target.value)}
+                  placeholder="e.g. About Winera International - Commercial Entertainment Solutions"
+                />
               </div>
 
               {/* Mobile Screen Hero Banner Upload & Preview */}
@@ -309,18 +300,13 @@ export default function AboutDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.aboutHero?.mobileBgAlt || ''}
-                    onChange={(e) => handleFieldChange('aboutHero', 'mobileBgAlt', e.target.value)}
-                    placeholder="e.g. About Winera International Mobile Banner - Commercial Entertainment Solutions"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                  value={formData.aboutHero?.mobileBgAlt || ''}
+                  onChange={(e) => handleFieldChange('aboutHero', 'mobileBgAlt', e.target.value)}
+                  placeholder="e.g. About Winera International Mobile Banner - Commercial Entertainment Solutions"
+                />
               </div>
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
@@ -397,18 +383,13 @@ export default function AboutDashboard({
                     />
                   )}
                 </div>
-                <div style={{ marginTop: '8px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
-                    🏷️ Photo Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.aboutWelcome?.mainImgAlt || ''}
-                    onChange={(e) => handleFieldChange('aboutWelcome', 'mainImgAlt', e.target.value)}
-                    placeholder="e.g. Welcome to Winera International 13+ Years Experience - Commercial Game Zone Setup"
-                    style={{ width: '100%', boxSizing: 'border-box', padding: '8px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Photo Alt Text (SEO Keyword)"
+                  value={formData.aboutWelcome?.mainImgAlt || ''}
+                  onChange={(e) => handleFieldChange('aboutWelcome', 'mainImgAlt', e.target.value)}
+                  placeholder="e.g. Welcome to Winera International 13+ Years Experience - Commercial Game Zone Setup"
+                />
               </div>
 
               {/* 2 Feature Cards */}
@@ -1118,18 +1099,13 @@ export default function AboutDashboard({
                         </label>
                         <img src={item.image || founderUnnit} alt="Preview" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #38bdf8' }} />
                       </div>
-                      <div style={{ marginTop: '10px' }}>
-                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                          🏷️ Founder Photo Alt Text (SEO Keyword)
-                        </label>
-                        <input
-                          type="text"
-                          value={item.imageAlt || ''}
-                          onChange={(e) => handleProfileFieldChange(idx, 'imageAlt', e.target.value)}
-                          placeholder="e.g. Mr. Unnit Jogani - Founder & CEO - Winera International"
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                        />
-                      </div>
+                      <AdminAltInput
+                        compact
+                        label="🏷️ Founder Photo Alt Text (SEO Keyword)"
+                        value={item.imageAlt || ''}
+                        onChange={(e) => handleProfileFieldChange(idx, 'imageAlt', e.target.value)}
+                        placeholder="e.g. Mr. Unnit Jogani - Founder & CEO - Winera International"
+                      />
                     </div>
 
                     {/* Name & Experience */}

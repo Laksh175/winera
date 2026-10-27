@@ -1,6 +1,7 @@
 import React from 'react';
 import { Plus, Trash2, Edit2, Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 
@@ -177,18 +178,12 @@ export default function ArcadeDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Hero Banner Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arcadeHero?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('arcadeHero', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Commercial Arcade Game Setup & Machines India - Winera International"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  label="🏷️ Hero Banner Alt Text (SEO Keyword)"
+                  value={formData.arcadeHero?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('arcadeHero', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Commercial Arcade Game Setup & Machines India - Winera International"
+                />
               </div>
 
               {/* Mobile Screen Hero Banner Upload & Preview */}
@@ -234,18 +229,12 @@ export default function ArcadeDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Mobile Hero Banner Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arcadeHero?.mobileBgAlt || ''}
-                    onChange={(e) => handleFieldChange('arcadeHero', 'mobileBgAlt', e.target.value)}
-                    placeholder="e.g. Commercial Arcade Game Setup Mobile Banner - Winera International"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  label="🏷️ Mobile Hero Banner Alt Text (SEO Keyword)"
+                  value={formData.arcadeHero?.mobileBgAlt || ''}
+                  onChange={(e) => handleFieldChange('arcadeHero', 'mobileBgAlt', e.target.value)}
+                  placeholder="e.g. Commercial Arcade Game Setup Mobile Banner - Winera International"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -328,18 +317,12 @@ export default function ArcadeDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Main Photo Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arcadeIntro?.mainImgAlt || ''}
-                    onChange={(e) => handleFieldChange('arcadeIntro', 'mainImgAlt', e.target.value)}
-                    placeholder="e.g. Commercial Arcade Game Machine Setup in India - Winera International"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  label="🏷️ Main Photo Alt Text (SEO Keyword)"
+                  value={formData.arcadeIntro?.mainImgAlt || ''}
+                  onChange={(e) => handleFieldChange('arcadeIntro', 'mainImgAlt', e.target.value)}
+                  placeholder="e.g. Commercial Arcade Game Machine Setup in India - Winera International"
+                />
               </div>
 
               {/* Image 2 Upload: Secondary Bottom-Right Image */}
@@ -395,18 +378,12 @@ export default function ArcadeDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Secondary Photo Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arcadeIntro?.secondaryImgAlt || ''}
-                    onChange={(e) => handleFieldChange('arcadeIntro', 'secondaryImgAlt', e.target.value)}
-                    placeholder="e.g. Commercial Arcade Arena Zone Overview - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  label="🏷️ Secondary Photo Alt Text (SEO Keyword)"
+                  value={formData.arcadeIntro?.secondaryImgAlt || ''}
+                  onChange={(e) => handleFieldChange('arcadeIntro', 'secondaryImgAlt', e.target.value)}
+                  placeholder="e.g. Commercial Arcade Arena Zone Overview - Winera"
+                />
               </div>
 
               <div>
@@ -1039,18 +1016,12 @@ export default function ArcadeDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Team Photo Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arcadeCommercial?.teamImgAlt || ''}
-                    onChange={(e) => handleFieldChange('arcadeCommercial', 'teamImgAlt', e.target.value)}
-                    placeholder="e.g. Winera Commercial Arcade Game Setup & Support Team"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  label="🏷️ Team Photo Alt Text (SEO Keyword)"
+                  value={formData.arcadeCommercial?.teamImgAlt || ''}
+                  onChange={(e) => handleFieldChange('arcadeCommercial', 'teamImgAlt', e.target.value)}
+                  placeholder="e.g. Winera Commercial Arcade Game Setup & Support Team"
+                />
               </div>
 
               {/* Point 1 Control */}
@@ -1499,18 +1470,12 @@ export default function ArcadeDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Banner Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arcadeCta?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('arcadeCta', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Need Any Consultations - Commercial Arcade Setup by Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  label="🏷️ Banner Image Alt Text (SEO Keyword)"
+                  value={formData.arcadeCta?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('arcadeCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Need Any Consultations - Commercial Arcade Setup by Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const arHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/f1ecb4v7xdztwwimzb3l.png";
@@ -114,16 +115,12 @@ export default function ArDashboard({
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>🏷️ Hero Background Alt Text (SEO Keyword)</label>
-                <input
-                  type="text"
-                  value={formData.arHero?.bgAlt || ''}
-                  onChange={(e) => handleFieldChange('arHero', 'bgAlt', e.target.value)}
-                  placeholder="e.g. Augmented Reality AR Interactive Games Setup - Winera"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Hero Background Alt Text (SEO Keyword)"
+                value={formData.arHero?.bgAlt || ''}
+                onChange={(e) => handleFieldChange('arHero', 'bgAlt', e.target.value)}
+                placeholder="e.g. Augmented Reality AR Interactive Games Setup - Winera"
+              />
 
               {/* Mobile Screen Hero Banner Upload & Preview */}
               <div>
@@ -176,18 +173,13 @@ export default function ArDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arHero?.mobileBgAlt || ''}
-                    onChange={(e) => handleFieldChange('arHero', 'mobileBgAlt', e.target.value)}
-                    placeholder="e.g. Augmented Reality AR Games Setup Mobile Banner - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                  value={formData.arHero?.mobileBgAlt || ''}
+                  onChange={(e) => handleFieldChange('arHero', 'mobileBgAlt', e.target.value)}
+                  placeholder="e.g. Augmented Reality AR Games Setup Mobile Banner - Winera"
+                />
               </div>
 
               <div>
@@ -271,22 +263,17 @@ export default function ArDashboard({
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Right Collage Graphic Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arIntro?.mainImgAlt || formData.arIntro?.imgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      handleFieldChange('arIntro', 'mainImgAlt', val);
-                      handleFieldChange('arIntro', 'imgAlt', val);
-                    }}
-                    placeholder="e.g. AR Games Supplier in India - Winera Commercial Setup"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Right Collage Graphic Image Alt Text (SEO Keyword)"
+                  value={formData.arIntro?.mainImgAlt || formData.arIntro?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    handleFieldChange('arIntro', 'mainImgAlt', val);
+                    handleFieldChange('arIntro', 'imgAlt', val);
+                  }}
+                  placeholder="e.g. AR Games Supplier in India - Winera Commercial Setup"
+                />
               </div>
 
               <div>
@@ -427,18 +414,13 @@ export default function ArDashboard({
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Left Column Image Graphic Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arMatchedVenue?.imgAlt || ''}
-                    onChange={(e) => handleFieldChange('arMatchedVenue', 'imgAlt', e.target.value)}
-                    placeholder="e.g. Interactive AR Attractions Built for Your Venue - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Left Column Image Graphic Alt Text (SEO Keyword)"
+                  value={formData.arMatchedVenue?.imgAlt || ''}
+                  onChange={(e) => handleFieldChange('arMatchedVenue', 'imgAlt', e.target.value)}
+                  placeholder="e.g. Interactive AR Attractions Built for Your Venue - Winera"
+                />
               </div>
 
               <div>
@@ -604,18 +586,13 @@ export default function ArDashboard({
                       style={{ width: '100px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #38bdf8' }}
                     />
                   </div>
-                  <div style={{ marginTop: '8px' }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                      🏷️ Row 1 Image Alt Text (SEO Keyword)
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.arFeatures?.f1ImgAlt || ''}
-                      onChange={(e) => handleFieldChange('arFeatures', 'f1ImgAlt', e.target.value)}
-                      placeholder="e.g. Exciting AR Attractions - Winera"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                    />
-                  </div>
+                  <AdminAltInput
+                    compact
+                    label="🏷️ Row 1 Image Alt Text (SEO Keyword)"
+                    value={formData.arFeatures?.f1ImgAlt || ''}
+                    onChange={(e) => handleFieldChange('arFeatures', 'f1ImgAlt', e.target.value)}
+                    placeholder="e.g. Exciting AR Attractions - Winera"
+                  />
                 </div>
               </div>
 
@@ -680,18 +657,13 @@ export default function ArDashboard({
                       style={{ width: '100px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #38bdf8' }}
                     />
                   </div>
-                  <div style={{ marginTop: '8px' }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                      🏷️ Row 2 Image Alt Text (SEO Keyword)
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.arFeatures?.f2ImgAlt || ''}
-                      onChange={(e) => handleFieldChange('arFeatures', 'f2ImgAlt', e.target.value)}
-                      placeholder="e.g. High-Quality AR Equipment - Winera"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                    />
-                  </div>
+                  <AdminAltInput
+                    compact
+                    label="🏷️ Row 2 Image Alt Text (SEO Keyword)"
+                    value={formData.arFeatures?.f2ImgAlt || ''}
+                    onChange={(e) => handleFieldChange('arFeatures', 'f2ImgAlt', e.target.value)}
+                    placeholder="e.g. High-Quality AR Equipment - Winera"
+                  />
                 </div>
               </div>
 
@@ -756,18 +728,13 @@ export default function ArDashboard({
                       style={{ width: '100px', height: '50px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #38bdf8' }}
                     />
                   </div>
-                  <div style={{ marginTop: '8px' }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                      🏷️ Row 3 Image Alt Text (SEO Keyword)
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.arFeatures?.f3ImgAlt || ''}
-                      onChange={(e) => handleFieldChange('arFeatures', 'f3ImgAlt', e.target.value)}
-                      placeholder="e.g. Budget-Friendly AR Setup - Winera"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                    />
-                  </div>
+                  <AdminAltInput
+                    compact
+                    label="🏷️ Row 3 Image Alt Text (SEO Keyword)"
+                    value={formData.arFeatures?.f3ImgAlt || ''}
+                    onChange={(e) => handleFieldChange('arFeatures', 'f3ImgAlt', e.target.value)}
+                    placeholder="e.g. Budget-Friendly AR Setup - Winera"
+                  />
                 </div>
               </div>
 
@@ -858,18 +825,13 @@ export default function ArDashboard({
                     style={{ width: '100px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Right Side Gamers Image Graphic Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arEarn?.imgAlt || ''}
-                    onChange={(e) => handleFieldChange('arEarn', 'imgAlt', e.target.value)}
-                    placeholder="e.g. Know Your Returns Before You Invest in AR Gaming Equipment - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Right Side Gamers Image Graphic Alt Text (SEO Keyword)"
+                  value={formData.arEarn?.imgAlt || ''}
+                  onChange={(e) => handleFieldChange('arEarn', 'imgAlt', e.target.value)}
+                  placeholder="e.g. Know Your Returns Before You Invest in AR Gaming Equipment - Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1164,18 +1126,13 @@ export default function ArDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '14px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Banner Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.arCta?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('arCta', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Ready to Set Up Your AR Gaming Zone - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Banner Background Image Alt Text (SEO Keyword)"
+                  value={formData.arCta?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('arCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Ready to Set Up Your AR Gaming Zone - Winera"
+                />
               </div>
 
 

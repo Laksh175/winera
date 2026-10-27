@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Upload, Plus, Trash2, Edit2 } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import StatusDropdown from '../components/StatusDropdown';
 import { uploadImageFile, updateSectionContent, mutateContentItem, deleteProjectApi } from '../services/api';
 
@@ -159,18 +160,13 @@ export default function ProjectsDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Hero Banner Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bannerImgAlt !== undefined ? currentSec.bannerImgAlt : (currentSec.bgAlt || '')}
-                        onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), bannerImgAlt: e.target.value, bgAlt: e.target.value } }))}
-                        placeholder="e.g. Completed Commercial Game Zone Projects Portfolio - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Hero Banner Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.bannerImgAlt !== undefined ? currentSec.bannerImgAlt : (currentSec.bgAlt || '')}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), bannerImgAlt: e.target.value, bgAlt: e.target.value } }))}
+                      placeholder="e.g. Completed Commercial Game Zone Projects Portfolio - Winera International"
+                    />
                   </div>
 
                   {/* Mobile Screen Hero Banner Upload & Preview */}
@@ -216,18 +212,13 @@ export default function ProjectsDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), mobileBgAlt: e.target.value } }))}
-                        placeholder="e.g. Completed Commercial Game Zone Projects Portfolio Mobile Banner - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectHero: { ...(prev.projectHero || defaultProjectHero), mobileBgAlt: e.target.value } }))}
+                      placeholder="e.g. Completed Commercial Game Zone Projects Portfolio Mobile Banner - Winera International"
+                    />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div>
@@ -719,18 +710,13 @@ export default function ProjectsDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Main Project Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imageAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), imageAlt: e.target.value } }))}
-                        placeholder="e.g. FifthAlley Sport Bowling Setup in Surat - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Main Project Image Alt Text (SEO Keyword)"
+                      value={currentSec.imageAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), imageAlt: e.target.value } }))}
+                      placeholder="e.g. FifthAlley Sport Bowling Setup in Surat - Winera International"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -783,18 +769,13 @@ export default function ProjectsDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), bgAlt: e.target.value } }))}
-                        placeholder="e.g. FifthAlley Sport Bowling Setup Details - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectBasicInfo: { ...(prev.projectBasicInfo || defaultProjectBasicInfo), bgAlt: e.target.value } }))}
+                      placeholder="e.g. FifthAlley Sport Bowling Setup Details - Winera International"
+                    />
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -960,18 +941,13 @@ export default function ProjectsDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Section Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imageAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), imageAlt: e.target.value } }))}
-                        placeholder="e.g. Client Bowling Setup Requirements - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Section Image Alt Text (SEO Keyword)"
+                      value={currentSec.imageAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), imageAlt: e.target.value } }))}
+                      placeholder="e.g. Client Bowling Setup Requirements - Winera International"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -1061,18 +1037,13 @@ export default function ProjectsDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Section Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imageAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), imageAlt: e.target.value } }))}
-                        placeholder="e.g. Winera International Custom Solution Implementation"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Section Image Alt Text (SEO Keyword)"
+                      value={currentSec.imageAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), imageAlt: e.target.value } }))}
+                      placeholder="e.g. Winera International Custom Solution Implementation"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -1125,18 +1096,13 @@ export default function ProjectsDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Gallery Section Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, projectGallery: { ...(prev.projectGallery || defaultProjectGallery), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Commercial Entertainment Center Gallery & Installation - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Gallery Section Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectGallery: { ...(prev.projectGallery || defaultProjectGallery), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Commercial Entertainment Center Gallery & Installation - Winera"
+                    />
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -1317,18 +1283,13 @@ export default function ProjectsDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ CTA Banner Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Planning a Game Zone of Your Own? Winera Setup Consultation"
-                        style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ CTA Banner Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectCta: { ...(prev.projectCta || {}), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Planning a Game Zone of Your Own? Winera Setup Consultation"
+                    />
                   </div>
 
                   <div>

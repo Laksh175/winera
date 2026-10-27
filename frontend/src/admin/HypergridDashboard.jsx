@@ -1,6 +1,7 @@
 import React from 'react';
 import { Plus, Trash2, Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const hypergridHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345665/winera_uploads/dazartbigth5uomw4l82.png";
@@ -252,18 +253,13 @@ export default function HypergridDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Hero Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Active Grid Interactive LED Gaming Floor - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Hero Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Active Grid Interactive LED Gaming Floor - Winera"
+                    />
                   </div>
 
                   {/* Mobile Screen Hero Banner Upload & Preview */}
@@ -309,18 +305,13 @@ export default function HypergridDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Mobile Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mobileBgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), mobileBgAlt: e.target.value } }))}
-                        placeholder="e.g. Active Grid Interactive LED Gaming Floor Mobile Banner - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Mobile Background Alt Text (SEO Keyword)"
+                      value={currentSec.mobileBgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridHero: { ...(prev.hypergridHero || defaultHypergridHero), mobileBgAlt: e.target.value } }))}
+                      placeholder="e.g. Active Grid Interactive LED Gaming Floor Mobile Banner - Winera"
+                    />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Active Page Text</label>
@@ -458,18 +449,13 @@ export default function HypergridDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Left Graphic Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mainImgAlt || currentSec.imgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), mainImgAlt: e.target.value } }))}
-                        placeholder="e.g. Hypergrid Game Supplier in India - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Left Graphic Alt Text (SEO Keyword)"
+                      value={currentSec.mainImgAlt || currentSec.imgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridIntro: { ...(prev.hypergridIntro || defaultHypergridIntro), mainImgAlt: e.target.value } }))}
+                      placeholder="e.g. Hypergrid Game Supplier in India - Winera International"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -548,18 +534,13 @@ export default function HypergridDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Right Graphic Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), imgAlt: e.target.value } }))}
-                        placeholder="e.g. Interactive LED Floor Games for High-Footfall Venues - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Right Graphic Alt Text (SEO Keyword)"
+                      value={currentSec.imgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridBanner: { ...(prev.hypergridBanner || defaultHypergridBanner), imgAlt: e.target.value } }))}
+                      placeholder="e.g. Interactive LED Floor Games for High-Footfall Venues - Winera International"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -612,18 +593,13 @@ export default function HypergridDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Technical Specifications - Hypergrid Interactive LED Gaming Floor"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridSpecs: { ...(prev.hypergridSpecs || defaultHypergridSpecs), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Technical Specifications - Hypergrid Interactive LED Gaming Floor"
+                    />
                   </div>
 
                   <div>
@@ -797,18 +773,13 @@ export default function HypergridDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Left Column Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.leftImgAlt || currentSec.imgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), leftImgAlt: e.target.value, imgAlt: e.target.value } }))}
-                        placeholder="e.g. What Makes Hypergrid the Right Choice for Your Venue - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Left Column Image Alt Text (SEO Keyword)"
+                      value={currentSec.leftImgAlt || currentSec.imgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridWhyUs: { ...(prev.hypergridWhyUs || defaultHypergridWhyUs), leftImgAlt: e.target.value, imgAlt: e.target.value } }))}
+                      placeholder="e.g. What Makes Hypergrid the Right Choice for Your Venue - Winera"
+                    />
                   </div>
 
                   <div>
@@ -1025,18 +996,13 @@ export default function HypergridDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Right Graphic Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), imgAlt: e.target.value } }))}
-                        placeholder="e.g. Is Hypergrid a Smart Investment for Your Venue - Winera Commercial Setup"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Right Graphic Image Alt Text (SEO Keyword)"
+                      value={currentSec.imgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, hypergridRoi: { ...(prev.hypergridRoi || defaultHypergridRoi), imgAlt: e.target.value } }))}
+                      placeholder="e.g. Is Hypergrid a Smart Investment for Your Venue - Winera Commercial Setup"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -1306,18 +1272,13 @@ export default function HypergridDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Banner Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.hypergridCta?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('hypergridCta', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Ready to Add Hypergrid to Your Venue - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Banner Background Image Alt Text (SEO Keyword)"
+                  value={formData.hypergridCta?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('hypergridCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Ready to Add Hypergrid to Your Venue - Winera"
+                />
               </div>
 
 

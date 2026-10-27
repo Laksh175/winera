@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const amusementHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345536/winera_uploads/s8shz3a3qqju8pkzuosz.png";
@@ -120,18 +121,12 @@ export default function AmusementDashboard({
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Background Image Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.amusementHero?.bgAlt || ''}
-                  onChange={(e) => handleFieldChange('amusementHero', 'bgAlt', e.target.value)}
-                  placeholder="e.g. Amusement Rides & Equipment Setup - Winera"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Background Image Alt Text (SEO Keyword)"
+                value={formData.amusementHero?.bgAlt || ''}
+                onChange={(e) => handleFieldChange('amusementHero', 'bgAlt', e.target.value)}
+                placeholder="e.g. Amusement Rides & Equipment Setup - Winera"
+              />
 
               {/* Mobile Screen Hero Banner Upload & Preview */}
               <div>
@@ -184,18 +179,13 @@ export default function AmusementDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.amusementHero?.mobileBgAlt || ''}
-                    onChange={(e) => handleFieldChange('amusementHero', 'mobileBgAlt', e.target.value)}
-                    placeholder="e.g. Turnkey Amusement Park Setup Mobile Banner - Winera International"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                  value={formData.amusementHero?.mobileBgAlt || ''}
+                  onChange={(e) => handleFieldChange('amusementHero', 'mobileBgAlt', e.target.value)}
+                  placeholder="e.g. Turnkey Amusement Park Setup Mobile Banner - Winera International"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -349,21 +339,15 @@ export default function AmusementDashboard({
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Left Collage Graphic Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.amusementIntro?.mainImgAlt || formData.amusementIntro?.imgAlt || ''}
-                  onChange={(e) => {
-                    handleFieldChange('amusementIntro', 'mainImgAlt', e.target.value);
-                    handleFieldChange('amusementIntro', 'imgAlt', e.target.value);
-                  }}
-                  placeholder="e.g. Amusement Park Ride Manufacturer in India - Winera"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Left Collage Graphic Alt Text (SEO Keyword)"
+                value={formData.amusementIntro?.mainImgAlt || formData.amusementIntro?.imgAlt || ''}
+                onChange={(e) => {
+                  handleFieldChange('amusementIntro', 'mainImgAlt', e.target.value);
+                  handleFieldChange('amusementIntro', 'imgAlt', e.target.value);
+                }}
+                placeholder="e.g. Amusement Park Ride Manufacturer in India - Winera"
+              />
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
@@ -466,18 +450,12 @@ export default function AmusementDashboard({
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Right Graphic Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.amusementBanner?.imgAlt || ''}
-                  onChange={(e) => handleFieldChange('amusementBanner', 'imgAlt', e.target.value)}
-                  placeholder="e.g. Complete Amusement Park Setups Built for Indian Venues - Winera"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Right Graphic Alt Text (SEO Keyword)"
+                value={formData.amusementBanner?.imgAlt || ''}
+                onChange={(e) => handleFieldChange('amusementBanner', 'imgAlt', e.target.value)}
+                placeholder="e.g. Complete Amusement Park Setups Built for Indian Venues - Winera"
+              />
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
@@ -661,21 +639,15 @@ export default function AmusementDashboard({
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Top Collage Graphic Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.amusementOptions?.topImgAlt || formData.amusementOptions?.imgAlt || ''}
-                  onChange={(e) => {
-                    handleFieldChange('amusementOptions', 'topImgAlt', e.target.value);
-                    handleFieldChange('amusementOptions', 'imgAlt', e.target.value);
-                  }}
-                  placeholder="e.g. Rides & Attractions We Supply - Winera Commercial Amusement Parks"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Top Collage Graphic Alt Text (SEO Keyword)"
+                value={formData.amusementOptions?.topImgAlt || formData.amusementOptions?.imgAlt || ''}
+                onChange={(e) => {
+                  handleFieldChange('amusementOptions', 'topImgAlt', e.target.value);
+                  handleFieldChange('amusementOptions', 'imgAlt', e.target.value);
+                }}
+                placeholder="e.g. Rides & Attractions We Supply - Winera Commercial Amusement Parks"
+              />
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
@@ -838,21 +810,15 @@ export default function AmusementDashboard({
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Bottom Inflatable Graphic Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.amusementRoi?.bottomImgAlt || formData.amusementRoi?.imgAlt || ''}
-                  onChange={(e) => {
-                    handleFieldChange('amusementRoi', 'bottomImgAlt', e.target.value);
-                    handleFieldChange('amusementRoi', 'imgAlt', e.target.value);
-                  }}
-                  placeholder="e.g. Before You Build Know What It Will Earn - Amusement Park ROI Setup Winera"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Bottom Inflatable Graphic Alt Text (SEO Keyword)"
+                value={formData.amusementRoi?.bottomImgAlt || formData.amusementRoi?.imgAlt || ''}
+                onChange={(e) => {
+                  handleFieldChange('amusementRoi', 'bottomImgAlt', e.target.value);
+                  handleFieldChange('amusementRoi', 'imgAlt', e.target.value);
+                }}
+                placeholder="e.g. Before You Build Know What It Will Earn - Amusement Park ROI Setup Winera"
+              />
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
@@ -1088,18 +1054,13 @@ export default function AmusementDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Banner Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.amusementCta?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('amusementCta', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Need Any Consultations - Amusement Park Solutions by Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Banner Background Image Alt Text (SEO Keyword)"
+                  value={formData.amusementCta?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('amusementCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Need Any Consultations - Amusement Park Solutions by Winera"
+                />
               </div>
 
 

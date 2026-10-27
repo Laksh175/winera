@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload, Plus, Trash2 } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const defaultGameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345484/winera_uploads/cjhcvoxksmptc84yslh2.png";
@@ -238,18 +239,13 @@ export default function SafetyDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Hero Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Safety Standards & Quality Certification - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Hero Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Safety Standards & Quality Certification - Winera"
+                    />
                   </div>
 
                   {/* Mobile Screen Hero Banner Upload & Preview */}
@@ -295,18 +291,13 @@ export default function SafetyDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), mobileBgAlt: e.target.value } }))}
-                        placeholder="e.g. Safety Standards & Quality Certification Mobile Banner - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyHero: { ...(prev.safetyHero || defaultSafetyHero), mobileBgAlt: e.target.value } }))}
+                      placeholder="e.g. Safety Standards & Quality Certification Mobile Banner - Winera"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -391,18 +382,13 @@ export default function SafetyDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Intro Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mainImgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), mainImgAlt: e.target.value } }))}
-                        placeholder="e.g. Game Zone & Kids Play Equipment Safety Standards - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Intro Image Alt Text (SEO Keyword)"
+                      value={currentSec.mainImgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyIntro: { ...(prev.safetyIntro || defaultSafetyIntro), mainImgAlt: e.target.value } }))}
+                      placeholder="e.g. Game Zone & Kids Play Equipment Safety Standards - Winera International"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -606,18 +592,13 @@ export default function SafetyDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Material Safety Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), imgAlt: e.target.value } }))}
-                        placeholder="e.g. Material & Fire Safety - Commercial Play Equipment - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Material Safety Image Alt Text (SEO Keyword)"
+                      value={currentSec.imgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyMaterials: { ...(prev.safetyMaterials || defaultSafetyMaterials), imgAlt: e.target.value } }))}
+                      placeholder="e.g. Material & Fire Safety - Commercial Play Equipment - Winera"
+                    />
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '10px' }}>
@@ -755,18 +736,13 @@ export default function SafetyDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Electrical Safety Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), imgAlt: e.target.value } }))}
-                        placeholder="e.g. Electrical & Machine Safety - Commercial Play Zones - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Electrical Safety Image Alt Text (SEO Keyword)"
+                      value={currentSec.imgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyElectrical: { ...(prev.safetyElectrical || defaultSafetyElectrical), imgAlt: e.target.value } }))}
+                      placeholder="e.g. Electrical & Machine Safety - Commercial Play Zones - Winera"
+                    />
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '10px' }}>
@@ -1044,18 +1020,13 @@ export default function SafetyDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ CTA Banner Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Safety Standard Certified Game Zone Consultation - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ CTA Banner Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, safetyWhyMatters: { ...(prev.safetyWhyMatters || defaultSafetyWhyMatters), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Safety Standard Certified Game Zone Consultation - Winera"
+                    />
                   </div>
 
                   <div>

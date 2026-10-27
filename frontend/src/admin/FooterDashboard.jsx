@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload } from 'lucide-react';
 import { uploadImageFile } from '../services/api';
+import AdminAltInput from '../components/AdminAltInput';
 
 const wineraLogo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png";
 
@@ -111,15 +112,12 @@ export default function FooterDashboard({
                       </label>
                     </div>
                     <div style={{ marginBottom: '14px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Footer Logo Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
+                      <AdminAltInput
+                        compact
+                        label="🏷️ Footer Logo Alt Text (SEO Keyword)"
                         value={currentSec.logoAlt || ''}
                         onChange={(e) => setFormData(prev => ({ ...prev, footer: { ...(prev.footer || defaultFooterData), logoAlt: e.target.value } }))}
                         placeholder="e.g. Winera International - Commercial Game Zone Developer & Manufacturer"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
                     </div>
                     <div>

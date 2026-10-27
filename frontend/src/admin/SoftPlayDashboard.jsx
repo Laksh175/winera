@@ -1,6 +1,7 @@
 import React from 'react';
 import { Plus, Trash2, Edit2, Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const softplayHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345683/winera_uploads/s9xcisfml3w3bzaqkoq9.png";
@@ -123,18 +124,12 @@ export default function SoftPlayDashboard({
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Background Image Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.softplayHero?.bgAlt || ''}
-                  onChange={(e) => handleFieldChange('softplayHero', 'bgAlt', e.target.value)}
-                  placeholder="e.g. Indoor Soft Play Area Equipment Manufacturers - Winera"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Background Image Alt Text (SEO Keyword)"
+                value={formData.softplayHero?.bgAlt || ''}
+                onChange={(e) => handleFieldChange('softplayHero', 'bgAlt', e.target.value)}
+                placeholder="e.g. Indoor Soft Play Area Equipment Manufacturers - Winera"
+              />
 
               {/* Mobile Screen Hero Banner Upload & Preview */}
               <div>
@@ -179,18 +174,13 @@ export default function SoftPlayDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.softplayHero?.mobileBgAlt || ''}
-                    onChange={(e) => handleFieldChange('softplayHero', 'mobileBgAlt', e.target.value)}
-                    placeholder="e.g. Indoor Soft Play Area Equipment Mobile Banner - Winera International"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                  value={formData.softplayHero?.mobileBgAlt || ''}
+                  onChange={(e) => handleFieldChange('softplayHero', 'mobileBgAlt', e.target.value)}
+                  placeholder="e.g. Indoor Soft Play Area Equipment Mobile Banner - Winera International"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -321,18 +311,13 @@ export default function SoftPlayDashboard({
                     />
                   </label>
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Section Photo Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.softplayIntro?.imgAlt || ''}
-                    onChange={(e) => handleFieldChange('softplayIntro', 'imgAlt', e.target.value)}
-                    placeholder="e.g. Indoor Soft Play Equipment Manufacturer in India - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Section Photo Alt Text (SEO Keyword)"
+                  value={formData.softplayIntro?.imgAlt || ''}
+                  onChange={(e) => handleFieldChange('softplayIntro', 'imgAlt', e.target.value)}
+                  placeholder="e.g. Indoor Soft Play Equipment Manufacturer in India - Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -443,18 +428,13 @@ export default function SoftPlayDashboard({
                     />
                   </label>
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ 3D Render Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.softplayManufacture?.imgAlt || ''}
-                    onChange={(e) => handleFieldChange('softplayManufacture', 'imgAlt', e.target.value)}
-                    placeholder="e.g. Soft Play Equipment Manufacture 3D Castle Render - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ 3D Render Alt Text (SEO Keyword)"
+                  value={formData.softplayManufacture?.imgAlt || ''}
+                  onChange={(e) => handleFieldChange('softplayManufacture', 'imgAlt', e.target.value)}
+                  placeholder="e.g. Soft Play Equipment Manufacture 3D Castle Render - Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -597,18 +577,13 @@ export default function SoftPlayDashboard({
                       />
                     </label>
                   </div>
-                  <div style={{ marginTop: '10px' }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                      🏷️ Background Image Alt Text (SEO Keyword)
-                    </label>
-                    <input
-                      type="text"
-                      value={currentSec.bgAlt || ''}
-                      onChange={(e) => handleFieldChange('softplaySpecs', 'bgAlt', e.target.value)}
-                      placeholder="e.g. Technical Specifications Soft Play Equipment - Winera International"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                    />
-                  </div>
+                  <AdminAltInput
+                    compact
+                    label="🏷️ Background Image Alt Text (SEO Keyword)"
+                    value={currentSec.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('softplaySpecs', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Technical Specifications Soft Play Equipment - Winera International"
+                  />
                 </div>
 
                 <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -732,18 +707,13 @@ export default function SoftPlayDashboard({
                       />
                     </label>
                   </div>
-                  <div style={{ marginTop: '10px' }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                      🏷️ Photo Alt Text (SEO Keyword)
-                    </label>
-                    <input
-                      type="text"
-                      value={currentSec.imgAlt || ''}
-                      onChange={(e) => handleFieldChange('softplayMaterials', 'imgAlt', e.target.value)}
-                      placeholder="e.g. Premium Materials Exceptional Durability Soft Play - Winera"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                    />
-                  </div>
+                  <AdminAltInput
+                    compact
+                    label="🏷️ Photo Alt Text (SEO Keyword)"
+                    value={currentSec.imgAlt || ''}
+                    onChange={(e) => handleFieldChange('softplayMaterials', 'imgAlt', e.target.value)}
+                    placeholder="e.g. Premium Materials Exceptional Durability Soft Play - Winera"
+                  />
                 </div>
 
                 {/* Subpoints Manager */}
@@ -989,18 +959,13 @@ export default function SoftPlayDashboard({
                               📐 600 × 400 px
                             </span>
                           </div>
-                          <div>
-                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
-                              🏷️ Card Image Alt Text (SEO Keyword)
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="e.g. Themed Soft Play Zones - Custom Indoor Play Area Setup Winera"
-                              value={tItem.imgAlt || ''}
-                              onChange={(e) => handleTypeChange(tIdx, 'imgAlt', e.target.value)}
-                              style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px' }}
-                            />
-                          </div>
+                          <AdminAltInput
+                            compact
+                            label="🏷️ Card Image Alt Text (SEO Keyword)"
+                            placeholder="e.g. Themed Soft Play Zones - Custom Indoor Play Area Setup Winera"
+                            value={tItem.imgAlt || ''}
+                            onChange={(e) => handleTypeChange(tIdx, 'imgAlt', e.target.value)}
+                          />
                         </div>
                       );
                     })}
@@ -1154,22 +1119,17 @@ export default function SoftPlayDashboard({
                     />
                   </label>
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ ROI Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.softplayRoi?.mainImgAlt || formData.softplayRoi?.imgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      const updated = { ...(formData.softplayRoi || {}), mainImgAlt: val, imgAlt: val };
-                      setFormData(prev => ({ ...prev, softplayRoi: updated }));
-                    }}
-                    placeholder="e.g. Know Your Returns ROI Report - Winera Soft Play Setup"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ ROI Image Alt Text (SEO Keyword)"
+                  value={formData.softplayRoi?.mainImgAlt || formData.softplayRoi?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const updated = { ...(formData.softplayRoi || {}), mainImgAlt: val, imgAlt: val };
+                    setFormData(prev => ({ ...prev, softplayRoi: updated }));
+                  }}
+                  placeholder="e.g. Know Your Returns ROI Report - Winera Soft Play Setup"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1538,18 +1498,13 @@ export default function SoftPlayDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Banner Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.softplayCta?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('softplayCta', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Ready to Build Your Soft Play Zone - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Banner Image Alt Text (SEO Keyword)"
+                  value={formData.softplayCta?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('softplayCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Ready to Build Your Soft Play Zone - Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>

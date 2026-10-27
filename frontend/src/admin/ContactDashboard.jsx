@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const defaultGameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345484/winera_uploads/cjhcvoxksmptc84yslh2.png";
@@ -109,18 +110,13 @@ export default function ContactDashboard({
                       style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
                     />
                   </div>
-                  <div style={{ marginTop: '10px' }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                      🏷️ Hero Banner Alt Text (SEO Keyword)
-                    </label>
-                    <input
-                      type="text"
-                      value={currentHero.bgAlt || ''}
-                      onChange={(e) => handleFieldChange('contactHero', 'bgAlt', e.target.value)}
-                      placeholder="e.g. Contact Winera International - Commercial Game Zone Setup & Turnkey Solutions"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                    />
-                  </div>
+                  <AdminAltInput
+                    compact
+                    label="🏷️ Hero Banner Alt Text (SEO Keyword)"
+                    value={currentHero.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('contactHero', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Contact Winera International - Commercial Game Zone Setup & Turnkey Solutions"
+                  />
                 </div>
 
                 {/* Mobile Screen Hero Banner */}
@@ -166,18 +162,13 @@ export default function ContactDashboard({
                       </button>
                     )}
                   </div>
-                  <div style={{ marginTop: '10px' }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                      🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                    </label>
-                    <input
-                      type="text"
-                      value={currentHero.mobileBgAlt || ''}
-                      onChange={(e) => handleFieldChange('contactHero', 'mobileBgAlt', e.target.value)}
-                      placeholder="e.g. Contact Winera International Mobile Banner - Commercial Game Zone Setup & Turnkey Solutions"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                    />
-                  </div>
+                  <AdminAltInput
+                    compact
+                    label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                    value={currentHero.mobileBgAlt || ''}
+                    onChange={(e) => handleFieldChange('contactHero', 'mobileBgAlt', e.target.value)}
+                    placeholder="e.g. Contact Winera International Mobile Banner - Commercial Game Zone Setup & Turnkey Solutions"
+                  />
                 </div>
 
                 <div style={{ textAlign: 'right', marginTop: '10px' }}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const bumpercarHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345643/winera_uploads/d0pjhjvz9xnbyggqy1lh.png";
@@ -150,18 +151,12 @@ export default function BumperCarDashboard({
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Background Image Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.bumpercarHero?.bgAlt || ''}
-                  onChange={(e) => handleFieldChange('bumpercarHero', 'bgAlt', e.target.value)}
-                  placeholder="e.g. Commercial Bumper Cars Arena Setup - Winera"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Background Image Alt Text (SEO Keyword)"
+                value={formData.bumpercarHero?.bgAlt || ''}
+                onChange={(e) => handleFieldChange('bumpercarHero', 'bgAlt', e.target.value)}
+                placeholder="e.g. Commercial Bumper Cars Arena Setup - Winera"
+              />
 
               {/* Mobile Screen Hero Banner Upload & Preview */}
               <div>
@@ -214,18 +209,13 @@ export default function BumperCarDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bumpercarHero?.mobileBgAlt || ''}
-                    onChange={(e) => handleFieldChange('bumpercarHero', 'mobileBgAlt', e.target.value)}
-                    placeholder="e.g. Commercial Bumper Cars Arena Setup Mobile Banner - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                  value={formData.bumpercarHero?.mobileBgAlt || ''}
+                  onChange={(e) => handleFieldChange('bumpercarHero', 'mobileBgAlt', e.target.value)}
+                  placeholder="e.g. Commercial Bumper Cars Arena Setup Mobile Banner - Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -351,22 +341,17 @@ export default function BumperCarDashboard({
                   </label>
                   <img src={getAdminValidImageUrl(formData.bumpercarIntro?.mainImgUrl, bumpercarCollageFrame)} alt="Intro Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Section Right Collage Graphic Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bumpercarIntro?.mainImgAlt || formData.bumpercarIntro?.imgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      handleFieldChange('bumpercarIntro', 'mainImgAlt', val);
-                      handleFieldChange('bumpercarIntro', 'imgAlt', val);
-                    }}
-                    placeholder="e.g. Bumper Car Manufacturer in India - Winera Commercial Turnkey Setup"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Section Right Collage Graphic Image Alt Text (SEO Keyword)"
+                  value={formData.bumpercarIntro?.mainImgAlt || formData.bumpercarIntro?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    handleFieldChange('bumpercarIntro', 'mainImgAlt', val);
+                    handleFieldChange('bumpercarIntro', 'imgAlt', val);
+                  }}
+                  placeholder="e.g. Bumper Car Manufacturer in India - Winera Commercial Turnkey Setup"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -432,18 +417,13 @@ export default function BumperCarDashboard({
                   </label>
                   <img src={getAdminValidImageUrl(formData.bumpercarBanner?.imgUrl, bumpercar3dNeon)} alt="3D Neon Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Right 3D Neon Bumper Car Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bumpercarBanner?.imgAlt || ''}
-                    onChange={(e) => handleFieldChange('bumpercarBanner', 'imgAlt', e.target.value)}
-                    placeholder="e.g. 3D Neon Bumper Car Commercial Ride - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Right 3D Neon Bumper Car Image Alt Text (SEO Keyword)"
+                  value={formData.bumpercarBanner?.imgAlt || ''}
+                  onChange={(e) => handleFieldChange('bumpercarBanner', 'imgAlt', e.target.value)}
+                  placeholder="e.g. 3D Neon Bumper Car Commercial Ride - Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -617,18 +597,13 @@ export default function BumperCarDashboard({
                     </label>
                     <img src={getAdminValidImageUrl(currentSec.bgUrl, bumpercarSpecsBg)} alt="Specs Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                   </div>
-                  <div style={{ marginTop: '10px' }}>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                      🏷️ Background Image Alt Text (SEO Keyword)
-                    </label>
-                    <input
-                      type="text"
-                      value={currentSec.bgAlt || ''}
-                      onChange={(e) => handleFieldChange('bumpercarSpecs', 'bgAlt', e.target.value)}
-                      placeholder="e.g. Technical Specifications - Commercial Bumper Car System Winera"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                    />
-                  </div>
+                  <AdminAltInput
+                    compact
+                    label="🏷️ Background Image Alt Text (SEO Keyword)"
+                    value={currentSec.bgAlt || ''}
+                    onChange={(e) => handleFieldChange('bumpercarSpecs', 'bgAlt', e.target.value)}
+                    placeholder="e.g. Technical Specifications - Commercial Bumper Car System Winera"
+                  />
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -835,22 +810,17 @@ export default function BumperCarDashboard({
                   </label>
                   <img src={getAdminValidImageUrl(formData.bumpercarOptions?.imgUrl, bumpercarOptionsCollage)} alt="Collage Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Right Collage Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bumpercarOptions?.imgAlt || formData.bumpercarOptions?.rightImgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      handleFieldChange('bumpercarOptions', 'imgAlt', val);
-                      handleFieldChange('bumpercarOptions', 'rightImgAlt', val);
-                    }}
-                    placeholder="e.g. Indoor Bumper Car Options for Your Venue - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Right Collage Image Alt Text (SEO Keyword)"
+                  value={formData.bumpercarOptions?.imgAlt || formData.bumpercarOptions?.rightImgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    handleFieldChange('bumpercarOptions', 'imgAlt', val);
+                    handleFieldChange('bumpercarOptions', 'rightImgAlt', val);
+                  }}
+                  placeholder="e.g. Indoor Bumper Car Options for Your Venue - Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1260,22 +1230,17 @@ export default function BumperCarDashboard({
                   </label>
                   <img src={getAdminValidImageUrl(formData.bumpercarInvestment?.imgUrl, bumpercarInvestmentCollage)} alt="Collage Preview" style={{ height: '45px', width: '75px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Left Collage Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bumpercarInvestment?.imgAlt || formData.bumpercarInvestment?.leftImgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      handleFieldChange('bumpercarInvestment', 'imgAlt', val);
-                      handleFieldChange('bumpercarInvestment', 'leftImgAlt', val);
-                    }}
-                    placeholder="e.g. Is a Bumper Car Ride a Smart Investment for Your Venue - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Left Collage Image Alt Text (SEO Keyword)"
+                  value={formData.bumpercarInvestment?.imgAlt || formData.bumpercarInvestment?.leftImgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    handleFieldChange('bumpercarInvestment', 'imgAlt', val);
+                    handleFieldChange('bumpercarInvestment', 'leftImgAlt', val);
+                  }}
+                  placeholder="e.g. Is a Bumper Car Ride a Smart Investment for Your Venue - Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1659,18 +1624,13 @@ export default function BumperCarDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '14px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Banner Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bumpercarCta?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('bumpercarCta', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Ready to Explore a Bumper Car Attraction for Your Venue - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Banner Background Image Alt Text (SEO Keyword)"
+                  value={formData.bumpercarCta?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('bumpercarCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Ready to Explore a Bumper Car Attraction for Your Venue - Winera"
+                />
               </div>
 
 

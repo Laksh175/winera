@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload, Plus, Trash2 } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const defaultGameZoneMobileBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345484/winera_uploads/cjhcvoxksmptc84yslh2.png";
@@ -279,18 +280,13 @@ export default function LaserTagDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Hero Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Laser Tag Arena Equipment Suppliers - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Hero Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Laser Tag Arena Equipment Suppliers - Winera"
+                    />
                   </div>
 
                   {/* Mobile Screen Hero Banner Upload & Preview */}
@@ -336,18 +332,13 @@ export default function LaserTagDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mobileBgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), mobileBgAlt: e.target.value } }))}
-                        placeholder="e.g. Laser Tag Arena Setup Mobile Banner - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.mobileBgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagHero: { ...(prev.lasertagHero || defaultLasertagHero), mobileBgAlt: e.target.value } }))}
+                      placeholder="e.g. Laser Tag Arena Setup Mobile Banner - Winera"
+                    />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Label</label>
@@ -510,18 +501,13 @@ export default function LaserTagDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Graphic Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mainImgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), mainImgAlt: e.target.value } }))}
-                        placeholder="e.g. Commercial Laser Tag Game Equipment - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Graphic Image Alt Text (SEO Keyword)"
+                      value={currentSec.mainImgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagIntro: { ...(prev.lasertagIntro || defaultLasertagIntro), mainImgAlt: e.target.value } }))}
+                      placeholder="e.g. Commercial Laser Tag Game Equipment - Winera"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -626,18 +612,13 @@ export default function LaserTagDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Graphic Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mainImgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), mainImgAlt: e.target.value } }))}
-                        placeholder="e.g. Commercial Laser Tag Arena Setup - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Graphic Image Alt Text (SEO Keyword)"
+                      value={currentSec.mainImgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSetup: { ...(prev.lasertagSetup || defaultLasertagSetup), mainImgAlt: e.target.value } }))}
+                      placeholder="e.g. Commercial Laser Tag Arena Setup - Winera"
+                    />
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -804,18 +785,13 @@ export default function LaserTagDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Right Photo Graphic Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mainImgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), mainImgAlt: e.target.value } }))}
-                        placeholder="e.g. Laser Tag for Groups & Birthday Parties - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Right Photo Graphic Alt Text (SEO Keyword)"
+                      value={currentSec.mainImgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagGroups: { ...(prev.lasertagGroups || defaultLasertagGroups), mainImgAlt: e.target.value } }))}
+                      placeholder="e.g. Laser Tag for Groups & Birthday Parties - Winera"
+                    />
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1059,18 +1035,13 @@ export default function LaserTagDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Card Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Laser Tag Technical Specifications Arena - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Card Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpecs: { ...(prev.lasertagSpecs || defaultLasertagSpecs), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Laser Tag Technical Specifications Arena - Winera"
+                    />
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1262,18 +1233,13 @@ export default function LaserTagDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Schematic Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mainImgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), mainImgAlt: e.target.value } }))}
-                        placeholder="e.g. Laser Tag Arena Space Requirements 3D Layout - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Schematic Image Alt Text (SEO Keyword)"
+                      value={currentSec.mainImgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpace: { ...(prev.lasertagSpace || defaultLasertagSpace), mainImgAlt: e.target.value } }))}
+                      placeholder="e.g. Laser Tag Arena Space Requirements 3D Layout - Winera"
+                    />
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1406,18 +1372,13 @@ export default function LaserTagDashboard({
                           <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => e.target.files?.[0] && handleCloudinaryUpload(e.target.files[0], (url) => handleSpyChange('mainImgUrl', url))} />
                         </label>
                       </div>
-                      <div style={{ marginTop: '10px' }}>
-                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                          🏷️ Big Main Arena Image Alt Text (SEO Keyword)
-                        </label>
-                        <input
-                          type="text"
-                          value={spyData.mainImgAlt || ''}
-                          onChange={(e) => handleSpyChange('mainImgAlt', e.target.value)}
-                          placeholder="e.g. Laser Spy Laser Beam Maze Room Setup - Winera"
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                        />
-                      </div>
+                      <AdminAltInput
+                        compact
+                        label="🏷️ Big Main Arena Image Alt Text (SEO Keyword)"
+                        value={spyData.mainImgAlt || ''}
+                        onChange={(e) => handleSpyChange('mainImgAlt', e.target.value)}
+                        placeholder="e.g. Laser Spy Laser Beam Maze Room Setup - Winera"
+                      />
                     </div>
                   </div>
 
@@ -1694,18 +1655,13 @@ export default function LaserTagDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Card Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Laser Spy Technical Specifications Arena - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Card Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, lasertagSpySpecs: { ...(prev.lasertagSpySpecs || defaultLasertagSpySpecs), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Laser Spy Technical Specifications Arena - Winera"
+                    />
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1981,18 +1937,13 @@ export default function LaserTagDashboard({
                     style={{ fontSize: '12px' }}
                   />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ ROI Photo Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.lasertagRoi?.mainImgAlt || ''}
-                    onChange={(e) => handleFieldChange('lasertagRoi', 'mainImgAlt', e.target.value)}
-                    placeholder="e.g. Laser Tag ROI Returns & Payback Analysis - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ ROI Photo Alt Text (SEO Keyword)"
+                  value={formData.lasertagRoi?.mainImgAlt || ''}
+                  onChange={(e) => handleFieldChange('lasertagRoi', 'mainImgAlt', e.target.value)}
+                  placeholder="e.g. Laser Tag ROI Returns & Payback Analysis - Winera"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -2392,18 +2343,13 @@ export default function LaserTagDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Banner Background Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.lasertagCta?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('lasertagCta', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Setup Commercial Laser Tag Arena - Winera International"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Banner Background Alt Text (SEO Keyword)"
+                  value={formData.lasertagCta?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('lasertagCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Setup Commercial Laser Tag Arena - Winera International"
+                />
               </div>
 
               <div>

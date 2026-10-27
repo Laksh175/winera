@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload } from 'lucide-react';
 import BlogAdminManagement from '../components/BlogAdminManagement';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const blogHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345630/winera_uploads/tj7ke5cpufz9t41c4d7v.png";
@@ -93,18 +94,13 @@ export default function BlogDashboard({
                         style={{ width: '100px', height: '70px', borderRadius: '10px', objectFit: 'cover', background: '#f8fafc', border: '1.5px solid #38bdf8', padding: '2px' }}
                       />
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt !== undefined ? currentSec.bgAlt : (defaultBlogHero.bgAlt || '')}
-                        onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Winera International Game Zone & Entertainment Industry Insights"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt !== undefined ? currentSec.bgAlt : (defaultBlogHero.bgAlt || '')}
+                      onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Winera International Game Zone & Entertainment Industry Insights"
+                    />
                   </div>
 
                   {/* Mobile Screen Hero Banner Upload & Preview */}
@@ -150,18 +146,13 @@ export default function BlogDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), mobileBgAlt: e.target.value } }))}
-                        placeholder="e.g. Winera International Game Zone & Entertainment Industry Insights Mobile Banner"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                      value={currentSec.mobileBgAlt !== undefined ? currentSec.mobileBgAlt : ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, blogHero: { ...(prev.blogHero || defaultBlogHero), mobileBgAlt: e.target.value } }))}
+                      placeholder="e.g. Winera International Game Zone & Entertainment Industry Insights Mobile Banner"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button

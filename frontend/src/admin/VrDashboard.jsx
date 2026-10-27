@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Upload, Plus, Trash2, Edit3 } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const vrCtaRightImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345690/winera_uploads/r7a7hoy1dktrgee5mxhq.png";
@@ -139,16 +140,12 @@ export default function VrDashboard({
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '4px' }}>🏷️ Hero Background Alt Text (SEO Keyword)</label>
-                <input
-                  type="text"
-                  value={formData.vrHero?.bgAlt || ''}
-                  onChange={(e) => handleFieldChange('vrHero', 'bgAlt', e.target.value)}
-                  placeholder="e.g. Virtual Reality VR Games and Simulators - Winera"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Hero Background Alt Text (SEO Keyword)"
+                value={formData.vrHero?.bgAlt || ''}
+                onChange={(e) => handleFieldChange('vrHero', 'bgAlt', e.target.value)}
+                placeholder="e.g. Virtual Reality VR Games and Simulators - Winera"
+              />
 
               {/* Mobile Screen Hero Banner Upload & Preview */}
               <div>
@@ -201,18 +198,13 @@ export default function VrDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.vrHero?.mobileBgAlt || ''}
-                    onChange={(e) => handleFieldChange('vrHero', 'mobileBgAlt', e.target.value)}
-                    placeholder="e.g. Virtual Reality VR Games and Simulators Mobile Banner - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                  value={formData.vrHero?.mobileBgAlt || ''}
+                  onChange={(e) => handleFieldChange('vrHero', 'mobileBgAlt', e.target.value)}
+                  placeholder="e.g. Virtual Reality VR Games and Simulators Mobile Banner - Winera"
+                />
               </div>
 
               <div>
@@ -296,22 +288,17 @@ export default function VrDashboard({
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Left Image Graphic Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.vrIntro?.mainImgAlt || formData.vrIntro?.imgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      handleFieldChange('vrIntro', 'mainImgAlt', val);
-                      handleFieldChange('vrIntro', 'imgAlt', val);
-                    }}
-                    placeholder="e.g. VR Gaming Machine Supplier in India - Winera Commercial Setup"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Left Image Graphic Alt Text (SEO Keyword)"
+                  value={formData.vrIntro?.mainImgAlt || formData.vrIntro?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    handleFieldChange('vrIntro', 'mainImgAlt', val);
+                    handleFieldChange('vrIntro', 'imgAlt', val);
+                  }}
+                  placeholder="e.g. VR Gaming Machine Supplier in India - Winera Commercial Setup"
+                />
               </div>
 
               <div>
@@ -454,18 +441,13 @@ export default function VrDashboard({
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Right Image Graphic Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.vrMatchedVenue?.imgAlt || ''}
-                    onChange={(e) => handleFieldChange('vrMatchedVenue', 'imgAlt', e.target.value)}
-                    placeholder="e.g. Commercial VR Machines Matched to Your Venue - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Right Image Graphic Alt Text (SEO Keyword)"
+                  value={formData.vrMatchedVenue?.imgAlt || ''}
+                  onChange={(e) => handleFieldChange('vrMatchedVenue', 'imgAlt', e.target.value)}
+                  placeholder="e.g. Commercial VR Machines Matched to Your Venue - Winera"
+                />
               </div>
 
               <div>
@@ -1155,18 +1137,13 @@ export default function VrDashboard({
                     style={{ width: '120px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Right Column Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.vrReliability?.imgAlt || ''}
-                    onChange={(e) => handleFieldChange('vrReliability', 'imgAlt', e.target.value)}
-                    placeholder="e.g. Commercial-Grade Quality and Reliability - Winera VR"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Right Column Image Alt Text (SEO Keyword)"
+                  value={formData.vrReliability?.imgAlt || ''}
+                  onChange={(e) => handleFieldChange('vrReliability', 'imgAlt', e.target.value)}
+                  placeholder="e.g. Commercial-Grade Quality and Reliability - Winera VR"
+                />
               </div>
 
               <div>
@@ -1277,18 +1254,13 @@ export default function VrDashboard({
                     style={{ width: '100px', height: '55px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #38bdf8' }}
                   />
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Right Graphic Image (VR Player) Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.vrEarn?.imgAlt || ''}
-                    onChange={(e) => handleFieldChange('vrEarn', 'imgAlt', e.target.value)}
-                    placeholder="e.g. What Will Your VR Gaming Zone Actually Earn - Winera International"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Right Graphic Image (VR Player) Alt Text (SEO Keyword)"
+                  value={formData.vrEarn?.imgAlt || ''}
+                  onChange={(e) => handleFieldChange('vrEarn', 'imgAlt', e.target.value)}
+                  placeholder="e.g. What Will Your VR Gaming Zone Actually Earn - Winera International"
+                />
               </div>
 
               <div>
@@ -1777,18 +1749,13 @@ export default function VrDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '14px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Banner Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.vrCta?.bgAlt || ''}
-                    onChange={(e) => handleFieldChange('vrCta', 'bgAlt', e.target.value)}
-                    placeholder="e.g. Need Any Consultations for VR Game Zone Setup - Winera"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Banner Background Image Alt Text (SEO Keyword)"
+                  value={formData.vrCta?.bgAlt || ''}
+                  onChange={(e) => handleFieldChange('vrCta', 'bgAlt', e.target.value)}
+                  placeholder="e.g. Need Any Consultations for VR Game Zone Setup - Winera"
+                />
               </div>
 
 

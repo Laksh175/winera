@@ -1,6 +1,7 @@
 import React from 'react';
 import { Plus, Trash2, Edit2, Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const bowlingHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345639/winera_uploads/lp7tajaeyaq6qgrmo40k.png";
@@ -153,18 +154,12 @@ export default function BowlingDashboard({
               </div>
 
               {/* Hero Background Image Alt Tag */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Background Image Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.bowlingHero?.bgAlt || ''}
-                  onChange={(e) => handleFieldChange('bowlingHero', 'bgAlt', e.target.value)}
-                  placeholder="e.g. Bowling Alley Setup & Manufacturer in India - Winera International"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Background Image Alt Text (SEO Keyword)"
+                value={formData.bowlingHero?.bgAlt || ''}
+                onChange={(e) => handleFieldChange('bowlingHero', 'bgAlt', e.target.value)}
+                placeholder="e.g. Bowling Alley Setup & Manufacturer in India - Winera International"
+              />
 
               {/* Mobile Screen Hero Banner Upload & Preview */}
               <div>
@@ -209,18 +204,12 @@ export default function BowlingDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Mobile Background Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bowlingHero?.mobileBgAlt || ''}
-                    onChange={(e) => handleFieldChange('bowlingHero', 'mobileBgAlt', e.target.value)}
-                    placeholder="e.g. Bowling Alley Setup & Manufacturer Mobile Banner - Winera International"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  label="🏷️ Mobile Background Image Alt Text (SEO Keyword)"
+                  value={formData.bowlingHero?.mobileBgAlt || ''}
+                  onChange={(e) => handleFieldChange('bowlingHero', 'mobileBgAlt', e.target.value)}
+                  placeholder="e.g. Bowling Alley Setup & Manufacturer Mobile Banner - Winera International"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -310,22 +299,16 @@ export default function BowlingDashboard({
               </div>
 
               {/* Main Graphic Alt Tag */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Main Graphic Image Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.bowlingIntro?.mainImgAlt || formData.bowlingIntro?.imgAlt || ''}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    const updated = { ...(formData.bowlingIntro || {}), mainImgAlt: val, imgAlt: val };
-                    setFormData(prev => ({ ...prev, bowlingIntro: updated }));
-                  }}
-                  placeholder="e.g. Bowling Alley Manufacturers in India - Winera International"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Main Graphic Image Alt Text (SEO Keyword)"
+                value={formData.bowlingIntro?.mainImgAlt || formData.bowlingIntro?.imgAlt || ''}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  const updated = { ...(formData.bowlingIntro || {}), mainImgAlt: val, imgAlt: val };
+                  setFormData(prev => ({ ...prev, bowlingIntro: updated }));
+                }}
+                placeholder="e.g. Bowling Alley Manufacturers in India - Winera International"
+              />
 
               {/* WhatsApp Action Button Controls for Bowling Intro */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -492,22 +475,16 @@ export default function BowlingDashboard({
               </div>
 
               {/* Pins Graphic Alt Tag */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Pins Graphic Image Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.bowlingManufacturer?.mainImgAlt || formData.bowlingManufacturer?.imgAlt || ''}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    const updated = { ...(formData.bowlingManufacturer || {}), mainImgAlt: val, imgAlt: val };
-                    setFormData(prev => ({ ...prev, bowlingManufacturer: updated }));
-                  }}
-                  placeholder="e.g. Exploding Bowling Pins - Commercial Bowling Lanes Setup"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Pins Graphic Image Alt Text (SEO Keyword)"
+                value={formData.bowlingManufacturer?.mainImgAlt || formData.bowlingManufacturer?.imgAlt || ''}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  const updated = { ...(formData.bowlingManufacturer || {}), mainImgAlt: val, imgAlt: val };
+                  setFormData(prev => ({ ...prev, bowlingManufacturer: updated }));
+                }}
+                placeholder="e.g. Exploding Bowling Pins - Commercial Bowling Lanes Setup"
+              />
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
@@ -603,22 +580,17 @@ export default function BowlingDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Free-Fall Graphic Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bowlingFreeFall?.mainImgAlt || formData.bowlingFreeFall?.imgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      const updated = { ...(formData.bowlingFreeFall || {}), mainImgAlt: val, imgAlt: val };
-                      setFormData(prev => ({ ...prev, bowlingFreeFall: updated }));
-                    }}
-                    placeholder="e.g. Free Fall Bowling Pinsetter - Commercial Bowling Setup"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Free-Fall Graphic Image Alt Text (SEO Keyword)"
+                  value={formData.bowlingFreeFall?.mainImgAlt || formData.bowlingFreeFall?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const updated = { ...(formData.bowlingFreeFall || {}), mainImgAlt: val, imgAlt: val };
+                    setFormData(prev => ({ ...prev, bowlingFreeFall: updated }));
+                  }}
+                  placeholder="e.g. Free Fall Bowling Pinsetter - Commercial Bowling Setup"
+                />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -787,22 +759,17 @@ export default function BowlingDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ String Bowling Graphic Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bowlingString?.mainImgAlt || formData.bowlingString?.imgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      const updated = { ...(formData.bowlingString || {}), mainImgAlt: val, imgAlt: val };
-                      setFormData(prev => ({ ...prev, bowlingString: updated }));
-                    }}
-                    placeholder="e.g. String Bowling Friends - Commercial String Bowling Machine"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ String Bowling Graphic Image Alt Text (SEO Keyword)"
+                  value={formData.bowlingString?.mainImgAlt || formData.bowlingString?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const updated = { ...(formData.bowlingString || {}), mainImgAlt: val, imgAlt: val };
+                    setFormData(prev => ({ ...prev, bowlingString: updated }));
+                  }}
+                  placeholder="e.g. String Bowling Friends - Commercial String Bowling Machine"
+                />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -1057,22 +1024,17 @@ export default function BowlingDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Investment & ROI Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bowlingRoi?.mainImgAlt || formData.bowlingRoi?.imgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      const updated = { ...(formData.bowlingRoi || {}), mainImgAlt: val, imgAlt: val };
-                      setFormData(prev => ({ ...prev, bowlingRoi: updated }));
-                    }}
-                    placeholder="e.g. Bowling Alley Lanes ROI - High Profit Game Zone Equipment"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Investment & ROI Image Alt Text (SEO Keyword)"
+                  value={formData.bowlingRoi?.mainImgAlt || formData.bowlingRoi?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const updated = { ...(formData.bowlingRoi || {}), mainImgAlt: val, imgAlt: val };
+                    setFormData(prev => ({ ...prev, bowlingRoi: updated }));
+                  }}
+                  placeholder="e.g. Bowling Alley Lanes ROI - High Profit Game Zone Equipment"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1168,22 +1130,17 @@ export default function BowlingDashboard({
                     </button>
                   )}
                 </div>
-                <div style={{ marginTop: '10px' }}>
-                  <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                    🏷️ Why Choose Winera Image Alt Text (SEO Keyword)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.bowlingWhyUs?.mainImgAlt || formData.bowlingWhyUs?.imgAlt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      const updated = { ...(formData.bowlingWhyUs || {}), mainImgAlt: val, imgAlt: val };
-                      setFormData(prev => ({ ...prev, bowlingWhyUs: updated }));
-                    }}
-                    placeholder="e.g. Blue Bowling Ball and Pins - Winera Game Zone Manufacturer"
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                  />
-                </div>
+                <AdminAltInput
+                  compact
+                  label="🏷️ Why Choose Winera Image Alt Text (SEO Keyword)"
+                  value={formData.bowlingWhyUs?.mainImgAlt || formData.bowlingWhyUs?.imgAlt || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const updated = { ...(formData.bowlingWhyUs || {}), mainImgAlt: val, imgAlt: val };
+                    setFormData(prev => ({ ...prev, bowlingWhyUs: updated }));
+                  }}
+                  placeholder="e.g. Blue Bowling Ball and Pins - Winera Game Zone Manufacturer"
+                />
               </div>
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1307,18 +1264,12 @@ export default function BowlingDashboard({
               </div>
 
               {/* Bowling CTA Banner Image Alt Tag */}
-              <div>
-                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
-                  🏷️ Background Banner Image Alt Text (SEO Keyword)
-                </label>
-                <input
-                  type="text"
-                  value={formData.bowlingCta?.bgAlt || ''}
-                  onChange={(e) => handleFieldChange('bowlingCta', 'bgAlt', e.target.value)}
-                  placeholder="e.g. Bowling Alley Setup Consultation & Equipment - Winera International"
-                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
-                />
-              </div>
+              <AdminAltInput
+                label="🏷️ Background Banner Image Alt Text (SEO Keyword)"
+                value={formData.bowlingCta?.bgAlt || ''}
+                onChange={(e) => handleFieldChange('bowlingCta', 'bgAlt', e.target.value)}
+                placeholder="e.g. Bowling Alley Setup Consultation & Equipment - Winera International"
+              />
 
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button

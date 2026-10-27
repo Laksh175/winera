@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit, Upload, Eye, ArrowLeft, Calendar, Clock, User, PenTool, Search, CheckCircle, AlertCircle, MoveUp, MoveDown } from 'lucide-react';
 import RichTextareaWithEditor from './RichTextareaWithEditor';
+import AdminAltInput from './AdminAltInput';
 import { sanitizeAndFormatHtml } from '../pages/BlogDetail';
 import { fetchBlogs, createBlogApi, updateBlogApi, deleteBlogApi, clearBlogCache } from '../services/api';
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
@@ -835,18 +836,13 @@ export default function BlogAdminManagement({
                         />
                       </label>
                     </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Game Zone Setup and ROI Planning - Winera International"
-                        value={editingBlog.imageAlt || ''}
-                        onChange={(e) => setEditingBlog(prev => ({ ...prev, imageAlt: e.target.value }))}
-                        style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Image Alt Text (SEO Keyword)"
+                      placeholder="e.g. Game Zone Setup and ROI Planning - Winera International"
+                      value={editingBlog.imageAlt || ''}
+                      onChange={(e) => setEditingBlog(prev => ({ ...prev, imageAlt: e.target.value }))}
+                    />
                     <span style={{ fontSize: '12px', color: '#64748b' }}>
                       Tip: Supported formats include PNG, JPG, WebP. Auto-optimizes to WebP format.
                     </span>

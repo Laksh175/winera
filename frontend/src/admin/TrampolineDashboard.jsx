@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
+import AdminAltInput from '../components/AdminAltInput';
 import { uploadImageFile } from '../services/api';
 
 const trampolineParkBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345688/winera_uploads/nri2vtjcndonajowvvqw.png";
@@ -250,18 +251,13 @@ export default function TrampolineDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Hero Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Commercial Trampoline Park Setup & Equipment - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Hero Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Commercial Trampoline Park Setup & Equipment - Winera"
+                    />
                   </div>
 
                   {/* Mobile Screen Hero Banner Upload & Preview */}
@@ -307,18 +303,13 @@ export default function TrampolineDashboard({
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Mobile Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mobileBgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), mobileBgAlt: e.target.value } }))}
-                        placeholder="e.g. Commercial Trampoline Park Setup Mobile Banner - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Mobile Background Alt Text (SEO Keyword)"
+                      value={currentSec.mobileBgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineHero: { ...(prev.trampolineHero || defaultTrampolineHero), mobileBgAlt: e.target.value } }))}
+                      placeholder="e.g. Commercial Trampoline Park Setup Mobile Banner - Winera International"
+                    />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Breadcrumb Active Page Text</label>
@@ -456,18 +447,13 @@ export default function TrampolineDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Main Graphic Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.mainImgAlt || currentSec.imgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), mainImgAlt: e.target.value } }))}
-                        placeholder="e.g. Trampoline Park Manufacturer in India - Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Main Graphic Alt Text (SEO Keyword)"
+                      value={currentSec.mainImgAlt || currentSec.imgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineIntro: { ...(prev.trampolineIntro || defaultTrampolineIntro), mainImgAlt: e.target.value } }))}
+                      placeholder="e.g. Trampoline Park Manufacturer in India - Winera International"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -557,18 +543,13 @@ export default function TrampolineDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Panda Mascot Graphic Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), imgAlt: e.target.value } }))}
-                        placeholder="e.g. Custom Trampoline Parks Setup Mascot - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Panda Mascot Graphic Alt Text (SEO Keyword)"
+                      value={currentSec.imgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineCustom: { ...(prev.trampolineCustom || defaultTrampolineCustom), imgAlt: e.target.value } }))}
+                      placeholder="e.g. Custom Trampoline Parks Setup Mascot - Winera"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -684,18 +665,13 @@ export default function TrampolineDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Card Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Technical Specifications Trampoline Park Equipment - Winera"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Card Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineSpecs: { ...(prev.trampolineSpecs || defaultTrampolineSpecs), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Technical Specifications Trampoline Park Equipment - Winera"
+                    />
                   </div>
 
                   {/* Action Button Controls for Specs */}
@@ -898,22 +874,17 @@ export default function TrampolineDashboard({
                                 />
                               </label>
                             </div>
-                            <div style={{ marginTop: '4px' }}>
-                              <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
-                                🏷️ Zone Card Alt Text (SEO Keyword)
-                              </label>
-                              <input
-                                type="text"
-                                value={z.imgAlt || ''}
-                                onChange={(e) => {
-                                  const updated = [...zonesList];
-                                  updated[idx] = { ...updated[idx], imgAlt: e.target.value };
-                                  setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
-                                }}
-                                placeholder="e.g. Free Jump Zones Commercial Trampoline Setup - Winera"
-                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px' }}
-                              />
-                            </div>
+                            <AdminAltInput
+                              compact
+                              label="🏷️ Zone Card Alt Text (SEO Keyword)"
+                              value={z.imgAlt || ''}
+                              onChange={(e) => {
+                                const updated = [...zonesList];
+                                updated[idx] = { ...updated[idx], imgAlt: e.target.value };
+                                setFormData(prev => ({ ...prev, trampolineInside: { ...(prev.trampolineInside || defaultTrampolineInside), zones: updated } }));
+                              }}
+                              placeholder="e.g. Free Jump Zones Commercial Trampoline Setup - Winera"
+                            />
                           </div>
                         );
                       })}
@@ -1064,18 +1035,13 @@ export default function TrampolineDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Right Image Graphic Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.imgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), imgAlt: e.target.value } }))}
-                        placeholder="e.g. Trampoline Park ROI Report - Winera Turnkey Setup"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Right Image Graphic Alt Text (SEO Keyword)"
+                      value={currentSec.imgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineRoi: { ...(prev.trampolineRoi || defaultTrampolineRoi), imgAlt: e.target.value } }))}
+                      placeholder="e.g. Trampoline Park ROI Report - Winera Turnkey Setup"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
@@ -1357,18 +1323,13 @@ export default function TrampolineDashboard({
                         />
                       </label>
                     </div>
-                    <div style={{ marginTop: '10px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Banner Background Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={currentSec.bgAlt || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), bgAlt: e.target.value } }))}
-                        placeholder="e.g. Plan Your Trampoline Park with Winera International"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      compact
+                      label="🏷️ Banner Background Alt Text (SEO Keyword)"
+                      value={currentSec.bgAlt || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, trampolineCta: { ...(prev.trampolineCta || defaultTrampolineCta), bgAlt: e.target.value } }))}
+                      placeholder="e.g. Plan Your Trampoline Park with Winera International"
+                    />
                   </div>
                   <div style={{ textAlign: 'right', marginTop: '10px' }}>
                     <button
