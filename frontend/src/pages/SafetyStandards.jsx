@@ -342,7 +342,7 @@ export default function SafetyStandards({ siteData }) {
         <div style={{ maxWidth: '1240px', margin: '0 auto', overflow: 'visible' }}>
           <div className="winera-safety-sticky-container" style={{ overflow: 'visible' }}>
             {/* Left Column: Vertically Centered Sticky Title & Subtitle */}
-            <div className="winera-safety-sticky-left" style={{
+            <div className="winera-safety-sticky-left winera-reveal winera-reveal-delay-1" style={{
               flex: isPhone ? 'none' : '0 0 42%',
               position: isPhone ? 'static' : 'sticky',
               top: isPhone ? 'auto' : '50%',
