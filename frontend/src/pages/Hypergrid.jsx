@@ -689,7 +689,7 @@ export default function Hypergrid({ siteData }) {
                 alt={siteData?.hypergridRoi?.imgAlt || "Is Hypergrid a Smart Investment for Your Venue? - Winera LED Floor"}
                 style={{
                   width: '100%',
-                  maxWidth: '380px',
+                  maxWidth: '450px',
                   maxHeight: '310px',
                   height: 'auto',
                   display: 'block'

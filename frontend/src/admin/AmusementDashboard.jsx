@@ -992,8 +992,7 @@ export default function AmusementDashboard({
               <div style={{ textAlign: 'right', marginTop: '10px' }}>
                 <button
                   onClick={() => persistSectionToDatabase('amusementFaqs', formData.amusementFaqs || [])}
-                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}
-                >
+                  style={{ background: '#38bdf8', color: '#ffffff', border: 'none', padding: '12px 28px', borderRadius: '12px', fontWeight: '900', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(56, 189, 248, 0.35)' }}>
                   Save Amusement Park FAQs
                 </button>
               </div>
