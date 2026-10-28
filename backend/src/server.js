@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import connectDB from './config/db.js';
+import { initDbBackupCron } from './services/dbBackupCron.js';
 import apiRoutes from './routes/api.routes.js';
 import { getSitemapXmlController } from './controllers/content.controller.js';
 
@@ -10,6 +11,7 @@ import fs from 'fs';
 import path from 'path';
 
 connectDB();
+initDbBackupCron();
 
 const app = express();
 

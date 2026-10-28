@@ -13,7 +13,9 @@
     "seed:projects": "node src/scripts/seedOnly15DocProjects.js",
     "seed:all": "node src/scripts/seedArcadeProductsMongo.js && node src/scripts/seedVrGamesMongo.js && node src/scripts/seedBlogsMongo.js && node src/scripts/seedOnly15DocProjects.js",
     "upload:cloudinary": "node src/scripts/uploadArcadeToCloudinary.js",
-    "sync:json": "node src/scripts/syncJsonFromMongo.js"
+    "sync:json": "node src/scripts/syncJsonFromMongo.js",
+    "backup:db": "node src/scripts/backupDatabase.js",
+    "restore:db": "node src/scripts/restoreFromBackupDb.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -25,6 +27,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.1",
     "multer": "^2.2.0",
+    "node-cron": "^4.6.0",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
