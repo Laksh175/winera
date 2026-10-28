@@ -2713,11 +2713,31 @@ export const syncSitemapController = async (req, res) => {
 };
 
 // @desc    Serve sitemap.xml dynamically with XML content-type
-// @route   GET /sitemap.xml or GET /api/sitemap.xml
-export const getSitemapXmlController = (req, res) => {
+// @route   GET /sitemap.xml or GET /api/sitemap.xml, /page-sitemap.xml, etc.
+export const getSitemapXmlController = (reqOrType, res) => {
+  if (typeof reqOrType === 'string') {
+    return (req, response) => {
+      try {
+        const xml = getSitemapXmlContent(reqOrType);
+        response.set('Content-Type', 'application/xml; charset=utf-8');
+        response.send(xml);
+      } catch (error) {
+        response.status(500).send('Error generating sitemap XML');
+      }
+    };
+  }
+
+  const req = reqOrType;
   try {
-    const xml = getSitemapXmlContent();
-    res.set('Content-Type', 'application/xml');
+    let type = 'index';
+    const pathUrl = req.originalUrl || req.path || '';
+    if (pathUrl.includes('page-sitemap')) type = 'page';
+    else if (pathUrl.includes('product-sitemap')) type = 'product';
+    else if (pathUrl.includes('project-sitemap')) type = 'project';
+    else if (pathUrl.includes('blog-sitemap')) type = 'blog';
+
+    const xml = getSitemapXmlContent(type);
+    res.set('Content-Type', 'application/xml; charset=utf-8');
     res.send(xml);
   } catch (error) {
     res.status(500).send('Error generating sitemap XML');

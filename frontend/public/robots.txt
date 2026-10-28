@@ -1,6 +1,69 @@
+# Robots.txt for https://www.winera.in/
+# Purpose: Crawl control for search engines & AI bots
+
+# =========================
+# AI & Search Bots
+# =========================
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: FirecrawlAgent
+Allow: /
+
+User-agent: AndiBot
+Allow: /
+
+User-agent: ExaBot
+Allow: /
+
+User-agent: PhindBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: CloudBot
+Allow: /
+
+User-agent: Gemini
+Allow: /
+
+# =========================
+# Default rule for all bots
+# =========================
+
 User-agent: *
 Allow: /
-Disallow: /admin
 Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login/
+Disallow: /signup/
+Disallow: /user/
+Disallow: /account/
+Disallow: /settings/
+Disallow: /profile/
+Disallow: /api/
+Disallow: /data/
+Disallow: /private/
+Disallow: /backend/
+Disallow: /config/
+Disallow: /internal/
+Disallow: */feed/
+Disallow: /thank-you
+Disallow: /*?utm_
 
-Sitemap: https://winera.in/sitemap.xml
+# =========================
+# Sitemap
+# =========================
+
+Sitemap: https://www.winera.in/sitemap.xml

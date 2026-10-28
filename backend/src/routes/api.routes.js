@@ -12,7 +12,13 @@ const router = express.Router();
 
 // Public routes
 router.get('/content', getContent);
-router.get('/sitemap.xml', getSitemapXmlController);
+router.get([
+  '/sitemap.xml',
+  '/page-sitemap.xml',
+  '/product-sitemap.xml',
+  '/project-sitemap.xml',
+  '/blog-sitemap.xml'
+], getSitemapXmlController);
 router.get('/projects', getProjects);
 router.get('/projects/:slug', getProjectBySlug);
 router.get('/arcade-products', getArcadeProducts);

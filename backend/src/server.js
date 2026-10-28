@@ -30,18 +30,47 @@ app.use((req, res, next) => {
   next();
 });
 
-// Root dynamic SEO sitemap
-app.get('/sitemap.xml', getSitemapXmlController);
+// Root dynamic SEO sitemap & category sub-sitemaps
+app.get([
+  '/sitemap.xml',
+  '/page-sitemap.xml',
+  '/product-sitemap.xml',
+  '/project-sitemap.xml',
+  '/blog-sitemap.xml'
+], getSitemapXmlController);
 
-// Root robots.txt ensuring admin pages are disallowed
+// Root robots.txt serving configured crawlers and rules
 app.get('/robots.txt', (req, res) => {
-  res.type('text/plain');
-  res.send(`User-agent: *
-Allow: /
-Disallow: /admin
-Disallow: /admin/
+  const filePath = path.resolve(process.cwd(), '../frontend/public/robots.txt');
+  if (fs.existsSync(filePath)) {
+    res.type('text/plain; charset=utf-8');
+    return res.sendFile(filePath);
+  }
+  res.type('text/plain; charset=utf-8');
+  res.send(`# Robots.txt for https://www.winera.in/
+# Purpose: Crawl control for search engines & AI bots
 
-Sitemap: https://winera.in/sitemap.xml
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login/
+Disallow: /signup/
+Disallow: /user/
+Disallow: /account/
+Disallow: /settings/
+Disallow: /profile/
+Disallow: /api/
+Disallow: /data/
+Disallow: /private/
+Disallow: /backend/
+Disallow: /config/
+Disallow: /internal/
+Disallow: */feed/
+Disallow: /thank-you
+Disallow: /*?utm_
+
+Sitemap: https://www.winera.in/sitemap.xml
 `);
 });
 
