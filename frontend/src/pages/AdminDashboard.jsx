@@ -1725,8 +1725,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
   // Keep formData in sync when siteData is fetched or refreshed from MongoDB API
   useEffect(() => {
-    if (siteData) {
-      setFormData(siteData);
+    if (siteData && Object.keys(siteData).length > 0) {
+      setFormData(prev => ({
+        ...prev,
+        ...siteData
+      }));
     }
   }, [siteData]);
 
@@ -2088,7 +2091,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         } catch { return ''; }
       })();
       await updateSectionContent(sectionKey, formData[sectionKey], token);
-      await refreshContent();
+      if (typeof refreshContent === 'function') {
+        await refreshContent(true, true);
+      }
       setStatusMsg(`'${sectionKey.toUpperCase()}' updated successfully!`);
     } catch (err) {
       setStatusMsg(`Error saving ${sectionKey}: ` + (err.response?.data?.message || err.message));
@@ -2169,6 +2174,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     setLoadingSection(sectionKey);
     setStatusMsg('');
     try {
+      // 1. Immediately reflect in local state so UI updates instantly without any delay
+      setFormData(prev => ({ ...prev, [sectionKey]: updatedData }));
       const token = admin?.token || (() => {
         try {
           const stored = JSON.parse(localStorage.getItem('winera_admin') || '{}');
@@ -2176,7 +2183,9 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         } catch { return ''; }
       })();
       await updateSectionContent(sectionKey, updatedData, token);
-      await refreshContent();
+      if (typeof refreshContent === 'function') {
+        await refreshContent(true, true);
+      }
       setStatusMsg(`Saved directly to MongoDB database!`);
     } catch (err) {
       setStatusMsg(`Database Save Error: ` + (err.response?.data?.message || err.message));
@@ -2922,14 +2931,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           matchValue: autoSlug,
           index: editingIndex
         }, admin.token);
-        await refreshContent();
+        if (typeof refreshContent === 'function') await refreshContent(true, true);
         setStatusMsg(`Project '${projName}' saved directly to database!`);
       } catch (err) {
         console.error("Single project save error:", err);
         if (err.response?.status === 404) {
           try {
             await updateSectionContent('projectItems', currentList, admin.token);
-            await refreshContent();
+            if (typeof refreshContent === 'function') await refreshContent(true, true);
             setStatusMsg(`Project '${projName}' saved directly to database!`);
             return;
           } catch (fbErr) {
@@ -3053,14 +3062,14 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           matchValue: cleanSlug,
           index: editingIndex
         }, admin.token);
-        await refreshContent();
+        if (typeof refreshContent === 'function') await refreshContent(true, true);
         setStatusMsg(`Product '${cardTitle}' saved directly to database!`);
       } catch (err) {
         console.error("Single arcade card save error:", err);
         if (err.response?.status === 404) {
           try {
             await persistSectionToDatabase('arcadeCategories', updated);
-            await refreshContent();
+            if (typeof refreshContent === 'function') await refreshContent(true, true);
             setStatusMsg(`Product '${cardTitle}' saved directly to database!`);
             return;
           } catch (fbErr) {
@@ -3187,13 +3196,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           matchValue: cleanSlug,
           index: editingIndex
         }, token);
-        await refreshContent();
+        if (typeof refreshContent === 'function') await refreshContent(true, true);
         setStatusMsg(`VR Product '${cardTitle}' saved directly to database!`);
       } catch (err) {
         console.error("Single VR card save error:", err);
         try {
           await persistSectionToDatabase(secKey, updated);
-          await refreshContent();
+          if (typeof refreshContent === 'function') await refreshContent(true, true);
           setStatusMsg(`VR Product '${cardTitle}' saved directly to database!`);
         } catch (fbErr) {
           setStatusMsg('Database Save Error: ' + (fbErr.response?.data?.message || fbErr.message));
@@ -4394,7 +4403,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           };
                           await updateSectionContent(key, payload, token);
                         }
-                        await refreshContent();
+                        if (typeof refreshContent === 'function') await refreshContent(true, true);
                         setStatusMsg('✓ Successfully saved & synced to ALL 11 product & project pages!');
                       } catch (err) {
                         setStatusMsg('Sync Error: ' + (err.response?.data?.message || err.message));

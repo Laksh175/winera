@@ -18,10 +18,18 @@ const getApiBaseUrl = () => {
 
 const API_BASE_URL = getApiBaseUrl();
 
-export const fetchSiteContent = async (page = null) => {
+export const fetchSiteContent = async (page = null, bustCache = false) => {
   try {
-    const url = page ? `${API_BASE_URL}/content?page=${page}` : `${API_BASE_URL}/content`;
-    const response = await axios.get(url, { timeout: 8000 });
+    const params = new URLSearchParams();
+    if (page) params.append('page', page);
+    if (bustCache) params.append('_t', Date.now().toString());
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+    const url = `${API_BASE_URL}/content${queryString}`;
+    const headers = bustCache ? {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache'
+    } : {};
+    const response = await axios.get(url, { headers, timeout: 8000 });
     return optimizeSiteDataImages(response.data);
   } catch (err) {
     console.warn('Backend server response timeout/unavailable, falling back to default site data:', err?.message);

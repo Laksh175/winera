@@ -338,14 +338,16 @@ export default function App() {
   });
   const [loading, setLoading] = useState(false);
 
-  const loadData = async (forceFull = false) => {
+  const loadData = async (forceFull = false, bustCache = false) => {
     try {
       const isHome = typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '');
-      const pageParam = (!forceFull && isHome) ? 'home' : null;
-      const data = await fetchSiteContent(pageParam);
+      const isAdmin = typeof window !== 'undefined' && window.location.pathname.startsWith('/admin');
+      const shouldBustCache = Boolean(bustCache || isAdmin);
+      const pageParam = (!forceFull && isHome && !shouldBustCache) ? 'home' : null;
+      const data = await fetchSiteContent(pageParam, shouldBustCache);
       if (data && Object.keys(data).length > 0) {
         setSiteData(data);
-        if (pageParam === 'home') {
+        if (pageParam === 'home' && !shouldBustCache) {
           try {
             localStorage.setItem('winera_home_content', JSON.stringify(data));
           } catch (e) {}

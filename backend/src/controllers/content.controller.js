@@ -1969,16 +1969,27 @@ export const adminLogin = async (req, res) => {
 export const getContent = async (req, res) => {
   try {
     const isHome = req.query.page === 'home';
+    const isNoCache = Boolean(
+      req.query._t ||
+      req.query.t ||
+      req.query.nocache === 'true' ||
+      req.headers['cache-control']?.includes('no-cache') ||
+      req.headers['cache-control']?.includes('no-store') ||
+      req.headers.authorization
+    );
     const now = Date.now();
 
     // Fast-path: return cached response if valid (drops latency from 3000ms to ~2ms)
-    if (isHome && cachedHomeContent && (now - lastCacheTime < CACHE_TTL_MS)) {
-      res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=300');
-      return res.json(cachedHomeContent);
-    }
-    if (!isHome && cachedFullContent && (now - lastCacheTime < CACHE_TTL_MS)) {
-      res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=300');
-      return res.json(cachedFullContent);
+    // ONLY for public non-admin traffic without cache-busting
+    if (!isNoCache) {
+      if (isHome && cachedHomeContent && (now - lastCacheTime < CACHE_TTL_MS)) {
+        res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=300');
+        return res.json(cachedHomeContent);
+      }
+      if (!isHome && cachedFullContent && (now - lastCacheTime < CACHE_TTL_MS)) {
+        res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=300');
+        return res.json(cachedFullContent);
+      }
     }
 
     let contents = await Content.find({});
@@ -2161,12 +2172,17 @@ export const getContent = async (req, res) => {
       }
     });
 
-    // Save to memory cache for subsequent instant loads
-    cachedFullContent = siteData;
-    cachedHomeContent = filteredData;
-    lastCacheTime = Date.now();
-
-    res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=300');
+    // Save to memory cache for subsequent instant loads only if not bypassing cache
+    if (!isNoCache) {
+      cachedFullContent = siteData;
+      cachedHomeContent = filteredData;
+      lastCacheTime = Date.now();
+      res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=300');
+    } else {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    }
 
     if (isHome) {
       return res.json(filteredData);
@@ -2328,6 +2344,7 @@ export const updateContent = async (req, res) => {
     }
 
     clearContentCache();
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
     res.json({ message: `Section '${sectionKey}' updated successfully`, content });
   } catch (error) {
     res.status(500).json({ message: error.message });
