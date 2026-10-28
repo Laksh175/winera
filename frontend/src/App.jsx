@@ -63,6 +63,12 @@ function GlobalScrollAnimation() {
     // Reset scroll to top instantly on page navigation
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
+    // Canonical URL Clean: Automatically remove duplicate/repeated slashes (e.g. /// -> /)
+    if (pathname && pathname.includes('//')) {
+      const cleanPath = pathname.replace(/\/+/g, '/') + (location.search || '') + (location.hash || '');
+      window.history.replaceState(null, '', cleanPath);
+    }
+
     // Clean up old animation classes from previous page elements
     const visibleEls = document.querySelectorAll('.is-visible, .aos-animate');
     visibleEls.forEach((el) => {
