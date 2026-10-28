@@ -489,7 +489,7 @@ export default function ArcadeGame({ siteData }) {
                 <h3 className="winera-arcade-feature-title" style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a', margin: '0 0 4px' }}>
                   {feature.title}
                 </h3>
-                <p className="winera-arcade-feature-desc" style={{ fontSize: '13px', color: '#64748b', fontWeight: '500', lineHeight: 1.55, margin: 0 }}
+                <p className="winera-arcade-feature-desc" style={{ fontSize: '14.5px', color: '#64748b', fontWeight: '500', lineHeight: 1.6, margin: 0 }}
                   dangerouslySetInnerHTML={{
                     __html: sanitizeAndFormatHtml(String(feature.desc || '').replace(/\n/g, '<br>'))
                   }}
@@ -1483,13 +1483,13 @@ export default function ArcadeGame({ siteData }) {
                   {paras.length > 1 ? (
                     <MobileExpandableText
                       preview={
-                        <p style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '6px', maxWidth: '800px' }}
+                        <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '8px', maxWidth: '800px' }}
                           dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(paras[0]).replace(/\n/g, '<br>')) }}
                         />
                       }
                       expandedContent={
                         paras.slice(1).map((para, paraIdx) => (
-                          <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '800px' }}
+                          <p key={paraIdx} style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '8px', maxWidth: '800px' }}
                             dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(para).replace(/\n/g, '<br>')) }}
                           />
                         ))
@@ -1497,7 +1497,7 @@ export default function ArcadeGame({ siteData }) {
                     />
                   ) : (
                     paras.map((para, paraIdx) => (
-                      <p key={paraIdx} style={{ fontSize: '12px', color: '#475569', fontWeight: '500', lineHeight: 1.6, marginBottom: '8px', maxWidth: '800px' }}
+                      <p key={paraIdx} style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '8px', maxWidth: '800px' }}
                         dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(para).replace(/\n/g, '<br>')) }}
                       />
                     ))
