@@ -2155,6 +2155,38 @@ export const getContent = async (req, res) => {
       }
     }
 
+    // Auto-ensure all 5 processHome cards (01 to 05) exist in MongoDB and are sorted properly
+    if (siteData.processHome && Array.isArray(siteData.processHome.cards)) {
+      const existingCards = siteData.processHome.cards;
+      const defaultCards = defaultSiteData.processHome.cards;
+      const existingNums = new Set(existingCards.map(c => String(c.num || '').trim()));
+
+      let needsProcessUpdate = false;
+      const mergedCards = [...existingCards];
+
+      for (const defCard of defaultCards) {
+        if (!existingNums.has(String(defCard.num).trim())) {
+          needsProcessUpdate = true;
+          mergedCards.push(defCard);
+        }
+      }
+
+      if (needsProcessUpdate) {
+        mergedCards.sort((a, b) => (parseInt(a.num, 10) || 0) - (parseInt(b.num, 10) || 0));
+        const updatedProcessHome = {
+          ...siteData.processHome,
+          cards: mergedCards
+        };
+        await Content.findOneAndUpdate(
+          { sectionKey: 'processHome' },
+          { sectionKey: 'processHome', data: updatedProcessHome },
+          { upsert: true, new: true }
+        );
+        siteData.processHome = updatedProcessHome;
+        clearContentCache();
+      }
+    }
+
     const homeSections = [
       'header', 'hero', 'stats', 'statsHeader',
       'clientLogos', 'clientsHeader', 'aboutHome',
