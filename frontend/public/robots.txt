@@ -63,7 +63,8 @@ Disallow: /thank-you
 Disallow: /*?utm_
 
 # =========================
-# Sitemap
+# Sitemap & Agentmap
 # =========================
 
 Sitemap: https://www.winera.in/sitemap.xml
+Agentmap: https://www.winera.in/.well-known/ai-catalog.json

@@ -84,12 +84,21 @@ app.get('/llms.txt', (req, res) => {
   res.type('text/plain; charset=utf-8').send('# Winera International\n\n> Commercial Game Zone Equipment Manufacturer in India.\n');
 });
 
-// Root Machine-Readable AI Catalog
-app.get('/ai-catalog.json', (req, res) => {
-  const filePath = path.resolve(process.cwd(), '../frontend/public/ai-catalog.json');
-  if (fs.existsSync(filePath)) {
+// Root Machine-Readable AI Catalog (ARD Specification Compliant)
+app.get([
+  '/ai-catalog.json',
+  '/.well-known/ai-catalog.json',
+  '/.well-known/ard.json'
+], (req, res) => {
+  const wellKnownPath = path.resolve(process.cwd(), '../frontend/public/.well-known/ai-catalog.json');
+  if (fs.existsSync(wellKnownPath)) {
     res.type('application/json; charset=utf-8');
-    return res.sendFile(filePath);
+    return res.sendFile(wellKnownPath);
+  }
+  const rootPath = path.resolve(process.cwd(), '../frontend/public/ai-catalog.json');
+  if (fs.existsSync(rootPath)) {
+    res.type('application/json; charset=utf-8');
+    return res.sendFile(rootPath);
   }
   res.status(404).json({ error: 'Catalog not found' });
 });

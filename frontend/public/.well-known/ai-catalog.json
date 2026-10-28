@@ -1,0 +1,138 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Winera International Pvt. Ltd.",
+    "identifier": "https://winera.in"
+  },
+  "entries": [
+    {
+      "identifier": "urn:ai:winera.in:catalog:turnkey-game-zones",
+      "displayName": "Turnkey Commercial Game Zone Setup",
+      "type": "text/html",
+      "url": "https://winera.in/",
+      "description": "End-to-end commercial game zone design, 2D/3D arena layout, equipment manufacturing, and installation across India.",
+      "representativeQueries": [
+        "Setup commercial game zone in India",
+        "Cost to open indoor amusement park"
+      ],
+      "tags": [
+        "game-zone",
+        "amusement-park",
+        "turnkey",
+        "setup"
+      ]
+    },
+    {
+      "identifier": "urn:ai:winera.in:catalog:trampoline-park",
+      "displayName": "Commercial Trampoline Park Equipment",
+      "type": "text/html",
+      "url": "https://winera.in/trampoline-park",
+      "description": "Custom indoor commercial trampoline parks with foam pits, ninja warrior courses, slam dunk hoops, and ASTM/EN-1176 safety compliance.",
+      "representativeQueries": [
+        "Buy commercial trampoline park equipment",
+        "Trampoline park manufacturer in India"
+      ],
+      "tags": [
+        "trampoline-park",
+        "indoor-play",
+        "amusement-rides"
+      ]
+    },
+    {
+      "identifier": "urn:ai:winera.in:catalog:bowling-alley",
+      "displayName": "Commercial Bowling Alley Setup",
+      "type": "text/html",
+      "url": "https://winera.in/bowling-alley",
+      "description": "Energy-efficient modern string pinsetter bowling alleys, duckpin bowling, and automatic live scoring displays.",
+      "representativeQueries": [
+        "Setup bowling alley in India",
+        "Commercial bowling equipment manufacturer"
+      ],
+      "tags": [
+        "bowling",
+        "string-pinsetter",
+        "game-zone"
+      ]
+    },
+    {
+      "identifier": "urn:ai:winera.in:catalog:soft-play",
+      "displayName": "Indoor Modular Soft Play Equipment",
+      "type": "text/html",
+      "url": "https://winera.in/soft-play",
+      "description": "Modular toddler indoor soft play structures, high-density non-toxic foam padding, ball pits, and safety obstacle arenas.",
+      "representativeQueries": [
+        "Soft play equipment manufacturer India",
+        "Kids indoor play area setup"
+      ],
+      "tags": [
+        "soft-play",
+        "toddler-play",
+        "kids-arena"
+      ]
+    },
+    {
+      "identifier": "urn:ai:winera.in:catalog:arcade-games",
+      "displayName": "Commercial Arcade Game Machines",
+      "type": "text/html",
+      "url": "https://winera.in/arcade-game",
+      "description": "Commercial coin-operated redemption games, claw crane machines, racing simulators, and basketball shootouts.",
+      "representativeQueries": [
+        "Commercial arcade game machines for sale India",
+        "Arcade game zone equipment supplier"
+      ],
+      "tags": [
+        "arcade",
+        "redemption-games",
+        "simulators"
+      ]
+    },
+    {
+      "identifier": "urn:ai:winera.in:catalog:vr-games",
+      "displayName": "VR & AR Commercial Gaming Machines",
+      "type": "text/html",
+      "url": "https://winera.in/vr-games",
+      "description": "9D VR motion cinema pods, 360-degree roller coaster flight simulators, and multiplayer virtual reality shooting platforms.",
+      "representativeQueries": [
+        "Commercial VR games manufacturer India",
+        "Setup VR gaming zone"
+      ],
+      "tags": [
+        "vr-games",
+        "virtual-reality",
+        "motion-simulators"
+      ]
+    },
+    {
+      "identifier": "urn:ai:winera.in:catalog:bumper-cars",
+      "displayName": "Commercial Bumper Cars Setup",
+      "type": "text/html",
+      "url": "https://winera.in/bumper-car",
+      "description": "Battery-operated and floor-grid commercial bumper cars with LED illumination and safety rubber bumpers.",
+      "representativeQueries": [
+        "Buy commercial bumper cars in India",
+        "Bumper car ride manufacturer"
+      ],
+      "tags": [
+        "bumper-car",
+        "amusement-rides",
+        "game-zone"
+      ]
+    },
+    {
+      "identifier": "urn:ai:winera.in:catalog:roi-blueprint",
+      "displayName": "Commercial Game Zone ROI Blueprint",
+      "type": "text/html",
+      "url": "https://winera.in/roi",
+      "description": "Customized revenue calculation, monthly footfall estimates, upkeep cost breakdown, and break-even timeline for entertainment venues.",
+      "representativeQueries": [
+        "Game zone business profit margin in India",
+        "ROI of trampoline park"
+      ],
+      "tags": [
+        "roi",
+        "business-plan",
+        "feasibility"
+      ]
+    }
+  ]
+}
