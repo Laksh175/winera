@@ -439,7 +439,7 @@ export default function ArcadeGame({ siteData }) {
 
             {/* Description Paragraph */}
             <p className="winera-arcade-intro-desc" style={{
-              fontSize: '15px',
+              fontSize: '17px',
               color: '#475569',
               fontWeight: '500',
               lineHeight: 1.65,
@@ -1483,13 +1483,13 @@ export default function ArcadeGame({ siteData }) {
                   {paras.length > 1 ? (
                     <MobileExpandableText
                       preview={
-                        <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '8px', maxWidth: '800px' }}
+                        <p style={{ fontSize: '17px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '8px', maxWidth: '800px' }}
                           dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(paras[0]).replace(/\n/g, '<br>')) }}
                         />
                       }
                       expandedContent={
                         paras.slice(1).map((para, paraIdx) => (
-                          <p key={paraIdx} style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '8px', maxWidth: '800px' }}
+                          <p key={paraIdx} style={{ fontSize: '17px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '8px', maxWidth: '800px' }}
                             dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(para).replace(/\n/g, '<br>')) }}
                           />
                         ))
@@ -1497,7 +1497,7 @@ export default function ArcadeGame({ siteData }) {
                     />
                   ) : (
                     paras.map((para, paraIdx) => (
-                      <p key={paraIdx} style={{ fontSize: '15px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '8px', maxWidth: '800px' }}
+                      <p key={paraIdx} style={{ fontSize: '17px', color: '#475569', fontWeight: '500', lineHeight: 1.65, marginBottom: '8px', maxWidth: '800px' }}
                         dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(String(para).replace(/\n/g, '<br>')) }}
                       />
                     ))
