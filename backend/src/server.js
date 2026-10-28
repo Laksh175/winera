@@ -30,31 +30,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// Root dynamic SEO sitemap & category sub-sitemaps
+// Root dynamic SEO sitemap & category sub-sitemaps (100% Google Compliant)
 app.get([
   '/sitemap.xml',
-  '/sitemap_index.xml',
   '/page-sitemap.xml',
   '/product-sitemap.xml',
   '/project-sitemap.xml',
   '/blog-sitemap.xml'
 ], getSitemapXmlController);
-
-// XSL Stylesheet for rendering interactive dropdown view in browser
-app.get('/sitemap.xsl', (req, res) => {
-  const candidates = [
-    path.resolve(process.cwd(), '../frontend/public/sitemap.xsl'),
-    path.resolve(process.cwd(), 'frontend/public/sitemap.xsl'),
-    path.resolve(process.cwd(), 'public/sitemap.xsl')
-  ];
-  for (const c of candidates) {
-    if (fs.existsSync(c)) {
-      res.type('application/xml; charset=utf-8');
-      return res.sendFile(c);
-    }
-  }
-  res.status(404).send('Not found');
-});
 
 // Root robots.txt serving configured crawlers and rules
 app.get('/robots.txt', (req, res) => {
