@@ -55,6 +55,17 @@ export const getTargetDirectories = () => {
     }
   }
 
+  // Live Nginx web roots if present on Ubuntu server
+  const liveNginxDirs = [
+    '/var/www/winera/frontend',
+    '/var/www/html'
+  ];
+  for (const dir of liveNginxDirs) {
+    if (fs.existsSync(dir) && !dirs.includes(dir)) {
+      dirs.push(dir);
+    }
+  }
+
   if (dirs.length === 0) {
     dirs.push(path.resolve(process.cwd(), '../frontend/public'));
   }
@@ -316,8 +327,9 @@ export const generateProjectSitemapXml = async () => {
 
   // Project Collection
   try {
-    const projects = await Project.find({ isActive: { $ne: false } }).select('slug name updatedAt createdAt');
+    const projects = await Project.find({ isActive: { $ne: false }, status: { $ne: 'inactive' } }).select('slug name updatedAt createdAt isActive status');
     for (const proj of projects) {
+      if (proj.isActive === false || proj.status === 'inactive') continue;
       const slug = (proj.slug || proj.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       if (slug && !seenSlugs.has(slug)) {
         seenSlugs.add(slug);
@@ -339,6 +351,7 @@ export const generateProjectSitemapXml = async () => {
     const contentDoc = await Content.findOne({ sectionKey: 'projectItems' });
     if (contentDoc && Array.isArray(contentDoc.data)) {
       for (const p of contentDoc.data) {
+        if (p.isActive === false || p.status === 'inactive') continue;
         const slug = (p.slug || p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
         if (slug && !seenSlugs.has(slug)) {
           seenSlugs.add(slug);
