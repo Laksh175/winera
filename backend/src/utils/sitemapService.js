@@ -507,6 +507,13 @@ export const addOrUpdateUrlInSitemap = async (arg1, arg2 = {}) => {
 };
 
 /**
+ * Batch add or update multiple URLs in sitemap
+ */
+export const addMultipleUrlsToSitemap = async (urlEntries = []) => {
+  return syncAllDatabaseToSitemap();
+};
+
+/**
  * Direct Content Retrieval for HTTP Serving
  */
 export const getSitemapXmlContent = (type = 'index') => {
