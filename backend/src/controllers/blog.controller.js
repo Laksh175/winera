@@ -10,9 +10,30 @@ const __dirname = path.dirname(__filename);
 
 let isSeedingBlogs = false;
 
-// Auto-seed Blog collection from backup JSON if database collection is empty
+// Auto-seed Blog collection from backup JSON and ensure all canonical blogs exist
 export const ensureBlogsSeeded = async () => {
   try {
+    const backupPath = path.join(__dirname, '../data/blogsData.json');
+    let canonicalBlogs = [];
+    if (fs.existsSync(backupPath)) {
+      const raw = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
+      canonicalBlogs = Array.isArray(raw) ? raw : (raw.blogs || raw.posts || []);
+    }
+
+    let anyRestored = false;
+    for (const b of canonicalBlogs) {
+      if (!b || !b.slug) continue;
+      const existing = await Blog.findOne({ $or: [{ slug: b.slug }, { id: b.id }] });
+      if (!existing) {
+        await Blog.create({
+          ...b,
+          isPublished: true
+        });
+        anyRestored = true;
+        console.log(`✅ Auto-restored missing canonical blog: ${b.slug}`);
+      }
+    }
+
     // Sync any blogs from Content collection blogPosts into Blog collection so both stay 100% in sync
     const contentDoc = await Content.findOne({ sectionKey: 'blogPosts' });
     if (contentDoc && Array.isArray(contentDoc.data) && contentDoc.data.length > 0) {
@@ -34,26 +55,14 @@ export const ensureBlogsSeeded = async () => {
       }
     }
 
-    const count = await Blog.countDocuments();
-    if (count === 0 && !isSeedingBlogs) {
-      isSeedingBlogs = true;
-      const backupPath = path.join(__dirname, '../data/blogsData.json');
-      if (fs.existsSync(backupPath)) {
-        console.log('🔄 Auto-seeding Blog collection in MongoDB from backup JSON...');
-        const raw = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
-        const blogs = Array.isArray(raw) ? raw : (raw.blogs || raw.posts || []);
-        if (blogs.length > 0) {
-          await Blog.insertMany(blogs, { ordered: false });
-          console.log(`✅ Auto-seeded ${blogs.length} blogs into MongoDB Blog collection!`);
-
-          // Also update Content collection blogPosts section
-          await Content.findOneAndUpdate(
-            { sectionKey: 'blogPosts' },
-            { sectionKey: 'blogPosts', data: blogs },
-            { upsert: true, new: true }
-          );
-        }
-      }
+    if (anyRestored) {
+      const allActive = await Blog.find({ isPublished: { $ne: false } }).sort({ id: 1, createdAt: -1 });
+      await Content.findOneAndUpdate(
+        { sectionKey: 'blogPosts' },
+        { sectionKey: 'blogPosts', data: allActive.map(b => (b.toObject ? b.toObject() : b)) },
+        { upsert: true, new: true }
+      );
+      syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap auto-update notice on blog restore:', e.message));
     }
   } catch (err) {
     console.warn('Auto-seed blogs notice:', err?.message);

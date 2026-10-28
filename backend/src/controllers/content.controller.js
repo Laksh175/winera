@@ -2038,18 +2038,40 @@ export const getContent = async (req, res) => {
     }
 
     // Auto-ensure dynamic blogs from MongoDB Blog collection are loaded into siteData.blogPosts
+    // and ensure all 28 canonical blogs from blogsData.json exist in MongoDB & siteData.blogPosts
+    const canonicalBlogs = Array.isArray(blogsData) ? blogsData : [];
+    let anyBlogRestored = false;
+    for (const b of canonicalBlogs) {
+      if (!b || !b.slug) continue;
+      const existing = await Blog.findOne({ $or: [{ slug: b.slug }, { id: b.id }] });
+      if (!existing) {
+        await Blog.create({
+          ...b,
+          isPublished: true
+        });
+        anyBlogRestored = true;
+        console.log(`✅ Auto-restored missing canonical blog into MongoDB: ${b.slug}`);
+      }
+    }
+
+    const activeBlogs = await Blog.find({ isPublished: { $ne: false } }).sort({ id: 1, createdAt: -1 });
     const isStaleBlogPosts = Array.isArray(siteData.blogPosts) && siteData.blogPosts.length > 0 && (
       siteData.blogPosts[0]?.title === 'Blog 1' ||
       siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
     );
-    if (!Array.isArray(siteData.blogPosts) || siteData.blogPosts.length === 0 || isStaleBlogPosts) {
-      const activeBlogs = await Blog.find({ isPublished: { $ne: false } }).sort({ id: 1, createdAt: -1 });
+    const currentPosts = Array.isArray(siteData.blogPosts) ? siteData.blogPosts : [];
+    const missingInBlogPosts = activeBlogs.some(ab => !currentPosts.some(cp => cp.slug === ab.slug || cp.id === ab.id));
+
+    if (!Array.isArray(siteData.blogPosts) || siteData.blogPosts.length === 0 || isStaleBlogPosts || anyBlogRestored || missingInBlogPosts) {
       siteData.blogPosts = activeBlogs.length > 0 ? activeBlogs.map(b => (b.toObject ? b.toObject() : b)) : blogsData;
       await Content.findOneAndUpdate(
         { sectionKey: 'blogPosts' },
         { sectionKey: 'blogPosts', data: siteData.blogPosts },
         { upsert: true, new: true }
       );
+      if (anyBlogRestored) {
+        syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap sync on blog restore notice:', e.message));
+      }
     }
 
     // Auto-ensure detailed case study projects from docx are present in MongoDB if empty
