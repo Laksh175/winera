@@ -113,14 +113,14 @@ const buildUrlXml = ({ url, lastmod, changefreq = 'weekly', priority = '0.8' }) 
 };
 
 /**
- * Wraps a list of <url> elements inside a standard <urlset>
+ * Wraps a list of <url> elements inside a standard <urlset> with XSL stylesheet
  */
 const wrapUrlset = (urlElements = []) => {
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlElements.join('\n')}\n</urlset>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlElements.join('\n')}\n</urlset>\n`;
 };
 
 /**
- * Generates the master <sitemapindex> as required by the client's PDF
+ * Generates the master <sitemapindex> as required by the client's PDF with XSL stylesheet
  */
 export const buildSitemapIndexXml = (subSitemaps = {}) => {
   const today = getTodayDateString();
@@ -129,7 +129,7 @@ export const buildSitemapIndexXml = (subSitemaps = {}) => {
   const projectLastMod = subSitemaps.project || today;
   const blogLastMod = subSitemaps.blog || today;
 
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <sitemap>
 <loc>${BASE_URL}/page-sitemap.xml</loc>
 <lastmod>${pageLastMod}</lastmod>
@@ -438,26 +438,44 @@ export const syncAllDatabaseToSitemap = async () => {
     const blogXml = await generateBlogSitemapXml();
     writeXmlFile('blog-sitemap.xml', blogXml);
 
-    // 5. Generate Master Sitemap Index
+    // Helper to extract <url> blocks
+    const extractUrlBlocks = (xml) => {
+      const matches = xml.match(/<url>[\s\S]*?<\/url>/g);
+      return matches || [];
+    };
+
+    // 5. Generate Master sitemap.xml containing ALL URLs with XSL stylesheet for dropdown display
+    const allUrls = [
+      ...extractUrlBlocks(pageXml),
+      ...extractUrlBlocks(blogXml),
+      ...extractUrlBlocks(projectXml),
+      ...extractUrlBlocks(productXml)
+    ];
+    const fullSitemapXml = wrapUrlset(allUrls);
+    writeXmlFile('sitemap.xml', fullSitemapXml);
+
+    // 6. Also generate sitemap_index.xml for index-specific crawlers
     const indexXml = buildSitemapIndexXml({
       page: today,
       product: today,
       project: today,
       blog: today
     });
-    writeXmlFile('sitemap.xml', indexXml);
+    writeXmlFile('sitemap_index.xml', indexXml);
 
     const pageCount = (pageXml.match(/<loc>/g) || []).length;
     const productCount = (productXml.match(/<loc>/g) || []).length;
     const projectCount = (projectXml.match(/<loc>/g) || []).length;
     const blogCount = (blogXml.match(/<loc>/g) || []).length;
+    const totalCount = allUrls.length;
 
-    console.log(`✅ [Sitemap Sync] Generated 5 sitemap files:
-      • sitemap.xml (Master Index)
+    console.log(`✅ [Sitemap Sync] Generated all sitemaps with interactive dropdowns:
+      • sitemap.xml (All ${totalCount} URLs with interactive dropdowns)
       • page-sitemap.xml (${pageCount} pages)
       • product-sitemap.xml (${productCount} products)
       • project-sitemap.xml (${projectCount} projects)
-      • blog-sitemap.xml (${blogCount} blogs)`);
+      • blog-sitemap.xml (${blogCount} blogs)
+      • sitemap_index.xml (Master Index)`);
 
     return {
       success: true,
