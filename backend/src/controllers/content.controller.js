@@ -2672,20 +2672,10 @@ export const mutateContentItem = async (req, res) => {
       }
     }
 
-    // Auto-sync added or updated items to sitemap
-    if (action !== 'delete' && item) {
+    // Auto-sync added, updated, or deleted items to sitemap
+    if (['projectItems', 'blogPosts', 'arcadeCategories', 'vrCategories', 'vrRange'].includes(sectionKey)) {
       try {
-        if (sectionKey === 'projectItems') {
-          const itemSlug = item.slug || (item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-          if (itemSlug) {
-            addOrUpdateUrlInSitemap({ url: `https://winera.in/project/${itemSlug}`, priority: '0.8', changefreq: 'weekly' }).catch(() => {});
-          }
-        } else if (sectionKey === 'blogPosts') {
-          const itemSlug = item.slug || (item.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-          if (itemSlug) {
-            addOrUpdateUrlInSitemap({ url: `https://winera.in/blog/${itemSlug}`, priority: '0.8', changefreq: 'weekly' }).catch(() => {});
-          }
-        }
+        syncAllDatabaseToSitemap().catch(e => console.warn('[Sitemap Auto-Sync Note]:', e?.message));
       } catch (sErr) {}
     }
 
