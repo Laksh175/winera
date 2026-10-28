@@ -2,8 +2,9 @@ export const sanitizeAndFormatHtml = (input) => {
   if (!input || typeof input !== 'string') return '';
   let html = input;
 
-  // 1. Remove editor cursor artifacts
+  // 1. Remove editor cursor artifacts and unwanted span tags (such as Quill clipboard artifacts <span style="background-color: transparent; color: rgb(0, 0, 0);">)
   html = html.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
+  html = html.replace(/<\/?span[^>]*>/gi, '');
 
   // 2. Convert markdown to HTML tags if markdown syntax exists
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
@@ -41,6 +42,7 @@ export const normalizeRawContent = (raw) => {
 
   // Strip ql-cursor or unwanted meta spans
   str = str.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
+  str = str.replace(/<\/?span[^>]*>/gi, '');
 
   // Convert HTML headings to markdown ###
   str = str.replace(/<h[1-6][^>]*>([\s\S]*?)<\/h[1-6]>/gi, (match, headingContent) => {

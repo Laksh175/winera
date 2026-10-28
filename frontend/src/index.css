@@ -148,8 +148,8 @@ select {
    Line-height: 26px
    Letter-spacing: 0px
    ========================================================================== */
-p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-sticky-register-card p):not(.winera-blog-sticky-register-card *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *):not(.winera-safety-accordion-wrapper *):not(.winera-safety-card-desc):not(.winera-safety-mobile-desc),
-p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *):not(.winera-safety-accordion-wrapper *):not(.winera-safety-card-desc):not(.winera-safety-mobile-desc) *:not(strong):not(b):not(em):not(i):not(u):not(a):not(del):not(s):not(strike):not(code),
+p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-bowling-roi-text *):not(.winera-blog-sticky-register-card p):not(.winera-blog-sticky-register-card *):not(.winera-roi-process-card p):not(.winera-roi-process-card *):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *):not(.winera-safety-accordion-wrapper *):not(.winera-safety-card-desc):not(.winera-safety-mobile-desc):not(.winera-arcade-intro-desc):not(.winera-arcade-intro-desc *):not(.winera-commercial-text-container *):not(.winera-commercial-text-container p):not(.winera-arcade-commercial-desc):not(.winera-arcade-commercial-desc *),
+p:not(.winera-cta-description):not(.winera-cta-subtitle):not(.winera-cta-banner-container *):not(.winera-cta-content-box *):not([class*="cta"] *):not(.winera-cta-p):not(.winera-bowling-roi-text p):not(.winera-blog-sticky-register-card p):not(.winera-roi-process-card p):not(.winera-home-hero-subtitle):not(.winera-home-hero-section p):not(.ql-editor p):not(.ql-editor *):not(.winera-blog-article-main-col p):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview p):not(.winera-admin-blog-preview *):not(.winera-safety-accordion-wrapper *):not(.winera-safety-card-desc):not(.winera-safety-mobile-desc):not(.winera-arcade-intro-desc):not(.winera-arcade-intro-desc *):not(.winera-commercial-text-container *):not(.winera-commercial-text-container p):not(.winera-arcade-commercial-desc):not(.winera-arcade-commercial-desc *) *:not(strong):not(b):not(em):not(i):not(u):not(a):not(del):not(s):not(strike):not(code),
 .lead,
 .winera-section-desc,
 .winera-card-desc,
@@ -820,7 +820,23 @@ section:not([class*="hero"]):not([class*="winera-products-section"]):not([class*
 }
 
 .winera-arcade-intro-desc,
-.winera-arcade-intro-section p,
+.winera-arcade-intro-desc *,
+.winera-arcade-intro-desc span,
+.winera-arcade-intro-desc p,
+.winera-arcade-intro-section .winera-arcade-intro-desc,
+.winera-arcade-intro-section .winera-arcade-intro-desc *,
+.winera-arcade-commercial-desc,
+.winera-arcade-commercial-desc *,
+.winera-arcade-commercial-desc span,
+.winera-arcade-commercial-desc p,
+.winera-commercial-text-container p,
+.winera-commercial-text-container p *,
+.winera-commercial-text-container p span {
+  font-size: 17px !important;
+  line-height: 1.65 !important;
+  color: #475569 !important;
+}
+
 .winera-bumpercar-whyus-card p,
 .winera-arcade-why-card p,
 .winera-vr-whyus-card p,
@@ -13350,7 +13366,6 @@ button[style*="background:transparent"]:hover,
   .winera-ar-earn-section p,
   .winera-ar-earn-section p *,
   .winera-ar-whyus-card p,
-  .winera-commercial-text-container p,
   .winera-vr-supplier-text p,
   .winera-vr-attractions-text p,
   .winera-vr-reliability-text p,

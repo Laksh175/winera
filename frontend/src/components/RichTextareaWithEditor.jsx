@@ -9,8 +9,9 @@ export const markdownToHtml = (md) => {
   if (!md || typeof md !== 'string') return '';
   let html = md;
 
-  // Clean cursor artifacts if any
+  // Clean cursor artifacts and unwanted span tags if any
   html = html.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
+  html = html.replace(/<\/?span[^>]*>/gi, '');
 
   // 1. Auto-heal any accidentally split sentence where an inline element or break occurred
   // right before a lowercase continuation word (e.g. "Winera...\n\nis a trusted..." or "</strong>\n\nis a")
@@ -72,8 +73,9 @@ export const htmlToMarkdown = (html) => {
   if (!html || typeof html !== 'string') return '';
   let md = html;
 
-  // Strip cursor artifacts
+  // Strip cursor artifacts and unwanted span tags
   md = md.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
+  md = md.replace(/<\/?span[^>]*>/gi, '');
 
   // If Quill split a sentence across paragraphs (e.g. </p><p>is a trusted...)
   md = md.replace(/<\/p>\s*<p[^>]*>\s*([a-z])/gi, ' $1');
