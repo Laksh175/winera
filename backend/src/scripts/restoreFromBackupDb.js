@@ -54,6 +54,23 @@ const restoreFromBackupDb = async () => {
 
       const liveCol = liveDb.collection(colName);
 
+      // CRITICAL DATA PROTECTION: NEVER drop 'leads' collection during a restore!
+      // Leads are real-time customer inquiries and must never be wiped out.
+      if (colName === 'leads') {
+        if (docs.length > 0) {
+          for (const leadDoc of docs) {
+            await liveCol.updateOne(
+              { _id: leadDoc._id },
+              { $setOnInsert: leadDoc },
+              { upsert: true }
+            );
+          }
+        }
+        totalDocsRestored += docs.length;
+        console.log(`  🛡️ [Protected] Merged "${colName}": ${docs.length} documents safely without dropping live leads.`);
+        continue;
+      }
+
       // Drop current state of live collection to replace with backup
       try {
         await liveCol.drop();

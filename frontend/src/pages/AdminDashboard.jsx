@@ -4044,7 +4044,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                 setFormData(prev => ({ ...prev, [sectionKey]: updatedData }));
                 await updateSectionContent(sectionKey, updatedData);
               }}
-              authToken={admin?.token || localStorage.getItem('adminToken')}
+              authToken={admin?.token || (() => {
+                try {
+                  return JSON.parse(localStorage.getItem('winera_admin') || '{}')?.token;
+                } catch {
+                  return null;
+                }
+              })()}
             />
           )}
 
