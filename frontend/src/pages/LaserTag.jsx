@@ -6,6 +6,7 @@ import TestimonialsSection from '../components/TestimonialsSection';
 import FaqSection from '../components/FaqSection';
 import CtaBanner from '../components/CtaBanner';
 import { sanitizeAndFormatHtml } from './BlogDetail';
+import BrochureModal, { openBrochure, resolvePdfUrl } from '../components/BrochureModal';
 import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
 const ctaMainBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345648/winera_uploads/ei16uczeuelaabtue4bs.jpg";
 const laserTagLeftCta = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791348709/winera_uploads/hzwfj0eti3q15lzthvz5.png";
@@ -306,6 +307,12 @@ export default function LaserTag({ siteData }) {
   const [isPhone, setIsPhone] = useState(
     typeof window !== 'undefined' ? window.innerWidth <= 768 : false
   );
+  const [isBrochureOpen, setIsBrochureOpen] = useState(false);
+  const [selectedBrochure, setSelectedBrochure] = useState({
+    url: '/pdf/Laser tag.pdf',
+    title: 'Laser Tag Product Catalogue & Specifications',
+    fileName: 'Laser tag.pdf'
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -985,23 +992,28 @@ export default function LaserTag({ siteData }) {
             </table>
           </div>
 
-          {/* Bottom CTA Button: Download Our Brochure matching Hypergrid */}
+          {/* Bottom CTA Button: Download Our Brochure */}
           <div style={{ margin: 0 }}>
             {(() => {
-              const baseLink = siteData?.lasertagSpecs?.buttonLink || "https://wa.me/919157873576";
-              const defaultMsg = siteData?.lasertagSpecs?.waMessage || "Hello Winera International! I want to download the Laser Tag Equipment & Setup Brochure. Please share details.";
-              const isPdf = typeof baseLink === 'string' && (baseLink.toLowerCase().includes('.pdf') || baseLink.includes('/uploads') || baseLink.includes('cloudinary') || baseLink.includes('drive.google'));
-              let hrefLink = baseLink;
-              if (!isPdf && !baseLink.includes('text=')) {
-                const separator = baseLink.includes('?') ? '&' : '?';
-                hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
-              }
+              const customLink = siteData?.lasertagSpecs?.buttonLink || siteData?.lasertagSpecs?.brochureUrl;
+              const activePdf = (customLink && typeof customLink === 'string' && customLink.trim() !== '#' && customLink.trim() !== '' && !customLink.includes('wa.me'))
+                ? customLink.trim()
+                : "/pdf/Laser tag.pdf";
+
               return (
-                <a
-                  href={hrefLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  download={isPdf ? "Winera-Laser-Tag-Brochure.pdf" : undefined}
+                <button
+                  type="button"
+                  onClick={() => openBrochure(
+                    activePdf,
+                    () => {
+                      setSelectedBrochure({
+                        url: activePdf,
+                        title: "Laser Tag Product Catalogue & Specifications",
+                        fileName: "Laser tag.pdf"
+                      });
+                      setIsBrochureOpen(true);
+                    }
+                  )}
                   aria-label="Download Our Brochure"
                   style={{
                     display: 'inline-flex',
@@ -1025,7 +1037,7 @@ export default function LaserTag({ siteData }) {
                   onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                 >
                   <span>{siteData?.lasertagSpecs?.buttonText || "Download Our Brochure"}</span>
-                </a>
+                </button>
               );
             })()}
           </div>
@@ -1654,23 +1666,28 @@ export default function LaserTag({ siteData }) {
             </table>
           </div>
 
-          {/* Bottom CTA Button: Download Our Brochure matching Hypergrid */}
+          {/* Bottom CTA Button: Download Our Brochure */}
           <div style={{ margin: 0 }}>
             {(() => {
-              const baseLink = siteData?.lasertagSpySpecs?.buttonLink || "https://wa.me/919157873576";
-              const defaultMsg = siteData?.lasertagSpySpecs?.waMessage || "Hello Winera International! I want to download the Laser Spy Equipment & Setup Brochure. Please share details.";
-              const isPdf = typeof baseLink === 'string' && (baseLink.toLowerCase().includes('.pdf') || baseLink.includes('/uploads') || baseLink.includes('cloudinary') || baseLink.includes('drive.google'));
-              let hrefLink = baseLink;
-              if (!isPdf && !baseLink.includes('text=')) {
-                const separator = baseLink.includes('?') ? '&' : '?';
-                hrefLink = `${baseLink}${separator}text=${encodeURIComponent(defaultMsg)}`;
-              }
+              const customLink = siteData?.lasertagSpySpecs?.buttonLink || siteData?.lasertagSpySpecs?.brochureUrl;
+              const activePdf = (customLink && typeof customLink === 'string' && customLink.trim() !== '#' && customLink.trim() !== '' && !customLink.includes('wa.me'))
+                ? customLink.trim()
+                : "/pdf/Laser tag.pdf";
+
               return (
-                <a
-                  href={hrefLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  download={isPdf ? "Winera-Laser-Spy-Brochure.pdf" : undefined}
+                <button
+                  type="button"
+                  onClick={() => openBrochure(
+                    activePdf,
+                    () => {
+                      setSelectedBrochure({
+                        url: activePdf,
+                        title: "Laser Spy & Laser Tag Technical Catalogue",
+                        fileName: "Laser tag.pdf"
+                      });
+                      setIsBrochureOpen(true);
+                    }
+                  )}
                   aria-label="Download Our Brochure"
                   style={{
                     display: 'inline-flex',
@@ -1694,7 +1711,7 @@ export default function LaserTag({ siteData }) {
                   onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                 >
                   <span>{siteData?.lasertagSpySpecs?.buttonText || "Download Our Brochure"}</span>
-                </a>
+                </button>
               );
             })()}
           </div>
@@ -2534,6 +2551,15 @@ export default function LaserTag({ siteData }) {
       <div style={{ marginTop: 'auto' }}>
         <Footer footerData={footer} />
       </div>
+
+      {/* BROCHURE PREVIEW & DOWNLOAD MODAL */}
+      <BrochureModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+        pdfUrl={selectedBrochure.url}
+        title={selectedBrochure.title}
+        fileName={selectedBrochure.fileName}
+      />
     </div>
   );
 }
