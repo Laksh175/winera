@@ -906,7 +906,9 @@ export default function ArcadeGameDetail({ siteData }) {
     features: [
       {
         num: "1.",
-        title: (cmsFoundCard?.feature1Title !== undefined && cmsFoundCard?.feature1Title !== '') ? cmsFoundCard.feature1Title : (defaultProduct.features?.[0]?.title || "12+ Years of Expertise"),
+        title: (cmsFoundCard?.feature1Title !== undefined && cmsFoundCard?.feature1Title !== '')
+          ? String(cmsFoundCard.feature1Title).replace(/12\+/g, '15+')
+          : (defaultProduct.features?.[0]?.title ? String(defaultProduct.features[0].title).replace(/12\+/g, '15+') : "15+ Years of Expertise"),
         desc: (cmsFoundCard?.feature1Desc !== undefined && cmsFoundCard?.feature1Desc !== '') ? cmsFoundCard.feature1Desc : (defaultProduct.features?.[0]?.desc || "Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.")
       },
       {

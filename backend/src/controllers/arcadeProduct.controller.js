@@ -40,6 +40,12 @@ const ensureArcadeProductsSeeded = async () => {
         }
       }
     }
+
+    // Auto-update legacy '12+ Years of Expertise' to '15+ Years of Expertise'
+    await ArcadeProduct.updateMany(
+      { feature1Title: { $regex: /12\+/i } },
+      { $set: { feature1Title: '15+ Years of Expertise' } }
+    ).catch(() => {});
   } catch (err) {
     console.warn('Auto-seed arcade products notice:', err?.message);
   } finally {

@@ -25,7 +25,7 @@ const arcadeProductSchema = new mongoose.Schema({
   gallery: [{ type: String }],
   galleryAlt: [{ type: String }],
   quoteUrl: { type: String, default: '' },
-  feature1Title: { type: String, default: '12+ Years of Expertise' },
+  feature1Title: { type: String, default: '15+ Years of Expertise' },
   feature1Desc: { type: String, default: 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.' },
   feature2Title: { type: String, default: 'Quality & Safety Standards' },
   feature2Desc: { type: String, default: 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.' },

@@ -2074,6 +2074,49 @@ export const getContent = async (req, res) => {
       }
     }
 
+    // Auto-update legacy '12+ Years of Expertise' to '15+ Years of Expertise' across arcade & VR products in MongoDB
+    if (siteData.arcadeCategories && Array.isArray(siteData.arcadeCategories.cards)) {
+      let arcadeModified = false;
+      siteData.arcadeCategories.cards.forEach(card => {
+        if (card && card.feature1Title && card.feature1Title.includes('12+')) {
+          card.feature1Title = card.feature1Title.replace(/12\+/g, '15+');
+          arcadeModified = true;
+        }
+      });
+      if (arcadeModified) {
+        await Content.findOneAndUpdate(
+          { sectionKey: 'arcadeCategories' },
+          { sectionKey: 'arcadeCategories', data: siteData.arcadeCategories },
+          { upsert: true, new: true }
+        );
+      }
+    }
+
+    if (siteData.vrCategories && Array.isArray(siteData.vrCategories.cards)) {
+      let vrModified = false;
+      siteData.vrCategories.cards.forEach(card => {
+        if (card && card.feature1Title && card.feature1Title.includes('12+')) {
+          card.feature1Title = card.feature1Title.replace(/12\+/g, '15+');
+          vrModified = true;
+        }
+      });
+      if (vrModified) {
+        await Content.findOneAndUpdate(
+          { sectionKey: 'vrCategories' },
+          { sectionKey: 'vrCategories', data: siteData.vrCategories },
+          { upsert: true, new: true }
+        );
+      }
+    }
+
+    // Also update dedicated ArcadeProduct collection in MongoDB
+    try {
+      await ArcadeProduct.updateMany(
+        { feature1Title: { $regex: /12\+/i } },
+        { $set: { feature1Title: '15+ Years of Expertise' } }
+      );
+    } catch (e) {}
+
     // Auto-ensure all canonical projects from projectsData.json exist in MongoDB Project collection & siteData.projectItems
     const canonicalProjects = Array.isArray(projectsData) ? projectsData : [];
     let anyProjectRestored = false;
