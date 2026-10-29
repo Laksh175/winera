@@ -349,7 +349,7 @@ export default function Home({ siteData }) {
             />
             <img
               src={isPhone ? getValidImageUrl(hero?.mobileBgUrl || hero?.bgUrlMobile, gameZoneBgTransparent) : getValidImageUrl(hero?.bgUrl, heroBg)}
-              alt={hero?.mobileBgAlt || hero?.bgAlt || "Game Zone Setup & Commercial Equipment - Winera International"}
+              alt={isPhone ? (hero?.mobileBgAlt || hero?.bgAlt || "Game Zone Setup & Commercial Equipment - Winera International") : (hero?.bgAlt || hero?.mobileBgAlt || "Game Zone Setup & Commercial Equipment - Winera International")}
               className="winera-home-hero-bg-responsive"
               width={isPhone ? 480 : 1920}
               height={isPhone ? 748 : 840}
