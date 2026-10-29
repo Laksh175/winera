@@ -6,6 +6,7 @@ import LeadManagementSection from '../components/LeadManagementSection';
 import BlogAdminManagement from '../components/BlogAdminManagement';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
 import StatusDropdown from '../components/StatusDropdown';
+import AdminAltInput from '../components/AdminAltInput';
 import HomeDashboard from '../admin/HomeDashboard';
 import ArcadeDashboard from '../admin/ArcadeDashboard';
 import BowlingDashboard from '../admin/BowlingDashboard';
@@ -4344,24 +4345,18 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               ) : null;
                             })()}
                           </div>
-                          <div style={{ marginTop: '8px' }}>
-                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                              🏷️ Image Alt Text (SEO Keyword)
-                            </label>
-                            <input
-                              type="text"
-                              value={item.imgAlt || ''}
-                              placeholder="e.g. Commercial Arcade Racing Game Setup - Winera"
-                              onChange={(e) => {
-                                const updated = itemsList.map((it, i) => i === idx ? { ...it, imgAlt: e.target.value } : it);
-                                setFormData(prev => ({
-                                  ...prev,
-                                  [activeSection]: { ...(prev[activeSection] || {}), items: updated }
-                                }));
-                              }}
-                              style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '12px' }}
-                            />
-                          </div>
+                          <AdminAltInput
+                            label="🏷️ Image Alt Text (SEO Keyword)"
+                            value={item.imgAlt || ''}
+                            placeholder={`e.g. ${item.title || 'Related Product'} Commercial Equipment Setup - Winera`}
+                            onChange={(e) => {
+                              const updated = itemsList.map((it, i) => i === idx ? { ...it, imgAlt: e.target.value } : it);
+                              setFormData(prev => ({
+                                ...prev,
+                                [activeSection]: { ...(prev[activeSection] || {}), items: updated }
+                              }));
+                            }}
+                          />
                         </div>
                       </div>
                     ))}
@@ -5110,16 +5105,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <img src={modalItemData.logoUrl} alt="" style={{ height: '40px', maxWidth: '100px', objectFit: 'contain', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '2px' }} />
                       )}
                     </div>
-                    <div style={{ marginTop: '8px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>🏷️ Logo Alt Text (SEO Keyword)</label>
-                      <input
-                        type="text"
-                        value={modalItemData.logoAlt || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, logoAlt: e.target.value }))}
-                        placeholder="e.g. Brand Name Logo - Winera Client"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      label="🏷️ Logo Alt Text (SEO Keyword)"
+                      value={modalItemData.logoAlt || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, logoAlt: e.target.value }))}
+                      placeholder="e.g. Brand Name Logo - Winera Client"
+                    />
                   </div>
                 </>
               )}
@@ -5176,16 +5167,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <img src={modalItemData.imageUrl || modalItemData.img} alt="" style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #38bdf8' }} />
                       )}
                     </div>
-                    <div style={{ marginTop: '8px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>🏷️ Venue Photo Alt Text (SEO Keyword)</label>
-                      <input
-                        type="text"
-                        value={modalItemData.imgAlt || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
-                        placeholder="e.g. Hulaboo Game Zone Indoor Amusement Park Setup - Surat"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      label="🏷️ Venue Photo Alt Text (SEO Keyword)"
+                      value={modalItemData.imgAlt || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
+                      placeholder="e.g. Hulaboo Game Zone Indoor Amusement Park Setup - Surat"
+                    />
                   </div>
                 </>
               )}
@@ -5435,18 +5422,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ flex: 1, padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px', minWidth: 0 }}
                       />
                     </div>
-                    <div style={{ marginTop: '8px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={modalItemData.imgAlt || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
-                        placeholder={`e.g. ${modalItemData.name || 'Commercial Arcade Game Machine'} - Winera International`}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      label="🏷️ Image Alt Text (SEO Keyword)"
+                      value={modalItemData.imgAlt || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
+                      placeholder={`e.g. ${modalItemData.name || 'Commercial Arcade Game Machine'} - Winera International`}
+                    />
                   </div>
 
                   {/* Dynamic Gallery Thumbnails */}
@@ -5571,22 +5552,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                 </div>
                               )}
                             </div>
-                            <div style={{ marginTop: '6px' }}>
-                              <input
-                                type="text"
-                                value={Array.isArray(modalItemData.galleryAlt) ? (modalItemData.galleryAlt[thumbIdx] || '') : ''}
-                                onChange={(e) => {
-                                  const val = e.target.value;
-                                  setModalItemData(prev => {
-                                    const altList = Array.isArray(prev.galleryAlt) ? [...prev.galleryAlt] : [];
-                                    altList[thumbIdx] = val;
-                                    return { ...prev, galleryAlt: altList };
-                                  });
-                                }}
-                                placeholder={`🏷️ Thumbnail ${thumbIdx + 1} Alt Text (SEO Keyword)`}
-                                style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '11px' }}
-                              />
-                            </div>
+                            <AdminAltInput
+                              compact
+                              label={`🏷️ Photo #${thumbIdx + 1} Alt Text (SEO Keyword)`}
+                              value={Array.isArray(modalItemData.galleryAlt) ? (modalItemData.galleryAlt[thumbIdx] || '') : ''}
+                              placeholder={`e.g. ${modalItemData.name || 'Arcade Game'} - Detail View ${thumbIdx + 1} - Winera`}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setModalItemData(prev => {
+                                  const altList = Array.isArray(prev.galleryAlt) ? [...prev.galleryAlt] : [];
+                                  altList[thumbIdx] = val;
+                                  return { ...prev, galleryAlt: altList };
+                                });
+                              }}
+                            />
                           </div>
                         );
                       })
@@ -5975,18 +5954,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         style={{ flex: 1, padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px', minWidth: 0 }}
                       />
                     </div>
-                    <div style={{ marginTop: '8px' }}>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                        🏷️ VR Game Image Alt Text (SEO Keyword)
-                      </label>
-                      <input
-                        type="text"
-                        value={modalItemData.imgAlt || ''}
-                        onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
-                        placeholder={`e.g. ${modalItemData.name || 'Commercial VR Simulator'} - Winera International`}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
-                      />
-                    </div>
+                    <AdminAltInput
+                      label="🏷️ VR Game Image Alt Text (SEO Keyword)"
+                      value={modalItemData.imgAlt || ''}
+                      onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
+                      placeholder={`e.g. ${modalItemData.name || 'Commercial VR Simulator'} - Winera International`}
+                    />
                   </div>
 
                   {/* Dynamic Gallery Thumbnails */}
@@ -6066,10 +6039,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               </div>
                             )}
                           </div>
-                          <div style={{ marginTop: '6px' }}>
-                            <input
-                              type="text"
+                            <AdminAltInput
+                              compact
+                              label={`🏷️ Photo #${thumbIdx + 1} Alt Text (SEO Keyword)`}
                               value={Array.isArray(modalItemData.galleryAlt) ? (modalItemData.galleryAlt[thumbIdx] || '') : ''}
+                              placeholder={`e.g. ${modalItemData.name || 'VR Simulator'} - Detail View ${thumbIdx + 1} - Winera`}
                               onChange={(e) => {
                                 const val = e.target.value;
                                 setModalItemData(prev => {
@@ -6078,10 +6052,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                   return { ...prev, galleryAlt: altList };
                                 });
                               }}
-                              placeholder={`🏷️ Photo #${thumbIdx + 1} Alt Text (SEO Keyword)`}
-                              style={{ width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '11px' }}
                             />
-                          </div>
                         </div>
                       );
                     })}
@@ -6263,18 +6234,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           style={{ flex: 1, padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
                         />
                       </div>
-                      <div style={{ marginTop: '8px' }}>
-                        <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#475569', marginBottom: '4px' }}>
-                          🏷️ Project Photo Alt Text (SEO Keyword)
-                        </label>
-                        <input
-                          type="text"
-                          value={modalItemData.imgAlt || ''}
-                          onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
-                          placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Setup - Winera International`}
-                          style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px' }}
-                        />
-                      </div>
+                      <AdminAltInput
+                        label="🏷️ Project Photo Alt Text (SEO Keyword)"
+                        value={modalItemData.imgAlt || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, imgAlt: e.target.value }))}
+                        placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Setup - Winera International`}
+                      />
                     </div>
 
                     {/* CASE STUDY CONTENT FIELDS */}
@@ -6426,18 +6391,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               <img src={modalItemData.basicInfoBg} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
                             )}
                           </div>
-                          <div style={{ marginTop: '6px' }}>
-                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
-                              🏷️ Background Image Alt Text (SEO Keyword)
-                            </label>
-                            <input
-                              type="text"
-                              value={modalItemData.basicInfoBgAlt || ''}
-                              onChange={(e) => setModalItemData(prev => ({ ...prev, basicInfoBgAlt: e.target.value }))}
-                              placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Setup Facility - Winera`}
-                              style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
-                            />
-                          </div>
+                          <AdminAltInput
+                            compact
+                            label="🏷️ Background Image Alt Text (SEO Keyword)"
+                            value={modalItemData.basicInfoBgAlt || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, basicInfoBgAlt: e.target.value }))}
+                            placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Setup Facility - Winera`}
+                          />
                         </div>
                       </div>
 
@@ -6489,18 +6449,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               <img src={modalItemData.clientImg || modalItemData.clientImageUrl} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
                             )}
                           </div>
-                          <div style={{ marginTop: '6px' }}>
-                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
-                              🏷️ Client Photo Alt Text (SEO Keyword)
-                            </label>
-                            <input
-                              type="text"
-                              value={modalItemData.clientImgAlt || ''}
-                              onChange={(e) => setModalItemData(prev => ({ ...prev, clientImgAlt: e.target.value }))}
-                              placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Client Requirement Setup - Winera`}
-                              style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
-                            />
-                          </div>
+                          <AdminAltInput
+                            compact
+                            label="🏷️ Client Photo Alt Text (SEO Keyword)"
+                            value={modalItemData.clientImgAlt || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, clientImgAlt: e.target.value }))}
+                            placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Client Requirement Setup - Winera`}
+                          />
                         </div>
                       </div>
 
@@ -6552,18 +6507,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               <img src={modalItemData.solutionImg || modalItemData.solutionImageUrl} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
                             )}
                           </div>
-                          <div style={{ marginTop: '6px' }}>
-                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
-                              🏷️ Solution Photo Alt Text (SEO Keyword)
-                            </label>
-                            <input
-                              type="text"
-                              value={modalItemData.solutionImgAlt || ''}
-                              onChange={(e) => setModalItemData(prev => ({ ...prev, solutionImgAlt: e.target.value }))}
-                              placeholder={`e.g. ${modalItemData.name || 'Game Zone'} Turnkey Solution by Winera International`}
-                              style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
-                            />
-                          </div>
+                          <AdminAltInput
+                            compact
+                            label="🏷️ Solution Photo Alt Text (SEO Keyword)"
+                            value={modalItemData.solutionImgAlt || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, solutionImgAlt: e.target.value }))}
+                            placeholder={`e.g. ${modalItemData.name || 'Game Zone'} Turnkey Solution by Winera International`}
+                          />
                         </div>
                       </div>
 
@@ -6748,22 +6698,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                                       style={{ flex: 1, minWidth: 0, padding: '6px 8px', borderRadius: '6px', border: '1.5px solid #cbd5e1', fontSize: '11px' }}
                                     />
                                   </div>
-                                  <div style={{ marginTop: '4px' }}>
-                                    <input
-                                      type="text"
-                                      value={Array.isArray(modalItemData.galleryImagesAlt) ? (modalItemData.galleryImagesAlt[idx] || '') : ''}
-                                      onChange={(e) => {
-                                        const val = e.target.value;
-                                        setModalItemData(prev => {
-                                          const altList = Array.isArray(prev.galleryImagesAlt) ? [...prev.galleryImagesAlt] : [];
-                                          altList[idx] = val;
-                                          return { ...prev, galleryImagesAlt: altList };
-                                        });
-                                      }}
-                                      placeholder={`🏷️ Gallery Photo #${idx + 1} Alt Text (SEO Keyword)`}
-                                      style={{ width: '100%', boxSizing: 'border-box', padding: '5px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '11px' }}
-                                    />
-                                  </div>
+                                  <AdminAltInput
+                                    compact
+                                    label={`🏷️ Photo #${idx + 1} Alt Text (SEO Keyword)`}
+                                    value={Array.isArray(modalItemData.galleryImagesAlt) ? (modalItemData.galleryImagesAlt[idx] || '') : ''}
+                                    placeholder={`e.g. ${modalItemData.name || 'Game Zone'} Gallery Setup #${idx + 1} - Winera`}
+                                    onChange={(e) => {
+                                      const val = e.target.value;
+                                      setModalItemData(prev => {
+                                        const altList = Array.isArray(prev.galleryImagesAlt) ? [...prev.galleryImagesAlt] : [];
+                                        altList[idx] = val;
+                                        return { ...prev, galleryImagesAlt: altList };
+                                      });
+                                    }}
+                                  />
                                 </div>
                               ))}
                             </div>
@@ -6799,18 +6747,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                               <img src={modalItemData.videoImg || modalItemData.videoCoverUrl} alt="" style={{ width: '50px', height: '35px', objectFit: 'cover', borderRadius: '6px' }} />
                             )}
                           </div>
-                          <div style={{ marginTop: '6px' }}>
-                            <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
-                              🏷️ Video Cover Alt Text (SEO Keyword)
-                            </label>
-                            <input
-                              type="text"
-                              value={modalItemData.videoAlt || ''}
-                              onChange={(e) => setModalItemData(prev => ({ ...prev, videoAlt: e.target.value }))}
-                              placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Setup Video Tour - Winera`}
-                              style={{ width: '100%', boxSizing: 'border-box', padding: '7px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
-                            />
-                          </div>
+                          <AdminAltInput
+                            compact
+                            label="🏷️ Video Cover Alt Text (SEO Keyword)"
+                            value={modalItemData.videoAlt || ''}
+                            onChange={(e) => setModalItemData(prev => ({ ...prev, videoAlt: e.target.value }))}
+                            placeholder={`e.g. ${modalItemData.name || 'Commercial Game Zone'} Setup Video Tour - Winera`}
+                          />
                         </div>
                         <div>
                           <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>YouTube Video URL / Action Link</label>
@@ -7005,18 +6948,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           />
                         )}
                       </div>
-                      <div style={{ marginTop: '8px' }}>
-                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
-                          🏷️ Photo Alt Text (SEO Keyword)
-                        </label>
-                        <input
-                          type="text"
-                          value={modalItemData.founderImgAlt || modalItemData.imgAlt || ''}
-                          onChange={(e) => setModalItemData(prev => ({ ...prev, founderImgAlt: e.target.value, imgAlt: e.target.value }))}
-                          placeholder="e.g. Client Testimonial - Game Zone Owner"
-                          style={{ width: '100%', boxSizing: 'border-box', padding: '6px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px' }}
-                        />
-                      </div>
+                      <AdminAltInput
+                        compact
+                        label="🏷️ Photo Alt Text (SEO Keyword)"
+                        value={modalItemData.founderImgAlt || modalItemData.imgAlt || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, founderImgAlt: e.target.value, imgAlt: e.target.value }))}
+                        placeholder="e.g. Client Testimonial - Game Zone Owner"
+                      />
                     </div>
 
                     {/* Video Cover / Thumbnail Photo */}
@@ -7060,18 +6998,13 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                           />
                         )}
                       </div>
-                      <div style={{ marginTop: '8px' }}>
-                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#475569', marginBottom: '3px' }}>
-                          🏷️ Video Thumbnail Alt Text (SEO Keyword)
-                        </label>
-                        <input
-                          type="text"
-                          value={modalItemData.videoImgAlt || ''}
-                          onChange={(e) => setModalItemData(prev => ({ ...prev, videoImgAlt: e.target.value }))}
-                          placeholder="e.g. Video Testimonial - Client Feedback Winera"
-                          style={{ width: '100%', boxSizing: 'border-box', padding: '6px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '11.5px' }}
-                        />
-                      </div>
+                      <AdminAltInput
+                        compact
+                        label="🏷️ Video Thumbnail Alt Text (SEO Keyword)"
+                        value={modalItemData.videoImgAlt || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, videoImgAlt: e.target.value }))}
+                        placeholder="e.g. Video Testimonial - Client Feedback Winera"
+                      />
                     </div>
                   </div>
 

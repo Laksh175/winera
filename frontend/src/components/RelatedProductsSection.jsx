@@ -103,6 +103,7 @@ export default function RelatedProductsSection({
         ? item.link.replace(/^\/products\//, '/product/')
         : `/product/${(item.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
       img: finalImg,
+      imgAlt: item.imgAlt || item.alt || '',
       isActive: item.isActive !== false && item.status !== 'inactive',
       status: item.status || 'active'
     };
@@ -281,7 +282,7 @@ export default function RelatedProductsSection({
                     >
                       <img
                         src={item.img}
-                        alt={item.title}
+                        alt={item.imgAlt || `${item.title || 'Game Zone'} Commercial Equipment Setup - Winera International`}
                         loading="lazy"
                         decoding="async"
                         style={{
