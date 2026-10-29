@@ -10,29 +10,56 @@ const __dirname = path.dirname(__filename);
 
 let isSeedingProjects = false;
 
-// Auto-seed Project collection from backup JSON if database collection is empty
+// Auto-seed Project collection from backup JSON and ensure all canonical projects exist
 export const ensureProjectsSeeded = async () => {
   try {
-    const count = await Project.countDocuments();
-    if (count === 0 && !isSeedingProjects) {
-      isSeedingProjects = true;
-      const backupPath = path.join(__dirname, '../data/projectsData.json');
-      if (fs.existsSync(backupPath)) {
-        console.log('🔄 Auto-seeding Project collection in MongoDB from backup JSON...');
-        const raw = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
-        const projects = Array.isArray(raw) ? raw : (raw.projects || []);
-        if (projects.length > 0) {
-          await Project.insertMany(projects, { ordered: false });
-          console.log(`✅ Auto-seeded ${projects.length} projects into MongoDB Project collection!`);
+    const backupPath = path.join(__dirname, '../data/projectsData.json');
+    let canonicalProjects = [];
+    if (fs.existsSync(backupPath)) {
+      const raw = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
+      canonicalProjects = Array.isArray(raw) ? raw : (raw.projects || []);
+    }
 
-          // Also update Content collection projectItems and builtProjects section
-          await Content.findOneAndUpdate(
-            { sectionKey: 'projectItems' },
-            { sectionKey: 'projectItems', data: projects },
-            { upsert: true, new: true }
-          );
-        }
+    let anyRestored = false;
+    for (const p of canonicalProjects) {
+      if (!p || !p.slug) continue;
+      const existing = await Project.findOne({ $or: [{ slug: p.slug }, { id: p.id }] });
+      if (!existing) {
+        await Project.create({
+          ...p,
+          isActive: true,
+          status: 'active'
+        });
+        anyRestored = true;
+        console.log(`✅ Auto-restored missing canonical project: ${p.slug}`);
       }
+    }
+
+    // Also verify Content collection's projectItems section
+    const contentDoc = await Content.findOne({ sectionKey: 'projectItems' });
+    let contentItems = Array.isArray(contentDoc?.data) ? contentDoc.data : [];
+    let contentNeedsUpdate = false;
+
+    for (const p of canonicalProjects) {
+      if (!p || !p.slug) continue;
+      const foundInContent = contentItems.some(ci => ci && (ci.slug === p.slug || ci.id === p.id));
+      if (!foundInContent) {
+        contentItems.unshift(p);
+        contentNeedsUpdate = true;
+        console.log(`✅ Auto-restored project to Content.projectItems: ${p.slug}`);
+      }
+    }
+
+    if (contentNeedsUpdate) {
+      await Content.findOneAndUpdate(
+        { sectionKey: 'projectItems' },
+        { sectionKey: 'projectItems', data: contentItems },
+        { upsert: true, new: true }
+      );
+    }
+
+    if (anyRestored) {
+      syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap auto-update notice on project restore:', e.message));
     }
   } catch (err) {
     console.warn('Auto-seed projects notice:', err?.message);

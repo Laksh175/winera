@@ -2074,15 +2074,59 @@ export const getContent = async (req, res) => {
       }
     }
 
-    // Auto-ensure detailed case study projects from docx are present in MongoDB if empty
-    if (!Array.isArray(siteData.projectItems) || siteData.projectItems.length === 0) {
-      const activeProjects = await Project.find({ isActive: { $ne: false }, status: { $ne: 'inactive' } }).sort({ createdAt: 1 });
-      siteData.projectItems = activeProjects.length > 0 ? activeProjects.map(p => p.toObject ? p.toObject() : p) : projectsData;
+    // Auto-ensure all canonical projects from projectsData.json exist in MongoDB Project collection & siteData.projectItems
+    const canonicalProjects = Array.isArray(projectsData) ? projectsData : [];
+    let anyProjectRestored = false;
+    for (const p of canonicalProjects) {
+      if (!p || !p.slug) continue;
+      const existing = await Project.findOne({ $or: [{ slug: p.slug }, { id: p.id }] });
+      if (!existing) {
+        await Project.create({
+          ...p,
+          isActive: true,
+          status: 'active'
+        });
+        anyProjectRestored = true;
+        console.log(`✅ Auto-restored missing canonical project into MongoDB: ${p.slug}`);
+      }
+    }
+
+    const activeProjects = await Project.find({
+      isActive: { $ne: false },
+      status: { $ne: 'inactive' },
+      slug: { $nin: ['funfair', 'skidz-play-spaces'] }
+    }).sort({ createdAt: 1 });
+    const activeProjectsObj = activeProjects.map(p => (p.toObject ? p.toObject() : p));
+
+    const currentProjectItems = Array.isArray(siteData.projectItems) ? siteData.projectItems : [];
+    const missingInProjectItems = canonicalProjects.some(cp => !currentProjectItems.some(item => item && (item.slug === cp.slug || item.id === cp.id)));
+
+    if (!Array.isArray(siteData.projectItems) || siteData.projectItems.length === 0 || anyProjectRestored || missingInProjectItems) {
+      // Merge while preserving FifthAlley and all canonical projects at the top
+      const mergedList = [];
+      // 1. Add all canonical projects first
+      canonicalProjects.forEach(cp => {
+        const found = currentProjectItems.find(item => item && (item.slug === cp.slug || item.id === cp.id)) || activeProjectsObj.find(ap => ap.slug === cp.slug || ap.id === cp.id) || cp;
+        mergedList.push(found);
+      });
+      // 2. Add any custom projects added by admin
+      currentProjectItems.forEach(item => {
+        if (!item || !item.slug) return;
+        if (item.slug === 'funfair' || item.slug === 'skidz-play-spaces') return;
+        if (!mergedList.some(m => m.slug === item.slug || m.id === item.id)) {
+          mergedList.push(item);
+        }
+      });
+
+      siteData.projectItems = mergedList;
       await Content.findOneAndUpdate(
         { sectionKey: 'projectItems' },
         { sectionKey: 'projectItems', data: siteData.projectItems },
         { upsert: true, new: true }
       );
+      if (anyProjectRestored) {
+        syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap sync on project restore notice:', e.message));
+      }
     } else if (Array.isArray(siteData.projectItems) && siteData.projectItems.some(p => p.slug === 'funfair' || p.slug === 'skidz-play-spaces')) {
       const cleanedProjects = siteData.projectItems.filter(p => p.slug !== 'funfair' && p.slug !== 'skidz-play-spaces');
       await Content.findOneAndUpdate(
