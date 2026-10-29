@@ -2,11 +2,13 @@
   "specVersion": "1.0",
   "host": {
     "displayName": "Winera International Pvt. Ltd.",
-    "identifier": "https://winera.in"
+    "identifier": "https://winera.in",
+    "documentationUrl": "https://winera.in/about",
+    "logoUrl": "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png"
   },
   "entries": [
     {
-      "identifier": "urn:ai:winera.in:catalog:turnkey-game-zones",
+      "identifier": "urn:air:winera.in:catalog:turnkey-game-zones",
       "displayName": "Turnkey Commercial Game Zone Setup",
       "type": "text/html",
       "url": "https://winera.in/",
@@ -23,7 +25,7 @@
       ]
     },
     {
-      "identifier": "urn:ai:winera.in:catalog:trampoline-park",
+      "identifier": "urn:air:winera.in:catalog:trampoline-park",
       "displayName": "Commercial Trampoline Park Equipment",
       "type": "text/html",
       "url": "https://winera.in/trampoline-park",
@@ -39,7 +41,7 @@
       ]
     },
     {
-      "identifier": "urn:ai:winera.in:catalog:bowling-alley",
+      "identifier": "urn:air:winera.in:catalog:bowling-alley",
       "displayName": "Commercial Bowling Alley Setup",
       "type": "text/html",
       "url": "https://winera.in/bowling-alley",
@@ -55,7 +57,7 @@
       ]
     },
     {
-      "identifier": "urn:ai:winera.in:catalog:soft-play",
+      "identifier": "urn:air:winera.in:catalog:soft-play",
       "displayName": "Indoor Modular Soft Play Equipment",
       "type": "text/html",
       "url": "https://winera.in/soft-play",
@@ -71,7 +73,7 @@
       ]
     },
     {
-      "identifier": "urn:ai:winera.in:catalog:arcade-games",
+      "identifier": "urn:air:winera.in:catalog:arcade-games",
       "displayName": "Commercial Arcade Game Machines",
       "type": "text/html",
       "url": "https://winera.in/arcade-game",
@@ -87,7 +89,7 @@
       ]
     },
     {
-      "identifier": "urn:ai:winera.in:catalog:vr-games",
+      "identifier": "urn:air:winera.in:catalog:vr-games",
       "displayName": "VR & AR Commercial Gaming Machines",
       "type": "text/html",
       "url": "https://winera.in/vr-games",
@@ -103,7 +105,7 @@
       ]
     },
     {
-      "identifier": "urn:ai:winera.in:catalog:bumper-cars",
+      "identifier": "urn:air:winera.in:catalog:bumper-cars",
       "displayName": "Commercial Bumper Cars Setup",
       "type": "text/html",
       "url": "https://winera.in/bumper-car",
@@ -119,7 +121,7 @@
       ]
     },
     {
-      "identifier": "urn:ai:winera.in:catalog:roi-blueprint",
+      "identifier": "urn:air:winera.in:catalog:roi-blueprint",
       "displayName": "Commercial Game Zone ROI Blueprint",
       "type": "text/html",
       "url": "https://winera.in/roi",
