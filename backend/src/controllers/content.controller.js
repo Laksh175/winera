@@ -201,39 +201,39 @@ export const defaultSiteData = {
   },
   faqs: [
     {
-      q: "How do I set up a game zone in India?",
+      q: "1. How Do I Set Up A Game Zone In India?",
       a: "Start with a consultation and share your available space, budget, and location with our team. As a trusted gaming zone setup company in India, Winera International handles everything from ROI analysis and layout design to equipment selection, installation, and post-launch support across 50+ cities."
     },
     {
-      q: "What is the cost of a game zone setup in India?",
+      q: "2. What Is The Cost Of A Game Zone Setup In India?",
       a: "Game zone setup cost in India totally depends on the size of space, type of attractions, and level of customisation. As a direct game zone equipment supplier, Winera International provides a complete cost breakdown covering equipment, installation, and maintenance before you confirm any project. Contact our team for a quote specific to your venue."
     },
     {
-      q: "Does Winera handle the complete game zone setup?",
+      q: "3. Does Winera Handle The Complete Game Zone Setup?",
       a: "Yes. As experienced game zone developers in India, we manage the entire project from concept to completion, space planning, equipment sourcing, layout design, installation, and after-sales support all handled by our own team, not third-party contractors."
     },
     {
-      q: "Which cities does Winera cover in India?",
+      q: "4. Which Cities Does Winera Cover In India?",
       a: "Winera International installs game zone equipment across 50+ cities in India — covering Tier-1 metros, Tier-2 cities, and emerging Tier-3 markets. Our own installation team reaches wherever your venue is located, without relying on local contractors."
     },
     {
-      q: "What makes Winera International different from other game zone suppliers?",
+      q: "5. What Makes Winera International Different From Other Game Zone Suppliers?",
       a: "Before recommending any equipment, we prepare a free ROI Blueprint for your specific venue covering projected footfall, revenue potential, and break-even timeline. Very few game zone suppliers in India offer this as a standard part of their process."
     },
     {
-      q: "Do you provide after-sales support after installation?",
+      q: "6. Do You Provide After-Sales Support After Installation?",
       a: "Yes. Our technical team provides ongoing maintenance, spare parts, and on-site support for all equipment we install available directly through our own team, not through agents or third-party service providers."
     },
     {
-      q: "Can game zone equipment be customised for my venue's theme?",
+      q: "7. Can Game Zone Equipment Be Customised For My Venue's Theme?",
       a: "Yes. Every game zone solution we deliver is designed around your specific space, theme, budget, and target audience from layout planning to equipment selection and visual design."
     },
     {
-      q: "How do I get started with my game zone project?",
+      q: "8. How Do I Get Started With My Game Zone Project?",
       a: "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. We're also available on social media."
     },
     {
-      q: "Can Winera International help me plan my game zone from scratch?",
+      q: "9. Can Winera International Help Me Plan My Game Zone From Scratch?",
       a: "Yes, Winera International offers complete game zone planning support. From space planning and equipment selection to installation and staff training, we manage the entire project. Our “Plan Your Game Zone” service is specially designed for first-time entrepreneurs and existing businesses looking to add an entertainment zone."
     }
   ],
@@ -2780,6 +2780,21 @@ export const getContent = async (req, res) => {
         siteData.testimonials = mergedTestimonials;
         clearContentCache();
       }
+    }
+
+    // Auto-repair canonical 9 Home FAQs in MongoDB if corrupted with test dummy data (e.g. 'efewfw' or fewer than 9 items)
+    const isFaqsCorrupted = !Array.isArray(siteData.faqs) ||
+      siteData.faqs.length < 9 ||
+      siteData.faqs.some(f => (f.q || '').toLowerCase().includes('efewfw'));
+
+    if (isFaqsCorrupted) {
+      await Content.findOneAndUpdate(
+        { sectionKey: 'faqs' },
+        { sectionKey: 'faqs', data: defaultSiteData.faqs },
+        { upsert: true, new: true }
+      );
+      siteData.faqs = defaultSiteData.faqs;
+      clearContentCache();
     }
 
     const homeSections = [
