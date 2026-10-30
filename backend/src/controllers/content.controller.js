@@ -2757,6 +2757,31 @@ export const getContent = async (req, res) => {
       }
     }
 
+    // Auto-sync canonical 20 testimonials into MongoDB if database has fewer than 20
+    if (!Array.isArray(siteData.testimonials) || siteData.testimonials.length < 20) {
+      const existingList = Array.isArray(siteData.testimonials) ? siteData.testimonials : [];
+      const defaultList = defaultSiteData.testimonials || [];
+      const existingNames = new Set(existingList.map(t => (t.name || t.gameZoneName || '').toLowerCase().trim()));
+
+      const mergedTestimonials = [...existingList];
+      for (const defItem of defaultList) {
+        const defName = (defItem.name || defItem.gameZoneName || '').toLowerCase().trim();
+        if (!existingNames.has(defName)) {
+          mergedTestimonials.push(defItem);
+        }
+      }
+
+      if (mergedTestimonials.length > existingList.length) {
+        await Content.findOneAndUpdate(
+          { sectionKey: 'testimonials' },
+          { sectionKey: 'testimonials', data: mergedTestimonials },
+          { upsert: true, new: true }
+        );
+        siteData.testimonials = mergedTestimonials;
+        clearContentCache();
+      }
+    }
+
     const homeSections = [
       'header', 'hero', 'stats', 'statsHeader',
       'clientLogos', 'clientsHeader', 'aboutHome',
