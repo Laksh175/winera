@@ -27,7 +27,7 @@ const restoreFromBackupDb = async () => {
     const client = mongoose.connection.client;
     const liveDb = mongoose.connection.db;
     const liveDbName = liveDb.databaseName;
-    const backupDbName = process.env.MONGODB_BACKUP_DB_NAME || 'winera-backup';
+    const backupDbName = process.env.MONGODB_BACKUP_DB_NAME || `${liveDbName}-backup`;
 
     if (liveDbName === backupDbName) {
       throw new Error(`CRITICAL ERROR: Live DB (${liveDbName}) and Backup DB (${backupDbName}) are the same! Aborting.`);

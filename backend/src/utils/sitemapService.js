@@ -382,7 +382,7 @@ export const generateBlogSitemapXml = async () => {
 
   // Blog Collection
   try {
-    const blogs = await Blog.find({ isPublished: { $ne: false } }).select('slug title updatedAt createdAt');
+    const blogs = await Blog.find({ isPublished: { $ne: false }, isActive: { $ne: false }, status: { $ne: 'inactive' } }).select('slug title updatedAt createdAt isActive status isPublished');
     for (const b of blogs) {
       const slug = (b.slug || b.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       if (slug && !seenSlugs.has(slug)) {

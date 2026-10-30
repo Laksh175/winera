@@ -3,6 +3,7 @@ import Content from '../models/Content.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { clearContentCache } from './content.controller.js';
 import { addOrUpdateUrlInSitemap, syncAllDatabaseToSitemap } from '../utils/sitemapService.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -56,7 +57,7 @@ export const ensureBlogsSeeded = async () => {
     }
 
     if (anyRestored) {
-      const allActive = await Blog.find({ isPublished: { $ne: false } }).sort({ id: 1, createdAt: -1 });
+      const allActive = await Blog.find({ isPublished: { $ne: false } }).sort({ createdAt: -1, id: 1 });
       await Content.findOneAndUpdate(
         { sectionKey: 'blogPosts' },
         { sectionKey: 'blogPosts', data: allActive.map(b => (b.toObject ? b.toObject() : b)) },
@@ -77,8 +78,14 @@ export const getBlogs = async (req, res) => {
   try {
     await ensureBlogsSeeded();
 
-    const { category, search, page = 1, limit } = req.query;
-    const query = { isPublished: { $ne: false } };
+    const { category, search, page = 1, limit, includeInactive } = req.query;
+    const query = {};
+
+    if (includeInactive !== 'true' && includeInactive !== true) {
+      query.isActive = { $ne: false };
+      query.status = { $ne: 'inactive' };
+      query.isPublished = { $ne: false };
+    }
 
     if (category && category !== 'All' && category !== 'All Categories') {
       query.category = { $regex: new RegExp(category, 'i') };
@@ -99,7 +106,7 @@ export const getBlogs = async (req, res) => {
 
     // Support limit='all' or unlimited fetching like arcade-products & vr-games
     if (!limit || limit === 'all' || limit === 'All' || limit === '0' || parseInt(limit, 10) >= 1000) {
-      const blogs = await Blog.find(query).sort({ id: 1, createdAt: -1 });
+      const blogs = await Blog.find(query).sort({ createdAt: -1, id: 1 });
       return res.json({
         success: true,
         total,
@@ -115,7 +122,7 @@ export const getBlogs = async (req, res) => {
     const skip = (pageNum - 1) * limitNum;
 
     const blogs = await Blog.find(query)
-      .sort({ id: 1, createdAt: -1 })
+      .sort({ createdAt: -1, id: 1 })
       .skip(skip)
       .limit(limitNum);
 
@@ -197,6 +204,7 @@ export const createBlog = async (req, res) => {
       }).catch(e => console.warn('Sitemap auto-update notice on blog create:', e.message));
     }
 
+    clearContentCache();
     res.json({ success: true, blog: created, post: created });
   } catch (error) {
     console.error('Error creating blog post:', error);
@@ -258,6 +266,7 @@ export const updateBlog = async (req, res) => {
       }).catch(e => console.warn('Sitemap auto-update notice on blog update:', e.message));
     }
 
+    clearContentCache();
     res.json({ success: true, blog: updated, post: updated });
   } catch (error) {
     console.error('Error updating blog post:', error);
@@ -303,6 +312,7 @@ export const deleteBlog = async (req, res) => {
     // Resync sitemap
     syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap notice on blog delete:', e.message));
 
+    clearContentCache();
     res.json({ success: true, message: 'Blog post deleted successfully' });
   } catch (error) {
     console.error('Error deleting blog post:', error);

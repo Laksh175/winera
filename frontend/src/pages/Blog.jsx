@@ -147,7 +147,13 @@ export default function Blog({ siteData }) {
       const exists = merged.some(m => (m.slug && sp.slug && m.slug === sp.slug) || (m.id && sp.id && String(m.id) === String(sp.id)));
       if (!exists) merged.push(sp);
     });
-    return merged;
+    const sorted = [...merged].sort((a, b) => {
+      const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      if (timeA !== timeB) return timeB - timeA;
+      return (Number(a.id) || 0) - (Number(b.id) || 0);
+    });
+    return sorted.filter(p => p.isActive !== false && p.status !== 'inactive' && p.isPublished !== false);
   })();
 
   const blogPosts = rawPosts.map((post) => {
@@ -213,7 +219,7 @@ export default function Blog({ siteData }) {
           style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          <h1 className="winera-blog-hero-h1" style={{
+          <span className="winera-blog-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -230,7 +236,7 @@ export default function Blog({ siteData }) {
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>{blogHero.breadcrumbText || "Blog"}</span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -260,9 +266,9 @@ export default function Blog({ siteData }) {
                 objectFit: 'fill'
               }}
             />
-            <h2 className="winera-blog-heading-title" style={{ fontSize: isPhone ? '28px' : '35px', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>
+            <h1 className="winera-blog-heading-title" style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: isPhone ? '28px' : '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', margin: 0 }}>
               our <span style={{ color: '#00a8ff' }}>Blogs</span>
-            </h2>
+            </h1>
           </motion.div>
 
           {/* 9 Cards Grid */}

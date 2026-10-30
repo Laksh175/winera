@@ -230,7 +230,7 @@ export default function AmusementPark({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Amusement Park */}
-          <h1 className="winera-amusement-hero-title" style={{
+          <span className="winera-amusement-hero-title" style={{
             fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -247,7 +247,7 @@ export default function AmusementPark({ siteData }) {
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>
               {siteData?.amusementHero?.breadcrumbText || "Amusement Park"}
             </span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -284,9 +284,9 @@ export default function AmusementPark({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h1 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.amusementIntro?.title, "*Amusement Park Ride*<br/>Manufacturer in India", '#38bdf8')}
-              </h2>
+              </h1>
             </div>
 
             {/* Subtitle Paragraph */}
@@ -762,7 +762,7 @@ export default function AmusementPark({ siteData }) {
       />
       <TestimonialsSection siteData={siteData} />
       <RelatedProductsSection sectionData={siteData?.amusementRelated || siteData?.arcadeRelated} accentColor="#00a8ff" />
-      <FaqSection faqsList={(Array.isArray(siteData?.amusementFaqs) && siteData.amusementFaqs.length >= 7) ? siteData.amusementFaqs : defaultAmusementFaqs} highlightColor="#00a8ff" />
+      <FaqSection faqsList={(Array.isArray(siteData?.amusementFaqs) && siteData.amusementFaqs.length > 0) ? siteData.amusementFaqs : defaultAmusementFaqs} highlightColor="#00a8ff" />
 
       {/* CTA BANNER SECTION WITH DYNAMIC CONTENT & EXACT TILTED CARDS MATCHING UI 1:1 */}
       <div className="winera-amusement-cta-wrapper">

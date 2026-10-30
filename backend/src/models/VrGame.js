@@ -28,7 +28,17 @@ const vrGameSchema = new mongoose.Schema({
   imgAlt: { type: String, default: '' },
   gallery: [{ type: String }],
   galleryAlt: [{ type: String }],
-  quoteUrl: { type: String, default: '' }
+  quoteUrl: { type: String, default: '' },
+  feature1Title: { type: String, default: '15+ Years of Expertise' },
+  feature1Desc: { type: String, default: 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.' },
+  feature2Title: { type: String, default: 'Quality & Safety Standards' },
+  feature2Desc: { type: String, default: 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.' },
+  feature3Title: { type: String, default: 'ROI-First Approach' },
+  feature3Desc: { type: String, default: 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.' },
+  feature4Title: { type: String, default: 'Reliable Pan-India Service' },
+  feature4Desc: { type: String, default: 'Our own team installs and supports every project across 50+ cities on time, every time.' },
+  metaTitle: { type: String, default: '' },
+  metaDescription: { type: String, default: '' }
 }, { timestamps: true });
 
 const VrGame = mongoose.model('VrGame', vrGameSchema);

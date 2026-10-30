@@ -60,6 +60,33 @@ const zoneImageMap = {
   'foam cube': foamCubeImg
 };
 
+const defaultTrampolineFaqs = [
+  {
+    q: "Why does Winera International stand out as the best trampoline park manufacturer in India?",
+    a: "Winera International manufactures every trampoline park in-house, offers a free ROI report before every project, and installs across 50+ cities through our own team, not a third-party contractor. One partner, from 3D design to after-sales support."
+  },
+  {
+    q: "What is the trampoline park setup cost in India?",
+    a: "Trampoline park setup cost in India depends on the facility size, number of attractions, and materials selected. Winera provides a complete cost breakdown — equipment, installation, and maintenance — before confirming any project. Contact our team for a quote specific to your space."
+  },
+  {
+    q: "Is a trampoline park a profitable business in India?",
+    a: "Yes, when located in a suitable venue with the right zone mix and pricing model. Trampoline parks generate revenue through entry fees, birthday party packages, school group bookings, corporate events, and membership plans. Winera prepares a free ROI report before every project showing your specific venue's projected daily capacity, estimated monthly revenue, and break-even timeline."
+  },
+  {
+    q: "What licenses or permissions are required to open a trampoline park in India?",
+    a: "Requirements vary by state and municipality but typically include a trade license, fire safety NOC, building use permission, and public liability insurance. Winera's team can guide you on general requirements based on your city and consult a local legal advisor for state-specific compliance."
+  },
+  {
+    q: "What maintenance does a commercial trampoline park require?",
+    a: "Winera trampoline parks are designed for 8–12 years of commercial operation with regular maintenance. Routine checks include: jump mat tension and condition, spring integrity, foam padding wear, safety net inspection, and frame connection points. A standard maintenance schedule and checklist is provided with every installation. Annual professional servicing is recommended."
+  },
+  {
+    q: "What is the ideal target audience for a trampoline park in India?",
+    a: "Children aged 5–15 years form the core audience, but modern trampoline parks increasingly serve teenagers, young adults, and corporate groups through ninja courses, dodgeball arenas, and team-building packages — making them viable for a much wider demographic than traditional play zones."
+  }
+];
+
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '' || url.includes('/src/assets/')) {
@@ -329,7 +356,7 @@ export default function TrampolinePark({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Breadcrumb Heading: Home > Trampoline Park */}
-          <h1 className="winera-trampoline-hero-h1" style={{
+          <span className="winera-trampoline-hero-h1" style={{
             fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -346,7 +373,7 @@ export default function TrampolinePark({ siteData }) {
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>
               {siteData?.trampolineHero?.breadcrumbText || "Trampoline Park"}
             </span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -383,9 +410,9 @@ export default function TrampolinePark({ siteData }) {
                 alt=""
                 style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '12px', objectFit: 'fill', marginLeft: 0 }}
               />
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h1 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.trampolineIntro?.title, "Trampoline Park *Manufacturer in India*", '#00a8ff')}
-              </h2>
+              </h1>
             </div>
 
             {/* Description Paragraph */}
@@ -1208,34 +1235,7 @@ export default function TrampolinePark({ siteData }) {
 
       {/* FREQUENTLY ASKED QUESTIONS SECTION */}
       <FaqSection
-        faqsList={(Array.isArray(siteData?.trampolineFaqs) && siteData.trampolineFaqs.length > 0)
-          ? siteData.trampolineFaqs
-          : [
-              {
-                q: "Why does Winera International stand out as the best trampoline park manufacturer in India?",
-                a: "Winera International manufactures every trampoline park in-house, offers a free ROI report before every project, and installs across 50+ cities through our own team, not a third-party contractor. One partner, from 3D design to after-sales support."
-              },
-              {
-                q: "What is the trampoline park setup cost in India?",
-                a: "Trampoline park setup cost in India depends on the facility size, number of attractions, and materials selected. Winera provides a complete cost breakdown — equipment, installation, and maintenance — before confirming any project. Contact our team for a quote specific to your space."
-              },
-              {
-                q: "Is a trampoline park a profitable business in India?",
-                a: "Yes, when located in a suitable venue with the right zone mix and pricing model. Trampoline parks generate revenue through entry fees, birthday party packages, school group bookings, corporate events, and membership plans. Winera prepares a free ROI report before every project showing your specific venue's projected daily capacity, estimated monthly revenue, and break-even timeline."
-              },
-              {
-                q: "What licenses or permissions are required to open a trampoline park in India?",
-                a: "Requirements vary by state and municipality but typically include a trade license, fire safety NOC, building use permission, and public liability insurance. Winera's team can guide you on general requirements based on your city and consult a local legal advisor for state-specific compliance."
-              },
-              {
-                q: "What maintenance does a commercial trampoline park require?",
-                a: "Winera trampoline parks are designed for 8–12 years of commercial operation with regular maintenance. Routine checks include: jump mat tension and condition, spring integrity, foam padding wear, safety net inspection, and frame connection points. A standard maintenance schedule and checklist is provided with every installation. Annual professional servicing is recommended."
-              },
-              {
-                q: "What is the ideal target audience for a trampoline park in India?",
-                a: "Children aged 5–15 years form the core audience, but modern trampoline parks increasingly serve teenagers, young adults, and corporate groups through ninja courses, dodgeball arenas, and team-building packages — making them viable for a much wider demographic than traditional play zones."
-              }
-            ]}
+        faqsList={(Array.isArray(siteData?.trampolineFaqs) && siteData.trampolineFaqs.length > 0) ? siteData.trampolineFaqs : defaultTrampolineFaqs}
         title="Frequently Asked *Questions*"
       />
 

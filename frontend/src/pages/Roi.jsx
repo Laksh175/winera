@@ -268,7 +268,7 @@ export default function Roi({ siteData }) {
           style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-          <h1 className="winera-roi-hero-h1" style={{
+          <span className="winera-roi-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -285,7 +285,7 @@ export default function Roi({ siteData }) {
             <Link to="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</Link>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>{roiHero.breadcrumbPage || "ROI"}</span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -318,13 +318,15 @@ export default function Roi({ siteData }) {
                 className="winera-roi-intro-stroke"
                 style={{ display: 'block', maxWidth: '100%', width: '280px', height: '8px', marginBottom: '14px', objectFit: 'fill' }}
               />
-              <h2 className="winera-roi-intro-h2" style={{
+              <h1 className="winera-roi-intro-h2" style={{
+                fontFamily: "'Black Han Sans', sans-serif",
                 fontSize: '35px',
-                fontWeight: '900',
+                fontWeight: '400',
+                fontStyle: 'normal',
+                letterSpacing: '0px',
                 color: '#0f172a',
                 lineHeight: 1.25,
-                marginBottom: '22px',
-                letterSpacing: '-0.5px'
+                marginBottom: '22px'
               }}>
                 <span className="winera-roi-intro-line1">
                   {roiIntro.titleLine1 || "You don't need a game zone…"}{' '}
@@ -335,7 +337,7 @@ export default function Roi({ siteData }) {
                 <span className="winera-roi-intro-line3" style={{ color: '#00a8ff' }}>
                   {roiIntro.titleLine2Blue || "profit machine."}
                 </span>
-              </h2>
+              </h1>
 
               <p
                 style={{

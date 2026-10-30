@@ -7,6 +7,7 @@ import BlogAdminManagement from '../components/BlogAdminManagement';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
 import StatusDropdown from '../components/StatusDropdown';
 import AdminAltInput from '../components/AdminAltInput';
+import ConfirmModal from '../components/ConfirmModal';
 import HomeDashboard from '../admin/HomeDashboard';
 import ArcadeDashboard from '../admin/ArcadeDashboard';
 import BowlingDashboard from '../admin/BowlingDashboard';
@@ -2247,6 +2248,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
             img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
             videoImg: "https://img.youtube.com/vi/YNrfGqhhl5w/sddefault.jpg",
+            videoThumbnail: "https://img.youtube.com/vi/YNrfGqhhl5w/sddefault.jpg",
             quote: "When we were planning Rebounce we had the space and the budget but no idea how to turn it into a game zone. Winera International Pvt. Ltd. made the entire process effortless. One meeting was enough. We shared our requirements and they handled everything from game selection and layout design to complete installation. The result speaks for itself Rebounce today is a thriving game zone and our customers keep coming back."
           },
           {
@@ -2261,6 +2263,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
             img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/q9p8mlpn0ws9f9vlrxhd.webp",
             videoImg: "https://img.youtube.com/vi/YXhUJ1k6pbQ/sddefault.jpg",
+            videoThumbnail: "https://img.youtube.com/vi/YXhUJ1k6pbQ/sddefault.jpg",
             quote: "Choosing the right gaming zone setup company in India was critical for us given our tight deadline. Winera International Pvt. Ltd. delivered everything as planned and on schedule. Fun Houze opening day went smoothly and the game zone setup was exactly as we discussed."
           },
           {
@@ -2275,6 +2278,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
             img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877032/winera_uploads/projects/jvr2xtu8jszcmzaglxmr.jpg",
             videoImg: "https://img.youtube.com/vi/Jvtsn-TxVqE/sddefault.jpg",
+            videoThumbnail: "https://img.youtube.com/vi/Jvtsn-TxVqE/sddefault.jpg",
             quote: "To be honest before starting Hulaboo we had visited multiple game zone setup companies and was confused about who to trust. When we finally met Winera International Pvt. Ltd. the clarity they gave us from day one was different. They explained the entire process, showed us real projects and gave us a transparent quote. That confidence is what made us sign. And they delivered exactly what they promised."
           },
           {
@@ -2289,7 +2293,248 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
             img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360320/winera_uploads/etpnimwouc6kknkwqzpd.webp",
             videoImg: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
+            videoThumbnail: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
             quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally."
+          },
+          {
+            gameZoneName: "Funfair",
+            name: "Funfair",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751038/winera_uploads/d2hp3wbwrlideyexncbq.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751038/winera_uploads/d2hp3wbwrlideyexncbq.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/igg4yrl7xhnxllqifpj7.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/igg4yrl7xhnxllqifpj7.jpg",
+            quote: "Most game zone equipment suppliers just deliver and disappear. What surprised us most about Winera International Pvt. Ltd. was that they actually sat with us, understood our space and planned the entire Funfair game zone layout from scratch. That level of involvement made a real difference to our final setup."
+          },
+          {
+            gameZoneName: "Playzonia",
+            name: "Playzonia",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+            quote: "Before finalizing we visited Winera International Pvt. Ltd. previous projects in person. The quality we saw there gave us confidence to move forward with Playzonia. They designed our complete soft play layout, selected age-appropriate equipment for children and handled the full installation from start to finish. Kids enjoy it daily and parents feel safe. That is our biggest win."
+          },
+          {
+            gameZoneName: "Uday Palace",
+            name: "Uday Palace",
+            reviewerRole: "Navsari",
+            role: "Navsari",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881418/winera_uploads/xrrhjysw5s2kv13idbab.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881418/winera_uploads/xrrhjysw5s2kv13idbab.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg",
+            quote: "Adding a game zone to Uday Palace was a new experiment for us. We were looking for a complete indoor amusement park setup company in India and Winera International Pvt. Ltd. made the entire process simple and stress free. Today our game zone is one of the most enjoyed parts of our venue especially by families."
+          },
+          {
+            gameZoneName: "360 VR Zone",
+            name: "360 VR Zone",
+            reviewerRole: "Gandhidham",
+            role: "Gandhidham",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880703/winera_uploads/nzzkicxebupzlpxlmhzy.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880703/winera_uploads/nzzkicxebupzlpxlmhzy.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg",
+            quote: "Our space was completely underutilized before the VR gaming zone setup. Winera International Pvt. Ltd. transformed our space into a complete VR gaming zone and the results have been outstanding. Now 360 runs are packed almost every day and the ROI came much faster than we expected."
+          },
+          {
+            gameZoneName: "Team Bounce Berry",
+            name: "Team Bounce Berry",
+            reviewerRole: "Mumbai",
+            role: "Mumbai",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881018/winera_uploads/vvzdaifxodmrp1ivuaf8.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881018/winera_uploads/vvzdaifxodmrp1ivuaf8.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+            quote: "Winera International set up our indoor play area, and the whole process was smooth from design to installation. The space is safe, colourful, and the kids absolutely love it. Parents keep coming back, and it's become the highlight of our venue."
+          },
+          {
+            gameZoneName: "Team Nextgen Gaming Zone",
+            name: "Team Nextgen Gaming Zone",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881491/winera_uploads/buvknsolyme0s1f4fblf.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881491/winera_uploads/buvknsolyme0s1f4fblf.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+            quote: "Winera developed our gaming zone end to end, and their team handled everything professionally. The equipment quality is excellent, and the support after installation has been quick and reliable. A great partner to work with."
+          },
+          {
+            gameZoneName: "Team Rock and Bowl",
+            name: "Team Rock and Bowl",
+            reviewerRole: "Vapi",
+            role: "Vapi",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880571/winera_uploads/gthc5zzrwzn9gkouwd9r.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880571/winera_uploads/gthc5zzrwzn9gkouwd9r.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877846/winera_uploads/ebko4as1kehon9gbnkg7.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877846/winera_uploads/ebko4as1kehon9gbnkg7.jpg",
+            quote: "Winera International helped us bring together everything under one roof — bowling, arcade, VR, and kids' play area. The whole project was well managed and finished on time, and honestly the variety is what keeps our guests coming back."
+          },
+          {
+            gameZoneName: "Team The Fun Factory",
+            name: "Team The Fun Factory",
+            reviewerRole: "Nallasopara",
+            role: "Nallasopara",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881095/winera_uploads/bcwejmmx5q48jdzujogs.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881095/winera_uploads/bcwejmmx5q48jdzujogs.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881209/winera_uploads/b9jr71otq8j24u3ugqid.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881209/winera_uploads/b9jr71otq8j24u3ugqid.jpg",
+            quote: "Our soft play area was designed and installed exactly to our space and budget. The build quality is great, it's safe for the children, and thanks to Winera International the response from families has been wonderful."
+          },
+          {
+            gameZoneName: "Team Zaazaa Play",
+            name: "Team Zaazaa Play",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880677/winera_uploads/exkp2vteumt8ky75mdbp.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880677/winera_uploads/exkp2vteumt8ky75mdbp.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg",
+            quote: "From the first design to the final setup, Winera International made everything easy. They understood our space and delivered a bright, safe play area that kids enjoy every day. Professional team, smooth experience."
+          },
+          {
+            gameZoneName: "Team Gif Gaming is Fun",
+            name: "Team Gif Gaming is Fun",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880235/winera_uploads/gtiimh5jducs44uq90ej.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880235/winera_uploads/gtiimh5jducs44uq90ej.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+            quote: "Winera built our multi-level soft play area. The climbing frames, slides, and ball pool are all top quality and completely safe for the kids. They handled everything with real professionalism, and children love spending time here. Their team supported us at every step."
+          },
+          {
+            gameZoneName: "Team Kidzonation",
+            name: "Team Kidzonation",
+            reviewerRole: "Mumbai",
+            role: "Mumbai",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880859/winera_uploads/btgwetb1unmp1qzjvzvd.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880859/winera_uploads/btgwetb1unmp1qzjvzvd.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg",
+            quote: "Winera International built our kids' play area from start to finish, and the whole process was stress-free. The equipment is safe and well made, and our young visitors have a great time."
+          },
+          {
+            gameZoneName: "Team Fizzy Fox",
+            name: "Team Fizzy Fox",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791876622/winera_uploads/gcaitxliikawd3sx2jj0.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791876622/winera_uploads/gcaitxliikawd3sx2jj0.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg",
+            quote: "Winera developed our game zone and delivered exactly what we needed. The setup was smooth, the equipment quality is top class, and the after-sales support has been dependable. A pleasure to work with."
+          },
+          {
+            gameZoneName: "Team Rumble Zone",
+            name: "Team Rumble Zone",
+            reviewerRole: "Gurugram",
+            role: "Gurugram",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880086/winera_uploads/snodsgd2vmwbjuoux6gq.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880086/winera_uploads/snodsgd2vmwbjuoux6gq.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880685/winera_uploads/ts0qlqlxigm1vfl1qp9s.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880685/winera_uploads/ts0qlqlxigm1vfl1qp9s.jpg",
+            quote: "From planning to opening day, Winera International handled our game zone setup professionally. Their team understood our space and delivered on time. Our visitors love it, and it's been great for business."
+          },
+          {
+            gameZoneName: "Team Happy Hoppers",
+            name: "Team Happy Hoppers",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881052/winera_uploads/bfrwk0i7ho8vwqc65bjy.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881052/winera_uploads/bfrwk0i7ho8vwqc65bjy.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg",
+            quote: "The indoor kids play zone Winera built for us has become the highlight of our space. The quality of soft play products, attention to safety, and the overall finish of the installation reflects the expertise their team brings to every project."
+          },
+          {
+            gameZoneName: "Team Playzonia, Surat",
+            name: "Team Playzonia, Surat",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+            quote: "Winera International handled our soft play setup from design to installation with complete professionalism. The 3D design process gave us full clarity before anything was built, and the final soft play equipment quality exceeded our expectations. We've had great visitor response since opening."
+          },
+          {
+            gameZoneName: "Team FifthAlley",
+            name: "Team FifthAlley",
+            reviewerRole: "Surat",
+            role: "Surat",
+            starRating: 5,
+            rating: 5,
+            youtubeVideoUrl: "",
+            videoUrl: "",
+            founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880600/winera_uploads/ziokha3xbk9ae3fatijh.png",
+            img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880600/winera_uploads/ziokha3xbk9ae3fatijh.png",
+            videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877018/winera_uploads/projects/lf45hnr7l9jwbij9gh4q.jpg",
+            videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877018/winera_uploads/projects/lf45hnr7l9jwbij9gh4q.jpg",
+            quote: "Getting a bowling setup right takes real know-how, and that's what Winera brought. From choosing the right equipment to installing it and training our staff, everything was handled properly and the after-sales support has been just as reliable. Our guests love the lanes."
           }
         ]
       };
@@ -2482,7 +2727,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         feature3Title: item.feature3Title !== undefined ? item.feature3Title : (knownDefault.feature3Title || 'ROI-First Approach'),
         feature3Desc: item.feature3Desc !== undefined ? item.feature3Desc : (knownDefault.feature3Desc || 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.'),
         feature4Title: item.feature4Title !== undefined ? item.feature4Title : (knownDefault.feature4Title || 'Reliable Pan-India Service'),
-        feature4Desc: item.feature4Desc !== undefined ? item.feature4Desc : (knownDefault.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.')
+        feature4Desc: item.feature4Desc !== undefined ? item.feature4Desc : (knownDefault.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.'),
+        metaTitle: item.metaTitle || item.seoTitle || knownDefault.metaTitle || '',
+        metaDescription: item.metaDescription || item.seoDescription || knownDefault.metaDescription || '',
+        seoTitle: item.seoTitle || item.metaTitle || '',
+        seoDescription: item.seoDescription || item.metaDescription || ''
       };
 
       // Search in arcadeMasterCards for full catalog data and multi-angle gallery
@@ -2512,6 +2761,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         ...defaultArcadeItem,
         ...(masterMatch || {}),
         ...item,
+        metaTitle: item.metaTitle || item.seoTitle || masterMatch?.metaTitle || masterMatch?.seoTitle || defaultArcadeItem.metaTitle || '',
+        metaDescription: item.metaDescription || item.seoDescription || masterMatch?.metaDescription || masterMatch?.seoDescription || defaultArcadeItem.metaDescription || '',
         gallery: richestGallery
       });
       setIsModalOpen(true);
@@ -2576,13 +2827,27 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         gallery3: richestVrGallery[2] || item.gallery3 || '',
         gallery4: richestVrGallery[3] || item.gallery4 || '',
         videoUrl: item.videoUrl || '',
-        quoteUrl: item.quoteUrl || `https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`
+        quoteUrl: item.quoteUrl || `https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`,
+        feature1Title: item.feature1Title !== undefined ? String(item.feature1Title).replace(/12\+/g, '15+') : (vrMatch?.feature1Title ? String(vrMatch.feature1Title).replace(/12\+/g, '15+') : '15+ Years of Expertise'),
+        feature1Desc: item.feature1Desc !== undefined ? item.feature1Desc : (vrMatch?.feature1Desc || 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.'),
+        feature2Title: item.feature2Title !== undefined ? item.feature2Title : (vrMatch?.feature2Title || 'Quality & Safety Standards'),
+        feature2Desc: item.feature2Desc !== undefined ? item.feature2Desc : (vrMatch?.feature2Desc || 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.'),
+        feature3Title: item.feature3Title !== undefined ? item.feature3Title : (vrMatch?.feature3Title || 'ROI-First Approach'),
+        feature3Desc: item.feature3Desc !== undefined ? item.feature3Desc : (vrMatch?.feature3Desc || 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.'),
+        feature4Title: item.feature4Title !== undefined ? item.feature4Title : (vrMatch?.feature4Title || 'Reliable Pan-India Service'),
+        feature4Desc: item.feature4Desc !== undefined ? item.feature4Desc : (vrMatch?.feature4Desc || 'Our own team installs and supports every project across 50+ cities on time, every time.'),
+        metaTitle: item.metaTitle || item.seoTitle || vrMatch?.metaTitle || '',
+        metaDescription: item.metaDescription || item.seoDescription || vrMatch?.metaDescription || '',
+        seoTitle: item.seoTitle || item.metaTitle || '',
+        seoDescription: item.seoDescription || item.metaDescription || ''
       };
 
       setModalItemData({
         ...defaultVrItem,
         ...(vrMatch || {}),
         ...item,
+        metaTitle: item.metaTitle || item.seoTitle || vrMatch?.metaTitle || vrMatch?.seoTitle || defaultVrItem.metaTitle || '',
+        metaDescription: item.metaDescription || item.seoDescription || vrMatch?.metaDescription || vrMatch?.seoDescription || defaultVrItem.metaDescription || '',
         gallery: richestVrGallery
       });
       setIsModalOpen(true);
@@ -2894,7 +3159,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
 
       // Update local state for immediate UI feedback
       if (modalMode === 'add') {
-        currentList.push(modalItemData);
+        currentList.unshift(modalItemData);
       } else if (modalMode === 'edit') {
         const foundIdx = currentList.findIndex(x => x && (x.slug === autoSlug || x.id === autoSlug || (x.name && x.name.toLowerCase() === projName.toLowerCase())));
         if (foundIdx !== -1) {
@@ -3030,7 +3295,11 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         feature3Title: modalItemData.feature3Title !== undefined ? modalItemData.feature3Title : 'ROI-First Approach',
         feature3Desc: modalItemData.feature3Desc !== undefined ? modalItemData.feature3Desc : 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.',
         feature4Title: modalItemData.feature4Title !== undefined ? modalItemData.feature4Title : 'Reliable Pan-India Service',
-        feature4Desc: modalItemData.feature4Desc !== undefined ? modalItemData.feature4Desc : 'Our own team installs and supports every project across 50+ cities on time, every time.'
+        feature4Desc: modalItemData.feature4Desc !== undefined ? modalItemData.feature4Desc : 'Our own team installs and supports every project across 50+ cities on time, every time.',
+        metaTitle: modalItemData.metaTitle || modalItemData.seoTitle || '',
+        metaDescription: modalItemData.metaDescription || modalItemData.seoDescription || '',
+        seoTitle: modalItemData.metaTitle || modalItemData.seoTitle || '',
+        seoDescription: modalItemData.metaDescription || modalItemData.seoDescription || ''
       };
 
       if (modalMode === 'add') {
@@ -3158,7 +3427,19 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         depth: modalItemData.depth || '',
         height: modalItemData.height || '',
         videoUrl: modalItemData.videoUrl || '',
-        quoteUrl: modalItemData.quoteUrl || `https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`
+        quoteUrl: modalItemData.quoteUrl || `https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20${encodeURIComponent(cardTitle)}`,
+        feature1Title: modalItemData.feature1Title !== undefined ? String(modalItemData.feature1Title).replace(/12\+/g, '15+') : '15+ Years of Expertise',
+        feature1Desc: modalItemData.feature1Desc !== undefined ? modalItemData.feature1Desc : 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.',
+        feature2Title: modalItemData.feature2Title !== undefined ? modalItemData.feature2Title : 'Quality & Safety Standards',
+        feature2Desc: modalItemData.feature2Desc !== undefined ? modalItemData.feature2Desc : 'Every product sourced from global manufacturers and tested for commercial-grade safety and durability.',
+        feature3Title: modalItemData.feature3Title !== undefined ? modalItemData.feature3Title : 'ROI-First Approach',
+        feature3Desc: modalItemData.feature3Desc !== undefined ? modalItemData.feature3Desc : 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.',
+        feature4Title: modalItemData.feature4Title !== undefined ? modalItemData.feature4Title : 'Reliable Pan-India Service',
+        feature4Desc: modalItemData.feature4Desc !== undefined ? modalItemData.feature4Desc : 'Our own team installs and supports every project across 50+ cities on time, every time.',
+        metaTitle: modalItemData.metaTitle || modalItemData.seoTitle || '',
+        metaDescription: modalItemData.metaDescription || modalItemData.seoDescription || '',
+        seoTitle: modalItemData.metaTitle || modalItemData.seoTitle || '',
+        seoDescription: modalItemData.metaDescription || modalItemData.seoDescription || ''
       };
 
       if (modalMode === 'add') {
@@ -3214,7 +3495,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       return;
     }
 
-    if (secKey === 'bowlingFaqs' && currentList.length < 8) {
+    if (secKey === 'bowlingFaqs' && (!Array.isArray(currentList) || currentList.length === 0)) {
       currentList = [...defaultBowlingFaqs];
     }
 
@@ -3293,6 +3574,246 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           videoImg: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
           videoThumbnail: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
           quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally."
+        },
+        {
+          gameZoneName: "Funfair",
+          name: "Funfair",
+          reviewerRole: "Surat",
+          role: "Surat",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751038/winera_uploads/d2hp3wbwrlideyexncbq.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751038/winera_uploads/d2hp3wbwrlideyexncbq.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/igg4yrl7xhnxllqifpj7.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/igg4yrl7xhnxllqifpj7.jpg",
+          quote: "Most game zone equipment suppliers just deliver and disappear. What surprised us most about Winera International Pvt. Ltd. was that they actually sat with us, understood our space and planned the entire Funfair game zone layout from scratch. That level of involvement made a real difference to our final setup."
+        },
+        {
+          gameZoneName: "Playzonia",
+          name: "Playzonia",
+          reviewerRole: "Surat",
+          role: "Surat",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+          quote: "Before finalizing we visited Winera International Pvt. Ltd. previous projects in person. The quality we saw there gave us confidence to move forward with Playzonia. They designed our complete soft play layout, selected age-appropriate equipment for children and handled the full installation from start to finish. Kids enjoy it daily and parents feel safe. That is our biggest win."
+        },
+        {
+          gameZoneName: "Uday Palace",
+          name: "Uday Palace",
+          reviewerRole: "Navsari",
+          role: "Navsari",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881418/winera_uploads/xrrhjysw5s2kv13idbab.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881418/winera_uploads/xrrhjysw5s2kv13idbab.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg",
+          quote: "Adding a game zone to Uday Palace was a new experiment for us. We were looking for a complete indoor amusement park setup company in India and Winera International Pvt. Ltd. made the entire process simple and stress free. Today our game zone is one of the most enjoyed parts of our venue especially by families."
+        },
+        {
+          gameZoneName: "360 VR Zone",
+          name: "360 VR Zone",
+          reviewerRole: "Gandhidham",
+          role: "Gandhidham",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880703/winera_uploads/nzzkicxebupzlpxlmhzy.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880703/winera_uploads/nzzkicxebupzlpxlmhzy.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg",
+          quote: "Our space was completely underutilized before the VR gaming zone setup. Winera International Pvt. Ltd. transformed our space into a complete VR gaming zone and the results have been outstanding. Now 360 runs are packed almost every day and the ROI came much faster than we expected."
+        },
+        {
+          gameZoneName: "Team Bounce Berry",
+          name: "Team Bounce Berry",
+          reviewerRole: "Mumbai",
+          role: "Mumbai",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881018/winera_uploads/vvzdaifxodmrp1ivuaf8.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881018/winera_uploads/vvzdaifxodmrp1ivuaf8.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+          quote: "Winera International set up our indoor play area, and the whole process was smooth from design to installation. The space is safe, colourful, and the kids absolutely love it. Parents keep coming back, and it's become the highlight of our venue."
+        },
+        {
+          gameZoneName: "Team Nextgen Gaming Zone",
+          name: "Team Nextgen Gaming Zone",
+          reviewerRole: "Surat",
+          role: "Surat",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881491/winera_uploads/buvknsolyme0s1f4fblf.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881491/winera_uploads/buvknsolyme0s1f4fblf.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+          quote: "Winera developed our gaming zone end to end, and their team handled everything professionally. The equipment quality is excellent, and the support after installation has been quick and reliable. A great partner to work with."
+        },
+        {
+          gameZoneName: "Team Rock and Bowl",
+          name: "Team Rock and Bowl",
+          reviewerRole: "Vapi",
+          role: "Vapi",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880571/winera_uploads/gthc5zzrwzn9gkouwd9r.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880571/winera_uploads/gthc5zzrwzn9gkouwd9r.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877846/winera_uploads/ebko4as1kehon9gbnkg7.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877846/winera_uploads/ebko4as1kehon9gbnkg7.jpg",
+          quote: "Winera International helped us bring together everything under one roof — bowling, arcade, VR, and kids' play area. The whole project was well managed and finished on time, and honestly the variety is what keeps our guests coming back."
+        },
+        {
+          gameZoneName: "Team The Fun Factory",
+          name: "Team The Fun Factory",
+          reviewerRole: "Nallasopara",
+          role: "Nallasopara",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881095/winera_uploads/bcwejmmx5q48jdzujogs.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881095/winera_uploads/bcwejmmx5q48jdzujogs.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881209/winera_uploads/b9jr71otq8j24u3ugqid.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881209/winera_uploads/b9jr71otq8j24u3ugqid.jpg",
+          quote: "Our soft play area was designed and installed exactly to our space and budget. The build quality is great, it's safe for the children, and thanks to Winera International the response from families has been wonderful."
+        },
+        {
+          gameZoneName: "Team Zaazaa Play",
+          name: "Team Zaazaa Play",
+          reviewerRole: "Surat",
+          role: "Surat",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880677/winera_uploads/exkp2vteumt8ky75mdbp.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880677/winera_uploads/exkp2vteumt8ky75mdbp.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg",
+          quote: "From the first design to the final setup, Winera International made everything easy. They understood our space and delivered a bright, safe play area that kids enjoy every day. Professional team, smooth experience."
+        },
+        {
+          gameZoneName: "Team Gif Gaming is Fun",
+          name: "Team Gif Gaming is Fun",
+          reviewerRole: "Surat",
+          role: "Surat",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880235/winera_uploads/gtiimh5jducs44uq90ej.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880235/winera_uploads/gtiimh5jducs44uq90ej.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+          quote: "Winera built our multi-level soft play area. The climbing frames, slides, and ball pool are all top quality and completely safe for the kids. They handled everything with real professionalism, and children love spending time here. Their team supported us at every step."
+        },
+        {
+          gameZoneName: "Team Kidzonation",
+          name: "Team Kidzonation",
+          reviewerRole: "Mumbai",
+          role: "Mumbai",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880859/winera_uploads/btgwetb1unmp1qzjvzvd.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880859/winera_uploads/btgwetb1unmp1qzjvzvd.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg",
+          quote: "Winera International built our kids' play area from start to finish, and the whole process was stress-free. The equipment is safe and well made, and our young visitors have a great time."
+        },
+        {
+          gameZoneName: "Team Fizzy Fox",
+          name: "Team Fizzy Fox",
+          reviewerRole: "Surat",
+          role: "Surat",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791876622/winera_uploads/gcaitxliikawd3sx2jj0.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791876622/winera_uploads/gcaitxliikawd3sx2jj0.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg",
+          quote: "Winera developed our game zone and delivered exactly what we needed. The setup was smooth, the equipment quality is top class, and the after-sales support has been dependable. A pleasure to work with."
+        },
+        {
+          gameZoneName: "Team Rumble Zone",
+          name: "Team Rumble Zone",
+          reviewerRole: "Gurugram",
+          role: "Gurugram",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880086/winera_uploads/snodsgd2vmwbjuoux6gq.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880086/winera_uploads/snodsgd2vmwbjuoux6gq.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880685/winera_uploads/ts0qlqlxigm1vfl1qp9s.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880685/winera_uploads/ts0qlqlxigm1vfl1qp9s.jpg",
+          quote: "From planning to opening day, Winera International handled our game zone setup professionally. Their team understood our space and delivered on time. Our visitors love it, and it's been great for business."
+        },
+        {
+          gameZoneName: "Team Happy Hoppers",
+          name: "Team Happy Hoppers",
+          reviewerRole: "Surat",
+          role: "Surat",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881052/winera_uploads/bfrwk0i7ho8vwqc65bjy.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881052/winera_uploads/bfrwk0i7ho8vwqc65bjy.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg",
+          quote: "The indoor kids play zone Winera built for us has become the highlight of our space. The quality of soft play products, attention to safety, and the overall finish of the installation reflects the expertise their team brings to every project."
+        },
+        {
+          gameZoneName: "Team Playzonia, Surat",
+          name: "Team Playzonia, Surat",
+          reviewerRole: "Surat",
+          role: "Surat",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+          quote: "Winera International handled our soft play setup from design to installation with complete professionalism. The 3D design process gave us full clarity before anything was built, and the final soft play equipment quality exceeded our expectations. We've had great visitor response since opening."
+        },
+        {
+          gameZoneName: "Team FifthAlley",
+          name: "Team FifthAlley",
+          reviewerRole: "Surat",
+          role: "Surat",
+          starRating: 5,
+          rating: 5,
+          youtubeVideoUrl: "",
+          videoUrl: "",
+          founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880600/winera_uploads/ziokha3xbk9ae3fatijh.png",
+          img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880600/winera_uploads/ziokha3xbk9ae3fatijh.png",
+          videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877018/winera_uploads/projects/lf45hnr7l9jwbij9gh4q.jpg",
+          videoThumbnail: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877018/winera_uploads/projects/lf45hnr7l9jwbij9gh4q.jpg",
+          quote: "Getting a bowling setup right takes real know-how, and that's what Winera brought. From choosing the right equipment to installing it and training our staff, everything was handled properly and the after-sales support has been just as reliable. Our guests love the lanes."
         }
       ];
       if (!Array.isArray(formData.testimonials) || formData.testimonials.length === 0) {
@@ -3352,7 +3873,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
     }
 
     if (modalMode === 'add') {
-      currentList.push(modalItemData);
+      currentList.unshift(modalItemData);
     } else if (modalMode === 'edit' && editingIndex !== null) {
       currentList[editingIndex] = modalItemData;
     }
@@ -3973,61 +4494,108 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         })()}
 
         {/* Floating Top-Right Success / Status Toast Notification */}
-        {statusMsg && (
-          <>
-            <style>{`
-              @keyframes toastSlideIn {
-                from { transform: translateX(100%) scale(0.9); opacity: 0; }
-                to { transform: translateX(0) scale(1); opacity: 1; }
-              }
-            `}</style>
-            <div style={{
-              position: 'fixed',
-              top: '24px',
-              right: '24px',
-              zIndex: 9999,
-              background: statusMsg.toLowerCase().includes('error') ? '#ef4444' : '#10b981',
-              color: '#ffffff',
-              padding: '14px 22px',
-              borderRadius: '16px',
-              fontSize: '14px',
-              fontWeight: '800',
-              boxShadow: statusMsg.toLowerCase().includes('error')
-                ? '0 12px 30px rgba(239, 68, 68, 0.4)'
-                : '0 12px 30px rgba(16, 185, 129, 0.4)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              maxWidth: '420px',
-              animation: 'toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-              transition: 'all 0.3s ease'
-            }}>
-              <CheckCircle style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-              <span style={{ flex: 1, lineHeight: '1.4' }}>{statusMsg}</span>
-              <button
-                onClick={() => setStatusMsg('')}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.25)',
-                  border: 'none',
-                  color: '#ffffff',
-                  width: '26px',
-                  height: '26px',
-                  borderRadius: '50%',
-                  cursor: 'pointer',
+        {statusMsg && (() => {
+          const isErr = statusMsg.toLowerCase().includes('error') || statusMsg.toLowerCase().includes('failed');
+          const isDel = statusMsg.toLowerCase().includes('delete');
+          const isEdit = statusMsg.toLowerCase().includes('update') || statusMsg.toLowerCase().includes('edit');
+          const badgeText = isErr ? 'Action Failed' : (isDel ? 'Deleted Successfully' : (isEdit ? 'Updated Successfully' : 'Saved Successfully'));
+          const bgGradient = isErr
+            ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.98), rgba(220, 38, 38, 0.98))'
+            : (isDel
+              ? 'linear-gradient(135deg, rgba(249, 115, 22, 0.98), rgba(234, 88, 12, 0.98))'
+              : 'linear-gradient(135deg, rgba(16, 185, 129, 0.98), rgba(5, 150, 105, 0.98))');
+          const shadowColor = isErr ? 'rgba(239, 68, 68, 0.35)' : (isDel ? 'rgba(249, 115, 22, 0.35)' : 'rgba(16, 185, 129, 0.35)');
+
+          return (
+            <>
+              <style>{`
+                @keyframes toastSlideIn {
+                  0% { transform: translateY(-25px) scale(0.92); opacity: 0; }
+                  100% { transform: translateY(0) scale(1); opacity: 1; }
+                }
+              `}</style>
+              <div style={{
+                position: 'fixed',
+                top: '26px',
+                right: '26px',
+                zIndex: 99999,
+                background: bgGradient,
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                color: '#ffffff',
+                padding: '16px 22px',
+                borderRadius: '18px',
+                boxShadow: `0 20px 45px -10px ${shadowColor}, 0 0 0 1px rgba(255, 255, 255, 0.22)`,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px',
+                maxWidth: '450px',
+                minWidth: '320px',
+                animation: 'toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                pointerEvents: 'auto'
+              }}>
+                <div style={{
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '12px',
+                  background: 'rgba(255, 255, 255, 0.2)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '12px',
-                  fontWeight: '900',
-                  marginLeft: '8px'
-                }}
-                title="Close"
-              >
-                ✕
-              </button>
-            </div>
-          </>
-        )}
+                  flexShrink: 0
+                }}>
+                  <CheckCircle style={{ width: '22px', height: '22px', color: '#ffffff' }} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
+                    fontSize: '10.5px',
+                    fontWeight: '900',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    opacity: 0.9,
+                    marginBottom: '2px'
+                  }}>
+                    {badgeText}
+                  </div>
+                  <div style={{
+                    fontSize: '13.5px',
+                    fontWeight: '700',
+                    lineHeight: '1.45',
+                    wordBreak: 'break-word',
+                    color: '#ffffff'
+                  }}>
+                    {statusMsg}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setStatusMsg('')}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.22)',
+                    border: 'none',
+                    color: '#ffffff',
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '13px',
+                    fontWeight: '900',
+                    marginLeft: '4px',
+                    flexShrink: 0,
+                    transition: 'background 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.35)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.22)'}
+                  title="Close"
+                >
+                  ✕
+                </button>
+              </div>
+            </>
+          );
+        })()}
 
         {/* DYNAMIC EDIT FORM PANELS */}
         <div style={{
@@ -5701,6 +6269,31 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   ))}
+
+                  {/* Individual Arcade Product SEO Meta Title & Description */}
+                  <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '12px' }}>
+                    <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>🔍 Individual Product SEO Meta Title & Meta Description</h5>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Meta Title (SEO Title)</label>
+                      <input
+                        type="text"
+                        value={modalItemData.metaTitle || modalItemData.seoTitle || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, metaTitle: e.target.value, seoTitle: e.target.value }))}
+                        placeholder={`e.g. ${modalItemData.name || modalItemData.title || 'Arcade Game'} | Winera International`}
+                        style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '600' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Meta Description (SEO Description)</label>
+                      <textarea
+                        rows={3}
+                        value={modalItemData.metaDescription || modalItemData.seoDescription || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, metaDescription: e.target.value, seoDescription: e.target.value }))}
+                        placeholder={`e.g. Commercial ${modalItemData.name || modalItemData.title || 'arcade machine'} for game zones, malls, and entertainment centers across India.`}
+                        style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
                 </>
               )}
 
@@ -6091,6 +6684,55 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       />
                     </div>
                   </div>
+
+                  <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', marginTop: '14px', marginBottom: '8px' }}>
+                    <h4 style={{ margin: 0, color: '#0284c7', fontSize: '15px', fontWeight: '800' }}>5. Specification Detail 2x2 Feature Cards</h4>
+                  </div>
+
+                  {[1, 2, 3, 4].map(num => (
+                    <div key={num} style={{ background: '#f8fafc', padding: '10px 12px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+                      <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>Feature Card {num}</label>
+                      <input
+                        type="text"
+                        value={modalItemData[`feature${num}Title`] || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, [`feature${num}Title`]: e.target.value }))}
+                        placeholder={`Feature ${num} Title`}
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '700', marginBottom: '6px' }}
+                      />
+                      <textarea
+                        rows={2}
+                        value={modalItemData[`feature${num}Desc`] || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, [`feature${num}Desc`]: e.target.value }))}
+                        placeholder={`Feature ${num} Description`}
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12px' }}
+                      />
+                    </div>
+                  ))}
+
+                  {/* Individual VR Product SEO Meta Title & Description */}
+                  <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '12px' }}>
+                    <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>🔍 Individual Product SEO Meta Title & Meta Description</h5>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Meta Title (SEO Title)</label>
+                      <input
+                        type="text"
+                        value={modalItemData.metaTitle || modalItemData.seoTitle || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, metaTitle: e.target.value, seoTitle: e.target.value }))}
+                        placeholder={`e.g. ${modalItemData.name || modalItemData.title || 'VR Game'} | Winera International`}
+                        style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px', fontWeight: '600' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Meta Description (SEO Description)</label>
+                      <textarea
+                        rows={3}
+                        value={modalItemData.metaDescription || modalItemData.seoDescription || ''}
+                        onChange={(e) => setModalItemData(prev => ({ ...prev, metaDescription: e.target.value, seoDescription: e.target.value }))}
+                        placeholder={`e.g. Commercial ${modalItemData.name || modalItemData.title || 'VR simulator'} for game zones, malls, and entertainment centers across India.`}
+                        style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
+                      />
+                    </div>
+                  </div>
                 </>
               )}
 
@@ -6464,20 +7106,20 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         <h5 style={{ fontSize: '12.5px', fontWeight: '800', color: '#0284c7', margin: 0 }}>What Solution We Provide Section</h5>
                         <div>
                           <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Paragraph 1</label>
-                          <textarea
-                            rows={2}
+                          <RichTextareaWithEditor
+                            rows={3}
                             value={modalItemData.solution1 || ''}
-                            onChange={(e) => setModalItemData(prev => ({ ...prev, solution1: e.target.value }))}
+                            onChange={(val) => setModalItemData(prev => ({ ...prev, solution1: val }))}
                             placeholder="We delivered FifthAlley Sport Bowling as a complete, ready-to-open venue..."
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                           />
                         </div>
                         <div>
                           <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Paragraph 2</label>
-                          <textarea
-                            rows={2}
+                          <RichTextareaWithEditor
+                            rows={3}
                             value={modalItemData.solution2 || ''}
-                            onChange={(e) => setModalItemData(prev => ({ ...prev, solution2: e.target.value }))}
+                            onChange={(val) => setModalItemData(prev => ({ ...prev, solution2: val }))}
                             placeholder="The result is a venue that is fun to play in and comfortable..."
                             style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                           />
@@ -7009,13 +7651,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Review Quote</label>
-                    <textarea
-                      rows={3}
+                    <RichTextareaWithEditor
+                      label="Review Quote"
+                      rows={4}
                       value={modalItemData.quote || ''}
-                      onChange={(e) => setModalItemData(prev => ({ ...prev, quote: e.target.value }))}
+                      onChange={(val) => setModalItemData(prev => ({ ...prev, quote: val }))}
                       placeholder="Enter review quote..."
-                      style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13px', lineHeight: 1.5 }}
                     />
                   </div>
                 </>
@@ -7068,100 +7709,10 @@ export default function AdminDashboard({ siteData, refreshContent }) {
       )}
 
       {/* STYLISH CONFIRMATION DELETE MODAL */}
-      {deleteConfirmModal && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(15, 23, 42, 0.65)',
-          backdropFilter: 'blur(8px)',
-          zIndex: 999999,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px'
-        }}>
-          <div style={{
-            background: '#ffffff',
-            borderRadius: '24px',
-            maxWidth: '440px',
-            width: '100%',
-            padding: '32px 26px',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            border: '1px solid #e2e8f0',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              borderRadius: '50%',
-              background: '#fee2e2',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: '16px',
-              color: '#ef4444',
-              boxShadow: '0 8px 20px rgba(239, 68, 68, 0.25)'
-            }}>
-              <Trash2 style={{ width: '32px', height: '32px' }} />
-            </div>
-
-            <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: '0 0 8px' }}>
-              {deleteConfirmModal.title || 'Are you sure?'}
-            </h3>
-
-            <p style={{ fontSize: '13.5px', color: '#64748b', margin: '0 0 24px', lineHeight: 1.5, fontWeight: '500' }}>
-              {deleteConfirmModal.message || 'Are you sure you want to delete this item? This action cannot be undone.'}
-            </p>
-
-            <div style={{ display: 'flex', gap: '12px', width: '100%' }}>
-              <button
-                onClick={() => setDeleteConfirmModal(null)}
-                style={{
-                  flex: 1,
-                  padding: '12px',
-                  borderRadius: '12px',
-                  background: '#f1f5f9',
-                  border: '1.5px solid #cbd5e1',
-                  color: '#475569',
-                  fontWeight: '800',
-                  fontSize: '13.5px',
-                  cursor: 'pointer'
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  if (typeof deleteConfirmModal.onConfirm === 'function') {
-                    deleteConfirmModal.onConfirm();
-                  }
-                  setDeleteConfirmModal(null);
-                }}
-                style={{
-                  flex: 1,
-                  padding: '12px',
-                  borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                  border: 'none',
-                  color: '#ffffff',
-                  fontWeight: '900',
-                  fontSize: '13.5px',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 14px rgba(239, 68, 68, 0.4)'
-                }}
-              >
-                Yes, Delete It
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmModal
+        modal={deleteConfirmModal}
+        onClose={() => setDeleteConfirmModal(null)}
+      />
     </div>
   );
 }

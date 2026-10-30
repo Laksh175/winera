@@ -237,6 +237,243 @@ export const defaultSiteData = {
       a: "Yes, Winera International offers complete game zone planning support. From space planning and equipment selection to installation and staff training, we manage the entire project. Our “Plan Your Game Zone” service is specially designed for first-time entrepreneurs and existing businesses looking to add an entertainment zone."
     }
   ],
+  arcadeFaqs: defaultArcadeFaqs,
+  vrFaqs: [
+    {
+      "q": "What is included in a commercial VR gaming set?",
+      "question": "What is included in a commercial VR gaming set?",
+      "a": "A complete commercial VR gaming set from Winera includes the VR machine unit, motion platform (where applicable), VR headsets, a pre-loaded and commercially licensed game library, safety barriers, installation by our own team, and post-installation support. Exact components vary by machine model — confirmed at the quote stage. ",
+      "answer": "A complete commercial VR gaming set from Winera includes the VR machine unit, motion platform (where applicable), VR headsets, a pre-loaded and commercially licensed game library, safety barriers, installation by our own team, and post-installation support. Exact components vary by machine model — confirmed at the quote stage. "
+    },
+    {
+      "q": "Which businesses typically need a VR games supplier in India?",
+      "a": "Family entertainment centres, malls, amusement parks, hotels, resorts, bowling centers, and standalone gaming zones are the most common businesses that work with a VR games supplier in India. \n",
+      "question": "Which businesses typically need a VR games supplier in India?",
+      "answer": "Family entertainment centres, malls, amusement parks, hotels, resorts, bowling centers, and standalone gaming zones are the most common businesses that work with a VR games supplier in India. \n"
+    },
+    {
+      "q": "What is the VR gaming setup cost in India?",
+      "a": "VR gaming setup cost in India depends on the number of machines, machine category, motion system complexity, and game library size. Pricing varies significantly between a single compact platform and a multi-machine zone with group rides. \n",
+      "question": "What is the VR gaming setup cost in India?",
+      "answer": "VR gaming setup cost in India depends on the number of machines, machine category, motion system complexity, and game library size. Pricing varies significantly between a single compact platform and a multi-machine zone with group rides. \n"
+    },
+    {
+      "q": "Do VR gaming machines require a minimum ceiling height or floor space?",
+      "a": "Yes. Motion platforms and group rides typically need higher ceiling clearance than solo simulators, and floor space requirements scale with player count. Winera assesses your venue's exact dimensions before recommending machine models, since not every machine fits every space.\n",
+      "question": "Do VR gaming machines require a minimum ceiling height or floor space?",
+      "answer": "Yes. Motion platforms and group rides typically need higher ceiling clearance than solo simulators, and floor space requirements scale with player count. Winera assesses your venue's exact dimensions before recommending machine models, since not every machine fits every space.\n"
+    },
+    {
+      "q": "How long does VR gaming machine installation take?",
+      "a": "Installation timelines depend on machine count and complexity; a single solo platform can be operational within days, while a multi-machine zone with group rides takes longer for setup and software configuration. We confirm an exact schedule at the quote stage.\n",
+      "question": "How long does VR gaming machine installation take?",
+      "answer": "Installation timelines depend on machine count and complexity; a single solo platform can be operational within days, while a multi-machine zone with group rides takes longer for setup and software configuration. We confirm an exact schedule at the quote stage.\n"
+    },
+    {
+      "q": "Can VR gaming machines be customised with branded content or specific game libraries?",
+      "a": "Yes. Game library selection, branding wraps, and venue-specific configuration can be tailored per machine. We confirm available customisation options for each model during the consultation.",
+      "question": "Can VR gaming machines be customised with branded content or specific game libraries?",
+      "answer": "Yes. Game library selection, branding wraps, and venue-specific configuration can be tailored per machine. We confirm available customisation options for each model during the consultation."
+    },
+    {
+      "q": "What happens if a VR machine breaks down after installation?",
+      "a": "Our own technicians handle servicing directly, with coverage across 50+ cities in India. For software issues, remote diagnostics are available for most machines. For hardware faults, our own team visits your site; you're not waiting on an overseas manufacturer or a disconnected logistics partner.",
+      "question": "What happens if a VR machine breaks down after installation?",
+      "answer": "Our own technicians handle servicing directly, with coverage across 50+ cities in India. For software issues, remote diagnostics are available for most machines. For hardware faults, our own team visits your site; you're not waiting on an overseas manufacturer or a disconnected logistics partner."
+    },
+    {
+      "q": "How do I get started with a VR gaming machine order from Winera?",
+      "a": "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP.",
+      "question": "How do I get started with a VR gaming machine order from Winera?",
+      "answer": "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Tell us your venue type, approximate floor area available, and the number of machines you're considering. Our team will recommend the right machine mix, provide a complete cost breakdown, and send a quote ASAP."
+    }
+  ],
+  bowlingFaqs: [
+    {
+      "q": "Why Choose Refurbished Brunswick Bowling Alley Equipment?",
+      "a": "We offer refurbished Brunswick bowling equipment that is well-known for its long-term reliability and performance. As one of the most preferred brands worldwide, Brunswick is valued for its stable mechanical capacity and low failure rate making it a top choice for bowling alley equipment globally. One of Brunswick’s standout features is its advanced scoring system that automatically identifies potential issues and provides user-friendly troubleshooting guides. This helps keep your lanes running smoothly with minimal downtime."
+    },
+    {
+      "q": "How is Brunswick Equipment Refurbished to Perfection?",
+      "a": "Our skilled engineers refurbish each set of Brunswick equipment with precision, replacing all worn parts using original Brunswick components. The result? A product that performs like new, at a fraction of the cost."
+    },
+    {
+      "q": "Why is the quality of refurbished Brunswick equipment trustworthy?",
+      "a": "Many bowling centers in India have shut down in recent years due to shifts in the sport's popularity. However, the equipment from these venues often remains in excellent condition, with many systems being only 2–5 years old. Considering Brunswick equipment is built to last 40–50 years, even lightly used units are still in their prime."
+    },
+    {
+      "q": "Why Opt for Refurbished Equipment?",
+      "a": "By choosing our refurbished Brunswick bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that’s been expertly restored, you’ll enjoy top-tier performance, low maintenance, and durability."
+    },
+    {
+      "q": "What is the Bowling Alley Setup Cost in India?",
+      "a": "The bowling alley setup cost in India depends on the number of lanes, equipment condition, and venue size. Winera International provides refurbished Brunswick bowling equipment at a fraction of new equipment cost making it possible to set up a high-end bowling center within a realistic budget. Contact our team for a complete cost-to-revenue report for your specific space."
+    },
+    {
+      "q": "What After-Sales Support Does Winera Provide for Bowling Alley Equipment?",
+      "a": "Our relationship with clients continues well after installation. We provide comprehensive maintenance, servicing, and support for all Brunswick bowling alley equipment we supply ensuring your lanes run smoothly with minimal downtime for years to come."
+    },
+    {
+      "q": "How much space is required to set up a bowling alley?",
+      "a": "A standard bowling lane requires 89 feet in length and 6 feet in width; a minimum of 2 lanes is recommended for commercial setups. Winera assesses your exact dimensions and provides a complete layout plan along with a free ROI report before confirming any equipment."
+    },
+    {
+      "q": "What is the difference between a free-fall bowling system and a string bowling system?",
+      "a": "Free-Fall Bowling System: In this system, the pins fall freely when the bowling ball hits them. It feels just like real bowling played in professional bowling centers.\n\nString Bowling System: In this system, each pin has a string attached at the top. After the ball hits the pins, the strings lift them back into place. It is easier to maintain and more affordable."
+    }
+  ],
+  softplayFaqs: [
+    {
+      "q": "Why does Winera International stand out as the best soft play equipment manufacturer in India?",
+      "a": "Winera International manufactures every soft play structure in-house, provides a free ROI report before every project, and installs across 50+ cities through our own team, not a third-party contractor. One partner, from 3D design to after-sales support."
+    },
+    {
+      "q": "How much does a soft play zone cost in India?",
+      "a": "Soft play zone cost in India depends on space size, design complexity, and materials. Winera International provides a complete cost breakdown before project confirmation. Contact our team for a customized quote based on your specific space and budget."
+    },
+    {
+      "q": "What businesses should install a soft play zone?",
+      "a": "Malls, hotels, schools, hospitals, airports, family entertainment centres, and residential township projects benefit most from soft play zones, any venue that regularly attracts families with children aged 2–12 years."
+    },
+    {
+      "q": "Can soft play zones be customized with themes?",
+      "a": "Yes. Winera International offers full customisation of jungle, ocean, space, and venue-branded themes with matching colours, structures, and visual elements. Every project includes a detailed 3D visual for client approval before manufacturing begins."
+    },
+    {
+      "q": "What maintenance does commercial soft play equipment need?",
+      "a": "Winera soft play structures are designed for a 10+ year commercial lifespan with standard maintenance. Routine checks include: foam padding condition, PVC cover integrity, structural connection points, and slide surface smoothness — typically quarterly. Daily venue-side maintenance is limited to cleaning and a visual safety check before opening. Winera provides a maintenance schedule and inspection checklist with every installation.\n"
+    },
+    {
+      "q": "What kind of Soft Play Equipment does Winera International supply?",
+      "a": "Winera International manufactures and supplies themed play zones, toddler and junior play areas, multi-level play structures, and ball pit and sensory zones — all custom designed around your space, budget, and target age group, installed by our own team across 50+ cities in India.\n"
+    },
+    {
+      "q": "How much floor space is needed to install a soft play zone?",
+      "a": "A soft play zone can be installed in spaces starting from 500 sq ft. Our design team creates a custom layout around your exact floor dimensions, ensuring every square foot is used effectively — along with a free ROI report before confirming any project.\n"
+    }
+  ],
+  trampolineFaqs: [
+    {
+      "q": "Why does Winera International stand out as the best trampoline park manufacturer in India?",
+      "a": "Winera International manufactures every trampoline park in-house, offers a free ROI report before every project, and installs across 50+ cities through our own team, not a third-party contractor. One partner, from 3D design to after-sales support."
+    },
+    {
+      "q": "What is the trampoline park setup cost in India?",
+      "a": "Trampoline park setup cost in India depends on the facility size, number of attractions, and materials selected. Winera provides a complete cost breakdown — equipment, installation, and maintenance — before confirming any project. Contact our team for a quote specific to your space."
+    },
+    {
+      "q": "Is a trampoline park a profitable business in India?",
+      "a": "Yes, when located in a suitable venue with the right zone mix and pricing model. Trampoline parks generate revenue through entry fees, birthday party packages, school group bookings, corporate events, and membership plans. Winera prepares a free ROI report before every project showing your specific venue's projected daily capacity, estimated monthly revenue, and break-even timeline."
+    },
+    {
+      "q": "What licenses or permissions are required to open a trampoline park in India?",
+      "a": "Requirements vary by state and municipality but typically include a trade license, fire safety NOC, building use permission, and public liability insurance. Winera's team can guide you on general requirements based on your city and consult a local legal advisor for state-specific compliance."
+    },
+    {
+      "q": "What maintenance does a commercial trampoline park require?",
+      "a": "Winera trampoline parks are designed for 8–12 years of commercial operation with regular maintenance. Routine checks include: jump mat tension and condition, spring integrity, foam padding wear, safety net inspection, and frame connection points. A standard maintenance schedule and checklist is provided with every installation. Annual professional servicing is recommended."
+    },
+    {
+      "q": "What is the ideal target audience for a trampoline park in India?",
+      "a": "Children aged 5–15 years form the core audience, but modern trampoline parks increasingly serve teenagers, young adults, and corporate groups through ninja courses, dodgeball arenas, and team-building packages — making them viable for a much wider demographic than traditional play zones."
+    }
+  ],
+  bumpercarFaqs: [
+    {
+      "question": "Where can I buy bumper cars in India?",
+      "answer": "Winera International manufactures and supplies electric floor and battery-operated bumper cars across India for amusement parks, malls, FECs, and gaming zones. We have completed installations in 50+ cities since 2014 and handle setup through our own engineering team."
+    },
+    {
+      "question": "What does the bumper car arena setup cost India?",
+      "answer": "Bumper car price in India depends on drive type, car count, arena size, and customisation. Winera provides a complete cost breakdown — equipment, installation, and maintenance — before you confirm anything. Contact us for a venue-specific quote."
+    },
+    {
+      "question": "What is the difference between electric floor and battery-operated bumper cars?",
+      "answer": "Electric floor bumper cars are powered through a conductive floor grid and ceiling contact system; they run continuously without battery management and suit permanent amusement park installations. Battery-operated bumper cars need no floor modification and can be relocated, making them ideal for malls, gaming zones, and flexible setups.",
+      "a": "Electric floor bumper cars are powered through a conductive floor grid and ceiling contact system; they run continuously without battery management and suit permanent amusement park installations. Battery-operated bumper cars need no floor modification and can be relocated, making them ideal for malls, gaming zones, and flexible setups."
+    },
+    {
+      "question": "Do bumper cars require special flooring?",
+      "answer": "Electric floor bumper cars require a conductive floor grid installation. Battery-operated bumper cars work on any flat surface with no floor modification needed. Our team assesses your existing floor and recommends the right type based on your infrastructure and venue goals."
+    },
+    {
+      "question": "How much floor area do I need for a bumper car attraction?",
+      "answer": "The minimum floor area required is 400 sq ft. A standard 6–8 car setup runs well in 500–700 sq ft. Larger venues with 12–15 cars typically use 1,000 sq ft or more. Our team calculates exact requirements based on your car count and traffic flow during the ROI planning stage."
+    },
+    {
+      "question": "What ROI can I expect from a bumper car ride?",
+      "answer": "ROI varies by venue size, daily footfall, session pricing, and operating hours. Winera prepares a free, venue-specific ROI report for every project covering projected rider capacity, estimated daily revenue, and break-even timeline — calculated against your actual floor size and local pricing, not a generic average."
+    },
+    {
+      "question": "Can bumper cars be used outdoors?",
+      "answer": "Our bumper cars are designed for indoor commercial use. Outdoor setups require a covered structure (shed or canopy) to protect the electrical components and floor systems from weather exposure. We advise on suitable outdoor setup configurations during the venue assessment.",
+      "a": "Our bumper cars are designed for indoor commercial use. Outdoor setups require a covered structure (shed or canopy) to protect the electrical components and floor systems from weather exposure. We advise on suitable outdoor setup configurations during the venue assessment."
+    },
+    {
+      "question": "What maintenance do bumper cars require?",
+      "answer": "Winera bumper cars are built for continuous commercial use with an expected lifespan of 8–12 years. Routine maintenance includes periodic inspection of bumpers, motors, and electrical contacts typically once or twice annually. Battery-operated models require regular battery health checks. We provide a maintenance schedule with every installation."
+    },
+    {
+      "question": "Why choose Winera International as your bumper car supplier in India?",
+      "answer": "Three reasons: first, we provide a free ROI report for your venue before you commit to any purchase. Second, our own engineering team installs and commissions every ride across 50+ cities in India with no third-party contractors. Third, as a direct manufacturer, you receive manufacturer pricing with no distributor markup."
+    }
+  ],
+  arFaqs: [
+    {
+      "question": "Who is a reliable AR games supplier in India?",
+      "q": "Who is a reliable AR games supplier in India?",
+      "answer": "Winera International is a direct AR games supplier in India, sourcing and installing commercial AR and interactive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres.\n",
+      "a": "Winera International is a direct AR games supplier in India, sourcing and installing commercial AR and interactive gaming equipment for malls, hotels, schools, resorts, and family entertainment centres.\n"
+    },
+    {
+      "question": "What is the setup cost for AR gaming equipment in India?",
+      "answer": "AR gaming cost in India depends on the product category, number of units and customisation requirements. Winera provides a complete cost breakdown of equipment, installation, and maintenance before confirming any order. Contact our team for a quote specific to your venue.",
+      "q": "What is the setup cost for AR gaming equipment in India?",
+      "a": "AR gaming cost in India depends on the product category, number of units and customisation requirements. Winera provides a complete cost breakdown of equipment, installation, and maintenance before confirming any order. Contact our team for a quote specific to your venue."
+    },
+    {
+      "question": "What is the minimum space required for AR gaming equipment?",
+      "answer": "Space requirements vary by product. Interactive floor tiles start from 30x30cm per module, while full sports simulators typically require 4–9 metres in length and 3–3.5 metres ceiling height. Winera's team assesses your exact dimensions before recommending compatible products.",
+      "q": "What is the minimum space required for AR gaming equipment?",
+      "a": "Space requirements vary by product. Interactive floor tiles start from 30x30cm per module, while full sports simulators typically require 4–9 metres in length and 3–3.5 metres ceiling height. Winera's team assesses your exact dimensions before recommending compatible products."
+    },
+    {
+      "question": "How do I get started with an AR gaming zone setup from Winera?",
+      "answer": "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP.\n",
+      "q": "How do I get started with an AR gaming zone setup from Winera?",
+      "a": "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP.\n"
+    },
+    {
+      "question": "Can AR gaming equipment be customised with branding or specific game content?",
+      "answer": "Yes. Many products in our range support custom branding, game library selection, and venue-specific content configuration. We confirm available customisation options for each product during the consultation stage.",
+      "q": "Can AR gaming equipment be customised with branding or specific game content?",
+      "a": "Yes. Many products in our range support custom branding, game library selection, and venue-specific content configuration. We confirm available customisation options for each product during the consultation stage."
+    },
+    {
+      "question": "What is the typical ROI for an AR gaming zone in India?",
+      "answer": "ROI depends on your venue type, daily footfall, session pricing, and machine mix. Winera prepares a free ROI report for every project — covering projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline — specific to your venue before you confirm any order.",
+      "q": "What is the typical ROI for an AR gaming zone in India?",
+      "a": "ROI depends on your venue type, daily footfall, session pricing, and machine mix. Winera prepares a free ROI report for every project — covering projected daily sessions, estimated revenue per attraction, maintenance costs, and break-even timeline — specific to your venue before you confirm any order."
+    },
+    {
+      "question": "Does Winera provide after-sales support for AR and interactive gaming equipment?",
+      "answer": "Yes. Our own technicians provide software updates, hardware servicing, and on-site support for all AR games and interactive gaming equipment we install — directly through our own team, without third-party service agents.",
+      "q": "Does Winera provide after-sales support for AR and interactive gaming equipment?",
+      "a": "Yes. Our own technicians provide software updates, hardware servicing, and on-site support for all AR games and interactive gaming equipment we install — directly through our own team, without third-party service agents."
+    },
+    {
+      "question": "How long does AR gaming equipment installation take?",
+      "answer": "Installation timelines depend on the number of products, venue readiness, and configuration complexity. A single interactive floor system can be operational within days, while a complete multi-category AR gaming zone takes longer for full setup and software configuration.",
+      "q": "How long does AR gaming equipment installation take?",
+      "a": "Installation timelines depend on the number of products, venue readiness, and configuration complexity. A single interactive floor system can be operational within days, while a complete multi-category AR gaming zone takes longer for full setup and software configuration."
+    },
+    {
+      "question": "How do I get started with an AR gaming zone setup from Winera?",
+      "answer": "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP.\n",
+      "q": "How do I get started with an AR gaming zone setup from Winera?",
+      "a": "Contact us via our website's contact form, WhatsApp, or call +91 91578 73576. Share your venue type, available floor space, and the type of interactive experience you want to offer. Our team will recommend the right product mix, prepare a free ROI report, and send a quote ASAP.\n"
+    }
+  ],
   testimonials: [
     {
       founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1789360319/winera_uploads/uanfdgdjqntkeaqm8d9u.webp",
@@ -293,6 +530,230 @@ export const defaultSiteData = {
       videoUrl: "https://youtube.com/shorts/lf1VMqxFvR0",
       videoImg: "https://img.youtube.com/vi/lf1VMqxFvR0/sddefault.jpg",
       quote: "Combining soft play and arcade under one roof was our vision but we had no idea how to execute it. We needed a reliable soft play equipment manufacturer in India who could also handle the arcade side. Winera International Pvt. Ltd. designed the House of Pepe layout perfectly; both zones feel different but connected. Customers enjoy both sections equally."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751038/winera_uploads/d2hp3wbwrlideyexncbq.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751038/winera_uploads/d2hp3wbwrlideyexncbq.png",
+      gameZoneName: "Funfair",
+      name: "Funfair",
+      reviewerRole: "Surat",
+      role: "Surat",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345677/winera_uploads/igg4yrl7xhnxllqifpj7.jpg",
+      quote: "Most game zone equipment suppliers just deliver and disappear. What surprised us most about Winera International Pvt. Ltd. was that they actually sat with us, understood our space and planned the entire Funfair game zone layout from scratch. That level of involvement made a real difference to our final setup."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+      gameZoneName: "Playzonia",
+      name: "Playzonia",
+      reviewerRole: "Surat",
+      role: "Surat",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+      quote: "Before finalizing we visited Winera International Pvt. Ltd. previous projects in person. The quality we saw there gave us confidence to move forward with Playzonia. They designed our complete soft play layout, selected age-appropriate equipment for children and handled the full installation from start to finish. Kids enjoy it daily and parents feel safe. That is our biggest win."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881418/winera_uploads/xrrhjysw5s2kv13idbab.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881418/winera_uploads/xrrhjysw5s2kv13idbab.png",
+      gameZoneName: "Uday Palace",
+      name: "Uday Palace",
+      reviewerRole: "Navsari",
+      role: "Navsari",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg",
+      quote: "Adding a game zone to Uday Palace was a new experiment for us. We were looking for a complete indoor amusement park setup company in India and Winera International Pvt. Ltd. made the entire process simple and stress free. Today our game zone is one of the most enjoyed parts of our venue especially by families."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880703/winera_uploads/nzzkicxebupzlpxlmhzy.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880703/winera_uploads/nzzkicxebupzlpxlmhzy.png",
+      gameZoneName: "360 VR Zone",
+      name: "360 VR Zone",
+      reviewerRole: "Gandhidham",
+      role: "Gandhidham",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791883780/winera_uploads/e9haienezg91tzsgj38x.jpg",
+      quote: "Our space was completely underutilized before the VR gaming zone setup. Winera International Pvt. Ltd. transformed our space into a complete VR gaming zone and the results have been outstanding. Now 360 runs are packed almost every day and the ROI came much faster than we expected."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881018/winera_uploads/vvzdaifxodmrp1ivuaf8.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881018/winera_uploads/vvzdaifxodmrp1ivuaf8.png",
+      gameZoneName: "Team Bounce Berry",
+      name: "Team Bounce Berry",
+      reviewerRole: "Mumbai",
+      role: "Mumbai",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885832/winera_uploads/cgxqcpf3yhkezpkq6rdi.webp",
+      quote: "Winera International set up our indoor play area, and the whole process was smooth from design to installation. The space is safe, colourful, and the kids absolutely love it. Parents keep coming back, and it's become the highlight of our venue."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881491/winera_uploads/buvknsolyme0s1f4fblf.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881491/winera_uploads/buvknsolyme0s1f4fblf.png",
+      gameZoneName: "Team Nextgen Gaming Zone",
+      name: "Team Nextgen Gaming Zone",
+      reviewerRole: "Surat",
+      role: "Surat",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885830/winera_uploads/b1krydhxzvuibrbgnuuw.webp",
+      quote: "Winera developed our gaming zone end to end, and their team handled everything professionally. The equipment quality is excellent, and the support after installation has been quick and reliable. A great partner to work with."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880571/winera_uploads/gthc5zzrwzn9gkouwd9r.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880571/winera_uploads/gthc5zzrwzn9gkouwd9r.png",
+      gameZoneName: "Team Rock and Bowl",
+      name: "Team Rock and Bowl",
+      reviewerRole: "Vapi",
+      role: "Vapi",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877846/winera_uploads/ebko4as1kehon9gbnkg7.jpg",
+      quote: "Winera International helped us bring together everything under one roof — bowling, arcade, VR, and kids' play area. The whole project was well managed and finished on time, and honestly the variety is what keeps our guests coming back."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881095/winera_uploads/bcwejmmx5q48jdzujogs.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881095/winera_uploads/bcwejmmx5q48jdzujogs.png",
+      gameZoneName: "Team The Fun Factory",
+      name: "Team The Fun Factory",
+      reviewerRole: "Nallasopara",
+      role: "Nallasopara",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881209/winera_uploads/b9jr71otq8j24u3ugqid.jpg",
+      quote: "Our soft play area was designed and installed exactly to our space and budget. The build quality is great, it's safe for the children, and thanks to Winera International the response from families has been wonderful."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880677/winera_uploads/exkp2vteumt8ky75mdbp.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880677/winera_uploads/exkp2vteumt8ky75mdbp.png",
+      gameZoneName: "Team Zaazaa Play",
+      name: "Team Zaazaa Play",
+      reviewerRole: "Surat",
+      role: "Surat",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/olzpipldgl4mnb7c1y5q.jpg",
+      quote: "From the first design to the final setup, Winera International made everything easy. They understood our space and delivered a bright, safe play area that kids enjoy every day. Professional team, smooth experience."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880235/winera_uploads/gtiimh5jducs44uq90ej.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880235/winera_uploads/gtiimh5jducs44uq90ej.png",
+      gameZoneName: "Team Gif Gaming is Fun",
+      name: "Team Gif Gaming is Fun",
+      reviewerRole: "Surat",
+      role: "Surat",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791885836/winera_uploads/fg9p4noqwygcofknhl7i.webp",
+      quote: "Winera built our multi-level soft play area. The climbing frames, slides, and ball pool are all top quality and completely safe for the kids. They handled everything with real professionalism, and children love spending time here. Their team supported us at every step."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880859/winera_uploads/btgwetb1unmp1qzjvzvd.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880859/winera_uploads/btgwetb1unmp1qzjvzvd.png",
+      gameZoneName: "Team Kidzonation",
+      name: "Team Kidzonation",
+      reviewerRole: "Mumbai",
+      role: "Mumbai",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791884286/winera_uploads/d9xxrrcg3v8trnkiq9kp.jpg",
+      quote: "Winera International built our kids' play area from start to finish, and the whole process was stress-free. The equipment is safe and well made, and our young visitors have a great time."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791876622/winera_uploads/gcaitxliikawd3sx2jj0.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791876622/winera_uploads/gcaitxliikawd3sx2jj0.png",
+      gameZoneName: "Team Fizzy Fox",
+      name: "Team Fizzy Fox",
+      reviewerRole: "Surat",
+      role: "Surat",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg",
+      quote: "Winera developed our game zone and delivered exactly what we needed. The setup was smooth, the equipment quality is top class, and the after-sales support has been dependable. A pleasure to work with."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880086/winera_uploads/snodsgd2vmwbjuoux6gq.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880086/winera_uploads/snodsgd2vmwbjuoux6gq.png",
+      gameZoneName: "Team Rumble Zone",
+      name: "Team Rumble Zone",
+      reviewerRole: "Gurugram",
+      role: "Gurugram",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880685/winera_uploads/ts0qlqlxigm1vfl1qp9s.jpg",
+      quote: "From planning to opening day, Winera International handled our game zone setup professionally. Their team understood our space and delivered on time. Our visitors love it, and it's been great for business."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881052/winera_uploads/bfrwk0i7ho8vwqc65bjy.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791881052/winera_uploads/bfrwk0i7ho8vwqc65bjy.png",
+      gameZoneName: "Team Happy Hoppers",
+      name: "Team Happy Hoppers",
+      reviewerRole: "Surat",
+      role: "Surat",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791882832/winera_uploads/megu51reihwjmg7sodji.jpg",
+      quote: "The indoor kids play zone Winera built for us has become the highlight of our space. The quality of soft play products, attention to safety, and the overall finish of the installation reflects the expertise their team brings to every project."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880827/winera_uploads/lqfwvfukadxhxyvvs313.png",
+      gameZoneName: "Team Playzonia, Surat",
+      name: "Team Playzonia, Surat",
+      reviewerRole: "Surat",
+      role: "Surat",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877055/winera_uploads/projects/kqskvifgcu4d5yuthggs.jpg",
+      quote: "Winera International handled our soft play setup from design to installation with complete professionalism. The 3D design process gave us full clarity before anything was built, and the final soft play equipment quality exceeded our expectations. We've had great visitor response since opening."
+    },
+    {
+      founderImage: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880600/winera_uploads/ziokha3xbk9ae3fatijh.png",
+      img: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791880600/winera_uploads/ziokha3xbk9ae3fatijh.png",
+      gameZoneName: "Team FifthAlley",
+      name: "Team FifthAlley",
+      reviewerRole: "Surat",
+      role: "Surat",
+      starRating: 5,
+      rating: 5,
+      youtubeVideoUrl: "",
+      videoUrl: "",
+      videoImg: "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791877018/winera_uploads/projects/lf45hnr7l9jwbij9gh4q.jpg",
+      quote: "Getting a bowling setup right takes real know-how, and that's what Winera brought. From choosing the right equipment to installing it and training our staff, everything was handled properly and the after-sales support has been just as reliable. Our guests love the lanes."
     }
   ],
   processHome: {
@@ -2054,7 +2515,7 @@ export const getContent = async (req, res) => {
       }
     }
 
-    const activeBlogs = await Blog.find({ isPublished: { $ne: false } }).sort({ id: 1, createdAt: -1 });
+    const activeBlogs = await Blog.find({ isPublished: { $ne: false } }).sort({ createdAt: -1, id: 1 });
     const isStaleBlogPosts = Array.isArray(siteData.blogPosts) && siteData.blogPosts.length > 0 && (
       siteData.blogPosts[0]?.title === 'Blog 1' ||
       siteData.blogPosts[0]?.image === '/src/assets/blog-images.png'
@@ -2727,7 +3188,7 @@ export const mutateContentItem = async (req, res) => {
         if (dupIdx !== -1) {
           list[dupIdx] = { ...list[dupIdx], ...item };
         } else {
-          list.push(item);
+          list.unshift(item);
         }
       }
     } else if (action === 'update') {

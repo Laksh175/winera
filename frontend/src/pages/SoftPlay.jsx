@@ -152,7 +152,7 @@ export default function SoftPlay({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Main Title / Breadcrumb: Home › Soft Play */}
-          <h1 className="winera-softplay-hero-h1" style={{
+          <span className="winera-softplay-hero-h1" style={{
             fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -167,7 +167,7 @@ export default function SoftPlay({ siteData }) {
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>{siteData?.softplayHero?.breadcrumbText || "Soft Play"}</span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -214,11 +214,11 @@ export default function SoftPlay({ siteData }) {
                 height={10}
                 style={{ display: 'block', width: '280px', maxWidth: '75%', height: 'auto', maxHeight: '10px', aspectRatio: '492 / 10', marginBottom: '10px', objectFit: 'contain' }}
               />
-              <h2 className="winera-softplay-supplier-h2" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h1 className="winera-softplay-supplier-h2" style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 <span style={{ color: '#00a8ff' }}>Indoor Soft Play</span>
                 <br />
                 <span>Equipment Manufacturer in India</span>
-              </h2>
+              </h1>
             </div>
 
             {/* Subtitle Description Paragraph */}

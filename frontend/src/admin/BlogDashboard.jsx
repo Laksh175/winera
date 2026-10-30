@@ -174,6 +174,7 @@ export default function BlogDashboard({
               persistSectionToDatabase={persistSectionToDatabase}
               uploadImageFile={uploadImageFile}
               adminToken={admin?.token}
+              setStatusMsg={setStatusMsg}
             />
           )}
     </>

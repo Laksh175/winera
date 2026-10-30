@@ -1930,7 +1930,7 @@ export default function Home({ siteData }) {
           />
 
           <FaqSection
-            faqList={(Array.isArray(siteData?.faqs) && siteData.faqs.length >= 9) ? siteData.faqs : defaultHomeFaqs}
+            faqList={(Array.isArray(siteData?.faqs) && siteData.faqs.length > 0) ? siteData.faqs : defaultHomeFaqs}
             title={siteData?.faqsHeader?.title}
             subtitle={siteData?.faqsHeader?.subtitle}
           />

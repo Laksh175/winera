@@ -289,7 +289,7 @@ export default function TermsAndConditions({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {isPhone ? (
-            <h1 className="winera-terms-hero-h1" style={{
+            <span className="winera-terms-hero-h1" style={{
               fontSize: '1.15rem',
               fontWeight: '800',
               color: '#ffffff',
@@ -306,7 +306,7 @@ export default function TermsAndConditions({ siteData }) {
               <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>{breadcrumbHome}</a>
               <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
               <span style={{ color: '#ffcd00', fontWeight: '900' }}>{breadcrumbText}</span>
-            </h1>
+            </span>
           ) : (
             <>
               <h1 style={{ fontSize: '42px', fontWeight: '900', letterSpacing: '-1px', marginBottom: '8px', lineHeight: 1.15 }}>

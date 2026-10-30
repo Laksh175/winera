@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit, Upload, Eye, ArrowLeft, Calendar, Clock, User, PenTool, Search, CheckCircle, AlertCircle, MoveUp, MoveDown } from 'lucide-react';
-import RichTextareaWithEditor from './RichTextareaWithEditor';
+import BlogRichEditor from './BlogRichEditor';
 import AdminAltInput from './AdminAltInput';
+import ConfirmModal from './ConfirmModal';
+import StatusDropdown from './StatusDropdown';
 import { sanitizeAndFormatHtml } from '../pages/BlogDetail';
 import { fetchBlogs, createBlogApi, updateBlogApi, deleteBlogApi, clearBlogCache } from '../services/api';
+import { calculateReadTime, getWordCount } from '../utils/readTime';
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 
 const getValidImageUrl = (url, fallback) => {
@@ -37,78 +40,63 @@ const parseBlogToForm = (post) => {
       title: '',
       subtitle: '',
       date: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase(),
-      readTime: '4 min read',
+      readTime: '1 min read',
       author: 'Divyang Mandani',
       category: 'INSIGHTS',
       image: '',
       imageAlt: '',
       description: '',
-      sections: [
-        { title: '', paragraph: '' }
-      ]
+      fullContent: '',
+      metaTitle: '',
+      metaDescription: '',
+      canonicalUrl: '',
+      sections: [],
+      isManualReadTime: false,
+      isActive: true,
+      status: 'active',
+      isPublished: true
     };
   }
 
-  // If already has structured sections array
-  if (Array.isArray(post.sections) && post.sections.length > 0) {
-    let desc = post.description || '';
-    if (!desc && post.fullContent) {
-      const cleanRaw = String(post.fullContent).replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n');
-      const firstPart = cleanRaw.split(/\n(?=###\s+)/)[0];
-      if (firstPart && !firstPart.trim().startsWith('###')) {
-        desc = firstPart.trim();
-      }
+  // 1. If post already has fullContent, use it directly
+  let fullContent = (post.fullContent || post.content || '').trim();
+
+  // 2. If fullContent is empty, combine legacy description and sections
+  if (!fullContent) {
+    const parts = [];
+    if (post.description && post.description.trim()) {
+      parts.push(post.description.trim());
     }
-    return {
-      ...post,
-      imageAlt: post.imageAlt || '',
-      description: desc || post.excerpt || '',
-      sections: post.sections.map(s => ({
-        title: s.title || '',
-        paragraph: s.paragraph || s.content || ''
-      }))
-    };
-  }
-
-  // Parse from fullContent markdown stream
-  let raw = String(post.fullContent || post.content || '');
-  if (!raw.trim()) {
-    return {
-      ...post,
-      description: post.description || post.excerpt || '',
-      sections: [{ title: '', paragraph: '' }]
-    };
-  }
-
-  // Convert literal string representations of newlines to real newlines
-  raw = raw.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n');
-
-  const parts = raw.split(/\n(?=###\s+)/);
-  let description = '';
-  let sections = [];
-
-  parts.forEach((part, index) => {
-    const trimmed = part.trim();
-    if (trimmed.startsWith('###')) {
-      const lines = trimmed.split('\n');
-      const title = lines[0].replace(/^###\s*/, '').trim();
-      const paragraph = lines.slice(1).join('\n').trim();
-      sections.push({ title, paragraph });
-    } else if (index === 0) {
-      description = trimmed;
-    } else {
-      sections.push({ title: '', paragraph: trimmed });
+    if (Array.isArray(post.sections) && post.sections.length > 0) {
+      post.sections.forEach(s => {
+        const t = (s.title || '').trim();
+        const p = (s.paragraph || s.content || '').trim();
+        if (t && p) parts.push(`<h3>${t}</h3>\n<p>${p}</p>`);
+        else if (t) parts.push(`<h3>${t}</h3>`);
+        else if (p) parts.push(`<p>${p}</p>`);
+      });
     }
-  });
-
-  if (sections.length === 0) {
-    sections = [{ title: '', paragraph: '' }];
+    fullContent = parts.join('\n\n');
   }
+
+  const computedReadTime = calculateReadTime(fullContent);
+  const initialReadTime = post.readTime && post.readTime.trim() ? post.readTime : computedReadTime;
+  const isPostActive = post.isActive !== false && post.status !== 'inactive' && post.isPublished !== false;
 
   return {
     ...post,
-    description: description || post.excerpt || '',
-    sections
+    imageAlt: post.imageAlt || '',
+    description: post.description || post.excerpt || '',
+    fullContent: fullContent,
+    readTime: initialReadTime,
+    metaTitle: post.metaTitle || '',
+    metaDescription: post.metaDescription || '',
+    canonicalUrl: post.canonicalUrl || '',
+    sections: [],
+    isManualReadTime: Boolean(post.readTime && post.readTime.trim() && post.readTime !== computedReadTime && post.readTime !== '4 min read'),
+    isActive: isPostActive,
+    status: isPostActive ? 'active' : 'inactive',
+    isPublished: isPostActive
   };
 };
 
@@ -117,8 +105,26 @@ export default function BlogAdminManagement({
   setFormData,
   persistSectionToDatabase,
   uploadImageFile,
-  adminToken
+  adminToken,
+  setStatusMsg
 }) {
+  const [toast, setToast] = useState(null);
+  const [confirmModal, setConfirmModal] = useState(null);
+
+  const showToast = (message, type = 'success') => {
+    if (typeof setStatusMsg === 'function') {
+      setStatusMsg(message);
+    }
+    setToast({ message, type });
+  };
+
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
   const isDummyPosts = Array.isArray(formData.blogPosts) && formData.blogPosts.length > 0 && (
     formData.blogPosts[0]?.title === 'Blog 1' ||
     formData.blogPosts[0]?.image === '/src/assets/blog-images.png'
@@ -138,7 +144,7 @@ export default function BlogAdminManagement({
   // Initialize or synchronize posts in formData if empty or dummy
   useEffect(() => {
     if (!Array.isArray(formData.blogPosts) || formData.blogPosts.length === 0 || isDummyPosts) {
-      fetchBlogs({ limit: 'all' })
+      fetchBlogs({ limit: 'all', includeInactive: 'true' })
         .then(res => {
           if (res?.success && Array.isArray(res.blogs || res.posts)) {
             setFormData(prev => ({
@@ -167,128 +173,142 @@ export default function BlogAdminManagement({
     setActiveTabPreview(false);
   };
 
-  const handleDeletePost = async (index) => {
-    if (window.confirm('Are you sure you want to delete this blog post?')) {
-      const postToDelete = rawList[index];
-      const updated = rawList.filter((_, i) => i !== index);
-      setFormData(prev => ({ ...prev, blogPosts: updated }));
-      await persistSectionToDatabase('blogPosts', updated);
-      if (postToDelete?._id || postToDelete?.id || postToDelete?.slug) {
-        try {
-          await deleteBlogApi(postToDelete._id || postToDelete.id || postToDelete.slug, adminToken);
-        } catch (delErr) {
-          console.warn('Direct blog delete notice:', delErr);
-        }
+  const handleToggleBlogStatus = async (index, newStatus, isAct) => {
+    const post = rawList[index];
+    if (!post) return;
+
+    const updatedPost = {
+      ...post,
+      isActive: isAct,
+      status: newStatus,
+      isPublished: isAct
+    };
+
+    const updatedList = [...rawList];
+    updatedList[index] = updatedPost;
+
+    setFormData(prev => ({
+      ...prev,
+      blogPosts: updatedList
+    }));
+
+    clearBlogCache();
+
+    try {
+      const idToUpdate = post._id || post.id || post.slug;
+      if (idToUpdate) {
+        await updateBlogApi(idToUpdate, updatedPost, adminToken);
       }
+      if (typeof persistSectionToDatabase === 'function') {
+        await persistSectionToDatabase('blogPosts', updatedList);
+      }
+      showToast(
+        `'${post.title || 'Blog'}' is now ${isAct ? '🟢 Active (Visible on website)' : '🔴 Inactive (Hidden on website)'}!`,
+        'success'
+      );
+    } catch (err) {
+      console.error('Failed to update blog status:', err);
+      showToast(`Failed to update status: ${err?.message || 'Server error'}`, 'error');
     }
   };
 
-  const handleAddSection = () => {
-    setEditingBlog(prev => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        sections: [...(prev.sections || []), { title: '', paragraph: '' }]
-      };
-    });
-  };
-
-  const handleRemoveSection = (secIndex) => {
-    setEditingBlog(prev => {
-      if (!prev) return prev;
-      if ((prev.sections || []).length <= 1) {
-        alert('At least one section is required. You can leave it empty if not needed.');
-        return prev;
+  const handleDeletePost = (index) => {
+    const postToDelete = rawList[index];
+    setConfirmModal({
+      title: 'Delete Blog Post?',
+      message: `Are you sure you want to permanently delete '${postToDelete?.title || 'this blog post'}'? This action cannot be undone.`,
+      iconType: 'delete',
+      confirmText: 'Yes, Delete Blog',
+      onConfirm: async () => {
+        const updated = rawList.filter((_, i) => i !== index);
+        setFormData(prev => ({ ...prev, blogPosts: updated }));
+        clearBlogCache();
+        if (postToDelete?._id || postToDelete?.id || postToDelete?.slug) {
+          try {
+            await deleteBlogApi(postToDelete._id || postToDelete.id || postToDelete.slug, adminToken);
+          } catch (delErr) {
+            console.warn('Direct blog delete notice:', delErr);
+          }
+        }
+        await persistSectionToDatabase('blogPosts', updated);
+        clearBlogCache();
+        showToast(`Blog post '${postToDelete?.title || 'item'}' deleted successfully!`, 'delete');
       }
-      const updated = prev.sections.filter((_, i) => i !== secIndex);
-      return { ...prev, sections: updated };
     });
   };
 
-  const handleSectionChange = (secIndex, field, val) => {
-    setEditingBlog(prev => {
-      if (!prev) return prev;
-      const list = [...(prev.sections || [])];
-      list[secIndex] = { ...(list[secIndex] || {}), [field]: val };
-      return { ...prev, sections: list };
-    });
-  };
-
-  const handleMoveSection = (secIndex, direction) => {
-    setEditingBlog(prev => {
-      if (!prev) return prev;
-      const list = [...(prev.sections || [])];
-      const targetIdx = direction === 'up' ? secIndex - 1 : secIndex + 1;
-      if (targetIdx < 0 || targetIdx >= list.length) return prev;
-      const temp = list[secIndex];
-      list[secIndex] = list[targetIdx];
-      list[targetIdx] = temp;
-      return { ...prev, sections: list };
-    });
-  };
 
   const handleSaveBlogForm = async () => {
     if (!editingBlog) return;
     if (!editingBlog.title || !editingBlog.title.trim()) {
-      alert('Please enter a Main Heading / Title for the blog.');
+      showToast('Please enter a Main Heading / Title for the blog.', 'warning');
       return;
     }
 
-    // Synthesize fullContent markdown stream
-    const contentParts = [];
-    if (editingBlog.description && editingBlog.description.trim()) {
-      contentParts.push(editingBlog.description.trim());
-    }
-    if (Array.isArray(editingBlog.sections)) {
-      editingBlog.sections.forEach(sec => {
-        const t = (sec.title || '').trim();
-        const p = (sec.paragraph || '').trim();
-        if (t && p) {
-          contentParts.push(`### ${t}\n\n${p}`);
-        } else if (t) {
-          contentParts.push(`### ${t}`);
-        } else if (p) {
-          contentParts.push(p);
-        }
-      });
+    const fullContent = (editingBlog.fullContent || '').trim();
+    if (!fullContent) {
+      showToast('Please enter content for the blog article.', 'warning');
+      return;
     }
 
-    const fullContent = contentParts.join('\n\n');
     const slug = editingBlog.slug?.trim() || editingBlog.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    const rawDesc = (editingBlog.description || '').replace(/<[^>]+>/g, '').trim();
-    const excerpt = rawDesc ? (rawDesc.substring(0, 160).replace(/\n/g, ' ') + '...') : '';
+    const cleanText = fullContent.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const excerpt = editingBlog.excerpt || (cleanText ? `${cleanText.substring(0, 160)}...` : '');
+    const description = editingBlog.description || (cleanText ? cleanText.substring(0, 300) : '');
+    const autoRead = calculateReadTime(fullContent);
+    const isAct = editingBlog.isActive !== false && editingBlog.status !== 'inactive' && editingBlog.isPublished !== false;
 
     const finalizedPost = {
       ...editingBlog,
+      isActive: isAct,
+      status: isAct ? 'active' : 'inactive',
+      isPublished: isAct,
+      readTime: editingBlog.readTime?.trim() || autoRead,
       slug,
-      excerpt: editingBlog.excerpt || excerpt,
+      excerpt,
       fullContent,
-      description: editingBlog.description || '',
-      sections: editingBlog.sections || []
+      description,
+      sections: []
     };
 
     let updatedList = [...rawList];
+    let savedApiPost = null;
+    let saveFailed = false;
+
+    try {
+      if (activeView === 'create' || currentEditIndex === null) {
+        const res = await createBlogApi(finalizedPost, adminToken);
+        savedApiPost = res?.blog || res?.post || null;
+      } else {
+        const idToUpdate = finalizedPost._id || finalizedPost.id || finalizedPost.slug;
+        const res = await updateBlogApi(idToUpdate, finalizedPost, adminToken);
+        savedApiPost = res?.blog || res?.post || null;
+      }
+    } catch (apiErr) {
+      console.error('Direct blog API sync error:', apiErr);
+      const errMsg = apiErr?.response?.data?.message || apiErr?.message || 'Unknown server error';
+      showToast(`⚠️ Blog save error: ${errMsg}\nPlease check your network or login session and try again.`, 'error');
+      saveFailed = true;
+    }
+
+    if (saveFailed) {
+      return; // Stop here so form contents are not lost and fake success message is not displayed!
+    }
+
+    const postWithDbIds = savedApiPost ? { ...finalizedPost, ...savedApiPost } : finalizedPost;
+
     if (activeView === 'create' || currentEditIndex === null) {
-      updatedList = [finalizedPost, ...updatedList];
+      updatedList = [postWithDbIds, ...updatedList];
     } else {
-      updatedList[currentEditIndex] = finalizedPost;
+      updatedList[currentEditIndex] = postWithDbIds;
     }
 
     setFormData(prev => ({ ...prev, blogPosts: updatedList }));
     clearBlogCache();
     await persistSectionToDatabase('blogPosts', updatedList);
-    try {
-      if (activeView === 'create' || currentEditIndex === null) {
-        await createBlogApi(finalizedPost, adminToken);
-      } else {
-        const idToUpdate = finalizedPost._id || finalizedPost.id || finalizedPost.slug;
-        await updateBlogApi(idToUpdate, finalizedPost, adminToken);
-      }
-    } catch (apiErr) {
-      console.warn('Direct blog API sync notice:', apiErr);
-    }
     clearBlogCache();
-    alert('Blog post saved successfully! Changes are live on the website.');
+    const actionLabel = activeView === 'create' || currentEditIndex === null ? 'created' : 'updated';
+    showToast(`Blog post ${actionLabel} successfully! Changes are live on the website.`, 'success');
     setActiveView('list');
     setEditingBlog(null);
   };
@@ -300,12 +320,26 @@ export default function BlogAdminManagement({
       const res = await uploadImageFile(file, adminToken);
       if (res && res.url) {
         setEditingBlog(prev => ({ ...prev, image: res.url }));
+        showToast('Blog image uploaded successfully!', 'success');
       }
     } catch (err) {
-      alert('Image upload failed: ' + (err.message || 'Unknown error'));
+      showToast('Image upload failed: ' + (err.message || 'Unknown error'), 'error');
     } finally {
       setIsUploading(false);
     }
+  };
+
+  const handleDiscardChanges = () => {
+    setConfirmModal({
+      title: 'Discard Unsaved Changes?',
+      message: 'Are you sure you want to discard your edits and return to the blog list?',
+      iconType: 'discard',
+      confirmText: 'Yes, Discard',
+      onConfirm: () => {
+        setActiveView('list');
+        setEditingBlog(null);
+      }
+    });
   };
 
   const filteredPosts = rawList.filter(p => {
@@ -317,6 +351,121 @@ export default function BlogAdminManagement({
 
   return (
     <div style={{ background: '#ffffff', borderRadius: '24px', padding: '32px', boxShadow: '0 4px 24px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0', fontFamily: "'Open Sans', sans-serif" }}>
+      {/* ─── COMMON REUSABLE CONFIRMATION MODAL ─── */}
+      <ConfirmModal
+        modal={confirmModal}
+        onClose={() => setConfirmModal(null)}
+      />
+
+      {/* Professional Toast Notification for Blog Dashboard */}
+      {toast && (() => {
+        const isErr = toast.type === 'error';
+        const isWarn = toast.type === 'warning';
+        const isDel = toast.type === 'delete';
+        const badgeTitle = isErr ? 'Action Failed' : (isWarn ? 'Attention Required' : (isDel ? 'Deleted Successfully' : 'Saved Successfully'));
+        const bgGrad = isErr
+          ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.98), rgba(220, 38, 38, 0.98))'
+          : (isWarn
+            ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.98), rgba(217, 119, 6, 0.98))'
+            : (isDel
+              ? 'linear-gradient(135deg, rgba(249, 115, 22, 0.98), rgba(234, 88, 12, 0.98))'
+              : 'linear-gradient(135deg, rgba(16, 185, 129, 0.98), rgba(5, 150, 105, 0.98))'));
+        const shadowCol = isErr ? 'rgba(239, 68, 68, 0.35)' : (isWarn ? 'rgba(245, 158, 11, 0.35)' : 'rgba(16, 185, 129, 0.35)');
+
+        return (
+          <>
+            <style>{`
+              @keyframes blogToastSlide {
+                0% { transform: translateY(-24px) scale(0.92); opacity: 0; }
+                100% { transform: translateY(0) scale(1); opacity: 1; }
+              }
+            `}</style>
+            <div style={{
+              position: 'fixed',
+              top: '26px',
+              right: '26px',
+              zIndex: 99999,
+              background: bgGrad,
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              color: '#ffffff',
+              padding: '16px 22px',
+              borderRadius: '18px',
+              boxShadow: `0 20px 45px -10px ${shadowCol}, 0 0 0 1px rgba(255, 255, 255, 0.22)`,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+              maxWidth: '460px',
+              minWidth: '320px',
+              animation: 'blogToastSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+              pointerEvents: 'auto'
+            }}>
+              <div style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '12px',
+                background: 'rgba(255, 255, 255, 0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                {isErr || isWarn ? (
+                  <AlertCircle style={{ width: '22px', height: '22px', color: '#ffffff' }} />
+                ) : (
+                  <CheckCircle style={{ width: '22px', height: '22px', color: '#ffffff' }} />
+                )}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{
+                  fontSize: '10.5px',
+                  fontWeight: '900',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  opacity: 0.9,
+                  marginBottom: '2px'
+                }}>
+                  {badgeTitle}
+                </div>
+                <div style={{
+                  fontSize: '13.5px',
+                  fontWeight: '700',
+                  lineHeight: '1.45',
+                  wordBreak: 'break-word',
+                  color: '#ffffff'
+                }}>
+                  {toast.message}
+                </div>
+              </div>
+              <button
+                onClick={() => setToast(null)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.22)',
+                  border: 'none',
+                  color: '#ffffff',
+                  width: '28px',
+                  height: '28px',
+                  borderRadius: '50%',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '13px',
+                  fontWeight: '900',
+                  marginLeft: '4px',
+                  flexShrink: 0,
+                  transition: 'background 0.2s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.35)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.22)'}
+                title="Close"
+              >
+                ✕
+              </button>
+            </div>
+          </>
+        );
+      })()}
       
       {/* ─── VIEW 1: BLOGS LIST VIEW ─── */}
       {activeView === 'list' && (
@@ -396,6 +545,7 @@ export default function BlogAdminManagement({
               filteredPosts.map((post, index) => {
                 const originalIndex = rawList.findIndex(p => p.id === post.id || p.title === post.title);
                 const postImg = getValidImageUrl(post.image || post.imgUrl, blogCardImg, post.id, originalIndex >= 0 ? originalIndex : index);
+                const isPostActive = post.isActive !== false && post.status !== 'inactive' && post.isPublished !== false;
 
                 return (
                   <div
@@ -405,12 +555,13 @@ export default function BlogAdminManagement({
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       gap: '20px',
-                      background: '#f8fafc',
+                      background: isPostActive ? '#f8fafc' : '#fff1f2',
                       borderRadius: '18px',
                       padding: '18px 20px',
-                      border: '1.5px solid #e2e8f0',
+                      border: isPostActive ? '1.5px solid #e2e8f0' : '1.5px solid #fecdd3',
                       transition: 'all 0.2s ease',
-                      flexWrap: 'wrap'
+                      flexWrap: 'wrap',
+                      opacity: isPostActive ? 1 : 0.92
                     }}
                   >
                     {/* Left: Defined 16:9 Thumbnail Image + Title & Meta */}
@@ -422,7 +573,7 @@ export default function BlogAdminManagement({
                         overflow: 'hidden',
                         background: '#0f172a',
                         flexShrink: 0,
-                        border: '1.5px solid #cbd5e1',
+                        border: isPostActive ? '1.5px solid #cbd5e1' : '1.5px solid #fca5a5',
                         position: 'relative'
                       }}>
                         <img
@@ -445,7 +596,7 @@ export default function BlogAdminManagement({
                           <span>•</span>
                           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                             <Clock style={{ width: '13px', height: '13px', color: '#0284c7' }} />
-                            {post.readTime || '4 min read'}
+                            {post.readTime || calculateReadTime(post.fullContent || post.content) || '1 min read'}
                           </span>
                           <span>•</span>
                           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#0284c7', fontWeight: '700' }}>
@@ -453,14 +604,39 @@ export default function BlogAdminManagement({
                             {post.author || 'Divyang Mandani'}
                           </span>
                         </div>
-                        <div style={{ marginTop: '3px', fontSize: '12px', color: '#0284c7', fontWeight: '700' }}>
-                          🔗 <span style={{ color: '#64748b' }}>/blog/</span>{post.slug || post.id}
+                        <div style={{ marginTop: '3px', fontSize: '12px', color: '#0284c7', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                          <span>🔗 <span style={{ color: '#64748b' }}>/blog/</span>{post.slug || post.id}</span>
+                          {!isPostActive && (
+                            <span style={{
+                              background: '#fee2e2',
+                              color: '#b91c1c',
+                              border: '1px solid #fca5a5',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              fontSize: '11px',
+                              fontWeight: '800',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px'
+                            }}>
+                              ● Inactive (Hidden on website)
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
 
-                    {/* Right: Action Buttons */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    {/* Right: Action Buttons with StatusDropdown */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                      <StatusDropdown
+                        isActive={isPostActive}
+                        status={post.status || (isPostActive ? 'active' : 'inactive')}
+                        direction={index >= filteredPosts.length - 2 && filteredPosts.length > 2 ? 'up' : 'down'}
+                        onChange={async (newStatus, isAct) => {
+                          await handleToggleBlogStatus(originalIndex >= 0 ? originalIndex : index, newStatus, isAct);
+                        }}
+                      />
+
                       <a
                         href={`/blog/${post.slug || post.id}`}
                         target="_blank"
@@ -543,12 +719,7 @@ export default function BlogAdminManagement({
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <button
                 type="button"
-                onClick={() => {
-                  if (window.confirm('Discard unsaved changes?')) {
-                    setActiveView('list');
-                    setEditingBlog(null);
-                  }
-                }}
+                onClick={handleDiscardChanges}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -635,7 +806,7 @@ export default function BlogAdminManagement({
                 <span>•</span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                   <Clock style={{ width: '14px', height: '14px', color: '#0284c7' }} />
-                  {editingBlog.readTime || '4 min read'}
+                  {editingBlog.readTime || calculateReadTime(editingBlog.fullContent) || '1 min read'}
                 </span>
                 <span>•</span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#0284c7', fontWeight: '700' }}>
@@ -651,34 +822,42 @@ export default function BlogAdminManagement({
                 </div>
               )}
 
-              {/* Description */}
-              {editingBlog.description && (
+              {/* Blog Article Content Preview */}
+              {editingBlog.fullContent ? (
                 <div
-                  className="winera-admin-blog-preview"
-                  style={{ fontSize: '17px', color: '#334155', lineHeight: 1.85, fontWeight: '400', marginBottom: '24px' }}
-                  dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(editingBlog.description.replace(/\n/g, '<br>')) }}
+                  className="winera-blog-article-content winera-admin-blog-preview"
+                  style={{ fontSize: '16.5px', color: '#334155', lineHeight: 1.85, fontWeight: '400', marginBottom: '24px' }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(editingBlog.fullContent) }}
                 />
-              )}
-
-              {/* Sub-sections */}
-              {editingBlog.sections?.map((sec, idx) => (
-                <div key={idx} style={{ marginBottom: '28px' }}>
-                  {sec.title && (
-                    <h3
-                      className="winera-admin-blog-preview"
-                      style={{ fontSize: '22px', fontWeight: '600', color: '#0f172a', margin: '28px 0 12px', lineHeight: 1.35 }}
-                      dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(sec.title) }}
-                    />
-                  )}
-                  {sec.paragraph && (
+              ) : (
+                <>
+                  {editingBlog.description && (
                     <div
                       className="winera-admin-blog-preview"
-                      style={{ fontSize: '17px', color: '#334155', lineHeight: 1.85, fontWeight: '400' }}
-                      dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(sec.paragraph.replace(/\n/g, '<br>')) }}
+                      style={{ fontSize: '17px', color: '#334155', lineHeight: 1.85, fontWeight: '400', marginBottom: '24px' }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(editingBlog.description.replace(/\n/g, '<br>')) }}
                     />
                   )}
-                </div>
-              ))}
+                  {editingBlog.sections?.map((sec, idx) => (
+                    <div key={idx} style={{ marginBottom: '28px' }}>
+                      {sec.title && (
+                        <h3
+                          className="winera-admin-blog-preview"
+                          style={{ fontSize: '22px', fontWeight: '600', color: '#0f172a', margin: '28px 0 12px', lineHeight: 1.35 }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(sec.title) }}
+                        />
+                      )}
+                      {sec.paragraph && (
+                        <div
+                          className="winera-admin-blog-preview"
+                          style={{ fontSize: '17px', color: '#334155', lineHeight: 1.85, fontWeight: '400' }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(sec.paragraph.replace(/\n/g, '<br>')) }}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           ) : (
             /* EDITOR FORM */
@@ -742,8 +921,30 @@ export default function BlogAdminManagement({
                 </p>
               </div>
 
-              {/* 2. META BAR: DATE, READ TIME, FOUNDER/AUTHOR */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px' }}>
+              {/* 2. META BAR: STATUS, DATE, READ TIME, FOUNDER/AUTHOR */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
+                {/* Visibility Status */}
+                <div>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                    <CheckCircle style={{ width: '14px', height: '14px', color: '#0284c7' }} />
+                    Visibility Status
+                  </label>
+                  <StatusDropdown
+                    isActive={editingBlog.isActive !== false && editingBlog.status !== 'inactive' && editingBlog.isPublished !== false}
+                    status={editingBlog.status || (editingBlog.isActive === false ? 'inactive' : 'active')}
+                    size="md"
+                    align="left"
+                    onChange={(newStatus, isAct) => {
+                      setEditingBlog(prev => ({
+                        ...prev,
+                        isActive: isAct,
+                        status: newStatus,
+                        isPublished: isAct
+                      }));
+                    }}
+                  />
+                </div>
+
                 {/* Date */}
                 <div>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
@@ -759,19 +960,73 @@ export default function BlogAdminManagement({
                   />
                 </div>
 
-                {/* Read Time */}
+                {/* Read Time with Auto-Detection & Word Count */}
                 <div>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
-                    <Clock style={{ width: '14px', height: '14px', color: '#0284c7' }} />
-                    Read Text
-                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', flexWrap: 'wrap', gap: '6px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                      <Clock style={{ width: '14px', height: '14px', color: '#0284c7' }} />
+                      Read Text
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const auto = calculateReadTime(editingBlog.fullContent);
+                        const words = getWordCount(editingBlog.fullContent);
+                        setEditingBlog(prev => ({ ...prev, readTime: auto, isManualReadTime: false }));
+                        showToast(`⚡ Auto-detected: '${auto}' based on ${words} words!`, 'info');
+                      }}
+                      title="Click to recalculate reading time based on total word count"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '11px',
+                        color: '#0284c7',
+                        background: '#e0f2fe',
+                        border: '1px solid #bae6fd',
+                        padding: '2px 8px',
+                        borderRadius: '6px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      ⚡ Auto: {calculateReadTime(editingBlog.fullContent)} ({getWordCount(editingBlog.fullContent)} words)
+                    </button>
+                  </div>
                   <input
                     type="text"
                     placeholder="e.g. 4 min read"
                     value={editingBlog.readTime || ''}
-                    onChange={(e) => setEditingBlog(prev => ({ ...prev, readTime: e.target.value }))}
+                    onChange={(e) => setEditingBlog(prev => ({ ...prev, readTime: e.target.value, isManualReadTime: true }))}
                     style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', boxSizing: 'border-box' }}
                   />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px' }}>
+                    <span style={{ fontSize: '11px', color: '#64748b' }}>
+                      {editingBlog.isManualReadTime ? '✏️ Custom manual value entered' : '⚡ Auto-syncs with content length (~200 words/min)'}
+                    </span>
+                    {editingBlog.isManualReadTime && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const auto = calculateReadTime(editingBlog.fullContent);
+                          setEditingBlog(prev => ({ ...prev, readTime: auto, isManualReadTime: false }));
+                        }}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: '#0284c7',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          textDecoration: 'underline',
+                          padding: 0
+                        }}
+                      >
+                        Reset to Auto
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {/* Founder / Author Name */}
@@ -835,6 +1090,45 @@ export default function BlogAdminManagement({
                           }}
                         />
                       </label>
+
+                      {editingBlog.image && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setConfirmModal({
+                              title: 'Delete Featured Image?',
+                              message: 'Are you sure you want to remove the featured image of this blog post?',
+                              iconType: 'delete',
+                              confirmText: 'Yes, Delete Image',
+                              onConfirm: () => {
+                                setEditingBlog(prev => ({ ...prev, image: '', imageAlt: '' }));
+                                showToast('Featured image removed.', 'delete');
+                              }
+                            });
+                          }}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            background: '#fee2e2',
+                            color: '#dc2626',
+                            border: '1.5px solid #fca5a5',
+                            padding: '10px 14px',
+                            borderRadius: '10px',
+                            fontWeight: '700',
+                            fontSize: '13px',
+                            cursor: 'pointer',
+                            whiteSpace: 'nowrap',
+                            transition: 'background 0.15s ease'
+                          }}
+                          onMouseEnter={(e) => { e.currentTarget.style.background = '#fecaca'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.background = '#fee2e2'; }}
+                          title="Delete / Remove Featured Image"
+                        >
+                          <Trash2 style={{ width: '14px', height: '14px', marginRight: '6px' }} />
+                          Delete Image
+                        </button>
+                      )}
                     </div>
                     <AdminAltInput
                       compact
@@ -868,153 +1162,206 @@ export default function BlogAdminManagement({
                     <div style={{ position: 'absolute', bottom: '4px', right: '6px', background: 'rgba(0,0,0,0.65)', color: '#fff', fontSize: '10px', padding: '1px 6px', borderRadius: '4px', fontWeight: '700' }}>
                       16:9
                     </div>
+                    {editingBlog.image && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setConfirmModal({
+                            title: 'Delete Featured Image?',
+                            message: 'Are you sure you want to remove the featured image of this blog post?',
+                            iconType: 'delete',
+                            confirmText: 'Yes, Delete Image',
+                            onConfirm: () => {
+                              setEditingBlog(prev => ({ ...prev, image: '', imageAlt: '' }));
+                              showToast('Featured image removed.', 'delete');
+                            }
+                          });
+                        }}
+                        style={{
+                          position: 'absolute',
+                          top: '6px',
+                          right: '6px',
+                          background: 'rgba(239, 68, 68, 0.92)',
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '6px',
+                          padding: '3px 8px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          fontSize: '10px',
+                          fontWeight: '800',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.4)'
+                        }}
+                        title="Delete Featured Image"
+                      >
+                        <Trash2 style={{ width: '11px', height: '11px' }} /> Delete
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
 
-              {/* 4. DESCRIPTION (INTRODUCTORY PARAGRAPHS) */}
-              <div>
-                <RichTextareaWithEditor
-                  label="Description (Introductory Overview Paragraphs)"
-                  placeholder="Enter introductory paragraphs before sub-sections (e.g. Kids today spend too much time inside...)"
-                  rows={4}
-                  value={editingBlog.description || ''}
-                  onChange={(val) => setEditingBlog(prev => ({ ...prev, description: val }))}
-                  fontSize="15px"
-                  lineHeight={1.75}
-                  color="#334155"
+              {/* 4. FULL BLOG CONTENT (ALL-IN-ONE WYSIWYG EDITOR) */}
+              <div style={{ marginTop: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+                      Blog Article Content (Rich WYSIWYG Editor) <span style={{ color: '#ef4444' }}>*</span>
+                    </label>
+                  </div>
+                  <span style={{ fontSize: '11px', color: '#0284c7', fontWeight: '800', background: '#e0f2fe', padding: '3px 10px', borderRadius: '8px' }}>
+                    All-in-One Editor
+                  </span>
+                </div>
+
+                <BlogRichEditor
+                  value={editingBlog.fullContent || ''}
+                  onChange={(val) => {
+                    const autoRead = calculateReadTime(val);
+                    setEditingBlog(prev => ({
+                      ...prev,
+                      fullContent: val,
+                      readTime: !prev?.isManualReadTime ? autoRead : prev.readTime
+                    }));
+                  }}
+                  uploadImageFile={uploadImageFile}
+                  adminToken={adminToken}
+                  showNotification={showToast}
+                  onRequestConfirm={setConfirmModal}
+                  minHeight="520px"
                 />
               </div>
 
-              {/* 5. DYNAMIC SECTIONS (TITLE + PARAGRAPH BOXES) */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '10px' }}>
-                <div>
-                  <h4 style={{ fontSize: '15px', fontWeight: '900', color: '#0f172a', margin: 0 }}>
-                    Blog Content Sub-Sections ({editingBlog.sections?.length || 0})
-                  </h4>
-                  <p style={{ fontSize: '12.5px', color: '#64748b', margin: '2px 0 0' }}>
-                    Each section contains a Sub-Heading (Title) and Paragraph with rich text formatting.
-                  </p>
+              {/* 5. PER-BLOG SEO META SETTINGS (Google Search Preview, Meta Title & Description) */}
+              <div style={{
+                marginTop: '32px',
+                padding: '26px 28px',
+                borderRadius: '24px',
+                background: '#ffffff',
+                border: '1.5px solid #e2e8f0',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.03)'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+                  <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', margin: '0 0 4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span>🔍</span> SEO Meta Title & Description Settings
+                    </h3>
+                    <p style={{ fontSize: '12.5px', color: '#64748b', margin: 0, fontWeight: '500' }}>
+                      Configure custom search engine title, meta description, and canonical URL specifically for this blog post.
+                    </p>
+                  </div>
+                  <span style={{ fontSize: '12px', background: '#e0f2fe', color: '#0284c7', padding: '5px 14px', borderRadius: '20px', fontWeight: '800' }}>
+                    Google Search Preview
+                  </span>
                 </div>
 
-                {/* List of Dynamic Sub-Sections */}
-                {editingBlog.sections?.map((sec, secIdx) => (
-                  <div
-                    key={secIdx}
-                    style={{
-                      background: '#f8fafc',
-                      borderRadius: '16px',
-                      padding: '20px',
-                      border: '1.5px solid #cbd5e1',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '14px',
-                      position: 'relative'
-                    }}
-                  >
-                    {/* Section Top Bar: Section Number & Controls */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <span style={{ fontSize: '13px', fontWeight: '800', color: '#0284c7', background: '#e0f2fe', padding: '3px 10px', borderRadius: '8px' }}>
-                        Section #{secIdx + 1}
-                      </span>
+                {/* Google Search Result Live Preview Card */}
+                <div style={{ background: '#f8fafc', borderRadius: '16px', padding: '18px 22px', marginBottom: '24px', border: '1px solid #cbd5e1' }}>
+                  <div style={{ fontSize: '12px', color: '#475569', marginBottom: '4px', wordBreak: 'break-all', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>🌐</span>
+                    <span>{editingBlog.canonicalUrl || `https://winera.in/blog/${editingBlog.slug || 'blog-slug'}`}</span>
+                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#1a0dab', marginBottom: '6px', lineHeight: 1.3, cursor: 'pointer' }}>
+                    {editingBlog.metaTitle || (editingBlog.title ? `${editingBlog.title} | Winera International` : 'Blog Article Title | Winera International')}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#4d5156', lineHeight: 1.5 }}>
+                    {editingBlog.metaDescription || editingBlog.description || (editingBlog.fullContent ? editingBlog.fullContent.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').substring(0, 160) + '...' : 'Read expert insights on game zone setup and indoor entertainment on Winera International.')}
+                  </div>
+                </div>
 
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        {secIdx > 0 && (
-                          <button
-                            type="button"
-                            title="Move Up"
-                            onClick={() => handleMoveSection(secIdx, 'up')}
-                            style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '6px', padding: '4px', cursor: 'pointer', color: '#475569' }}
-                          >
-                            <MoveUp style={{ width: '13px', height: '13px' }} />
-                          </button>
-                        )}
-                        {secIdx < (editingBlog.sections.length - 1) && (
-                          <button
-                            type="button"
-                            title="Move Down"
-                            onClick={() => handleMoveSection(secIdx, 'down')}
-                            style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '6px', padding: '4px', cursor: 'pointer', color: '#475569' }}
-                          >
-                            <MoveDown style={{ width: '13px', height: '13px' }} />
-                          </button>
-                        )}
-                        {editingBlog.sections.length > 1 && (
-                          <button
-                            type="button"
-                            title="Remove Section"
-                            onClick={() => handleRemoveSection(secIdx)}
-                            style={{ background: '#fee2e2', border: 'none', borderRadius: '6px', padding: '4px 8px', cursor: 'pointer', color: '#dc2626', fontSize: '12px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                          >
-                            <Trash2 style={{ width: '13px', height: '13px' }} />
-                            Remove
-                          </button>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* 1. Sub-Heading (Title) Box */}
-                    <div>
-                      <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
-                        1] Sub-Heading / Section Title
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                  {/* Page Title Tag */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>
+                        Page Title Tag (<code>&lt;title&gt;</code>)
                       </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Physical Development Through Play"
-                        value={sec.title || ''}
-                        onChange={(e) => handleSectionChange(secIdx, 'title', e.target.value)}
-                        style={{
-                          width: '100%',
-                          padding: '10px 14px',
-                          borderRadius: '10px',
-                          border: '1.5px solid #cbd5e1',
-                          fontSize: '15px',
-                          fontWeight: '600',
-                          color: '#0f172a',
-                          background: '#ffffff',
-                          boxSizing: 'border-box'
-                        }}
-                      />
+                      <span style={{ fontSize: '11px', color: (editingBlog.metaTitle || '').length > 60 ? '#ef4444' : '#64748b', fontWeight: '600' }}>
+                        {(editingBlog.metaTitle || '').length} / 60 characters
+                      </span>
                     </div>
+                    <input
+                      type="text"
+                      value={editingBlog.metaTitle || ''}
+                      onChange={(e) => setEditingBlog(prev => ({ ...prev, metaTitle: e.target.value }))}
+                      placeholder={editingBlog.title ? `${editingBlog.title} | Winera International` : 'e.g. 10 Trampoline Park Trends in 2026 | Winera International'}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        border: '1.5px solid #cbd5e1',
+                        fontSize: '14px',
+                        fontFamily: 'inherit',
+                        outline: 'none',
+                        transition: 'border-color 0.15s ease'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = '#0284c7'}
+                      onBlur={(e) => e.target.style.borderColor = '#cbd5e1'}
+                    />
+                  </div>
 
-                    {/* 2. Paragraph (Content) Box with Rich Editor */}
-                    <div>
-                      <RichTextareaWithEditor
-                        label="2] Paragraph / Section Content"
-                        placeholder="Enter paragraph content for this section... Use Bold, Italic, Underline, Bullet Lists from toolbar above."
-                        rows={4}
-                        value={sec.paragraph || ''}
-                        onChange={(val) => handleSectionChange(secIdx, 'paragraph', val)}
-                        fontSize="15px"
-                        lineHeight={1.8}
-                        color="#334155"
-                      />
+                  {/* Meta Description Tag */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>
+                        Meta Description Tag (<code>&lt;meta name="description"&gt;</code>)
+                      </label>
+                      <span style={{ fontSize: '11px', color: (editingBlog.metaDescription || '').length > 160 ? '#ef4444' : '#64748b', fontWeight: '600' }}>
+                        {(editingBlog.metaDescription || '').length} / 160 characters
+                      </span>
+                    </div>
+                    <textarea
+                      rows={3}
+                      value={editingBlog.metaDescription || ''}
+                      onChange={(e) => setEditingBlog(prev => ({ ...prev, metaDescription: e.target.value }))}
+                      placeholder="e.g. Discover expert tips on setting up a high-ROI trampoline park and game zone in India. Complete equipment, layout, and budget guide."
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        border: '1.5px solid #cbd5e1',
+                        fontSize: '13.5px',
+                        lineHeight: 1.6,
+                        fontFamily: 'inherit',
+                        outline: 'none',
+                        transition: 'border-color 0.15s ease'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = '#0284c7'}
+                      onBlur={(e) => e.target.style.borderColor = '#cbd5e1'}
+                    />
+                  </div>
+
+                  {/* Canonical URL Tag */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: '800', color: '#0f172a' }}>
+                        🔗 Canonical URL Tag (<code>&lt;link rel="canonical"&gt;</code>)
+                      </label>
+                    </div>
+                    <input
+                      type="url"
+                      value={editingBlog.canonicalUrl || ''}
+                      onChange={(e) => setEditingBlog(prev => ({ ...prev, canonicalUrl: e.target.value }))}
+                      placeholder={`https://winera.in/blog/${editingBlog.slug || 'your-blog-slug'}`}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        border: '1.5px solid #cbd5e1',
+                        fontSize: '14px',
+                        fontFamily: 'inherit',
+                        outline: 'none',
+                        transition: 'border-color 0.15s ease'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = '#0284c7'}
+                      onBlur={(e) => e.target.style.borderColor = '#cbd5e1'}
+                    />
+                    <div style={{ marginTop: '6px', fontSize: '11.5px', color: '#64748b', background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0', lineHeight: 1.5 }}>
+                      💡 <strong>Tip:</strong> Sets the primary official URL for search engines. Leave blank to default to <code>https://winera.in/blog/{editingBlog.slug || 'your-blog-slug'}</code>.
                     </div>
                   </div>
-                ))}
-
-                {/* Bottom Add More Button */}
-                <div style={{ textAlign: 'center', marginTop: '6px' }}>
-                  <button
-                    type="button"
-                    onClick={handleAddSection}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      background: '#f0f9ff',
-                      color: '#0284c7',
-                      border: '1.5px dashed #0284c7',
-                      padding: '10px 24px',
-                      borderRadius: '12px',
-                      fontWeight: '800',
-                      fontSize: '13.5px',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    <Plus style={{ width: '16px', height: '16px' }} />
-                    + Add Another Sub-Heading & Paragraph Box
-                  </button>
                 </div>
               </div>
 
@@ -1022,12 +1369,7 @@ export default function BlogAdminManagement({
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '12px', marginTop: '20px', paddingTop: '20px', borderTop: '1.5px solid #f1f5f9' }}>
                 <button
                   type="button"
-                  onClick={() => {
-                    if (window.confirm('Discard unsaved changes?')) {
-                      setActiveView('list');
-                      setEditingBlog(null);
-                    }
-                  }}
+                  onClick={handleDiscardChanges}
                   style={{
                     background: '#f1f5f9',
                     color: '#475569',

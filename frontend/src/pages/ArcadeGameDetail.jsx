@@ -35,6 +35,49 @@ const getValidImageUrl = (url, fallback) => {
   return url;
 };
 
+// Helper to extract canonical image signature without extensions, folder differences or _vr suffixes
+const getImageSignature = (url) => {
+  if (!url || typeof url !== 'string') return '';
+  const clean = url.split('?')[0].split('#')[0];
+  const filename = clean.split('/').pop() || '';
+  return filename
+    .toLowerCase()
+    .replace(/\.(webp|jpg|jpeg|png|gif|svg|avif)$/i, '')
+    .replace(/(_vr|-vr)$/i, '')
+    .replace(/[-_]v\d+$/i, '')
+    .trim();
+};
+
+// Deduplicate image URLs to eliminate any identical photos regardless of folder or file format
+const dedupeImageUrls = (urls, baseImg = null) => {
+  if (!Array.isArray(urls)) return [];
+  const result = [];
+  const seenUrls = new Set();
+  const seenSigs = new Set();
+
+  if (baseImg && typeof baseImg === 'string' && baseImg.trim() !== '') {
+    const cleanBase = baseImg.replace(/\/f_auto,q_auto\//g, '/').replace(/\/+$/, '').trim().toLowerCase();
+    const baseSig = getImageSignature(baseImg);
+    seenUrls.add(cleanBase);
+    if (baseSig) seenSigs.add(baseSig);
+    result.push(baseImg);
+  }
+
+  for (const u of urls) {
+    if (!u || typeof u !== 'string' || u.trim() === '') continue;
+    const clean = u.replace(/\/f_auto,q_auto\//g, '/').replace(/\/+$/, '').trim().toLowerCase();
+    const sig = getImageSignature(u);
+    const isDup = seenUrls.has(clean) || (sig && seenSigs.has(sig));
+    if (!isDup) {
+      seenUrls.add(clean);
+      if (sig) seenSigs.add(sig);
+      result.push(u);
+    }
+  }
+
+  return result;
+};
+
 // Arcade Products Database Mapping all dynamic game detail content
 export const arcadeProductsData = {
   'parkour-motor-2-dx': {
@@ -595,12 +638,12 @@ export default function ArcadeGameDetail({ siteData }) {
         const prod = res?.product || res?.game;
         if (isMounted && prod) {
           setApiProduct(prod);
-          const gal = Array.isArray(prod.gallery) ? prod.gallery.filter(Boolean) : [];
+          const gal = dedupeImageUrls(Array.isArray(prod.gallery) ? prod.gallery.filter(Boolean) : [], prod.img || prod.imageUrl);
           if (gal.length <= 1) {
             secondaryFetch.then(secRes => {
               const secProd = secRes?.product || secRes?.game;
               if (isMounted && secProd) {
-                const secGal = Array.isArray(secProd.gallery) ? secProd.gallery.filter(Boolean) : [];
+                const secGal = dedupeImageUrls(Array.isArray(secProd.gallery) ? secProd.gallery.filter(Boolean) : [], secProd.img || secProd.imageUrl);
                 if (secGal.length > gal.length) {
                   setApiProduct(prev => ({
                     ...(prev || {}),
@@ -803,30 +846,10 @@ export default function ArcadeGameDetail({ siteData }) {
 
   const productCategory = cmsFoundCard?.category || cmsFoundCard?.specsCategory || masterFoundCard?.category || defaultProduct.category || '';
 
-  const normalizeImgUrl = (url) => {
-    if (!url || typeof url !== 'string') return '';
-    return url.replace(/\/f_auto,q_auto\//g, '/').replace(/\/+$/, '').trim().toLowerCase();
-  };
-
   let galleryList = [];
   if (customGalleries.length > 0) {
     const mapped = customGalleries.map(img => getValidImageUrl(img, resolvedMainImg));
-    const unique = [];
-    const seen = new Set();
-    
-    if (resolvedMainImg) {
-      unique.push(resolvedMainImg);
-      seen.add(normalizeImgUrl(resolvedMainImg));
-    }
-    
-    for (const img of mapped) {
-      const norm = normalizeImgUrl(img);
-      if (norm && !seen.has(norm)) {
-        seen.add(norm);
-        unique.push(img);
-      }
-    }
-    galleryList = unique;
+    galleryList = dedupeImageUrls(mapped, resolvedMainImg);
   } else {
     galleryList = [resolvedMainImg];
   }
@@ -926,7 +949,9 @@ export default function ArcadeGameDetail({ siteData }) {
         title: (cmsFoundCard?.feature4Title !== undefined && cmsFoundCard?.feature4Title !== '') ? cmsFoundCard.feature4Title : (defaultProduct.features?.[3]?.title || "Reliable Pan-India Service"),
         desc: (cmsFoundCard?.feature4Desc !== undefined && cmsFoundCard?.feature4Desc !== '') ? cmsFoundCard.feature4Desc : (defaultProduct.features?.[3]?.desc || "Our own team installs and supports every project across 50+ cities on time, every time.")
       }
-    ]
+    ],
+    metaTitle: cmsFoundCard?.metaTitle || cmsFoundCard?.seoTitle || masterFoundCard?.metaTitle || masterFoundCard?.seoTitle || '',
+    metaDescription: cmsFoundCard?.metaDescription || cmsFoundCard?.seoDescription || masterFoundCard?.metaDescription || masterFoundCard?.seoDescription || ''
   };
 
   const isVrProduct = Boolean(
@@ -942,7 +967,18 @@ export default function ArcadeGameDetail({ siteData }) {
   const thumbContainerRef = useRef(null);
 
   useEffect(() => {
-    document.title = `${product.name} | ${isVrProduct ? 'VR Game Machine' : 'Arcade Game Machine'} | Winera International`;
+    const pageTitle = product.metaTitle || `${product.name} | ${isVrProduct ? 'VR Game Machine' : 'Arcade Game Machine'} | Winera International`;
+    const metaDesc = product.metaDescription || (product.desc ? product.desc.replace(/<[^>]*>/g, '').slice(0, 160) : `Commercial-grade ${product.name} ${isVrProduct ? 'VR simulator' : 'arcade machine'} for game zones, malls, and entertainment centers across India by Winera International.`);
+    document.title = pageTitle;
+
+    let metaDesc_el = document.querySelector('meta[name="description"]');
+    if (!metaDesc_el) {
+      metaDesc_el = document.createElement('meta');
+      metaDesc_el.setAttribute('name', 'description');
+      document.head.appendChild(metaDesc_el);
+    }
+    metaDesc_el.setAttribute('content', metaDesc);
+
     window.scrollTo(0, 0);
   }, [product, isVrProduct]);
 
@@ -981,7 +1017,7 @@ export default function ArcadeGameDetail({ siteData }) {
         >
           {/* Breadcrumb Title: Home › [Product Name] */}
           <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
-            <h1 className="winera-arcade-hero-h1" style={{
+            <span className="winera-arcade-hero-h1" style={{
               fontSize: '21px',
               fontWeight: '800',
               color: '#ffffff',
@@ -1003,7 +1039,7 @@ export default function ArcadeGameDetail({ siteData }) {
               <span style={{ color: '#ffcd00', fontWeight: '900' }}>
                 {product.name}
               </span>
-            </h1>
+            </span>
           </div>
         </section>
 
@@ -1184,7 +1220,7 @@ export default function ArcadeGameDetail({ siteData }) {
                   />
 
                   {/* Title */}
-                  <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+                  <h1 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                     {product.nameBase || product.name || "Parkour Motor "}
                     {product.nameHighlight ? (
                       <>
@@ -1192,7 +1228,7 @@ export default function ArcadeGameDetail({ siteData }) {
                         <span style={{ color: '#00a8ff' }}>{product.nameHighlight}</span>
                       </>
                     ) : null}
-                  </h2>
+                  </h1>
                 </div>
 
                 {/* Specification Long Banner */}

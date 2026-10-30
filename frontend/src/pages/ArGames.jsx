@@ -129,7 +129,7 @@ export default function ArGames({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › AR Games */}
-          <h1 className="winera-ar-hero-h1" style={{
+          <span className="winera-ar-hero-h1" style={{
             fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -146,7 +146,7 @@ export default function ArGames({ siteData }) {
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>
               {siteData?.arHero?.breadcrumbText || "AR Games"}
             </span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -168,9 +168,9 @@ export default function ArGames({ siteData }) {
                 alt=""
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h1 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.arIntro?.title, "*AR Games* Supplier<br/>in India", '#00a8ff')}
-              </h2>
+              </h1>
             </div>
 
             <p

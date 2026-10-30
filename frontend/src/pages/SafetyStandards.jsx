@@ -233,7 +233,7 @@ export default function SafetyStandards({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Safety Standards */}
-          <h1 className="winera-safety-hero-h1" style={{
+          <span className="winera-safety-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -252,7 +252,7 @@ export default function SafetyStandards({ siteData }) {
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>
               {siteData?.safetyHero?.breadcrumbText || "Safety Standards"}
             </span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -304,10 +304,10 @@ export default function SafetyStandards({ siteData }) {
                 alt=""
                 style={{ display: 'block', maxWidth: '100%', width: '320px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h1 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {siteData?.safetyIntro?.titleLine1 || "Game Zone & Kids Play"}<br />
                 <span style={{ color: '#00a8ff' }}>{siteData?.safetyIntro?.titleLine2 || "Equipment Safety Standards"}</span>
-              </h2>
+              </h1>
             </div>
 
             <MobileExpandableText

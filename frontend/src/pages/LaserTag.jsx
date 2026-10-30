@@ -388,7 +388,7 @@ export default function LaserTag({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Laser Tag */}
-          <h1 className="winera-lasertag-hero-h1" style={{
+          <span className="winera-lasertag-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -407,7 +407,7 @@ export default function LaserTag({ siteData }) {
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>
               {siteData?.lasertagHero?.breadcrumbText || "Laser Tag"}
             </span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -443,10 +443,13 @@ export default function LaserTag({ siteData }) {
               }}
             />
 
-            {/* H2 Title with Auto Line Breaks & Exact Colors */}
-            <h2 style={{
+            {/* H1 Title with Auto Line Breaks & Exact Colors */}
+            <h1 style={{
+              fontFamily: "'Black Han Sans', sans-serif",
               fontSize: isPhone ? '26px' : '35px',
-              fontWeight: '900',
+              fontWeight: '400',
+              fontStyle: 'normal',
+              letterSpacing: '0px',
               color: '#0f172a',
               lineHeight: 1.18,
               margin: '0 0 18px 0',
@@ -492,7 +495,7 @@ export default function LaserTag({ siteData }) {
                   </>
                 );
               })()}
-            </h2>
+            </h1>
 
             {/* Description Text with Mobile Expandable Text */}
             <div style={{ marginBottom: '28px', maxWidth: '520px', width: '100%', textAlign: isPhone ? 'center' : 'left' }}>

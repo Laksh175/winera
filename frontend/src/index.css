@@ -91,15 +91,19 @@ svg {
 }
 
 
-/* Master Section Title h2 Desktop Font Size */
-h2,
-section h2,
+/* Master Section Title h1/h2 Desktop Font Size */
+h1:not(.winera-home-hero-h1):not(.winera-blog-article-title):not(.ql-editor *):not(.winera-blog-article-content *):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview *):not(.winera-blog-quill-container *):not(.admin-dashboard *):not([class*="admin"] *),
+section h1:not(.winera-home-hero-h1):not(.winera-blog-article-title):not(.ql-editor *):not(.winera-blog-article-content *):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview *):not(.winera-blog-quill-container *):not(.admin-dashboard *):not([class*="admin"] *),
+div[class*="winera"]:not(.winera-blog-article-content):not(.winera-blog-article-main-col):not(.winera-blog-quill-container) h1:not(.winera-home-hero-h1):not(.winera-blog-article-title):not(.ql-editor *):not(.winera-blog-article-content *):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview *):not(.winera-blog-quill-container *):not(.admin-dashboard *):not([class*="admin"] *),
+h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *),
+section h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *),
 .winera-section-heading-container h2,
-div[class*="winera"] h2,
-div[class*="section"] h2,
-div[class*="text"] h2,
-div[class*="container"] h2,
-div[class*="grid"] h2 {
+.winera-section-heading-container h1,
+div[class*="winera"]:not(.winera-blog-article-content):not(.winera-blog-article-main-col):not(.winera-blog-quill-container) h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *),
+div[class*="section"] h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *),
+div[class*="text"] h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *),
+div[class*="container"]:not(.winera-blog-detail-container) h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *),
+div[class*="grid"] h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *) {
   font-size: 35px !important;
 }
 
@@ -187,24 +191,154 @@ span b,
 li strong,
 li b,
 .ql-editor strong,
+.ql-editor strong,
 .ql-editor b,
-.ql-editor * strong,
-.ql-editor * b,
 .winera-blog-article-main-col strong,
 .winera-blog-article-main-col b,
-.winera-blog-article-main-col * strong,
-.winera-blog-article-main-col * b,
 .winera-admin-blog-preview strong,
-.winera-admin-blog-preview b,
-.winera-admin-blog-preview * strong,
-.winera-admin-blog-preview * b {
+.winera-admin-blog-preview b {
   font-weight: 800 !important;
-  color: #0f172a !important;
+  color: #0f172a;
   display: inline !important;
   width: auto !important;
   max-width: none !important;
   float: none !important;
   vertical-align: baseline !important;
+}
+
+/* Allow custom inline text colors in rich editor and blog article.
+   Never apply color: inherit to [style*="color"] itself, only to child elements (like strong, em, b)
+   so the child element adopts the parent's custom color without wiping out the color itself. */
+.ql-editor [style*="color"] strong,
+.ql-editor [style*="color"] b,
+.ql-editor [style*="color"] em,
+.ql-editor [style*="color"] i,
+.ql-editor [style*="color"] u,
+.winera-blog-article-content [style*="color"] strong,
+.winera-blog-article-content [style*="color"] b,
+.winera-blog-article-content [style*="color"] em,
+.winera-blog-article-content [style*="color"] i,
+.winera-blog-article-main-col [style*="color"] strong,
+.winera-blog-article-main-col [style*="color"] b,
+.winera-admin-blog-preview [style*="color"] strong,
+.winera-admin-blog-preview [style*="color"] b {
+  color: inherit !important;
+}
+
+/* Global Quill Code Blocks & Syntax Highlight Box (1:1 Exact Match with Admin Editor) */
+.winera-blog-article-content pre,
+.winera-blog-article-content pre.ql-syntax,
+.winera-blog-article-content .ql-syntax,
+.winera-blog-article-content .ql-code-block-container,
+.winera-blog-article-main-col pre,
+.winera-blog-article-main-col pre.ql-syntax,
+.winera-blog-article-main-col .ql-syntax,
+.winera-blog-article-main-col .ql-code-block-container,
+.winera-admin-blog-preview pre,
+.winera-admin-blog-preview pre.ql-syntax,
+.winera-admin-blog-preview .ql-syntax,
+.winera-admin-blog-preview .ql-code-block-container {
+  background-color: #23241f !important;
+  color: #f8f8f2 !important;
+  border-radius: 4px !important;
+  padding: 6px 14px !important;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 15.5px !important;
+  line-height: 1.65 !important;
+  margin: 14px 0 !important;
+  display: block !important;
+  overflow-x: auto !important;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.winera-blog-article-content .ql-code-block,
+.winera-blog-article-main-col .ql-code-block,
+.winera-admin-blog-preview .ql-code-block {
+  background: transparent !important;
+  color: #f8f8f2 !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 15.5px !important;
+  line-height: 1.65 !important;
+  display: block !important;
+}
+.winera-blog-article-content pre *,
+.winera-blog-article-content .ql-code-block-container *,
+.winera-blog-article-main-col pre *,
+.winera-blog-article-main-col .ql-code-block-container *,
+.winera-admin-blog-preview pre *,
+.winera-admin-blog-preview .ql-code-block-container * {
+  color: #f8f8f2 !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+/* Global Quill Background Color Classes */
+.winera-blog-article-content .ql-bg-black,
+.winera-blog-article-main-col .ql-bg-black,
+.winera-admin-blog-preview .ql-bg-black { background-color: #000000 !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+.winera-blog-article-content .ql-bg-red,
+.winera-blog-article-main-col .ql-bg-red,
+.winera-admin-blog-preview .ql-bg-red { background-color: #e60000 !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+.winera-blog-article-content .ql-bg-orange,
+.winera-blog-article-main-col .ql-bg-orange,
+.winera-admin-blog-preview .ql-bg-orange { background-color: #f90 !important; color: #000000 !important; padding: 2px 6px !important; border-radius: 4px !important; }
+.winera-blog-article-content .ql-bg-yellow,
+.winera-blog-article-main-col .ql-bg-yellow,
+.winera-admin-blog-preview .ql-bg-yellow { background-color: #ff0 !important; color: #000000 !important; padding: 2px 6px !important; border-radius: 4px !important; }
+.winera-blog-article-content .ql-bg-green,
+.winera-blog-article-main-col .ql-bg-green,
+.winera-admin-blog-preview .ql-bg-green { background-color: #008a00 !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+.winera-blog-article-content .ql-bg-blue,
+.winera-blog-article-main-col .ql-bg-blue,
+.winera-admin-blog-preview .ql-bg-blue { background-color: #06c !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+.winera-blog-article-content .ql-bg-purple,
+.winera-blog-article-main-col .ql-bg-purple,
+.winera-admin-blog-preview .ql-bg-purple { background-color: #93f !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+
+/* Global Quill Text Color Classes */
+.winera-blog-article-content .ql-color-white,
+.winera-blog-article-main-col .ql-color-white,
+.winera-admin-blog-preview .ql-color-white { color: #ffffff !important; }
+.winera-blog-article-content .ql-color-red,
+.winera-blog-article-main-col .ql-color-red,
+.winera-admin-blog-preview .ql-color-red { color: #e60000 !important; }
+.winera-blog-article-content .ql-color-orange,
+.winera-blog-article-main-col .ql-color-orange,
+.winera-admin-blog-preview .ql-color-orange { color: #f90 !important; }
+.winera-blog-article-content .ql-color-yellow,
+.winera-blog-article-main-col .ql-color-yellow,
+.winera-admin-blog-preview .ql-color-yellow { color: #ff0 !important; }
+.winera-blog-article-content .ql-color-green,
+.winera-blog-article-main-col .ql-color-green,
+.winera-admin-blog-preview .ql-color-green { color: #008a00 !important; }
+.winera-blog-article-content .ql-color-blue,
+.winera-blog-article-main-col .ql-color-blue,
+.winera-admin-blog-preview .ql-color-blue { color: #06c !important; }
+.winera-blog-article-content .ql-color-purple,
+.winera-blog-article-main-col .ql-color-purple,
+.winera-admin-blog-preview .ql-color-purple { color: #93f !important; }
+
+/* Sticky Quill Toolbar in Admin Editor */
+.winera-blog-quill-container {
+  overflow: visible !important;
+}
+.winera-blog-quill-container .ql-toolbar.ql-snow {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  background: #ffffff !important;
+  border-bottom: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06) !important;
+  border-top-left-radius: 16px !important;
+  border-top-right-radius: 16px !important;
 }
 
 em,
@@ -933,15 +1067,15 @@ html {
     box-sizing: border-box !important;
   }
 
-  h1 {
+  h1:not(.ql-editor h1):not(.winera-blog-article-content h1):not(.winera-blog-article-main-col h1):not(.winera-admin-blog-preview h1):not(.winera-blog-quill-container *) {
     font-size: clamp(2rem, 3.5vw, 2.75rem) !important;
   }
 
-  h2 {
+  h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *) {
     font-size: clamp(1.75rem, 3vw, 2.35rem) !important;
   }
 
-  h3 {
+  h3:not(.ql-editor h3):not(.winera-blog-article-content h3):not(.winera-blog-article-main-col h3):not(.winera-admin-blog-preview h3):not(.winera-blog-quill-container *) {
     font-size: clamp(1.5rem, 2.5vw, 1.85rem) !important;
   }
 
@@ -2126,8 +2260,10 @@ html {
   }
 
   .winera-section-heading-container h2,
+  .winera-section-heading-container h1,
   .winera-section-heading-h2,
-  h2.winera-section-heading-h2 {
+  h2.winera-section-heading-h2,
+  h1.winera-section-heading-h2 {
     text-align: center !important;
     font-size: clamp(23px, 6.2vw, 29px) !important;
     line-height: 1.22 !important;
@@ -10218,12 +10354,18 @@ img.winera-section-heading-accent {
    GLOBAL SECTION TITLES FONT FAMILY & TYPOGRAPHY
    (Black Han Sans, weight 400, regular style, 0px letter spacing)
    ========================================== */
-h2,
+h1:not(.winera-home-hero-h1):not(.winera-blog-article-title):not(.ql-editor *):not(.winera-blog-article-content *):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview *):not(.winera-blog-quill-container *):not(.admin-dashboard *):not([class*="admin"] *),
+h1:not(.winera-home-hero-h1):not(.winera-blog-article-title):not(.ql-editor *):not(.winera-blog-article-content *):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview *):not(.winera-blog-quill-container *):not(.admin-dashboard *):not([class*="admin"] *) span,
+h1:not(.winera-home-hero-h1):not(.winera-blog-article-title):not(.ql-editor *):not(.winera-blog-article-content *):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview *):not(.winera-blog-quill-container *):not(.admin-dashboard *):not([class*="admin"] *) *,
+h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *),
 .winera-section-heading-container h2,
+.winera-section-heading-container h1,
 .winera-home-hero-h1 span,
-h2 span,
+h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *) span,
 .winera-section-heading-container h2 span,
-.winera-section-heading-container h2 * {
+.winera-section-heading-container h1 span,
+.winera-section-heading-container h2 *,
+.winera-section-heading-container h1 * {
   font-family: 'Black Han Sans', sans-serif !important;
   font-weight: 400 !important;
   font-style: normal !important;
@@ -20452,4 +20594,70 @@ div[role="button"][aria-label*="Toggle FAQ"]:active {
   align-self: flex-start !important;
   height: fit-content !important;
   z-index: 20 !important;
+}
+
+/* ==========================================================================
+   BLOG ARTICLE CONTENT TYPOGRAPHY PRESERVATION (PREVENTS GLOBAL OVERRIDES)
+   ========================================================================== */
+article.winera-blog-article-main-col .winera-blog-article-content h1,
+.winera-blog-article-content h1,
+.winera-blog-quill-container .ql-editor h1 {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin: 30px 0 14px !important;
+  line-height: 1.3 !important;
+  font-family: 'Open Sans', sans-serif !important;
+}
+article.winera-blog-article-main-col .winera-blog-article-content h2,
+.winera-blog-article-content h2,
+.winera-blog-quill-container .ql-editor h2 {
+  font-size: 23px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 26px 0 12px !important;
+  line-height: 1.35 !important;
+  font-family: 'Open Sans', sans-serif !important;
+}
+article.winera-blog-article-main-col .winera-blog-article-content h3,
+.winera-blog-article-content h3,
+.winera-blog-quill-container .ql-editor h3 {
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 22px 0 10px !important;
+  line-height: 1.4 !important;
+  font-family: 'Open Sans', sans-serif !important;
+}
+article.winera-blog-article-main-col .winera-blog-article-content h4,
+.winera-blog-article-content h4,
+.winera-blog-quill-container .ql-editor h4 {
+  font-size: 16.5px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 18px 0 8px !important;
+  line-height: 1.45 !important;
+  font-family: 'Open Sans', sans-serif !important;
+}
+article.winera-blog-article-main-col .winera-blog-article-content h5,
+.winera-blog-article-content h5,
+.winera-blog-quill-container .ql-editor h5 {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 16px 0 6px !important;
+  line-height: 1.5 !important;
+  font-family: 'Open Sans', sans-serif !important;
+}
+article.winera-blog-article-main-col .winera-blog-article-content h6,
+.winera-blog-article-content h6,
+.winera-blog-quill-container .ql-editor h6 {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #475569 !important;
+  margin: 14px 0 6px !important;
+  line-height: 1.5 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  font-family: 'Open Sans', sans-serif !important;
 }

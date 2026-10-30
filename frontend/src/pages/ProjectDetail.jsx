@@ -794,7 +794,7 @@ export default function ProjectDetail({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Breadcrumb: Home › Project › Name */}
-          <h1 className="winera-project-hero-h1" style={{
+          <span className="winera-project-hero-h1" style={{
             fontSize: isPhone ? '1.05rem' : '21px',
             fontWeight: '900',
             color: '#ffffff',
@@ -814,7 +814,7 @@ export default function ProjectDetail({ siteData }) {
             <Link to="/project" style={{ color: '#ffffff', textDecoration: 'none' }}>Project</Link>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>{currentProject.name}</span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -834,9 +834,12 @@ export default function ProjectDetail({ siteData }) {
               style={{ display: 'block', maxWidth: '100%', width: '300px', height: '8px', marginBottom: '12px', objectFit: 'fill' }}
             />
 
-            <h2 style={{
+            <h1 style={{
+              fontFamily: "'Black Han Sans', sans-serif",
               fontSize: '35px',
-              fontWeight: '900',
+              fontWeight: '400',
+              fontStyle: 'normal',
+              letterSpacing: '0px',
               color: '#0f172a',
               lineHeight: 1.2,
               marginBottom: '14px',
@@ -854,7 +857,7 @@ export default function ProjectDetail({ siteData }) {
                   </>
                 );
               })()}
-            </h2>
+            </h1>
 
             <p
               style={{

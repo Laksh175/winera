@@ -265,7 +265,7 @@ export default function VrGames({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › VR Games */}
-          <h1 className="winera-vr-hero-h1" style={{
+          <span className="winera-vr-hero-h1" style={{
             fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -282,7 +282,7 @@ export default function VrGames({ siteData }) {
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>
               {siteData?.vrHero?.breadcrumbText || "VR Games"}
             </span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -320,9 +320,9 @@ export default function VrGames({ siteData }) {
                 className="winera-yellow-stroke winera-vr-intro-stroke"
                 style={{ display: 'block', width: '260px', maxWidth: '100%', height: '10px', marginBottom: '10px', objectFit: 'fill', margin: '0 0 10px 0' }}
               />
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h1 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.vrIntro?.title, "*VR Gaming Machine*<br/>supplier in India", '#00a8ff')}
-              </h2>
+              </h1>
             </div>
 
             <p
@@ -981,20 +981,6 @@ export default function VrGames({ siteData }) {
                               }}>
                                 {card.name}
                               </h3>
-
-                              <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '6px',
-                                fontSize: '12px',
-                                color: '#0284c7',
-                                fontWeight: '700',
-                                marginTop: 'auto'
-                              }}>
-                                <span>View Specifications</span>
-                                <ArrowRight style={{ width: '13px', height: '13px' }} />
-                              </div>
                             </Link>
                           );
                         })}

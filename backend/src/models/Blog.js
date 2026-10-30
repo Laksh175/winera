@@ -18,7 +18,10 @@ const blogSchema = new mongoose.Schema({
   imageAlt: { type: String, default: '' },
   metaTitle: { type: String, default: '' },
   metaDescription: { type: String, default: '' },
+  canonicalUrl: { type: String, default: '' },
   metaKeywords: [{ type: String }],
+  isActive: { type: Boolean, default: true },
+  status: { type: String, default: 'active' },
   isPublished: { type: Boolean, default: true }
 }, { timestamps: true });
 

@@ -90,9 +90,11 @@ export default function SectionHeading({
   accentFilter = null,
   accentColor = null,
   accentStyle = {},
-  style = {}
+  style = {},
+  as = 'h2'
 }) {
   const isLeft = align === 'left';
+  const HeadingTag = as || 'h2';
 
   if (accentAlign === 'left-inline') {
     return (
@@ -142,7 +144,7 @@ export default function SectionHeading({
               }}
             />
           )}
-          <h2 className="winera-section-heading-h2" style={{
+          <HeadingTag className="winera-section-heading-h2" style={{
             fontFamily: "'Black Han Sans', sans-serif",
             fontSize: '35px',
             fontWeight: '400',
@@ -152,7 +154,7 @@ export default function SectionHeading({
             lineHeight: '1.2'
           }}>
             {parseStarText(children)}
-          </h2>
+          </HeadingTag>
           {subtitle && (
             <p className="winera-section-subtitle" style={{ color: 'rgb(55, 62, 65)', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: '400', letterSpacing: '0px', marginTop: '10px', textAlign: align || 'center' }}>
               {subtitle}
@@ -210,7 +212,7 @@ export default function SectionHeading({
             }}
           />
         )}
-        <h2 className="winera-section-heading-h2" style={{
+        <HeadingTag className="winera-section-heading-h2" style={{
           fontFamily: "'Black Han Sans', sans-serif",
           fontSize: '35px',
           fontWeight: '400',
@@ -220,7 +222,7 @@ export default function SectionHeading({
           lineHeight: '1.2'
         }}>
           {parseStarText(children)}
-        </h2>
+        </HeadingTag>
         {subtitle && (
           <p className="winera-section-subtitle" style={{ color: 'rgb(55, 62, 65)', fontFamily: "'Open Sans', sans-serif", fontSize: '17px', lineHeight: '28px', fontWeight: '400', letterSpacing: '0px', marginTop: '10px', textAlign: align || 'center' }}>
             {subtitle}

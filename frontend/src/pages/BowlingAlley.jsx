@@ -255,7 +255,7 @@ export default function BowlingAlley({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Bowling Alley */}
-          <h1 className="winera-bowling-hero-h1" style={{
+          <span className="winera-bowling-hero-h1" style={{
             fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -272,7 +272,7 @@ export default function BowlingAlley({ siteData }) {
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>
               {(siteData?.bowlingHero?.breadcrumbText || "Bowling").replace("Bowling Alley", "Bowling")}
             </span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -296,12 +296,14 @@ export default function BowlingAlley({ siteData }) {
                 className="winera-yellow-stroke winera-bowling-intro-stroke"
                 style={{ display: 'block', width: '280px', maxWidth: '75%', height: 'auto', maxHeight: '10px', aspectRatio: '492 / 10', marginBottom: '3px', objectFit: 'contain' }}
               />
-              <h2 style={{
+              <h1 style={{
+                fontFamily: "'Black Han Sans', sans-serif",
                 fontSize: '35px',
-                fontWeight: '900',
+                fontWeight: '400',
+                fontStyle: 'normal',
                 lineHeight: 1.1,
                 color: '#0f172a',
-                letterSpacing: '-1px',
+                letterSpacing: '0px',
                 margin: 0
               }}>
                 {(() => {
@@ -328,7 +330,7 @@ export default function BowlingAlley({ siteData }) {
                     return part;
                   });
                 })()}
-              </h2>
+              </h1>
             </div>
 
             <p
@@ -1289,7 +1291,7 @@ export default function BowlingAlley({ siteData }) {
 
       {/* 10. FREQUENTLY ASKED QUESTIONS SECTION (DYNAMIC BOWLING FAQS WITH FALLBACK) */}
       <FaqSection
-        faqList={Array.isArray(siteData?.bowlingFaqs) && siteData.bowlingFaqs.length >= 8 ? siteData.bowlingFaqs : defaultBowlingFaqs}
+        faqList={Array.isArray(siteData?.bowlingFaqs) && siteData.bowlingFaqs.length > 0 ? siteData.bowlingFaqs : defaultBowlingFaqs}
         title={siteData?.faqsHeader?.title}
         subtitle={siteData?.faqsHeader?.subtitle}
         highlightColor="#00a8ff"

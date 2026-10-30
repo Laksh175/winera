@@ -273,7 +273,7 @@ export default function ArcadeGame({ siteData }) {
               />
               <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
                 {/* Centered Title / Breadcrumb: Home › Arcade Game */}
-                <h1 className="winera-arcade-hero-h1" style={{
+                <span className="winera-arcade-hero-h1" style={{
                   fontSize: '21px',
                   fontWeight: '800',
                   color: '#ffffff',
@@ -290,7 +290,7 @@ export default function ArcadeGame({ siteData }) {
                   <span style={{ color: '#ffcd00', fontWeight: '900' }}>
                     {siteData?.arcadeHero?.breadcrumbText || "Arcade Game"}
                   </span>
-                </h1>
+                </span>
               </div>
             </section>
           );
@@ -420,7 +420,7 @@ export default function ArcadeGame({ siteData }) {
           {/* Right Text & Features Block */}
           <div className="winera-arcade-intro-text" style={{ textAlign: 'left' }}>
             {/* Title Header with yellow brush accent */}
-            <SectionHeading align="left" marginBottom="20px" accentWidth="75%" accentMaxWidth="300px">
+            <SectionHeading as="h1" align="left" marginBottom="20px" accentWidth="75%" accentMaxWidth="300px">
               {(() => {
                 const rawTitle = typeof siteData?.arcadeIntro?.title === 'string' ? siteData.arcadeIntro.title : "*Arcade Game* Machines in India";
                 const parts = String(rawTitle).split(/\*{1,2}(.*?)\*{1,2}/g);

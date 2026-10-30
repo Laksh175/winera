@@ -2,9 +2,8 @@ export const sanitizeAndFormatHtml = (input) => {
   if (!input || typeof input !== 'string') return '';
   let html = input;
 
-  // 1. Remove editor cursor artifacts and unwanted span tags (such as Quill clipboard artifacts <span style="background-color: transparent; color: rgb(0, 0, 0);">)
+  // 1. Remove editor cursor artifacts only (preserve styled spans for text colors & highlights)
   html = html.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
-  html = html.replace(/<\/?span[^>]*>/gi, '');
 
   // 2. Convert markdown to HTML tags if markdown syntax exists
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
@@ -18,17 +17,6 @@ export const sanitizeAndFormatHtml = (input) => {
     const targetAttr = isWineraOrRelative ? '' : ' target="_blank" rel="noopener noreferrer"';
     return `<a href="${href}" style="color: #0284c7; font-weight: 700; text-decoration: underline;"${targetAttr}>`;
   });
-
-  // 4. Auto-heal any accidentally split sentences (e.g. bolded prefix split across </p><p> or <br>)
-  html = html.replace(/<\/p>\s*<p[^>]*>\s*([a-z])/gi, ' $1');
-  html = html.replace(/(<\/strong>|<\/b>|<\/a>|<\/u>|<\/em>)\s*<\/p>\s*<p[^>]*>\s*/gi, '$1 ');
-  html = html.replace(/([^\.\!\?\:\n>])\s*<br\s*\/?>\s*([a-z])/gi, '$1 $2');
-
-  // 5. Strip redundant outer <p>...</p> if whole content is wrapped in paragraph
-  const trimmed = html.trim();
-  if (/^<p[^>]*>[\s\S]*<\/p>$/i.test(trimmed) && (trimmed.match(/<\/p>/gi) || []).length === 1) {
-    html = trimmed.replace(/^<p[^>]*>/i, '').replace(/<\/p>$/i, '');
-  }
 
   return html;
 };

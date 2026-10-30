@@ -24,7 +24,7 @@ export const syncLiveDbToBackupDb = async () => {
     const client = mongoose.connection.client;
     const sourceDb = mongoose.connection.db;
     const sourceDbName = sourceDb.databaseName;
-    const targetDbName = process.env.MONGODB_BACKUP_DB_NAME || 'winera-backup';
+    const targetDbName = process.env.MONGODB_BACKUP_DB_NAME || `${sourceDbName}-backup`;
 
     // STRICT SAFETY CHECK: Ensure target is never the source database!
     if (sourceDbName === targetDbName) {

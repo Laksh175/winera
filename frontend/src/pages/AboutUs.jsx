@@ -188,7 +188,7 @@ export default function AboutUs({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {isPhone ? (
-            <h1 className="winera-about-hero-h1" style={{
+            <span className="winera-about-hero-h1" style={{
               fontSize: '1.15rem',
               fontWeight: '800',
               color: '#ffffff',
@@ -205,10 +205,10 @@ export default function AboutUs({ siteData }) {
               <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>Home</a>
               <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
               <span style={{ color: '#ffcd00', fontWeight: '900' }}>About Us</span>
-            </h1>
+            </span>
           ) : (
             <>
-              <h1 style={{
+              <div style={{
                 fontSize: '3.6rem',
                 fontWeight: '900',
                 letterSpacing: '-1px',
@@ -229,7 +229,7 @@ export default function AboutUs({ siteData }) {
                     return part;
                   });
                 })()}
-              </h1>
+              </div>
 
               <div className="winera-about-hero-breadcrumb" style={{
                 fontSize: '21px',
@@ -276,7 +276,7 @@ export default function AboutUs({ siteData }) {
           </div>
 
           <div className="winera-about-welcome-text" style={{ textAlign: 'left' }}>
-            <SectionHeading align="left" marginBottom="16px" accentWidth="65%" accentMaxWidth="320px">
+            <SectionHeading as="h1" align="left" marginBottom="16px" accentWidth="65%" accentMaxWidth="320px">
               {(() => {
                 const rawTitle = siteData?.aboutWelcome?.title || "Welcome to *Winera International*";
                 const parts = rawTitle.split(/\*{1,2}(.*?)\*{1,2}/g);

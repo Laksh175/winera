@@ -614,12 +614,11 @@ export default function ProjectsDashboard({
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Description Paragraph</label>
-                    <textarea
-                      rows={4}
+                    <RichTextareaWithEditor
+                      rows={3}
                       value={currentSec.description !== undefined ? currentSec.description : defaultProjectBlock.description}
-                      onChange={(e) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), description: e.target.value } }))}
+                      onChange={(val) => setFormData(prev => ({ ...prev, projectBlock: { ...(prev.projectBlock || defaultProjectBlock), description: val } }))}
                       placeholder="Enter project summary description..."
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
                     />
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -896,20 +895,18 @@ export default function ProjectsDashboard({
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
                       value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultProjectClientWanted.paragraph1}
-                      onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), paragraph1: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), paragraph1: val } }))}
                     />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
                       value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultProjectClientWanted.paragraph2}
-                      onChange={(e) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), paragraph2: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, projectClientWanted: { ...(prev.projectClientWanted || defaultProjectClientWanted), paragraph2: val } }))}
                     />
                   </div>
                   <div>
@@ -992,20 +989,18 @@ export default function ProjectsDashboard({
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 1</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
                       value={currentSec.paragraph1 !== undefined ? currentSec.paragraph1 : defaultProjectSolution.paragraph1}
-                      onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), paragraph1: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), paragraph1: val } }))}
                     />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Paragraph 2</label>
-                    <textarea
+                    <RichTextareaWithEditor
                       rows={3}
                       value={currentSec.paragraph2 !== undefined ? currentSec.paragraph2 : defaultProjectSolution.paragraph2}
-                      onChange={(e) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), paragraph2: e.target.value } }))}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #cbd5e1', fontSize: '13.5px', lineHeight: 1.6 }}
+                      onChange={(val) => setFormData(prev => ({ ...prev, projectSolution: { ...(prev.projectSolution || defaultProjectSolution), paragraph2: val } }))}
                     />
                   </div>
                   <div>

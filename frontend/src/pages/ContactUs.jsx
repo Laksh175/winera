@@ -168,7 +168,7 @@ export default function ContactUs({ siteData }) {
           decoding="async"
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: 0, zIndex: 2 }}>
-          <h1 className="winera-contact-hero-h1" style={{
+          <span className="winera-contact-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -185,7 +185,7 @@ export default function ContactUs({ siteData }) {
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>{breadcrumbHome}</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>{breadcrumbText}</span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -210,7 +210,7 @@ export default function ContactUs({ siteData }) {
           {/* LEFT COLUMN: Section Title, Subtext & Stacked Contact Info Cards */}
           <div className="winera-contact-left-col" style={{ textAlign: 'left', width: '100%', boxSizing: 'border-box' }}>
             <div className="winera-contact-heading-wrap">
-              <SectionHeading align="left" marginBottom="20px" accentWidth="255px" accentMaxWidth="420px">
+              <SectionHeading as="h1" align="left" marginBottom="20px" accentWidth="255px" accentMaxWidth="420px">
                 {(() => {
                   let rawTitle = siteData?.contactPage?.title || "Get in Touch with *Winera*<br />*International*";
                   if (rawTitle.includes('*Winera International*')) {

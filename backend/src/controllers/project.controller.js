@@ -143,7 +143,7 @@ export const getProjects = async (req, res) => {
       ];
     }
 
-    let projects = await Project.find(query).sort({ createdAt: 1 });
+    let projects = await Project.find(query).sort({ createdAt: -1 });
 
     if (!projects || projects.length === 0) {
       const contentDoc = await Content.findOne({ sectionKey: 'projectItems' });

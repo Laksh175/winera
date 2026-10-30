@@ -12,6 +12,7 @@ import WineraImage from '../components/WineraImage';
 import { Calendar, Clock, PenTool } from 'lucide-react';
 import { fetchBlogBySlug, fetchBlogs } from '../services/api';
 import { sanitizeAndFormatHtml, normalizeRawContent } from '../utils/sanitizeHtml';
+import { calculateReadTime } from '../utils/readTime';
 
 const getValidImageUrl = (url, fallback) => {
   if (url && typeof url === 'string' && (url.includes('eqjkboeokagpaus2ifxa') || url.includes('/src/assets/'))) {
@@ -68,12 +69,38 @@ const formatExcerpt = (text) => {
   return `${cut}...`;
 };
 
-// Helper to extract SHORT headings for Table of Contents
+// Helper to extract ONLY MAIN Section Titles for "In this article" Table of Contents
 const extractHeadings = (text) => {
   if (!text) return [];
+  const headings = [];
+  let counter = 0;
+
+  // 1. If content contains HTML
+  const isHtml = /<\/?(?:p|h[1-6]|div|table|strong|em|pre|code|span|blockquote|ul|ol|li)[\s>]/i.test(text);
+
+  if (isHtml) {
+    // Extract genuine section headings: <h1> to <h6> only (as requested by user)
+    // Exclude sub-questions (titles ending with '?', or starting with Q:, FAQ:)
+    const headingRegex = /<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/gi;
+    let match;
+    while ((match = headingRegex.exec(text)) !== null) {
+      const rawTitle = match[2].replace(/<[^>]+>/g, '').trim();
+      const isQuestion = rawTitle.endsWith('?') || /^Q\d*[:.]/i.test(rawTitle) || /^FAQ/i.test(rawTitle);
+      if (rawTitle && !isQuestion) {
+        headings.push({
+          id: `blog-heading-${counter++}`,
+          title: rawTitle.length > 50 ? `${rawTitle.substring(0, 50)}...` : rawTitle,
+          rawTitle
+        });
+      }
+    }
+
+    return headings;
+  }
+
+  // 2. Legacy markdown fallback (only when markdown # headings exist)
   const normalized = normalizeRawContent(text);
   const paragraphs = normalized.split('\n\n');
-  const headings = [];
   paragraphs.forEach((pText) => {
     const trimmed = pText.trim();
     if (!trimmed || /^#+\s*$/.test(trimmed)) return;
@@ -81,19 +108,12 @@ const extractHeadings = (text) => {
     if (trimmed.startsWith('#')) {
       const firstLine = trimmed.replace(/^#+\s*/, '').split('\n')[0].trim();
       const cleanTitle = firstLine.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
-      if (cleanTitle) {
+      const isQuestion = cleanTitle.endsWith('?') || /^Q\d*[:.]/i.test(cleanTitle);
+      if (cleanTitle && !isQuestion) {
         headings.push({
           id: `blog-heading-${headings.length}`,
-          title: cleanTitle.length > 45 ? `${cleanTitle.substring(0, 45)}...` : cleanTitle,
-        });
-      }
-    } else {
-      const numMatch = trimmed.match(/^(\d+\.\s+[^.\n:]+)/);
-      if (numMatch && trimmed.length < 120 && !trimmed.includes('\n')) {
-        const titleText = numMatch[1].trim();
-        headings.push({
-          id: `blog-heading-${headings.length}`,
-          title: titleText.length > 45 ? `${titleText.substring(0, 45)}...` : titleText,
+          title: cleanTitle.length > 50 ? `${cleanTitle.substring(0, 50)}...` : cleanTitle,
+          rawTitle: cleanTitle
         });
       }
     }
@@ -106,6 +126,35 @@ export { sanitizeAndFormatHtml, normalizeRawContent };
 
 const renderFormattedText = (text) => {
   if (!text) return null;
+
+  // Direct HTML Render Mode: Preserves exact line-breaks, tables, headings, code-blocks, colors, and images
+  const isHtmlContent = /<\/?(?:p|h[1-6]|ul|ol|li|table|tr|td|th|blockquote|pre|code|img|div|span|strong|em|u|a)[\s>]/i.test(text);
+
+  if (isHtmlContent) {
+    let headingCounter = 0;
+    // Inject matching anchor IDs into genuine headings h1 to h6 only
+    let htmlWithHeadingIds = text.replace(/<h([1-6])([^>]*)>([\s\S]*?)<\/h\1>/gi, (match, level, attrs, inner) => {
+      const clean = inner.replace(/<[^>]+>/g, '').trim();
+      const isQuestion = clean.endsWith('?') || /^Q\d*[:.]/i.test(clean) || /^FAQ/i.test(clean);
+      if (clean && !isQuestion) {
+        const headingId = `blog-heading-${headingCounter++}`;
+        if (/id=["'][^"']*["']/i.test(attrs)) {
+          return match;
+        }
+        return `<h${level} id="${headingId}"${attrs}>${inner}</h${level}>`;
+      }
+      return match;
+    });
+
+    return (
+      <div
+        className="winera-blog-article-content"
+        dangerouslySetInnerHTML={{ __html: htmlWithHeadingIds }}
+      />
+    );
+  }
+
+  // Legacy Markdown Fallback Render Mode
   const normalized = normalizeRawContent(text);
   const paragraphs = normalized.split('\n\n');
   let headingCounter = 0;
@@ -339,11 +388,42 @@ export default function BlogDetail({ siteData }) {
 
   useEffect(() => {
     if (!post?.title && !post?.subtitle) return;
-    const fullTitle = `${post.title || ''} ${post.subtitle || ''}`.trim();
-    document.title = `${fullTitle || 'Blog Detail'} | Winera International`;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Canonical link tag update for SEO
+    // 1. Dynamic Meta Title Tag
+    const fullTitle = `${post.title || ''} ${post.subtitle || ''}`.trim();
+    const seoTitle = post.metaTitle && post.metaTitle.trim()
+      ? post.metaTitle.trim()
+      : `${fullTitle || 'Blog Detail'} | Winera International`;
+    document.title = seoTitle;
+
+    // 2. Dynamic Meta Description Tag
+    let metaDescTag = document.querySelector("meta[name='description']");
+    if (!metaDescTag) {
+      metaDescTag = document.createElement('meta');
+      metaDescTag.setAttribute('name', 'description');
+      document.head.appendChild(metaDescTag);
+    }
+    const cleanContentSnippet = (post.fullContent || post.content || '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .substring(0, 160);
+    const seoDesc = post.metaDescription && post.metaDescription.trim()
+      ? post.metaDescription.trim()
+      : (post.excerpt || post.description || cleanContentSnippet || 'Read expert insights on game zone setup and indoor entertainment on Winera International.');
+    metaDescTag.setAttribute('content', seoDesc);
+
+    // 3. OpenGraph and Twitter Meta Tags
+    const ogTitle = document.querySelector("meta[property='og:title']");
+    if (ogTitle) ogTitle.setAttribute('content', seoTitle);
+    const ogDesc = document.querySelector("meta[property='og:description']");
+    if (ogDesc) ogDesc.setAttribute('content', seoDesc);
+    const twTitle = document.querySelector("meta[name='twitter:title']");
+    if (twTitle) twTitle.setAttribute('content', seoTitle);
+    const twDesc = document.querySelector("meta[name='twitter:description']");
+    if (twDesc) twDesc.setAttribute('content', seoDesc);
+
+    // 4. Canonical link tag update for SEO
     let canonicalTag = document.querySelector("link[rel='canonical']");
     if (!canonicalTag) {
       canonicalTag = document.createElement('link');
@@ -351,7 +431,12 @@ export default function BlogDetail({ siteData }) {
       document.head.appendChild(canonicalTag);
     }
     const currentSlug = post.slug || post.id;
-    canonicalTag.setAttribute('href', `https://winera.in/blog/${currentSlug}`);
+    const resolvedCanonical = post.canonicalUrl && post.canonicalUrl.trim()
+      ? post.canonicalUrl.trim()
+      : `https://winera.in/blog/${currentSlug}`;
+    canonicalTag.setAttribute('href', resolvedCanonical);
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // Canonical SEO URL Redirect: If accessed via numeric ID (e.g. /blog/2), seamlessly replace URL with SEO-friendly slug
     if (post?.slug && String(id) !== String(post.slug)) {
@@ -359,9 +444,13 @@ export default function BlogDetail({ siteData }) {
     }
   }, [id, post, navigate]);
 
-  // Resolve rich article content: prioritize structured description & sections (the direct fields edited in admin), fallback to fullContent
+  // Resolve rich article content: prioritize fullContent, then content, then legacy description & sections
   let rawArticleContent = '';
-  if (post.description || (Array.isArray(post.sections) && post.sections.length > 0)) {
+  if (post.fullContent && typeof post.fullContent === 'string' && post.fullContent.trim()) {
+    rawArticleContent = post.fullContent.trim();
+  } else if (post.content && typeof post.content === 'string' && post.content.trim()) {
+    rawArticleContent = post.content.trim();
+  } else if (post.description || (Array.isArray(post.sections) && post.sections.length > 0)) {
     const parts = [];
     if (post.description && post.description.trim()) {
       parts.push(post.description.trim());
@@ -376,11 +465,6 @@ export default function BlogDetail({ siteData }) {
       });
     }
     rawArticleContent = parts.join('\n\n');
-  }
-
-  // Fallback to fullContent if structured description & sections are absent
-  if (!rawArticleContent && post.fullContent) {
-    rawArticleContent = post.fullContent;
   }
 
   if (!rawArticleContent) {
@@ -475,7 +559,7 @@ export default function BlogDetail({ siteData }) {
               <span style={{ flexShrink: 0, color: '#cbd5e1' }}>•</span>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', flexShrink: 0 }}>
                 <Clock style={{ width: '15px', height: '15px', color: '#0284c7' }} />
-                {post.readTime || '5 min read'}
+                {post.readTime || calculateReadTime(post.fullContent || post.content) || '4 min read'}
               </span>
               <span style={{ flexShrink: 0, color: '#cbd5e1' }}>•</span>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#0284c7', fontWeight: '700', whiteSpace: 'nowrap', flexShrink: 0 }}>
@@ -512,19 +596,20 @@ export default function BlogDetail({ siteData }) {
 
           <div className="winera-blog-3col-grid" style={{
             display: 'grid',
-            gridTemplateColumns: '260px minmax(0, 1fr) 310px',
+            gridTemplateColumns: headings.length > 0 ? '260px minmax(0, 1fr) 310px' : 'minmax(0, 1fr) 320px',
             gap: '35px',
             alignItems: 'start'
           }}>
 
             {/* ── LEFT COLUMN: STICKY TABLE OF CONTENTS MENU (FONT SIZE 15px) ── */}
-            <div className="winera-blog-left-toc-sticky" style={{
-              position: 'sticky',
-              top: '110px',
-              alignSelf: 'start',
-              height: 'fit-content',
-              zIndex: 10
-            }}>
+            {headings.length > 0 && (
+              <div className="winera-blog-left-toc-sticky" style={{
+                position: 'sticky',
+                top: '110px',
+                alignSelf: 'start',
+                height: 'fit-content',
+                zIndex: 10
+              }}>
               <div style={{
                 background: '#ffffff',
                 border: '1.5px solid #e2e8f0',
@@ -598,6 +683,7 @@ export default function BlogDetail({ siteData }) {
                 </div>
               </div>
             </div>
+            )}
 
             {/* ── MIDDLE COLUMN: ARTICLE CONTENT ── */}
             <div className="winera-blog-article-main-col" style={{ width: '100%', textAlign: 'left' }}>
@@ -920,6 +1006,303 @@ export default function BlogDetail({ siteData }) {
         .winera-blog-article-main-col span,
         .winera-blog-article-main-col li {
           text-align: left !important;
+        }
+
+        /* ── Full Blog Rich Article Content Styling ── */
+        .winera-blog-article-content {
+          font-family: 'Open Sans', sans-serif !important;
+          color: #334155 !important;
+          font-size: 16.5px !important;
+          line-height: 1.85 !important;
+          text-align: left !important;
+        }
+
+        /* Paragraphs & Exact Spacing Preservation */
+        .winera-blog-article-content p {
+          font-size: 16.5px !important;
+          color: #334155 !important;
+          line-height: 1.85 !important;
+          margin-bottom: 20px !important;
+          min-height: 1.6em !important;
+          text-align: left !important;
+        }
+        .winera-blog-article-content p:has(br:only-child),
+        .winera-blog-article-content p br {
+          display: block !important;
+        }
+
+        /* Headings H1 to H6 (Google Docs Style Exact Hierarchy & Proportions) */
+        article.winera-blog-article-main-col .winera-blog-article-content h1,
+        .winera-blog-article-content h1 {
+          font-size: 28px !important;
+          font-weight: 800 !important;
+          color: #0f172a !important;
+          margin: 30px 0 14px !important;
+          line-height: 1.3 !important;
+          scroll-margin-top: 110px !important;
+          font-family: 'Open Sans', sans-serif !important;
+          text-align: left !important;
+        }
+        article.winera-blog-article-main-col .winera-blog-article-content h2,
+        .winera-blog-article-content h2 {
+          font-size: 23px !important;
+          font-weight: 700 !important;
+          color: #0f172a !important;
+          margin: 26px 0 12px !important;
+          line-height: 1.35 !important;
+          scroll-margin-top: 110px !important;
+          font-family: 'Open Sans', sans-serif !important;
+          text-align: left !important;
+        }
+        article.winera-blog-article-main-col .winera-blog-article-content h3,
+        .winera-blog-article-content h3 {
+          font-size: 19px !important;
+          font-weight: 700 !important;
+          color: #0f172a !important;
+          margin: 22px 0 10px !important;
+          line-height: 1.4 !important;
+          scroll-margin-top: 110px !important;
+          font-family: 'Open Sans', sans-serif !important;
+          text-align: left !important;
+        }
+        article.winera-blog-article-main-col .winera-blog-article-content h4,
+        .winera-blog-article-content h4 {
+          font-size: 16.5px !important;
+          font-weight: 700 !important;
+          color: #0f172a !important;
+          margin: 18px 0 8px !important;
+          line-height: 1.45 !important;
+          scroll-margin-top: 110px !important;
+          font-family: 'Open Sans', sans-serif !important;
+          text-align: left !important;
+        }
+        article.winera-blog-article-main-col .winera-blog-article-content h5,
+        .winera-blog-article-content h5 {
+          font-size: 15px !important;
+          font-weight: 700 !important;
+          color: #0f172a !important;
+          margin: 16px 0 6px !important;
+          line-height: 1.5 !important;
+          scroll-margin-top: 110px !important;
+          font-family: 'Open Sans', sans-serif !important;
+          text-align: left !important;
+        }
+        article.winera-blog-article-main-col .winera-blog-article-content h6,
+        .winera-blog-article-content h6 {
+          font-size: 13.5px !important;
+          font-weight: 700 !important;
+          color: #475569 !important;
+          margin: 14px 0 6px !important;
+          line-height: 1.5 !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.5px !important;
+          scroll-margin-top: 110px !important;
+          font-family: 'Open Sans', sans-serif !important;
+          text-align: left !important;
+        }
+
+        /* Code Blocks & Quill Syntax Block (1:1 Exact Match with Admin Editor) */
+        .winera-blog-article-content pre,
+        .winera-blog-article-content pre.ql-syntax,
+        .winera-blog-article-content .ql-syntax,
+        .winera-blog-article-content .ql-code-block-container {
+          background-color: #23241f !important;
+          color: #f8f8f2 !important;
+          border-radius: 4px !important;
+          padding: 6px 14px !important;
+          font-family: 'Open Sans', sans-serif !important;
+          font-size: 15.5px !important;
+          line-height: 1.65 !important;
+          margin: 14px 0 !important;
+          display: block !important;
+          overflow-x: auto !important;
+          white-space: pre-wrap !important;
+          word-break: break-word !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+        .winera-blog-article-content .ql-code-block {
+          background: transparent !important;
+          color: #f8f8f2 !important;
+          border: none !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          font-family: 'Open Sans', sans-serif !important;
+          font-size: 15.5px !important;
+          line-height: 1.65 !important;
+          display: block !important;
+        }
+        .winera-blog-article-content pre *,
+        .winera-blog-article-content .ql-code-block-container * {
+          color: #f8f8f2 !important;
+          background-color: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          font-family: 'Open Sans', sans-serif !important;
+        }
+        .winera-blog-article-content code:not(pre code) {
+          background-color: #f1f5f9 !important;
+          color: #0f172a !important;
+          padding: 2px 6px !important;
+          border-radius: 4px !important;
+          font-family: 'Open Sans', sans-serif !important;
+          font-size: 0.95em !important;
+        }
+
+        /* Support Custom Text Colors & Background Highlights */
+        .winera-blog-article-content [style*="color"] strong,
+        .winera-blog-article-content [style*="color"] b,
+        .winera-blog-article-content [style*="color"] em,
+        .winera-blog-article-content [style*="color"] i {
+          color: inherit !important;
+        }
+        .winera-blog-article-content span[style*="color"],
+        .winera-blog-article-content span[style*="background"] {
+          display: inline !important;
+        }
+        .winera-blog-article-content [style*="background"] {
+          border-radius: 4px !important;
+          padding: 2px 6px !important;
+        }
+        .winera-blog-article-content p[style*="background"],
+        .winera-blog-article-content div[style*="background"] {
+          padding: 12px 18px !important;
+          border-radius: 8px !important;
+          margin: 16px 0 !important;
+          display: block !important;
+        }
+
+        /* Quill Background Color Classes */
+        .winera-blog-article-content .ql-bg-black { background-color: #000000 !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+        .winera-blog-article-content .ql-bg-red { background-color: #e60000 !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+        .winera-blog-article-content .ql-bg-orange { background-color: #f90 !important; color: #000000 !important; padding: 2px 6px !important; border-radius: 4px !important; }
+        .winera-blog-article-content .ql-bg-yellow { background-color: #ff0 !important; color: #000000 !important; padding: 2px 6px !important; border-radius: 4px !important; }
+        .winera-blog-article-content .ql-bg-green { background-color: #008a00 !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+        .winera-blog-article-content .ql-bg-blue { background-color: #06c !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+        .winera-blog-article-content .ql-bg-purple { background-color: #93f !important; color: #ffffff !important; padding: 2px 6px !important; border-radius: 4px !important; }
+
+        /* Quill Text Color Classes */
+        .winera-blog-article-content .ql-color-white { color: #ffffff !important; }
+        .winera-blog-article-content .ql-color-red { color: #e60000 !important; }
+        .winera-blog-article-content .ql-color-orange { color: #f90 !important; }
+        .winera-blog-article-content .ql-color-yellow { color: #ff0 !important; }
+        .winera-blog-article-content .ql-color-green { color: #008a00 !important; }
+        .winera-blog-article-content .ql-color-blue { color: #06c !important; }
+        .winera-blog-article-content .ql-color-purple { color: #93f !important; }
+
+        /* Quill Text Alignments */
+        .winera-blog-article-content .ql-align-center,
+        .winera-blog-article-content p.ql-align-center,
+        .winera-blog-article-content h1.ql-align-center,
+        .winera-blog-article-content h2.ql-align-center,
+        .winera-blog-article-content h3.ql-align-center,
+        .winera-blog-article-content h4.ql-align-center,
+        .winera-blog-article-content h5.ql-align-center,
+        .winera-blog-article-content h6.ql-align-center {
+          text-align: center !important;
+        }
+        .winera-blog-article-content .ql-align-right,
+        .winera-blog-article-content p.ql-align-right,
+        .winera-blog-article-content h1.ql-align-right,
+        .winera-blog-article-content h2.ql-align-right,
+        .winera-blog-article-content h3.ql-align-right,
+        .winera-blog-article-content h4.ql-align-right,
+        .winera-blog-article-content h5.ql-align-right,
+        .winera-blog-article-content h6.ql-align-right {
+          text-align: right !important;
+        }
+        .winera-blog-article-content .ql-align-justify,
+        .winera-blog-article-content p.ql-align-justify {
+          text-align: justify !important;
+        }
+
+        /* Quill Indentations */
+        .winera-blog-article-content .ql-indent-1 { padding-left: 2rem !important; }
+        .winera-blog-article-content .ql-indent-2 { padding-left: 4rem !important; }
+        .winera-blog-article-content .ql-indent-3 { padding-left: 6rem !important; }
+        .winera-blog-article-content .ql-indent-4 { padding-left: 8rem !important; }
+        .winera-blog-article-content .ql-indent-5 { padding-left: 10rem !important; }
+
+        /* Quill Font Size Classes */
+        .winera-blog-article-content .ql-size-small { font-size: 0.75em !important; }
+        .winera-blog-article-content .ql-size-large { font-size: 1.45em !important; }
+        .winera-blog-article-content .ql-size-huge { font-size: 2.1em !important; }
+
+        /* Tables: Professional layout with borders, zebra striping & responsive scroll */
+        .winera-blog-article-content table {
+          width: 100% !important;
+          border-collapse: collapse !important;
+          margin: 28px 0 !important;
+          background: #ffffff !important;
+          border-radius: 12px !important;
+          overflow: hidden !important;
+          border: 1.5px solid #cbd5e1 !important;
+          box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+        }
+        .winera-blog-article-content th,
+        .winera-blog-article-content td {
+          padding: 12px 18px !important;
+          border: 1px solid #cbd5e1 !important;
+          font-size: 15px !important;
+          line-height: 1.6 !important;
+          color: #334155 !important;
+          vertical-align: top !important;
+          text-align: left !important;
+        }
+        .winera-blog-article-content th {
+          background: #f1f5f9 !important;
+          font-weight: 700 !important;
+          color: #0f172a !important;
+        }
+        .winera-blog-article-content tr:nth-child(even) td {
+          background: #f8fafc !important;
+        }
+        .winera-blog-article-content tr:hover td {
+          background: #f0f9ff !important;
+        }
+
+        /* Inline Images */
+        .winera-blog-article-content img {
+          max-width: 100% !important;
+          height: auto !important;
+          border-radius: 14px !important;
+          margin: 26px auto !important;
+          display: block !important;
+          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+        }
+
+        /* Blockquotes, Lists & Links */
+        .winera-blog-article-content blockquote {
+          border-left: 4px solid #0284c7 !important;
+          padding: 14px 22px !important;
+          margin: 24px 0 !important;
+          background: #f0f9ff !important;
+          border-radius: 0 12px 12px 0 !important;
+          font-style: italic !important;
+          color: #0369a1 !important;
+          text-align: left !important;
+        }
+        .winera-blog-article-content ul,
+        .winera-blog-article-content ol {
+          margin: 16px 0 24px 24px !important;
+          padding-left: 10px !important;
+          text-align: left !important;
+        }
+        .winera-blog-article-content li {
+          margin-bottom: 8px !important;
+          line-height: 1.8 !important;
+          text-align: left !important;
+        }
+        .winera-blog-article-content strong,
+        .winera-blog-article-content b {
+          font-weight: 800 !important;
+          color: #0f172a;
+        }
+        .winera-blog-article-content a {
+          color: #0284c7 !important;
+          font-weight: 700 !important;
+          text-decoration: underline !important;
         }
         .winera-blog-left-toc-sticky {
           position: sticky !important;

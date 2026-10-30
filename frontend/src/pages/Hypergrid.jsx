@@ -207,7 +207,7 @@ export default function Hypergrid({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Single Line Heading: Home › Hypergrid (Matching AR Games 1:1) */}
-          <h1 className="winera-hypergrid-hero-title" style={{
+          <span className="winera-hypergrid-hero-title" style={{
             fontSize: '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -224,7 +224,7 @@ export default function Hypergrid({ siteData }) {
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>
               {siteData?.hypergridHero?.breadcrumbText || "Hypergrid"}
             </span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -261,9 +261,9 @@ export default function Hypergrid({ siteData }) {
                 alt=""
                 style={{ display: 'block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h1 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
                 {renderTitleMarkup(siteData?.hypergridIntro?.title, "*Hypergrid Game* Supplier<br/>in India", '#00a8ff')}
-              </h2>
+              </h1>
             </div>
 
             {/* Description Paragraph */}

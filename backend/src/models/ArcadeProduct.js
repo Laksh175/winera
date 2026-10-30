@@ -32,7 +32,9 @@ const arcadeProductSchema = new mongoose.Schema({
   feature3Title: { type: String, default: 'ROI-First Approach' },
   feature3Desc: { type: String, default: 'Every project begins with a free ROI report, revenue and break-even calculated before you invest.' },
   feature4Title: { type: String, default: 'Reliable Pan-India Service' },
-  feature4Desc: { type: String, default: 'Our own team installs and supports every project across 50+ cities on time, every time.' }
+  feature4Desc: { type: String, default: 'Our own team installs and supports every project across 50+ cities on time, every time.' },
+  metaTitle: { type: String, default: '' },
+  metaDescription: { type: String, default: '' }
 }, { timestamps: true });
 
 const ArcadeProduct = mongoose.model('ArcadeProduct', arcadeProductSchema);

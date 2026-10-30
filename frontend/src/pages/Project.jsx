@@ -338,7 +338,7 @@ export default function Project({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Breadcrumb: Home › Project */}
-          <h1 className="winera-project-hero-h1" style={{
+          <span className="winera-project-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -355,7 +355,7 @@ export default function Project({ siteData }) {
             <Link to="/" style={{ color: '#ffffff', textDecoration: 'none' }}>{breadcrumbHome}</Link>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>{breadcrumbPage}</span>
-          </h1>
+          </span>
         </div>
       </section>
 
@@ -363,7 +363,7 @@ export default function Project({ siteData }) {
       <section className="winera-project-main-section" style={{ padding: '70px 4vw 35px', maxWidth: '1240px', margin: '0 auto' }}>
         {/* Title: Crafting India's Best Play Destinations */}
         <div className="winera-project-heading-wrapper">
-          <SectionHeading marginBottom="45px" accentWidth="220px" accentMaxWidth="260px">
+          <SectionHeading as="h1" marginBottom="45px" accentWidth="220px" accentMaxWidth="260px">
             <span className="winera-project-heading-line1">Crafting <span style={{ color: '#00a8ff' }}>India's Best</span></span>{' '}
             <span className="winera-project-heading-line2" style={{ color: '#00a8ff' }}>Play Destinations</span>
           </SectionHeading>
