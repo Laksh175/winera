@@ -848,465 +848,465 @@ export const defaultSiteData = {
     tagline: "India's Trusted Game Zone Equipment Manufacturer & Supplier"
   },
   arCategoriesData: {
-  "Sports Simulators": [
-    {
-      "name": "Soccer Simulator",
-      "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Penalty Shootout",
-      "img": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Tennis Simulator",
-      "img": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Basketball",
-      "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Archery Simulator",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Shooting Simulator",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cycling Simulator",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Skiing Simulator",
-      "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Ski Simulator",
-      "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Boxing Simulator",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Running Simulator",
-      "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Rowing Simulator",
-      "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Curling Simulator",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Crazy Slingshot",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Super Rolling Ball",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Dynamic Styling",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Motion Sensing Game",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Golf Simulator",
-      "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Golf Plus",
-      "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Smart Soccer Wall",
-      "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Interactive Games": [
-    {
-      "name": "SAIO All-in-One 2.0",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "SAIO (LED Version)",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Omniball LED Version",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Omniball",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Combat 6",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber Dunk Reality",
-      "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Running Wall",
-      "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Curling",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber AR Boxing",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bikes — Luxe",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Rock Climbing",
-      "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Billiard",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Dynamic Kayaking",
-      "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Billiards",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Whac-a-Mole on Wall",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wonder Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Slide",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Magic Swing",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Music Wall",
-      "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Legend Archery",
-      "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Roll Action",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Particle Man",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Super Grid",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Laser Maze",
-      "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Motion Master Console",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "AR & VR Experiences": [
-    {
-      "name": "AR Bumper Car",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Garden",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bikes — Luxe",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Laser Shooting",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "10M High Range High Accuracy Laser Shooting",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Hunting Storm Realistic",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wireless Laser Tag",
-      "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "7D Imax Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Dynamic Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Room",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Restaurant",
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AI Holographic Bot",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Fog Screen Machine",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Radar",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Interactive Floor & Walls": [
-    {
-      "name": "Magic Floor — Integrated",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Floor — Outdoor",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Floor — Indoor",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Active Game LED Floor",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Digital Display Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wonderful World",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magical Waterfall",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Wonder Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Projection Lamp",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Projection Mapping Software",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Electronic Whiteboard",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Kids & Family Attractions": [
-    {
-      "name": "Interactive Trampoline",
-      "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Sandbox",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Egg Fort",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Slide",
-      "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Garden",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Gesture Interactive Book",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Draw2Life (Scan)",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Draw2Life (Screen)",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "GymBuster",
-      "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Fitness & Education": [
-    {
-      "name": "Gym Education Interactive Training System",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bike",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AR Spin Bikes — Luxe",
-      "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Rock Climbing",
-      "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Cyber AR Boxing",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Combat 6",
-      "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Roll Action",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Motion Master Console",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Bowling & Ball Games": [
-    {
-      "name": "Top Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Mini Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Bowling",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Magic Billiard",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Interactive Billiards",
-      "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Super Rolling Ball",
-      "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Themed & Immersive Zones": [
-    {
-      "name": "Immersive Room",
-      "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Restaurant",
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Immersive Dynamic Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "7D Imax Cinema",
-      "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Themed Sports Bar",
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Whole Site Planning",
-      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
-    }
-  ],
-  "Technology & Infrastructure": [
-    {
-      "name": "Projection Mapping Software",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "AI Holographic Bot",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Electronic Whiteboard",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Fog Screen Machine",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Projection Lamp",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Radar",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Digital Display Wall",
-      "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "name": "Whole Site Planning",
-      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
-    }
-  ]
-},
+    "Sports Simulators": [
+      {
+        "name": "Soccer Simulator",
+        "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Penalty Shootout",
+        "img": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Tennis Simulator",
+        "img": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Basketball",
+        "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Archery Simulator",
+        "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Shooting Simulator",
+        "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Cycling Simulator",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Skiing Simulator",
+        "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Ski Simulator",
+        "img": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Boxing Simulator",
+        "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Running Simulator",
+        "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Rowing Simulator",
+        "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Curling Simulator",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Crazy Slingshot",
+        "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Super Rolling Ball",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Dynamic Styling",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Motion Sensing Game",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Golf Simulator",
+        "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Golf Plus",
+        "img": "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Smart Soccer Wall",
+        "img": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Interactive Games": [
+      {
+        "name": "SAIO All-in-One 2.0",
+        "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "SAIO (LED Version)",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Omniball LED Version",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Omniball",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Combat 6",
+        "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Cyber Dunk Reality",
+        "img": "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Running Wall",
+        "img": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Curling",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Cyber AR Boxing",
+        "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bike",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bikes — Luxe",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Rock Climbing",
+        "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magic Billiard",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Dynamic Kayaking",
+        "img": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Billiards",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Whac-a-Mole on Wall",
+        "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wonder Wall",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Slide",
+        "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Magic Swing",
+        "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Music Wall",
+        "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Legend Archery",
+        "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Roll Action",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Particle Man",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Super Grid",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Laser Maze",
+        "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Motion Master Console",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "AR & VR Experiences": [
+      {
+        "name": "AR Bumper Car",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Garden",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bike",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bikes — Luxe",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Laser Shooting",
+        "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "10M High Range High Accuracy Laser Shooting",
+        "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Hunting Storm Realistic",
+        "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wireless Laser Tag",
+        "img": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "7D Imax Cinema",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Dynamic Cinema",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Room",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Restaurant",
+        "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AI Holographic Bot",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Fog Screen Machine",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Radar",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Interactive Floor & Walls": [
+      {
+        "name": "Magic Floor — Integrated",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magic Floor — Outdoor",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magic Floor — Indoor",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Active Game LED Floor",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Digital Display Wall",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wonderful World",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magical Waterfall",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wonder Wall",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Projection Lamp",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Projection Mapping Software",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Electronic Whiteboard",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Kids & Family Attractions": [
+      {
+        "name": "Interactive Trampoline",
+        "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Sandbox",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magic Egg Fort",
+        "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Slide",
+        "img": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Garden",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Gesture Interactive Book",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Draw2Life (Scan)",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Draw2Life (Screen)",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "GymBuster",
+        "img": "https://images.unsplash.com/photo-1533560904424-a0c61dc306fc?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Fitness & Education": [
+      {
+        "name": "Gym Education Interactive Training System",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bike",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AR Spin Bikes — Luxe",
+        "img": "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Rock Climbing",
+        "img": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Cyber AR Boxing",
+        "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Combat 6",
+        "img": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Roll Action",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Motion Master Console",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Bowling & Ball Games": [
+      {
+        "name": "Top Bowling",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Bowling",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Mini Bowling",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Bowling",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magic Billiard",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interactive Billiards",
+        "img": "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Super Rolling Ball",
+        "img": "https://images.unsplash.com/photo-1545232979-fbf582f05a9d?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Themed & Immersive Zones": [
+      {
+        "name": "Immersive Room",
+        "img": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Restaurant",
+        "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Immersive Dynamic Cinema",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "7D Imax Cinema",
+        "img": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Themed Sports Bar",
+        "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Whole Site Planning",
+        "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "Technology & Infrastructure": [
+      {
+        "name": "Projection Mapping Software",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "AI Holographic Bot",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Electronic Whiteboard",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Fog Screen Machine",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Projection Lamp",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Radar",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Digital Display Wall",
+        "img": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Whole Site Planning",
+        "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
   amusementHero: {
     breadcrumbText: "Amusement Park",
     bgUrl: ""
@@ -2396,7 +2396,7 @@ export const adminLogin = async (req, res) => {
 
   try {
     const inputUser = (username || '').trim().toLowerCase();
-    let admin = await Admin.findOne({ 
+    let admin = await Admin.findOne({
       $or: [
         { username: inputUser },
         { username: username }
@@ -2404,7 +2404,7 @@ export const adminLogin = async (req, res) => {
     });
 
     const isRaviDefault = (inputUser === 'ravi@wineraindia.com' || inputUser === 'admin') &&
-                          (password === 'Winera@2026#Ravi' || password === 'admin123');
+      (password === 'Winera@2026#Ravi' || password === 'admin123');
 
     if (!admin && isRaviDefault) {
       admin = await Admin.create({
@@ -2576,7 +2576,7 @@ export const getContent = async (req, res) => {
         { feature1Title: { $regex: /12\+/i } },
         { $set: { feature1Title: '15+ Years of Expertise' } }
       );
-    } catch (e) {}
+    } catch (e) { }
 
     // Auto-ensure all canonical projects from projectsData.json exist in MongoDB Project collection & siteData.projectItems
     const canonicalProjects = Array.isArray(projectsData) ? projectsData : [];
@@ -2797,6 +2797,21 @@ export const getContent = async (req, res) => {
       clearContentCache();
     }
 
+    // Auto-clean bowlingRoi.p2 in MongoDB if containing the extra sentence / Return on Investment link
+    if (siteData.bowlingRoi && typeof siteData.bowlingRoi.p2 === 'string' && siteData.bowlingRoi.p2.includes('Every restored system is built for consistent')) {
+      const cleanP2 = "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment.";
+      siteData.bowlingRoi = {
+        ...siteData.bowlingRoi,
+        p2: cleanP2
+      };
+      await Content.findOneAndUpdate(
+        { sectionKey: 'bowlingRoi' },
+        { sectionKey: 'bowlingRoi', data: siteData.bowlingRoi },
+        { upsert: true, new: true }
+      );
+      clearContentCache();
+    }
+
     const homeSections = [
       'header', 'hero', 'stats', 'statsHeader',
       'clientLogos', 'clientsHeader', 'aboutHome',
@@ -2899,7 +2914,7 @@ export const updateContent = async (req, res) => {
             { slug: { $in: ['funfair', 'skidz-play-spaces'] } },
             { name: { $regex: /^(funfair|skidz\s*play\s*spaces)$/i } }
           ]
-        }).catch(() => {});
+        }).catch(() => { });
 
         // Also sync builtProjects collection with updated project active status and images
         const builtDoc = await Content.findOne({ sectionKey: 'builtProjects' });
@@ -3022,12 +3037,12 @@ export const uploadImage = async (req, res) => {
 
       const result = await cloudinary.uploader.upload(req.file.path, uploadOptions);
       if (fs.existsSync(req.file.path)) {
-        try { fs.unlinkSync(req.file.path); } catch (e) {}
+        try { fs.unlinkSync(req.file.path); } catch (e) { }
       }
       return res.json({ url: result.secure_url, filename: result.public_id, isCloudinary: true });
     } catch (err) {
       if (fs.existsSync(req.file.path)) {
-        try { fs.unlinkSync(req.file.path); } catch (e) {}
+        try { fs.unlinkSync(req.file.path); } catch (e) { }
       }
       console.error('Cloudinary document upload error:', err?.message || err);
       const errMsg = err?.message || 'Upload error';
@@ -3061,7 +3076,7 @@ export const uploadImage = async (req, res) => {
     const result = await cloudinary.uploader.upload(req.file.path, uploadOptions);
     // Remove temporary local file after Cloudinary upload
     if (fs.existsSync(req.file.path)) {
-      try { fs.unlinkSync(req.file.path); } catch (e) {}
+      try { fs.unlinkSync(req.file.path); } catch (e) { }
     }
     let optUrl = result.secure_url;
     if (optUrl && optUrl.includes('/upload/') && !optUrl.includes('/f_auto,q_auto/')) {
@@ -3201,15 +3216,15 @@ export const mutateContentItem = async (req, res) => {
         try {
           const itemSlug = item.slug || (item.title || item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
           if (itemSlug) {
-            addOrUpdateUrlInSitemap({ url: `https://winera.in/product/${itemSlug}`, priority: '0.8', changefreq: 'monthly' }).catch(() => {});
+            addOrUpdateUrlInSitemap({ url: `https://winera.in/product/${itemSlug}`, priority: '0.8', changefreq: 'monthly' }).catch(() => { });
           }
           if (item.category) {
             const catSlug = item.category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
             if (catSlug) {
-              addOrUpdateUrlInSitemap({ url: `https://winera.in/product/${catSlug}`, priority: '0.9', changefreq: 'weekly' }).catch(() => {});
+              addOrUpdateUrlInSitemap({ url: `https://winera.in/product/${catSlug}`, priority: '0.9', changefreq: 'weekly' }).catch(() => { });
             }
           }
-        } catch (sErr) {}
+        } catch (sErr) { }
       }
 
       return res.json({
@@ -3318,7 +3333,7 @@ export const mutateContentItem = async (req, res) => {
     if (['projectItems', 'blogPosts', 'arcadeCategories', 'vrCategories', 'vrRange'].includes(sectionKey)) {
       try {
         syncAllDatabaseToSitemap().catch(e => console.warn('[Sitemap Auto-Sync Note]:', e?.message));
-      } catch (sErr) {}
+      } catch (sErr) { }
     }
 
     clearContentCache();

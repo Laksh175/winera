@@ -1079,7 +1079,10 @@ export default function BowlingAlley({ siteData }) {
                 <p
                   style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '3px', width: '103%' }}
                   dangerouslySetInnerHTML={{
-                    __html: sanitizeAndFormatHtml((siteData?.bowlingRoi?.p2 || "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment.").replace(/\n/g, '<br>'))
+                    __html: sanitizeAndFormatHtml((() => {
+                      const rawP2 = siteData?.bowlingRoi?.p2 || "By choosing our refurbished bowling systems, you can create a high-end bowling center at a cost-effective budget. With reliable machinery that's been expertly restored, you'll enjoy top-tier performance, low maintenance, and durability without the cost of brand-new equipment.";
+                      return rawP2.replace(/\s*Every restored system is built for consistent.*$/i, '').trim().replace(/\n/g, '<br>');
+                    })())
                   }}
                 />
               }

@@ -274,7 +274,7 @@ export default function SoftPlay({ siteData }) {
                 height={10}
                 style={{ display: 'block', width: '320px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
               />
-              <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0 }}>
+              <h2 className="winera-softplay-manufacture-title" style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.15, margin: 0, whiteSpace: 'nowrap' }}>
                 {renderTitleMarkup(siteData?.softplayManufacture?.title, "Soft Play *Equipment Manufacture*")}
               </h2>
             </div>

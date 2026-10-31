@@ -20661,3 +20661,14 @@ article.winera-blog-article-main-col .winera-blog-article-content h6,
   letter-spacing: 0.5px !important;
   font-family: 'Open Sans', sans-serif !important;
 }
+
+/* Soft Play Equipment Manufacture Single Line Title */
+.winera-softplay-manufacture-title {
+  white-space: nowrap !important;
+}
+
+@media (max-width: 900px) {
+  .winera-softplay-manufacture-title {
+    white-space: normal !important;
+  }
+}
