@@ -1239,12 +1239,12 @@ export default function ArcadeGameDetail({ siteData }) {
                   fontSize: '14px',
                   padding: '7px 16px',
                   borderRadius: '2px',
-                  display: 'block',
-                  width: '82%',
-                  maxWidth: '360px',
+                  display: 'inline-block',
+                  width: 'fit-content',
+                  maxWidth: '100%',
                   marginTop: '4px'
                 }} className="winera-arcade-banner-pill">
-                  Specification:
+                  Why Choose Winera International
                 </div>
 
                 {/* Specs Key-Value List */}
