@@ -3191,25 +3191,29 @@ export const mutateContentItem = async (req, res) => {
       // Also keep ArcadeProduct and VrGame dedicated collections in sync
       try {
         const itemSlug = item?.slug || (item?.title || item?.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-        if (sectionKey === 'arcadeCategories') {
+        const targetModel = sectionKey === 'arcadeCategories' ? ArcadeProduct : (sectionKey === 'vrCategories' || sectionKey === 'vrRange' ? VrGame : null);
+
+        if (targetModel) {
           if (action === 'delete') {
             const delVal = matchValue || itemSlug;
-            if (delVal) await ArcadeProduct.deleteOne({ $or: [{ slug: delVal }, { name: delVal }] });
+            if (delVal) await targetModel.deleteOne({ $or: [{ slug: delVal }, { name: delVal }] });
           } else if (item) {
-            await ArcadeProduct.findOneAndUpdate(
-              { $or: [{ slug: itemSlug }, { name: item.name || item.title }] },
-              { $set: { ...item, slug: itemSlug, name: item.name || item.title, title: item.title || item.name } },
-              { upsert: true, new: true }
-            );
-          }
-        } else if (sectionKey === 'vrCategories' || sectionKey === 'vrRange') {
-          if (action === 'delete') {
-            const delVal = matchValue || itemSlug;
-            if (delVal) await VrGame.deleteOne({ $or: [{ slug: delVal }, { name: delVal }] });
-          } else if (item) {
-            await VrGame.findOneAndUpdate(
-              { $or: [{ slug: itemSlug }, { name: item.name || item.title }] },
-              { $set: { ...item, slug: itemSlug, name: item.name || item.title, title: item.title || item.name } },
+            const { _id, id, ...cleanSet } = item;
+            cleanSet.slug = itemSlug;
+            cleanSet.name = item.name || item.title;
+            cleanSet.title = item.title || item.name;
+
+            const queryOr = [];
+            const docId = _id || (id && mongoose.Types.ObjectId.isValid(id) ? id : null);
+            if (docId) queryOr.push({ _id: docId });
+            if (matchValue) queryOr.push({ slug: matchValue });
+            if (itemSlug) queryOr.push({ slug: itemSlug });
+            if (item.name) queryOr.push({ name: item.name });
+            if (item.title) queryOr.push({ title: item.title });
+
+            await targetModel.findOneAndUpdate(
+              { $or: queryOr },
+              { $set: cleanSet },
               { upsert: true, new: true }
             );
           }

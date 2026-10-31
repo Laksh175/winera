@@ -405,6 +405,52 @@ export default function RichTextareaWithEditor({
         .winera-quill-editor-wrapper .ql-snow .ql-toolbar button.ql-active .ql-fill {
           fill: #0284c7 !important;
         }
+
+        /* Table Styling inside Editor (Fixed layout, 17px font, auto line breaking) */
+        .winera-quill-editor-wrapper .ql-editor table {
+          border-collapse: collapse !important;
+          width: 100% !important;
+          min-width: 100% !important;
+          max-width: 100% !important;
+          margin: 24px 0 !important;
+          border: 1.5px solid #cbd5e1 !important;
+          background: #ffffff !important;
+          table-layout: fixed !important;
+        }
+        .winera-quill-editor-wrapper .ql-editor th,
+        .winera-quill-editor-wrapper .ql-editor td {
+          border: 1px solid #cbd5e1 !important;
+          padding: 12px 16px !important;
+          font-size: 17px !important;
+          color: #334155 !important;
+          line-height: 1.65 !important;
+          vertical-align: top !important;
+          box-sizing: border-box !important;
+          word-break: break-word !important;
+          overflow-wrap: anywhere !important;
+          word-wrap: break-word !important;
+          white-space: normal !important;
+          text-align: left;
+        }
+        .winera-quill-editor-wrapper .ql-editor th p,
+        .winera-quill-editor-wrapper .ql-editor td p,
+        .winera-quill-editor-wrapper .ql-editor th *,
+        .winera-quill-editor-wrapper .ql-editor td * {
+          margin: 0 !important;
+          padding: 0 !important;
+          font-size: 17px !important;
+          line-height: 1.65 !important;
+          color: #334155 !important;
+          word-break: break-word !important;
+          overflow-wrap: anywhere !important;
+          word-wrap: break-word !important;
+          white-space: normal !important;
+        }
+        .winera-quill-editor-wrapper .ql-editor th {
+          font-weight: 700 !important;
+          background: #f1f5f9 !important;
+          color: #0f172a !important;
+        }
       `}</style>
     </div>
   );

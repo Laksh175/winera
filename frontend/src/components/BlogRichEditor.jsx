@@ -2079,7 +2079,9 @@ export default function BlogRichEditor({
           text-align: left;
         }
         .winera-blog-quill-container .ql-editor th p,
-        .winera-blog-quill-container .ql-editor td p {
+        .winera-blog-quill-container .ql-editor td p,
+        .winera-blog-quill-container .ql-editor th *,
+        .winera-blog-quill-container .ql-editor td * {
           margin: 0 !important;
           padding: 0 !important;
           font-size: 17px !important;

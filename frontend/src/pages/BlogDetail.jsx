@@ -1579,7 +1579,9 @@ export default function BlogDetail({ siteData }) {
         }
 
         .winera-blog-article-content table th p,
-        .winera-blog-article-content table td p {
+        .winera-blog-article-content table td p,
+        .winera-blog-article-content table th *,
+        .winera-blog-article-content table td * {
           margin: 0 !important;
           padding: 0 !important;
           font-size: 17px !important;

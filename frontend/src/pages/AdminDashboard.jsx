@@ -2762,6 +2762,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         ...defaultArcadeItem,
         ...(masterMatch || {}),
         ...item,
+        originalSlug: item.slug || masterMatch?.slug || '',
+        originalId: item._id || item.id || masterMatch?._id || masterMatch?.id || '',
         metaTitle: item.metaTitle || item.seoTitle || masterMatch?.metaTitle || masterMatch?.seoTitle || defaultArcadeItem.metaTitle || '',
         metaDescription: item.metaDescription || item.seoDescription || masterMatch?.metaDescription || masterMatch?.seoDescription || defaultArcadeItem.metaDescription || '',
         gallery: richestGallery
@@ -2847,6 +2849,8 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         ...defaultVrItem,
         ...(vrMatch || {}),
         ...item,
+        originalSlug: item.slug || vrMatch?.slug || '',
+        originalId: item._id || item.id || vrMatch?._id || vrMatch?.id || '',
         metaTitle: item.metaTitle || item.seoTitle || vrMatch?.metaTitle || vrMatch?.seoTitle || defaultVrItem.metaTitle || '',
         metaDescription: item.metaDescription || item.seoDescription || vrMatch?.metaDescription || vrMatch?.seoDescription || defaultVrItem.metaDescription || '',
         gallery: richestVrGallery
@@ -4005,7 +4009,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
             max-width: 100% !important;
             height: auto !important;
           }
-          table {
+          table:not(.ql-editor table) {
             display: block !important;
             width: 100% !important;
             overflow-x: auto !important;

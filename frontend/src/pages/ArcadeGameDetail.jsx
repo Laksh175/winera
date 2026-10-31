@@ -869,16 +869,20 @@ export default function ArcadeGameDetail({ siteData }) {
     galleryList = [resolvedMainImg];
   }
 
-  // Calculate nameBase and nameHighlight cleanly to show stylish Black (Base) + Cyan (Highlight) colors
-  const rawTitle = (cmsFoundCard?.name || cmsFoundCard?.title || masterFoundCard?.name || masterFoundCard?.title || defaultProduct.name || '').replace(/TO\[ GUN/gi, 'TOP GUN');
+  // Prioritize active product data from API, CMS, or master catalog
+  const activeCard = apiProduct || cmsFoundCard || masterFoundCard;
+  const rawTitle = (activeCard?.name || activeCard?.title || defaultProduct.name || '').replace(/TO\[ GUN/gi, 'TOP GUN');
   let finalNameBase = '';
   let finalNameHighlight = '';
 
-  if (cmsFoundCard?.nameBase !== undefined && cmsFoundCard?.nameHighlight !== undefined && (cmsFoundCard.nameBase || cmsFoundCard.nameHighlight)) {
-    finalNameBase = String(cmsFoundCard.nameBase).replace(/TO\[ GUN/gi, 'TOP GUN');
-    finalNameHighlight = cmsFoundCard.nameHighlight;
-  } else if (cmsFoundCard?.nameHighlight) {
-    const highlight = cmsFoundCard.nameHighlight;
+  if (activeCard?.nameBase !== undefined && activeCard?.nameHighlight !== undefined && (activeCard.nameBase !== '' || activeCard.nameHighlight !== '')) {
+    finalNameBase = String(activeCard.nameBase || '').replace(/TO\[ GUN/gi, 'TOP GUN');
+    finalNameHighlight = activeCard.nameHighlight || '';
+  } else if (activeCard?.nameBase !== undefined && activeCard.nameBase !== '') {
+    finalNameBase = String(activeCard.nameBase).replace(/TO\[ GUN/gi, 'TOP GUN');
+    finalNameHighlight = activeCard?.nameHighlight || '';
+  } else if (activeCard?.nameHighlight) {
+    const highlight = activeCard.nameHighlight;
     if (rawTitle.endsWith(highlight)) {
       finalNameBase = rawTitle.slice(0, rawTitle.length - highlight.length).trim();
       finalNameHighlight = highlight;
@@ -902,7 +906,7 @@ export default function ArcadeGameDetail({ siteData }) {
   }
 
   // Construct dynamic product object
-  const productName = (cmsFoundCard?.name || cmsFoundCard?.title || masterFoundCard?.name || masterFoundCard?.title || defaultProduct.name || '').replace(/TO\[ GUN/gi, 'TOP GUN');
+  const productName = (activeCard?.name || activeCard?.title || defaultProduct.name || '').replace(/TO\[ GUN/gi, 'TOP GUN');
 
   const product = {
     name: productName,
