@@ -58,22 +58,21 @@ function parseStarText(children) {
 
   return parts.map((part, index) => {
     const formattedPart = toTitleCaseText(part);
-    if (index % 2 === 1) {
-      return (
-        <span key={index} style={{
-          color: '#00a8ff',
-          fontFamily: "'Black Han Sans', sans-serif",
-          fontWeight: '400',
-          fontStyle: 'normal',
-          fontSize: 'inherit',
-          lineHeight: 'inherit',
-          letterSpacing: 'inherit'
-        }}>
-          {formattedPart}
-        </span>
-      );
-    }
-    return formattedPart;
+    if (!formattedPart) return null;
+    const isHighlight = index % 2 === 1;
+    return (
+      <span key={index} style={{
+        color: isHighlight ? '#00a8ff' : '#0f172a',
+        fontFamily: "'Black Han Sans', sans-serif",
+        fontWeight: '400',
+        fontStyle: 'normal',
+        fontSize: 'inherit',
+        lineHeight: 'inherit',
+        letterSpacing: 'inherit'
+      }}>
+        {formattedPart}
+      </span>
+    );
   });
 }
 

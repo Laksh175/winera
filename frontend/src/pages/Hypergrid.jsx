@@ -102,13 +102,13 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => 
 
   // Sanitize line breaks and markup for Hypergrid page titles specifically
   if (text.toLowerCase().includes('interactive led floor games')) {
-    text = "Interactive LED Floor Games <br/>*for High-Footfall Venues*";
+    text = "Interactive LED Floor Games <br/>*For High-Footfall Venues*";
   } else if (text.toLowerCase().includes('what makes hypergrid')) {
-    text = "*What Makes Hypergrid* <br/>the Right Choice for Your Venue";
+    text = "*What Makes Hypergrid* <br/>The Right Choice For Your Venue";
   } else if (text.toLowerCase().includes('is hypergrid a smart') || text.toLowerCase().includes('investment for your venue')) {
-    text = "Is Hypergrid a Smart <br/>*Investment for Your Venue?*";
+    text = "Is Hypergrid A Smart <br/>*Investment For Your Venue?*";
   } else if (text.toLowerCase().includes('hypergrid game') && text.toLowerCase().includes('supplier')) {
-    text = "*Hypergrid Game* Supplier<br/>in India";
+    text = "*Hypergrid Game* Supplier<br/>In India";
   }
 
   const parts = text.split(/\*{1,2}(.*?)\*{1,2}/gs);
@@ -124,21 +124,33 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => 
           {sIdx < subParts.length - 1 && <br />}
         </React.Fragment>
       ));
-      return isHighlight ? (
-        <span key={index} style={{ color: actualHighlight }}>
+      return (
+        <span key={index} style={{
+          color: isHighlight ? actualHighlight : '#0f172a',
+          fontFamily: "'Black Han Sans', sans-serif",
+          fontWeight: '400',
+          fontStyle: 'normal',
+          fontSize: 'inherit',
+          lineHeight: 'inherit',
+          letterSpacing: 'inherit'
+        }}>
           {content}{' '}
         </span>
-      ) : (
-        <React.Fragment key={index}>{content}</React.Fragment>
       );
     }
 
-    return isHighlight ? (
-      <span key={index} style={{ color: actualHighlight }}>
+    return (
+      <span key={index} style={{
+        color: isHighlight ? actualHighlight : '#0f172a',
+        fontFamily: "'Black Han Sans', sans-serif",
+        fontWeight: '400',
+        fontStyle: 'normal',
+        fontSize: 'inherit',
+        lineHeight: 'inherit',
+        letterSpacing: 'inherit'
+      }}>
         {part}{' '}
       </span>
-    ) : (
-      <React.Fragment key={index}>{part}</React.Fragment>
     );
   });
 };
@@ -493,8 +505,8 @@ export default function Hypergrid({ siteData }) {
               alt=""
               style={{ display: 'inline-block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '10px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: '0 0 14px' }}>
-              {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid*<br/>*the Right Choice for Your Venue*", '#00a8ff')}
+            <h2 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', color: '#0f172a', lineHeight: 1.2, letterSpacing: '0px', margin: '0 0 14px' }}>
+              {renderTitleMarkup(siteData?.hypergridWhyUs?.title, "*What Makes Hypergrid*<br/>The Right Choice For Your Venue", '#00a8ff')}
             </h2>
             <p
               style={{ fontSize: '13.5px', color: 'rgba(55, 62, 65, 1)', lineHeight: 1.6, fontWeight: '500', margin: 0 }}
@@ -593,8 +605,8 @@ export default function Hypergrid({ siteData }) {
               alt=""
               style={{ display: 'inline-block', maxWidth: '100%', width: '350px', height: '10px', marginBottom: '12px', objectFit: 'fill' }}
             />
-            <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
-              {renderTitleMarkup(siteData?.hypergridRoi?.title, "Is Hypergrid a Smart <br/>*Investment for Your Venue?*", '#00a8ff')}
+            <h2 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', color: '#0f172a', lineHeight: 1.2, letterSpacing: '0px', margin: 0 }}>
+              {renderTitleMarkup(siteData?.hypergridRoi?.title, "Is Hypergrid A Smart <br/>*Investment For Your Venue?*", '#00a8ff')}
             </h2>
           </div>
 
@@ -902,7 +914,7 @@ export default function Hypergrid({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
+        simpleTitle="Our *Recent Projects*"
       />
 
       {/* 10. WHAT OUR CLIENTS SAY (TESTIMONIALS) SECTION */}

@@ -781,7 +781,7 @@ export default function ArGames({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
+        simpleTitle="Our *Recent Projects*"
       />
 
       {/* 10. WHAT OUR CLIENTS SAY (TESTIMONIALS) SECTION */}

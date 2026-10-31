@@ -1247,7 +1247,7 @@ export default function SoftPlay({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
+        simpleTitle="Our *Recent Projects*"
       />
 
       {/* 11. WHAT OUR CLIENTS SAY SECTION (PERSISTED TESTIMONIALS DATA) */}

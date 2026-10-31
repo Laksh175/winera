@@ -1224,7 +1224,7 @@ export default function TrampolinePark({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
+        simpleTitle="Our *Recent Projects*"
       />
 
       {/* TESTIMONIALS SECTION (WHAT OUR CLIENTS SAY) */}

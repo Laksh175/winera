@@ -10360,16 +10360,33 @@ h1:not(.winera-home-hero-h1):not(.winera-blog-article-title):not(.ql-editor *):n
 h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *),
 .winera-section-heading-container h2,
 .winera-section-heading-container h1,
+.winera-section-heading-h2,
 .winera-home-hero-h1 span,
 h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *) span,
 .winera-section-heading-container h2 span,
 .winera-section-heading-container h1 span,
+.winera-section-heading-h2 span,
 .winera-section-heading-container h2 *,
-.winera-section-heading-container h1 * {
+.winera-section-heading-container h1 *,
+.winera-section-heading-h2 * {
   font-family: 'Black Han Sans', sans-serif !important;
   font-weight: 400 !important;
   font-style: normal !important;
   letter-spacing: 0px !important;
+}
+
+h1:not(.winera-home-hero-h1):not(.winera-blog-article-title):not(.ql-editor *):not(.winera-blog-article-content *):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview *):not(.winera-blog-quill-container *):not(.admin-dashboard *):not([class*="admin"] *) span,
+h1:not(.winera-home-hero-h1):not(.winera-blog-article-title):not(.ql-editor *):not(.winera-blog-article-content *):not(.winera-blog-article-main-col *):not(.winera-admin-blog-preview *):not(.winera-blog-quill-container *):not(.admin-dashboard *):not([class*="admin"] *) *,
+h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *) span,
+h2:not(.ql-editor h2):not(.winera-blog-article-content h2):not(.winera-blog-article-main-col h2):not(.winera-admin-blog-preview h2):not(.winera-blog-quill-container *) *,
+.winera-section-heading-container h2 span,
+.winera-section-heading-container h1 span,
+.winera-section-heading-h2 span,
+.winera-section-heading-container h2 *,
+.winera-section-heading-container h1 *,
+.winera-section-heading-h2 * {
+  font-size: inherit !important;
+  line-height: inherit !important;
 }
 
 /* ==========================================================================
@@ -15474,7 +15491,9 @@ button[style*="background:transparent"]:hover,
     padding-top: 20px !important;
   }
 
-  .winera-hypergrid-whyus-container h2 {
+  .winera-hypergrid-whyus-container h2,
+  .winera-hypergrid-whyus-container h2 span,
+  .winera-hypergrid-whyus-container h2 * {
     font-size: 28px !important;
     margin-bottom: 6px !important;
   }
@@ -17999,7 +18018,9 @@ button[style*="background:transparent"]:hover,
 
 /* Hypergrid ROI Section Title Mobile Fix */
 @media (max-width: 850px) {
-  .winera-hypergrid-roi-section h2 {
+  .winera-hypergrid-roi-section h2,
+  .winera-hypergrid-roi-section h2 span,
+  .winera-hypergrid-roi-section h2 * {
     font-size: clamp(20px, 5.2vw, 25px) !important;
     line-height: 1.25 !important;
     text-align: center !important;
@@ -18018,7 +18039,9 @@ button[style*="background:transparent"]:hover,
 }
 
 @media (max-width: 480px) {
-  .winera-hypergrid-roi-section h2 {
+  .winera-hypergrid-roi-section h2,
+  .winera-hypergrid-roi-section h2 span,
+  .winera-hypergrid-roi-section h2 * {
     font-size: clamp(18px, 4.8vw, 22px) !important;
     line-height: 1.25 !important;
     max-width: 320px !important;

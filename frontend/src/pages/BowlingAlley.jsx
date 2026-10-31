@@ -93,20 +93,34 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => 
         </React.Fragment>
       ));
 
-      if (isCyan) {
-        return <span key={sIdx} style={{ color: '#00a8ff' }}>{lineElements}</span>;
-      }
-      return <React.Fragment key={sIdx}>{lineElements}</React.Fragment>;
-    });
-
-    if (isHighlighted) {
       return (
-        <span key={pIdx} style={{ color: actualHighlight }}>
-          {renderedSub}
+        <span key={sIdx} style={{
+          color: isCyan ? '#00a8ff' : (isHighlighted ? actualHighlight : '#0f172a'),
+          fontFamily: "'Black Han Sans', sans-serif",
+          fontWeight: '400',
+          fontStyle: 'normal',
+          fontSize: 'inherit',
+          lineHeight: 'inherit',
+          letterSpacing: 'inherit'
+        }}>
+          {lineElements}
         </span>
       );
-    }
-    return <React.Fragment key={pIdx}>{renderedSub}</React.Fragment>;
+    });
+
+    return (
+      <span key={pIdx} style={{
+        color: isHighlighted ? actualHighlight : '#0f172a',
+        fontFamily: "'Black Han Sans', sans-serif",
+        fontWeight: '400',
+        fontStyle: 'normal',
+        fontSize: 'inherit',
+        lineHeight: 'inherit',
+        letterSpacing: 'inherit'
+      }}>
+        {renderedSub}
+      </span>
+    );
   });
 };
 
@@ -499,7 +513,7 @@ export default function BowlingAlley({ siteData }) {
                   className="winera-yellow-stroke"
                   style={{ display: 'block', width: '200px', height: '8px', marginBottom: '3px', objectFit: 'fill' }}
                 />
-                <h2 style={{ fontSize: 'clamp(27px, 2.25vw, 35px)', fontWeight: '900', color: '#0f172a', lineHeight: 1.2, margin: 0 }}>
+                <h2 style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: '35px', fontWeight: '400', fontStyle: 'normal', color: '#0f172a', lineHeight: 1.2, letterSpacing: '0px', margin: 0 }}>
                   {(() => {
                     let titleStr = siteData?.bowlingFreeFall?.title;
                     if (!titleStr || titleStr === "*Free-Fall Bowling:* Give the Full Professional Experience" || titleStr.includes("Give the Full<br/>Professional Experience") || titleStr.includes("Give the Full<br />Professional Experience")) {
@@ -1268,7 +1282,7 @@ export default function BowlingAlley({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
+        simpleTitle="Our *Recent Projects*"
         showBottomButton={true}
         buttonText="Know More"
       />

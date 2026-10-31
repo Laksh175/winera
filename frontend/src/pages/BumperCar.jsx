@@ -1460,7 +1460,7 @@ export default function BumperCar({ siteData }) {
         siteData={siteData}
         projects={siteData?.builtProjects}
         showTopHeader={false}
-        simpleTitle={<>Our <span style={{ color: '#00a8ff' }}>Recent Projects</span></>}
+        simpleTitle="Our *Recent Projects*"
         showBottomButton={true}
         buttonText="View All Projects"
       />
