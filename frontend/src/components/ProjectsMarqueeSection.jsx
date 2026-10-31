@@ -50,6 +50,7 @@ export default function ProjectsMarqueeSection({
     if (!p) return false;
     if (p.slug === 'funfair' || p.slug === 'skidz-play-spaces') return false;
     if (p.isActive === false || p.status === 'inactive') return false;
+    if (p.status === 'scheduled' && (!p.scheduledAt || new Date(p.scheduledAt) > new Date())) return false;
     const cleanSlug = (p.slug || '').toLowerCase();
     if (cleanSlug && inactiveSlugs.has(cleanSlug)) return false;
     return true;

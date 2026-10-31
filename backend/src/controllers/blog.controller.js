@@ -78,13 +78,31 @@ export const getBlogs = async (req, res) => {
   try {
     await ensureBlogsSeeded();
 
+    // Auto-promote any scheduled blogs whose scheduledAt time has arrived
+    try {
+      const now = new Date();
+      await Blog.updateMany(
+        { status: 'scheduled', scheduledAt: { $lte: now } },
+        { $set: { status: 'active', isActive: true, isPublished: true } }
+      );
+    } catch (_) {}
+
     const { category, search, page = 1, limit, includeInactive } = req.query;
     const query = {};
 
     if (includeInactive !== 'true' && includeInactive !== true) {
+      const now = new Date();
       query.isActive = { $ne: false };
       query.status = { $ne: 'inactive' };
       query.isPublished = { $ne: false };
+
+      const visibilityCondition = {
+        $or: [
+          { status: { $ne: 'scheduled' } },
+          { scheduledAt: { $lte: now } }
+        ]
+      };
+      query.$and = query.$and ? [...query.$and, visibilityCondition] : [visibilityCondition];
     }
 
     if (category && category !== 'All' && category !== 'All Categories') {
@@ -93,13 +111,16 @@ export const getBlogs = async (req, res) => {
 
     if (search && search.trim() !== '') {
       const q = search.trim();
-      query.$or = [
-        { title: { $regex: q, $options: 'i' } },
-        { subtitle: { $regex: q, $options: 'i' } },
-        { excerpt: { $regex: q, $options: 'i' } },
-        { author: { $regex: q, $options: 'i' } },
-        { category: { $regex: q, $options: 'i' } }
-      ];
+      const searchCondition = {
+        $or: [
+          { title: { $regex: q, $options: 'i' } },
+          { subtitle: { $regex: q, $options: 'i' } },
+          { excerpt: { $regex: q, $options: 'i' } },
+          { author: { $regex: q, $options: 'i' } },
+          { category: { $regex: q, $options: 'i' } }
+        ]
+      };
+      query.$and = query.$and ? [...query.$and, searchCondition] : [searchCondition];
     }
 
     const total = await Blog.countDocuments(query);
@@ -159,6 +180,18 @@ export const getBlogBySlug = async (req, res) => {
 
     if (!blog) {
       return res.status(404).json({ success: false, message: 'Blog post not found' });
+    }
+
+    if (req.query?.preview !== 'true' && req.query?.includeInactive !== 'true') {
+      const isPastScheduled = blog.status === 'scheduled' && blog.scheduledAt && new Date(blog.scheduledAt) <= new Date();
+      if (isPastScheduled) {
+        blog.status = 'active';
+        blog.isActive = true;
+        blog.isPublished = true;
+        await blog.save().catch(() => {});
+      } else if (blog.isActive === false || blog.status === 'inactive' || (blog.status === 'scheduled' && blog.scheduledAt && new Date(blog.scheduledAt) > new Date())) {
+        return res.status(404).json({ success: false, message: 'Blog post is scheduled or hidden' });
+      }
     }
 
     res.json({ success: true, blog, post: blog });

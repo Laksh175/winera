@@ -359,11 +359,21 @@ export default function RichTextareaWithEditor({
         .winera-quill-editor-wrapper .ql-editor * a {
           color: #0284c7 !important;
           text-decoration: underline !important;
-          font-weight: 700 !important;
+          font-weight: normal !important;
           cursor: pointer !important;
           display: inline !important;
           width: auto !important;
           max-width: none !important;
+        }
+        .winera-quill-editor-wrapper .ql-editor strong a,
+        .winera-quill-editor-wrapper .ql-editor b a,
+        .winera-quill-editor-wrapper .ql-editor a strong,
+        .winera-quill-editor-wrapper .ql-editor a b,
+        .winera-quill-editor-wrapper .ql-editor h1 a,
+        .winera-quill-editor-wrapper .ql-editor h2 a,
+        .winera-quill-editor-wrapper .ql-editor h3 a,
+        .winera-quill-editor-wrapper .ql-editor h4 a {
+          font-weight: 700 !important;
         }
         .winera-quill-editor-wrapper .ql-editor.ql-blank::before {
           color: #94a3b8 !important;

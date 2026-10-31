@@ -124,8 +124,29 @@ export const getProjects = async (req, res) => {
       console.warn('Sync Project with Content model notice:', syncErr?.message);
     }
 
-    const { category, search } = req.query;
-    const query = { isActive: { $ne: false }, status: { $ne: 'inactive' } };
+    // Auto-promote any scheduled projects whose scheduledAt time has arrived
+    const now = new Date();
+    try {
+      await Project.updateMany(
+        { status: 'scheduled', scheduledAt: { $lte: now } },
+        { $set: { status: 'active', isActive: true } }
+      );
+    } catch (_) {}
+
+    const { category, search, includeInactive } = req.query;
+    const query = {};
+
+    if (includeInactive !== 'true' && includeInactive !== true) {
+      query.isActive = { $ne: false };
+      query.status = { $ne: 'inactive' };
+      const visibilityCondition = {
+        $or: [
+          { status: { $ne: 'scheduled' } },
+          { scheduledAt: { $lte: now } }
+        ]
+      };
+      query.$and = [visibilityCondition];
+    }
 
     if (category && category !== 'All' && category !== 'All Categories') {
       query.category = { $regex: new RegExp(category, 'i') };
@@ -133,14 +154,17 @@ export const getProjects = async (req, res) => {
 
     if (search && search.trim() !== '') {
       const q = search.trim();
-      query.$or = [
-        { name: { $regex: q, $options: 'i' } },
-        { city: { $regex: q, $options: 'i' } },
-        { state: { $regex: q, $options: 'i' } },
-        { type: { $regex: q, $options: 'i' } },
-        { category: { $regex: q, $options: 'i' } },
-        { description: { $regex: q, $options: 'i' } }
-      ];
+      const searchCondition = {
+        $or: [
+          { name: { $regex: q, $options: 'i' } },
+          { city: { $regex: q, $options: 'i' } },
+          { state: { $regex: q, $options: 'i' } },
+          { type: { $regex: q, $options: 'i' } },
+          { category: { $regex: q, $options: 'i' } },
+          { description: { $regex: q, $options: 'i' } }
+        ]
+      };
+      query.$and = query.$and ? [...query.$and, searchCondition] : [searchCondition];
     }
 
     let projects = await Project.find(query).sort({ createdAt: -1 });
@@ -148,7 +172,10 @@ export const getProjects = async (req, res) => {
     if (!projects || projects.length === 0) {
       const contentDoc = await Content.findOne({ sectionKey: 'projectItems' });
       if (Array.isArray(contentDoc?.data) && contentDoc.data.length > 0) {
-        return res.json(contentDoc.data);
+        const filteredFallback = includeInactive === 'true'
+          ? contentDoc.data
+          : contentDoc.data.filter(p => p.isActive !== false && p.status !== 'inactive' && (p.status !== 'scheduled' || (p.scheduledAt && new Date(p.scheduledAt) <= now)));
+        return res.json(filteredFallback);
       }
     }
 
@@ -183,6 +210,19 @@ export const getProjectBySlug = async (req, res) => {
 
     if (!project) {
       return res.status(404).json({ success: false, message: 'Project not found' });
+    }
+
+    if (req.query?.preview !== 'true' && req.query?.includeInactive !== 'true') {
+      const isPastScheduled = project.status === 'scheduled' && project.scheduledAt && new Date(project.scheduledAt) <= new Date();
+      if (isPastScheduled) {
+        if (project.save) {
+          project.status = 'active';
+          project.isActive = true;
+          await project.save().catch(() => {});
+        }
+      } else if (project.isActive === false || project.status === 'inactive' || (project.status === 'scheduled' && project.scheduledAt && new Date(project.scheduledAt) > new Date())) {
+        return res.status(404).json({ success: false, message: 'Project is scheduled or hidden' });
+      }
     }
 
     res.json(project);

@@ -67,20 +67,13 @@ const getValidImageUrl = (url, fallback, width) => {
   }
 
   if (finalUrl.includes('res.cloudinary.com') && finalUrl.includes('/image/upload/')) {
-    if (width) {
-      if (finalUrl.includes('/image/upload/f_auto,q_auto,w_') || finalUrl.includes('/w_')) {
-        finalUrl = finalUrl.replace(/\/image\/upload\/[^/]*w_\d+\//, `/image/upload/f_auto,q_auto,w_${width}/`);
-      } else if (finalUrl.includes('/image/upload/f_auto,q_auto/')) {
-        finalUrl = finalUrl.replace('/image/upload/f_auto,q_auto/', `/image/upload/f_auto,q_auto,w_${width}/`);
-      } else {
-        finalUrl = finalUrl.replace('/image/upload/', `/image/upload/f_auto,q_auto,w_${width}/`);
+    const targetW = width || 600;
+    if (finalUrl.includes('/image/upload/f_auto,q_auto')) {
+      if (width && !finalUrl.includes(`w_${width}`)) {
+        finalUrl = finalUrl.replace(/\/image\/upload\/f_auto,q_auto(?:,w_\d+)?\//, `/image/upload/f_auto,q_auto,w_${targetW}/`);
       }
     } else {
-      if (finalUrl.includes('q_auto:eco')) {
-        finalUrl = finalUrl.replace('q_auto:eco', 'q_auto');
-      }
-      finalUrl = finalUrl.replace(/\/image\/upload\/f_auto,q_auto,w_\d+\//, '/image/upload/f_auto,q_auto/');
-      finalUrl = finalUrl.replace(/,w_\d+/, '').replace(/\/w_\d+\//, '/');
+      finalUrl = finalUrl.replace('/image/upload/', `/image/upload/f_auto,q_auto,w_${targetW}/`);
     }
   }
 
@@ -171,6 +164,34 @@ export default function Home({ siteData }) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Preload all industry carousel images on mount so they appear immediately with zero delay
+  React.useEffect(() => {
+    const defaultIndustries = [
+      { title: "Shopping Malls", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885841/winera_uploads/qrhgcb1f1ovtfcxljjhp.jpg" },
+      { title: "Hotels & Resorts", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/dnipphbitg7auvb8tkmz.jpg" },
+      { title: "Schools & Academies", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885840/winera_uploads/l5jhtvihkadehhnkgjmc.jpg" },
+      { title: "Commercial Spaces", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" },
+      { title: "Residential Projects", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
+      { title: "Sports Centres", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" },
+      { title: "Entertainment Hubs", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" },
+      { title: "Airports & Terminals", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885838/winera_uploads/vlznxp5vpxt5nxrorrzw.webp" },
+      { title: "Hospitals & Clinics", img: "https://res.cloudinary.com/achfsmlm/image/upload/v1791885839/winera_uploads/vbmyhwwywzwqzclv0a5u.jpg" },
+      { title: "Food and Beverage", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" }
+    ];
+    const items = (Array.isArray(siteData?.industriesHeader?.items) && siteData.industriesHeader.items.length > 0)
+      ? siteData.industriesHeader.items
+      : defaultIndustries;
+
+    items.forEach((item, idx) => {
+      const rawImg = item?.img || defaultIndustries[idx % defaultIndustries.length]?.img;
+      const validUrl = getValidImageUrl(rawImg, '', 600);
+      if (validUrl) {
+        const imgObj = new Image();
+        imgObj.src = validUrl;
+      }
+    });
+  }, [siteData?.industriesHeader?.items]);
 
   const resolveProductLink = (prod) => {
     if (!prod) return '/product/trampoline-park';
@@ -1379,59 +1400,74 @@ export default function Home({ siteData }) {
                     };
                   });
 
-                  return items.map((ind, idx, arr) => {
-                    const total = arr.length;
-                    let offset = (idx - activeIndustryIndex) % total;
-                    if (offset > total / 2) offset -= total;
-                    if (offset < -total / 2) offset += total;
+                  return (
+                    <React.Fragment>
+                      {/* Eager hidden preloading for all industry images so first-time load and sliding are instant */}
+                      <div style={{ display: 'none' }} aria-hidden="true">
+                        {items.map((indItem, i) => (
+                          <img
+                            key={`preload-ind-dom-${i}`}
+                            src={getValidImageUrl(indItem.img, defaultIndustries[i % defaultIndustries.length]?.img || indMall, 600)}
+                            loading="eager"
+                            decoding="async"
+                            alt=""
+                          />
+                        ))}
+                      </div>
 
-                    // Show only the 5 closest cards: offsets -2, -1, 0, 1, 2
-                    if (Math.abs(offset) > 2) return null;
+                      {items.map((ind, idx, arr) => {
+                        const total = arr.length;
+                        let offset = (idx - activeIndustryIndex) % total;
+                        if (offset > total / 2) offset -= total;
+                        if (offset < -total / 2) offset += total;
 
-                    const isCenter = offset === 0;
-                    const translateXMap = { '-2': '-500px', '-1': '-265px', '0': '0px', '1': '265px', '2': '500px' };
-                    const translateYMap = { '-2': '30px', '-1': '15px', '0': '0px', '1': '15px', '2': '30px' };
-                    const scaleMap = { '-2': 0.76, '-1': 0.88, '0': 1.12, '1': 0.88, '2': 0.76 };
-                    const opacityMap = { '-2': 0.6, '-1': 0.88, '0': 1, '1': 0.88, '2': 0.6 };
-                    const zIndexMap = { '-2': 5, '-1': 15, '0': 30, '1': 15, '2': 5 };
+                        // Show only the 5 closest cards: offsets -2, -1, 0, 1, 2
+                        if (Math.abs(offset) > 2) return null;
 
-                    return (
-                      <div
-                        key={idx}
-                        role="button"
-                        tabIndex={0}
-                        aria-label={`Select industry ${ind.title}`}
-                        onClick={() => setActiveIndustryIndex(idx)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            setActiveIndustryIndex(idx);
-                          }
-                        }}
-                        className={`winera-industry-card ${isCenter ? 'is-center-card' : 'is-side-card'} industry-offset-${offset}`}
-                        style={{
-                          position: 'absolute',
-                          width: '260px',
-                          height: '350px',
-                          borderRadius: '16px',
-                          overflow: 'hidden',
-                          cursor: 'pointer',
-                          transition: 'all 0.55s cubic-bezier(0.34, 1.25, 0.64, 1)',
-                          opacity: opacityMap[offset],
-                          zIndex: zIndexMap[offset],
-                          transform: `translate3d(${translateXMap[offset]}, ${translateYMap[offset]}, 0) scale(${scaleMap[offset]})`,
-                          boxShadow: isCenter ? '0 25px 50px rgba(0, 0, 0, 0.4)' : '0 12px 28px rgba(0,0,0,0.18)',
-                          background: '#0f172a'
-                        }}
-                      >
+                        const isCenter = offset === 0;
+                        const translateXMap = { '-2': '-500px', '-1': '-265px', '0': '0px', '1': '265px', '2': '500px' };
+                        const translateYMap = { '-2': '30px', '-1': '15px', '0': '0px', '1': '15px', '2': '30px' };
+                        const scaleMap = { '-2': 0.76, '-1': 0.88, '0': 1.12, '1': 0.88, '2': 0.76 };
+                        const opacityMap = { '-2': 0.6, '-1': 0.88, '0': 1, '1': 0.88, '2': 0.6 };
+                        const zIndexMap = { '-2': 5, '-1': 15, '0': 30, '1': 15, '2': 5 };
+
+                        return (
+                          <div
+                            key={idx}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`Select industry ${ind.title}`}
+                            onClick={() => setActiveIndustryIndex(idx)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                setActiveIndustryIndex(idx);
+                              }
+                            }}
+                            className={`winera-industry-card ${isCenter ? 'is-center-card' : 'is-side-card'} industry-offset-${offset}`}
+                            style={{
+                              position: 'absolute',
+                              width: '260px',
+                              height: '350px',
+                              borderRadius: '16px',
+                              overflow: 'hidden',
+                              cursor: 'pointer',
+                              transition: 'all 0.55s cubic-bezier(0.34, 1.25, 0.64, 1)',
+                              opacity: opacityMap[offset],
+                              zIndex: zIndexMap[offset],
+                              transform: `translate3d(${translateXMap[offset]}, ${translateYMap[offset]}, 0) scale(${scaleMap[offset]})`,
+                              boxShadow: isCenter ? '0 25px 50px rgba(0, 0, 0, 0.4)' : '0 12px 28px rgba(0,0,0,0.18)',
+                              background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)'
+                            }}
+                          >
                         <img
-                          src={getValidImageUrl(ind.img, defaultIndustries[idx % defaultIndustries.length]?.img || indMall)}
+                          src={getValidImageUrl(ind.img, defaultIndustries[idx % defaultIndustries.length]?.img || indMall, 600)}
                           alt={ind.imgAlt || `${ind.title} Game Zone Solutions - Winera International`}
-                          loading="lazy"
+                          loading="eager"
                           decoding="async"
                           onError={(e) => {
                             e.currentTarget.onerror = null;
-                            e.currentTarget.src = defaultIndustries[idx % defaultIndustries.length]?.img || indMall;
+                            e.currentTarget.src = getValidImageUrl(defaultIndustries[idx % defaultIndustries.length]?.img || indMall, '', 600);
                           }}
                           style={{
                             position: 'absolute',
@@ -1461,8 +1497,10 @@ export default function Home({ siteData }) {
                         )}
                       </div>
                     );
-                  });
-                })()}
+                  })}
+                </React.Fragment>
+              );
+            })()}
               </div>
 
               <button

@@ -9,7 +9,7 @@ const gameZoneMobileBanner = projectPageMobileBanner;
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 import WineraImage from '../components/WineraImage';
-import { Calendar, Clock, PenTool } from 'lucide-react';
+import { Calendar, Clock, PenTool, ChevronDown } from 'lucide-react';
 import { fetchBlogBySlug, fetchBlogs } from '../services/api';
 import { sanitizeAndFormatHtml, normalizeRawContent } from '../utils/sanitizeHtml';
 import { calculateReadTime } from '../utils/readTime';
@@ -69,56 +69,120 @@ const formatExcerpt = (text) => {
   return `${cut}...`;
 };
 
-// Helper to extract ONLY MAIN Section Titles for "In this article" Table of Contents
+// Helper to extract Section Titles for "In this article" Table of Contents
+// STRICT RULES:
+// 1. Only <h2> headings set by Admin show as Main Titles (no <h1>, <h3>, or other tags in main list)
+// 2. Any sub-headings (<h3>..<h6>) under each <h2> are grouped in a dropdown accordion
+// 3. Compact 14px font size to prevent overly long menus
 const extractHeadings = (text) => {
   if (!text) return [];
-  const headings = [];
-  let counter = 0;
 
   // 1. If content contains HTML
   const isHtml = /<\/?(?:p|h[1-6]|div|table|strong|em|pre|code|span|blockquote|ul|ol|li)[\s>]/i.test(text);
 
   if (isHtml) {
-    // Extract genuine section headings: <h1> to <h6> only (as requested by user)
-    // Exclude sub-questions (titles ending with '?', or starting with Q:, FAQ:)
-    const headingRegex = /<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/gi;
+    const headingRegex = /<h([1-6])([^>]*)>([\s\S]*?)<\/h\1>/gi;
     let match;
+    const allFound = [];
+    let counter = 0;
+
     while ((match = headingRegex.exec(text)) !== null) {
-      const rawTitle = match[2].replace(/<[^>]+>/g, '').trim();
-      const isQuestion = rawTitle.endsWith('?') || /^Q\d*[:.]/i.test(rawTitle) || /^FAQ/i.test(rawTitle);
-      if (rawTitle && !isQuestion) {
-        headings.push({
-          id: `blog-heading-${counter++}`,
-          title: rawTitle.length > 50 ? `${rawTitle.substring(0, 50)}...` : rawTitle,
+      const level = parseInt(match[1], 10);
+      const attrs = match[2];
+      const inner = match[3];
+      const rawTitle = inner.replace(/<[^>]+>/g, '').trim();
+
+      if (rawTitle) {
+        const existingIdMatch = attrs.match(/\bid=["']([^"']+)["']/i);
+        const headingId = existingIdMatch ? existingIdMatch[1] : `blog-heading-${counter++}`;
+        allFound.push({
+          id: headingId,
+          level,
+          title: rawTitle,
           rawTitle
         });
       }
     }
 
-    return headings;
+    // Check if any H2 heading exists
+    const hasH2 = allFound.some(h => h.level === 2);
+
+    if (hasH2) {
+      const grouped = [];
+      let currentH2 = null;
+
+      allFound.forEach((h) => {
+        if (h.level === 2) {
+          currentH2 = {
+            id: h.id,
+            level: 2,
+            title: h.title,
+            rawTitle: h.rawTitle,
+            subItems: []
+          };
+          grouped.push(currentH2);
+        } else if (currentH2 && h.level > 2) {
+          currentH2.subItems.push({
+            id: h.id,
+            level: h.level,
+            title: h.title,
+            rawTitle: h.rawTitle
+          });
+        }
+      });
+
+      return grouped;
+    }
+
+    // Fallback if no H2 exists: show top-level genuine headings
+    return allFound.map(h => ({ ...h, subItems: [] }));
   }
 
   // 2. Legacy markdown fallback (only when markdown # headings exist)
   const normalized = normalizeRawContent(text);
   const paragraphs = normalized.split('\n\n');
+  const allFound = [];
+  let counter = 0;
+
   paragraphs.forEach((pText) => {
     const trimmed = pText.trim();
     if (!trimmed || /^#+\s*$/.test(trimmed)) return;
 
     if (trimmed.startsWith('#')) {
-      const firstLine = trimmed.replace(/^#+\s*/, '').split('\n')[0].trim();
-      const cleanTitle = firstLine.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
-      const isQuestion = cleanTitle.endsWith('?') || /^Q\d*[:.]/i.test(cleanTitle);
-      if (cleanTitle && !isQuestion) {
-        headings.push({
-          id: `blog-heading-${headings.length}`,
-          title: cleanTitle.length > 50 ? `${cleanTitle.substring(0, 50)}...` : cleanTitle,
-          rawTitle: cleanTitle
-        });
+      const match = trimmed.match(/^(#{1,6})\s+(.*)/);
+      if (match) {
+        let level = match[1].length;
+        if (level === 3 || level === 1) level = 2; // Treat main blog headings as H2
+        const firstLine = match[2].split('\n')[0].trim();
+        const cleanTitle = firstLine.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim();
+        if (cleanTitle) {
+          allFound.push({
+            id: `blog-heading-${counter++}`,
+            level,
+            title: cleanTitle,
+            rawTitle: cleanTitle
+          });
+        }
       }
     }
   });
-  return headings;
+
+  const hasH2 = allFound.some(h => h.level === 2);
+  if (hasH2) {
+    const grouped = [];
+    let currentH2 = null;
+    allFound.forEach((h) => {
+      if (h.level === 2) {
+        currentH2 = { ...h, subItems: [] };
+        grouped.push(currentH2);
+      } else if (currentH2 && h.level > 2) {
+        currentH2.subItems.push(h);
+      }
+    });
+    return grouped;
+  }
+
+  return allFound.map(h => ({ ...h, subItems: [] }));
 };
 
 export { sanitizeAndFormatHtml, normalizeRawContent };
@@ -132,24 +196,53 @@ const renderFormattedText = (text) => {
 
   if (isHtmlContent) {
     let headingCounter = 0;
-    // Inject matching anchor IDs into genuine headings h1 to h6 only
+    // Inject matching anchor IDs into genuine headings h1 to h6
     let htmlWithHeadingIds = text.replace(/<h([1-6])([^>]*)>([\s\S]*?)<\/h\1>/gi, (match, level, attrs, inner) => {
       const clean = inner.replace(/<[^>]+>/g, '').trim();
-      const isQuestion = clean.endsWith('?') || /^Q\d*[:.]/i.test(clean) || /^FAQ/i.test(clean);
-      if (clean && !isQuestion) {
-        const headingId = `blog-heading-${headingCounter++}`;
-        if (/id=["'][^"']*["']/i.test(attrs)) {
-          return match;
+      if (clean) {
+        const existingIdMatch = attrs.match(/\bid=["']([^"']+)["']/i);
+        const headingId = existingIdMatch ? existingIdMatch[1] : `blog-heading-${headingCounter++}`;
+        const hasClass = /\bclass=["'][^"']*["']/i.test(attrs);
+        let newAttrs = attrs;
+        if (hasClass) {
+          newAttrs = newAttrs.replace(/\bclass=["']([^"']*)["']/i, `class="$1 winera-blog-heading-${level} winera-blog-article-h${level}"`);
+        } else {
+          newAttrs = `${newAttrs} class="winera-blog-heading-${level} winera-blog-article-h${level}"`;
         }
-        return `<h${level} id="${headingId}"${attrs}>${inner}</h${level}>`;
+        if (!existingIdMatch) {
+          newAttrs = ` id="${headingId}"${newAttrs}`;
+        }
+        return `<h${level}${newAttrs}>${inner}</h${level}>`;
       }
       return match;
     });
 
+    // Automatically wrap any <table> with .winera-blog-table-responsive container so it adjusts according to content and scrolls smoothly only when necessary
+    let processedHtml = htmlWithHeadingIds;
+    if (processedHtml.includes('<table')) {
+      // Clean up justify classes and excessive non-breaking spaces inside tables
+      processedHtml = processedHtml.replace(/<table[\s\S]*?<\/table>/gi, (tableHtml) => {
+        let cleaned = tableHtml
+          .replace(/text-align\s*:\s*justify\s*;?/gi, '')
+          .replace(/\bql-align-justify\b/gi, '')
+          .replace(/(?:&nbsp;|\u00a0){2,}/gi, ' ');
+        cleaned = cleaned.replace(/(<t[dh][^>]*>)([\s\S]*?)(<\/t[dh]>)/gi, (m, open, body, close) => {
+          const normalizedBody = body
+            .replace(/[ \t]{2,}/g, ' ')
+            .replace(/<p[^>]*class=["'][^"']*ql-align-justify[^"']*["'][^>]*>/gi, '<p>')
+            .replace(/<p\s+style=["'][^"']*text-align\s*:\s*justify[^"']*["'][^>]*>/gi, '<p>');
+          return `${open}${normalizedBody}${close}`;
+        });
+        return cleaned;
+      });
+      processedHtml = processedHtml.replace(/<div[^>]*class=["'][^"']*winera-blog-table-responsive[^"']*["'][^>]*>([\s\S]*?)<\/div>/gi, '$1');
+      processedHtml = processedHtml.replace(/(<table[\s\S]*?<\/table>)/gi, '<div class="winera-blog-table-responsive">$1</div>');
+    }
+
     return (
       <div
         className="winera-blog-article-content"
-        dangerouslySetInnerHTML={{ __html: htmlWithHeadingIds }}
+        dangerouslySetInnerHTML={{ __html: processedHtml }}
       />
     );
   }
@@ -175,11 +268,12 @@ const renderFormattedText = (text) => {
         headingCounter++;
 
         elements.push(
-          <h3
+          <h2
             key={`h-${idx}`}
             id={headingId}
+            className="winera-blog-heading-2 winera-blog-article-h2"
             style={{
-              fontSize: '22px',
+              fontSize: '27px',
               fontWeight: '700',
               color: '#0f172a',
               margin: '36px 0 14px',
@@ -272,6 +366,230 @@ const renderFormattedText = (text) => {
   return elements;
 };
 
+// ── TABLE OF CONTENTS ACCORDION (H2 Main Headings + Dropdown Sub-Points) ──
+const BlogTableOfContents = ({ headings }) => {
+  const [expandedMap, setExpandedMap] = useState({});
+  const [activeId, setActiveId] = useState('');
+
+  // Auto-scroll tracker for highlighting active heading
+  useEffect(() => {
+    const handleScroll = () => {
+      const allIds = [];
+      headings.forEach(h => {
+        allIds.push(h.id);
+        if (Array.isArray(h.subItems)) {
+          h.subItems.forEach(sub => allIds.push(sub.id));
+        }
+      });
+
+      const scrollPos = window.scrollY + 130;
+      for (let i = allIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(allIds[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveId(allIds[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [headings]);
+
+  const scrollToHeading = (id, e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    const el = document.getElementById(id);
+    if (el) {
+      const yOffset = -95;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const toggleExpand = (id, e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    setExpandedMap(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const handleMainHeadingClick = (heading, e) => {
+    e.preventDefault();
+    scrollToHeading(heading.id);
+    if (heading.subItems && heading.subItems.length > 0) {
+      setExpandedMap(prev => ({
+        ...prev,
+        [heading.id]: !prev[heading.id]
+      }));
+    }
+  };
+
+  return (
+    <div style={{
+      background: '#ffffff',
+      border: '1.5px solid #e2e8f0',
+      borderRadius: '16px',
+      overflow: 'hidden',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.03)'
+    }}>
+      {/* Header */}
+      <div style={{
+        fontSize: '14px',
+        fontWeight: '800',
+        color: '#0f172a',
+        padding: '13px 16px',
+        borderBottom: '1.5px solid #f1f5f9',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px',
+        background: '#fafafa'
+      }}>
+        <span style={{ color: '#0284c7' }}>📌</span> In this article
+      </div>
+
+      {/* Headings List */}
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        {headings.map((h, index) => {
+          const hasSubItems = Array.isArray(h.subItems) && h.subItems.length > 0;
+          const isExpanded = !!expandedMap[h.id];
+          const isMainActive = activeId === h.id || (hasSubItems && h.subItems.some(sub => sub.id === activeId));
+
+          return (
+            <div
+              key={h.id}
+              style={{
+                borderBottom: index < headings.length - 1 ? '1px solid #f1f5f9' : 'none',
+                background: isMainActive ? '#f0f9ff' : 'transparent',
+                transition: 'background-color 0.15s ease'
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '10px 14px',
+                  borderLeft: isMainActive ? '3.5px solid #0284c7' : '3.5px solid transparent',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+                onClick={(e) => handleMainHeadingClick(h, e)}
+                onMouseEnter={(e) => {
+                  if (!isMainActive) e.currentTarget.style.backgroundColor = '#f8fafc';
+                }}
+                onMouseLeave={(e) => {
+                  if (!isMainActive) e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+              >
+                <a
+                  href={`#${h.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleMainHeadingClick(h, e);
+                  }}
+                  title={h.title}
+                  style={{
+                    flex: 1,
+                    fontSize: '14px',
+                    fontWeight: isMainActive ? '700' : '600',
+                    color: isMainActive ? '#0284c7' : '#1e293b',
+                    textDecoration: 'none',
+                    lineHeight: 1.45,
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    wordBreak: 'break-word',
+                    textAlign: 'left'
+                  }}
+                >
+                  {h.title}
+                </a>
+
+                {hasSubItems && (
+                  <button
+                    type="button"
+                    onClick={(e) => toggleExpand(h.id, e)}
+                    aria-label={isExpanded ? 'Collapse sub-headings' : 'Expand sub-headings'}
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      padding: '4px',
+                      marginLeft: '6px',
+                      cursor: 'pointer',
+                      color: isMainActive ? '#0284c7' : '#64748b',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: '4px',
+                      transition: 'transform 0.2s ease, color 0.15s ease',
+                      transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'
+                    }}
+                  >
+                    <ChevronDown style={{ width: '16px', height: '16px' }} />
+                  </button>
+                )}
+              </div>
+
+              {/* Sub-items Accordion Dropdown */}
+              {hasSubItems && isExpanded && (
+                <div style={{
+                  background: '#f8fafc',
+                  borderTop: '1px solid #e2e8f0',
+                  padding: '2px 0'
+                }}>
+                  {h.subItems.map((sub, sIdx) => {
+                    const isSubActive = activeId === sub.id;
+                    return (
+                      <a
+                        key={sub.id}
+                        href={`#${sub.id}`}
+                        onClick={(e) => scrollToHeading(sub.id, e)}
+                        title={sub.title}
+                        style={{
+                          display: 'block',
+                          padding: '8px 14px 8px 24px',
+                          fontSize: '13.5px',
+                          fontWeight: isSubActive ? '700' : '500',
+                          color: isSubActive ? '#0284c7' : '#475569',
+                          textDecoration: 'none',
+                          lineHeight: 1.4,
+                          borderLeft: isSubActive ? '3.5px solid #0284c7' : '3.5px solid transparent',
+                          borderBottom: sIdx < h.subItems.length - 1 ? '1px solid #edf2f7' : 'none',
+                          transition: 'all 0.15s ease',
+                          textAlign: 'left',
+                          wordBreak: 'break-word'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.color = '#0284c7';
+                          e.currentTarget.style.backgroundColor = '#e0f2fe';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.color = isSubActive ? '#0284c7' : '#475569';
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                        }}
+                      >
+                        {sub.title}
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 export default function BlogDetail({ siteData }) {
   const [isPhone, setIsPhone] = useState(
     typeof window !== 'undefined' ? window.innerWidth <= 768 : false
@@ -356,7 +674,13 @@ export default function BlogDetail({ siteData }) {
       const exists = merged.some(m => (m.slug && sp.slug && m.slug === sp.slug) || (m.id && sp.id && String(m.id) === String(sp.id)));
       if (!exists) merged.push(sp);
     });
-    return merged;
+    return merged.filter(p => {
+      if (!p) return false;
+      if (p.status === 'scheduled') {
+        return p.scheduledAt && new Date(p.scheduledAt) <= new Date();
+      }
+      return p.isActive !== false && p.status !== 'inactive' && p.isPublished !== false;
+    });
   })();
 
   const blogPosts = rawPosts.map((p) => {
@@ -528,8 +852,8 @@ export default function BlogDetail({ siteData }) {
           <div className="winera-blog-top-header" style={{ marginBottom: '24px', textAlign: 'left' }}>
             {/* Main Article Title & Subtitle */}
             <h1 className="winera-blog-article-title" style={{
-              fontSize: '38px',
-              fontWeight: '600',
+              fontSize: '33px',
+              fontWeight: '700',
               color: '#0f172a',
               lineHeight: 1.25,
               margin: '0 0 16px',
@@ -596,12 +920,12 @@ export default function BlogDetail({ siteData }) {
 
           <div className="winera-blog-3col-grid" style={{
             display: 'grid',
-            gridTemplateColumns: headings.length > 0 ? '260px minmax(0, 1fr) 310px' : 'minmax(0, 1fr) 320px',
-            gap: '35px',
+            gridTemplateColumns: headings.length > 0 ? '250px minmax(0, 1fr) 300px' : 'minmax(0, 1fr) 320px',
+            gap: '30px',
             alignItems: 'start'
           }}>
 
-            {/* ── LEFT COLUMN: STICKY TABLE OF CONTENTS MENU (FONT SIZE 15px) ── */}
+            {/* ── LEFT COLUMN: STICKY TABLE OF CONTENTS ACCORDION (H2 ONLY + DROPDOWN SUB-POINTS, FONT SIZE 14px) ── */}
             {headings.length > 0 && (
               <div className="winera-blog-left-toc-sticky" style={{
                 position: 'sticky',
@@ -610,83 +934,12 @@ export default function BlogDetail({ siteData }) {
                 height: 'fit-content',
                 zIndex: 10
               }}>
-              <div style={{
-                background: '#ffffff',
-                border: '1.5px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '18px 16px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.03)'
-              }}>
-                <div style={{
-                  fontSize: '14px',
-                  fontWeight: '800',
-                  color: '#0f172a',
-                  marginBottom: '12px',
-                  paddingBottom: '8px',
-                  borderBottom: '1.5px solid #f1f5f9',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}>
-                  <span style={{ color: '#0284c7' }}>📌</span> In this article
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  {headings.map((h) => (
-                    <a
-                      key={h.id}
-                      href={`#${h.id}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const el = document.getElementById(h.id);
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }}
-                      title={h.title}
-                      style={{
-                        background: 'transparent',
-                        border: 'none',
-                        textAlign: 'left',
-                        fontSize: '15px',
-                        color: '#334155',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        padding: '6px 8px',
-                        borderRadius: '8px',
-                        transition: 'all 0.15s ease',
-                        lineHeight: 1.4,
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '6px',
-                        overflow: 'hidden',
-                        textDecoration: 'none'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#e0f2fe';
-                        e.currentTarget.style.color = '#0284c7';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'transparent';
-                        e.currentTarget.style.color = '#334155';
-                      }}
-                    >
-                      <span style={{ color: '#0284c7', fontWeight: '800', flexShrink: 0 }}>•</span>
-                      <span style={{
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        wordBreak: 'break-word'
-                      }}>
-                        {h.title}
-                      </span>
-                    </a>
-                  ))}
-                </div>
+                <BlogTableOfContents headings={headings} />
               </div>
-            </div>
             )}
 
             {/* ── MIDDLE COLUMN: ARTICLE CONTENT ── */}
-            <div className="winera-blog-article-main-col" style={{ width: '100%', textAlign: 'left' }}>
+            <div className="winera-blog-article-main-col" style={{ width: '100%', minWidth: 0, maxWidth: '100%', textAlign: 'left', overflow: 'hidden' }}>
               {/* Formatted Article Text Stream */}
               <div style={{ marginBottom: '40px' }}>
                 {renderFormattedText(rawArticleContent)}
@@ -1031,35 +1284,69 @@ export default function BlogDetail({ siteData }) {
           display: block !important;
         }
 
-        /* Headings H1 to H6 (Google Docs Style Exact Hierarchy & Proportions) */
-        article.winera-blog-article-main-col .winera-blog-article-content h1,
-        .winera-blog-article-content h1 {
-          font-size: 28px !important;
+        /* Headings H1 to H6 on Blog Page (Strict requested sizes: H1: 33px, H2: 27px, H3: 23px) */
+        div.winera-blog-3col-grid div.winera-blog-article-main-col h1,
+        div.winera-blog-article-main-col h1,
+        div.winera-blog-article-content h1,
+        h1.winera-blog-main-h1 {
+          font-size: 33px !important;
           font-weight: 800 !important;
           color: #0f172a !important;
-          margin: 30px 0 14px !important;
+          margin: 32px 0 14px !important;
           line-height: 1.3 !important;
           scroll-margin-top: 110px !important;
           font-family: 'Open Sans', sans-serif !important;
           text-align: left !important;
         }
-        article.winera-blog-article-main-col .winera-blog-article-content h2,
-        .winera-blog-article-content h2 {
-          font-size: 23px !important;
+        div.winera-blog-3col-grid div.winera-blog-article-main-col h2,
+        div.winera-blog-3col-grid div.winera-blog-article-main-col h2 *,
+        div.winera-blog-article-main-col h2,
+        div.winera-blog-article-main-col h2 *,
+        div.winera-blog-article-content h2,
+        div.winera-blog-article-content h2 *,
+        .winera-blog-article-main-col h2,
+        .winera-blog-article-main-col h2 *,
+        .winera-blog-article-content h2,
+        .winera-blog-article-content h2 *,
+        .winera-blog-main-article-section h2,
+        h2.winera-blog-heading-2,
+        h2.winera-blog-heading-2 *,
+        h2.winera-blog-article-h2,
+        h2.winera-blog-article-h2 *,
+        h2[id^="blog-heading-"],
+        h2[id^="blog-heading-"] *,
+        div[class*="winera"] h2.winera-blog-heading-2,
+        div[class*="winera"] h2.winera-blog-heading-2 *,
+        div[class*="winera"] h2.winera-blog-article-h2,
+        div[class*="winera"] h2.winera-blog-article-h2 *,
+        div[class*="winera"] h2[id^="blog-heading-"],
+        div[class*="winera"] h2[id^="blog-heading-"] * {
+          font-size: 27px !important;
           font-weight: 700 !important;
           color: #0f172a !important;
-          margin: 26px 0 12px !important;
+          margin: 28px 0 12px !important;
           line-height: 1.35 !important;
           scroll-margin-top: 110px !important;
           font-family: 'Open Sans', sans-serif !important;
           text-align: left !important;
         }
-        article.winera-blog-article-main-col .winera-blog-article-content h3,
-        .winera-blog-article-content h3 {
-          font-size: 19px !important;
+        div.winera-blog-3col-grid div.winera-blog-article-main-col h3,
+        div.winera-blog-3col-grid div.winera-blog-article-main-col h3 *,
+        div.winera-blog-article-main-col h3,
+        div.winera-blog-article-main-col h3 *,
+        div.winera-blog-article-content h3,
+        div.winera-blog-article-content h3 *,
+        .winera-blog-article-main-col h3,
+        .winera-blog-article-content h3,
+        .winera-blog-main-article-section h3,
+        h3.winera-blog-heading-3,
+        h3.winera-blog-heading-3 *,
+        h3[id^="blog-heading-"],
+        h3[id^="blog-heading-"] * {
+          font-size: 23px !important;
           font-weight: 700 !important;
           color: #0f172a !important;
-          margin: 22px 0 10px !important;
+          margin: 24px 0 10px !important;
           line-height: 1.4 !important;
           scroll-margin-top: 110px !important;
           font-family: 'Open Sans', sans-serif !important;
@@ -1067,10 +1354,10 @@ export default function BlogDetail({ siteData }) {
         }
         article.winera-blog-article-main-col .winera-blog-article-content h4,
         .winera-blog-article-content h4 {
-          font-size: 16.5px !important;
+          font-size: 19px !important;
           font-weight: 700 !important;
           color: #0f172a !important;
-          margin: 18px 0 8px !important;
+          margin: 20px 0 8px !important;
           line-height: 1.45 !important;
           scroll-margin-top: 110px !important;
           font-family: 'Open Sans', sans-serif !important;
@@ -1229,37 +1516,187 @@ export default function BlogDetail({ siteData }) {
         .winera-blog-article-content .ql-size-large { font-size: 1.45em !important; }
         .winera-blog-article-content .ql-size-huge { font-size: 2.1em !important; }
 
-        /* Tables: Professional layout with borders, zebra striping & responsive scroll */
-        .winera-blog-article-content table {
+        /* ── Tables: Professional Layout Matching Admin Editor with Clean Spacing ── */
+        .winera-blog-table-responsive {
           width: 100% !important;
-          border-collapse: collapse !important;
-          margin: 28px 0 !important;
-          background: #ffffff !important;
+          max-width: 100% !important;
+          margin: 24px 0 !important;
           border-radius: 12px !important;
-          overflow: hidden !important;
           border: 1.5px solid #cbd5e1 !important;
           box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+          background: #ffffff !important;
+          box-sizing: border-box !important;
+          overflow-x: auto !important;
+          overflow-y: hidden !important;
+          -webkit-overflow-scrolling: touch !important;
+          scrollbar-width: thin;
+          scrollbar-color: #cbd5e1 transparent;
         }
-        .winera-blog-article-content th,
-        .winera-blog-article-content td {
-          padding: 12px 18px !important;
+        .winera-blog-table-responsive::-webkit-scrollbar {
+          height: 5px;
+        }
+        .winera-blog-table-responsive::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 10px;
+        }
+        .winera-blog-table-responsive::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .winera-blog-table-responsive table,
+        .winera-blog-article-content table {
+          width: 100% !important;
+          max-width: 100% !important;
+          border-collapse: collapse !important;
+          margin: 0 !important;
+          table-layout: fixed !important;
+          background: #ffffff !important;
+          border: none !important;
+          box-shadow: none !important;
+          box-sizing: border-box !important;
+        }
+
+        .winera-blog-article-content table th,
+        .winera-blog-article-content table td {
           border: 1px solid #cbd5e1 !important;
-          font-size: 15px !important;
-          line-height: 1.6 !important;
+          padding: 12px 16px !important;
+          font-size: 17px !important;
+          line-height: 1.65 !important;
           color: #334155 !important;
           vertical-align: top !important;
+          text-align: left;
+          box-sizing: border-box !important;
+          word-break: break-word !important;
+          overflow-wrap: anywhere !important;
+          word-wrap: break-word !important;
+          white-space: normal !important;
+          word-spacing: normal !important;
+          letter-spacing: normal !important;
+          text-justify: none !important;
+          hyphens: none !important;
+          -webkit-hyphens: none !important;
+        }
+
+        /* Explicit alignment overrides for table cells & their contents */
+        .winera-blog-article-content table th[align="center"],
+        .winera-blog-article-content table td[align="center"],
+        .winera-blog-article-content table th[style*="text-align: center"],
+        .winera-blog-article-content table td[style*="text-align: center"],
+        .winera-blog-article-content table th[style*="text-align:center"],
+        .winera-blog-article-content table td[style*="text-align:center"],
+        .winera-blog-article-content table th.ql-align-center,
+        .winera-blog-article-content table td.ql-align-center,
+        .winera-blog-article-content table th .ql-align-center,
+        .winera-blog-article-content table td .ql-align-center,
+        .winera-blog-article-content table th[align="center"] *,
+        .winera-blog-article-content table td[align="center"] *,
+        .winera-blog-article-content table th[style*="text-align: center"] *,
+        .winera-blog-article-content table td[style*="text-align: center"] *,
+        .winera-blog-article-content table th[style*="text-align:center"] *,
+        .winera-blog-article-content table td[style*="text-align:center"] *,
+        .winera-blog-article-content table th.ql-align-center *,
+        .winera-blog-article-content table td.ql-align-center * {
+          text-align: center !important;
+        }
+
+        .winera-blog-article-content table th[align="right"],
+        .winera-blog-article-content table td[align="right"],
+        .winera-blog-article-content table th[style*="text-align: right"],
+        .winera-blog-article-content table td[style*="text-align: right"],
+        .winera-blog-article-content table th[style*="text-align:right"],
+        .winera-blog-article-content table td[style*="text-align:right"],
+        .winera-blog-article-content table th.ql-align-right,
+        .winera-blog-article-content table td.ql-align-right,
+        .winera-blog-article-content table th .ql-align-right,
+        .winera-blog-article-content table td .ql-align-right,
+        .winera-blog-article-content table th[align="right"] *,
+        .winera-blog-article-content table td[align="right"] *,
+        .winera-blog-article-content table th[style*="text-align: right"] *,
+        .winera-blog-article-content table td[style*="text-align: right"] *,
+        .winera-blog-article-content table th[style*="text-align:right"] *,
+        .winera-blog-article-content table td[style*="text-align:right"] *,
+        .winera-blog-article-content table th.ql-align-right *,
+        .winera-blog-article-content table td.ql-align-right * {
+          text-align: right !important;
+        }
+
+        .winera-blog-article-content table th[align="left"],
+        .winera-blog-article-content table td[align="left"],
+        .winera-blog-article-content table th[style*="text-align: left"],
+        .winera-blog-article-content table td[style*="text-align: left"],
+        .winera-blog-article-content table th[style*="text-align:left"],
+        .winera-blog-article-content table td[style*="text-align:left"],
+        .winera-blog-article-content table th.ql-align-left,
+        .winera-blog-article-content table td.ql-align-left,
+        .winera-blog-article-content table th .ql-align-left,
+        .winera-blog-article-content table td .ql-align-left,
+        .winera-blog-article-content table th[align="left"] *,
+        .winera-blog-article-content table td[align="left"] *,
+        .winera-blog-article-content table th[style*="text-align: left"] *,
+        .winera-blog-article-content table td[style*="text-align: left"] *,
+        .winera-blog-article-content table th[style*="text-align:left"] *,
+        .winera-blog-article-content table td[style*="text-align:left"] *,
+        .winera-blog-article-content table th.ql-align-left *,
+        .winera-blog-article-content table td.ql-align-left * {
           text-align: left !important;
         }
-        .winera-blog-article-content th {
+
+        /* Strictly prevent text-align justify inside tables so words never get huge gaps */
+        .winera-blog-article-content table th.ql-align-justify,
+        .winera-blog-article-content table td.ql-align-justify,
+        .winera-blog-article-content table th p.ql-align-justify,
+        .winera-blog-article-content table td p.ql-align-justify {
+          text-align: left !important;
+          text-justify: none !important;
+          word-spacing: normal !important;
+        }
+
+        .winera-blog-article-content table th {
           background: #f1f5f9 !important;
           font-weight: 700 !important;
           color: #0f172a !important;
+          font-size: 17px !important;
+          letter-spacing: -0.1px !important;
+          border-bottom: 2px solid #cbd5e1 !important;
         }
-        .winera-blog-article-content tr:nth-child(even) td {
+
+        .winera-blog-article-content table tr:nth-child(even) td {
           background: #f8fafc !important;
         }
-        .winera-blog-article-content tr:hover td {
-          background: #f0f9ff !important;
+
+        .winera-blog-article-content table tr:hover td {
+          background: #f0fdf4 !important;
+        }
+
+        /* Reset nested paragraphs inside table cells to 17px and proper line-height */
+        .winera-blog-article-content table th p,
+        .winera-blog-article-content table td p {
+          margin: 0 !important;
+          padding: 0 !important;
+          font-size: 17px !important;
+          line-height: 1.65 !important;
+          min-height: auto !important;
+          color: inherit !important;
+          font-weight: inherit !important;
+          word-break: break-word !important;
+          overflow-wrap: anywhere !important;
+          word-wrap: break-word !important;
+          white-space: normal !important;
+          word-spacing: normal !important;
+          letter-spacing: normal !important;
+          text-justify: none !important;
+          hyphens: none !important;
+          -webkit-hyphens: none !important;
+        }
+
+        .winera-blog-article-content table th p + p,
+        .winera-blog-article-content table td p + p {
+          margin-top: 4px !important;
+        }
+
+        /* Prevent oversized forced column inline widths from breaking container */
+        .winera-blog-article-content table col {
+          max-width: 100% !important;
         }
 
         /* Inline Images */
@@ -1301,8 +1738,18 @@ export default function BlogDetail({ siteData }) {
         }
         .winera-blog-article-content a {
           color: #0284c7 !important;
-          font-weight: 700 !important;
+          font-weight: normal !important;
           text-decoration: underline !important;
+        }
+        .winera-blog-article-content strong a,
+        .winera-blog-article-content b a,
+        .winera-blog-article-content a strong,
+        .winera-blog-article-content a b,
+        .winera-blog-article-content h1 a,
+        .winera-blog-article-content h2 a,
+        .winera-blog-article-content h3 a,
+        .winera-blog-article-content h4 a {
+          font-weight: 700 !important;
         }
         .winera-blog-left-toc-sticky {
           position: sticky !important;

@@ -391,6 +391,7 @@ export default function ProjectDetail({ siteData }) {
   const allProjectsList = rawList.filter(p => {
     if (!p) return false;
     if (p.isActive === false || p.status === 'inactive') return false;
+    if (p.status === 'scheduled' && (!p.scheduledAt || new Date(p.scheduledAt) > new Date())) return false;
     const cleanSlug = (p.slug || '').toLowerCase();
     const cleanName = (p.name || '').toLowerCase();
     if (cleanSlug === 'funfair' || cleanName === 'funfair' || cleanSlug.includes('funfair')) return false;

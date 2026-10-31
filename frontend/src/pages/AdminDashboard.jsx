@@ -8,6 +8,7 @@ import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
 import StatusDropdown from '../components/StatusDropdown';
 import AdminAltInput from '../components/AdminAltInput';
 import ConfirmModal from '../components/ConfirmModal';
+import WineraDateTimePicker from '../components/WineraDateTimePicker';
 import HomeDashboard from '../admin/HomeDashboard';
 import ArcadeDashboard from '../admin/ArcadeDashboard';
 import BowlingDashboard from '../admin/BowlingDashboard';
@@ -45,7 +46,7 @@ const DEFAULT_VR_CATEGORIES = [
   "Kids' Interactive Equipment"
 ];
 import projectPageMobileBanner from '../assets/project-page-mobile-banner.png';
-import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, Edit3, X, Star, Video, Trophy, Sparkles, Calculator, Menu, Target, ChevronDown } from 'lucide-react';
+import { Save, LogOut, ExternalLink, RefreshCw, CheckCircle, Users, Home, Gamepad2, Info, Layout, MessageSquare, HelpCircle, List, Sliders, PhoneCall, ShieldCheck, Building, Plus, Trash2, FileText, Upload, Image as ImageIcon, Edit2, Edit, Edit3, X, Star, Video, Trophy, Sparkles, Calculator, Menu, Target, ChevronDown, Clock, Calendar } from 'lucide-react';
 const blogCardImg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345635/winera_uploads/ltwinrzpqitg4s8znfel.png";
 const yellowBrushAccent = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345696/winera_uploads/kllqvzchxecftuxi6zdn.png";
 const ctaConsultationsBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
@@ -6822,10 +6823,28 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                       <div>
                         <label style={{ display: 'block', fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '6px' }}>Project Status</label>
                         <select
-                          value={(modalItemData.isActive !== false && modalItemData.status !== 'inactive') ? 'active' : 'inactive'}
+                          value={modalItemData.status === 'scheduled' ? 'scheduled' : ((modalItemData.isActive !== false && modalItemData.status !== 'inactive') ? 'active' : 'inactive')}
                           onChange={(e) => {
-                            const isAct = e.target.value === 'active';
-                            setModalItemData(prev => ({ ...prev, isActive: isAct, status: isAct ? 'active' : 'inactive' }));
+                            const val = e.target.value;
+                            if (val === 'scheduled') {
+                              const tomorrow = new Date();
+                              tomorrow.setDate(tomorrow.getDate() + 1);
+                              tomorrow.setHours(10, 0, 0, 0);
+                              setModalItemData(prev => ({
+                                ...prev,
+                                isActive: false,
+                                status: 'scheduled',
+                                scheduledAt: prev.scheduledAt || tomorrow.toISOString()
+                              }));
+                            } else {
+                              const isAct = val === 'active';
+                              setModalItemData(prev => ({
+                                ...prev,
+                                isActive: isAct,
+                                status: isAct ? 'active' : 'inactive',
+                                scheduledAt: isAct ? null : prev.scheduledAt
+                              }));
+                            }
                           }}
                           style={{
                             width: '100%',
@@ -6834,13 +6853,113 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                             border: '1.5px solid #cbd5e1',
                             fontWeight: '800',
                             fontSize: '14px',
-                            background: (modalItemData.isActive !== false && modalItemData.status !== 'inactive') ? '#ecfdf5' : '#fef2f2',
-                            color: (modalItemData.isActive !== false && modalItemData.status !== 'inactive') ? '#059669' : '#dc2626'
+                            background: modalItemData.status === 'scheduled' ? '#fffbeb' : ((modalItemData.isActive !== false && modalItemData.status !== 'inactive') ? '#ecfdf5' : '#fef2f2'),
+                            color: modalItemData.status === 'scheduled' ? '#b45309' : ((modalItemData.isActive !== false && modalItemData.status !== 'inactive') ? '#059669' : '#dc2626')
                           }}
                         >
                           <option value="active">🟢 Active (Visible on Website)</option>
                           <option value="inactive">🔴 Inactive (Hidden from Website)</option>
+                          {(modalItemData.status === 'scheduled' || modalItemData.isActive === false || modalItemData.status === 'inactive') && (
+                            <option value="scheduled">⏰ Scheduled (Auto-Publish at Date & Time)</option>
+                          )}
                         </select>
+
+                        {/* When Inactive, give direct button to Set Auto-Publish Date & Time */}
+                        {modalItemData.status !== 'scheduled' && (modalItemData.status === 'inactive' || modalItemData.isActive === false) && (
+                          <div style={{ marginTop: '8px' }}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const tomorrow = new Date();
+                                tomorrow.setDate(tomorrow.getDate() + 1);
+                                tomorrow.setHours(10, 0, 0, 0);
+                                setModalItemData(prev => ({
+                                  ...prev,
+                                  isActive: false,
+                                  status: 'scheduled',
+                                  scheduledAt: prev.scheduledAt || tomorrow.toISOString()
+                                }));
+                              }}
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                background: '#f0f9ff',
+                                color: '#0284c7',
+                                border: '1.5px solid #bae6fd',
+                                borderRadius: '8px',
+                                padding: '8px 14px',
+                                fontSize: '12.5px',
+                                fontWeight: '800',
+                                cursor: 'pointer',
+                                transition: 'all 0.15s ease'
+                              }}
+                            >
+                              <Clock style={{ width: '14px', height: '14px' }} />
+                              ⏰ Set Auto-Publish Date & Time
+                            </button>
+                          </div>
+                        )}
+
+                        {modalItemData.status === 'scheduled' && (
+                          <div style={{ marginTop: '8px', background: '#fffbeb', border: '1.5px solid #fcd34d', borderRadius: '10px', padding: '10px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                              <label style={{ fontSize: '11px', fontWeight: '800', color: '#b45309' }}>
+                                Auto-Publish Date & Time
+                              </label>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setModalItemData(prev => ({ ...prev, status: 'inactive', isActive: false }));
+                                }}
+                                style={{
+                                  background: 'none',
+                                  border: 'none',
+                                  color: '#dc2626',
+                                  fontSize: '11px',
+                                  fontWeight: '700',
+                                  cursor: 'pointer'
+                                }}
+                              >
+                                Cancel Schedule
+                              </button>
+                            </div>
+                            <WineraDateTimePicker
+                              minDate={new Date().toISOString()}
+                              value={modalItemData.scheduledAt}
+                              onChange={(val) => {
+                                setModalItemData(prev => ({ ...prev, scheduledAt: val }));
+                              }}
+                              onSave={(val) => {
+                                setModalItemData(prev => ({ ...prev, scheduledAt: val }));
+                                saveModalItem();
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={saveModalItem}
+                              style={{
+                                marginTop: '8px',
+                                width: '100%',
+                                background: 'linear-gradient(135deg, #10b981, #059669)',
+                                color: '#ffffff',
+                                border: 'none',
+                                padding: '10px 14px',
+                                borderRadius: '8px',
+                                fontWeight: '800',
+                                fontSize: '13px',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '6px',
+                                boxShadow: '0 3px 10px rgba(16, 185, 129, 0.35)'
+                              }}
+                            >
+                              💾 Save Scheduled Time Now
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div>

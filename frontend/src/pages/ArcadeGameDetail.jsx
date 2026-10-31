@@ -1233,16 +1233,17 @@ export default function ArcadeGameDetail({ siteData }) {
 
                 {/* Specification Long Banner */}
                 <div style={{
-                  background: 'linear-gradient(90deg, #38bdf8 0%, rgba(56, 189, 248, 0.5) 55%, rgba(56, 189, 248, 0) 100%)',
+                  background: 'linear-gradient(90deg, #38bdf8 0%, #38bdf8 70%, rgba(56, 189, 248, 0.45) 88%, rgba(56, 189, 248, 0) 100%)',
                   color: '#ffffff',
                   fontWeight: '800',
                   fontSize: '14px',
                   padding: '7px 16px',
                   borderRadius: '2px',
-                  display: 'inline-block',
-                  width: 'fit-content',
-                  maxWidth: '100%',
-                  marginTop: '4px'
+                  display: 'block',
+                  width: '82%',
+                  maxWidth: '360px',
+                  marginTop: '4px',
+                  whiteSpace: 'nowrap'
                 }} className="winera-arcade-banner-pill">
                   Why Choose Winera International
                 </div>

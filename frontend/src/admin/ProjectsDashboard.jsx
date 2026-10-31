@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Upload, Plus, Trash2, Edit2 } from 'lucide-react';
+import { Upload, Plus, Trash2, Edit2, Clock, Calendar } from 'lucide-react';
 import RichTextareaWithEditor from '../components/RichTextareaWithEditor';
 import AdminAltInput from '../components/AdminAltInput';
 import StatusDropdown from '../components/StatusDropdown';
+import WineraDateTimePicker from '../components/WineraDateTimePicker';
 import { uploadImageFile, updateSectionContent, mutateContentItem, deleteProjectApi } from '../services/api';
 
 const projectBanner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/a42izbmfkrylnroo3i7g.png";
@@ -33,6 +34,12 @@ const getAdminValidImageUrl = (url, fallback) => {
     return url;
   }
   return fallback;
+};
+
+const getMinDateTimeLocal = () => {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().slice(0, 16);
 };
 
 const defaultProjectHero = {
@@ -120,6 +127,28 @@ export default function ProjectsDashboard({
 }) {
   const [newCategoryInput, setNewCategoryInput] = useState('');
   const [adminProjectFilterCat, setAdminProjectFilterCat] = useState('All');
+  const [scheduleModal, setScheduleModal] = useState(null);
+
+  const openScheduleModal = (index, item) => {
+    let initialDateTime = '';
+    if (item.scheduledAt) {
+      try {
+        const d = new Date(item.scheduledAt);
+        if (!isNaN(d.getTime())) {
+          const pad = (n) => String(n).padStart(2, '0');
+          initialDateTime = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        }
+      } catch (_) {}
+    }
+    if (!initialDateTime) {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(10, 0, 0, 0);
+      const pad = (n) => String(n).padStart(2, '0');
+      initialDateTime = `${tomorrow.getFullYear()}-${pad(tomorrow.getMonth() + 1)}-${pad(tomorrow.getDate())}T${pad(tomorrow.getHours())}:${pad(tomorrow.getMinutes())}`;
+    }
+    setScheduleModal({ index, item, scheduledAt: initialDateTime, status: item.status === 'scheduled' ? 'scheduled' : 'scheduled' });
+  };
 
   return (
     <>
@@ -462,9 +491,11 @@ export default function ProjectsDashboard({
                             <td style={{ padding: '14px 18px', fontWeight: '600', color: '#64748b', fontSize: '12px' }}>/project/{item.slug || 'detail'}</td>
                             <td style={{ padding: '14px 18px', textAlign: 'center', position: 'relative' }}>
                               <StatusDropdown
-                                isActive={isItemActive}
+                                isActive={isItemActive && item.status !== 'scheduled'}
+                                status={item.status || (isItemActive ? 'active' : 'inactive')}
+                                scheduledAt={item.scheduledAt}
                                 direction={idx >= filteredDisplayList.length - 2 && filteredDisplayList.length > 2 ? 'up' : 'down'}
-                                onChange={async (newStatus, isAct) => {
+                                onChange={async (newStatus, isAct, schedAt) => {
                                   setSelectedPage('projectPage');
                                   setActiveSection('projectItems');
                                   if (typeof window !== 'undefined') {
@@ -474,24 +505,36 @@ export default function ProjectsDashboard({
                                     } catch (_) { }
                                   }
 
+                                  const isScheduled = newStatus === 'scheduled';
                                   const updatedItem = {
                                     ...item,
-                                    isActive: isAct,
-                                    status: newStatus
+                                    isActive: newStatus === 'active',
+                                    status: newStatus,
+                                    scheduledAt: isScheduled ? (schedAt || item.scheduledAt) : (newStatus === 'active' ? null : item.scheduledAt)
                                   };
                                   const updatedList = [...currentList];
                                   updatedList[targetIdx] = updatedItem;
                                   let updatedBuilt = Array.isArray(formData.builtProjects) ? [...formData.builtProjects] : [];
                                   const bpMatchIdx = updatedBuilt.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
                                   if (bpMatchIdx !== -1) {
-                                    updatedBuilt[bpMatchIdx] = { ...updatedBuilt[bpMatchIdx], isActive: isAct, status: newStatus };
+                                    updatedBuilt[bpMatchIdx] = {
+                                      ...updatedBuilt[bpMatchIdx],
+                                      isActive: newStatus === 'active',
+                                      status: newStatus,
+                                      scheduledAt: isScheduled ? (schedAt || item.scheduledAt) : (newStatus === 'active' ? null : item.scheduledAt)
+                                    };
                                   }
                                   setFormData(prev => ({ ...prev, projectItems: updatedList, builtProjects: updatedBuilt }));
 
                                   try {
                                     await updateSectionContent('projectItems', updatedList, admin.token);
                                     await refreshContent();
-                                    setStatusMsg(`Project '${item.name || 'item'}' status set to ${isAct ? 'Active' : 'Inactive'}!`);
+                                    if (isScheduled) {
+                                      const dateDisplay = updatedItem.scheduledAt ? new Date(updatedItem.scheduledAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) : 'scheduled time';
+                                      setStatusMsg(`⏰ Project '${item.name || 'item'}' scheduled for ${dateDisplay}! It will auto-publish automatically.`);
+                                    } else {
+                                      setStatusMsg(`Project '${item.name || 'item'}' status set to ${isAct ? 'Active' : 'Inactive'}!`);
+                                    }
                                   } catch (err) {
                                     console.error("Status update error:", err);
                                     setStatusMsg('Error updating status: ' + (err.response?.data?.message || err.message));
@@ -499,7 +542,37 @@ export default function ProjectsDashboard({
                                 }}
                               />
                             </td>
-                            <td style={{ padding: '14px 18px', textAlign: 'right' }}>
+                            <td style={{ padding: '14px 18px', textAlign: 'right', whiteSpace: 'nowrap' }}>
+                              {(() => {
+                                const isItemActive = item.status === 'active' || (item.isActive !== false && item.status !== 'inactive' && item.status !== 'scheduled');
+                                const isItemScheduled = item.status === 'scheduled';
+                                if (isItemActive) return null;
+                                return (
+                                  <button
+                                    type="button"
+                                    onClick={() => openScheduleModal(targetIdx, item)}
+                                    style={{
+                                      background: isItemScheduled ? '#fffbeb' : '#f0f9ff',
+                                      color: isItemScheduled ? '#b45309' : '#0284c7',
+                                      border: isItemScheduled ? '1.5px solid #fde68a' : '1.5px solid #bae6fd',
+                                      padding: '6px 12px',
+                                      borderRadius: '8px',
+                                      cursor: 'pointer',
+                                      marginRight: '8px',
+                                      fontWeight: '800',
+                                      fontSize: '12px',
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: '4px',
+                                      transition: 'all 0.15s ease'
+                                    }}
+                                    title={isItemScheduled ? "Change auto-publish Date & Time" : "Set Date & Time for automatic publishing"}
+                                  >
+                                    <Clock style={{ width: '13px', height: '13px' }} />
+                                    {isItemScheduled ? 'Change Time' : '⏰ Set Time'}
+                                  </button>
+                                );
+                              })()}
                               <button
                                 onClick={() => openModal('edit', targetIdx, item)}
                                 style={{ background: '#e0f2fe', color: '#0284c7', border: 'none', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px', fontWeight: '700', fontSize: '12px' }}
@@ -1341,6 +1414,143 @@ export default function ProjectsDashboard({
               </div>
             );
           })()}
+
+      {/* Schedule Auto-Publish Date & Time Modal */}
+      {scheduleModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(15, 23, 42, 0.65)',
+          backdropFilter: 'blur(5px)',
+          zIndex: 999999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }}>
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            padding: '30px',
+            maxWidth: '460px',
+            width: '100%',
+            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.35)',
+            border: '1.5px solid #e2e8f0'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+              <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: 'linear-gradient(135deg, #e0f2fe, #bae6fd)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Clock style={{ width: '24px', height: '24px', color: '#0284c7' }} />
+              </div>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '900', color: '#0f172a' }}>
+                  ⏰ Set Auto-Publish Time
+                </h3>
+                <p style={{ margin: '2px 0 0', fontSize: '12.5px', color: '#64748b', fontWeight: '700' }}>
+                  {scheduleModal.item?.name || 'Project Card'}
+                </p>
+              </div>
+            </div>
+
+            <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.55, margin: '0 0 18px 0', background: '#f8fafc', padding: '12px 14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+              Select the exact future date and time. Winera system will automatically publish this project on the website even if you are not available.
+            </p>
+
+            <div style={{ marginBottom: '18px' }}>
+              <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                📅 Select Date & Time:
+              </label>
+              <WineraDateTimePicker
+                minDate={getMinDateTimeLocal()}
+                value={scheduleModal.scheduledAt || ''}
+                onChange={(val) => setScheduleModal(prev => ({ ...prev, scheduledAt: val }))}
+              />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!scheduleModal.scheduledAt) {
+                    alert('Please select a date & time');
+                    return;
+                  }
+                  if (new Date(scheduleModal.scheduledAt).getTime() <= Date.now()) {
+                    alert('Please select a future date & time. Past dates cannot be selected.');
+                    return;
+                  }
+                  const schedIso = new Date(scheduleModal.scheduledAt).toISOString();
+                  const targetIdx = scheduleModal.index;
+                  const item = scheduleModal.item;
+                  const updatedItem = {
+                    ...item,
+                    isActive: false,
+                    status: 'scheduled',
+                    scheduledAt: schedIso
+                  };
+                  const currentList = Array.isArray(formData.projectItems) ? [...formData.projectItems] : [];
+                  currentList[targetIdx] = updatedItem;
+
+                  let updatedBuilt = Array.isArray(formData.builtProjects) ? [...formData.builtProjects] : [];
+                  const bpMatchIdx = updatedBuilt.findIndex(b => (b.slug && item.slug && b.slug === item.slug) || (b.name && item.name && b.name.toLowerCase() === item.name.toLowerCase()));
+                  if (bpMatchIdx !== -1) {
+                    updatedBuilt[bpMatchIdx] = { ...updatedBuilt[bpMatchIdx], isActive: false, status: 'scheduled', scheduledAt: schedIso };
+                  }
+
+                  setFormData(prev => ({ ...prev, projectItems: currentList, builtProjects: updatedBuilt }));
+                  setScheduleModal(null);
+
+                  try {
+                    await updateSectionContent('projectItems', currentList, admin.token);
+                    await refreshContent();
+                    const dateDisplay = new Date(schedIso).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
+                    setStatusMsg(`⏰ Project '${item.name}' scheduled for ${dateDisplay}! It will automatically publish.`);
+                  } catch (err) {
+                    console.error("Status update error:", err);
+                    setStatusMsg('Error updating status: ' + (err.response?.data?.message || err.message));
+                  }
+                }}
+                style={{
+                  width: '100%',
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '13px 18px',
+                  borderRadius: '12px',
+                  fontWeight: '800',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px'
+                }}
+              >
+                💾 Save & Confirm Schedule
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setScheduleModal(null)}
+                style={{
+                  width: '100%',
+                  background: '#f1f5f9',
+                  color: '#475569',
+                  border: '1px solid #cbd5e1',
+                  padding: '11px 18px',
+                  borderRadius: '12px',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  marginTop: '4px'
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

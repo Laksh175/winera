@@ -4,6 +4,7 @@ import BlogRichEditor from './BlogRichEditor';
 import AdminAltInput from './AdminAltInput';
 import ConfirmModal from './ConfirmModal';
 import StatusDropdown from './StatusDropdown';
+import WineraDateTimePicker from './WineraDateTimePicker';
 import { sanitizeAndFormatHtml } from '../pages/BlogDetail';
 import { fetchBlogs, createBlogApi, updateBlogApi, deleteBlogApi, clearBlogCache } from '../services/api';
 import { calculateReadTime, getWordCount } from '../utils/readTime';
@@ -29,6 +30,12 @@ const getValidImageUrl = (url, fallback) => {
     return url.src;
   }
   return fallback || blogCardImg;
+};
+
+const getMinDateTimeLocal = () => {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().slice(0, 16);
 };
 
 // Helper to parse blog post into structured fields
@@ -81,7 +88,8 @@ const parseBlogToForm = (post) => {
 
   const computedReadTime = calculateReadTime(fullContent);
   const initialReadTime = post.readTime && post.readTime.trim() ? post.readTime : computedReadTime;
-  const isPostActive = post.isActive !== false && post.status !== 'inactive' && post.isPublished !== false;
+  const isPostScheduled = post.status === 'scheduled';
+  const isPostActive = !isPostScheduled && post.isActive !== false && post.status !== 'inactive' && post.isPublished !== false;
 
   return {
     ...post,
@@ -95,8 +103,9 @@ const parseBlogToForm = (post) => {
     sections: [],
     isManualReadTime: Boolean(post.readTime && post.readTime.trim() && post.readTime !== computedReadTime && post.readTime !== '4 min read'),
     isActive: isPostActive,
-    status: isPostActive ? 'active' : 'inactive',
-    isPublished: isPostActive
+    status: isPostScheduled ? 'scheduled' : (isPostActive ? 'active' : 'inactive'),
+    isPublished: isPostActive,
+    scheduledAt: post.scheduledAt || null
   };
 };
 
@@ -110,6 +119,18 @@ export default function BlogAdminManagement({
 }) {
   const [toast, setToast] = useState(null);
   const [confirmModal, setConfirmModal] = useState(null);
+  const [scheduleModal, setScheduleModal] = useState(null);
+
+  const openScheduleModal = (index, post) => {
+    const initialSched = post?.scheduledAt
+      ? new Date(post.scheduledAt).toISOString().slice(0, 16)
+      : new Date(Date.now() + 3600000).toISOString().slice(0, 16);
+    setScheduleModal({
+      index,
+      post,
+      scheduledAt: initialSched
+    });
+  };
 
   const showToast = (message, type = 'success') => {
     if (typeof setStatusMsg === 'function') {
@@ -173,15 +194,17 @@ export default function BlogAdminManagement({
     setActiveTabPreview(false);
   };
 
-  const handleToggleBlogStatus = async (index, newStatus, isAct) => {
+  const handleToggleBlogStatus = async (index, newStatus, isAct, schedAt) => {
     const post = rawList[index];
     if (!post) return;
 
+    const isScheduled = newStatus === 'scheduled';
     const updatedPost = {
       ...post,
-      isActive: isAct,
+      isActive: newStatus === 'active',
       status: newStatus,
-      isPublished: isAct
+      isPublished: newStatus === 'active',
+      scheduledAt: isScheduled ? (schedAt || post.scheduledAt) : (newStatus === 'active' ? null : post.scheduledAt)
     };
 
     const updatedList = [...rawList];
@@ -202,10 +225,18 @@ export default function BlogAdminManagement({
       if (typeof persistSectionToDatabase === 'function') {
         await persistSectionToDatabase('blogPosts', updatedList);
       }
-      showToast(
-        `'${post.title || 'Blog'}' is now ${isAct ? '🟢 Active (Visible on website)' : '🔴 Inactive (Hidden on website)'}!`,
-        'success'
-      );
+      if (isScheduled) {
+        const dateDisplay = updatedPost.scheduledAt ? new Date(updatedPost.scheduledAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) : 'scheduled time';
+        showToast(
+          `⏰ '${post.title || 'Blog'}' is scheduled for ${dateDisplay}! It will automatically publish without any manual action.`,
+          'success'
+        );
+      } else {
+        showToast(
+          `'${post.title || 'Blog'}' is now ${isAct ? '🟢 Active (Visible on website)' : '🔴 Inactive (Hidden on website)'}!`,
+          'success'
+        );
+      }
     } catch (err) {
       console.error('Failed to update blog status:', err);
       showToast(`Failed to update status: ${err?.message || 'Server error'}`, 'error');
@@ -256,13 +287,15 @@ export default function BlogAdminManagement({
     const excerpt = editingBlog.excerpt || (cleanText ? `${cleanText.substring(0, 160)}...` : '');
     const description = editingBlog.description || (cleanText ? cleanText.substring(0, 300) : '');
     const autoRead = calculateReadTime(fullContent);
-    const isAct = editingBlog.isActive !== false && editingBlog.status !== 'inactive' && editingBlog.isPublished !== false;
+    const isScheduled = editingBlog.status === 'scheduled';
+    const isAct = !isScheduled && editingBlog.isActive !== false && editingBlog.status !== 'inactive' && editingBlog.isPublished !== false;
 
     const finalizedPost = {
       ...editingBlog,
       isActive: isAct,
-      status: isAct ? 'active' : 'inactive',
+      status: isScheduled ? 'scheduled' : (isAct ? 'active' : 'inactive'),
       isPublished: isAct,
+      scheduledAt: isScheduled ? editingBlog.scheduledAt : (isAct ? null : editingBlog.scheduledAt),
       readTime: editingBlog.readTime?.trim() || autoRead,
       slug,
       excerpt,
@@ -606,7 +639,7 @@ export default function BlogAdminManagement({
                         </div>
                         <div style={{ marginTop: '3px', fontSize: '12px', color: '#0284c7', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                           <span>🔗 <span style={{ color: '#64748b' }}>/blog/</span>{post.slug || post.id}</span>
-                          {!isPostActive && (
+                          {!isPostActive && post.status !== 'scheduled' && (
                             <span style={{
                               background: '#fee2e2',
                               color: '#b91c1c',
@@ -631,35 +664,91 @@ export default function BlogAdminManagement({
                       <StatusDropdown
                         isActive={isPostActive}
                         status={post.status || (isPostActive ? 'active' : 'inactive')}
+                        scheduledAt={post.scheduledAt}
                         direction={index >= filteredPosts.length - 2 && filteredPosts.length > 2 ? 'up' : 'down'}
-                        onChange={async (newStatus, isAct) => {
-                          await handleToggleBlogStatus(originalIndex >= 0 ? originalIndex : index, newStatus, isAct);
+                        onChange={async (newStatus, isAct, schedAt) => {
+                          await handleToggleBlogStatus(originalIndex >= 0 ? originalIndex : index, newStatus, isAct, schedAt);
                         }}
                       />
 
-                      <a
-                        href={`/blog/${post.slug || post.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          background: '#f0f9ff',
-                          color: '#0284c7',
-                          border: '1.5px solid #bae6fd',
-                          padding: '8px 14px',
-                          borderRadius: '10px',
-                          fontWeight: '800',
-                          fontSize: '12.5px',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                          transition: 'all 0.15s ease'
-                        }}
-                      >
-                        <Eye style={{ width: '14px', height: '14px' }} />
-                        View Live
-                      </a>
+                      {!isPostActive && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const originalIndex = rawList.findIndex(p => p._id === post._id || (p.slug && p.slug === post.slug) || p.title === post.title);
+                            openScheduleModal(originalIndex >= 0 ? originalIndex : index, post);
+                          }}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            background: (post.status === 'scheduled' && post.scheduledAt) ? '#fffbeb' : '#f0f9ff',
+                            color: (post.status === 'scheduled' && post.scheduledAt) ? '#b45309' : '#0284c7',
+                            border: (post.status === 'scheduled' && post.scheduledAt) ? '1.5px solid #fde68a' : '1.5px solid #bae6fd',
+                            padding: '8px 14px',
+                            borderRadius: '10px',
+                            fontWeight: '800',
+                            fontSize: '12.5px',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease'
+                          }}
+                          title="Set specific Date & Time to auto-publish"
+                        >
+                          <Clock style={{ width: '14px', height: '14px' }} />
+                          {(post.status === 'scheduled' && post.scheduledAt) ? 'Change Time' : '⏰ Set Time'}
+                        </button>
+                      )}
+
+                      {isPostActive ? (
+                        <a
+                          href={`/blog/${post.slug || post.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            background: '#f0f9ff',
+                            color: '#0284c7',
+                            border: '1.5px solid #bae6fd',
+                            padding: '8px 14px',
+                            borderRadius: '10px',
+                            fontWeight: '800',
+                            fontSize: '12.5px',
+                            textDecoration: 'none',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease'
+                          }}
+                          title="View live blog on website"
+                        >
+                          <Eye style={{ width: '14px', height: '14px' }} />
+                          View Live
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            background: '#f8fafc',
+                            color: '#94a3b8',
+                            border: '1.5px solid #e2e8f0',
+                            padding: '8px 14px',
+                            borderRadius: '10px',
+                            fontWeight: '800',
+                            fontSize: '12.5px',
+                            cursor: 'not-allowed',
+                            opacity: 0.45,
+                            transition: 'all 0.15s ease'
+                          }}
+                          title="Blog is currently Inactive/Hidden from website"
+                        >
+                          <Eye style={{ width: '14px', height: '14px' }} />
+                          View Live
+                        </button>
+                      )}
 
                       <button
                         type="button"
@@ -826,8 +915,12 @@ export default function BlogAdminManagement({
               {editingBlog.fullContent ? (
                 <div
                   className="winera-blog-article-content winera-admin-blog-preview"
-                  style={{ fontSize: '16.5px', color: '#334155', lineHeight: 1.85, fontWeight: '400', marginBottom: '24px' }}
-                  dangerouslySetInnerHTML={{ __html: sanitizeAndFormatHtml(editingBlog.fullContent) }}
+                  style={{ fontSize: '16.5px', color: '#334155', lineHeight: 1.85, fontWeight: '400', marginBottom: '24px', overflowX: 'auto', maxWidth: '100%' }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeAndFormatHtml(editingBlog.fullContent)
+                      .replace(/<div[^>]*class=["'][^"']*winera-blog-table-responsive[^"']*["'][^>]*>([\s\S]*?)<\/div>/gi, '$1')
+                      .replace(/(<table[\s\S]*?<\/table>)/gi, '<div class="winera-blog-table-responsive">$1</div>')
+                  }}
                 />
               ) : (
                 <>
@@ -930,19 +1023,106 @@ export default function BlogAdminManagement({
                     Visibility Status
                   </label>
                   <StatusDropdown
-                    isActive={editingBlog.isActive !== false && editingBlog.status !== 'inactive' && editingBlog.isPublished !== false}
+                    isActive={editingBlog.status !== 'scheduled' && editingBlog.isActive !== false && editingBlog.status !== 'inactive' && editingBlog.isPublished !== false}
                     status={editingBlog.status || (editingBlog.isActive === false ? 'inactive' : 'active')}
+                    scheduledAt={editingBlog.scheduledAt}
                     size="md"
                     align="left"
-                    onChange={(newStatus, isAct) => {
+                    onChange={(newStatus, isAct, schedAt) => {
                       setEditingBlog(prev => ({
                         ...prev,
-                        isActive: isAct,
+                        isActive: newStatus === 'active',
                         status: newStatus,
-                        isPublished: isAct
+                        isPublished: newStatus === 'active',
+                        scheduledAt: newStatus === 'scheduled' ? (schedAt || prev.scheduledAt) : (newStatus === 'active' ? null : prev.scheduledAt)
                       }));
                     }}
                   />
+                  {editingBlog.status === 'scheduled' && (
+                    <div style={{ marginTop: '8px', background: '#fffbeb', border: '1.5px solid #fcd34d', borderRadius: '10px', padding: '10px' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#b45309', marginBottom: '4px' }}>
+                        Auto-Publish Date & Time
+                      </label>
+                      <WineraDateTimePicker
+                        minDate={getMinDateTimeLocal()}
+                        value={editingBlog.scheduledAt}
+                        onChange={(val) => {
+                          setEditingBlog(prev => ({ ...prev, scheduledAt: val }));
+                        }}
+                        onSave={(val) => {
+                          setEditingBlog(prev => ({ ...prev, scheduledAt: val }));
+                          handleSaveBlogForm();
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleSaveBlogForm}
+                        style={{
+                          marginTop: '8px',
+                          width: '100%',
+                          background: 'linear-gradient(135deg, #10b981, #059669)',
+                          color: '#ffffff',
+                          border: 'none',
+                          padding: '10px 14px',
+                          borderRadius: '8px',
+                          fontWeight: '800',
+                          fontSize: '13px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          boxShadow: '0 3px 10px rgba(16, 185, 129, 0.35)'
+                        }}
+                      >
+                        💾 Save Scheduled Time Now
+                      </button>
+                    </div>
+                  )}
+
+                  <div style={{ marginTop: '8px' }}>
+                    {(() => {
+                      const isBlogActive = editingBlog.status === 'active' || (editingBlog.isActive !== false && editingBlog.status !== 'inactive' && editingBlog.status !== 'scheduled');
+                      const isBlogScheduled = editingBlog.status === 'scheduled';
+                      if (isBlogActive) return null;
+                      return (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const nextScheduled = !isBlogScheduled;
+                            const tomorrow = new Date();
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            tomorrow.setHours(10, 0, 0, 0);
+                            setEditingBlog(prev => ({
+                              ...prev,
+                              isActive: !nextScheduled,
+                              status: nextScheduled ? 'scheduled' : 'inactive',
+                              isPublished: !nextScheduled,
+                              scheduledAt: nextScheduled ? (prev.scheduledAt || tomorrow.toISOString()) : null
+                            }));
+                          }}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            background: isBlogScheduled ? '#fef3c7' : '#f0f9ff',
+                            color: isBlogScheduled ? '#b45309' : '#0284c7',
+                            border: isBlogScheduled ? '1.5px solid #fcd34d' : '1.5px solid #bae6fd',
+                            borderRadius: '8px',
+                            padding: '6px 12px',
+                            fontSize: '12px',
+                            fontWeight: '800',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease'
+                          }}
+                          title="Set Auto-Publish Date & Time"
+                        >
+                          <Clock style={{ width: '13px', height: '13px' }} />
+                          {isBlogScheduled ? '⏰ Auto-Publish is Enabled' : '⏰ Set Auto-Publish Time'}
+                        </button>
+                      );
+                    })()}
+                  </div>
                 </div>
 
                 {/* Date */}
@@ -1406,6 +1586,117 @@ export default function BlogAdminManagement({
             </div>
           )}
 
+        </div>
+      )}
+
+      {/* Schedule Auto-Publish Date & Time Modal */}
+      {scheduleModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(15, 23, 42, 0.65)',
+          backdropFilter: 'blur(5px)',
+          zIndex: 999999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }}>
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            padding: '30px',
+            maxWidth: '460px',
+            width: '100%',
+            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.35)',
+            border: '1.5px solid #e2e8f0'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+              <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: 'linear-gradient(135deg, #e0f2fe, #bae6fd)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Clock style={{ width: '24px', height: '24px', color: '#0284c7' }} />
+              </div>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '900', color: '#0f172a' }}>
+                  ⏰ Set Auto-Publish Time
+                </h3>
+                <p style={{ margin: '2px 0 0', fontSize: '12.5px', color: '#64748b', fontWeight: '700' }}>
+                  {scheduleModal.post?.title || 'Blog Post'}
+                </p>
+              </div>
+            </div>
+
+            <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.55, margin: '0 0 18px 0', background: '#f8fafc', padding: '12px 14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+              Select the exact future date and time. Winera system will automatically publish this blog post on the website even if you are not available.
+            </p>
+
+            <div style={{ marginBottom: '18px' }}>
+              <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>
+                📅 Select Date & Time:
+              </label>
+              <WineraDateTimePicker
+                minDate={getMinDateTimeLocal()}
+                value={scheduleModal.scheduledAt || ''}
+                onChange={(val) => setScheduleModal(prev => ({ ...prev, scheduledAt: val }))}
+              />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!scheduleModal.scheduledAt) {
+                    alert('Please select a date & time');
+                    return;
+                  }
+                  if (new Date(scheduleModal.scheduledAt).getTime() <= Date.now()) {
+                    alert('Please select a future date & time. Past dates cannot be selected.');
+                    return;
+                  }
+                  const schedIso = new Date(scheduleModal.scheduledAt).toISOString();
+                  const targetIdx = scheduleModal.index;
+                  setScheduleModal(null);
+                  await handleToggleBlogStatus(targetIdx, 'scheduled', false, schedIso);
+                }}
+                style={{
+                  width: '100%',
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '13px 18px',
+                  borderRadius: '12px',
+                  fontWeight: '800',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px'
+                }}
+              >
+                💾 Save & Confirm Schedule
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setScheduleModal(null)}
+                style={{
+                  width: '100%',
+                  background: '#f1f5f9',
+                  color: '#475569',
+                  border: '1px solid #cbd5e1',
+                  padding: '11px 18px',
+                  borderRadius: '12px',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  marginTop: '4px'
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

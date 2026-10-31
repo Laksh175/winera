@@ -4,6 +4,7 @@ import cors from 'cors';
 import compression from 'compression';
 import connectDB from './config/db.js';
 import { initDbBackupCron } from './services/dbBackupCron.js';
+import { initScheduledPublishingCron } from './services/scheduledPublishService.js';
 import apiRoutes from './routes/api.routes.js';
 import { getSitemapXmlController } from './controllers/content.controller.js';
 
@@ -12,6 +13,7 @@ import path from 'path';
 
 connectDB();
 initDbBackupCron();
+initScheduledPublishingCron();
 
 const app = express();
 

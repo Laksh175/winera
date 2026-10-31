@@ -153,7 +153,13 @@ export default function Blog({ siteData }) {
       if (timeA !== timeB) return timeB - timeA;
       return (Number(a.id) || 0) - (Number(b.id) || 0);
     });
-    return sorted.filter(p => p.isActive !== false && p.status !== 'inactive' && p.isPublished !== false);
+    return sorted.filter(p => {
+      if (!p) return false;
+      if (p.status === 'scheduled') {
+        return p.scheduledAt && new Date(p.scheduledAt) <= new Date();
+      }
+      return p.isActive !== false && p.status !== 'inactive' && p.isPublished !== false;
+    });
   })();
 
   const blogPosts = rawPosts.map((post) => {

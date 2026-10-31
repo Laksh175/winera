@@ -11,12 +11,32 @@ export const sanitizeAndFormatHtml = (input) => {
   html = html.replace(/~~(.+?)~~/g, '<del>$1</del>');
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
-  // 3. Ensure links have proper color, font-weight and security attributes
+  // 3. Ensure links have proper color, normal font-weight (never forced bold) and security attributes
+  html = html.replace(/(<a\s+[^>]*?style=["'][^"']*?)font-weight\s*:\s*(?:700|800|bold)\s*;?/gi, '$1');
   html = html.replace(/<a\s+[^>]*?href=["']?([^"'\s>]+)["']?[^>]*>/gi, (match, href) => {
     const isWineraOrRelative = href.startsWith('/') || href.startsWith('#') || href.includes('winera.in');
     const targetAttr = isWineraOrRelative ? '' : ' target="_blank" rel="noopener noreferrer"';
-    return `<a href="${href}" style="color: #0284c7; font-weight: 700; text-decoration: underline;"${targetAttr}>`;
+    return `<a href="${href}" style="color: #0284c7; font-weight: normal; text-decoration: underline;"${targetAttr}>`;
   });
+
+  // 4. Clean table spacing: remove text-align justify (which causes huge gaps between words) and normalize multiple spaces
+  if (html.includes('<table')) {
+    html = html.replace(/<table[\s\S]*?<\/table>/gi, (tableHtml) => {
+      let cleaned = tableHtml
+        .replace(/text-align\s*:\s*justify\s*;?/gi, '')
+        .replace(/\bql-align-justify\b/gi, '')
+        .replace(/(?:&nbsp;|\u00a0){2,}/gi, ' ');
+      // Normalize runs of spaces inside table cell content
+      cleaned = cleaned.replace(/(<t[dh][^>]*>)([\s\S]*?)(<\/t[dh]>)/gi, (m, open, body, close) => {
+        const normalizedBody = body
+          .replace(/[ \t]{2,}/g, ' ')
+          .replace(/<p[^>]*class=["'][^"']*ql-align-justify[^"']*["'][^>]*>/gi, '<p>')
+          .replace(/<p\s+style=["'][^"']*text-align\s*:\s*justify[^"']*["'][^>]*>/gi, '<p>');
+        return `${open}${normalizedBody}${close}`;
+      });
+      return cleaned;
+    });
+  }
 
   return html;
 };

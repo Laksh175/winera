@@ -44,7 +44,8 @@ const projectSchema = new mongoose.Schema({
   metaTitle: { type: String, default: '' },
   metaDescription: { type: String, default: '' },
   isActive: { type: Boolean, default: true },
-  status: { type: String, default: 'active' }
+  status: { type: String, default: 'active' },
+  scheduledAt: { type: Date, default: null }
 }, { timestamps: true });
 
 const Project = mongoose.model('Project', projectSchema);

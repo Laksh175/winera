@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { Table, Plus, Trash2, Image as ImageIcon, X } from 'lucide-react';
+import { Table, Plus, Trash2, Image as ImageIcon, X, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 import ConfirmModal from './ConfirmModal';
 
 /**
@@ -15,10 +16,20 @@ export const prepareBlogContentForEditor = (raw) => {
   // Convert literal string representations of newlines to real newlines
   content = content.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n');
 
-  // If already full HTML, clean up any cursor artifacts and return
+  // If already full HTML, clean up any cursor artifacts, table justify bloat, and return
   const hasHtmlTags = /<\/?(?:p|h[1-6]|ul|ol|li|table|tr|td|th|img|blockquote|div|span|strong|em|u|a)[\s>]/i.test(content);
   if (hasHtmlTags) {
-    return content.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
+    let cleaned = content.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
+    cleaned = cleaned.replace(/(<a\s+[^>]*?style=["'][^"']*?)font-weight\s*:\s*(?:700|800|bold)\s*;?/gi, '$1');
+    if (cleaned.includes('<table')) {
+      cleaned = cleaned.replace(/<table[\s\S]*?<\/table>/gi, (tableHtml) => {
+        return tableHtml
+          .replace(/text-align\s*:\s*justify\s*;?/gi, '')
+          .replace(/\bql-align-justify\b/gi, '')
+          .replace(/(?:&nbsp;|\u00a0){2,}/gi, ' ');
+      });
+    }
+    return cleaned;
   }
 
   // Legacy Markdown to HTML converter
@@ -102,7 +113,11 @@ export default function BlogRichEditor({
   const savedRangeRef = useRef(null);
   const lastSelectedRangeRef = useRef(null);
   const [tableBarPos, setTableBarPos] = useState(null);
+  const [tableMountNode, setTableMountNode] = useState(null);
   const updateTablePosRef = useRef(null);
+  const activeTableCellRef = useRef(null);
+  const [alignScope, setAlignScope] = useState('cell'); // 'cell' | 'column' | 'row' | 'table'
+  const [currentCellAlign, setCurrentCellAlign] = useState('left');
 
   // Active Image selection & deletion state
   const [activeImage, setActiveImage] = useState(null);
@@ -120,14 +135,24 @@ export default function BlogRichEditor({
     const tableRect = table.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
 
-    const top = tableRect.top - containerRect.top;
-    const left = tableRect.left - containerRect.left;
+    // If table is completely out of view, hide
+    if (tableRect.bottom < containerRect.top + 60 || tableRect.top > containerRect.bottom) {
+      setTableBarPos(null);
+      return;
+    }
 
-    // Position directly above where the table starts
+    const tableTop = tableRect.top - containerRect.top;
+    const tableLeft = tableRect.left - containerRect.left;
+
+    // Anchor at exact table top; transform: translateY(calc(-100% - 12px)) ensures
+    // the toolbar bottom edge is ALWAYS strictly 12px above the table (NEVER overlapping row 1)
+    const isScrolledPast = tableTop < 75;
+
     setTableBarPos({
-      top: Math.max(0, top - 44),
-      left: Math.max(8, left),
-      width: tableRect.width
+      top: isScrolledPast ? 54 : tableTop,
+      left: Math.max(8, tableLeft),
+      width: tableRect.width,
+      isScrolledPast
     });
   };
   updateTablePosRef.current = updateTableBarPosition;
@@ -326,6 +351,12 @@ export default function BlogRichEditor({
 
     quillRef.current = quill;
 
+    // Dedicated mount point between .ql-toolbar and editorDiv (.ql-container)
+    const mountDiv = document.createElement('div');
+    mountDiv.className = 'winera-blog-table-toolbar-mount';
+    containerRef.current.insertBefore(mountDiv, editorDiv);
+    setTableMountNode(mountDiv);
+
     // Set initial content
     if (value) {
       const initialHtml = prepareBlogContentForEditor(value);
@@ -446,8 +477,11 @@ export default function BlogRichEditor({
     const updateTableFocus = (e) => {
       const cell = (e ? e.target : document.activeElement)?.closest?.('td, th');
       if (cell && editorElement.contains(cell)) {
+        activeTableCellRef.current = cell;
         activeTableElementRef.current = cell.closest('table');
         setActiveTable(true);
+        const curAlign = cell.getAttribute('align') || cell.style.textAlign || (cell.classList.contains('ql-align-center') ? 'center' : (cell.classList.contains('ql-align-right') ? 'right' : 'left'));
+        setCurrentCellAlign(curAlign);
         const sel = quill.getSelection();
         if (sel) savedRangeRef.current = sel;
         setTimeout(() => {
@@ -458,8 +492,11 @@ export default function BlogRichEditor({
         const node = domSel && domSel.anchorNode;
         const cellFromNode = node && (node.nodeType === 1 ? node : node.parentElement)?.closest?.('td, th');
         if (cellFromNode && editorElement.contains(cellFromNode)) {
+          activeTableCellRef.current = cellFromNode;
           activeTableElementRef.current = cellFromNode.closest('table');
           setActiveTable(true);
+          const curAlign = cellFromNode.getAttribute('align') || cellFromNode.style.textAlign || (cellFromNode.classList.contains('ql-align-center') ? 'center' : (cellFromNode.classList.contains('ql-align-right') ? 'right' : 'left'));
+          setCurrentCellAlign(curAlign);
           const sel = quill.getSelection();
           if (sel) savedRangeRef.current = sel;
           setTimeout(() => {
@@ -469,6 +506,7 @@ export default function BlogRichEditor({
           setActiveTable(false);
           setTableBarPos(null);
           activeTableElementRef.current = null;
+          activeTableCellRef.current = null;
         }
       }
     };
@@ -484,6 +522,12 @@ export default function BlogRichEditor({
           try {
             const [table, row, cell] = tableModule.getTable(range);
             if (cell) {
+              const domNode = cell.domNode;
+              if (domNode) {
+                activeTableCellRef.current = domNode;
+                const curAlign = domNode.getAttribute('align') || domNode.style.textAlign || (domNode.classList.contains('ql-align-center') ? 'center' : (domNode.classList.contains('ql-align-right') ? 'right' : 'left'));
+                setCurrentCellAlign(curAlign);
+              }
               setActiveTable(true);
               activeTableElementRef.current = cell.domNode ? cell.domNode.closest('table') : editorElement.querySelector('table');
               setTimeout(() => {
@@ -540,33 +584,144 @@ export default function BlogRichEditor({
       }
     };
 
-    // Handle paste of image files (e.g. screenshot or copied image) -> upload to Cloudinary
+    // Handle paste of image files and direct copy-pasting of tables with clean spacing
     const handleEditorPaste = async (e) => {
       const clipboardData = e.clipboardData;
-      if (!clipboardData || !clipboardData.items) return;
-      for (let i = 0; i < clipboardData.items.length; i++) {
-        const item = clipboardData.items[i];
-        if (item.type && item.type.indexOf('image') !== -1) {
-          const file = item.getAsFile();
-          if (file && typeof uploadImageFile === 'function') {
-            e.preventDefault();
-            try {
-              if (showNotification) showNotification('Uploading pasted image to Cloudinary...', 'info');
-              const res = await uploadImageFile(file, adminToken);
-              const uploadedUrl = res?.url || res?.imageUrl || (typeof res === 'string' ? res : null);
-              if (uploadedUrl) {
-                const range = quill.getSelection(true);
-                const idx = range ? range.index : quill.getLength();
-                quill.insertEmbed(idx, 'image', uploadedUrl, 'user');
-                quill.setSelection(idx + 1);
-                if (showNotification) showNotification('Pasted image uploaded to Cloudinary successfully!', 'success');
+      if (!clipboardData) return;
+
+      // 1. Check for image files (e.g. screenshot or copied image) -> upload to Cloudinary
+      if (clipboardData.items) {
+        for (let i = 0; i < clipboardData.items.length; i++) {
+          const item = clipboardData.items[i];
+          if (item.type && item.type.indexOf('image') !== -1) {
+            const file = item.getAsFile();
+            if (file && typeof uploadImageFile === 'function') {
+              e.preventDefault();
+              try {
+                if (showNotification) showNotification('Uploading pasted image to Cloudinary...', 'info');
+                const res = await uploadImageFile(file, adminToken);
+                const uploadedUrl = res?.url || res?.imageUrl || (typeof res === 'string' ? res : null);
+                if (uploadedUrl) {
+                  const range = quill.getSelection(true);
+                  const idx = range ? range.index : quill.getLength();
+                  quill.insertEmbed(idx, 'image', uploadedUrl, 'user');
+                  quill.setSelection(idx + 1);
+                  if (showNotification) showNotification('Pasted image uploaded to Cloudinary successfully!', 'success');
+                }
+              } catch (err) {
+                console.error('Pasted image upload failed:', err);
+                if (showNotification) showNotification('Failed to upload pasted image: ' + (err.message || 'Error'), 'error');
               }
-            } catch (err) {
-              console.error('Pasted image upload failed:', err);
-              if (showNotification) showNotification('Failed to upload pasted image: ' + (err.message || 'Error'), 'error');
+              return;
             }
-            break;
           }
+        }
+      }
+
+      // 2. Check for HTML Table copy-paste (from Word, Excel, Google Docs, or Websites)
+      const html = clipboardData.getData('text/html');
+      const textPlain = clipboardData.getData('text/plain');
+
+      if (html && (html.toLowerCase().includes('<table'))) {
+        e.preventDefault();
+        try {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const tables = doc.querySelectorAll('table');
+
+          if (tables.length > 0) {
+            tables.forEach(table => {
+              table.removeAttribute('width');
+              table.removeAttribute('height');
+              table.removeAttribute('class');
+              table.setAttribute('style', 'width: 100%; border-collapse: collapse; margin: 16px 0;');
+
+              table.querySelectorAll('colgroup, col, style, xml, o\\:p, meta, script').forEach(el => el.remove());
+
+              const rows = table.querySelectorAll('tr');
+              rows.forEach((row, rIdx) => {
+                row.removeAttribute('style');
+                row.removeAttribute('class');
+                row.removeAttribute('height');
+
+                const cells = row.querySelectorAll('th, td');
+                cells.forEach(cell => {
+                  let align = cell.getAttribute('align') || cell.style.textAlign || '';
+                  if (align === 'justify') align = 'left';
+                  cell.removeAttribute('style');
+                  cell.removeAttribute('class');
+                  cell.removeAttribute('width');
+                  cell.removeAttribute('height');
+
+                  if (align) {
+                    cell.setAttribute('align', align);
+                    cell.style.textAlign = align;
+                  }
+
+                  // Clean cell HTML: strip excessive spacing, &nbsp;, empty tags
+                  let inner = cell.innerHTML;
+                  inner = inner
+                    .replace(/&nbsp;/gi, ' ')
+                    .replace(/\u00a0/g, ' ')
+                    .replace(/[ \t]{2,}/g, ' ')
+                    .replace(/text-align\s*:\s*justify\s*;?/gi, '')
+                    .replace(/\bql-align-justify\b/gi, '')
+                    .replace(/<span[^>]*>/gi, '')
+                    .replace(/<\/span>/gi, '')
+                    .replace(/<font[^>]*>/gi, '')
+                    .replace(/<\/font>/gi, '')
+                    .replace(/<p[^>]*>/gi, '<p>')
+                    .replace(/<p>\s*<\/p>/gi, '')
+                    .replace(/<br\s*\/?>/gi, ' ');
+
+                  cell.innerHTML = inner.trim() || '&nbsp;';
+                });
+              });
+            });
+
+            const cleanHtml = doc.body.innerHTML;
+            const range = quill.getSelection(true) || { index: quill.getLength() };
+            quill.clipboard.dangerouslyPasteHTML(range.index, cleanHtml + '<p><br></p>', 'user');
+            setTimeout(() => {
+              quill.update(Quill.sources.USER);
+              const newHtml = quill.root.innerHTML;
+              lastEmittedValueRef.current = newHtml;
+              if (onChangeRef.current) onChangeRef.current(newHtml);
+              if (showNotification) showNotification('Table pasted and formatted cleanly with proper spacing!', 'success');
+            }, 30);
+            return;
+          }
+        } catch (err) {
+          console.warn('HTML table paste parse fallback:', err);
+        }
+      }
+
+      // 3. Check for TSV spreadsheet copy-paste (Tab-separated values from Excel/Google Sheets)
+      if (textPlain && textPlain.includes('\t') && textPlain.includes('\n')) {
+        const lines = textPlain.trim().split(/\r?\n/);
+        if (lines.length >= 1 && lines.some(l => l.includes('\t'))) {
+          e.preventDefault();
+          const rowsHtml = lines.map((line, rIdx) => {
+            const cols = line.split('\t');
+            const tag = rIdx === 0 ? 'th' : 'td';
+            const cellsHtml = cols.map(c => {
+              const clean = c.trim().replace(/\u00a0+/g, ' ').replace(/[ \t]{2,}/g, ' ');
+              return `<${tag}>${clean || '&nbsp;'}</${tag}>`;
+            }).join('');
+            return `<tr>${cellsHtml}</tr>`;
+          }).join('');
+
+          const cleanTableHtml = `<table style="width: 100%; border-collapse: collapse; margin: 16px 0;"><tbody>${rowsHtml}</tbody></table><p><br></p>`;
+          const range = quill.getSelection(true) || { index: quill.getLength() };
+          quill.clipboard.dangerouslyPasteHTML(range.index, cleanTableHtml, 'user');
+          setTimeout(() => {
+            quill.update(Quill.sources.USER);
+            const newHtml = quill.root.innerHTML;
+            lastEmittedValueRef.current = newHtml;
+            if (onChangeRef.current) onChangeRef.current(newHtml);
+            if (showNotification) showNotification('Spreadsheet table pasted cleanly with proper spacing!', 'success');
+          }, 30);
+          return;
         }
       }
     };
@@ -614,6 +769,7 @@ export default function BlogRichEditor({
       editorElement.removeEventListener('keydown', handleEditorKeyDown);
       editorElement.removeEventListener('paste', handleEditorPaste);
       editorElement.removeEventListener('drop', handleEditorDrop);
+      setTableMountNode(null);
       quillRef.current = null;
     };
   }, []);
@@ -745,6 +901,93 @@ export default function BlogRichEditor({
     } catch (err) {
       console.error('Table action error:', err);
     }
+  };
+
+  // Handle Table Text Alignment: Left, Center, Right (for Cell, Column, Row, or Table)
+  const handleTableCellAlign = (alignment, overrideScope = null) => {
+    const quill = quillRef.current;
+    if (!quill) return;
+
+    let cell = activeTableCellRef.current;
+    if (!cell && activeTableElementRef.current) {
+      const sel = window.getSelection();
+      if (sel && sel.anchorNode) {
+        const node = sel.anchorNode.nodeType === 3 ? sel.anchorNode.parentElement : sel.anchorNode;
+        cell = node.closest('td, th');
+      }
+    }
+    if (!cell && activeTableElementRef.current) {
+      cell = activeTableElementRef.current.querySelector('td:focus, th:focus') ||
+             activeTableElementRef.current.querySelector('td, th');
+    }
+    if (!cell) return;
+
+    const table = cell.closest('table');
+    if (!table) return;
+
+    setCurrentCellAlign(alignment);
+    const scopeToUse = overrideScope || alignScope;
+
+    const applyAlign = (targetCell) => {
+      targetCell.style.textAlign = alignment;
+      targetCell.setAttribute('align', alignment);
+      targetCell.classList.remove('ql-align-justify', 'ql-align-center', 'ql-align-right', 'ql-align-left');
+      targetCell.classList.add(`ql-align-${alignment}`);
+
+      targetCell.querySelectorAll('*').forEach(child => {
+        child.style.textAlign = alignment;
+        child.classList.remove('ql-align-justify', 'ql-align-center', 'ql-align-right', 'ql-align-left');
+        if (alignment !== 'left') {
+          child.classList.add(`ql-align-${alignment}`);
+        }
+      });
+    };
+
+    // Check if user has highlighted text across multiple cells
+    const sel = window.getSelection();
+    let selectedCells = [];
+    if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+      const range = sel.getRangeAt(0);
+      table.querySelectorAll('th, td').forEach(c => {
+        if (range.intersectsNode(c)) {
+          selectedCells.push(c);
+        }
+      });
+    }
+
+    if (selectedCells.length > 1) {
+      selectedCells.forEach(applyAlign);
+      if (showNotification) showNotification(`Selected ${selectedCells.length} boxes aligned ${alignment}`, 'info');
+    } else if (scopeToUse === 'column') {
+      const row = cell.closest('tr');
+      const cells = Array.from(row.children);
+      const colIdx = cells.indexOf(cell);
+      if (colIdx !== -1) {
+        table.querySelectorAll('tr').forEach(tr => {
+          const c = tr.children[colIdx];
+          if (c) applyAlign(c);
+        });
+        if (showNotification) showNotification(`Column aligned ${alignment}`, 'info');
+      }
+    } else if (scopeToUse === 'row') {
+      const row = cell.closest('tr');
+      if (row) {
+        Array.from(row.children).forEach(applyAlign);
+        if (showNotification) showNotification(`Row aligned ${alignment}`, 'info');
+      }
+    } else if (scopeToUse === 'table') {
+      table.querySelectorAll('th, td').forEach(applyAlign);
+      if (showNotification) showNotification(`Entire table aligned ${alignment}`, 'info');
+    } else {
+      // Default: Apply strictly to the current single box (cell)
+      applyAlign(cell);
+      if (showNotification) showNotification(`Box aligned ${alignment}`, 'info');
+    }
+
+    quill.update(Quill.sources.USER);
+    const html = quill.root.innerHTML;
+    lastEmittedValueRef.current = html;
+    if (onChangeRef.current) onChangeRef.current(html);
   };
 
   // Insert a clean regular paragraph line below the currently active table
@@ -968,141 +1211,259 @@ export default function BlogRichEditor({
           position: 'relative'
         }}
       >
-        {/* ── Table Quick Actions Toolbar (Positioned directly ABOVE where the table starts) ── */}
-        {activeTable && tableBarPos && (
+        {/* ── Table Quick Actions Toolbar (Docked cleanly below Quill toolbar, never overlapping row 1 or toolbar) ── */}
+        {activeTable && tableMountNode && createPortal(
           <div
             className="winera-blog-table-controls-bar"
             style={{
-              position: 'absolute',
-              top: `${tableBarPos.top}px`,
-              left: `${tableBarPos.left}px`,
-              zIndex: 40,
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '6px',
-              padding: '6px 12px',
-              background: '#ffffff',
-              border: '1.5px solid #0284c7',
-              borderRadius: '8px',
-              boxShadow: '0 4px 14px rgba(2, 132, 199, 0.16)',
+              flexDirection: 'column',
+              gap: '8px',
+              padding: '10px 16px',
+              background: '#f8fafc',
+              borderBottom: '2px solid #0284c7',
+              borderTop: '1px solid #e2e8f0',
+              boxShadow: '0 4px 14px rgba(2, 132, 199, 0.08)',
               fontSize: '12px',
-              flexWrap: 'wrap',
-              maxWidth: 'calc(100% - 16px)',
-              transition: 'top 0.08s ease, left 0.08s ease'
+              width: '100%',
+              boxSizing: 'border-box'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-              <span style={{ fontWeight: 800, color: '#0369a1', display: 'flex', alignItems: 'center', gap: '5px', marginRight: '4px' }}>
-                <Table size={15} strokeWidth={2.2} style={{ color: '#0284c7' }} />
-                <span>Table:</span>
-              </span>
+            {/* ROW 1: Table Structure Controls (Rows, Columns, Extra Line, Delete) */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                <span style={{ fontWeight: 800, color: '#0369a1', display: 'flex', alignItems: 'center', gap: '5px', marginRight: '4px' }}>
+                  <Table size={15} strokeWidth={2.2} style={{ color: '#0284c7' }} />
+                  <span>Table Tools:</span>
+                </span>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableAction('insertRowAbove'); }}
+                  style={tableBtnStyle}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#e0f2fe'; e.currentTarget.style.borderColor = '#0284c7'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#cbd5e1'; }}
+                  title="Insert row above current row"
+                >
+                  <Plus size={13} strokeWidth={2.5} style={{ color: '#0284c7' }} />
+                  Row Above
+                </button>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableAction('insertRowBelow'); }}
+                  style={tableBtnStyle}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#e0f2fe'; e.currentTarget.style.borderColor = '#0284c7'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#cbd5e1'; }}
+                  title="Insert row below current row"
+                >
+                  <Plus size={13} strokeWidth={2.5} style={{ color: '#0284c7' }} />
+                  Row Below
+                </button>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableAction('deleteRow'); }}
+                  style={{ ...tableBtnStyle, color: '#dc2626', borderColor: '#fca5a5' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.borderColor = '#ef4444'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#fca5a5'; }}
+                  title="Delete current row"
+                >
+                  <Trash2 size={13} strokeWidth={2} style={{ color: '#dc2626' }} />
+                  Delete Row
+                </button>
+                <span style={{ color: '#cbd5e1', margin: '0 2px' }}>|</span>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableAction('insertColumnLeft'); }}
+                  style={tableBtnStyle}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#e0f2fe'; e.currentTarget.style.borderColor = '#0284c7'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#cbd5e1'; }}
+                  title="Insert column to the left"
+                >
+                  <Plus size={13} strokeWidth={2.5} style={{ color: '#0284c7' }} />
+                  Col Left
+                </button>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableAction('insertColumnRight'); }}
+                  style={tableBtnStyle}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#e0f2fe'; e.currentTarget.style.borderColor = '#0284c7'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#cbd5e1'; }}
+                  title="Insert column to the right"
+                >
+                  <Plus size={13} strokeWidth={2.5} style={{ color: '#0284c7' }} />
+                  Col Right
+                </button>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableAction('deleteColumn'); }}
+                  style={{ ...tableBtnStyle, color: '#dc2626', borderColor: '#fca5a5' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.borderColor = '#ef4444'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#fca5a5'; }}
+                  title="Delete current column"
+                >
+                  <Trash2 size={13} strokeWidth={2} style={{ color: '#dc2626' }} />
+                  Delete Col
+                </button>
+
+                <span style={{ color: '#cbd5e1', margin: '0 2px' }}>|</span>
+
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); insertParagraphBelowTable(); }}
+                  style={{
+                    ...tableBtnStyle,
+                    background: '#f0fdf4',
+                    borderColor: '#86efac',
+                    color: '#166534',
+                    fontWeight: '700'
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#dcfce7'; e.currentTarget.style.borderColor = '#22c55e'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#f0fdf4'; e.currentTarget.style.borderColor = '#86efac'; }}
+                  title="Insert regular text line below this table"
+                >
+                  <Plus size={13} strokeWidth={2.5} style={{ color: '#16a34a' }} />
+                  Line Below Table
+                </button>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableAction('deleteTable'); }}
+                  style={{
+                    ...tableBtnStyle,
+                    background: '#fef2f2',
+                    color: '#b91c1c',
+                    borderColor: '#ef4444',
+                    fontWeight: '800'
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.borderColor = '#dc2626'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#ef4444'; }}
+                  title="Delete this entire table from the article"
+                >
+                  <Trash2 size={13} strokeWidth={2.2} style={{ color: '#b91c1c' }} />
+                  Delete Entire Table
+                </button>
+              </div>
+
+              {/* Done / Close Button */}
               <button
                 type="button"
-                onMouseDown={(e) => { e.preventDefault(); handleTableAction('insertRowAbove'); }}
-                style={tableBtnStyle}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#e0f2fe'; e.currentTarget.style.borderColor = '#0284c7'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#cbd5e1'; }}
-                title="Insert row above current row"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  setActiveTable(false);
+                  activeTableCellRef.current = null;
+                  activeTableElementRef.current = null;
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  border: '1px solid #cbd5e1',
+                  background: '#ffffff',
+                  color: '#64748b',
+                  borderRadius: '6px',
+                  padding: '4px 9px',
+                  fontSize: '11px',
+                  fontWeight: '700',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#0f172a'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.color = '#64748b'; }}
+                title="Hide table tools"
               >
-                <Plus size={13} strokeWidth={2.5} style={{ color: '#0284c7' }} />
-                Row Above
-              </button>
-              <button
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); handleTableAction('insertRowBelow'); }}
-                style={tableBtnStyle}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#e0f2fe'; e.currentTarget.style.borderColor = '#0284c7'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#cbd5e1'; }}
-                title="Insert row below current row"
-              >
-                <Plus size={13} strokeWidth={2.5} style={{ color: '#0284c7' }} />
-                Row Below
-              </button>
-              <button
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); handleTableAction('deleteRow'); }}
-                style={{ ...tableBtnStyle, color: '#dc2626', borderColor: '#fca5a5' }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.borderColor = '#ef4444'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#fca5a5'; }}
-                title="Delete current row"
-              >
-                <Trash2 size={13} strokeWidth={2} style={{ color: '#dc2626' }} />
-                Delete Row
-              </button>
-              <span style={{ color: '#cbd5e1', margin: '0 2px' }}>|</span>
-              <button
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); handleTableAction('insertColumnLeft'); }}
-                style={tableBtnStyle}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#e0f2fe'; e.currentTarget.style.borderColor = '#0284c7'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#cbd5e1'; }}
-                title="Insert column to the left"
-              >
-                <Plus size={13} strokeWidth={2.5} style={{ color: '#0284c7' }} />
-                Col Left
-              </button>
-              <button
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); handleTableAction('insertColumnRight'); }}
-                style={tableBtnStyle}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#e0f2fe'; e.currentTarget.style.borderColor = '#0284c7'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#cbd5e1'; }}
-                title="Insert column to the right"
-              >
-                <Plus size={13} strokeWidth={2.5} style={{ color: '#0284c7' }} />
-                Col Right
-              </button>
-              <button
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); handleTableAction('deleteColumn'); }}
-                style={{ ...tableBtnStyle, color: '#dc2626', borderColor: '#fca5a5' }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.borderColor = '#ef4444'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.borderColor = '#fca5a5'; }}
-                title="Delete current column"
-              >
-                <Trash2 size={13} strokeWidth={2} style={{ color: '#dc2626' }} />
-                Delete Col
+                <X size={12} strokeWidth={2.5} />
+                <span>Done</span>
               </button>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <button
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); insertParagraphBelowTable(); }}
-                style={{
-                  ...tableBtnStyle,
-                  background: '#f0fdf4',
-                  borderColor: '#86efac',
-                  color: '#166534',
-                  fontWeight: '700'
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#dcfce7'; e.currentTarget.style.borderColor = '#22c55e'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#f0fdf4'; e.currentTarget.style.borderColor = '#86efac'; }}
-                title="Insert regular text line below this table"
-              >
-                <Plus size={13} strokeWidth={2.5} style={{ color: '#16a34a' }} />
-                Line Below Table
-              </button>
-              <button
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); handleTableAction('deleteTable'); }}
-                style={{
-                  ...tableBtnStyle,
-                  background: '#fef2f2',
-                  color: '#b91c1c',
-                  borderColor: '#ef4444',
-                  fontWeight: '800'
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.borderColor = '#dc2626'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#ef4444'; }}
-                title="Delete this entire table from the article"
-              >
-                <Trash2 size={13} strokeWidth={2.2} style={{ color: '#b91c1c' }} />
-                Delete Entire Table
-              </button>
+            {/* ROW 2: Alignment Controls + Granular Scope (Cell vs Column vs Row vs Table) */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', paddingTop: '6px', borderTop: '1px solid #e2e8f0' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', background: '#ffffff', padding: '2px 4px', borderRadius: '8px', border: '1.5px solid #cbd5e1', gap: '3px' }}>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#475569', margin: '0 4px' }}>Align:</span>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableCellAlign('left'); }}
+                  style={{
+                    ...tableBtnStyle,
+                    padding: '4px 9px',
+                    fontSize: '11.5px',
+                    fontWeight: '700',
+                    background: currentCellAlign === 'left' ? '#0284c7' : '#ffffff',
+                    borderColor: currentCellAlign === 'left' ? '#0284c7' : '#cbd5e1',
+                    color: currentCellAlign === 'left' ? '#ffffff' : '#334155'
+                  }}
+                  title="Align text to Left"
+                >
+                  <AlignLeft size={13} strokeWidth={2.4} />
+                  <span>Left</span>
+                </button>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableCellAlign('center'); }}
+                  style={{
+                    ...tableBtnStyle,
+                    padding: '4px 9px',
+                    fontSize: '11.5px',
+                    fontWeight: '700',
+                    background: currentCellAlign === 'center' ? '#0284c7' : '#ffffff',
+                    borderColor: currentCellAlign === 'center' ? '#0284c7' : '#cbd5e1',
+                    color: currentCellAlign === 'center' ? '#ffffff' : '#334155'
+                  }}
+                  title="Align text to Center"
+                >
+                  <AlignCenter size={13} strokeWidth={2.4} />
+                  <span>Center</span>
+                </button>
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); handleTableCellAlign('right'); }}
+                  style={{
+                    ...tableBtnStyle,
+                    padding: '4px 9px',
+                    fontSize: '11.5px',
+                    fontWeight: '700',
+                    background: currentCellAlign === 'right' ? '#0284c7' : '#ffffff',
+                    borderColor: currentCellAlign === 'right' ? '#0284c7' : '#cbd5e1',
+                    color: currentCellAlign === 'right' ? '#ffffff' : '#334155'
+                  }}
+                  title="Align text to Right"
+                >
+                  <AlignRight size={13} strokeWidth={2.4} />
+                  <span>Right</span>
+                </button>
+              </div>
+
+              {/* Scope Selector: This Box (Cell) vs Column vs Row vs Table */}
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', background: '#e2e8f0', padding: '2px 4px', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#475569', margin: '0 4px' }}>Apply to:</span>
+                {[
+                  { key: 'cell', label: '📍 This Box (Cell)' },
+                  { key: 'column', label: '⬇ Column' },
+                  { key: 'row', label: '➡ Row' },
+                  { key: 'table', label: '▦ Entire Table' }
+                ].map(scope => (
+                  <button
+                    key={scope.key}
+                    type="button"
+                    onMouseDown={(e) => { e.preventDefault(); setAlignScope(scope.key); }}
+                    style={{
+                      border: 'none',
+                      padding: '3px 8px',
+                      borderRadius: '6px',
+                      fontSize: '11px',
+                      fontWeight: alignScope === scope.key ? '800' : '600',
+                      cursor: 'pointer',
+                      background: alignScope === scope.key ? '#0284c7' : 'transparent',
+                      color: alignScope === scope.key ? '#ffffff' : '#475569',
+                      boxShadow: alignScope === scope.key ? '0 2px 6px rgba(2, 132, 199, 0.25)' : 'none',
+                      transition: 'all 0.15s ease'
+                    }}
+                    title={`Apply alignment to ${scope.label}`}
+                  >
+                    {scope.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          </div>,
+          tableMountNode
         )}
 
         {/* ── Image Quick Actions Floating Toolbar (Appears on click of any image inside editor) ── */}
@@ -1472,6 +1833,15 @@ export default function BlogRichEditor({
           border-top-right-radius: 16px !important;
           box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06) !important;
         }
+
+        /* Docked Table Toolbar Mount (Sticky directly below Quill toolbar) */
+        .winera-blog-table-toolbar-mount {
+          position: sticky !important;
+          top: 48px !important;
+          z-index: 99 !important;
+          width: 100% !important;
+          background: #ffffff !important;
+        }
         .winera-blog-quill-container .ql-formats {
           margin-right: 12px !important;
           display: inline-flex !important;
@@ -1578,26 +1948,26 @@ export default function BlogRichEditor({
 
         /* Headings Styling Inside Editor (Google Docs Exact Proportions & Hierarchy) */
         .winera-blog-quill-container .ql-editor h1 {
-          font-size: 28px !important;
+          font-size: 33px !important;
           font-weight: 800 !important;
           color: #0f172a;
-          margin: 30px 0 14px !important;
+          margin: 32px 0 14px !important;
           line-height: 1.3 !important;
           font-family: 'Open Sans', sans-serif !important;
         }
         .winera-blog-quill-container .ql-editor h2 {
-          font-size: 23px !important;
+          font-size: 27px !important;
           font-weight: 700 !important;
           color: #0f172a;
-          margin: 26px 0 12px !important;
+          margin: 28px 0 12px !important;
           line-height: 1.35 !important;
           font-family: 'Open Sans', sans-serif !important;
         }
         .winera-blog-quill-container .ql-editor h3 {
-          font-size: 19px !important;
+          font-size: 23px !important;
           font-weight: 700 !important;
           color: #0f172a;
-          margin: 22px 0 10px !important;
+          margin: 24px 0 10px !important;
           line-height: 1.4 !important;
           font-family: 'Open Sans', sans-serif !important;
         }
@@ -1641,31 +2011,140 @@ export default function BlogRichEditor({
           display: inline !important;
         }
 
-        /* Table Styling Inside Editor with Column Resizing */
+        /* Table Styling Inside Editor with Column Resizing & Content Fit (17px Font Size, Exact Fixed Column Layout like Image 3) */
         .winera-blog-quill-container .ql-editor table {
           border-collapse: collapse !important;
           width: 100% !important;
-          margin: 20px 0 !important;
+          max-width: 100% !important;
+          margin: 28px 0 !important;
           border: 1.5px solid #cbd5e1 !important;
           background: #ffffff !important;
-          table-layout: auto !important;
+          table-layout: fixed !important;
+        }
+        .winera-blog-quill-container .ql-editor {
+          overflow-x: auto !important;
         }
         .winera-blog-quill-container .ql-editor th,
         .winera-blog-quill-container .ql-editor td {
           border: 1px solid #cbd5e1 !important;
-          padding: 10px 14px !important;
-          min-width: 45px !important;
-          font-size: 14.5px !important;
+          padding: 12px 16px !important;
+          min-width: 50px !important;
+          font-size: 17px !important;
           color: #334155 !important;
-          line-height: 1.6 !important;
+          line-height: 1.65 !important;
           vertical-align: top !important;
           position: relative !important;
           box-sizing: border-box !important;
+          word-break: break-word !important;
+          overflow-wrap: anywhere !important;
+          word-wrap: break-word !important;
+          white-space: normal !important;
+          word-spacing: normal !important;
+          letter-spacing: normal !important;
+          text-justify: none !important;
+          text-align: left;
         }
+        .winera-blog-quill-container .ql-editor th {
+          font-weight: 700 !important;
+          background: #f1f5f9 !important;
+          color: #0f172a !important;
+          border-bottom: 2px solid #cbd5e1 !important;
+        }
+
+        /* Alignment support for table cells inside editor */
+        .winera-blog-quill-container .ql-editor table th[align="center"],
+        .winera-blog-quill-container .ql-editor table td[align="center"],
+        .winera-blog-quill-container .ql-editor table th[style*="text-align: center"],
+        .winera-blog-quill-container .ql-editor table td[style*="text-align: center"],
+        .winera-blog-quill-container .ql-editor table th[style*="text-align:center"],
+        .winera-blog-quill-container .ql-editor table td[style*="text-align:center"],
+        .winera-blog-quill-container .ql-editor table th.ql-align-center,
+        .winera-blog-quill-container .ql-editor table td.ql-align-center,
+        .winera-blog-quill-container .ql-editor table th .ql-align-center,
+        .winera-blog-quill-container .ql-editor table td .ql-align-center,
+        .winera-blog-quill-container .ql-editor table th[align="center"] *,
+        .winera-blog-quill-container .ql-editor table td[align="center"] *,
+        .winera-blog-quill-container .ql-editor table th[style*="text-align: center"] *,
+        .winera-blog-quill-container .ql-editor table td[style*="text-align: center"] *,
+        .winera-blog-quill-container .ql-editor table th[style*="text-align:center"] *,
+        .winera-blog-quill-container .ql-editor table td[style*="text-align:center"] *,
+        .winera-blog-quill-container .ql-editor table th.ql-align-center *,
+        .winera-blog-quill-container .ql-editor table td.ql-align-center * {
+          text-align: center !important;
+        }
+
+        .winera-blog-quill-container .ql-editor table th[align="right"],
+        .winera-blog-quill-container .ql-editor table td[align="right"],
+        .winera-blog-quill-container .ql-editor table th[style*="text-align: right"],
+        .winera-blog-quill-container .ql-editor table td[style*="text-align: right"],
+        .winera-blog-quill-container .ql-editor table th[style*="text-align:right"],
+        .winera-blog-quill-container .ql-editor table td[style*="text-align:right"],
+        .winera-blog-quill-container .ql-editor table th.ql-align-right,
+        .winera-blog-quill-container .ql-editor table td.ql-align-right,
+        .winera-blog-quill-container .ql-editor table th .ql-align-right,
+        .winera-blog-quill-container .ql-editor table td .ql-align-right,
+        .winera-blog-quill-container .ql-editor table th[align="right"] *,
+        .winera-blog-quill-container .ql-editor table td[align="right"] *,
+        .winera-blog-quill-container .ql-editor table th[style*="text-align: right"] *,
+        .winera-blog-quill-container .ql-editor table td[style*="text-align: right"] *,
+        .winera-blog-quill-container .ql-editor table th[style*="text-align:right"] *,
+        .winera-blog-quill-container .ql-editor table td[style*="text-align:right"] *,
+        .winera-blog-quill-container .ql-editor table th.ql-align-right *,
+        .winera-blog-quill-container .ql-editor table td.ql-align-right * {
+          text-align: right !important;
+        }
+
+        .winera-blog-quill-container .ql-editor table th[align="left"],
+        .winera-blog-quill-container .ql-editor table td[align="left"],
+        .winera-blog-quill-container .ql-editor table th[style*="text-align: left"],
+        .winera-blog-quill-container .ql-editor table td[style*="text-align: left"],
+        .winera-blog-quill-container .ql-editor table th[style*="text-align:left"],
+        .winera-blog-quill-container .ql-editor table td[style*="text-align:left"],
+        .winera-blog-quill-container .ql-editor table th.ql-align-left,
+        .winera-blog-quill-container .ql-editor table td.ql-align-left,
+        .winera-blog-quill-container .ql-editor table th .ql-align-left,
+        .winera-blog-quill-container .ql-editor table td .ql-align-left,
+        .winera-blog-quill-container .ql-editor table th[align="left"] *,
+        .winera-blog-quill-container .ql-editor table td[align="left"] *,
+        .winera-blog-quill-container .ql-editor table th[style*="text-align: left"] *,
+        .winera-blog-quill-container .ql-editor table td[style*="text-align: left"] *,
+        .winera-blog-quill-container .ql-editor table th[style*="text-align:left"] *,
+        .winera-blog-quill-container .ql-editor table td[style*="text-align:left"] *,
+        .winera-blog-quill-container .ql-editor table th.ql-align-left *,
+        .winera-blog-quill-container .ql-editor table td.ql-align-left * {
+          text-align: left !important;
+        }
+
+        /* Prevent text-align justify inside tables so words never get huge gaps */
+        .winera-blog-quill-container .ql-editor table td.ql-align-justify,
+        .winera-blog-quill-container .ql-editor table th.ql-align-justify,
+        .winera-blog-quill-container .ql-editor table td p.ql-align-justify,
+        .winera-blog-quill-container .ql-editor table th p.ql-align-justify {
+          text-align: left !important;
+          text-justify: none !important;
+          word-spacing: normal !important;
+        }
+
+        .winera-blog-quill-container .ql-editor table th p,
+        .winera-blog-quill-container .ql-editor table td p {
+          margin: 0 !important;
+          padding: 0 !important;
+          font-size: 17px !important;
+          line-height: 1.65 !important;
+          min-height: auto !important;
+          word-break: break-word !important;
+          overflow-wrap: anywhere !important;
+          word-wrap: break-word !important;
+          white-space: normal !important;
+          word-spacing: normal !important;
+          letter-spacing: normal !important;
+        }
+
         .winera-blog-quill-container .ql-editor th {
           background: #f1f5f9 !important;
           font-weight: 700 !important;
           color: #0f172a !important;
+          border-bottom: 2px solid #cbd5e1 !important;
         }
 
         /* Images Inside Editor */
@@ -1697,6 +2176,16 @@ export default function BlogRichEditor({
         .winera-blog-quill-container .ql-editor a {
           color: #0284c7 !important;
           text-decoration: underline !important;
+          font-weight: normal !important;
+        }
+        .winera-blog-quill-container .ql-editor strong a,
+        .winera-blog-quill-container .ql-editor b a,
+        .winera-blog-quill-container .ql-editor a strong,
+        .winera-blog-quill-container .ql-editor a b,
+        .winera-blog-quill-container .ql-editor h1 a,
+        .winera-blog-quill-container .ql-editor h2 a,
+        .winera-blog-quill-container .ql-editor h3 a,
+        .winera-blog-quill-container .ql-editor h4 a {
           font-weight: 700 !important;
         }
 

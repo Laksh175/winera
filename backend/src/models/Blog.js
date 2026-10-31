@@ -22,7 +22,8 @@ const blogSchema = new mongoose.Schema({
   metaKeywords: [{ type: String }],
   isActive: { type: Boolean, default: true },
   status: { type: String, default: 'active' },
-  isPublished: { type: Boolean, default: true }
+  isPublished: { type: Boolean, default: true },
+  scheduledAt: { type: Date, default: null }
 }, { timestamps: true });
 
 const Blog = mongoose.model('Blog', blogSchema);

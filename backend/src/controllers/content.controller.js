@@ -10,6 +10,7 @@ import Blog from '../models/Blog.js';
 import ArcadeProduct from '../models/ArcadeProduct.js';
 import VrGame from '../models/VrGame.js';
 import jwt from 'jsonwebtoken';
+import { checkAndPublishScheduledItems } from '../services/scheduledPublishService.js';
 import {
   addOrUpdateUrlInSitemap,
   addMultipleUrlsToSitemap,
@@ -2452,6 +2453,11 @@ export const getContent = async (req, res) => {
         return res.json(cachedFullContent);
       }
     }
+
+    // Auto-promote any due scheduled items so they turn Active immediately
+    try {
+      await checkAndPublishScheduledItems();
+    } catch (_) {}
 
     let contents = await Content.find({});
 
