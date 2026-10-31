@@ -1546,6 +1546,7 @@ export default function BlogDetail({ siteData }) {
         .winera-blog-table-responsive table,
         .winera-blog-article-content table {
           width: 100% !important;
+          min-width: 100% !important;
           max-width: 100% !important;
           border-collapse: collapse !important;
           margin: 0 !important;
@@ -1575,6 +1576,19 @@ export default function BlogDetail({ siteData }) {
           text-justify: none !important;
           hyphens: none !important;
           -webkit-hyphens: none !important;
+        }
+
+        .winera-blog-article-content table th p,
+        .winera-blog-article-content table td p {
+          margin: 0 !important;
+          padding: 0 !important;
+          font-size: 17px !important;
+          line-height: 1.65 !important;
+          color: #334155 !important;
+          word-break: break-word !important;
+          overflow-wrap: anywhere !important;
+          word-wrap: break-word !important;
+          white-space: normal !important;
         }
 
         /* Explicit alignment overrides for table cells & their contents */

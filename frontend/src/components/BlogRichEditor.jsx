@@ -124,6 +124,7 @@ export default function BlogRichEditor({
   const activeImageElementRef = useRef(null);
   const [imageBarPos, setImageBarPos] = useState(null);
   const updateImagePosRef = useRef(null);
+  const lastPasteTimeRef = useRef(0);
 
   const updateTableBarPosition = () => {
     const table = activeTableElementRef.current;
@@ -589,6 +590,13 @@ export default function BlogRichEditor({
       const clipboardData = e.clipboardData;
       if (!clipboardData) return;
 
+      // Anti-double-trigger debounce (prevents double paste events within 400ms)
+      const now = Date.now();
+      if (now - lastPasteTimeRef.current < 400) {
+        e.preventDefault();
+        return;
+      }
+
       // 1. Check for image files (e.g. screenshot or copied image) -> upload to Cloudinary
       if (clipboardData.items) {
         for (let i = 0; i < clipboardData.items.length; i++) {
@@ -597,6 +605,7 @@ export default function BlogRichEditor({
             const file = item.getAsFile();
             if (file && typeof uploadImageFile === 'function') {
               e.preventDefault();
+              lastPasteTimeRef.current = Date.now();
               try {
                 if (showNotification) showNotification('Uploading pasted image to Cloudinary...', 'info');
                 const res = await uploadImageFile(file, adminToken);
@@ -624,66 +633,85 @@ export default function BlogRichEditor({
 
       if (html && (html.toLowerCase().includes('<table'))) {
         e.preventDefault();
+        if (typeof e.stopImmediatePropagation === 'function') {
+          e.stopImmediatePropagation();
+        }
+        lastPasteTimeRef.current = Date.now();
         try {
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, 'text/html');
           const tables = doc.querySelectorAll('table');
 
           if (tables.length > 0) {
-            tables.forEach(table => {
-              table.removeAttribute('width');
-              table.removeAttribute('height');
-              table.removeAttribute('class');
-              table.setAttribute('style', 'width: 100%; border-collapse: collapse; margin: 16px 0;');
+            // Pick ONLY the single primary data table (the one with the most cells)
+            // to completely prevent duplicate wrapper or sibling tables from Word/Docs/Web
+            let primaryTable = tables[0];
+            if (tables.length > 1) {
+              Array.from(tables).forEach(t => {
+                const cellCount = t.querySelectorAll('td, th').length;
+                if (cellCount > primaryTable.querySelectorAll('td, th').length) {
+                  primaryTable = t;
+                }
+              });
+            }
 
-              table.querySelectorAll('colgroup, col, style, xml, o\\:p, meta, script').forEach(el => el.remove());
+            primaryTable.removeAttribute('width');
+            primaryTable.removeAttribute('height');
+            primaryTable.removeAttribute('class');
+            primaryTable.setAttribute('style', 'width: 100%; border-collapse: collapse; margin: 16px 0;');
 
-              const rows = table.querySelectorAll('tr');
-              rows.forEach((row, rIdx) => {
-                row.removeAttribute('style');
-                row.removeAttribute('class');
-                row.removeAttribute('height');
+            primaryTable.querySelectorAll('colgroup, col, style, xml, o\\:p, meta, script').forEach(el => el.remove());
 
-                const cells = row.querySelectorAll('th, td');
-                cells.forEach(cell => {
-                  let align = cell.getAttribute('align') || cell.style.textAlign || '';
-                  if (align === 'justify') align = 'left';
-                  cell.removeAttribute('style');
-                  cell.removeAttribute('class');
-                  cell.removeAttribute('width');
-                  cell.removeAttribute('height');
+            const rows = primaryTable.querySelectorAll('tr');
+            rows.forEach((row) => {
+              row.removeAttribute('style');
+              row.removeAttribute('class');
+              row.removeAttribute('height');
 
-                  if (align) {
-                    cell.setAttribute('align', align);
-                    cell.style.textAlign = align;
-                  }
+              const cells = row.querySelectorAll('th, td');
+              cells.forEach(cell => {
+                let align = cell.getAttribute('align') || cell.style.textAlign || '';
+                if (align === 'justify') align = 'left';
+                cell.removeAttribute('style');
+                cell.removeAttribute('class');
+                cell.removeAttribute('width');
+                cell.removeAttribute('height');
 
-                  // Clean cell HTML: strip excessive spacing, &nbsp;, empty tags
-                  let inner = cell.innerHTML;
-                  inner = inner
-                    .replace(/&nbsp;/gi, ' ')
-                    .replace(/\u00a0/g, ' ')
-                    .replace(/[ \t]{2,}/g, ' ')
-                    .replace(/text-align\s*:\s*justify\s*;?/gi, '')
-                    .replace(/\bql-align-justify\b/gi, '')
-                    .replace(/<span[^>]*>/gi, '')
-                    .replace(/<\/span>/gi, '')
-                    .replace(/<font[^>]*>/gi, '')
-                    .replace(/<\/font>/gi, '')
-                    .replace(/<p[^>]*>/gi, '<p>')
-                    .replace(/<p>\s*<\/p>/gi, '')
-                    .replace(/<br\s*\/?>/gi, ' ');
+                if (align) {
+                  cell.setAttribute('align', align);
+                  cell.style.textAlign = align;
+                }
 
-                  cell.innerHTML = inner.trim() || '&nbsp;';
-                });
+                // Clean cell HTML: strip excessive spacing, &nbsp;, empty tags
+                let inner = cell.innerHTML;
+                inner = inner
+                  .replace(/&nbsp;/gi, ' ')
+                  .replace(/\u00a0/g, ' ')
+                  .replace(/[ \t]{2,}/g, ' ')
+                  .replace(/text-align\s*:\s*justify\s*;?/gi, '')
+                  .replace(/\bql-align-justify\b/gi, '')
+                  .replace(/<span[^>]*>/gi, '')
+                  .replace(/<\/span>/gi, '')
+                  .replace(/<font[^>]*>/gi, '')
+                  .replace(/<\/font>/gi, '')
+                  .replace(/<p[^>]*>/gi, '<p>')
+                  .replace(/<p>\s*<\/p>/gi, '')
+                  .replace(/<br\s*\/?>/gi, ' ');
+
+                cell.innerHTML = inner.trim() || '&nbsp;';
               });
             });
 
-            const cleanHtml = doc.body.innerHTML;
-            const range = quill.getSelection(true) || { index: quill.getLength() };
-            quill.clipboard.dangerouslyPasteHTML(range.index, cleanHtml + '<p><br></p>', 'user');
+            const cleanTableHtml = primaryTable.outerHTML;
+            const range = quill.getSelection(true) || { index: quill.getLength(), length: 0 };
+
+            // If user selected text/table to replace, delete that range first so it never duplicates
+            if (range.length > 0) {
+              quill.deleteText(range.index, range.length, 'user');
+            }
+
+            quill.clipboard.dangerouslyPasteHTML(range.index, cleanTableHtml, 'user');
             setTimeout(() => {
-              quill.update(Quill.sources.USER);
               const newHtml = quill.root.innerHTML;
               lastEmittedValueRef.current = newHtml;
               if (onChangeRef.current) onChangeRef.current(newHtml);
@@ -701,6 +729,10 @@ export default function BlogRichEditor({
         const lines = textPlain.trim().split(/\r?\n/);
         if (lines.length >= 1 && lines.some(l => l.includes('\t'))) {
           e.preventDefault();
+          if (typeof e.stopImmediatePropagation === 'function') {
+            e.stopImmediatePropagation();
+          }
+          lastPasteTimeRef.current = Date.now();
           const rowsHtml = lines.map((line, rIdx) => {
             const cols = line.split('\t');
             const tag = rIdx === 0 ? 'th' : 'td';
@@ -711,11 +743,13 @@ export default function BlogRichEditor({
             return `<tr>${cellsHtml}</tr>`;
           }).join('');
 
-          const cleanTableHtml = `<table style="width: 100%; border-collapse: collapse; margin: 16px 0;"><tbody>${rowsHtml}</tbody></table><p><br></p>`;
-          const range = quill.getSelection(true) || { index: quill.getLength() };
+          const cleanTableHtml = `<table style="width: 100%; border-collapse: collapse; margin: 16px 0;"><tbody>${rowsHtml}</tbody></table>`;
+          const range = quill.getSelection(true) || { index: quill.getLength(), length: 0 };
+          if (range.length > 0) {
+            quill.deleteText(range.index, range.length, 'user');
+          }
           quill.clipboard.dangerouslyPasteHTML(range.index, cleanTableHtml, 'user');
           setTimeout(() => {
-            quill.update(Quill.sources.USER);
             const newHtml = quill.root.innerHTML;
             lastEmittedValueRef.current = newHtml;
             if (onChangeRef.current) onChangeRef.current(newHtml);
@@ -755,7 +789,7 @@ export default function BlogRichEditor({
     editorElement.addEventListener('keyup', updateTableFocus);
     editorElement.addEventListener('click', handleEditorImageClick);
     editorElement.addEventListener('keydown', handleEditorKeyDown);
-    editorElement.addEventListener('paste', handleEditorPaste);
+    editorElement.addEventListener('paste', handleEditorPaste, true);
     editorElement.addEventListener('drop', handleEditorDrop);
 
     return () => {
@@ -767,7 +801,7 @@ export default function BlogRichEditor({
       editorElement.removeEventListener('keyup', updateTableFocus);
       editorElement.removeEventListener('click', handleEditorImageClick);
       editorElement.removeEventListener('keydown', handleEditorKeyDown);
-      editorElement.removeEventListener('paste', handleEditorPaste);
+      editorElement.removeEventListener('paste', handleEditorPaste, true);
       editorElement.removeEventListener('drop', handleEditorDrop);
       setTableMountNode(null);
       quillRef.current = null;
@@ -2011,10 +2045,11 @@ export default function BlogRichEditor({
           display: inline !important;
         }
 
-        /* Table Styling Inside Editor with Column Resizing & Content Fit (17px Font Size, Exact Fixed Column Layout like Image 3) */
+        /* Table Styling Inside Editor (17px Font Size, Fixed Layout for Auto Line-Breaking & Proportional Columns) */
         .winera-blog-quill-container .ql-editor table {
           border-collapse: collapse !important;
           width: 100% !important;
+          min-width: 100% !important;
           max-width: 100% !important;
           margin: 28px 0 !important;
           border: 1.5px solid #cbd5e1 !important;
@@ -2028,7 +2063,6 @@ export default function BlogRichEditor({
         .winera-blog-quill-container .ql-editor td {
           border: 1px solid #cbd5e1 !important;
           padding: 12px 16px !important;
-          min-width: 50px !important;
           font-size: 17px !important;
           color: #334155 !important;
           line-height: 1.65 !important;
@@ -2043,6 +2077,18 @@ export default function BlogRichEditor({
           letter-spacing: normal !important;
           text-justify: none !important;
           text-align: left;
+        }
+        .winera-blog-quill-container .ql-editor th p,
+        .winera-blog-quill-container .ql-editor td p {
+          margin: 0 !important;
+          padding: 0 !important;
+          font-size: 17px !important;
+          line-height: 1.65 !important;
+          color: #334155 !important;
+          word-break: break-word !important;
+          overflow-wrap: anywhere !important;
+          word-wrap: break-word !important;
+          white-space: normal !important;
         }
         .winera-blog-quill-container .ql-editor th {
           font-weight: 700 !important;

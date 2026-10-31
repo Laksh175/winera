@@ -20793,31 +20793,38 @@ article.winera-blog-article-main-col .winera-blog-article-content h6,
   font-family: 'Open Sans', sans-serif !important;
 }
 
-/* Blog Article Table 17px Font Size & Auto Line Breaking (Fixed Layout like Image 3) */
+/* Blog Article Table 17px Font Size, Scrollable & Content-Fit Layout */
 div.winera-blog-article-main-col table,
 div.winera-blog-article-content table,
+.winera-blog-table-responsive table,
 .winera-blog-quill-container .ql-editor table {
-  table-layout: fixed !important;
+  table-layout: auto !important;
   width: 100% !important;
-  max-width: 100% !important;
+  min-width: 100% !important;
+  max-width: none !important;
 }
 
 div.winera-blog-article-main-col table th,
 div.winera-blog-article-main-col table td,
 div.winera-blog-article-content table th,
 div.winera-blog-article-content table td,
+.winera-blog-table-responsive table th,
+.winera-blog-table-responsive table td,
 div.winera-blog-article-main-col table th p,
 div.winera-blog-article-main-col table td p,
 div.winera-blog-article-content table th p,
 div.winera-blog-article-content table td p,
+.winera-blog-table-responsive table th p,
+.winera-blog-table-responsive table td p,
 .winera-blog-quill-container .ql-editor table th,
 .winera-blog-quill-container .ql-editor table td,
 .winera-blog-quill-container .ql-editor table th p,
 .winera-blog-quill-container .ql-editor table td p {
   font-size: 17px !important;
   line-height: 1.65 !important;
-  word-break: break-word !important;
-  overflow-wrap: anywhere !important;
+  min-width: 140px !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
   word-wrap: break-word !important;
   white-space: normal !important;
 }
