@@ -126,7 +126,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => 
       ));
       return (
         <span key={index} style={{
-          color: isHighlight ? actualHighlight : '#0f172a',
+          color: isHighlight ? actualHighlight : 'inherit',
           fontFamily: "'Black Han Sans', sans-serif",
           fontWeight: '400',
           fontStyle: 'normal',
@@ -141,7 +141,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => 
 
     return (
       <span key={index} style={{
-        color: isHighlight ? actualHighlight : '#0f172a',
+        color: isHighlight ? actualHighlight : 'inherit',
         fontFamily: "'Black Han Sans', sans-serif",
         fontWeight: '400',
         fontStyle: 'normal',

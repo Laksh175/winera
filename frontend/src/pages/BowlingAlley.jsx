@@ -95,7 +95,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => 
 
       return (
         <span key={sIdx} style={{
-          color: isCyan ? '#00a8ff' : (isHighlighted ? actualHighlight : '#0f172a'),
+          color: isCyan ? '#00a8ff' : (isHighlighted ? actualHighlight : 'inherit'),
           fontFamily: "'Black Han Sans', sans-serif",
           fontWeight: '400',
           fontStyle: 'normal',
@@ -110,7 +110,7 @@ const renderTitleMarkup = (rawText, defaultText, highlightColor = '#00a8ff') => 
 
     return (
       <span key={pIdx} style={{
-        color: isHighlighted ? actualHighlight : '#0f172a',
+        color: isHighlighted ? actualHighlight : 'inherit',
         fontFamily: "'Black Han Sans', sans-serif",
         fontWeight: '400',
         fontStyle: 'normal',

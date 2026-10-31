@@ -62,7 +62,7 @@ function parseStarText(children) {
     const isHighlight = index % 2 === 1;
     return (
       <span key={index} style={{
-        color: isHighlight ? '#00a8ff' : '#0f172a',
+        color: isHighlight ? '#00a8ff' : 'inherit',
         fontFamily: "'Black Han Sans', sans-serif",
         fontWeight: '400',
         fontStyle: 'normal',
