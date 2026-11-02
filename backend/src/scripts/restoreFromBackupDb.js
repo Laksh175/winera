@@ -123,7 +123,7 @@ const restoreFromBackupDb = async () => {
         await liveCol.drop();
       } catch (dropErr) {
         if (dropErr.code !== 26 && !dropErr.message?.includes('ns not found')) {
-          console.warn(`[DB Restore] Notice dropping ${colName}:`, dropErr.message);
+          console.warn(`[DB Restore] Notice dropping ${targetLiveColName}:`, dropErr.message);
         }
       }
 
@@ -144,7 +144,7 @@ const restoreFromBackupDb = async () => {
       }
 
       totalDocsRestored += docs.length;
-      console.log(`  ✓ Restored "${colName}": ${docs.length} documents -> "${liveDbName}.${colName}"`);
+      console.log(`  ✓ Restored "${targetLiveColName}": ${docs.length} documents -> "${liveDbName}.${targetLiveColName}"`);
     }
 
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
