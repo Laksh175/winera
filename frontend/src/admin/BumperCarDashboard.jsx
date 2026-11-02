@@ -627,9 +627,9 @@ export default function BumperCarDashboard({
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <input
                         type="text"
-                        value={(currentSec.brochureUrl && currentSec.brochureUrl !== '#') ? currentSec.brochureUrl : ''}
+                        value={(currentSec.brochureUrl && currentSec.brochureUrl !== '#' && !currentSec.brochureUrl.toLowerCase().includes('softplay')) ? currentSec.brochureUrl : '/pdf/Bumper Car Catalogue.pdf'}
                         onChange={(e) => handleFieldChange('bumpercarSpecs', 'brochureUrl', e.target.value)}
-                        placeholder="e.g. /uploads/bumpercar_brochure.pdf or Cloudinary URL"
+                        placeholder="e.g. /pdf/Bumper Car Catalogue.pdf or Cloudinary URL"
                         style={{ flex: 1, padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                       />
                       <label style={{ background: '#38bdf8', color: '#fff', padding: '12px 16px', borderRadius: '14px', fontWeight: '800', fontSize: '12.5px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
@@ -647,7 +647,7 @@ export default function BumperCarDashboard({
                         💡 Cloudinary Free plan limit: <strong>10 MB</strong> (Allows larger files automatically with a Cloudinary Pro plan). Compress via <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#0284c7', textDecoration: 'underline', fontWeight: '700' }}>iLovePDF</a> if needed.
                       </span>
                       {(() => {
-                        const activePdf = (currentSec.brochureUrl && currentSec.brochureUrl !== '#') ? currentSec.brochureUrl : '';
+                        const activePdf = (currentSec.brochureUrl && currentSec.brochureUrl !== '#' && !currentSec.brochureUrl.toLowerCase().includes('softplay')) ? currentSec.brochureUrl : '/pdf/Bumper Car Catalogue.pdf';
                         return activePdf ? (
                           <a
                             href={activePdf}

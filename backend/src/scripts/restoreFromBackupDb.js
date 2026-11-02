@@ -54,31 +54,56 @@ const restoreFromBackupDb = async () => {
       throw new Error(`CRITICAL ERROR: Live DB (${liveDbName}) and Backup DB (${backupDbName}) are the same! Aborting.`);
     }
 
-    const backupDb = client.db(backupDbName);
-    const backupCollections = await backupDb.listCollections().toArray();
+    let sourceBackupDb = null;
+    let isPrefixedSource = false;
+    let backupCollections = [];
+
+    // 1. Try reading from separate backup database
+    try {
+      const candidateDb = client.db(backupDbName);
+      const cols = await candidateDb.listCollections().toArray();
+      if (cols && cols.length > 0) {
+        sourceBackupDb = candidateDb;
+        backupCollections = cols.filter(c => !c.name.startsWith('system.'));
+      }
+    } catch {
+      // Unauthorized on separate db
+    }
+
+    // 2. Fallback to _backup_ collections inside live database
+    if (backupCollections.length === 0) {
+      const liveCols = await liveDb.listCollections().toArray();
+      const backupColsInLive = liveCols.filter(c => c.name.startsWith('_backup_'));
+      if (backupColsInLive.length > 0) {
+        sourceBackupDb = liveDb;
+        isPrefixedSource = true;
+        backupCollections = backupColsInLive;
+        console.log(`💡 [DB Restore] Found internal backup collections ("_backup_<name>") inside "${liveDbName}".`);
+      }
+    }
 
     if (backupCollections.length === 0) {
-      console.warn(`⚠️ [DB Restore] No collections found in "${backupDbName}". Restore cancelled.`);
+      console.warn(`⚠️ [DB Restore] No backup collections found in "${backupDbName}" or "${liveDbName}._backup_*". Restore cancelled.`);
       process.exit(1);
     }
 
-    console.log(`ℹ️ [DB Restore] Restoring from "${backupDbName}" into Live DB "${liveDbName}".`);
-    console.log(`ℹ️ [DB Restore] Found ${backupCollections.length} collections in "${backupDbName}".`);
+    console.log(`ℹ️ [DB Restore] Found ${backupCollections.length} backup collections to restore into "${liveDbName}".`);
 
     let totalDocsRestored = 0;
 
     for (const colInfo of backupCollections) {
-      const colName = colInfo.name;
-      if (colName.startsWith('system.')) continue;
+      const rawName = colInfo.name;
+      if (rawName.startsWith('system.')) continue;
 
-      const backupCol = backupDb.collection(colName);
+      const targetLiveColName = isPrefixedSource ? rawName.replace(/^_backup_/, '') : rawName;
+      const backupCol = sourceBackupDb.collection(rawName);
       const docs = await backupCol.find({}).toArray();
 
-      const liveCol = liveDb.collection(colName);
+      const liveCol = liveDb.collection(targetLiveColName);
 
       // CRITICAL DATA PROTECTION: NEVER drop 'leads' collection during a restore!
       // Leads are real-time customer inquiries and must never be wiped out.
-      if (colName === 'leads') {
+      if (targetLiveColName === 'leads') {
         if (docs.length > 0) {
           for (const leadDoc of docs) {
             await liveCol.updateOne(
@@ -89,7 +114,7 @@ const restoreFromBackupDb = async () => {
           }
         }
         totalDocsRestored += docs.length;
-        console.log(`  🛡️ [Protected] Merged "${colName}": ${docs.length} documents safely without dropping live leads.`);
+        console.log(`  🛡️ [Protected] Merged "${targetLiveColName}": ${docs.length} documents safely without dropping live leads.`);
         continue;
       }
 

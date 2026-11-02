@@ -650,10 +650,8 @@ export default function BumperCar({ siteData }) {
               onClick={() => openBrochure(
                 (() => {
                   const bUrl = siteData?.bumpercarSpecs?.brochureUrl;
-                  if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '') return bUrl.trim();
-                  const sUrl = siteData?.softplayTypes?.brochureUrl;
-                  if (sUrl && typeof sUrl === 'string' && sUrl.trim() !== '#' && sUrl.trim() !== '') return sUrl.trim();
-                  return "/pdf/Winera Softplay.pdf";
+                  if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '' && !bUrl.toLowerCase().includes('softplay')) return bUrl.trim();
+                  return "/pdf/Bumper Car Catalogue.pdf";
                 })(),
                 () => setIsBrochureOpen(true)
               )}
@@ -1539,14 +1537,12 @@ export default function BumperCar({ siteData }) {
         pdfUrl={
           (() => {
             const bUrl = siteData?.bumpercarSpecs?.brochureUrl;
-            if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '') return bUrl.trim();
-            const sUrl = siteData?.softplayTypes?.brochureUrl;
-            if (sUrl && typeof sUrl === 'string' && sUrl.trim() !== '#' && sUrl.trim() !== '') return sUrl.trim();
-            return "/pdf/Winera Softplay.pdf";
+            if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '' && !bUrl.toLowerCase().includes('softplay')) return bUrl.trim();
+            return "/pdf/Bumper Car Catalogue.pdf";
           })()
         }
         title="Bumper Cars - Technical Specifications & Brochure"
-        fileName="Bumper Cars Brochure - Winera International.pdf"
+        fileName="Bumper Car Catalogue - Winera International.pdf"
       />
 
       {/* FOOTER */}
