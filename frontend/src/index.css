@@ -15167,11 +15167,13 @@ button[style*="background:transparent"]:hover,
     font-size: 14px !important;
     line-height: 1.25 !important;
     margin-bottom: 2px !important;
+    text-align: left !important;
   }
 
   .winera-roi-get-card-box p {
     font-size: 11.5px !important;
     line-height: 1.35 !important;
+    text-align: left !important;
   }
 
   /* 5. Bowling Alley Free-Fall & String Bowling 1024px Vertical Stack (Text Top, Image Bottom) */
@@ -18682,16 +18684,24 @@ button[style*="background:transparent"]:hover,
 
 /* ROI Get Section Timeline Text Left Alignment */
 .winera-roi-get-step-text,
+.winera-roi-get-step-text h3,
 .winera-roi-get-step-text h4,
-.winera-roi-get-step-text p {
+.winera-roi-get-step-text p,
+.winera-roi-get-step-text *,
+.winera-roi-get-card-box h3,
+.winera-roi-get-card-box p {
   text-align: left !important;
 }
 
 @media (max-width: 768px) {
 
   .winera-roi-get-step-text,
+  .winera-roi-get-step-text h3,
   .winera-roi-get-step-text h4,
-  .winera-roi-get-step-text p {
+  .winera-roi-get-step-text p,
+  .winera-roi-get-step-text *,
+  .winera-roi-get-card-box h3,
+  .winera-roi-get-card-box p {
     text-align: left !important;
   }
 }
