@@ -20448,6 +20448,22 @@ img.winera-yellow-stroke,
 }
 
 @media (max-width: 768px) {
+  .winera-blog-heading-container {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 auto 24px auto !important;
+  }
+
+  .winera-blog-heading-title {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
   .winera-blog-heading-stroke,
   .winera-blog-heading-container img.winera-blog-heading-stroke,
   .winera-blog-heading-container img[src*="kllqvzchxecftuxi6zdn"] {

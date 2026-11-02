@@ -272,7 +272,7 @@ export default function Blog({ siteData }) {
                 objectFit: 'fill'
               }}
             />
-            <h1 className="winera-blog-heading-title" style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: isPhone ? '28px' : '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', margin: 0 }}>
+            <h1 className="winera-blog-heading-title" style={{ fontFamily: "'Black Han Sans', sans-serif", fontSize: isPhone ? '28px' : '35px', fontWeight: '400', fontStyle: 'normal', letterSpacing: '0px', color: '#0f172a', margin: 0, textAlign: 'center' }}>
               our <span style={{ color: '#00a8ff' }}>Blogs</span>
             </h1>
           </motion.div>
@@ -492,14 +492,22 @@ export default function Blog({ siteData }) {
         }
         @media (max-width: 768px) {
           .winera-blog-heading-container {
-            text-align: left !important;
-            align-items: flex-start !important;
+            text-align: center !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            margin: 0 auto 24px auto !important;
           }
           .winera-blog-heading-stroke {
-            margin: 0 0 8px 0 !important;
+            margin: 0 auto 8px auto !important;
+            display: block !important;
           }
           .winera-blog-heading-title {
-            text-align: left !important;
+            text-align: center !important;
+            width: 100% !important;
+            margin: 0 auto !important;
           }
           .winera-blog-single-card,
           .winera-blog-single-card *,
