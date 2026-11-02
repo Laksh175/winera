@@ -212,42 +212,65 @@ export default function ContactUs({ siteData }) {
             <div className="winera-contact-heading-wrap">
               <SectionHeading as="h1" align="left" marginBottom="20px" accentWidth="255px" accentMaxWidth="420px">
                 {(() => {
-                  let rawTitle = siteData?.contactPage?.title || "Get In Touch With<br />*Winera International*";
-                  rawTitle = rawTitle.replace(/WineraInternational/g, 'Winera International');
-                  if (rawTitle.includes('*Winera*<br />*International*')) {
-                    rawTitle = rawTitle.replace('*Winera*<br />*International*', '*Winera International*');
-                  }
-                  if (!rawTitle.includes('<br')) {
-                    if (rawTitle.includes('*Winera International*')) {
-                      rawTitle = rawTitle.replace('*Winera International*', '<br />*Winera International*');
-                    } else if (rawTitle.toLowerCase().includes('with ')) {
-                      rawTitle = rawTitle.replace(/with\s+/i, 'with<br />');
+                  let title = (siteData?.contactPage?.title || "Get In Touch With<br />Winera International")
+                    .replace(/WineraInternational/gi, 'Winera International')
+                    .replace(/WithWinera/gi, 'With Winera')
+                    .replace(/([a-zA-Z])\*([a-zA-Z])/g, '$1 $2')
+                    .trim();
+
+                  let line1 = '';
+                  let line2 = '';
+
+                  if (title.includes('<br')) {
+                    const splitBr = title.split(/<br\s*\/?>/i);
+                    line1 = splitBr[0].replace(/\*/g, '').trim();
+                    line2 = splitBr.slice(1).join(' ').replace(/\*/g, '').trim();
+                  } else if (title.includes('*')) {
+                    const match = title.match(/^(.*?)\*+(.*?)\*+$/);
+                    if (match) {
+                      line1 = match[1].trim();
+                      line2 = match[2].trim();
+                    } else {
+                      const parts = title.split(/\*+/).filter(Boolean);
+                      line1 = (parts[0] || '').trim();
+                      line2 = (parts.slice(1).join(' ') || '').trim();
+                    }
+                  } else {
+                    const withIdx = title.toLowerCase().indexOf('with');
+                    if (withIdx !== -1 && withIdx + 4 < title.length) {
+                      line1 = title.slice(0, withIdx + 4).trim();
+                      line2 = title.slice(withIdx + 4).trim();
+                    } else {
+                      const words = title.split(/\s+/);
+                      if (words.length > 2) {
+                        const mid = Math.ceil(words.length / 2);
+                        line1 = words.slice(0, mid).join(' ');
+                        line2 = words.slice(mid).join(' ');
+                      } else {
+                        line1 = title;
+                        line2 = '';
+                      }
                     }
                   }
 
-                  const lines = rawTitle.split(/<br\s*\/?>/i);
-                  return lines.map((line, lIdx) => {
-                    const parts = line.split(/\*{1,2}(.*?)\*{1,2}/g);
-                    return (
-                      <span key={lIdx} style={{ display: 'block', lineHeight: 1.18 }}>
-                        {parts.map((part, pIdx) => {
-                          const isDark = pIdx % 2 === 1;
-                          if (isDark) {
-                            return (
-                              <span key={pIdx} className="winera-contact-title-dark" style={{ color: '#0f172a' }}>
-                                {part}
-                              </span>
-                            );
-                          }
-                          return (
-                            <span key={pIdx} className="winera-contact-title-cyan" style={{ color: '#00a8ff' }}>
-                              {part}
-                            </span>
-                          );
-                        })}
+                  if (line1.toLowerCase().endsWith('winera') && line2.toLowerCase().startsWith('international')) {
+                    line1 = line1.replace(/winera$/i, '').trim();
+                    line2 = ('Winera ' + line2).trim();
+                  }
+
+                  line1 = line1.replace(/\s+/g, ' ').trim();
+                  line2 = line2.replace(/\s+/g, ' ').trim();
+
+                  return [
+                    <span key="line1" className="winera-contact-title-line1" style={{ display: 'block', color: '#00a8ff', whiteSpace: 'nowrap', lineHeight: 1.18 }}>
+                      {line1}
+                    </span>,
+                    line2 ? (
+                      <span key="line2" className="winera-contact-title-line2" style={{ display: 'block', color: '#0f172a', whiteSpace: 'nowrap', lineHeight: 1.18 }}>
+                        {line2}
                       </span>
-                    );
-                  });
+                    ) : null
+                  ];
                 })()}
               </SectionHeading>
             </div>

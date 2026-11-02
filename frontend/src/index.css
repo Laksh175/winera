@@ -19879,13 +19879,18 @@ section.winera-safety-structure-section .winera-safety-accordion-wrapper p.winer
    CONTACT US PAGE TITLE 2-LINE MOBILE STYLING
    ========================================================================== */
 .winera-contact-heading-wrap .winera-contact-title-line1 {
-  display: block;
-  color: #38bdf8;
+  display: block !important;
+  color: #00a8ff !important;
+  line-height: 1.18 !important;
+  white-space: nowrap !important;
+  margin-bottom: 2px !important;
 }
 
 .winera-contact-heading-wrap .winera-contact-title-line2 {
-  display: block;
-  color: #0f172a;
+  display: block !important;
+  color: #0f172a !important;
+  line-height: 1.18 !important;
+  white-space: nowrap !important;
 }
 
 .winera-contact-main-section {
@@ -19967,24 +19972,31 @@ section.winera-safety-structure-section .winera-safety-accordion-wrapper p.winer
   }
 
   .winera-contact-heading-wrap .winera-section-heading-h2 {
-    font-size: clamp(26px, 6vw, 32px) !important;
-    line-height: 1.2 !important;
+    font-size: clamp(21px, 5.2vw, 26px) !important;
+    line-height: 1.22 !important;
+    text-align: left !important;
   }
 
   .winera-contact-heading-wrap .winera-contact-title-line1 {
     display: block !important;
-    margin-bottom: 2px !important;
+    color: #00a8ff !important;
+    white-space: nowrap !important;
+    margin-bottom: 3px !important;
+    letter-spacing: 0.2px !important;
   }
 
   .winera-contact-heading-wrap .winera-contact-title-line2 {
     display: block !important;
+    color: #0f172a !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.2px !important;
   }
 }
 
 @media (max-width: 480px) {
   .winera-contact-heading-wrap .winera-section-heading-h2 {
-    font-size: clamp(24px, 5.8vw, 28px) !important;
-    line-height: 1.2 !important;
+    font-size: clamp(19px, 5.2vw, 24px) !important;
+    line-height: 1.22 !important;
   }
 }
 
