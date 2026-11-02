@@ -168,7 +168,7 @@ export default function ContactUs({ siteData }) {
           decoding="async"
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: 0, zIndex: 2 }}>
-          <span className="winera-contact-hero-h1" style={{
+          <h1 className="winera-contact-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -185,7 +185,7 @@ export default function ContactUs({ siteData }) {
             <a href="/" style={{ color: '#ffffff', textDecoration: 'none' }}>{breadcrumbHome}</a>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>{breadcrumbText}</span>
-          </span>
+          </h1>
         </div>
       </section>
 
