@@ -19972,7 +19972,7 @@ section.winera-safety-structure-section .winera-safety-accordion-wrapper p.winer
   }
 
   .winera-contact-heading-wrap .winera-section-heading-h2 {
-    font-size: clamp(21px, 5.2vw, 26px) !important;
+    font-size: 25px !important;
     line-height: 1.22 !important;
     text-align: left !important;
   }
@@ -19995,7 +19995,7 @@ section.winera-safety-structure-section .winera-safety-accordion-wrapper p.winer
 
 @media (max-width: 480px) {
   .winera-contact-heading-wrap .winera-section-heading-h2 {
-    font-size: clamp(19px, 5.2vw, 24px) !important;
+    font-size: 25px !important;
     line-height: 1.22 !important;
   }
 }
