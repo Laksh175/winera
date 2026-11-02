@@ -283,12 +283,19 @@ export default function AboutUs({ siteData }) {
                 return parts.map((part, index) => {
                   if (index % 2 === 1) {
                     return (
-                      <span key={index} style={{ color: '#00a8ff' }}>
-                        {part}
-                      </span>
+                      <React.Fragment key={index}>
+                        <br className="winera-about-welcome-mobile-br" />
+                        <span className="winera-about-welcome-accent" style={{ color: '#00a8ff' }}>
+                          {part}
+                        </span>
+                      </React.Fragment>
                     );
                   }
-                  return part;
+                  return (
+                    <span key={index} className="winera-about-welcome-prefix">
+                      {part}
+                    </span>
+                  );
                 });
               })()}
             </SectionHeading>

@@ -5694,6 +5694,24 @@ html {
   .winera-about-welcome-text {
     order: 1 !important;
     width: 100% !important;
+    text-align: center !important;
+  }
+
+  .winera-about-welcome-mobile-br {
+    display: block !important;
+  }
+
+  .winera-about-welcome-text h1,
+  .winera-about-welcome-text .winera-section-heading-h2 {
+    font-size: clamp(22px, 5.8vw, 27px) !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+
+  .winera-about-welcome-accent {
+    white-space: nowrap !important;
+    display: inline-block !important;
   }
 
   .winera-about-welcome-collage {
@@ -20487,6 +20505,10 @@ img.winera-yellow-stroke,
     margin: 0 auto 8px auto !important;
     display: block !important;
   }
+}
+
+.winera-about-welcome-mobile-br {
+  display: none;
 }
 
 /* ARCADE GAME DETAIL PAGE HEADING STROKE & TIGHT SPACING FIX */
