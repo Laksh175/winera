@@ -658,7 +658,7 @@ export default function BlogRichEditor({
             primaryTable.removeAttribute('width');
             primaryTable.removeAttribute('height');
             primaryTable.removeAttribute('class');
-            primaryTable.setAttribute('style', 'width: 100%; border-collapse: collapse; margin: 16px 0;');
+            primaryTable.setAttribute('style', 'width: 100%; border-collapse: collapse; margin: 16px 0; table-layout: fixed;');
 
             primaryTable.querySelectorAll('colgroup, col, style, xml, o\\:p, meta, script').forEach(el => el.remove());
 
@@ -743,7 +743,7 @@ export default function BlogRichEditor({
             return `<tr>${cellsHtml}</tr>`;
           }).join('');
 
-          const cleanTableHtml = `<table style="width: 100%; border-collapse: collapse; margin: 16px 0;"><tbody>${rowsHtml}</tbody></table>`;
+          const cleanTableHtml = `<table style="width: 100%; border-collapse: collapse; margin: 16px 0; table-layout: fixed;"><tbody>${rowsHtml}</tbody></table>`;
           const range = quill.getSelection(true) || { index: quill.getLength(), length: 0 };
           if (range.length > 0) {
             quill.deleteText(range.index, range.length, 'user');
