@@ -18517,11 +18517,14 @@ button[style*="background:transparent"]:hover,
     text-align: center !important;
   }
 
+  .winera-project-heading-wrapper h1,
   .winera-project-heading-wrapper h2,
+  .winera-project-heading-wrapper .winera-section-heading-h1,
   .winera-project-heading-wrapper .winera-section-heading-h2,
+  .winera-project-main-section h1,
   .winera-project-main-section h2 {
-    font-size: clamp(16px, 4.4vw, 22px) !important;
-    line-height: 1.35 !important;
+    font-size: 25px !important;
+    line-height: 1.25 !important;
     max-width: 100% !important;
     margin: 0 auto !important;
     text-align: center !important;

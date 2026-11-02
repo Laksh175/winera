@@ -339,7 +339,7 @@ export default function Project({ siteData }) {
         />
         <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 20px', zIndex: 2 }}>
           {/* Centered Breadcrumb: Home › Project */}
-          <span className="winera-project-hero-h1" style={{
+          <h1 className="winera-project-hero-h1" style={{
             fontSize: isPhone ? '1.15rem' : '21px',
             fontWeight: '800',
             color: '#ffffff',
@@ -356,7 +356,7 @@ export default function Project({ siteData }) {
             <Link to="/" style={{ color: '#ffffff', textDecoration: 'none' }}>{breadcrumbHome}</Link>
             <span style={{ color: '#ffffff', fontWeight: '400' }}>&rsaquo;</span>
             <span style={{ color: '#ffcd00', fontWeight: '900' }}>{breadcrumbPage}</span>
-          </span>
+          </h1>
         </div>
       </section>
 
