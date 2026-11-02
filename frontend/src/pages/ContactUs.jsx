@@ -212,9 +212,17 @@ export default function ContactUs({ siteData }) {
             <div className="winera-contact-heading-wrap">
               <SectionHeading as="h1" align="left" marginBottom="20px" accentWidth="255px" accentMaxWidth="420px">
                 {(() => {
-                  let rawTitle = siteData?.contactPage?.title || "Get in Touch with *Winera*<br />*International*";
-                  if (rawTitle.includes('*Winera International*')) {
-                    rawTitle = rawTitle.replace('*Winera International*', '*Winera*<br />*International*');
+                  let rawTitle = siteData?.contactPage?.title || "Get In Touch With<br />*Winera International*";
+                  rawTitle = rawTitle.replace(/WineraInternational/g, 'Winera International');
+                  if (rawTitle.includes('*Winera*<br />*International*')) {
+                    rawTitle = rawTitle.replace('*Winera*<br />*International*', '*Winera International*');
+                  }
+                  if (!rawTitle.includes('<br')) {
+                    if (rawTitle.includes('*Winera International*')) {
+                      rawTitle = rawTitle.replace('*Winera International*', '<br />*Winera International*');
+                    } else if (rawTitle.toLowerCase().includes('with ')) {
+                      rawTitle = rawTitle.replace(/with\s+/i, 'with<br />');
+                    }
                   }
 
                   const lines = rawTitle.split(/<br\s*\/?>/i);

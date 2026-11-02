@@ -19967,26 +19967,24 @@ section.winera-safety-structure-section .winera-safety-accordion-wrapper p.winer
   }
 
   .winera-contact-heading-wrap .winera-section-heading-h2 {
-    font-size: clamp(17px, 4.6vw, 24px) !important;
-    line-height: 1.25 !important;
+    font-size: clamp(26px, 6vw, 32px) !important;
+    line-height: 1.2 !important;
   }
 
   .winera-contact-heading-wrap .winera-contact-title-line1 {
     display: block !important;
-    white-space: nowrap !important;
     margin-bottom: 2px !important;
   }
 
   .winera-contact-heading-wrap .winera-contact-title-line2 {
     display: block !important;
-    white-space: nowrap !important;
   }
 }
 
 @media (max-width: 480px) {
   .winera-contact-heading-wrap .winera-section-heading-h2 {
-    font-size: clamp(15px, 4.3vw, 20px) !important;
-    line-height: 1.25 !important;
+    font-size: clamp(24px, 5.8vw, 28px) !important;
+    line-height: 1.2 !important;
   }
 }
 
