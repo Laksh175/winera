@@ -19,23 +19,76 @@ export const sanitizeAndFormatHtml = (input) => {
     return `<a href="${href}" style="color: #0284c7; font-weight: normal; text-decoration: underline;"${targetAttr}>`;
   });
 
-  // 4. Clean table spacing: remove text-align justify (which causes huge gaps between words) and normalize multiple spaces
+  // 4. Clean text alignment and unwanted whitespace across ALL content:
+  // Remove justify alignment bloat that causes uneven gaps between words
+  html = html
+    .replace(/text-align\s*:\s*justify\s*;?/gi, '')
+    .replace(/\bql-align-justify\b/gi, '');
+
+  // Protect <pre> and <code> blocks from whitespace manipulation
+  const codeBlocks = [];
+  html = html.replace(/<(pre|code)[^>]*>[\s\S]*?<\/\1>/gi, (m) => {
+    codeBlocks.push(m);
+    return `<!--__WINERA_CODE_BLOCK_${codeBlocks.length - 1}__-->`;
+  });
+
+  // Normalize 2 or more non-breaking spaces or consecutive whitespace into a single space
+  html = html.replace(/(?:&nbsp;|\u00a0)+/gi, ' ');
+
+  // Strip redundant boilerplate styles added by editors that interfere with spacing
+  html = html
+    .replace(/background-color\s*:\s*transparent\s*;?/gi, '')
+    .replace(/color\s*:\s*rgb\(0,\s*0,\s*0\)\s*;?/gi, '')
+    .replace(/\s*style=["']\s*["']/gi, '');
+
+  // Unwrap standalone punctuation spans (e.g. <span style="...">,</span> -> ,)
+  html = html.replace(/<span[^>]*>([,.:;!?])<\/span>/gi, '$1');
+
+  // 1. Remove ANY empty inline tags completely (NEVER replace with a space)
+  let prevHtml;
+  do {
+    prevHtml = html;
+    html = html.replace(/<(span|strong|em|b|i|u)[^>]*>\s*<\/\1>/gi, '');
+  } while (html !== prevHtml);
+
+  // 2. No space before punctuation (e.g. 'companies ,', 'included .', '</span> ,', '</span> .')
+  html = html.replace(/\s+(<\/(?:span|strong|em|b|i|u)>)\s*([,.:;!?])/gi, '$1$2');
+  html = html.replace(/(<\/(?:span|strong|em|b|i|u)>)\s+([,.:;!?])/gi, '$1$2');
+  html = html.replace(/\s+([,.:;!?])/g, '$1');
+
+  // 3. Move trailing spaces inside inline tags to OUTSIDE the tag (unless immediately followed by punctuation)
+  html = html.replace(/([^\s>])\s+(<\/(?:span|strong|em|b|i|u)>)(?!\s*[,.:;!?])/gi, '$1$2 ');
+
+  // 4. Move leading spaces inside inline tags to BEFORE the tag
+  html = html.replace(/(<(?:span|strong|em|b|i|u)[^>]*>)\s+([^\s<])/gi, ' $1$2');
+
+  // 5. Ensure single space after punctuation when followed by words or tags
+  html = html.replace(/([,;:!?])\s*(<(?:span|strong|em|b|i|u)[^>]*>)\s*([^\s<])/gi, '$1 $2$3');
+  html = html.replace(/([,;:!?])\s+([^\s<])/gi, '$1 $2');
+
+  // 6. Clean spaces across adjacent inline tags
+  html = html.replace(/(<\/(?:span|strong|em|b|i|u)>)\s+(<(?:span|strong|em|b|i|u)[^>]*>)\s+/gi, '$1 $2');
+  html = html.replace(/\s+(<\/(?:span|strong|em|b|i|u)>)\s+(<(?:span|strong|em|b|i|u)[^>]*>)/gi, '$1 $2');
+
+  // 7. Clean leading spaces at beginning of block elements (<p>, <h1-6>, <li>, <td>, <th>)
+  html = html.replace(/(<(?:p|h[1-6]|li|td|th)[^>]*>)\s+/gi, '$1');
+  html = html.replace(/(<(?:p|h[1-6]|li|td|th)[^>]*>(?:<(?:span|strong|em|b|i)[^>]*>)+)\s+/gi, '$1');
+  // Clean leading spaces after <br>
+  html = html.replace(/(<br\s*\/?>)\s+/gi, '$1');
+  // Clean trailing spaces before closing tags of blocks
+  html = html.replace(/\s+(<\/(?:p|h[1-6]|li|td|th)>)/gi, '$1');
+  html = html.replace(/\s+((?:<\/(?:span|strong|em|b|i)>)+<\/(?:p|h[1-6]|li|td|th)>)/gi, '$1');
+
+  // 8. Collapse duplicate horizontal spaces
+  html = html.replace(/[ \t]{2,}/g, ' ');
+
+  // Restore code blocks
+  html = html.replace(/<!--__WINERA_CODE_BLOCK_(\d+)__-->/g, (m, idx) => codeBlocks[Number(idx)] || '');
+
+  // 5. Clean and wrap tables in .winera-blog-table-responsive
   if (html.includes('<table')) {
-    html = html.replace(/<table[\s\S]*?<\/table>/gi, (tableHtml) => {
-      let cleaned = tableHtml
-        .replace(/text-align\s*:\s*justify\s*;?/gi, '')
-        .replace(/\bql-align-justify\b/gi, '')
-        .replace(/(?:&nbsp;|\u00a0){2,}/gi, ' ');
-      // Normalize runs of spaces inside table cell content
-      cleaned = cleaned.replace(/(<t[dh][^>]*>)([\s\S]*?)(<\/t[dh]>)/gi, (m, open, body, close) => {
-        const normalizedBody = body
-          .replace(/[ \t]{2,}/g, ' ')
-          .replace(/<p[^>]*class=["'][^"']*ql-align-justify[^"']*["'][^>]*>/gi, '<p>')
-          .replace(/<p\s+style=["'][^"']*text-align\s*:\s*justify[^"']*["'][^>]*>/gi, '<p>');
-        return `${open}${normalizedBody}${close}`;
-      });
-      return cleaned;
-    });
+    html = html.replace(/<div[^>]*class=["'][^"']*winera-blog-table-responsive[^"']*["'][^>]*>([\s\S]*?)<\/div>/gi, '$1');
+    html = html.replace(/(<table[\s\S]*?<\/table>)/gi, '<div class="winera-blog-table-responsive">$1</div>');
   }
 
   return html;

@@ -23,11 +23,25 @@ export default function WineraDateTimePicker({
   const minuteScrollRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Parse initial value or fallback to tomorrow 10:00 AM
+  // Get current timestamp and boundary helpers
+  const now = new Date();
+  const todayYear = now.getFullYear();
+  const todayMonth = now.getMonth();
+  const todayDate = now.getDate();
+  const todayStart = new Date(todayYear, todayMonth, todayDate, 0, 0, 0, 0).getTime();
+
+  // Parse initial value or fallback to safe future time
   const getInitialDate = () => {
     if (value) {
       const d = new Date(value);
-      if (!isNaN(d.getTime())) return d;
+      if (!isNaN(d.getTime())) {
+        if (d.getTime() < Date.now()) {
+          // If value was in the past, default to 1 hour ahead
+          const fresh = new Date(Date.now() + 60 * 60 * 1000);
+          return fresh;
+        }
+        return d;
+      }
     }
     const d = new Date();
     d.setDate(d.getDate() + 1);
@@ -91,10 +105,47 @@ export default function WineraDateTimePicker({
   const isPM = currentHours24 >= 12;
   const currentHours12 = currentHours24 % 12 === 0 ? 12 : currentHours24 % 12;
 
-  const minDateTime = minDate ? new Date(minDate).getTime() : Date.now();
+  // Minimum date boundary: must not be in the past
+  const minBoundaryTime = minDate ? Math.max(new Date(minDate).getTime(), Date.now()) : Date.now();
+  const minBoundaryDayStart = minDate
+    ? new Date(new Date(minDate).getFullYear(), new Date(minDate).getMonth(), new Date(minDate).getDate(), 0, 0, 0, 0).getTime()
+    : todayStart;
+
+  // Check if viewing month is the current month or earlier
+  const isPrevMonthDisabled = viewYear < todayYear || (viewYear === todayYear && viewMonth <= todayMonth);
+
+  // Check if selected date is today
+  const isSelectedDateToday =
+    selectedDate.getFullYear() === todayYear &&
+    selectedDate.getMonth() === todayMonth &&
+    selectedDate.getDate() === todayDate;
+
+  // AM is past if today is selected and current hour is >= 12
+  const isAmPast = isSelectedDateToday && now.getHours() >= 12;
+
+  // An hour is past if today is selected and this hour (in 24h format) has passed
+  const getIsHourPast = (h12) => {
+    if (!isSelectedDateToday) return false;
+    let h24 = h12;
+    if (isPM) {
+      h24 = h12 === 12 ? 12 : h12 + 12;
+    } else {
+      h24 = h12 === 12 ? 0 : h12;
+    }
+    return h24 < now.getHours();
+  };
+
+  // A minute is past if today is selected and current selected hour is current hour and minute < now.getMinutes()
+  const getIsMinutePast = (m) => {
+    if (!isSelectedDateToday) return false;
+    if (currentHours24 < now.getHours()) return true;
+    if (currentHours24 === now.getHours()) return m < now.getMinutes();
+    return false;
+  };
 
   // Navigation
   const prevMonth = () => {
+    if (isPrevMonthDisabled) return;
     if (viewMonth === 0) {
       setViewMonth(11);
       setViewYear(y => y - 1);
@@ -118,6 +169,16 @@ export default function WineraDateTimePicker({
     updated.setFullYear(viewYear);
     updated.setMonth(viewMonth);
     updated.setDate(day);
+
+    // If selecting today, ensure selected time is not in the past
+    if (viewYear === todayYear && viewMonth === todayMonth && day === todayDate) {
+      if (updated.getTime() <= Date.now()) {
+        const nextFutureTime = new Date(Date.now() + 15 * 60 * 1000);
+        updated.setHours(nextFutureTime.getHours());
+        updated.setMinutes(nextFutureTime.getMinutes());
+      }
+    }
+
     setSelectedDate(updated);
     if (onChange) onChange(updated.toISOString());
   };
@@ -164,24 +225,27 @@ export default function WineraDateTimePicker({
     setIsOpen(false);
   };
 
-  // Handle Today
+  // Handle Today (default to +15 minutes into future)
   const handleToday = () => {
-    const now = new Date();
-    // Default to +1 hour so it's not in the past
-    now.setHours(now.getHours() + 1, 0, 0, 0);
-    setSelectedDate(now);
-    setViewYear(now.getFullYear());
-    setViewMonth(now.getMonth());
-    if (onChange) onChange(now.toISOString());
+    const d = new Date(Date.now() + 15 * 60 * 1000);
+    setSelectedDate(d);
+    setViewYear(d.getFullYear());
+    setViewMonth(d.getMonth());
+    if (onChange) onChange(d.toISOString());
   };
 
-  // Handle Save (closes the box and triggers onSave)
+  // Handle Save (closes the box and triggers onSave, guaranteeing future timestamp)
   const handleSaveAndClose = (e) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
-    const isoString = selectedDate.toISOString();
+    let finalDate = new Date(selectedDate);
+    if (finalDate.getTime() <= Date.now()) {
+      finalDate = new Date(Date.now() + 10 * 60 * 1000);
+      setSelectedDate(finalDate);
+    }
+    const isoString = finalDate.toISOString();
     if (onChange) onChange(isoString);
     if (onSave) onSave(isoString);
     setIsOpen(false);
@@ -283,8 +347,21 @@ export default function WineraDateTimePicker({
                 <div style={{ display: 'flex', gap: '4px' }}>
                   <button
                     type="button"
+                    disabled={isPrevMonthDisabled}
                     onClick={prevMonth}
-                    style={{ background: '#f1f5f9', border: 'none', borderRadius: '6px', width: '26px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#334155' }}
+                    style={{
+                      background: '#f1f5f9',
+                      border: 'none',
+                      borderRadius: '6px',
+                      width: '26px',
+                      height: '26px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: isPrevMonthDisabled ? 'not-allowed' : 'pointer',
+                      opacity: isPrevMonthDisabled ? 0.35 : 1,
+                      color: '#334155'
+                    }}
                   >
                     <ChevronLeft style={{ width: '15px', height: '15px' }} />
                   </button>
@@ -320,8 +397,8 @@ export default function WineraDateTimePicker({
                 {/* Current Month Days */}
                 {Array.from({ length: daysInMonth }).map((_, i) => {
                   const dayNum = i + 1;
-                  const dateObj = new Date(viewYear, viewMonth, dayNum, 23, 59, 59);
-                  const isPast = dateObj.getTime() < minDateTime - 86400000;
+                  const dayEnd = new Date(viewYear, viewMonth, dayNum, 23, 59, 59, 999).getTime();
+                  const isPast = dayEnd < minBoundaryDayStart;
                   const isSelected = selectedDate.getFullYear() === viewYear &&
                     selectedDate.getMonth() === viewMonth &&
                     selectedDate.getDate() === dayNum;
@@ -331,7 +408,7 @@ export default function WineraDateTimePicker({
                       key={`curr-${dayNum}`}
                       type="button"
                       disabled={isPast}
-                      onClick={() => handleSelectDay(dayNum)}
+                      onClick={() => !isPast && handleSelectDay(dayNum)}
                       style={{
                         padding: '6px 0',
                         fontSize: '12px',
@@ -341,6 +418,7 @@ export default function WineraDateTimePicker({
                         border: 'none',
                         borderRadius: '6px',
                         cursor: isPast ? 'not-allowed' : 'pointer',
+                        opacity: isPast ? 0.35 : 1,
                         transition: 'all 0.1s ease'
                       }}
                     >
@@ -357,7 +435,8 @@ export default function WineraDateTimePicker({
               <div style={{ display: 'flex', gap: '6px' }}>
                 <button
                   type="button"
-                  onClick={() => handleToggleAmPm(false)}
+                  disabled={isAmPast}
+                  onClick={() => !isAmPast && handleToggleAmPm(false)}
                   style={{
                     flex: 1,
                     padding: '6px 0',
@@ -366,8 +445,9 @@ export default function WineraDateTimePicker({
                     borderRadius: '8px',
                     border: !isPM ? '1.5px solid #0284c7' : '1px solid #e2e8f0',
                     background: !isPM ? '#0284c7' : '#f8fafc',
-                    color: !isPM ? '#ffffff' : '#475569',
-                    cursor: 'pointer',
+                    color: !isPM ? '#ffffff' : (isAmPast ? '#cbd5e1' : '#475569'),
+                    cursor: isAmPast ? 'not-allowed' : 'pointer',
+                    opacity: isAmPast ? 0.35 : 1,
                     transition: 'all 0.15s ease'
                   }}
                 >
@@ -426,12 +506,14 @@ export default function WineraDateTimePicker({
                   </div>
                   {hoursList.map(h => {
                     const isSelected = currentHours12 === h;
+                    const isHourPast = getIsHourPast(h);
                     return (
                       <button
                         key={h}
                         type="button"
+                        disabled={isHourPast}
                         data-selected={isSelected}
-                        onClick={() => handleSelectHour(h)}
+                        onClick={() => !isHourPast && handleSelectHour(h)}
                         style={{
                           padding: '5px 0',
                           fontSize: '12.5px',
@@ -439,8 +521,9 @@ export default function WineraDateTimePicker({
                           borderRadius: '8px',
                           border: isSelected ? '1.5px solid #0284c7' : 'none',
                           background: isSelected ? '#0284c7' : 'transparent',
-                          color: isSelected ? '#ffffff' : '#1e293b',
-                          cursor: 'pointer',
+                          color: isSelected ? '#ffffff' : (isHourPast ? '#cbd5e1' : '#1e293b'),
+                          cursor: isHourPast ? 'not-allowed' : 'pointer',
+                          opacity: isHourPast ? 0.35 : 1,
                           textAlign: 'center',
                           transition: 'all 0.1s ease',
                           flexShrink: 0
@@ -483,12 +566,14 @@ export default function WineraDateTimePicker({
                   </div>
                   {minutesList.map(m => {
                     const isSelected = currentMinutes === m;
+                    const isMinutePast = getIsMinutePast(m);
                     return (
                       <button
                         key={m}
                         type="button"
+                        disabled={isMinutePast}
                         data-selected={isSelected}
-                        onClick={() => handleSelectMinute(m)}
+                        onClick={() => !isMinutePast && handleSelectMinute(m)}
                         style={{
                           padding: '5px 0',
                           fontSize: '12.5px',
@@ -496,8 +581,9 @@ export default function WineraDateTimePicker({
                           borderRadius: '8px',
                           border: isSelected ? '1.5px solid #0284c7' : 'none',
                           background: isSelected ? '#0284c7' : 'transparent',
-                          color: isSelected ? '#ffffff' : '#1e293b',
-                          cursor: 'pointer',
+                          color: isSelected ? '#ffffff' : (isMinutePast ? '#cbd5e1' : '#1e293b'),
+                          cursor: isMinutePast ? 'not-allowed' : 'pointer',
+                          opacity: isMinutePast ? 0.35 : 1,
                           textAlign: 'center',
                           transition: 'all 0.1s ease',
                           flexShrink: 0

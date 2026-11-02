@@ -2,8 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { Table, Plus, Trash2, Image as ImageIcon, X, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
+import { Table, Plus, Trash2, Image as ImageIcon, X, AlignLeft, AlignCenter, AlignRight, Minus, ChevronDown } from 'lucide-react';
 import ConfirmModal from './ConfirmModal';
+
+// Register StyleAttributor for font-size with arbitrary pixel support (Google Docs style)
+try {
+  const SizeStyle = Quill.import('attributors/style/size');
+  if (SizeStyle) {
+    SizeStyle.whitelist = null;
+    Quill.register({ 'formats/size': SizeStyle }, true);
+  }
+} catch (e) {
+  console.warn('SizeStyle registration:', e);
+}
 
 /**
  * Normalizes initial incoming value to valid HTML for Quill.
@@ -16,19 +27,29 @@ export const prepareBlogContentForEditor = (raw) => {
   // Convert literal string representations of newlines to real newlines
   content = content.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n');
 
-  // If already full HTML, clean up any cursor artifacts, table justify bloat, and return
+  // If already full HTML, clean up any cursor artifacts, table justify bloat, runs of &nbsp; and leading spaces
   const hasHtmlTags = /<\/?(?:p|h[1-6]|ul|ol|li|table|tr|td|th|img|blockquote|div|span|strong|em|u|a)[\s>]/i.test(content);
   if (hasHtmlTags) {
     let cleaned = content.replace(/<span class="ql-cursor">.*?<\/span>/gi, '');
     cleaned = cleaned.replace(/(<a\s+[^>]*?style=["'][^"']*?)font-weight\s*:\s*(?:700|800|bold)\s*;?/gi, '$1');
-    if (cleaned.includes('<table')) {
-      cleaned = cleaned.replace(/<table[\s\S]*?<\/table>/gi, (tableHtml) => {
-        return tableHtml
-          .replace(/text-align\s*:\s*justify\s*;?/gi, '')
-          .replace(/\bql-align-justify\b/gi, '')
-          .replace(/(?:&nbsp;|\u00a0){2,}/gi, ' ');
-      });
-    }
+    cleaned = cleaned
+      .replace(/text-align\s*:\s*justify\s*;?/gi, '')
+      .replace(/\bql-align-justify\b/gi, '');
+    cleaned = cleaned.replace(/(?:&nbsp;|\u00a0){2,}/gi, ' ');
+    cleaned = cleaned.replace(/[ \t]*(?:&nbsp;|\u00a0)[ \t]*/gi, ' ');
+    cleaned = cleaned.replace(/[ \t]{2,}/g, ' ');
+
+    // Clean trailing whitespace inside inline tags (e.g. <span style="...">text </span> -> <span style="...">text</span> )
+    cleaned = cleaned.replace(/([^\s>])[ \t\r\n]*(?:&nbsp;|\u00a0|[ \t])+(<\/(?:span|strong|em|b|i|u)>)/gi, '$1$2 ');
+
+    // Clean leading whitespace inside inline tags (e.g. <span style="..."> text</span> ->  <span style="...">text</span>)
+    cleaned = cleaned.replace(/(<(?:span|strong|em|b|i|u)[^>]*>)[ \t\r\n]*(?:&nbsp;|\u00a0|[ \t])+([^\s<])/gi, ' $1$2');
+
+    // Collapse any duplicate spaces created around inline tags
+    cleaned = cleaned.replace(/[ \t]{2,}/g, ' ');
+
+    cleaned = cleaned.replace(/(<(?:p|h[1-6]|li|td|th)[^>]*>)[ \t\r\n]*(?:&nbsp;|\u00a0|[ \t])+/gi, '$1');
+    cleaned = cleaned.replace(/(<(?:p|h[1-6]|li|td|th)[^>]*><(?:span|strong|em|b|i)[^>]*>)[ \t\r\n]*(?:&nbsp;|\u00a0|[ \t])+/gi, '$1');
     return cleaned;
   }
 
@@ -114,6 +135,7 @@ export default function BlogRichEditor({
   const lastSelectedRangeRef = useRef(null);
   const [tableBarPos, setTableBarPos] = useState(null);
   const [tableMountNode, setTableMountNode] = useState(null);
+  const [fontSizeMountNode, setFontSizeMountNode] = useState(null);
   const updateTablePosRef = useRef(null);
   const activeTableCellRef = useRef(null);
   const [alignScope, setAlignScope] = useState('cell'); // 'cell' | 'column' | 'row' | 'table'
@@ -358,6 +380,26 @@ export default function BlogRichEditor({
     containerRef.current.insertBefore(mountDiv, editorDiv);
     setTableMountNode(mountDiv);
 
+    // Mount Google Docs Font Size Widget into Quill toolbar
+    const toolbarModule = quill.getModule('toolbar');
+    if (toolbarModule && toolbarModule.container) {
+      const headerFormats = toolbarModule.container.querySelector('.ql-header')?.closest('.ql-formats');
+      const fontSizeMount = document.createElement('span');
+      fontSizeMount.className = 'ql-formats winera-blog-fontsize-mount';
+      fontSizeMount.style.marginRight = '8px';
+      fontSizeMount.style.marginLeft = '2px';
+      fontSizeMount.style.verticalAlign = 'middle';
+      fontSizeMount.style.display = 'inline-flex';
+      fontSizeMount.style.alignItems = 'center';
+
+      if (headerFormats && headerFormats.nextSibling) {
+        toolbarModule.container.insertBefore(fontSizeMount, headerFormats.nextSibling);
+      } else {
+        toolbarModule.container.appendChild(fontSizeMount);
+      }
+      setFontSizeMountNode(fontSizeMount);
+    }
+
     // Set initial content
     if (value) {
       const initialHtml = prepareBlogContentForEditor(value);
@@ -379,10 +421,37 @@ export default function BlogRichEditor({
       const words = text ? text.split(/\s+/).length : 0;
       setStats({ words, characters: text.length });
 
-      if (htmlOutput === lastEmittedValueRef.current) return;
-      lastEmittedValueRef.current = htmlOutput;
+      let cleanOutput = htmlOutput;
+      if (cleanOutput && cleanOutput.includes('<')) {
+        cleanOutput = cleanOutput.replace(/(?:&nbsp;|\u00a0)+/gi, ' ');
+        cleanOutput = cleanOutput
+          .replace(/background-color\s*:\s*transparent\s*;?/gi, '')
+          .replace(/color\s*:\s*rgb\(0,\s*0,\s*0\)\s*;?/gi, '')
+          .replace(/\s*style=["']\s*["']/gi, '');
+        cleanOutput = cleanOutput.replace(/<span[^>]*>([,.:;!?])<\/span>/gi, '$1');
+        let prevClean;
+        do {
+          prevClean = cleanOutput;
+          cleanOutput = cleanOutput.replace(/<(span|strong|em|b|i|u)[^>]*>\s*<\/\1>/gi, '');
+        } while (cleanOutput !== prevClean);
+        cleanOutput = cleanOutput.replace(/\s+(<\/(?:span|strong|em|b|i|u)>)\s*([,.:;!?])/gi, '$1$2');
+        cleanOutput = cleanOutput.replace(/(<\/(?:span|strong|em|b|i|u)>)\s+([,.:;!?])/gi, '$1$2');
+        cleanOutput = cleanOutput.replace(/\s+([,.:;!?])/g, '$1');
+        cleanOutput = cleanOutput.replace(/([^\s>])\s+(<\/(?:span|strong|em|b|i|u)>)(?!\s*[,.:;!?])/gi, '$1$2 ');
+        cleanOutput = cleanOutput.replace(/(<(?:span|strong|em|b|i|u)[^>]*>)\s+([^\s<])/gi, ' $1$2');
+        cleanOutput = cleanOutput.replace(/([,;:!?])\s*(<(?:span|strong|em|b|i|u)[^>]*>)\s*([^\s<])/gi, '$1 $2$3');
+        cleanOutput = cleanOutput.replace(/([,;:!?])\s+([^\s<])/gi, '$1 $2');
+        cleanOutput = cleanOutput.replace(/(<\/(?:span|strong|em|b|i|u)>)\s+(<(?:span|strong|em|b|i|u)[^>]*>)\s+/gi, '$1 $2');
+        cleanOutput = cleanOutput.replace(/\s+(<\/(?:span|strong|em|b|i|u)>)\s+(<(?:span|strong|em|b|i|u)[^>]*>)/gi, '$1 $2');
+        cleanOutput = cleanOutput.replace(/(<(?:p|h[1-6]|li|td|th)[^>]*>)\s+/gi, '$1');
+        cleanOutput = cleanOutput.replace(/\s+(<\/(?:p|h[1-6]|li|td|th)>)/gi, '$1');
+        cleanOutput = cleanOutput.replace(/[ \t]{2,}/g, ' ');
+      }
+
+      if (cleanOutput === lastEmittedValueRef.current) return;
+      lastEmittedValueRef.current = cleanOutput;
       if (onChangeRef.current) {
-        onChangeRef.current(htmlOutput);
+        onChangeRef.current(cleanOutput);
       }
     });
 
@@ -804,6 +873,7 @@ export default function BlogRichEditor({
       editorElement.removeEventListener('paste', handleEditorPaste, true);
       editorElement.removeEventListener('drop', handleEditorDrop);
       setTableMountNode(null);
+      setFontSizeMountNode(null);
       quillRef.current = null;
     };
   }, []);
@@ -968,12 +1038,21 @@ export default function BlogRichEditor({
       targetCell.classList.remove('ql-align-justify', 'ql-align-center', 'ql-align-right', 'ql-align-left');
       targetCell.classList.add(`ql-align-${alignment}`);
 
+      if (alignment === 'left') {
+        targetCell.style.textIndent = '0px';
+        try {
+          targetCell.innerHTML = targetCell.innerHTML
+            .replace(/^(?:\s|&nbsp;|\u00a0)+/gi, '')
+            .replace(/(<(?:p|div)[^>]*>)[ \t\r\n]*(?:&nbsp;|\u00a0|[ \t])+/gi, '$1')
+            .replace(/(?:&nbsp;|\u00a0){2,}/gi, ' ');
+        } catch (e) {}
+      }
+
       targetCell.querySelectorAll('*').forEach(child => {
         child.style.textAlign = alignment;
+        child.style.textIndent = '0px';
         child.classList.remove('ql-align-justify', 'ql-align-center', 'ql-align-right', 'ql-align-left');
-        if (alignment !== 'left') {
-          child.classList.add(`ql-align-${alignment}`);
-        }
+        child.classList.add(`ql-align-${alignment}`);
       });
     };
 
@@ -1245,6 +1324,16 @@ export default function BlogRichEditor({
           position: 'relative'
         }}
       >
+        {/* ── Google Docs Style Font Size Control Portal ── */}
+        {fontSizeMountNode && createPortal(
+          <GoogleDocsFontSizePicker
+            quillRef={quillRef}
+            savedRangeRef={savedRangeRef}
+            lastSelectedRangeRef={lastSelectedRangeRef}
+          />,
+          fontSizeMountNode
+        )}
+
         {/* ── Table Quick Actions Toolbar (Docked cleanly below Quill toolbar, never overlapping row 1 or toolbar) ── */}
         {activeTable && tableMountNode && createPortal(
           <div
@@ -2249,6 +2338,25 @@ export default function BlogRichEditor({
         .winera-blog-quill-container .ql-snow .ql-toolbar button.ql-active .ql-fill {
           fill: #0284c7 !important;
         }
+
+        /* Google Docs Font Size Controls */
+        .winera-blog-quill-container .winera-google-docs-fontsize-picker button {
+          float: none !important;
+          width: auto !important;
+          height: 28px !important;
+          padding: 0 4px !important;
+          box-shadow: none !important;
+        }
+        .winera-blog-quill-container .winera-google-docs-fontsize-picker input {
+          font-family: inherit !important;
+        }
+        .winera-blog-quill-container .winera-google-docs-fontsize-dropdown::-webkit-scrollbar {
+          width: 5px;
+        }
+        .winera-blog-quill-container .winera-google-docs-fontsize-dropdown::-webkit-scrollbar-thumb {
+          background-color: #cbd5e1;
+          border-radius: 4px;
+        }
       `}</style>
 
       {/* Reusable Confirmation Modal fallback if not handled by parent */}
@@ -2257,6 +2365,430 @@ export default function BlogRichEditor({
           modal={localConfirmModal}
           onClose={() => setLocalConfirmModal(null)}
         />
+      )}
+    </div>
+  );
+}
+
+/**
+ * Google Docs Style Font Size Picker with editable input & dropdown
+ */
+function GoogleDocsFontSizePicker({ quillRef, savedRangeRef, lastSelectedRangeRef }) {
+  const [fontSize, setFontSize] = useState('16');
+  const [inputValue, setInputValue] = useState('16');
+  const [isOpen, setIsOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+
+  const FONT_SIZES = [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 30, 36, 48, 60, 72, 96];
+
+  useEffect(() => {
+    const quill = quillRef.current;
+    if (!quill) return;
+
+    const detectFontSize = () => {
+      if (isEditing) return;
+      try {
+        const range = quill.getSelection() || savedRangeRef.current;
+        if (!range) return;
+
+        const formats = quill.getFormat(range);
+        if (formats && formats.size) {
+          const rawNum = parseInt(String(formats.size).replace(/[^0-9]/g, ''), 10);
+          if (!isNaN(rawNum) && rawNum > 0) {
+            setFontSize(String(rawNum));
+            setInputValue(String(rawNum));
+            return;
+          }
+        }
+
+        const leaf = quill.getLeaf(range.index);
+        const node = leaf && leaf[0] && leaf[0].domNode;
+        if (node) {
+          const el = node.nodeType === 3 ? node.parentElement : node;
+          if (el) {
+            const comp = window.getComputedStyle(el).fontSize;
+            const rawNum = Math.round(parseFloat(comp));
+            if (!isNaN(rawNum) && rawNum > 0) {
+              setFontSize(String(rawNum));
+              setInputValue(String(rawNum));
+              return;
+            }
+          }
+        }
+
+        setFontSize('16');
+        setInputValue('16');
+      } catch (e) {}
+    };
+
+    quill.on('selection-change', detectFontSize);
+    quill.on('text-change', detectFontSize);
+
+    detectFontSize();
+
+    return () => {
+      quill.off('selection-change', detectFontSize);
+      quill.off('text-change', detectFontSize);
+    };
+  }, [quillRef, savedRangeRef, isEditing]);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setIsOpen(false);
+        setIsEditing(false);
+        setInputValue(fontSize);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [fontSize]);
+
+  const applySize = (val) => {
+    const quill = quillRef.current;
+    if (!quill) return;
+
+    const num = parseInt(String(val).replace(/[^0-9]/g, ''), 10);
+    if (isNaN(num) || num <= 0 || num > 300) {
+      setInputValue(fontSize);
+      setIsOpen(false);
+      setIsEditing(false);
+      return;
+    }
+
+    const pxVal = `${num}px`;
+
+    let range = quill.getSelection();
+    if ((!range || range.length === 0) && savedRangeRef.current) {
+      range = savedRangeRef.current;
+    }
+    if ((!range || range.length === 0) && lastSelectedRangeRef.current) {
+      range = lastSelectedRangeRef.current;
+    }
+
+    if (range && range.length > 0) {
+      // Get the exact selected text to trim leading/trailing whitespace
+      const selectedText = quill.getText(range.index, range.length);
+      let startIndex = range.index;
+      let targetLength = range.length;
+
+      // Strip leading whitespace from format range
+      const leadMatch = selectedText.match(/^[\s\u00a0]+/);
+      if (leadMatch) {
+        const leadLen = leadMatch[0].length;
+        startIndex += leadLen;
+        targetLength -= leadLen;
+      }
+
+      // Strip trailing whitespace from format range
+      const remainingText = selectedText.substring(startIndex - range.index);
+      const trailMatch = remainingText.match(/[\s\u00a0]+$/);
+      if (trailMatch) {
+        targetLength -= trailMatch[0].length;
+      }
+
+      if (targetLength > 0) {
+        quill.formatText(startIndex, targetLength, 'size', pxVal, 'user');
+        quill.setSelection(startIndex, targetLength);
+      } else {
+        quill.format('size', pxVal, 'user');
+      }
+    } else if (range) {
+      quill.format('size', pxVal, 'user');
+    } else {
+      quill.format('size', pxVal, 'user');
+    }
+
+    setFontSize(String(num));
+    setInputValue(String(num));
+    setIsOpen(false);
+    setIsEditing(false);
+    quill.focus();
+  };
+
+  const handleStep = (delta) => {
+    const currentNum = parseInt(fontSize, 10) || 16;
+    const newNum = Math.max(6, Math.min(200, currentNum + delta));
+    applySize(newNum);
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="winera-google-docs-fontsize-picker"
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        position: 'relative',
+        userSelect: 'none',
+        gap: '2px',
+        verticalAlign: 'middle'
+      }}
+    >
+      {/* Decrease Button (-) */}
+      <button
+        type="button"
+        title="Decrease font size"
+        aria-label="Decrease font size"
+        onMouseDown={(e) => {
+          e.preventDefault();
+          handleStep(-1);
+        }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '24px',
+          height: '28px',
+          padding: 0,
+          background: 'transparent',
+          border: 'none',
+          borderRadius: '4px',
+          color: '#475569',
+          cursor: 'pointer',
+          transition: 'all 0.15s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#f1f5f9';
+          e.currentTarget.style.color = '#0f172a';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = 'transparent';
+          e.currentTarget.style.color = '#475569';
+        }}
+      >
+        <Minus size={13} strokeWidth={2.5} />
+      </button>
+
+      {/* Input Box with Dropdown Toggle */}
+      <div
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          height: '28px',
+          background: '#ffffff',
+          border: isOpen ? '1.5px solid #0284c7' : '1px solid #cbd5e1',
+          borderRadius: '4px',
+          padding: '0 2px',
+          boxShadow: isOpen ? '0 0 0 2px rgba(2, 132, 199, 0.12)' : 'none',
+          transition: 'all 0.15s ease'
+        }}
+      >
+        {/* Editable input field for manual font size entry */}
+        <input
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          title="Font size (Click to type or select from dropdown)"
+          aria-label="Font size"
+          onFocus={(e) => {
+            setIsEditing(true);
+            setIsOpen(true);
+            e.target.select();
+          }}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              applySize(inputValue);
+              inputRef.current?.blur();
+            } else if (e.key === 'Escape') {
+              setIsOpen(false);
+              setIsEditing(false);
+              setInputValue(fontSize);
+              quillRef.current?.focus();
+            }
+          }}
+          onBlur={() => {
+            setIsEditing(false);
+            applySize(inputValue);
+          }}
+          style={{
+            width: '28px',
+            height: '24px',
+            border: 'none',
+            outline: 'none',
+            background: 'transparent',
+            textAlign: 'center',
+            fontSize: '13px',
+            fontWeight: '600',
+            color: '#1e293b',
+            fontFamily: 'inherit',
+            padding: 0
+          }}
+        />
+
+        {/* Dropdown Chevron Toggle Button */}
+        <button
+          type="button"
+          tabIndex={-1}
+          title="Font size options"
+          aria-label="Toggle font size options"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            setIsOpen((prev) => !prev);
+          }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '14px',
+            height: '24px',
+            padding: 0,
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            color: '#64748b'
+          }}
+        >
+          <ChevronDown size={11} strokeWidth={2.5} />
+        </button>
+      </div>
+
+      {/* Increase Button (+) */}
+      <button
+        type="button"
+        title="Increase font size"
+        aria-label="Increase font size"
+        onMouseDown={(e) => {
+          e.preventDefault();
+          handleStep(1);
+        }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '24px',
+          height: '28px',
+          padding: 0,
+          background: 'transparent',
+          border: 'none',
+          borderRadius: '4px',
+          color: '#475569',
+          cursor: 'pointer',
+          transition: 'all 0.15s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#f1f5f9';
+          e.currentTarget.style.color = '#0f172a';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = 'transparent';
+          e.currentTarget.style.color = '#475569';
+        }}
+      >
+        <Plus size={13} strokeWidth={2.5} />
+      </button>
+
+      {/* Dropdown Menu (Google Docs List Style) */}
+      {isOpen && (
+        <div
+          className="winera-google-docs-fontsize-dropdown"
+          style={{
+            position: 'absolute',
+            top: '32px',
+            left: '26px',
+            width: '64px',
+            maxHeight: '260px',
+            overflowY: 'auto',
+            background: '#ffffff',
+            border: '1px solid #cbd5e1',
+            borderRadius: '6px',
+            boxShadow: '0 8px 24px rgba(15, 23, 42, 0.16), 0 2px 6px rgba(15, 23, 42, 0.08)',
+            padding: '4px 0',
+            zIndex: 99999,
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          {FONT_SIZES.map((sz) => {
+            const isSelected = String(sz) === String(fontSize);
+            return (
+              <div
+                key={sz}
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  applySize(sz);
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '26px',
+                  fontSize: '13px',
+                  fontWeight: isSelected ? '700' : '500',
+                  color: isSelected ? '#0284c7' : '#334155',
+                  backgroundColor: isSelected ? '#e0f2fe' : 'transparent',
+                  cursor: 'pointer',
+                  margin: '1px 3px',
+                  borderRadius: '3px',
+                  transition: 'background-color 0.1s ease'
+                }}
+                onMouseEnter={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = '#f1f5f9';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }
+                }}
+              >
+                {sz}
+              </div>
+            );
+          })}
+
+          {/* Reset / Default Option */}
+          <div
+            onMouseDown={(e) => {
+              e.preventDefault();
+              const quill = quillRef.current;
+              if (quill) {
+                let range = quill.getSelection() || savedRangeRef.current || lastSelectedRangeRef.current;
+                if (range && range.length > 0) {
+                  quill.formatText(range.index, range.length, 'size', false, 'user');
+                  quill.setSelection(range);
+                } else {
+                  quill.format('size', false, 'user');
+                }
+                setFontSize('16');
+                setInputValue('16');
+                setIsOpen(false);
+                quill.focus();
+              }
+            }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '24px',
+              fontSize: '11px',
+              fontWeight: '600',
+              color: '#64748b',
+              borderTop: '1px solid #f1f5f9',
+              marginTop: '3px',
+              cursor: 'pointer',
+              borderRadius: '3px',
+              transition: 'all 0.1s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#fee2e2';
+              e.currentTarget.style.color = '#ef4444';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = '#64748b';
+            }}
+          >
+            Clear
+          </div>
+        </div>
       )}
     </div>
   );

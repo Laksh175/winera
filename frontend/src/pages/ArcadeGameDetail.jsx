@@ -1249,7 +1249,7 @@ export default function ArcadeGameDetail({ siteData }) {
                   marginTop: '4px',
                   whiteSpace: 'nowrap'
                 }} className="winera-arcade-banner-pill">
-                  Why Choose Winera International
+                  Specification
                 </div>
 
                 {/* Specs Key-Value List */}
@@ -1445,7 +1445,7 @@ export default function ArcadeGameDetail({ siteData }) {
                 }}
               />
               <h2 style={{ fontSize: '35px', fontWeight: '900', color: '#0f172a', margin: 0, lineHeight: 1.2 }}>
-                Specification <span style={{ color: '#00a8ff' }}>Detail</span>
+                Why Choose <span style={{ color: '#00a8ff' }}>Winera International</span>
               </h2>
             </div>
 

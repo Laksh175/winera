@@ -217,22 +217,77 @@ const renderFormattedText = (text) => {
       return match;
     });
 
-    // Automatically wrap any <table> with .winera-blog-table-responsive container so it adjusts according to content and scrolls smoothly only when necessary
-    let processedHtml = htmlWithHeadingIds;
+    // Clean text alignment and unwanted whitespace across ALL content:
+    let processedHtml = htmlWithHeadingIds
+      .replace(/text-align\s*:\s*justify\s*;?/gi, '')
+      .replace(/\bql-align-justify\b/gi, '');
+
+    // Protect <pre> and <code> blocks from whitespace manipulation
+    const codeBlocks = [];
+    processedHtml = processedHtml.replace(/<(pre|code)[^>]*>[\s\S]*?<\/\1>/gi, (m) => {
+      codeBlocks.push(m);
+      return `<!--__WINERA_CODE_BLOCK_${codeBlocks.length - 1}__-->`;
+    });
+
+    // Normalize 2 or more non-breaking spaces or consecutive whitespace into a single space
+    processedHtml = processedHtml.replace(/(?:&nbsp;|\u00a0)+/gi, ' ');
+
+    // Strip redundant boilerplate styles added by editors that interfere with spacing
+    processedHtml = processedHtml
+      .replace(/background-color\s*:\s*transparent\s*;?/gi, '')
+      .replace(/color\s*:\s*rgb\(0,\s*0,\s*0\)\s*;?/gi, '')
+      .replace(/\s*style=["']\s*["']/gi, '');
+
+    // Unwrap standalone punctuation spans (e.g. <span style="...">,</span> -> ,)
+    processedHtml = processedHtml.replace(/<span[^>]*>([,.:;!?])<\/span>/gi, '$1');
+
+    // 1. Remove ANY empty inline tags completely (NEVER replace with a space)
+    let prevHtml;
+    do {
+      prevHtml = processedHtml;
+      processedHtml = processedHtml.replace(/<(span|strong|em|b|i|u)[^>]*>\s*<\/\1>/gi, '');
+    } while (processedHtml !== prevHtml);
+
+    // 2. No space before punctuation (e.g. 'companies ,', 'included .', '</span> ,', '</span> .')
+    processedHtml = processedHtml.replace(/\s+(<\/(?:span|strong|em|b|i|u)>)\s*([,.:;!?])/gi, '$1$2');
+    processedHtml = processedHtml.replace(/(<\/(?:span|strong|em|b|i|u)>)\s+([,.:;!?])/gi, '$1$2');
+    processedHtml = processedHtml.replace(/\s+([,.:;!?])/g, '$1');
+
+    // 3. Move trailing spaces inside inline tags to OUTSIDE the tag (unless immediately followed by punctuation)
+    processedHtml = processedHtml.replace(/([^\s>])\s+(<\/(?:span|strong|em|b|i|u)>)(?!\s*[,.:;!?])/gi, '$1$2 ');
+
+    // 4. Move leading spaces inside inline tags to BEFORE the tag
+    processedHtml = processedHtml.replace(/(<(?:span|strong|em|b|i|u)[^>]*>)\s+([^\s<])/gi, ' $1$2');
+
+    // 5. Ensure single space after punctuation when followed by words or tags
+    processedHtml = processedHtml.replace(/([,;:!?])\s*(<(?:span|strong|em|b|i|u)[^>]*>)\s*([^\s<])/gi, '$1 $2$3');
+    processedHtml = processedHtml.replace(/([,;:!?])\s+([^\s<])/gi, '$1 $2');
+
+    // 6. Clean spaces across adjacent inline tags
+    processedHtml = processedHtml.replace(/(<\/(?:span|strong|em|b|i|u)>)\s+(<(?:span|strong|em|b|i|u)[^>]*>)\s+/gi, '$1 $2');
+    processedHtml = processedHtml.replace(/\s+(<\/(?:span|strong|em|b|i|u)>)\s+(<(?:span|strong|em|b|i|u)[^>]*>)/gi, '$1 $2');
+
+    // 7. Clean leading spaces at beginning of block elements (<p>, <h1-6>, <li>, <td>, <th>)
+    processedHtml = processedHtml.replace(/(<(?:p|h[1-6]|li|td|th)[^>]*>)\s+/gi, '$1');
+    processedHtml = processedHtml.replace(/(<(?:p|h[1-6]|li|td|th)[^>]*>(?:<(?:span|strong|em|b|i)[^>]*>)+)\s+/gi, '$1');
+    // Clean leading spaces after <br>
+    processedHtml = processedHtml.replace(/(<br\s*\/?>)\s+/gi, '$1');
+    // Clean trailing spaces before closing tags of blocks
+    processedHtml = processedHtml.replace(/\s+(<\/(?:p|h[1-6]|li|td|th)>)/gi, '$1');
+    processedHtml = processedHtml.replace(/\s+((?:<\/(?:span|strong|em|b|i)>)+<\/(?:p|h[1-6]|li|td|th)>)/gi, '$1');
+
+    // 8. Collapse duplicate horizontal spaces
+    processedHtml = processedHtml.replace(/[ \t]{2,}/g, ' ');
+
+    // Restore code blocks
+    processedHtml = processedHtml.replace(/<!--__WINERA_CODE_BLOCK_(\d+)__-->/g, (m, idx) => codeBlocks[Number(idx)] || '');
+
+    // Automatically wrap any <table> with .winera-blog-table-responsive container so it adjusts according to content and scrolls smoothly
     if (processedHtml.includes('<table')) {
-      // Clean up justify classes and excessive non-breaking spaces inside tables
       processedHtml = processedHtml.replace(/<table[\s\S]*?<\/table>/gi, (tableHtml) => {
         let cleaned = tableHtml
-          .replace(/text-align\s*:\s*justify\s*;?/gi, '')
-          .replace(/\bql-align-justify\b/gi, '')
-          .replace(/(?:&nbsp;|\u00a0){2,}/gi, ' ');
-        cleaned = cleaned.replace(/(<t[dh][^>]*>)([\s\S]*?)(<\/t[dh]>)/gi, (m, open, body, close) => {
-          const normalizedBody = body
-            .replace(/[ \t]{2,}/g, ' ')
-            .replace(/<p[^>]*class=["'][^"']*ql-align-justify[^"']*["'][^>]*>/gi, '<p>')
-            .replace(/<p\s+style=["'][^"']*text-align\s*:\s*justify[^"']*["'][^>]*>/gi, '<p>');
-          return `${open}${normalizedBody}${close}`;
-        });
+          .replace(/(<t[dh][^>]*>)[ \t\r\n]*(?:&nbsp;|\u00a0|[ \t])*/gi, '$1')
+          .replace(/(<t[dh][^>]*><p[^>]*>)[ \t\r\n]*(?:&nbsp;|\u00a0|[ \t])*/gi, '$1');
         return cleaned;
       });
       processedHtml = processedHtml.replace(/<div[^>]*class=["'][^"']*winera-blog-table-responsive[^"']*["'][^>]*>([\s\S]*?)<\/div>/gi, '$1');
@@ -692,12 +747,12 @@ export default function BlogDetail({ siteData }) {
 
   // Find post from list, apiBlog, or router state
   const foundInList = blogPosts.find(p => String(p.id) === String(id) || String(p.slug) === String(id));
-  const rawPost = (apiBlog && (String(apiBlog.id) === String(id) || String(apiBlog.slug) === String(id)))
-    ? (foundInList ? { ...apiBlog, ...foundInList, author: foundInList.author || apiBlog.author } : apiBlog)
+  const isCurrentApiBlog = apiBlog && (String(apiBlog.id) === String(id) || String(apiBlog.slug) === String(id) || String(apiBlog._id) === String(id));
+  const post = isCurrentApiBlog
+    ? (foundInList ? { ...foundInList, ...apiBlog, author: apiBlog.author || foundInList.author } : apiBlog)
     : (navPost && (String(navPost.id) === String(id) || String(navPost.slug) === String(id)))
       ? navPost
-      : (foundInList || apiBlog || navPost || blogPosts[0] || {});
-  const post = foundInList ? { ...rawPost, ...foundInList, author: foundInList.author || rawPost.author } : rawPost;
+      : (foundInList || blogPosts[0] || {});
   const postImg = getValidImageUrl(post?.image || post?.imageUrl || post?.imgUrl, blogCardImg);
 
   // Recent/Related posts: Pick the NEXT 3 consecutive blogs after current blog
@@ -1444,13 +1499,33 @@ export default function BlogDetail({ siteData }) {
         .winera-blog-article-content [style*="color"] i {
           color: inherit !important;
         }
-        .winera-blog-article-content span[style*="color"],
+        .winera-blog-article-content span {
+          display: inline !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        .winera-blog-article-content span[style*="font-size"] {
+          display: inline !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          line-height: inherit !important;
+        }
+        .winera-blog-article-content span[style*="color"] {
+          display: inline !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
         .winera-blog-article-content span[style*="background"] {
           display: inline !important;
+          margin: 0 !important;
+          padding: 0 !important;
         }
-        .winera-blog-article-content [style*="background"] {
-          border-radius: 4px !important;
-          padding: 2px 6px !important;
+        .winera-blog-article-content span[style*="transparent"],
+        .winera-blog-article-content span[style*="inherit"] {
+          margin: 0 !important;
+          padding: 0 !important;
+          background: transparent !important;
+          background-color: transparent !important;
         }
         .winera-blog-article-content p[style*="background"],
         .winera-blog-article-content div[style*="background"] {
@@ -1547,10 +1622,9 @@ export default function BlogDetail({ siteData }) {
         .winera-blog-article-content table {
           width: 100% !important;
           min-width: 100% !important;
-          max-width: 100% !important;
+          max-width: none !important;
           border-collapse: collapse !important;
           margin: 0 !important;
-          table-layout: fixed !important;
           background: #ffffff !important;
           border: none !important;
           box-shadow: none !important;
@@ -1565,10 +1639,10 @@ export default function BlogDetail({ siteData }) {
           line-height: 1.65 !important;
           color: #334155 !important;
           vertical-align: top !important;
-          text-align: left;
+          text-align: left !important;
           box-sizing: border-box !important;
-          word-break: break-word !important;
-          overflow-wrap: anywhere !important;
+          word-break: normal !important;
+          overflow-wrap: break-word !important;
           word-wrap: break-word !important;
           white-space: normal !important;
           word-spacing: normal !important;
@@ -1576,6 +1650,7 @@ export default function BlogDetail({ siteData }) {
           text-justify: none !important;
           hyphens: none !important;
           -webkit-hyphens: none !important;
+          text-indent: 0 !important;
         }
 
         .winera-blog-article-content table th p,
@@ -1587,10 +1662,12 @@ export default function BlogDetail({ siteData }) {
           font-size: 17px !important;
           line-height: 1.65 !important;
           color: #334155 !important;
-          word-break: break-word !important;
-          overflow-wrap: anywhere !important;
+          text-align: left !important;
+          word-break: normal !important;
+          overflow-wrap: break-word !important;
           word-wrap: break-word !important;
           white-space: normal !important;
+          text-indent: 0 !important;
         }
 
         /* Explicit alignment overrides for table cells & their contents */
@@ -1674,6 +1751,7 @@ export default function BlogDetail({ siteData }) {
           font-size: 17px !important;
           letter-spacing: -0.1px !important;
           border-bottom: 2px solid #cbd5e1 !important;
+          text-align: left !important;
         }
 
         .winera-blog-article-content table tr:nth-child(even) td {
@@ -1684,7 +1762,7 @@ export default function BlogDetail({ siteData }) {
           background: #f0fdf4 !important;
         }
 
-        /* Reset nested paragraphs inside table cells to 17px and proper line-height */
+        /* Reset nested paragraphs inside table cells to 17px, clean text-align left and proper line-height */
         .winera-blog-article-content table th p,
         .winera-blog-article-content table td p {
           margin: 0 !important;
@@ -1694,8 +1772,9 @@ export default function BlogDetail({ siteData }) {
           min-height: auto !important;
           color: inherit !important;
           font-weight: inherit !important;
-          word-break: break-word !important;
-          overflow-wrap: anywhere !important;
+          text-align: left !important;
+          word-break: normal !important;
+          overflow-wrap: break-word !important;
           word-wrap: break-word !important;
           white-space: normal !important;
           word-spacing: normal !important;
@@ -1703,6 +1782,7 @@ export default function BlogDetail({ siteData }) {
           text-justify: none !important;
           hyphens: none !important;
           -webkit-hyphens: none !important;
+          text-indent: 0 !important;
         }
 
         .winera-blog-article-content table th p + p,
@@ -1847,6 +1927,52 @@ export default function BlogDetail({ siteData }) {
           .winera-blog-article-main-col span,
           .winera-blog-article-main-col li {
             text-align: left !important;
+            text-indent: 0 !important;
+          }
+
+          /* Responsive Table on Mobile: Smooth Horizontal Scroll & Readable Columns */
+          .winera-blog-table-responsive {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            touch-action: pan-x !important;
+            margin: 18px 0 !important;
+            border-radius: 10px !important;
+          }
+          .winera-blog-table-responsive table,
+          .winera-blog-article-content table {
+            width: max-content !important;
+            min-width: 620px !important;
+            max-width: none !important;
+            table-layout: auto !important;
+            display: table !important;
+          }
+          .winera-blog-article-content table th,
+          .winera-blog-article-content table td {
+            min-width: 120px !important;
+            padding: 10px 14px !important;
+            font-size: 15px !important;
+            line-height: 1.55 !important;
+            word-break: normal !important;
+            overflow-wrap: break-word !important;
+            white-space: normal !important;
+            text-indent: 0 !important;
+          }
+          .winera-blog-article-content table th p,
+          .winera-blog-article-content table td p,
+          .winera-blog-article-content table th *,
+          .winera-blog-article-content table td * {
+            font-size: 15px !important;
+            line-height: 1.55 !important;
+            word-break: normal !important;
+            overflow-wrap: break-word !important;
+            white-space: normal !important;
+            text-indent: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
         }
         @media (max-width: 480px) {

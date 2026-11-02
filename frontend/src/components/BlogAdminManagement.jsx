@@ -276,11 +276,12 @@ export default function BlogAdminManagement({
       return;
     }
 
-    const fullContent = (editingBlog.fullContent || '').trim();
-    if (!fullContent) {
+    const rawContent = (editingBlog.fullContent || '').trim();
+    if (!rawContent) {
       showToast('Please enter content for the blog article.', 'warning');
       return;
     }
+    const fullContent = sanitizeAndFormatHtml(rawContent);
 
     const slug = editingBlog.slug?.trim() || editingBlog.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const cleanText = fullContent.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();

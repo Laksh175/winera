@@ -25,8 +25,29 @@ const restoreFromBackupDb = async () => {
     console.log('✅ Connected to MongoDB.');
 
     const client = mongoose.connection.client;
-    const liveDb = mongoose.connection.db;
-    const liveDbName = liveDb.databaseName;
+    const connectedDb = mongoose.connection.db;
+
+    // Detect available databases on MongoDB
+    let availableDbNames = [];
+    try {
+      const adminDb = client.db().admin();
+      const dbsList = await adminDb.listDatabases();
+      availableDbNames = (dbsList?.databases || []).map(d => d.name);
+    } catch {
+      // Non-fatal if unprivileged user
+    }
+
+    // Determine Live Target Database for restore:
+    let liveDbName = process.env.MONGODB_SOURCE_DB_NAME;
+    if (!liveDbName) {
+      if (availableDbNames.includes('myappdb')) {
+        liveDbName = 'myappdb';
+      } else {
+        liveDbName = connectedDb.databaseName;
+      }
+    }
+
+    const liveDb = client.db(liveDbName);
     const backupDbName = process.env.MONGODB_BACKUP_DB_NAME || `${liveDbName}-backup`;
 
     if (liveDbName === backupDbName) {
@@ -41,6 +62,7 @@ const restoreFromBackupDb = async () => {
       process.exit(1);
     }
 
+    console.log(`ℹ️ [DB Restore] Restoring from "${backupDbName}" into Live DB "${liveDbName}".`);
     console.log(`ℹ️ [DB Restore] Found ${backupCollections.length} collections in "${backupDbName}".`);
 
     let totalDocsRestored = 0;

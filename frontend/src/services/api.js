@@ -318,6 +318,9 @@ export const clearBlogCache = () => {
   blogCache.clear();
   try {
     sessionStorage.removeItem('winera_dynamic_blogs');
+    sessionStorage.removeItem('winera_site_data');
+    localStorage.removeItem('winera_dynamic_blogs');
+    localStorage.removeItem('winera_site_data');
   } catch (e) {}
 };
 

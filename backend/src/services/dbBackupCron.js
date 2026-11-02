@@ -22,8 +22,32 @@ export const syncLiveDbToBackupDb = async () => {
     }
 
     const client = mongoose.connection.client;
-    const sourceDb = mongoose.connection.db;
-    const sourceDbName = sourceDb.databaseName;
+    const connectedDb = mongoose.connection.db;
+
+    // Detect available databases on MongoDB
+    let availableDbNames = [];
+    try {
+      const adminDb = client.db().admin();
+      const dbsList = await adminDb.listDatabases();
+      availableDbNames = (dbsList?.databases || []).map(d => d.name);
+    } catch {
+      // Non-fatal if unprivileged user
+    }
+
+    // Determine Live Source Database:
+    // 1. Explicit env MONGODB_SOURCE_DB_NAME (e.g. 'myappdb')
+    // 2. If 'myappdb' exists on MongoDB, prioritize it because it is the live admin production DB
+    // 3. Fallback to connected database
+    let sourceDbName = process.env.MONGODB_SOURCE_DB_NAME;
+    if (!sourceDbName) {
+      if (availableDbNames.includes('myappdb')) {
+        sourceDbName = 'myappdb';
+      } else {
+        sourceDbName = connectedDb.databaseName;
+      }
+    }
+
+    const sourceDb = client.db(sourceDbName);
     const targetDbName = process.env.MONGODB_BACKUP_DB_NAME || `${sourceDbName}-backup`;
 
     // STRICT SAFETY CHECK: Ensure target is never the source database!
@@ -38,7 +62,7 @@ export const syncLiveDbToBackupDb = async () => {
 
     // List all collections from source database
     const collections = await sourceDb.listCollections().toArray();
-    console.log(`ℹ️ [DB Backup] Found ${collections.length} collections in live database to copy.`);
+    console.log(`ℹ️ [DB Backup] Found ${collections.length} collections in "${sourceDbName}" to copy.`);
 
     let totalDocsCopied = 0;
 
