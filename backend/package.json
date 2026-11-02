@@ -15,7 +15,8 @@
     "upload:cloudinary": "node src/scripts/uploadArcadeToCloudinary.js",
     "sync:json": "node src/scripts/syncJsonFromMongo.js",
     "backup:db": "node src/scripts/backupDatabase.js",
-    "restore:db": "node src/scripts/restoreFromBackupDb.js"
+    "restore:db": "node src/scripts/restoreFromBackupDb.js",
+    "clean:backup": "node src/scripts/cleanBackupCollections.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
