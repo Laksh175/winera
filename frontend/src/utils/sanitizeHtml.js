@@ -48,27 +48,27 @@ export const sanitizeAndFormatHtml = (input) => {
   let prevHtml;
   do {
     prevHtml = html;
-    html = html.replace(/<(span|strong|em|b|i|u)[^>]*>\s*<\/\1>/gi, '');
+    html = html.replace(/<(span|strong|em|b|i|u|a)[^>]*>\s*<\/\1>/gi, '');
   } while (html !== prevHtml);
 
-  // 2. No space before punctuation (e.g. 'companies ,', 'included .', '</span> ,', '</span> .')
-  html = html.replace(/\s+(<\/(?:span|strong|em|b|i|u)>)\s*([,.:;!?])/gi, '$1$2');
-  html = html.replace(/(<\/(?:span|strong|em|b|i|u)>)\s+([,.:;!?])/gi, '$1$2');
+  // 2. No space before punctuation (e.g. 'companies ,', 'included .', '</span> ,', '</a> ,')
+  html = html.replace(/\s+(<\/(?:span|strong|em|b|i|u|a)>)\s*([,.:;!?])/gi, '$1$2');
+  html = html.replace(/(<\/(?:span|strong|em|b|i|u|a)>)\s+([,.:;!?])/gi, '$1$2');
   html = html.replace(/\s+([,.:;!?])/g, '$1');
 
   // 3. Move trailing spaces inside inline tags to OUTSIDE the tag (unless immediately followed by punctuation)
-  html = html.replace(/([^\s>])\s+(<\/(?:span|strong|em|b|i|u)>)(?!\s*[,.:;!?])/gi, '$1$2 ');
+  html = html.replace(/([^\s>])\s+(<\/(?:span|strong|em|b|i|u|a)>)(?!\s*[,.:;!?])/gi, '$1$2 ');
 
   // 4. Move leading spaces inside inline tags to BEFORE the tag
-  html = html.replace(/(<(?:span|strong|em|b|i|u)[^>]*>)\s+([^\s<])/gi, ' $1$2');
+  html = html.replace(/(<(?:span|strong|em|b|i|u|a)[^>]*>)\s+([^\s<])/gi, ' $1$2');
 
   // 5. Ensure single space after punctuation when followed by words or tags
-  html = html.replace(/([,;:!?])\s*(<(?:span|strong|em|b|i|u)[^>]*>)\s*([^\s<])/gi, '$1 $2$3');
+  html = html.replace(/([,;:!?])\s*(<(?:span|strong|em|b|i|u|a)[^>]*>)\s*([^\s<])/gi, '$1 $2$3');
   html = html.replace(/([,;:!?])\s+([^\s<])/gi, '$1 $2');
 
   // 6. Clean spaces across adjacent inline tags
-  html = html.replace(/(<\/(?:span|strong|em|b|i|u)>)\s+(<(?:span|strong|em|b|i|u)[^>]*>)\s+/gi, '$1 $2');
-  html = html.replace(/\s+(<\/(?:span|strong|em|b|i|u)>)\s+(<(?:span|strong|em|b|i|u)[^>]*>)/gi, '$1 $2');
+  html = html.replace(/(<\/(?:span|strong|em|b|i|u|a)>)\s+(<(?:span|strong|em|b|i|u|a)[^>]*>)\s+/gi, '$1 $2');
+  html = html.replace(/\s+(<\/(?:span|strong|em|b|i|u|a)>)\s+(<(?:span|strong|em|b|i|u|a)[^>]*>)/gi, '$1 $2');
 
   // 7. Clean leading spaces at beginning of block elements (<p>, <h1-6>, <li>, <td>, <th>)
   html = html.replace(/(<(?:p|h[1-6]|li|td|th)[^>]*>)\s+/gi, '$1');

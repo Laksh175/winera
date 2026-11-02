@@ -4225,7 +4225,8 @@ html {
     display: none !important;
   }
 
-  .winera-bumpercar-investment-text a {
+  .winera-bumpercar-investment-text .winera-cyan-cta-wrapper a,
+  .winera-bumpercar-investment-text a.winera-cyan-cta-btn {
     margin: 20px 0 0 !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -4240,12 +4241,30 @@ html {
     gap: 0 !important;
   }
 
-  .winera-bumpercar-investment-text a span {
+  .winera-bumpercar-investment-text .winera-cyan-cta-wrapper a span,
+  .winera-bumpercar-investment-text a.winera-cyan-cta-btn span {
     font-size: 14px !important;
     font-weight: 600 !important;
     line-height: 1.1 !important;
     white-space: nowrap !important;
     letter-spacing: -0.1px !important;
+  }
+
+  .winera-bumpercar-investment-text p a,
+  .winera-bumpercar-investment-text .winera-bumpercar-investment-intro a {
+    display: inline !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: content-box !important;
+    white-space: normal !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    color: #0284c7 !important;
+    text-decoration: underline !important;
   }
 
   .winera-bumpercar-whyus-section {
