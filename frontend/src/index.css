@@ -4204,7 +4204,11 @@ html {
     display: none !important;
   }
 
-  .winera-bumpercar-investment-text p {
+  .winera-bumpercar-investment-text p,
+  .winera-bumpercar-investment-intro,
+  .winera-bumpercar-investment-intro p {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
     text-align: left !important;
     width: 100% !important;
   }

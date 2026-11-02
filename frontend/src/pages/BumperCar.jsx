@@ -1146,7 +1146,7 @@ export default function BumperCar({ siteData }) {
             </div>
 
             {/* Intro Paragraph 1 */}
-            <div className="winera-bumpercar-investment-intro" style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, fontWeight: '500', marginBottom: '16px' }}
+            <p className="winera-bumpercar-investment-intro" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '16px' }}
               dangerouslySetInnerHTML={{
                 __html: sanitizeAndFormatHtml((siteData?.bumpercarInvestment?.introText || "Most bumper car suppliers in India provide a catalogue price and leave the financial decision to you. As India's ROI-First Game Zone Developer, Winera International works differently.").replace(/\n/g, '<br>'))
               }}
