@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/product/:category/:slug",
+      "destination": "/product/:slug",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]

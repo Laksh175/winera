@@ -151,6 +151,17 @@ process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception thrown:', err);
 });
 
+// Legacy Product URLs 301 Permanent Redirect Handler (SEO Canonical Preservation)
+app.get([
+  '/product/arcade-games/:slug',
+  '/product/vr-games/:slug',
+  '/product/:category/:slug'
+], (req, res) => {
+  const { slug } = req.params;
+  const queryString = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  return res.redirect(301, `/product/${slug}${queryString}`);
+});
+
 app.use('/api', apiRoutes);
 
 app.get('/', (req, res) => {

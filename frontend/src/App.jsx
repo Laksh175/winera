@@ -1,5 +1,5 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { fetchSiteContent } from './services/api';
 import wineraLogo from './assets/logo.webp';
@@ -220,6 +220,32 @@ import { VideoModalProvider } from './context/VideoModalContext';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import GlobalSeoSchema from './components/GlobalSeoSchema';
 
+// Legacy Product URL 301 Permanent Redirect Handler
+// Safely redirects old URLs like /product/arcade-games/:slug or /product/vr-games/:slug to canonical /product/:slug
+function LegacyProductRedirect() {
+  const { slug } = useParams();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (typeof document !== 'undefined' && slug) {
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonicalLink);
+      }
+      canonicalLink.setAttribute('href', `https://winera.in/product/${slug}`);
+    }
+  }, [slug]);
+
+  if (!slug) {
+    return <Navigate to="/product/arcade-games" replace />;
+  }
+
+  const target = `/product/${slug}${location.search || ''}${location.hash || ''}`;
+  return <Navigate to={target} replace />;
+}
+
 function AppRoutes({ siteData, loadData }) {
   const location = useLocation();
 
@@ -297,6 +323,11 @@ function AppRoutes({ siteData, loadData }) {
 
           {/* Product Detail Dynamic Route (Canonical /product/:slug) */}
           <Route path="/product/:slug" element={<ArcadeGameDetail siteData={siteData} />} />
+
+          {/* Legacy Product 301 Permanent Redirects: /product/arcade-games/:slug, /product/vr-games/:slug, and nested categories -> /product/:slug */}
+          <Route path="/product/arcade-games/:slug" element={<LegacyProductRedirect />} />
+          <Route path="/product/vr-games/:slug" element={<LegacyProductRedirect />} />
+          <Route path="/product/:category/:slug" element={<LegacyProductRedirect />} />
 
           {/* 14. Safety Standards (Canonical /resource/safety-standards) */}
           <Route path="/resource/safety-standards" element={<SafetyStandards siteData={siteData} />} />
