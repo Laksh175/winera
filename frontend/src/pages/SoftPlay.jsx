@@ -873,9 +873,9 @@ export default function SoftPlay({ siteData }) {
                 type="button"
                 onClick={() => openBrochure(
                   (() => {
-                    const sUrl = siteData?.softplaySpecs?.brochureUrl;
+                    const sUrl = siteData?.softplaySpecs?.brochureUrl || siteData?.softplaySpecs?.buttonLink;
                     if (sUrl && typeof sUrl === 'string' && sUrl.trim() !== '#' && sUrl.trim() !== '') return sUrl.trim();
-                    const tUrl = siteData?.softplayTypes?.brochureUrl;
+                    const tUrl = siteData?.softplayTypes?.brochureUrl || siteData?.softplayTypes?.buttonLink;
                     if (tUrl && typeof tUrl === 'string' && tUrl.trim() !== '#' && tUrl.trim() !== '') return tUrl.trim();
                     return "/pdf/Winera Softplay.pdf";
                   })(),
@@ -1319,9 +1319,9 @@ export default function SoftPlay({ siteData }) {
         onClose={() => setIsBrochureOpen(false)}
         pdfUrl={
           (() => {
-            const sUrl = siteData?.softplaySpecs?.brochureUrl;
+            const sUrl = siteData?.softplaySpecs?.brochureUrl || siteData?.softplaySpecs?.buttonLink;
             if (sUrl && typeof sUrl === 'string' && sUrl.trim() !== '#' && sUrl.trim() !== '') return sUrl.trim();
-            const tUrl = siteData?.softplayTypes?.brochureUrl;
+            const tUrl = siteData?.softplayTypes?.brochureUrl || siteData?.softplayTypes?.buttonLink;
             if (tUrl && typeof tUrl === 'string' && tUrl.trim() !== '#' && tUrl.trim() !== '') return tUrl.trim();
             return "/pdf/Winera Softplay.pdf";
           })()

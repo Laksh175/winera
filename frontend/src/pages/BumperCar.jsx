@@ -649,7 +649,7 @@ export default function BumperCar({ siteData }) {
               type="button"
               onClick={() => openBrochure(
                 (() => {
-                  const bUrl = siteData?.bumpercarSpecs?.brochureUrl;
+                  const bUrl = siteData?.bumpercarSpecs?.brochureUrl || siteData?.bumpercarSpecs?.buttonLink || siteData?.bumpercarSpecs?.brochureLink;
                   if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '' && !bUrl.toLowerCase().includes('softplay')) return bUrl.trim();
                   return "/pdf/Bumper Car Catalogue.pdf";
                 })(),
@@ -1536,7 +1536,7 @@ export default function BumperCar({ siteData }) {
         onClose={() => setIsBrochureOpen(false)}
         pdfUrl={
           (() => {
-            const bUrl = siteData?.bumpercarSpecs?.brochureUrl;
+            const bUrl = siteData?.bumpercarSpecs?.brochureUrl || siteData?.bumpercarSpecs?.buttonLink || siteData?.bumpercarSpecs?.brochureLink;
             if (bUrl && typeof bUrl === 'string' && bUrl.trim() !== '#' && bUrl.trim() !== '' && !bUrl.toLowerCase().includes('softplay')) return bUrl.trim();
             return "/pdf/Bumper Car Catalogue.pdf";
           })()

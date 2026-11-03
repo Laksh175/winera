@@ -452,7 +452,7 @@ export default function Hypergrid({ siteData }) {
               type="button"
               onClick={() => openBrochure(
                 (() => {
-                  const hUrl = siteData?.hypergridSpecs?.brochureUrl;
+                  const hUrl = siteData?.hypergridSpecs?.buttonLink || siteData?.hypergridSpecs?.brochureUrl || siteData?.hypergridSpecs?.brochureLink;
                   if (hUrl && typeof hUrl === 'string' && hUrl.trim() !== '#' && hUrl.trim() !== '') return hUrl.trim();
                   return "/pdf/Hyper Grid.pdf";
                 })(),
