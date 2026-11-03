@@ -4732,7 +4732,8 @@ html {
     box-sizing: border-box !important;
   }
 
-  .winera-bowling-roi-text a {
+  .winera-bowling-roi-text a[aria-label="Talk to an ROI Expert"],
+  .winera-bowling-roi-text a.winera-cyan-cta-btn {
     margin: 0 auto !important;
   }
 
@@ -5207,7 +5208,8 @@ html {
     text-align: center !important;
   }
 
-  .winera-softplay-roi-text a {
+  .winera-softplay-roi-text a[aria-label="Talk to an ROI Expert"],
+  .winera-softplay-roi-text a.winera-cyan-cta-btn {
     margin: 0 auto !important;
   }
 
@@ -7169,18 +7171,28 @@ textarea::placeholder,
     text-align: center !important;
   }
 
-  .winera-hypergrid-banner-text,
-  .winera-hypergrid-roi-text {
+  .winera-hypergrid-banner-text {
     text-align: center !important;
     width: 100% !important;
   }
 
-  .winera-hypergrid-banner-text p,
-  .winera-hypergrid-roi-text p {
+  .winera-hypergrid-roi-text {
+    text-align: left !important;
+    width: 100% !important;
+  }
+
+  .winera-hypergrid-banner-text p {
     text-align: center !important;
     max-width: 100% !important;
     margin-left: auto !important;
     margin-right: auto !important;
+  }
+
+  .winera-hypergrid-roi-text p {
+    text-align: left !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
   .winera-hypergrid-banner-img,
@@ -7927,7 +7939,8 @@ textarea::placeholder,
 
   .winera-hypergrid-supplier-text .winera-cyan-cta-wrapper,
   .winera-hypergrid-banner-text .winera-cyan-cta-wrapper,
-  .winera-hypergrid-roi-text a {
+  .winera-hypergrid-roi-text a[aria-label="Talk to an ROI Expert"],
+  .winera-hypergrid-roi-text a.winera-cyan-cta-btn {
     display: flex !important;
     justify-content: center !important;
     margin: 20px auto 0 !important;
@@ -21099,4 +21112,48 @@ div.winera-blog-article-content table td *,
   .winera-softplay-manufacture-title {
     white-space: normal !important;
   }
+}
+
+/* ==========================================================================
+   GLOBAL INLINE PARAGRAPH LINK PRESERVATION
+   Ensures any link inside paragraphs, list items, and description blocks
+   remains strictly inline without breaking onto new lines or receiving
+   accidental button flex / margin styles.
+   ========================================================================== */
+p a,
+p a:visited,
+p a:hover,
+p a:active,
+li a,
+.winera-hypergrid-roi-text p a,
+.winera-hypergrid-banner-text p a,
+.winera-hypergrid-supplier-text p a,
+.winera-bumpercar-investment-text p a,
+.winera-bumpercar-investment-intro a,
+.winera-bumpercar-investment-text .winera-bumpercar-investment-intro a,
+.winera-bumpercar-supplier-text p a,
+.winera-bumpercar-intro-text p a,
+.winera-bowling-roi-text p a,
+.winera-softplay-roi-text p a,
+.winera-amusement-roi-text p a,
+.winera-trampoline-roi-text p a,
+.winera-ar-earn-text p a,
+.winera-vr-earn-text p a,
+.winera-expandable-preview p a,
+.winera-expandable-content p a {
+  display: inline !important;
+  width: auto !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: content-box !important;
+  white-space: normal !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  color: #0284c7 !important;
+  font-weight: 500 !important;
+  text-decoration: underline !important;
+  vertical-align: baseline !important;
 }

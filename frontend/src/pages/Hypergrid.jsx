@@ -623,7 +623,7 @@ export default function Hypergrid({ siteData }) {
               <MobileExpandableText
                 preview={
                   <p
-                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '22px', maxWidth: '620px', textAlign: 'justify' }}
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '22px', maxWidth: '620px', textAlign: 'left' }}
                     dangerouslySetInnerHTML={{
                       __html: sanitizeAndFormatHtml((siteData?.hypergridRoi?.paragraph1 || "Most interactive LED floor game suppliers quote a unit price and leave the business decision entirely to you. As India's ROI-First Game Zone Developer, Winera International works differently. Before confirming any Hypergrid order, our team prepares a complete ROI report for your specific venue \u2014 covering equipment cost, projected daily sessions, estimated revenue per session, maintenance costs, and break-even timeline.").replace(/\n/g, '<br>'))
                     }}
@@ -631,7 +631,7 @@ export default function Hypergrid({ siteData }) {
                 }
                 expandedContent={
                   <p
-                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '620px', textAlign: 'justify' }}
+                    style={{ fontSize: '15px', color: '#475569', lineHeight: 1.65, fontWeight: '500', marginBottom: '28px', maxWidth: '620px', textAlign: 'left' }}
                     dangerouslySetInnerHTML={{
                       __html: sanitizeAndFormatHtml((siteData?.hypergridRoi?.paragraph2 || "Every figure is calculated around your venue type, daily footfall, and target visitor demographic \u2014 not an industry average. Very few Hypergrid game suppliers in India include this as a standard part of their process. For Winera, it is where every project starts.").replace(/\n/g, '<br>'))
                     }}

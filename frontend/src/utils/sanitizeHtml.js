@@ -16,7 +16,7 @@ export const sanitizeAndFormatHtml = (input) => {
   html = html.replace(/<a\s+[^>]*?href=["']?([^"'\s>]+)["']?[^>]*>/gi, (match, href) => {
     const isWineraOrRelative = href.startsWith('/') || href.startsWith('#') || href.includes('winera.in');
     const targetAttr = isWineraOrRelative ? '' : ' target="_blank" rel="noopener noreferrer"';
-    return `<a href="${href}" style="color: #0284c7; font-weight: normal; text-decoration: underline;"${targetAttr}>`;
+    return `<a href="${href}" style="display: inline; color: #0284c7; font-weight: normal; text-decoration: underline;"${targetAttr}>`;
   });
 
   // 4. Clean text alignment and unwanted whitespace across ALL content:

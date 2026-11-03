@@ -723,7 +723,7 @@ export default function BumperCar({ siteData }) {
               color: 'rgb(55, 62, 65)',
               marginBottom: '35px',
               width: '84%',
-              textAlign: 'justify'
+              textAlign: 'left'
             }}
               dangerouslySetInnerHTML={{
                 __html: sanitizeAndFormatHtml((siteData?.bumpercarOptions?.desc || "We supply two drive types for indoor bumper car attractions. The right choice depends on your floor infrastructure, venue flexibility, and operational model.").replace(/\n/g, '<br>'))
