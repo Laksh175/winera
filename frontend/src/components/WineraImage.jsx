@@ -6,6 +6,9 @@ const loadedImageCache = new Set();
 
 const optimizeCloudinaryUrl = (url, width) => {
   if (!url || typeof url !== 'string') return url;
+  if (url.includes('track-flying-cinema-10p-standard-2')) {
+    return 'https://res.cloudinary.com/achfsmlm/image/upload/v1791888603/winera_vr_games_v2/track-flying-cinema-10p-standard-2_vr.jpg';
+  }
   if (!url.includes('cloudinary.com') || !url.includes('/image/upload/')) return url;
   
   // If url already has w_\d+, update it or remove if width is false/null

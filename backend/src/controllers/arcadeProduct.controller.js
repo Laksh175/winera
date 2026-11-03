@@ -46,6 +46,18 @@ const ensureArcadeProductsSeeded = async () => {
       { feature1Title: { $regex: /12\+/i } },
       { $set: { feature1Title: '15+ Years of Expertise' } }
     ).catch(() => {});
+
+    // Auto-fix broken 0-byte or corrupted image path for track-flying-cinema-10p-standard-2
+    await ArcadeProduct.updateOne(
+      { slug: 'track-flying-cinema-10p-standard-2', img: { $regex: /track-flying-cinema-10p-standard-2\.webp/ } },
+      {
+        $set: {
+          img: 'https://res.cloudinary.com/achfsmlm/image/upload/v1791888603/winera_vr_games_v2/track-flying-cinema-10p-standard-2_vr.jpg',
+          imageUrl: 'https://res.cloudinary.com/achfsmlm/image/upload/v1791888603/winera_vr_games_v2/track-flying-cinema-10p-standard-2_vr.jpg',
+          gallery: ['https://res.cloudinary.com/achfsmlm/image/upload/v1791888603/winera_vr_games_v2/track-flying-cinema-10p-standard-2_vr.jpg']
+        }
+      }
+    ).catch(() => {});
   } catch (err) {
     console.warn('Auto-seed arcade products notice:', err?.message);
   } finally {

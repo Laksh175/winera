@@ -1,5 +1,8 @@
 export function optImg(url) {
   if (!url || typeof url !== 'string') return url;
+  if (url.includes('track-flying-cinema-10p-standard-2')) {
+    return 'https://res.cloudinary.com/achfsmlm/image/upload/v1791888603/winera_vr_games_v2/track-flying-cinema-10p-standard-2_vr.jpg';
+  }
   if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/f_auto,q_auto/')) {
     return url.replace('/upload/', '/upload/f_auto,q_auto/');
   }

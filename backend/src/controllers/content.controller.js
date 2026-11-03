@@ -2549,6 +2549,12 @@ export const getContent = async (req, res) => {
           card.feature1Title = card.feature1Title.replace(/12\+/g, '15+');
           arcadeModified = true;
         }
+        if (card && card.slug === 'track-flying-cinema-10p-standard-2' && card.img && card.img.includes('track-flying-cinema-10p-standard-2.webp')) {
+          card.img = 'https://res.cloudinary.com/achfsmlm/image/upload/v1791888603/winera_vr_games_v2/track-flying-cinema-10p-standard-2_vr.jpg';
+          card.imageUrl = card.img;
+          if (Array.isArray(card.gallery)) card.gallery = [card.img];
+          arcadeModified = true;
+        }
       });
       if (arcadeModified) {
         await Content.findOneAndUpdate(
