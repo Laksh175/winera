@@ -164,8 +164,36 @@ app.get([
 
 app.use('/api', apiRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Winera Backend API is running...');
+// Dynamic HTML Server: Injects accurate canonical and OpenGraph URL tags for raw requests & view-source
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+    return next();
+  }
+  const indexPath = path.resolve(frontendDistPath, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    try {
+      let html = fs.readFileSync(indexPath, 'utf8');
+      const cleanPath = req.path === '/' ? '/' : req.path.replace(/\/+$/, '');
+      const dynamicCanonical = `https://winera.in${cleanPath}`;
+      html = html.replace(
+        /<link\s+rel=["']canonical["']\s+href=["'][^"']*["']\s*\/?>/i,
+        `<link rel="canonical" href="${dynamicCanonical}" />`
+      );
+      html = html.replace(
+        /<meta\s+property=["']og:url["']\s+content=["'][^"']*["']\s*\/?>/i,
+        `<meta property="og:url" content="${dynamicCanonical}" />`
+      );
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      return res.send(html);
+    } catch (e) {
+      console.warn('Dynamic index.html serve notice:', e?.message);
+    }
+  }
+  if (req.path === '/' || req.path === '') {
+    return res.send('Winera Backend API is running...');
+  }
+  next();
 });
 
 // Global Express Error Handler Middleware

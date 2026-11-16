@@ -983,8 +983,29 @@ export default function ArcadeGameDetail({ siteData }) {
     }
     metaDesc_el.setAttribute('content', metaDesc);
 
+    // Canonical & OpenGraph URL Tag for Product
+    const resolvedCanonical = product.canonicalUrl && product.canonicalUrl.trim()
+      ? product.canonicalUrl.trim()
+      : `https://winera.in/product/${slug}`;
+
+    let canonicalTag = document.querySelector("link[rel='canonical']");
+    if (!canonicalTag) {
+      canonicalTag = document.createElement('link');
+      canonicalTag.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalTag);
+    }
+    canonicalTag.setAttribute('href', resolvedCanonical);
+
+    let ogUrlTag = document.querySelector("meta[property='og:url']");
+    if (!ogUrlTag) {
+      ogUrlTag = document.createElement('meta');
+      ogUrlTag.setAttribute('property', 'og:url');
+      document.head.appendChild(ogUrlTag);
+    }
+    ogUrlTag.setAttribute('content', resolvedCanonical);
+
     window.scrollTo(0, 0);
-  }, [product, isVrProduct]);
+  }, [product, isVrProduct, slug]);
 
   useEffect(() => {
     if (thumbRefs.current[selectedImageIndex]) {

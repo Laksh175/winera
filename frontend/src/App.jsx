@@ -200,9 +200,10 @@ function GlobalCanonicalTag({ siteData }) {
     }
 
     // Determine target URL: Admin configured custom URL or clean standard live URL
+    const cleanPath = pathname === '/' ? '/' : pathname.replace(/\/+$/, '');
     const targetUrl = customCanonical && customCanonical.trim() !== ''
       ? customCanonical.trim()
-      : `https://winera.in${pathname === '/' ? '/' : pathname}`;
+      : `https://winera.in${cleanPath}`;
 
     let canonicalLink = document.querySelector('link[rel="canonical"]');
     if (!canonicalLink) {
@@ -211,6 +212,14 @@ function GlobalCanonicalTag({ siteData }) {
       document.head.appendChild(canonicalLink);
     }
     canonicalLink.setAttribute('href', targetUrl);
+
+    let ogUrlTag = document.querySelector('meta[property="og:url"]');
+    if (!ogUrlTag) {
+      ogUrlTag = document.createElement('meta');
+      ogUrlTag.setAttribute('property', 'og:url');
+      document.head.appendChild(ogUrlTag);
+    }
+    ogUrlTag.setAttribute('content', targetUrl);
   }, [pathname, siteData]);
 
   return null;

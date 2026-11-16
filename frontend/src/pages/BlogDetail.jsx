@@ -809,11 +809,19 @@ export default function BlogDetail({ siteData }) {
       canonicalTag.setAttribute('rel', 'canonical');
       document.head.appendChild(canonicalTag);
     }
-    const currentSlug = post.slug || post.id;
+    const currentSlug = post.slug || id;
     const resolvedCanonical = post.canonicalUrl && post.canonicalUrl.trim()
       ? post.canonicalUrl.trim()
       : `https://winera.in/blog/${currentSlug}`;
     canonicalTag.setAttribute('href', resolvedCanonical);
+
+    let ogUrlTag = document.querySelector("meta[property='og:url']");
+    if (!ogUrlTag) {
+      ogUrlTag = document.createElement('meta');
+      ogUrlTag.setAttribute('property', 'og:url');
+      document.head.appendChild(ogUrlTag);
+    }
+    ogUrlTag.setAttribute('content', resolvedCanonical);
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
