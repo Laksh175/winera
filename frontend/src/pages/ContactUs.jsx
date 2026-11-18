@@ -787,42 +787,66 @@ export default function ContactUs({ siteData }) {
             <div style={{
               position: 'relative',
               width: '100%',
-              height: isMobile ? '320px' : '440px',
+              height: isMobile ? '380px' : '450px',
               borderRadius: isMobile ? '18px' : '28px',
               overflow: 'hidden',
               boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
               border: '4px solid #ffffff'
             }}>
-              <a
-                href={siteData?.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8966098,17z/data=!3m1!4b1!4m6!3m5!1s0x3be0458aa41d1761:0x6c2c313a9305bb7f!8m2!3d21.2290369!4d72.8991847"}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  position: 'absolute',
-                  top: '14px',
-                  right: '14px',
-                  zIndex: 5,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'rgba(255, 255, 255, 0.95)',
-                  backdropFilter: 'blur(8px)',
-                  color: '#0284c7',
-                  padding: '8px 16px',
-                  borderRadius: '10px',
-                  boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
-                  fontWeight: '700',
-                  fontSize: '12.5px',
-                  textDecoration: 'none'
-                }}
-              >
-                <MapPin style={{ width: '15px', height: '15px', color: '#e11d48' }} />
-                <span>Open in Google Maps</span>
-              </a>
+              {/* Custom Exact Address Card on Top-Left with Office 1011 */}
+              <div style={{
+                position: 'absolute',
+                top: isMobile ? '10px' : '16px',
+                left: isMobile ? '10px' : '16px',
+                zIndex: 5,
+                background: '#ffffff',
+                borderRadius: '14px',
+                boxShadow: '0 6px 22px rgba(0,0,0,0.2)',
+                padding: isMobile ? '12px 14px' : '16px 20px',
+                maxWidth: isMobile ? 'calc(100% - 20px)' : '370px',
+                textAlign: 'left',
+                border: '1px solid rgba(0,0,0,0.06)'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '6px' }}>
+                  <MapPin style={{ width: '18px', height: '18px', color: '#e11d48', flexShrink: 0, marginTop: '2px' }} />
+                  <div>
+                    <h4 style={{ margin: 0, fontSize: isMobile ? '13px' : '15px', fontWeight: '800', color: '#0f172a' }}>
+                      Winera International Pvt. Ltd.
+                    </h4>
+                    <span style={{ fontSize: '11px', color: '#0284c7', fontWeight: '700' }}>
+                      Office No. 1011, 10th Floor
+                    </span>
+                  </div>
+                </div>
+                <p style={{ margin: '0 0 10px 0', fontSize: isMobile ? '11px' : '12px', color: '#475569', lineHeight: 1.45, fontWeight: '500' }}>
+                  Millennium Business Hub, Opp. Sarthana, Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat 395013
+                </p>
+                <a
+                  href={siteData?.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8966098,17z/data=!3m1!4b1!4m6!3m5!1s0x3be0458aa41d1761:0x6c2c313a9305bb7f!8m2!3d21.2290369!4d72.8991847"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    background: '#1a73e8',
+                    color: '#ffffff',
+                    padding: '7px 16px',
+                    borderRadius: '20px',
+                    fontSize: '12px',
+                    fontWeight: '700',
+                    textDecoration: 'none',
+                    boxShadow: '0 2px 8px rgba(26,115,232,0.35)'
+                  }}
+                >
+                  <MapPin style={{ width: '13px', height: '13px' }} />
+                  <span>Open in Maps</span>
+                </a>
+              </div>
 
               <iframe
                 title="Winera International Location Map"
-                src={siteData?.contactPage?.mapUrl || "https://maps.google.com/maps?q=Office+No.+1011,+10th+floor,+Millennium+Business+Hub,+opp.+Sarthana,+Bhagavan+Nagar,+Sarthana+Jakat+Naka,+Nature+Park+and+Zoo,+Nana+Varachha,+Surat,+Gujarat+395013&t=&z=16&ie=UTF8&iwloc=&output=embed"}
+                src={siteData?.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.8548777174697!2d72.9148311!3d21.2462222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f0032b84cf7%3A0x88981f37e42d75f2!2sMillennium%20Business%20Hub!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
