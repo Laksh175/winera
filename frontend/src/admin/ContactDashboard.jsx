@@ -342,7 +342,7 @@ export default function ContactDashboard({
                 </label>
                 <input
                   type="text"
-                  value={formData.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d238130.15372332616!2d72.68220805!3d21.1591425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04e59411d1563%3A0xfe4558290938b042!2sSurat%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
+                  value={formData.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.8548777174697!2d72.9148311!3d21.2462222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f0032b84cf7%3A0x88981f37e42d75f2!2sMillennium%20Business%20Hub!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
                   onChange={(e) => handleFieldChange('contactPage', 'mapUrl', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontWeight: '500' }}
                 />
