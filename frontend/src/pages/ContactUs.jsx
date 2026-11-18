@@ -787,39 +787,35 @@ export default function ContactUs({ siteData }) {
             <div style={{
               position: 'relative',
               width: '100%',
-              height: isMobile ? '380px' : '450px',
+              height: isMobile ? '340px' : '420px',
               borderRadius: isMobile ? '18px' : '28px',
               overflow: 'hidden',
               boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
               border: '4px solid #ffffff'
             }}>
-              {/* Custom Exact Address Card on Top-Left with Office 1011 */}
+              {/* Compact Sleek Location Card on Top-Left */}
               <div style={{
                 position: 'absolute',
-                top: isMobile ? '10px' : '16px',
-                left: isMobile ? '10px' : '16px',
+                top: isMobile ? '8px' : '12px',
+                left: isMobile ? '8px' : '12px',
                 zIndex: 5,
-                background: '#ffffff',
-                borderRadius: '14px',
-                boxShadow: '0 6px 22px rgba(0,0,0,0.2)',
-                padding: isMobile ? '12px 14px' : '16px 20px',
-                maxWidth: isMobile ? 'calc(100% - 20px)' : '370px',
+                background: 'rgba(255, 255, 255, 0.98)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '10px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.14)',
+                padding: isMobile ? '8px 12px' : '10px 14px',
+                maxWidth: isMobile ? '260px' : '310px',
                 textAlign: 'left',
-                border: '1px solid rgba(0,0,0,0.06)'
+                border: '1px solid #e2e8f0'
               }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '6px' }}>
-                  <MapPin style={{ width: '18px', height: '18px', color: '#e11d48', flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <h4 style={{ margin: 0, fontSize: isMobile ? '13px' : '15px', fontWeight: '800', color: '#0f172a' }}>
-                      Winera International Pvt. Ltd.
-                    </h4>
-                    <span style={{ fontSize: '11px', color: '#0284c7', fontWeight: '700' }}>
-                      Office No. 1011, 10th Floor
-                    </span>
-                  </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
+                  <MapPin style={{ width: '15px', height: '15px', color: '#e11d48', flexShrink: 0 }} />
+                  <h4 style={{ margin: 0, fontSize: isMobile ? '12.5px' : '13.5px', fontWeight: '800', color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    Winera International
+                  </h4>
                 </div>
-                <p style={{ margin: '0 0 10px 0', fontSize: isMobile ? '11px' : '12px', color: '#475569', lineHeight: 1.45, fontWeight: '500' }}>
-                  Millennium Business Hub, Opp. Sarthana, Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat 395013
+                <p style={{ margin: '0 0 7px 0', fontSize: isMobile ? '10.5px' : '11.5px', color: '#475569', lineHeight: 1.35, fontWeight: '500' }}>
+                  Office 1011, 10th Flr, Millennium Business Hub, Opp. Sarthana Zoo, Surat
                 </p>
                 <a
                   href={siteData?.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8966098,17z/data=!3m1!4b1!4m6!3m5!1s0x3be0458aa41d1761:0x6c2c313a9305bb7f!8m2!3d21.2290369!4d72.8991847"}
@@ -828,25 +824,25 @@ export default function ContactUs({ siteData }) {
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '6px',
+                    gap: '5px',
                     background: '#1a73e8',
                     color: '#ffffff',
-                    padding: '7px 16px',
-                    borderRadius: '20px',
-                    fontSize: '12px',
+                    padding: '4px 12px',
+                    borderRadius: '14px',
+                    fontSize: '11px',
                     fontWeight: '700',
                     textDecoration: 'none',
-                    boxShadow: '0 2px 8px rgba(26,115,232,0.35)'
+                    boxShadow: '0 2px 6px rgba(26,115,232,0.3)'
                   }}
                 >
-                  <MapPin style={{ width: '13px', height: '13px' }} />
+                  <MapPin style={{ width: '11px', height: '11px' }} />
                   <span>Open in Maps</span>
                 </a>
               </div>
 
               <iframe
                 title="Winera International Location Map"
-                src={siteData?.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.8548777174697!2d72.9148311!3d21.2462222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f0032b84cf7%3A0x88981f37e42d75f2!2sMillennium%20Business%20Hub!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
+                src={siteData?.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.1028711681726!2d72.8966098!3d21.2290369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0458aa41d1761%3A0x6c2c313a9305bb7f!2sWinera%20International%20Pvt.%20LTd.%20-%20Game%20Zone%20Setup%20Company!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
