@@ -303,7 +303,7 @@ export default function ContactDashboard({
                     <RichTextareaWithEditor
                       label="Location 1 Full Address"
                       rows={3}
-                      value={formData.contactPage?.hq1Address !== undefined ? formData.contactPage.hq1Address : "Winera International Pvt. Ltd.\nSurat, Gujarat, India.\nHotline: +91 91578 73576 / +91 95123 56766"}
+                      value={formData.contactPage?.hq1Address !== undefined ? formData.contactPage.hq1Address : "Office No. 1011, 10th floor, Millennium Business Hub, opp. Sarthana, Bhagavan Nagar, Sarthana Jakat Naka, Nature Park and Zoo, Nana Varachha, Surat, Gujarat 395013\nHotline: +91 91578 73576 / +91 95123 56766"}
                       onChange={(val) => handleFieldChange('contactPage', 'hq1Address', val)}
                       placeholder="Enter Location 1 full address..."
                     />
@@ -342,8 +342,18 @@ export default function ContactDashboard({
                 </label>
                 <input
                   type="text"
-                  value={formData.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.8548777174697!2d72.9148311!3d21.2462222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f0032b84cf7%3A0x88981f37e42d75f2!2sMillennium%20Business%20Hub!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
+                  value={formData.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.1028711681726!2d72.8966098!3d21.2290369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0458aa41d1761%3A0x6c2c313a9305bb7f!2sWinera%20International%20Pvt.%20LTd.%20-%20Game%20Zone%20Setup%20Company!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
                   onChange={(e) => handleFieldChange('contactPage', 'mapUrl', e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontWeight: '500', marginBottom: '14px' }}
+                />
+
+                <label style={{ display: 'block', fontWeight: '800', fontSize: '13px', color: '#0f172a', marginBottom: '8px' }}>
+                  Direct Google Maps Link (Opens app / full map in new tab)
+                </label>
+                <input
+                  type="text"
+                  value={formData.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8966098,17z/data=!3m1!4b1!4m6!3m5!1s0x3be0458aa41d1761:0x6c2c313a9305bb7f!8m2!3d21.2290369!4d72.8991847"}
+                  onChange={(e) => handleFieldChange('contactPage', 'googleMapsUrl', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontWeight: '500' }}
                 />
               </div>
