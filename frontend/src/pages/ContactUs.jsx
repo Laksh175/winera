@@ -822,7 +822,7 @@ export default function ContactUs({ siteData }) {
 
               <iframe
                 title="Winera International Location Map"
-                src={siteData?.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.1028711681726!2d72.8966098!3d21.2290369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0458aa41d1761%3A0x6c2c313a9305bb7f!2sWinera%20International%20Pvt.%20LTd.%20-%20Game%20Zone%20Setup%20Company!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
+                src={siteData?.contactPage?.mapUrl || "https://maps.google.com/maps?q=Office+No.+1011,+10th+floor,+Millennium+Business+Hub,+opp.+Sarthana,+Bhagavan+Nagar,+Sarthana+Jakat+Naka,+Nature+Park+and+Zoo,+Nana+Varachha,+Surat,+Gujarat+395013&t=&z=16&ie=UTF8&iwloc=&output=embed"}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
