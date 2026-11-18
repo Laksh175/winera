@@ -1000,16 +1000,25 @@ export default function AboutUs({ siteData }) {
                     })()}
                   </div>
 
-                  <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-                    <a
-                      href={currentFounder?.linkedinUrl || "https://linkedin.com"}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-                    >
-                      <span>Linkedin Profile</span>
-                    </a>
-                  </div>
+                  {(() => {
+                    const rawUrl = currentFounder?.linkedinUrl;
+                    const resolvedUrl = rawUrl && rawUrl.trim()
+                      ? (/^https?:\/\//i.test(rawUrl.trim()) ? rawUrl.trim() : `https://${rawUrl.trim()}`)
+                      : "https://www.linkedin.com";
+
+                    return (
+                      <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+                        <a
+                          href={resolvedUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                        >
+                          <span>Linkedin Profile</span>
+                        </a>
+                      </div>
+                    );
+                  })()}
                 </div>
               </div>
 
