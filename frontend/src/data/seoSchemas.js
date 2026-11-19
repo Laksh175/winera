@@ -196,7 +196,10 @@ export const SEO_SCHEMAS = {
           "https://www.youtube.com/@winerainternational8917",
           "https://x.com/WinEra_Int",
           "https://www.google.com/maps?cid=14350748879418151825"
-        ]
+        ],
+        "priceRange": "₹₹₹",
+        "currenciesAccepted": "INR",
+        "paymentAccepted": "Cash, Credit Card, Bank Transfer, UPI"
       },
       {
         "@type": "WebSite",
