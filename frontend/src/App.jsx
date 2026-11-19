@@ -255,6 +255,26 @@ function LegacyProductRedirect() {
   return <Navigate to={target} replace />;
 }
 
+// Legacy Plural /products/:slug to /product/:slug redirect handler (Soft 404 Prevention)
+function LegacyPluralProductsRedirect() {
+  const { slug } = useParams();
+  const location = useLocation();
+
+  if (!slug) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (slug === 'bumper-cars') {
+    return <Navigate to={`/product/bumper-car${location.search || ''}`} replace />;
+  }
+  if (slug === 'sculpture' || slug === 'reception-table' || slug === 'lights') {
+    return <Navigate to={`/${location.search || ''}`} replace />;
+  }
+
+  const target = `/product/${slug}${location.search || ''}${location.hash || ''}`;
+  return <Navigate to={target} replace />;
+}
+
 function AppRoutes({ siteData, loadData }) {
   const location = useLocation();
 
@@ -359,7 +379,18 @@ function AppRoutes({ siteData, loadData }) {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard siteData={siteData} refreshContent={loadData} />} />
 
-          {/* 20. Strict Fallback 404 Page Not Found Route for all non-canonical / invalid URLs */}
+          {/* 20. SEO 301 Redirections (Soft 404 Resolution) */}
+          <Route path="/home" element={<Navigate to="/" replace />} />
+          <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
+          <Route path="/auth/privacy-policy" element={<Navigate to="/privacy-policy" replace />} />
+          <Route path="/roi" element={<Navigate to="/resource/roi" replace />} />
+          <Route path="/safety-standards" element={<Navigate to="/resource/safety-standards" replace />} />
+          <Route path="/faq" element={<Navigate to="/" replace />} />
+          <Route path="/arcade-game" element={<Navigate to="/product/arcade-games" replace />} />
+          <Route path="/products" element={<Navigate to="/" replace />} />
+          <Route path="/products/:slug" element={<LegacyPluralProductsRedirect />} />
+
+          {/* 21. Strict Fallback 404 Page Not Found Route for all non-canonical / invalid URLs */}
           <Route path="*" element={<NotFoundPage siteData={siteData} />} />
         </Routes>
       </Suspense>
