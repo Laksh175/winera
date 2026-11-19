@@ -352,7 +352,7 @@ export default function ContactDashboard({
                 </label>
                 <input
                   type="text"
-                  value={formData.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8966098,17z/data=!3m1!4b1!4m6!3m5!1s0x3be0458aa41d1761:0x6c2c313a9305bb7f!8m2!3d21.2290369!4d72.8991847"}
+                  value={formData.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Millennium+Business+Hub/@21.2290369,72.8991847,17z/data=!3m1!4b1!4m6!3m5!1s0x3be04f0032b84cf7:0x88981f37e42d75f2!8m2!3d21.2290369!4d72.8991847"}
                   onChange={(e) => handleFieldChange('contactPage', 'googleMapsUrl', e.target.value)}
                   style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '13px', fontWeight: '500' }}
                 />

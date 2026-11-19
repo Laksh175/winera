@@ -685,7 +685,7 @@ export default function ContactUs({ siteData }) {
                   />
                   <div style={{ position: 'relative', zIndex: 3, marginTop: '14px' }}>
                     <a
-                      href={siteData?.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8966098,17z/data=!3m1!4b1!4m6!3m5!1s0x3be0458aa41d1761:0x6c2c313a9305bb7f!8m2!3d21.2290369!4d72.8991847"}
+                      href={siteData?.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Millennium+Business+Hub/@21.2290369,72.8991847,17z/data=!3m1!4b1!4m6!3m5!1s0x3be04f0032b84cf7:0x88981f37e42d75f2!8m2!3d21.2290369!4d72.8991847"}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
@@ -818,7 +818,7 @@ export default function ContactUs({ siteData }) {
                   Office 1011, 10th Flr, Millennium Business Hub, Opp. Sarthana Zoo, Surat
                 </p>
                 <a
-                  href={siteData?.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8966098,17z/data=!3m1!4b1!4m6!3m5!1s0x3be0458aa41d1761:0x6c2c313a9305bb7f!8m2!3d21.2290369!4d72.8991847"}
+                  href={siteData?.contactPage?.googleMapsUrl || "https://www.google.com/maps/place/Millennium+Business+Hub/@21.2290369,72.8991847,17z/data=!3m1!4b1!4m6!3m5!1s0x3be04f0032b84cf7:0x88981f37e42d75f2!8m2!3d21.2290369!4d72.8991847"}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
