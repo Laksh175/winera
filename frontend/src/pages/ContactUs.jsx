@@ -685,7 +685,7 @@ export default function ContactUs({ siteData }) {
                   />
                   <div style={{ position: 'relative', zIndex: 3, marginTop: '14px' }}>
                     <a
-                      href={(siteData?.contactPage?.googleMapsUrl && !siteData?.contactPage?.googleMapsUrl.includes('/place//@')) ? siteData.contactPage.googleMapsUrl : "https://www.google.com/maps/place/Millennium+Business+Hub,+719-721,+Bhagavan+Nagar,+Sarthana+Jakat+Naka,+Sarthi+Society,+Nana+Varachha,+Surat,+Gujarat+395013/@21.2290369,72.8991847,17z/data=!3m1!4b1!4m6!3m5!1s0x3be0458aa41d1761:0x6c2c313a9305bb7f!8m2!3d21.2290369!4d72.8991847!16s%2Fg%2F11wjbbyl1n"}
+                      href={(siteData?.contactPage?.googleMapsUrl && !siteData?.contactPage?.googleMapsUrl.includes('/place//@')) ? siteData.contactPage.googleMapsUrl : "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8991847,17z/data=!3m1!4b1!4m6!3m5!1s0x3be04f5018b7227d:0xc7281a12828dd391!8m2!3d21.2290369!4d72.8991847!16s%2Fg%2F11jv819g3v"}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
@@ -818,7 +818,7 @@ export default function ContactUs({ siteData }) {
                   Office 1011, 10th Flr, Millennium Business Hub, Opp. Sarthana Zoo, Surat
                 </p>
                 <a
-                  href={(siteData?.contactPage?.googleMapsUrl && !siteData?.contactPage?.googleMapsUrl.includes('/place//@')) ? siteData.contactPage.googleMapsUrl : "https://www.google.com/maps/place/Millennium+Business+Hub,+719-721,+Bhagavan+Nagar,+Sarthana+Jakat+Naka,+Sarthi+Society,+Nana+Varachha,+Surat,+Gujarat+395013/@21.2290369,72.8991847,17z/data=!3m1!4b1!4m6!3m5!1s0x3be0458aa41d1761:0x6c2c313a9305bb7f!8m2!3d21.2290369!4d72.8991847!16s%2Fg%2F11wjbbyl1n"}
+                  href={(siteData?.contactPage?.googleMapsUrl && !siteData?.contactPage?.googleMapsUrl.includes('/place//@')) ? siteData.contactPage.googleMapsUrl : "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8991847,17z/data=!3m1!4b1!4m6!3m5!1s0x3be04f5018b7227d:0xc7281a12828dd391!8m2!3d21.2290369!4d72.8991847!16s%2Fg%2F11jv819g3v"}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -842,7 +842,7 @@ export default function ContactUs({ siteData }) {
 
               <iframe
                 title="Winera International Location Map"
-                src={siteData?.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.1028711681726!2d72.8966098!3d21.2290369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0458aa41d1761%3A0x6c2c313a9305bb7f!2sWinera%20International%20Pvt.%20LTd.%20-%20Game%20Zone%20Setup%20Company!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
+                src={siteData?.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.1028711681726!2d72.8966098!3d21.2290369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f5018b7227d%3A0xc7281a12828dd391!2sWinera%20International%20Pvt.%20LTd.%20-%20Game%20Zone%20Setup%20Company!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
