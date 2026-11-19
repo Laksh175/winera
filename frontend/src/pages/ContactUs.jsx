@@ -793,53 +793,6 @@ export default function ContactUs({ siteData }) {
               boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
               border: '4px solid #ffffff'
             }}>
-              {/* Compact Sleek Location Card on Top-Left */}
-              <div style={{
-                position: 'absolute',
-                top: isMobile ? '8px' : '12px',
-                left: isMobile ? '8px' : '12px',
-                zIndex: 5,
-                background: 'rgba(255, 255, 255, 0.98)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '10px',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.14)',
-                padding: isMobile ? '8px 12px' : '10px 14px',
-                maxWidth: isMobile ? '260px' : '310px',
-                textAlign: 'left',
-                border: '1px solid #e2e8f0'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
-                  <MapPin style={{ width: '15px', height: '15px', color: '#e11d48', flexShrink: 0 }} />
-                  <h4 style={{ margin: 0, fontSize: isMobile ? '12.5px' : '13.5px', fontWeight: '800', color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    Winera International
-                  </h4>
-                </div>
-                <p style={{ margin: '0 0 7px 0', fontSize: isMobile ? '10.5px' : '11.5px', color: '#475569', lineHeight: 1.35, fontWeight: '500' }}>
-                  Office 1011, 10th Flr, Millennium Business Hub, Opp. Sarthana Zoo, Surat
-                </p>
-                <a
-                  href={(siteData?.contactPage?.googleMapsUrl && !siteData?.contactPage?.googleMapsUrl.includes('/place//@')) ? siteData.contactPage.googleMapsUrl : "https://www.google.com/maps/place/Winera+International+Pvt.+LTd.+-+Game+Zone+Setup+Company/@21.2290369,72.8991847,17z/data=!3m1!4b1!4m6!3m5!1s0x3be04f5018b7227d:0xc7281a12828dd391!8m2!3d21.2290369!4d72.8991847!16s%2Fg%2F11jv819g3v"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    background: '#1a73e8',
-                    color: '#ffffff',
-                    padding: '4px 12px',
-                    borderRadius: '14px',
-                    fontSize: '11px',
-                    fontWeight: '700',
-                    textDecoration: 'none',
-                    boxShadow: '0 2px 6px rgba(26,115,232,0.3)'
-                  }}
-                >
-                  <MapPin style={{ width: '11px', height: '11px' }} />
-                  <span>Open in Maps</span>
-                </a>
-              </div>
-
               <iframe
                 title="Winera International Location Map"
                 src={siteData?.contactPage?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.1028711681726!2d72.8966098!3d21.2290369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f5018b7227d%3A0xc7281a12828dd391!2sWinera%20International%20Pvt.%20LTd.%20-%20Game%20Zone%20Setup%20Company!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
