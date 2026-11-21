@@ -6,7 +6,7 @@ import ArcadeProduct from '../models/ArcadeProduct.js';
 import VrGame from '../models/VrGame.js';
 import Content from '../models/Content.js';
 
-const BASE_URL = process.env.SITE_URL || 'https://www.winera.in';
+const BASE_URL = process.env.SITE_URL || 'https://winera.in';
 
 /**
  * Returns today's date formatted as YYYY-MM-DD
@@ -80,13 +80,13 @@ export const normalizeUrl = (rawUrl) => {
   if (!rawUrl) return '';
   let url = rawUrl.trim();
 
-  // Normalize winera.in to www.winera.in as per client's PDF structure
-  if (url.startsWith('https://winera.in')) {
-    url = url.replace('https://winera.in', BASE_URL);
-  } else if (url.startsWith('http://winera.in')) {
-    url = url.replace('http://winera.in', BASE_URL);
+  // Normalize to canonical https://winera.in
+  if (url.startsWith('https://www.winera.in')) {
+    url = url.replace('https://www.winera.in', BASE_URL);
   } else if (url.startsWith('http://www.winera.in')) {
     url = url.replace('http://www.winera.in', BASE_URL);
+  } else if (url.startsWith('http://winera.in')) {
+    url = url.replace('http://winera.in', BASE_URL);
   } else if (!url.startsWith('http://') && !url.startsWith('https://')) {
     url = `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
   }

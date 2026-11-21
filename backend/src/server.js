@@ -7,6 +7,14 @@ import { initDbBackupCron } from './services/dbBackupCron.js';
 import { initScheduledPublishingCron } from './services/scheduledPublishService.js';
 import apiRoutes from './routes/api.routes.js';
 import { getSitemapXmlController } from './controllers/content.controller.js';
+import {
+  getBaseIndexHtml,
+  injectSeoTags,
+  getBlogSeoData,
+  getProductSeoData,
+  getProjectSeoData,
+  getStaticPageSeoData
+} from './utils/seoHtmlService.js';
 
 import fs from 'fs';
 import path from 'path';
@@ -49,7 +57,7 @@ app.get('/robots.txt', (req, res) => {
     return res.sendFile(filePath);
   }
   res.type('text/plain; charset=utf-8');
-  res.send(`# Robots.txt for https://www.winera.in/
+  res.send(`# Robots.txt for https://winera.in/
 # Purpose: Crawl control for search engines & AI bots
 
 User-agent: *
@@ -72,7 +80,7 @@ Disallow: */feed/
 Disallow: /thank-you
 Disallow: /*?utm_
 
-Sitemap: https://www.winera.in/sitemap.xml
+Sitemap: https://winera.in/sitemap.xml
 `);
 });
 
@@ -164,36 +172,60 @@ app.get([
 
 app.use('/api', apiRoutes);
 
-// Dynamic HTML Server: Injects accurate canonical and OpenGraph URL tags for raw requests & view-source
-app.get('*', (req, res, next) => {
+// Dynamic HTML Server: Injects accurate SEO meta tags (title, description, image, canonical, OG & Twitter tags) for raw requests & web crawlers
+app.get('*', async (req, res, next) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
     return next();
   }
-  const indexPath = path.resolve(frontendDistPath, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    try {
-      let html = fs.readFileSync(indexPath, 'utf8');
-      const cleanPath = req.path === '/' ? '/' : req.path.replace(/\/+$/, '');
-      const dynamicCanonical = `https://winera.in${cleanPath}`;
-      html = html.replace(
-        /<link\s+rel=["']canonical["']\s+href=["'][^"']*["']\s*\/?>/i,
-        `<link rel="canonical" href="${dynamicCanonical}" />`
-      );
-      html = html.replace(
-        /<meta\s+property=["']og:url["']\s+content=["'][^"']*["']\s*\/?>/i,
-        `<meta property="og:url" content="${dynamicCanonical}" />`
-      );
-      res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-      return res.send(html);
-    } catch (e) {
-      console.warn('Dynamic index.html serve notice:', e?.message);
+
+  const baseHtml = getBaseIndexHtml();
+  if (!baseHtml) {
+    if (req.path === '/' || req.path === '') {
+      return res.send('Winera Backend API is running...');
     }
+    return next();
   }
-  if (req.path === '/' || req.path === '') {
-    return res.send('Winera Backend API is running...');
+
+  try {
+    const rawPath = req.path;
+    let seoData = null;
+
+    // 1. Dynamic Blog Pages: /blog/:slug
+    if (rawPath.startsWith('/blog/')) {
+      const slug = rawPath.replace(/^\/blog\//, '').replace(/\/+$/, '');
+      if (slug) {
+        seoData = await getBlogSeoData(slug);
+      }
+    }
+    // 2. Dynamic Product Pages: /product/:slug
+    else if (rawPath.startsWith('/product/')) {
+      const slug = rawPath.replace(/^\/product\//, '').replace(/\/+$/, '');
+      if (slug) {
+        seoData = await getProductSeoData(slug);
+      }
+    }
+    // 3. Dynamic Project Pages: /project/:slug
+    else if (rawPath.startsWith('/project/')) {
+      const slug = rawPath.replace(/^\/project\//, '').replace(/\/+$/, '');
+      if (slug) {
+        seoData = await getProjectSeoData(slug);
+      }
+    }
+
+    // 4. Static Pages or Fallback
+    if (!seoData) {
+      seoData = getStaticPageSeoData(rawPath);
+    }
+
+    const injectedHtml = injectSeoTags(baseHtml, seoData);
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    return res.send(injectedHtml);
+  } catch (err) {
+    console.error('[DynamicHTML] Error injecting SEO tags:', err);
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    return res.send(baseHtml);
   }
-  next();
 });
 
 // Global Express Error Handler Middleware
