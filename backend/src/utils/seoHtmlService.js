@@ -7,6 +7,7 @@ import ArcadeProduct from '../models/ArcadeProduct.js';
 import VrGame from '../models/VrGame.js';
 import Project from '../models/Project.js';
 import Content from '../models/Content.js';
+import { SEO_SCHEMAS } from '../data/seoSchemas.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -152,32 +153,37 @@ export async function getBlogSeoData(slug) {
     </article>
   `;
 
-  // Article / BlogPosting Schema
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    'headline': blog.title || title,
-    'description': desc,
-    'image': [image],
-    'datePublished': blog.createdAt || blog.date || '2024-01-01',
-    'dateModified': blog.updatedAt || blog.createdAt || '2024-01-01',
-    'author': {
-      '@type': 'Person',
-      'name': blog.author || 'Divyang Mandani'
-    },
-    'publisher': {
-      '@type': 'Organization',
-      'name': 'Winera International Pvt. Ltd.',
-      'logo': {
-        '@type': 'ImageObject',
-        'url': 'https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png'
+  // Route Schema check (from SEO_SCHEMAS) or fallback to dynamic BlogPosting Schema
+  const blogRoute = `/blog/${normalizedSlug}`;
+  let schema = SEO_SCHEMAS[blogRoute] || null;
+
+  if (!schema) {
+    schema = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      'headline': blog.title || title,
+      'description': desc,
+      'image': [image],
+      'datePublished': blog.createdAt || blog.date || '2024-01-01',
+      'dateModified': blog.updatedAt || blog.createdAt || '2024-01-01',
+      'author': {
+        '@type': 'Person',
+        'name': blog.author || 'Divyang Mandani'
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Winera International Pvt. Ltd.',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': 'https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png'
+        }
+      },
+      'mainEntityOfPage': {
+        '@type': 'WebPage',
+        '@id': canonicalUrl
       }
-    },
-    'mainEntityOfPage': {
-      '@type': 'WebPage',
-      '@id': canonicalUrl
-    }
-  };
+    };
+  }
 
   return {
     title,
@@ -291,12 +297,16 @@ export async function getProductSeoData(slug) {
       }
     }
 
+    const catRoute = `/product/${normalizedSlug}`;
+    const schema = SEO_SCHEMAS[catRoute] || null;
+
     return {
       title: categoryMap[normalizedSlug].title,
       description: categoryMap[normalizedSlug].desc,
       image: DEFAULT_IMAGE,
       canonicalUrl: `${BASE_URL}/product/${normalizedSlug}`,
       ogType: 'website',
+      schema,
       bodyHtml
     };
   }
@@ -316,12 +326,32 @@ export async function getProductSeoData(slug) {
 
   if (!product) {
     const readable = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    const canonicalUrl = `${BASE_URL}/product/${normalizedSlug}`;
+    const fallbackSchema = SEO_SCHEMAS[`/product/${normalizedSlug}`] || {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      'name': readable,
+      'description': `Commercial game zone equipment: ${readable}. Turnkey manufacturing, setup, and supply across 50+ cities in India by Winera International.`,
+      'image': [DEFAULT_IMAGE],
+      'brand': {
+        '@type': 'Brand',
+        'name': 'Winera International'
+      },
+      'offers': {
+        '@type': 'Offer',
+        'url': canonicalUrl,
+        'priceCurrency': 'INR',
+        'availability': 'https://schema.org/InStock'
+      }
+    };
+
     return {
       title: `${readable} | Commercial Game Zone Equipment | Winera International`,
       description: `Commercial game zone equipment: ${readable}. Turnkey manufacturing, setup, and supply across 50+ cities in India by Winera International.`,
       image: DEFAULT_IMAGE,
-      canonicalUrl: `${BASE_URL}/product/${normalizedSlug}`,
-      ogType: 'product'
+      canonicalUrl,
+      ogType: 'product',
+      schema: fallbackSchema
     };
   }
 
@@ -390,12 +420,15 @@ export async function getProjectSeoData(slug) {
 
   if (!project) {
     const readable = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    const projectRoute = `/project/${normalizedSlug}`;
+    const schema = SEO_SCHEMAS[projectRoute] || null;
     return {
       title: `${readable} | Game Zone Project Setup | Winera International`,
       description: `Explore ${readable} game zone setup and installation project by Winera International across India.`,
       image: DEFAULT_IMAGE,
       canonicalUrl: `${BASE_URL}/project/${normalizedSlug}`,
-      ogType: 'website'
+      ogType: 'website',
+      schema
     };
   }
 
@@ -415,13 +448,16 @@ export async function getProjectSeoData(slug) {
   }
 
   const canonicalUrl = `${BASE_URL}/project/${project.slug || normalizedSlug}`;
+  const projectRoute = `/project/${project.slug || normalizedSlug}`;
+  const schema = SEO_SCHEMAS[projectRoute] || SEO_SCHEMAS[`/project/${normalizedSlug}`] || null;
 
   return {
     title,
     description: desc,
     image,
     canonicalUrl,
-    ogType: 'website'
+    ogType: 'website',
+    schema
   };
 }
 
@@ -530,22 +566,30 @@ export function getStaticPageSeoData(rawPath) {
       `;
     }
 
+    const pRoute = p === '/' ? '/' : p;
+    const schema = SEO_SCHEMAS[pRoute] || null;
+
     return {
       title: staticPages[p].title,
       description: staticPages[p].desc,
       image: staticPages[p].image,
       canonicalUrl: `${BASE_URL}${p === '/' ? '/' : p}`,
       ogType: 'website',
+      schema,
       bodyHtml
     };
   }
+
+  const pRoute = p === '/' ? '/' : p;
+  const schema = SEO_SCHEMAS[pRoute] || null;
 
   return {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESC,
     image: DEFAULT_IMAGE,
     canonicalUrl: `${BASE_URL}${p === '/' ? '/' : p}`,
-    ogType: 'website'
+    ogType: 'website',
+    schema
   };
 }
 
@@ -635,10 +679,25 @@ export function injectSeoTags(baseHtml, meta) {
   }
 
   // 6. Schema Injection
+  // Always replace the static winera-dynamic-ld-json script in baseHtml so that
+  // inner pages never accidentally carry the Homepage schema / Homepage FAQs!
+  const dynamicScriptRegex = /<script\s+id=["']winera-dynamic-ld-json["'][^>]*>[\s\S]*?<\/script>/i;
+
   if (schema) {
     const schemaJson = JSON.stringify(schema, null, 2);
-    const schemaTag = `\n  <script type="application/ld+json">\n${schemaJson}\n  </script>\n`;
-    html = html.replace(/<\/head>/i, `${schemaTag}</head>`);
+    const schemaTag = `<script id="winera-dynamic-ld-json" type="application/ld+json">\n${schemaJson}\n  </script>`;
+
+    if (dynamicScriptRegex.test(html)) {
+      html = html.replace(dynamicScriptRegex, schemaTag);
+    } else {
+      html = html.replace(/<\/head>/i, `  ${schemaTag}\n</head>`);
+    }
+  } else {
+    // If this inner page has no schema, strip the homepage schema script tag
+    // to prevent Google or Schema.org from seeing wrong homepage FAQs on this URL.
+    if (dynamicScriptRegex.test(html) && canonicalUrl !== BASE_URL && canonicalUrl !== `${BASE_URL}/`) {
+      html = html.replace(dynamicScriptRegex, '');
+    }
   }
 
   // 7. Inject Crawler-friendly HTML into <div id="root"> for non-JS crawlers & Screaming Frog
