@@ -138,6 +138,7 @@ app.use('/uploads', express.static('uploads', {
 const frontendDistPath = path.resolve(process.cwd(), '../frontend/dist');
 if (fs.existsSync(frontendDistPath)) {
   app.use(express.static(frontendDistPath, {
+    index: false,
     maxAge: '1y',
     immutable: true,
     setHeaders: (res, filePath) => {

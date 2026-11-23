@@ -141,6 +141,17 @@ export async function getBlogSeoData(slug) {
 
   const canonicalUrl = `${BASE_URL}/blog/${blog.slug}`;
 
+  // Pre-rendered clean crawler content for Googlebot and non-JS crawlers
+  const bodyHtml = `
+    <article style="max-width:900px;margin:0 auto;padding:20px;">
+      <h1>${escapeAttr(blog.title)} ${escapeAttr(blog.subtitle || '')}</h1>
+      <p><strong>Published:</strong> ${escapeAttr(blog.date || '2024')}</p>
+      <p><strong>Author:</strong> ${escapeAttr(blog.author || 'Divyang Mandani')}</p>
+      <div>${blog.fullContent || blog.content || `<p>${escapeAttr(desc)}</p>`}</div>
+      <p><a href="/blog">&larr; Back to all blogs</a></p>
+    </article>
+  `;
+
   // Article / BlogPosting Schema
   const schema = {
     '@context': 'https://schema.org',
@@ -174,7 +185,8 @@ export async function getBlogSeoData(slug) {
     image,
     canonicalUrl,
     ogType: 'article',
-    schema
+    schema,
+    bodyHtml
   };
 }
 
@@ -417,12 +429,63 @@ export function getStaticPageSeoData(rawPath) {
   };
 
   if (staticPages[p]) {
+    let bodyHtml = null;
+
+    // Pre-render all 33 blog links on /blog for non-JS crawlers & Screaming Frog
+    if (p === '/blog') {
+      const blogs = getBlogsFromJson();
+      const blogLinks = blogs.map(b => `
+        <article style="margin-bottom:24px;">
+          <h2><a href="/blog/${b.slug}">${escapeAttr(b.title)} ${escapeAttr(b.subtitle || '')}</a></h2>
+          <p>${escapeAttr(b.excerpt || '')}</p>
+        </article>
+      `).join('');
+
+      bodyHtml = `
+        <main style="max-width:1200px;margin:0 auto;padding:24px;">
+          <h1>Game Zone & Amusement Park Industry Blogs | Winera International</h1>
+          <p>Read expert guides, ROI formulas, setup costs, and industry tips on establishing profitable indoor game zones in India.</p>
+          <section>
+            ${blogLinks}
+          </section>
+        </main>
+      `;
+    } else if (p === '/') {
+      bodyHtml = `
+        <header style="padding:24px;">
+          <h1>Winera International - Commercial Game Zone Equipment Manufacturer</h1>
+          <nav>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/why-us">About Us</a></li>
+              <li><a href="/contact">Contact Us</a></li>
+              <li><a href="/blog">Blogs & Insights</a></li>
+              <li><a href="/project">Projects</a></li>
+              <li><a href="/resource/roi">ROI Blueprint</a></li>
+              <li><a href="/resource/safety-standards">Safety Standards</a></li>
+              <li><a href="/product/arcade-games">Arcade Games</a></li>
+              <li><a href="/product/vr-games">VR Games</a></li>
+              <li><a href="/product/soft-play">Soft Play</a></li>
+              <li><a href="/product/trampoline-park">Trampoline Park</a></li>
+              <li><a href="/product/bowling-alley">Bowling Alley</a></li>
+              <li><a href="/product/bumper-car">Bumper Cars</a></li>
+              <li><a href="/product/amusement-park">Amusement Park Rides</a></li>
+              <li><a href="/product/hypergrid">Hypergrid</a></li>
+              <li><a href="/product/laser-tag">Laser Tag</a></li>
+              <li><a href="/product/ar-games">AR Games</a></li>
+            </ul>
+          </nav>
+        </header>
+      `;
+    }
+
     return {
       title: staticPages[p].title,
       description: staticPages[p].desc,
       image: staticPages[p].image,
       canonicalUrl: `${BASE_URL}${p === '/' ? '/' : p}`,
-      ogType: 'website'
+      ogType: 'website',
+      bodyHtml
     };
   }
 
@@ -525,6 +588,14 @@ export function injectSeoTags(baseHtml, meta) {
     const schemaJson = JSON.stringify(schema, null, 2);
     const schemaTag = `\n  <script type="application/ld+json">\n${schemaJson}\n  </script>\n`;
     html = html.replace(/<\/head>/i, `${schemaTag}</head>`);
+  }
+
+  // 7. Inject Crawler-friendly HTML into <div id="root"> for non-JS crawlers & Screaming Frog
+  if (meta.bodyHtml) {
+    html = html.replace(
+      /<div\s+id=["']root["'][^>]*>[\s\S]*?<\/div>/i,
+      `<div id="root">\n${meta.bodyHtml}\n</div>`
+    );
   }
 
   return html;
