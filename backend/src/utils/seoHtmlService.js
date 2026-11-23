@@ -241,12 +241,63 @@ export async function getProductSeoData(slug) {
   };
 
   if (categoryMap[normalizedSlug]) {
+    let bodyHtml = null;
+
+    if (normalizedSlug === 'arcade-games') {
+      try {
+        const arcadeData = JSON.parse(fs.readFileSync(new URL('../data/allArcadeProducts.json', import.meta.url), 'utf-8'));
+        const cards = (arcadeData && arcadeData.cards) || [];
+        const links = cards
+          .filter(c => {
+            const s = (c.slug || c.title || c.name || '').toLowerCase();
+            return s && !/^to(-\d+)?$/i.test(s) && !/invoice-wi/i.test(s) && s !== 'example';
+          })
+          .map(c => `<li><a href="/product/${c.slug || c.title || c.name}">${escapeAttr(c.name || c.title)}</a></li>`)
+          .join('\n');
+        bodyHtml = `
+          <main style="max-width:1200px;margin:0 auto;padding:24px;">
+            <h1>Commercial Arcade Games Catalogue | Winera International</h1>
+            <p>Explore our complete commercial arcade game collection, prize redemption machines, racing simulators, and amusement park games across India.</p>
+            <ul>
+              ${links}
+            </ul>
+          </main>
+        `;
+      } catch (e) {
+        console.warn('Error pre-rendering arcade games:', e.message);
+      }
+    } else if (normalizedSlug === 'vr-games') {
+      try {
+        const vrData = JSON.parse(fs.readFileSync(new URL('../data/allVrGames.json', import.meta.url), 'utf-8'));
+        const cards = (vrData && vrData.cards) || [];
+        const links = cards
+          .filter(c => {
+            const s = (c.slug || c.title || c.name || '').toLowerCase();
+            return s && !/^to(-\d+)?$/i.test(s) && !/invoice-wi/i.test(s) && s !== 'example';
+          })
+          .map(c => `<li><a href="/product/${c.slug || c.title || c.name}">${escapeAttr(c.name || c.title)}</a></li>`)
+          .join('\n');
+        bodyHtml = `
+          <main style="max-width:1200px;margin:0 auto;padding:24px;">
+            <h1>Commercial Virtual Reality (VR) Games & Simulators | Winera International</h1>
+            <p>Explore our premium 9D VR motion cinema, VR flight simulators, and interactive virtual reality attraction setups across India.</p>
+            <ul>
+              ${links}
+            </ul>
+          </main>
+        `;
+      } catch (e) {
+        console.warn('Error pre-rendering VR games:', e.message);
+      }
+    }
+
     return {
       title: categoryMap[normalizedSlug].title,
       description: categoryMap[normalizedSlug].desc,
       image: DEFAULT_IMAGE,
       canonicalUrl: `${BASE_URL}/product/${normalizedSlug}`,
-      ogType: 'website'
+      ogType: 'website',
+      bodyHtml
     };
   }
 
