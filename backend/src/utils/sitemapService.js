@@ -239,6 +239,16 @@ export const generatePageSitemapXml = () => {
   return wrapUrlset(xmlUrls);
 };
 
+const isJunkProductSlug = (slug) => {
+  if (!slug || slug.length < 2) return true;
+  // Specific junk slugs reported by SEO: to, to-2, to-3, invoice-*, example*
+  if (/^to(-\d+)?$/i.test(slug)) return true;
+  if (/^invoice/i.test(slug) || slug.includes('invoice-wi')) return true;
+  if (/^example(-\d+)?$/i.test(slug)) return true;
+  if (/^test(-\d+)?$/i.test(slug)) return true;
+  return false;
+};
+
 /**
  * 2. Generate Product Sitemap (All individual Arcade & VR product pages)
  */
@@ -252,7 +262,7 @@ export const generateProductSitemapXml = async () => {
     const arcadeProds = await ArcadeProduct.find({}).select('slug name title updatedAt');
     for (const prod of arcadeProds) {
       const slug = (prod.slug || prod.title || prod.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      if (slug && !seenSlugs.has(slug)) {
+      if (slug && !seenSlugs.has(slug) && !isJunkProductSlug(slug)) {
         seenSlugs.add(slug);
         const modDate = prod.updatedAt ? new Date(prod.updatedAt).toISOString().split('T')[0] : today;
         items.push({
@@ -272,7 +282,7 @@ export const generateProductSitemapXml = async () => {
     const vrGames = await VrGame.find({}).select('slug name title updatedAt');
     for (const vr of vrGames) {
       const slug = (vr.slug || vr.title || vr.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      if (slug && !seenSlugs.has(slug)) {
+      if (slug && !seenSlugs.has(slug) && !isJunkProductSlug(slug)) {
         seenSlugs.add(slug);
         const modDate = vr.updatedAt ? new Date(vr.updatedAt).toISOString().split('T')[0] : today;
         items.push({
@@ -298,7 +308,7 @@ export const generateProductSitemapXml = async () => {
       const cards = data.cards && Array.isArray(data.cards) ? data.cards : (Array.isArray(data) ? data : []);
       for (const card of cards) {
         const slug = (card.slug || card.title || card.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-        if (slug && !seenSlugs.has(slug)) {
+        if (slug && !seenSlugs.has(slug) && !isJunkProductSlug(slug)) {
           seenSlugs.add(slug);
           items.push({
             url: `${BASE_URL}/product/${slug}`,
