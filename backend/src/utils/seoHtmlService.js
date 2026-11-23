@@ -251,7 +251,16 @@ export async function getProductSeoData(slug) {
     }
   }
 
-  if (!product) return null;
+  if (!product) {
+    const readable = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    return {
+      title: `${readable} | Commercial Game Zone Equipment | Winera International`,
+      description: `Commercial game zone equipment: ${readable}. Turnkey manufacturing, setup, and supply across 50+ cities in India by Winera International.`,
+      image: DEFAULT_IMAGE,
+      canonicalUrl: `${BASE_URL}/product/${normalizedSlug}`,
+      ogType: 'product'
+    };
+  }
 
   let title = product.metaTitle && product.metaTitle.trim();
   if (!title) {
@@ -316,7 +325,16 @@ export async function getProjectSeoData(slug) {
     }
   }
 
-  if (!project) return null;
+  if (!project) {
+    const readable = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    return {
+      title: `${readable} | Game Zone Project Setup | Winera International`,
+      description: `Explore ${readable} game zone setup and installation project by Winera International across India.`,
+      image: DEFAULT_IMAGE,
+      canonicalUrl: `${BASE_URL}/project/${normalizedSlug}`,
+      ogType: 'website'
+    };
+  }
 
   let title = project.metaTitle && project.metaTitle.trim();
   if (!title) {
