@@ -223,17 +223,11 @@ export const SEO_SCHEMAS = {
         "about": {
           "@id": "https://winera.in/#organization"
         },
-        "hasPart": {
-          "@id": "https://winera.in/#faq"
-        },
         "inLanguage": "en-IN"
       },
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
@@ -331,9 +325,6 @@ export const SEO_SCHEMAS = {
         },
         "mainEntity": {
           "@id": "https://winera.in/product/arcade-games#service"
-        },
-        "hasPart": {
-          "@id": "https://winera.in/product/arcade-games#faq"
         },
         "inLanguage": "en-IN"
       },
@@ -750,9 +741,6 @@ export const SEO_SCHEMAS = {
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/product/vr-games#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/product/vr-games#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
@@ -843,9 +831,6 @@ export const SEO_SCHEMAS = {
         "breadcrumb": {
           "@id": "https://winera.in/product/ar-games#breadcrumb"
         },
-        "hasPart": {
-          "@id": "https://winera.in/product/ar-games#faq"
-        },
         "primaryImageOfPage": {
           "@type": "ImageObject",
           "url": "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/jnv3jpypar3oyptok2ua.png"
@@ -935,9 +920,6 @@ export const SEO_SCHEMAS = {
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/product/ar-games#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/product/ar-games#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
@@ -1035,9 +1017,6 @@ export const SEO_SCHEMAS = {
         ],
         "breadcrumb": {
           "@id": "https://winera.in/product/bowling-alley#breadcrumb"
-        },
-        "hasPart": {
-          "@id": "https://winera.in/product/bowling-alley#faq"
         },
         "primaryImageOfPage": {
           "@type": "ImageObject",
@@ -1154,9 +1133,6 @@ export const SEO_SCHEMAS = {
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/product/bowling-alley#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/product/bowling-alley#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
@@ -1246,9 +1222,6 @@ export const SEO_SCHEMAS = {
         },
         "breadcrumb": {
           "@id": "https://winera.in/product/trampoline-park#breadcrumb"
-        },
-        "hasPart": {
-          "@id": "https://winera.in/product/trampoline-park#faq"
         },
         "primaryImageOfPage": {
           "@type": "ImageObject",
@@ -1375,9 +1348,6 @@ export const SEO_SCHEMAS = {
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/product/trampoline-park#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/product/trampoline-park#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
@@ -1451,9 +1421,6 @@ export const SEO_SCHEMAS = {
         },
         "breadcrumb": {
           "@id": "https://winera.in/product/soft-play#breadcrumb"
-        },
-        "hasPart": {
-          "@id": "https://winera.in/product/soft-play#faq"
         },
         "primaryImageOfPage": {
           "@type": "ImageObject",
@@ -1549,9 +1516,6 @@ export const SEO_SCHEMAS = {
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/product/soft-play#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/product/soft-play#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
@@ -1641,9 +1605,6 @@ export const SEO_SCHEMAS = {
         ],
         "breadcrumb": {
           "@id": "https://winera.in/product/bumper-car#breadcrumb"
-        },
-        "hasPart": {
-          "@id": "https://winera.in/product/bumper-car#faq"
         },
         "primaryImageOfPage": {
           "@type": "ImageObject",
@@ -1765,9 +1726,6 @@ export const SEO_SCHEMAS = {
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/product/bumper-car#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/product/bumper-car#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
@@ -1866,9 +1824,6 @@ export const SEO_SCHEMAS = {
         "breadcrumb": {
           "@id": "https://winera.in/product/hypergrid#breadcrumb"
         },
-        "hasPart": {
-          "@id": "https://winera.in/product/hypergrid#faq"
-        },
         "primaryImageOfPage": {
           "@type": "ImageObject",
           "url": "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345665/winera_uploads/dzjrsas1qwrxj8qxlw45.png"
@@ -1922,9 +1877,6 @@ export const SEO_SCHEMAS = {
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/product/hypergrid#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/product/hypergrid#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
@@ -2023,9 +1975,6 @@ export const SEO_SCHEMAS = {
         "breadcrumb": {
           "@id": "https://winera.in/product/amusement-park#breadcrumb"
         },
-        "hasPart": {
-          "@id": "https://winera.in/product/amusement-park#faq"
-        },
         "primaryImageOfPage": {
           "@type": "ImageObject",
           "url": "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1787751064/winera_uploads/awhbwhnepdlxpwfh05oz.png"
@@ -2120,9 +2069,6 @@ export const SEO_SCHEMAS = {
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/product/amusement-park#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/product/amusement-park#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
@@ -2205,9 +2151,6 @@ export const SEO_SCHEMAS = {
         "breadcrumb": {
           "@id": "https://winera.in/product/laser-tag#breadcrumb"
         },
-        "hasPart": {
-          "@id": "https://winera.in/product/laser-tag#faq"
-        },
         "primaryImageOfPage": {
           "@type": "ImageObject",
           "url": "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791289349/winera_uploads/elpoxj7ydvsuhbwoocnk.png"
@@ -2283,9 +2226,6 @@ export const SEO_SCHEMAS = {
       {
         "@type": "FAQPage",
         "@id": "https://winera.in/product/laser-tag#faq",
-        "isPartOf": {
-          "@id": "https://winera.in/product/laser-tag#webpage"
-        },
         "mainEntity": [
           {
             "@type": "Question",
