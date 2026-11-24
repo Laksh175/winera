@@ -514,12 +514,6 @@ export async function getProductSeoData(slug) {
       'brand': {
         '@type': 'Brand',
         'name': 'Winera International'
-      },
-      'offers': {
-        '@type': 'Offer',
-        'url': canonicalUrl,
-        'priceCurrency': 'INR',
-        'availability': 'https://schema.org/InStock'
       }
     };
 
@@ -571,12 +565,6 @@ export async function getProductSeoData(slug) {
     'brand': {
       '@type': 'Brand',
       'name': 'Winera International'
-    },
-    'offers': {
-      '@type': 'Offer',
-      'url': canonicalUrl,
-      'priceCurrency': 'INR',
-      'availability': 'https://schema.org/InStock'
     }
   };
 
