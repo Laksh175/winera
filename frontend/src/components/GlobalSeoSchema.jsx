@@ -30,8 +30,8 @@ export default function GlobalSeoSchema() {
         document.head.appendChild(scriptTag);
       }
       scriptTag.textContent = JSON.stringify(schemaData);
-    } else if (scriptTag && normalizedPath !== '/') {
-      // Clean up on unmapped routes (like admin dashboards)
+    } else if (scriptTag && normalizedPath.startsWith('/admin')) {
+      // Only clean up on admin dashboard routes so dynamic product/blog schemas remain intact
       scriptTag.remove();
     }
   }, [pathname]);
