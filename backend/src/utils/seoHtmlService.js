@@ -297,6 +297,18 @@ export async function getProductSeoData(slug) {
       }
     }
 
+    if (!bodyHtml) {
+      bodyHtml = `
+        <main style="max-width:1200px;margin:0 auto;padding:24px;">
+          <h1>${escapeAttr(categoryMap[normalizedSlug].title)}</h1>
+          <p>${escapeAttr(categoryMap[normalizedSlug].desc)}</p>
+          <nav aria-label="breadcrumb">
+            <a href="/">Home</a> / <span>${escapeAttr(categoryMap[normalizedSlug].title)}</span>
+          </nav>
+        </main>
+      `;
+    }
+
     const catRoute = `/product/${normalizedSlug}`;
     const schema = SEO_SCHEMAS[catRoute] || null;
 
@@ -345,13 +357,22 @@ export async function getProductSeoData(slug) {
       }
     };
 
+    const fallbackBodyHtml = `
+      <main style="max-width:1200px;margin:0 auto;padding:24px;">
+        <h1>${escapeAttr(readable)}</h1>
+        <p>Commercial game zone equipment: ${escapeAttr(readable)}. Turnkey manufacturing, setup, and supply across 50+ cities in India by Winera International.</p>
+        <p><a href="/product/arcade-games">&larr; Back to all products</a></p>
+      </main>
+    `;
+
     return {
       title: `${readable} | Commercial Game Zone Equipment | Winera International`,
       description: `Commercial game zone equipment: ${readable}. Turnkey manufacturing, setup, and supply across 50+ cities in India by Winera International.`,
       image: DEFAULT_IMAGE,
       canonicalUrl,
       ogType: 'product',
-      schema: fallbackSchema
+      schema: fallbackSchema,
+      bodyHtml: fallbackBodyHtml
     };
   }
 
@@ -393,13 +414,24 @@ export async function getProductSeoData(slug) {
     }
   };
 
+  const bodyHtml = `
+    <article style="max-width:1200px;margin:0 auto;padding:24px;">
+      <h1>${escapeAttr(title)}</h1>
+      <p><strong>Category:</strong> ${escapeAttr(product.category || 'Commercial Arcade & VR Equipment')}</p>
+      <p>${escapeAttr(desc)}</p>
+      ${image ? `<img src="${escapeAttr(image)}" alt="${escapeAttr(title)}" style="max-width:100%;height:auto;" />` : ''}
+      <p><a href="/product/arcade-games">&larr; Back to all products</a></p>
+    </article>
+  `;
+
   return {
     title,
     description: desc,
     image,
     canonicalUrl,
     ogType: 'product',
-    schema
+    schema,
+    bodyHtml
   };
 }
 
@@ -422,13 +454,21 @@ export async function getProjectSeoData(slug) {
     const readable = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     const projectRoute = `/project/${normalizedSlug}`;
     const schema = SEO_SCHEMAS[projectRoute] || null;
+    const fallbackProjectBody = `
+      <main style="max-width:1200px;margin:0 auto;padding:24px;">
+        <h1>${escapeAttr(readable)} | Game Zone Project</h1>
+        <p>Explore ${escapeAttr(readable)} game zone setup and installation project by Winera International across India.</p>
+        <p><a href="/project">&larr; Back to all projects</a></p>
+      </main>
+    `;
     return {
       title: `${readable} | Game Zone Project Setup | Winera International`,
       description: `Explore ${readable} game zone setup and installation project by Winera International across India.`,
       image: DEFAULT_IMAGE,
       canonicalUrl: `${BASE_URL}/project/${normalizedSlug}`,
       ogType: 'website',
-      schema
+      schema,
+      bodyHtml: fallbackProjectBody
     };
   }
 
@@ -450,6 +490,14 @@ export async function getProjectSeoData(slug) {
   const canonicalUrl = `${BASE_URL}/project/${project.slug || normalizedSlug}`;
   const projectRoute = `/project/${project.slug || normalizedSlug}`;
   const schema = SEO_SCHEMAS[projectRoute] || SEO_SCHEMAS[`/project/${normalizedSlug}`] || null;
+  const projectBodyHtml = `
+    <article style="max-width:1200px;margin:0 auto;padding:24px;">
+      <h1>${escapeAttr(title)}</h1>
+      <p><strong>Location:</strong> ${escapeAttr(project.city || 'India')}</p>
+      <p>${escapeAttr(desc)}</p>
+      <p><a href="/project">&larr; Back to all projects</a></p>
+    </article>
+  `;
 
   return {
     title,
@@ -457,7 +505,8 @@ export async function getProjectSeoData(slug) {
     image,
     canonicalUrl,
     ogType: 'website',
-    schema
+    schema,
+    bodyHtml: projectBodyHtml
   };
 }
 
@@ -701,12 +750,19 @@ export function injectSeoTags(baseHtml, meta) {
   }
 
   // 7. Inject Crawler-friendly HTML into <div id="root"> for non-JS crawlers & Screaming Frog
-  if (meta.bodyHtml) {
-    html = html.replace(
-      /<div\s+id=["']root["'][^>]*>[\s\S]*?<\/div>/i,
-      `<div id="root">\n${meta.bodyHtml}\n</div>`
-    );
-  }
+  // If a specific bodyHtml is provided, use it; otherwise generate a clean fallback so
+  // no inner page ever accidentally inherits the Homepage <h1> from index.html!
+  const effectiveBodyHtml = meta.bodyHtml || `
+    <main style="max-width:1200px;margin:0 auto;padding:24px;">
+      <h1>${safeTitle}</h1>
+      <p>${safeDesc}</p>
+    </main>
+  `;
+
+  html = html.replace(
+    /<div\s+id=["']root["'][^>]*>[\s\S]*?<\/div>/i,
+    `<div id="root">\n${effectiveBodyHtml}\n</div>`
+  );
 
   return html;
 }
