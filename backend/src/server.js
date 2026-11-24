@@ -215,7 +215,7 @@ app.get('*', async (req, res, next) => {
 
     // 4. Static Pages or Fallback
     if (!seoData) {
-      seoData = getStaticPageSeoData(rawPath);
+      seoData = await getStaticPageSeoData(rawPath);
     }
 
     const injectedHtml = injectSeoTags(baseHtml, seoData);

@@ -8,6 +8,207 @@ import VrGame from '../models/VrGame.js';
 import Project from '../models/Project.js';
 import Content from '../models/Content.js';
 import { SEO_SCHEMAS } from '../data/seoSchemas.js';
+import { defaultSiteData } from '../controllers/content.controller.js';
+
+// Clean markdown (*bold*) and HTML tags (<br/>) from headings
+function cleanHeading(raw) {
+  if (!raw) return '';
+  return String(raw)
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\*/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// In-memory cache for CMS sections (TTL: 10 seconds for real-time admin sync)
+let cmsCache = new Map();
+let lastCmsFetch = 0;
+
+export async function getCmsSection(sectionKey) {
+  const now = Date.now();
+  if (cmsCache.has(sectionKey) && (now - lastCmsFetch < 10000)) {
+    return cmsCache.get(sectionKey);
+  }
+
+  let data = null;
+  if (mongoose.connection && mongoose.connection.readyState === 1) {
+    try {
+      const doc = await Content.findOne({ sectionKey }).maxTimeMS(2000).lean();
+      if (doc && doc.data) {
+        data = doc.data;
+      }
+    } catch (e) {
+      console.warn(`[SeoHtml] Mongo query warning for ${sectionKey}:`, e.message);
+    }
+  }
+
+  if (!data && defaultSiteData && defaultSiteData[sectionKey]) {
+    data = defaultSiteData[sectionKey];
+  }
+
+  if (data) {
+    cmsCache.set(sectionKey, data);
+  }
+  return data;
+}
+
+const CATEGORY_CMS_CONFIG = {
+  'laser-tag': {
+    seoKey: 'lasertagSeo',
+    introKey: 'lasertagIntro',
+    getHeading: (intro) => {
+      if (intro?.titleHighlight || intro?.titleNormal) {
+        return cleanHeading(`${intro.titleHighlight || ''} ${intro.titleNormal || ''}`);
+      }
+      return cleanHeading(intro?.title) || 'Laser Tag Gaming Equipment & Laser Spy Supplier in India';
+    },
+    defaultTitle: 'Laser Tag Equipment Supplier in India | Winera International',
+    defaultDesc: 'Want to add laser tag or laser spy to your venue? Winera International handles the full setup, from arena design and gear to software and staff training.'
+  },
+  'bumper-car': {
+    seoKey: 'bumpercarSeo',
+    fallbackSeoKey: 'bumperSeo',
+    introKey: 'bumpercarIntro',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'Bumper Car Manufacturer in India',
+    defaultTitle: 'Bumper Car Manufacturer in India | Electric & Battery Cars | Winera International',
+    defaultDesc: 'As a leading Bumper Car Manufacturer in India, Winera International Pvt Ltd crafts exhilarating, safe, and durable bumper cars that are a favorite at amusement parks.'
+  },
+  'soft-play': {
+    seoKey: 'softplaySeo',
+    introKey: 'softplayIntro',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'Indoor Soft Play Equipment Manufacturer in India',
+    defaultTitle: 'Top Soft Play Equipment Manufacturers in India | Winera International',
+    defaultDesc: 'As a premier soft play manufacturer in India, Winera International creates custom indoor soft play equipment. We deliver personalized solutions designed to fit your specific space and budget.'
+  },
+  'trampoline-park': {
+    seoKey: 'trampolineSeo',
+    introKey: 'trampolineIntro',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'Trampoline Park Manufacturer in India',
+    defaultTitle: 'Trampoline Park Manufacturer in India | Winera International',
+    defaultDesc: 'Looking for a trampoline park manufacturer in India? Winera International designs and installs custom trampoline parks to your space, vision, and budget.'
+  },
+  'bowling-alley': {
+    seoKey: 'bowlingSeo',
+    introKey: 'bowlingIntro',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'Bowling Alley Manufacturers in India',
+    defaultTitle: 'Bowling Alley Manufacturer in India | Winera International',
+    defaultDesc: 'Looking for a bowling alley manufacturer in India? Winera International supplies premium new and refurbished Brunswick systems, with 15+ years of expertise.'
+  },
+  'arcade-games': {
+    seoKey: 'arcadeSeo',
+    introKey: 'arcadeHero',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'Commercial Arcade Games Manufacturer & Supplier in India',
+    defaultTitle: 'Arcade Games Manufacturer in India | Winera International',
+    defaultDesc: 'Looking for arcade game machines in India? Winera International offers redemption games, kiddie rides, racing simulators, and more at direct factory prices.'
+  },
+  'vr-games': {
+    seoKey: 'vrSeo',
+    introKey: 'vrIntro',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'VR Gaming Machine Supplier in India',
+    defaultTitle: 'VR Gaming Machine Manufacturer in India | Winera International',
+    defaultDesc: 'Winera International is a leading VR gaming machine manufacturer in India, offering immersive virtual reality attractions built for arcades and FEC centers.'
+  },
+  'amusement-park': {
+    seoKey: 'amusementSeo',
+    introKey: 'amusementIntro',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'Amusement Park Ride Manufacturer in India',
+    defaultTitle: 'Amusement Park Manufacturer in India | Winera International',
+    defaultDesc: 'Winera International is a premier amusement park manufacturer in India, delivering innovative, safe rides and equipment tailored to your game zone and venue space.'
+  },
+  'hypergrid': {
+    seoKey: 'hypergridSeo',
+    introKey: 'hypergridIntro',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'Hypergrid Game Supplier in India',
+    defaultTitle: 'Hypergrid Game Supplier in India | Winera International',
+    defaultDesc: 'Winera International is a trusted Hypergrid game supplier in India, installing commercial interactive LED floor systems for malls, FECs, and trampoline parks.'
+  },
+  'ar-games': {
+    seoKey: 'arSeo',
+    introKey: 'arIntro',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'AR Games Supplier in India',
+    defaultTitle: 'AR Games Supplier in India | Winera International',
+    defaultDesc: 'Winera International is a leading AR games supplier in India, sourcing and installing sports simulators, interactive floors, and immersive gaming attractions.'
+  }
+};
+
+const STATIC_PAGE_CMS_MAP = {
+  '/': {
+    seoKey: 'homeSeo',
+    heroKey: 'hero',
+    getHeading: (hero) => {
+      const rawTitle = hero?.title || "Game Zone Equipment *Manufacturer* & Supplier";
+      return cleanHeading(rawTitle) || 'Game Zone Equipment Manufacturer & Supplier in India';
+    },
+    defaultTitle: 'Game Zone Equipment Manufacturer in India | Winera International',
+    defaultDesc: 'Winera International is your trusted Game Zone Equipment Manufacturer and Indoor Play Equipment Manufacturer in India since 2014. Get Amazing deals!'
+  },
+  '/why-us': {
+    seoKey: 'aboutSeo',
+    heroKey: 'aboutHero',
+    getHeading: (hero) => cleanHeading(hero?.title) || 'Why Choose Winera International',
+    defaultTitle: 'The Right Choice for Your Business | Winera International',
+    defaultDesc: 'Winera delivers more than promises trusted expertise, customer care, and quality solutions that set us apart. Discover why clients choose us.'
+  },
+  '/contact': {
+    seoKey: 'contactSeo',
+    heroKey: 'contactHero',
+    getHeading: (hero) => cleanHeading(hero?.title) || 'Contact Winera International',
+    defaultTitle: 'Contact Winera International | Game Zone Equipment Setup',
+    defaultDesc: 'Get in touch with Winera International for game zone setup inquiries, equipment pricing, ROI consultations, and customer support across India.'
+  },
+  '/blog': {
+    seoKey: 'blogSeo',
+    heroKey: 'blogHero',
+    getHeading: (hero) => cleanHeading(hero?.title) || 'Winera International Blogs',
+    defaultTitle: 'Winera International Blog | Winera International',
+    defaultDesc: 'Explore expert insights, trends, and ideas from Winera International to elevate your entertainment venue and create unforgettable guest experiences.'
+  },
+  '/project': {
+    seoKey: 'projectSeo',
+    heroKey: 'projectHero',
+    getHeading: (hero) => cleanHeading(hero?.title) || 'Our Projects & Game Zone Installations',
+    defaultTitle: 'Our Projects | Game Zones Built | Winera International',
+    defaultDesc: "Explore Winera International's completed projects across India. Real play destinations we've designed, built, and installed for venues of every size and type."
+  },
+  '/resource/roi': {
+    seoKey: 'roiSeo',
+    heroKey: 'roiIntro',
+    getHeading: (hero) => {
+      if (hero?.titleLine1 || hero?.titleLine2) {
+        return cleanHeading(`${hero.titleLine1 || ''} ${hero.titleLine2 || ''}`);
+      }
+      return 'Game Zone ROI Blueprint & Feasibility Calculator';
+    },
+    defaultTitle: 'Know Your Game Zone ROI Before You Invest | Winera International',
+    defaultDesc: 'Opening a game zone is easy, making it profitable is a system. Winera International models your ROI around your space and budget before you invest a rupee.'
+  },
+  '/resource/safety-standards': {
+    seoKey: 'safetySeo',
+    heroKey: 'safetyIntro',
+    getHeading: (hero) => {
+      if (hero?.titleLine1 || hero?.titleLine2) {
+        return cleanHeading(`${hero.titleLine1 || ''} ${hero.titleLine2 || ''}`);
+      }
+      return 'Where Game Zone Safety Comes First';
+    },
+    defaultTitle: 'Where Game Zone Safety Comes First | Winera International',
+    defaultDesc: 'Safety comes first at Winera International. Every ride, play structure, and machine we install meets global safety standards, so your venue opens ready to run.'
+  },
+  '/privacy-policy': {
+    seoKey: 'privacySeo',
+    heroKey: null,
+    getHeading: () => 'Winera International Privacy Policy for Game Zone Solutions',
+    defaultTitle: 'Winera International Privacy Policy for Game Zone Solutions',
+    defaultDesc: 'Learn how Winera International collects, uses, and protects the information you share when enquiring about our game zone equipment and setup services in India.'
+  },
+  '/terms-and-conditions': {
+    seoKey: 'termsSeo',
+    heroKey: null,
+    getHeading: () => 'Terms of Service | Winera International',
+    defaultTitle: 'Terms of Service | Winera International',
+    defaultDesc: "Read Winera International's Terms of Service outlining your rights, responsibilities, and guidelines for using our game zone equipment and setup in India."
+  }
+};
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -202,51 +403,16 @@ export async function getBlogSeoData(slug) {
 export async function getProductSeoData(slug) {
   const normalizedSlug = (slug || '').toLowerCase().trim();
 
-  // Category page lookup
-  const categoryMap = {
-    'arcade-games': {
-      title: 'Commercial Arcade Games Manufacturer & Supplier in India | Winera International',
-      desc: 'Buy top-earning commercial arcade games in India. Claw machines, racing simulators, ticket redemption, basketball games, and shooting games with pan-India setup.'
-    },
-    'vr-games': {
-      title: 'Commercial VR Games & Virtual Reality 360 Rides | Winera International',
-      desc: 'High-ROI commercial VR gaming simulators, 360 VR roller coasters, VR shooting arenas, and motion simulators for malls and entertainment centers in India.'
-    },
-    'soft-play': {
-      title: 'Soft Play Equipment Manufacturer in India | Indoor Playground | Winera',
-      desc: 'Turnkey indoor soft play equipment manufacturer in India. Custom multi-level play structures, toddler zones, ball pits, and slides for malls, cafes, and schools.'
-    },
-    'trampoline-park': {
-      title: 'Commercial Trampoline Park Manufacturer & Setup in India | Winera',
-      desc: 'India’s leading trampoline park builder. High-grade foam pits, slam dunk courts, ninja warrior courses, and airbag zones built with international safety standards.'
-    },
-    'bowling-alley': {
-      title: 'Commercial Bowling Alley Setup & Equipment Supplier in India | Winera',
-      desc: 'Full-length regulation bowling alleys and duckpin bowling lanes setup in India. Turnkey installation, electronic scoring, and pinsetter machinery for venues.'
-    },
-    'bumper-car': {
-      title: 'Commercial Bumper Cars Manufacturer in India | Winera International',
-      desc: 'Battery-powered and ceiling-grid commercial bumper cars for amusement parks and game zones. Durable fiberglass bodies, interactive LED lighting, and safety bumpers.'
-    },
-    'amusement-park': {
-      title: 'Indoor Amusement Park Rides & Attractions Manufacturer | Winera',
-      desc: 'Custom-designed indoor amusement park rides and attractions across India. Trackless trains, mini drop towers, carousel rides, and family entertainment setups.'
-    },
-    'hypergrid': {
-      title: 'Interactive Hypergrid Active LED Gaming Arena | Winera International',
-      desc: 'The viral interactive LED floor puzzle arena in India. Fast-paced active motion gaming grids for family entertainment centers, trampoline parks, and sports arenas.'
-    },
-    'laser-tag': {
-      title: 'Turnkey Laser Tag Arena Setup & Equipment in India | Winera',
-      desc: 'Commercial laser tag equipment, phasers, vests, interactive bases, and themed glow-in-the-dark arena design and construction across India.'
-    },
-    'ar-games': {
-      title: 'Augmented Reality (AR) Games & Interactive Projections | Winera',
-      desc: 'Cutting-edge interactive AR sandboxes, wall climbing projections, and interactive floor systems for indoor play zones and interactive museums.'
-    }
-  };
+  // Category page lookup from dynamic CMS
+  if (CATEGORY_CMS_CONFIG[normalizedSlug]) {
+    const cfg = CATEGORY_CMS_CONFIG[normalizedSlug];
+    const seo = (await getCmsSection(cfg.seoKey)) || (cfg.fallbackSeoKey ? await getCmsSection(cfg.fallbackSeoKey) : null) || {};
+    const intro = (await getCmsSection(cfg.introKey)) || {};
 
-  if (categoryMap[normalizedSlug]) {
+    const title = seo.pageTitle && seo.pageTitle.trim() ? seo.pageTitle.trim() : cfg.defaultTitle;
+    const desc = seo.metaDescription && seo.metaDescription.trim() ? seo.metaDescription.trim() : cfg.defaultDesc;
+    const h1 = cfg.getHeading(intro, seo);
+
     let bodyHtml = null;
 
     if (normalizedSlug === 'arcade-games') {
@@ -262,8 +428,8 @@ export async function getProductSeoData(slug) {
           .join('\n');
         bodyHtml = `
           <main style="max-width:1200px;margin:0 auto;padding:24px;">
-            <h1>Commercial Arcade Games Catalogue | Winera International</h1>
-            <p>Explore our complete commercial arcade game collection, prize redemption machines, racing simulators, and amusement park games across India.</p>
+            <h1>${escapeAttr(h1)}</h1>
+            <p>${escapeAttr(desc)}</p>
             <ul>
               ${links}
             </ul>
@@ -285,8 +451,8 @@ export async function getProductSeoData(slug) {
           .join('\n');
         bodyHtml = `
           <main style="max-width:1200px;margin:0 auto;padding:24px;">
-            <h1>Commercial Virtual Reality (VR) Games & Simulators | Winera International</h1>
-            <p>Explore our premium 9D VR motion cinema, VR flight simulators, and interactive virtual reality attraction setups across India.</p>
+            <h1>${escapeAttr(h1)}</h1>
+            <p>${escapeAttr(desc)}</p>
             <ul>
               ${links}
             </ul>
@@ -300,10 +466,10 @@ export async function getProductSeoData(slug) {
     if (!bodyHtml) {
       bodyHtml = `
         <main style="max-width:1200px;margin:0 auto;padding:24px;">
-          <h1>${escapeAttr(categoryMap[normalizedSlug].title)}</h1>
-          <p>${escapeAttr(categoryMap[normalizedSlug].desc)}</p>
+          <h1>${escapeAttr(h1)}</h1>
+          <p>${escapeAttr(desc)}</p>
           <nav aria-label="breadcrumb">
-            <a href="/">Home</a> / <span>${escapeAttr(categoryMap[normalizedSlug].title)}</span>
+            <a href="/">Home</a> / <span>${escapeAttr(h1)}</span>
           </nav>
         </main>
       `;
@@ -313,8 +479,8 @@ export async function getProductSeoData(slug) {
     const schema = SEO_SCHEMAS[catRoute] || null;
 
     return {
-      title: categoryMap[normalizedSlug].title,
-      description: categoryMap[normalizedSlug].desc,
+      title,
+      description: desc,
       image: DEFAULT_IMAGE,
       canonicalUrl: `${BASE_URL}/product/${normalizedSlug}`,
       ogType: 'website',
@@ -513,61 +679,20 @@ export async function getProjectSeoData(slug) {
 /**
  * Metadata resolver for Static Pages
  */
-export function getStaticPageSeoData(rawPath) {
+export async function getStaticPageSeoData(rawPath) {
   const p = (rawPath || '/').toLowerCase().replace(/\/+$/, '') || '/';
 
-  const staticPages = {
-    '/': {
-      title: DEFAULT_TITLE,
-      desc: DEFAULT_DESC,
-      image: DEFAULT_IMAGE
-    },
-    '/why-us': {
-      title: "Why Choose Winera | India's Trusted Game Zone Equipment Manufacturer",
-      desc: "Learn why malls, FECs, and resorts trust Winera International for commercial game zone equipment, free ROI analysis, and 50+ city turnkey installations.",
-      image: DEFAULT_IMAGE
-    },
-    '/contact': {
-      title: "Contact Us | Winera International - Commercial Game Zone Inquiries",
-      desc: "Get in touch with Winera International for game zone setup inquiries, equipment pricing, ROI consultations, and customer support across India.",
-      image: DEFAULT_IMAGE
-    },
-    '/blog': {
-      title: "Game Zone & Amusement Park Industry Blogs | Winera International",
-      desc: "Read expert guides, ROI formulas, setup costs, and industry tips on establishing profitable indoor game zones, trampoline parks, and arcade setups in India.",
-      image: DEFAULT_IMAGE
-    },
-    '/project': {
-      title: "Game Zone Projects & Portfolio Across India | Winera International",
-      desc: "Explore our portfolio of successful arcade, trampoline park, bowling alley, and soft play installations completed across 50+ cities in India.",
-      image: DEFAULT_IMAGE
-    },
-    '/resource/roi': {
-      title: "Game Zone ROI Blueprint & Feasibility Calculator | Winera International",
-      desc: "Calculate your game zone setup cost, footfall projections, monthly operating expenses, and break-even timeline with our free ROI Blueprint.",
-      image: DEFAULT_IMAGE
-    },
-    '/resource/safety-standards': {
-      title: "Safety Standards & Quality Certifications | Winera International",
-      desc: "Discover how Winera International adheres to European EN-1176, ASTM, and global safety standards for commercial indoor playgrounds and arcade rides.",
-      image: DEFAULT_IMAGE
-    },
-    '/privacy-policy': {
-      title: "Privacy Policy | Winera International",
-      desc: "Read our privacy policy regarding how Winera International collects, protects, and manages user information.",
-      image: DEFAULT_IMAGE
-    },
-    '/terms-and-conditions': {
-      title: "Terms & Conditions | Winera International",
-      desc: "Review the terms and conditions governing the purchase, supply, and installation of Winera International game zone equipment.",
-      image: DEFAULT_IMAGE
-    }
-  };
+  if (STATIC_PAGE_CMS_MAP[p]) {
+    const cfg = STATIC_PAGE_CMS_MAP[p];
+    const seo = (await getCmsSection(cfg.seoKey)) || {};
+    const hero = cfg.heroKey ? ((await getCmsSection(cfg.heroKey)) || {}) : {};
 
-  if (staticPages[p]) {
+    const title = seo.pageTitle && seo.pageTitle.trim() ? seo.pageTitle.trim() : cfg.defaultTitle;
+    const desc = seo.metaDescription && seo.metaDescription.trim() ? seo.metaDescription.trim() : cfg.defaultDesc;
+    const h1 = cfg.getHeading(hero, seo);
+
     let bodyHtml = null;
 
-    // Pre-render all 33 blog links on /blog for non-JS crawlers & Screaming Frog
     if (p === '/blog') {
       const blogs = getBlogsFromJson();
       const blogLinks = blogs.map(b => `
@@ -579,8 +704,8 @@ export function getStaticPageSeoData(rawPath) {
 
       bodyHtml = `
         <main style="max-width:1200px;margin:0 auto;padding:24px;">
-          <h1>Game Zone & Amusement Park Industry Blogs | Winera International</h1>
-          <p>Read expert guides, ROI formulas, setup costs, and industry tips on establishing profitable indoor game zones in India.</p>
+          <h1>${escapeAttr(h1)}</h1>
+          <p>${escapeAttr(desc)}</p>
           <section>
             ${blogLinks}
           </section>
@@ -589,7 +714,8 @@ export function getStaticPageSeoData(rawPath) {
     } else if (p === '/') {
       bodyHtml = `
         <header style="padding:24px;">
-          <h1>Winera International - Commercial Game Zone Equipment Manufacturer</h1>
+          <h1>${escapeAttr(h1)}</h1>
+          <p>${escapeAttr(desc)}</p>
           <nav>
             <ul>
               <li><a href="/">Home</a></li>
@@ -613,15 +739,25 @@ export function getStaticPageSeoData(rawPath) {
           </nav>
         </header>
       `;
+    } else {
+      bodyHtml = `
+        <main style="max-width:1200px;margin:0 auto;padding:24px;">
+          <h1>${escapeAttr(h1)}</h1>
+          <p>${escapeAttr(desc)}</p>
+          <nav aria-label="breadcrumb">
+            <a href="/">Home</a> / <span>${escapeAttr(h1)}</span>
+          </nav>
+        </main>
+      `;
     }
 
     const pRoute = p === '/' ? '/' : p;
     const schema = SEO_SCHEMAS[pRoute] || null;
 
     return {
-      title: staticPages[p].title,
-      description: staticPages[p].desc,
-      image: staticPages[p].image,
+      title,
+      description: desc,
+      image: DEFAULT_IMAGE,
       canonicalUrl: `${BASE_URL}${p === '/' ? '/' : p}`,
       ogType: 'website',
       schema,
