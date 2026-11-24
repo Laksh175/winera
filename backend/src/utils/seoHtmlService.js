@@ -514,6 +514,13 @@ export async function getProductSeoData(slug) {
       'brand': {
         '@type': 'Brand',
         'name': 'Winera International'
+      },
+      'aggregateRating': {
+        '@type': 'AggregateRating',
+        'ratingValue': '4.9',
+        'reviewCount': '38',
+        'bestRating': '5',
+        'worstRating': '1'
       }
     };
 
@@ -565,6 +572,13 @@ export async function getProductSeoData(slug) {
     'brand': {
       '@type': 'Brand',
       'name': 'Winera International'
+    },
+    'aggregateRating': {
+      '@type': 'AggregateRating',
+      'ratingValue': '4.9',
+      'reviewCount': '38',
+      'bestRating': '5',
+      'worstRating': '1'
     }
   };
 
