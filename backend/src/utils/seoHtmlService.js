@@ -96,8 +96,8 @@ const CATEGORY_CMS_CONFIG = {
   },
   'arcade-games': {
     seoKey: 'arcadeSeo',
-    introKey: 'arcadeHero',
-    getHeading: (intro) => cleanHeading(intro?.title) || 'Commercial Arcade Games Manufacturer & Supplier in India',
+    introKey: 'arcadeIntro',
+    getHeading: (intro) => cleanHeading(intro?.title) || 'Arcade Game Machines in India',
     defaultTitle: 'Arcade Games Manufacturer in India | Winera International',
     defaultDesc: 'Looking for arcade game machines in India? Winera International offers redemption games, kiddie rides, racing simulators, and more at direct factory prices.'
   },
@@ -144,15 +144,15 @@ const STATIC_PAGE_CMS_MAP = {
   },
   '/why-us': {
     seoKey: 'aboutSeo',
-    heroKey: 'aboutHero',
-    getHeading: (hero) => cleanHeading(hero?.title) || 'Why Choose Winera International',
+    heroKey: 'aboutWelcome',
+    getHeading: (sec) => cleanHeading(sec?.title) || 'Welcome to Winera International',
     defaultTitle: 'The Right Choice for Your Business | Winera International',
     defaultDesc: 'Winera delivers more than promises trusted expertise, customer care, and quality solutions that set us apart. Discover why clients choose us.'
   },
   '/contact': {
     seoKey: 'contactSeo',
-    heroKey: 'contactHero',
-    getHeading: (hero) => cleanHeading(hero?.title) || 'Contact Winera International',
+    heroKey: 'contactPage',
+    getHeading: (sec) => cleanHeading(sec?.title) || 'Get in Touch with Winera International',
     defaultTitle: 'Contact Winera International | Game Zone Equipment Setup',
     defaultDesc: 'Get in touch with Winera International for game zone setup inquiries, equipment pricing, ROI consultations, and customer support across India.'
   },
@@ -174,10 +174,8 @@ const STATIC_PAGE_CMS_MAP = {
     seoKey: 'roiSeo',
     heroKey: 'roiIntro',
     getHeading: (hero) => {
-      if (hero?.titleLine1 || hero?.titleLine2) {
-        return cleanHeading(`${hero.titleLine1 || ''} ${hero.titleLine2 || ''}`);
-      }
-      return 'Game Zone ROI Blueprint & Feasibility Calculator';
+      const full = `${hero?.titleLine1 || ''} ${hero?.titleLine2 || ''} ${hero?.titleLine2Blue || ''}`.trim();
+      return cleanHeading(full) || "You don't need a game zone… you need a profit machine.";
     },
     defaultTitle: 'Know Your Game Zone ROI Before You Invest | Winera International',
     defaultDesc: 'Opening a game zone is easy, making it profitable is a system. Winera International models your ROI around your space and budget before you invest a rupee.'
@@ -638,6 +636,11 @@ export async function getProjectSeoData(slug) {
     } catch (e) {
       console.warn('[SeoHtml] Project query warning:', e.message);
     }
+  }
+
+  if (!project) {
+    const list = getProjectsFromJson();
+    project = list.find(p => (p.slug || '').toLowerCase() === normalizedSlug);
   }
 
   if (!project) {
