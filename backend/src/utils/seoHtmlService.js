@@ -166,7 +166,7 @@ const STATIC_PAGE_CMS_MAP = {
   '/project': {
     seoKey: 'projectSeo',
     heroKey: 'projectHero',
-    getHeading: (hero) => cleanHeading(hero?.title) || 'Our Projects & Game Zone Installations',
+    getHeading: (hero) => cleanHeading(hero?.title) || "Crafting India's Best Play Destinations",
     defaultTitle: 'Our Projects | Game Zones Built | Winera International',
     defaultDesc: "Explore Winera International's completed projects across India. Real play destinations we've designed, built, and installed for venues of every size and type."
   },
@@ -683,9 +683,17 @@ export async function getProjectSeoData(slug) {
   const canonicalUrl = `${BASE_URL}/project/${project.slug || normalizedSlug}`;
   const projectRoute = `/project/${project.slug || normalizedSlug}`;
   const schema = SEO_SCHEMAS[projectRoute] || SEO_SCHEMAS[`/project/${normalizedSlug}`] || null;
+
+  const projectH1 = [
+    project.titleLine1,
+    project.titleLine2,
+    project.titleLine2Black,
+    project.titleLine3
+  ].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim() || project.name || title;
+
   const projectBodyHtml = `
     <article style="max-width:1200px;margin:0 auto;padding:24px;">
-      <h1>${escapeAttr(title)}</h1>
+      <h1>${escapeAttr(projectH1)}</h1>
       <p><strong>Location:</strong> ${escapeAttr(project.city || 'India')}</p>
       <p>${escapeAttr(desc)}</p>
       <p><a href="/project">&larr; Back to all projects</a></p>
