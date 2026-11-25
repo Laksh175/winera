@@ -298,6 +298,27 @@ function getBlogsFromJson() {
   return [];
 }
 
+let cachedProjectsJson = null;
+function getProjectsFromJson() {
+  if (cachedProjectsJson) return cachedProjectsJson;
+  const candidatePaths = [
+    path.resolve(__dirname, '../data/projectsData.json'),
+    path.resolve(process.cwd(), 'backend/src/data/projectsData.json'),
+    path.resolve(process.cwd(), 'src/data/projectsData.json')
+  ];
+  for (const jsonPath of candidatePaths) {
+    if (fs.existsSync(jsonPath)) {
+      try {
+        cachedProjectsJson = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+        return cachedProjectsJson;
+      } catch (e) {
+        console.warn('[SeoHtml] Could not parse projectsData.json', e.message);
+      }
+    }
+  }
+  return [];
+}
+
 /**
  * Metadata resolver for Blog posts
  */
@@ -741,6 +762,24 @@ export async function getStaticPageSeoData(rawPath) {
             </ul>
           </nav>
         </header>
+      `;
+    } else if (p === '/project') {
+      const projects = getProjectsFromJson();
+      const projectLinks = projects.map(proj => `
+        <article style="margin-bottom:20px;">
+          <h2><a href="/project/${proj.slug}">${escapeAttr(proj.name || proj.titleLine1 || 'Game Zone Project')}</a></h2>
+          <p>${escapeAttr(proj.desc || proj.description || '')}</p>
+        </article>
+      `).join('');
+
+      bodyHtml = `
+        <main style="max-width:1200px;margin:0 auto;padding:24px;">
+          <h1>${escapeAttr(h1)}</h1>
+          <p>${escapeAttr(desc)}</p>
+          <section>
+            ${projectLinks}
+          </section>
+        </main>
       `;
     } else {
       bodyHtml = `
