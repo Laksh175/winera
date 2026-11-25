@@ -4022,7 +4022,7 @@ export const SEO_SCHEMAS = {
             "@type": "ListItem",
             "position": 21,
             "name": "How to Choose the Right Indoor Amusement Games for Your Space",
-            "url": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space",
+            "url": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space",
             "image": "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_600/v17913 53422/winera_uploads/blogs/blog-cover-21.jpg"
           },
           {
@@ -7120,8 +7120,8 @@ export const SEO_SCHEMAS = {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space#webpage",
-        "url": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space",
+        "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space#webpage",
+        "url": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space",
         "name": "Indoor Amusement Games Guide | Winera International",
         "description": "Which indoor amusement games suit your space? Weigh floor area, target audience and budget to pick the right mix for your venue. A guide for owners.",
         "inLanguage": "en-IN",
@@ -7132,18 +7132,18 @@ export const SEO_SCHEMAS = {
           "url": "https://winera.in/"
         },
         "breadcrumb": {
-          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space#breadcrumb"
+          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space#breadcrumb"
         },
         "mainEntity": {
-          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space#article"
+          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space#article"
         },
         "primaryImageOfPage": {
-          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space#primaryimage"
+          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space#primaryimage"
         }
       },
       {
         "@type": "ImageObject",
-        "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space#primaryimage",
+        "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space#primaryimage",
         "url": "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto,w_1400/v1791 353422/winera_uploads/blogs/blog-cover-21.jpg",
         "width": 1400,
         "height": 733,
@@ -7151,11 +7151,11 @@ export const SEO_SCHEMAS = {
       },
       {
         "@type": "BlogPosting",
-        "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space#article",
+        "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space#article",
         "headline": "How to Choose the Right Indoor Amusement Games for Your Space",
         "description": "How to choose the right indoor amusement games for your space: assess your floor area, know your audience, budget for upkeep and match the style of your venue.",
         "image": {
-          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space#primaryimage"
+          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space#primaryimage"
         },
         "datePublished": "2026-09-12",
         "dateModified": "2026-09-12",
@@ -7177,7 +7177,7 @@ export const SEO_SCHEMAS = {
           }
         },
         "mainEntityOfPage": {
-          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space#webpage"
+          "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space#webpage"
         },
         "isPartOf": {
           "@type": "Blog",
@@ -7225,7 +7225,7 @@ export const SEO_SCHEMAS = {
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space#breadcrumb",
+        "@id": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -7243,7 +7243,7 @@ export const SEO_SCHEMAS = {
             "@type": "ListItem",
             "position": 3,
             "name": "How to Choose the Right Indoor Amusement Games for Your Space",
-            "item": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-you r-space"
+            "item": "https://winera.in/blog/how-to-choose-the-right-indoor-amusement-games-for-your-space"
           }
         ]
       }
