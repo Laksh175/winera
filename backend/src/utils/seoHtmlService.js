@@ -250,6 +250,7 @@ export function getBaseIndexHtml() {
   }
 
   const candidatePaths = [
+    '/var/www/winera/frontend/dist/index.html',
     path.resolve(__dirname, '../../../frontend/dist/index.html'),
     path.resolve(__dirname, '../../../frontend/public/index.html'),
     path.resolve(__dirname, '../../../frontend/index.html'),

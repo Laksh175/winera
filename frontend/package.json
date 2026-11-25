@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node init && vite",
-    "build": "node init && vite build",
+    "build": "node init && vite build && (test -d /var/www/winera/frontend/dist && cp -r dist/* /var/www/winera/frontend/dist/ || true)",
     "lint": "oxlint",
     "preview": "vite preview"
   },
