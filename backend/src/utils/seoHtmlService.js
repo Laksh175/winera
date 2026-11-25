@@ -582,6 +582,7 @@ export async function getProductSeoData(slug) {
   }
 
   const canonicalUrl = `${BASE_URL}/product/${product.slug || normalizedSlug}`;
+  const productH1 = (product.name || product.title || 'Game Zone Equipment').trim();
 
   const schema = {
     '@context': 'https://schema.org',
@@ -604,10 +605,10 @@ export async function getProductSeoData(slug) {
 
   const bodyHtml = `
     <article style="max-width:1200px;margin:0 auto;padding:24px;">
-      <h1>${escapeAttr(title)}</h1>
+      <h1>${escapeAttr(productH1)}</h1>
       <p><strong>Category:</strong> ${escapeAttr(product.category || 'Commercial Arcade & VR Equipment')}</p>
       <p>${escapeAttr(desc)}</p>
-      ${image ? `<img src="${escapeAttr(image)}" alt="${escapeAttr(title)}" style="max-width:100%;height:auto;" />` : ''}
+      ${image ? `<img src="${escapeAttr(image)}" alt="${escapeAttr(productH1)}" style="max-width:100%;height:auto;" />` : ''}
       <p><a href="/product/arcade-games">&larr; Back to all products</a></p>
     </article>
   `;
