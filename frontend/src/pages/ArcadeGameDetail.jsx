@@ -24,6 +24,7 @@ import {
   ChevronUp, ChevronDown, ChevronLeft, ChevronRight, MoveHorizontal, Box, Ruler, MessageCircle, ArrowRight 
 } from 'lucide-react';
 import { fetchArcadeProductBySlug, fetchVrGameBySlug } from '../services/api';
+import { isValidVideoUrl } from '../utils/videoUtils';
 
 const getValidImageUrl = (url, fallback) => {
   if (!url || typeof url !== 'string' || url.trim() === '') {
@@ -100,7 +101,7 @@ export const arcadeProductsData = {
       depth: '2310 mm',
       height: '2490 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Parkour%20Motor%20II%20(DX)'
   },
   'manx-tt-32': {
@@ -123,7 +124,7 @@ export const arcadeProductsData = {
       depth: '1900 mm',
       height: '1700 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20MANX%20TT%2032"'
   },
   'super-air-hockey': {
@@ -146,7 +147,7 @@ export const arcadeProductsData = {
       depth: '1200 mm',
       height: '820 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Super%20Air%20Hockey'
   },
   'puck-carnival-air-hockey': {
@@ -169,7 +170,7 @@ export const arcadeProductsData = {
       depth: '1350 mm',
       height: '850 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Puck%20Carnival%20Air%20Hockey'
   },
   'dazzling-air-hockey-multi-puck': {
@@ -192,7 +193,7 @@ export const arcadeProductsData = {
       depth: '1400 mm',
       height: '900 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Dazzling%20Air%20Hockey'
   },
   'aurora-air-hockey': {
@@ -215,7 +216,7 @@ export const arcadeProductsData = {
       depth: '1250 mm',
       height: '830 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aurora%20Air%20Hockey'
   },
   'ocha-air-hockey': {
@@ -238,7 +239,7 @@ export const arcadeProductsData = {
       depth: '1100 mm',
       height: '800 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Ocha%20Air%20Hockey'
   },
   'aero-x-air-hockey': {
@@ -261,7 +262,7 @@ export const arcadeProductsData = {
       depth: '1280 mm',
       height: '860 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aero%20X%20Air%20Hockey'
   },
   'astrology-cointopia': {
@@ -284,7 +285,7 @@ export const arcadeProductsData = {
       depth: '900 mm',
       height: '2100 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Astrology%20Cointopia'
   },
   'astrology-capsule-version': {
@@ -307,7 +308,7 @@ export const arcadeProductsData = {
       depth: '850 mm',
       height: '1950 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Astrology%20Capsule%20Version'
   },
   'basketball-star': {
@@ -330,7 +331,7 @@ export const arcadeProductsData = {
       depth: '2500 mm',
       height: '2400 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Basketball%20Star'
   },
   'pinball-storm': {
@@ -353,7 +354,7 @@ export const arcadeProductsData = {
       depth: '1400 mm',
       height: '1900 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Pinball%20Storm'
   },
   'larva-kids-ride': {
@@ -376,7 +377,7 @@ export const arcadeProductsData = {
       depth: '850 mm',
       height: '1100 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Larva%20Kids%20Ride'
   },
   'toy-story-plush-claw-machine': {
@@ -399,7 +400,7 @@ export const arcadeProductsData = {
       depth: '880 mm',
       height: '2000 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Toy%20Story%20Plush%20Claw%20Machine'
   },
   'lucky-catcher-crane-machine': {
@@ -422,7 +423,7 @@ export const arcadeProductsData = {
       depth: '890 mm',
       height: '2050 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Lucky%20Catcher%20Crane%20Machine'
   },
   'happy-carousel-kiddy-ride': {
@@ -445,7 +446,7 @@ export const arcadeProductsData = {
       depth: '1400 mm',
       height: '1800 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Happy%20Carousel%20Kiddy%20Ride'
   },
   'super-speed-mini-racer': {
@@ -468,7 +469,7 @@ export const arcadeProductsData = {
       depth: '800 mm',
       height: '1050 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Super%20Speed%20Mini%20Racer'
   },
   'speed-driver-5-twin-motion': {
@@ -491,7 +492,7 @@ export const arcadeProductsData = {
       depth: '1750 mm',
       height: '2100 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Speed%20Driver%205%20Twin%20Motion'
   },
   'outrun-2-supercar-simulator': {
@@ -514,7 +515,7 @@ export const arcadeProductsData = {
       depth: '1650 mm',
       height: '2050 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20OutRun%202%20Supercar%20Simulator'
   },
   'scarlet-dawn-dual-gun-shooter': {
@@ -537,7 +538,7 @@ export const arcadeProductsData = {
       depth: '1800 mm',
       height: '2250 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Scarlet%20Dawn%20Dual%20Gun%20Shooter'
   },
   'jurassic-motion-arcade-shooter': {
@@ -560,7 +561,7 @@ export const arcadeProductsData = {
       depth: '2200 mm',
       height: '2300 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Jurassic%20Motion%20Arcade%20Shooter'
   },
   'dragon-boxer-punching-machine': {
@@ -583,7 +584,7 @@ export const arcadeProductsData = {
       depth: '1150 mm',
       height: '2200 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Dragon%20Boxer%20Punching%20Machine'
   },
   'ultimate-hammer-king-pro': {
@@ -606,7 +607,7 @@ export const arcadeProductsData = {
       depth: '1200 mm',
       height: '2450 mm'
     },
-    videoUrl: 'https://youtube.com',
+    videoUrl: '',
     quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Ultimate%20Hammer%20King%20Pro'
   }
 };
@@ -1379,27 +1380,29 @@ export default function ArcadeGameDetail({ siteData }) {
 
                 {/* CTA Action Buttons */}
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '18px', flexWrap: 'wrap' }} className="winera-arcade-cta-row">
-                  {/* Button 1: Watch Video with arcadegame-button-1.png BG */}
-                  <button
-                    onClick={() => openVideoModal(product.videoUrl, `${product.name} Showcase`)}
-                    style={{
-                      width: '190px',
-                      height: '70px',
-                      background: `url(${getValidImageUrl(siteData?.arcadeIntro?.videoBtnBg, arcadeBtn1)}) center center / 100% 100% no-repeat`,
-                      color: '#ffffff',
-                      fontSize: '15px',
-                      fontWeight: '600',
-                      border: 'none',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      padding: '7px 5px 2px 0',
-                      textDecoration: 'none'
-                    }}
-                  >
-                    <span>{siteData?.arcadeIntro?.videoBtnText || "Watch Video"}</span>
-                  </button>
+                  {/* Button 1: Watch Video with arcadegame-button-1.png BG - Only rendered when genuine video link exists */}
+                  {isValidVideoUrl(product.videoUrl) && (
+                    <button
+                      onClick={() => openVideoModal(product.videoUrl, `${product.name} Showcase`)}
+                      style={{
+                        width: '190px',
+                        height: '70px',
+                        background: `url(${getValidImageUrl(siteData?.arcadeIntro?.videoBtnBg, arcadeBtn1)}) center center / 100% 100% no-repeat`,
+                        color: '#ffffff',
+                        fontSize: '15px',
+                        fontWeight: '600',
+                        border: 'none',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        padding: '7px 5px 2px 0',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      <span>{siteData?.arcadeIntro?.videoBtnText || "Watch Video"}</span>
+                    </button>
+                  )}
 
                   {/* Button 2: Get a Quote with arcadegame-button-2.png BG */}
                   {(() => {

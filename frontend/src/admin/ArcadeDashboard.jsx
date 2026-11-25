@@ -472,10 +472,14 @@ export default function ArcadeDashboard({
                   </label>
                   <input
                     type="text"
-                    value={formData.arcadeIntro?.videoLink || 'https://youtube.com'}
+                    value={formData.arcadeIntro?.videoLink || ''}
                     onChange={(e) => handleFieldChange('arcadeIntro', 'videoLink', e.target.value)}
+                    placeholder="https://www.youtube.com/watch?v=... (Optional)"
                     style={{ width: '100%', padding: '12px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0', background: '#F5F5F9', fontSize: '14px', fontWeight: '600' }}
                   />
+                  <span style={{ display: 'block', fontSize: '11.5px', color: '#64748b', marginTop: '6px' }}>
+                    💡 <strong>Tip:</strong> Jab tak video URL blank rahegi, "Watch Video" button hide rahega. YouTube link daalte hi button automatic show ho jayega.
+                  </span>
                 </div>
               </div>
 

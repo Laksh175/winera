@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Star, Play } from 'lucide-react';
 import { useVideoModal } from '../context/VideoModalContext';
+import { isValidVideoUrl } from '../utils/videoUtils';
 import SectionHeading from './SectionHeading';
 import MotionFadeIn from './MotionFadeIn';
 const testiOwner = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345688/winera_uploads/zginla6nsiaq2avxmot4.jpg";
@@ -607,7 +608,7 @@ export default function TestimonialsSection({
                       }
                     }}
                   />
-                  {Boolean(activeVideoUrl && String(activeVideoUrl).trim()) && (
+                  {isValidVideoUrl(activeVideoUrl) && (
                     <button
                       onClick={() => openVideoModal(activeVideoUrl, `${currentItem.gameZoneName || currentItem.name || 'Client'} - Video Review`, { isVertical: true })}
                       onMouseDown={(e) => e.preventDefault()}
@@ -828,7 +829,7 @@ export default function TestimonialsSection({
                     }
                   }}
                 />
-                {Boolean(currentItem.youtubeVideoUrl && String(currentItem.youtubeVideoUrl).trim()) && (
+                {isValidVideoUrl(currentItem.youtubeVideoUrl) && (
                   <button
                     onClick={() => openVideoModal(currentItem.youtubeVideoUrl, `${currentItem.name} - Video Review`, { isVertical: true })}
                     onMouseDown={(e) => e.preventDefault()}

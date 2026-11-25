@@ -25,6 +25,7 @@ const yellowStrokeLine = "https://res.cloudinary.com/achfsmlm/image/upload/f_aut
 import CtaBanner from '../components/CtaBanner';
 import { fetchProjectBySlug, fetchProjects } from '../services/api';
 import { sanitizeAndFormatHtml } from './BlogDetail';
+import { isValidVideoUrl } from '../utils/videoUtils';
 const bumpercarCtaBannerBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
 const projHulaboo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/a52mbp31belkkslptdal.jpg";
 const projNeon1 = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345675/winera_uploads/s8v6jwxs7eyoq877yeso.jpg";
@@ -745,7 +746,7 @@ export default function ProjectDetail({ siteData }) {
   });
 
   const videoImg = getValidImageUrl(currentProject.videoImg || videoData.image, projectSectionVideo);
-  const videoLink = currentProject.videoUrl || videoData.videoUrl || siteData?.header?.whatsAppUrl || 'https://wa.me/919157873576';
+  const videoLink = currentProject.videoUrl || videoData.videoUrl || '';
 
   // Set page title and meta description for SEO
   useEffect(() => {
@@ -1281,119 +1282,121 @@ export default function ProjectDetail({ siteData }) {
         </div>
       </section>
 
-      {/* 7. PROJECT VIDEO SHOWCASE SECTION */}
-      <section className="winera-project-video-section" style={{ padding: '60px 4vw 90px', maxWidth: '1060px', margin: '0 auto', textAlign: 'center' }}>
-        <motion.button
-          className="winera-project-video-btn"
-          onClick={() => openVideoModal(videoLink, `${currentProject.name} Showcase`)}
-          initial={{ opacity: 0, y: 40, scale: 0.96 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-          whileHover={{ y: -8, scale: 1.02, boxShadow: '0 25px 50px rgba(0,0,0,0.25)' }}
-          whileTap={{ scale: 0.98 }}
-          aria-label="Play Project Showcase Video"
-          style={{
-            display: 'block',
-            position: 'relative',
-            width: '100%',
-            borderRadius: '28px',
-            overflow: 'hidden',
-            boxShadow: '0 12px 35px rgba(0,0,0,0.12)',
-            border: 'none',
-            padding: 0,
-            cursor: 'pointer',
-            background: '#0f172a',
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden'
-          }}
-        >
-          <img
-            className="winera-project-video-img"
-            src={videoImg}
-            alt={currentProject?.videoAlt || `${currentProject?.name || 'Commercial Game Zone'} Video Walkthrough & Tour - Winera`}
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = projectSectionVideo;
-            }}
-            style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '28px' }}
-          />
-
-          {/* Subtle Video Vignette Overlay for Crisp Contrast */}
-          <div
+      {/* 7. PROJECT VIDEO SHOWCASE SECTION - Only rendered when genuine video exists */}
+      {isValidVideoUrl(videoLink) && (
+        <section className="winera-project-video-section" style={{ padding: '60px 4vw 90px', maxWidth: '1060px', margin: '0 auto', textAlign: 'center' }}>
+          <motion.button
+            className="winera-project-video-btn"
+            onClick={() => openVideoModal(videoLink, `${currentProject.name} Showcase`)}
+            initial={{ opacity: 0, y: 40, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+            whileHover={{ y: -8, scale: 1.02, boxShadow: '0 25px 50px rgba(0,0,0,0.25)' }}
+            whileTap={{ scale: 0.98 }}
+            aria-label="Play Project Showcase Video"
             style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.45) 100%)',
+              display: 'block',
+              position: 'relative',
+              width: '100%',
               borderRadius: '28px',
-              pointerEvents: 'none'
-            }}
-          />
-
-          {/* Central Pulsing Play Button Badge */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              pointerEvents: 'none',
-              zIndex: 3
+              overflow: 'hidden',
+              boxShadow: '0 12px 35px rgba(0,0,0,0.12)',
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer',
+              background: '#0f172a',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden'
             }}
           >
-            {/* Outer Expanding Pulse Ring */}
-            <motion.div
-              animate={{
-                scale: [1, 1.45, 1],
-                opacity: [0.7, 0, 0.7]
+            <img
+              className="winera-project-video-img"
+              src={videoImg}
+              alt={currentProject?.videoAlt || `${currentProject?.name || 'Commercial Game Zone'} Video Walkthrough & Tour - Winera`}
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = projectSectionVideo;
               }}
-              transition={{
-                duration: 2.2,
-                repeat: Infinity,
-                ease: 'easeInOut'
-              }}
+              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '28px' }}
+            />
+
+            {/* Subtle Video Vignette Overlay for Crisp Contrast */}
+            <div
               style={{
                 position: 'absolute',
-                width: isPhone ? '75px' : '96px',
-                height: isPhone ? '75px' : '96px',
-                borderRadius: '50%',
-                background: 'rgba(56, 189, 248, 0.35)',
-                border: '2px solid rgba(56, 189, 248, 0.7)'
+                inset: 0,
+                background: 'radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.45) 100%)',
+                borderRadius: '28px',
+                pointerEvents: 'none'
               }}
             />
 
-            {/* Glowing Brand Play Button */}
+            {/* Central Pulsing Play Button Badge */}
             <div
               style={{
-                position: 'relative',
-                width: isPhone ? '58px' : '76px',
-                height: isPhone ? '58px' : '76px',
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-                boxShadow: '0 8px 30px rgba(56, 189, 248, 0.6), 0 0 25px rgba(255, 255, 255, 0.5)',
-                border: '3px solid #ffffff',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                transition: 'transform 0.3s ease'
+                pointerEvents: 'none',
+                zIndex: 3
               }}
             >
-              <Play
+              {/* Outer Expanding Pulse Ring */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.45, 1],
+                  opacity: [0.7, 0, 0.7]
+                }}
+                transition={{
+                  duration: 2.2,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
                 style={{
-                  width: isPhone ? '24px' : '30px',
-                  height: isPhone ? '24px' : '30px',
-                  color: '#ffffff',
-                  fill: '#ffffff',
-                  marginLeft: '4px'
+                  position: 'absolute',
+                  width: isPhone ? '75px' : '96px',
+                  height: isPhone ? '75px' : '96px',
+                  borderRadius: '50%',
+                  background: 'rgba(56, 189, 248, 0.35)',
+                  border: '2px solid rgba(56, 189, 248, 0.7)'
                 }}
               />
+
+              {/* Glowing Brand Play Button */}
+              <div
+                style={{
+                  position: 'relative',
+                  width: isPhone ? '58px' : '76px',
+                  height: isPhone ? '58px' : '76px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
+                  boxShadow: '0 8px 30px rgba(56, 189, 248, 0.6), 0 0 25px rgba(255, 255, 255, 0.5)',
+                  border: '3px solid #ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'transform 0.3s ease'
+                }}
+              >
+                <Play
+                  style={{
+                    width: isPhone ? '24px' : '30px',
+                    height: isPhone ? '24px' : '30px',
+                    color: '#ffffff',
+                    fill: '#ffffff',
+                    marginLeft: '4px'
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        </motion.button>
-      </section>
+          </motion.button>
+        </section>
+      )}
 
       {/* 8. OUR RECENT PROJECTS MARQUEE */}
       <ProjectsMarqueeSection

@@ -11,6 +11,7 @@ import CtaBanner from '../components/CtaBanner';
 import MobileExpandableText from '../components/MobileExpandableText';
 import BrochureModal, { openBrochure } from '../components/BrochureModal';
 import { sanitizeAndFormatHtml } from './BlogDetail';
+import { isValidVideoUrl } from '../utils/videoUtils';
 const needConsultationsBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345647/winera_uploads/ncvfqvtbv4zdvf9cd4n7.jpg";
 const softplayCtaBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345683/winera_uploads/onngsoz46k1mgxbyi6n1.png";
 const softplayHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345683/winera_uploads/s9xcisfml3w3bzaqkoq9.png";
@@ -292,15 +293,17 @@ export default function SoftPlay({ siteData }) {
               }
             />
 
-            <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
-              <button
-                onClick={() => openVideoModal(siteData?.softplayManufacture?.videoUrl, "Soft Play Equipment Showcase")}
-                className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
-                style={{ border: 'none', cursor: 'pointer' }}
-              >
-                {siteData?.softplayManufacture?.btnText || "Watch Video"}
-              </button>
-            </div>
+            {isValidVideoUrl(siteData?.softplayManufacture?.videoUrl) && (
+              <div className="winera-cyan-cta-wrapper winera-cyan-cta-wrapper-sm">
+                <button
+                  onClick={() => openVideoModal(siteData?.softplayManufacture?.videoUrl, "Soft Play Equipment Showcase")}
+                  className="winera-cyan-cta-btn winera-cyan-cta-btn-sm"
+                  style={{ border: 'none', cursor: 'pointer' }}
+                >
+                  {siteData?.softplayManufacture?.btnText || "Watch Video"}
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Right 3D Soft Play Castle Equipment Render */}

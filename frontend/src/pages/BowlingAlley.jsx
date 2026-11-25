@@ -10,6 +10,7 @@ import RelatedProductsSection from '../components/RelatedProductsSection';
 import MobileExpandableText from '../components/MobileExpandableText';
 import BrochureModal, { openBrochure } from '../components/BrochureModal';
 import { sanitizeAndFormatHtml } from './BlogDetail';
+import { isValidVideoUrl } from '../utils/videoUtils';
 
 const wineraLogo = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345673/winera_uploads/dqjnjhybdtibqy4soznu.png";
 const arcadeHeroBg = "https://res.cloudinary.com/achfsmlm/image/upload/f_auto,q_auto/v1791345623/winera_uploads/rpygauibfzxyouopsc4r.png";
@@ -546,29 +547,31 @@ export default function BowlingAlley({ siteData }) {
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ fontWeight: '700', color: '#475569' }}>Best for:</span><span style={{ fontWeight: '800', color: '#0f172a' }}>{siteData?.bowlingFreeFall?.specBestFor || "Dedicated bowling centers"}</span></div>
               </div>
 
-              <div className="winera-bowling-types-btn-row" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
-                <button
-                  onClick={() => openVideoModal(siteData?.bowlingFreeFall?.videoUrl, "Free Fall Bowling Showcase")}
-                  aria-label="Watch Free Fall Bowling Video"
-                  style={{
-                    width: '190px',
-                    height: '70px',
-                    background: `url(${getValidImageUrl(siteData?.bowlingFreeFall?.videoBtnBg, ctaBannerBg)}) center center / 100% 100% no-repeat`,
-                    color: '#0f172a',
-                    fontSize: '15px',
-                    fontWeight: '700',
-                    border: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    padding: '7px 5px 2px 0',
-                    textDecoration: 'none'
-                  }}
-                >
-                  <span>{siteData?.bowlingFreeFall?.btnText || "Watch Video"}</span>
-                </button>
-              </div>
+              {isValidVideoUrl(siteData?.bowlingFreeFall?.videoUrl) && (
+                <div className="winera-bowling-types-btn-row" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
+                  <button
+                    onClick={() => openVideoModal(siteData?.bowlingFreeFall?.videoUrl, "Free Fall Bowling Showcase")}
+                    aria-label="Watch Free Fall Bowling Video"
+                    style={{
+                      width: '190px',
+                      height: '70px',
+                      background: `url(${getValidImageUrl(siteData?.bowlingFreeFall?.videoBtnBg, ctaBannerBg)}) center center / 100% 100% no-repeat`,
+                      color: '#0f172a',
+                      fontSize: '15px',
+                      fontWeight: '700',
+                      border: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      padding: '7px 5px 2px 0',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    <span>{siteData?.bowlingFreeFall?.btnText || "Watch Video"}</span>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Right Photo Collage with Overlapping Cyan Pill Specification Badges */}

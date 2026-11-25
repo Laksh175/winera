@@ -2572,7 +2572,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           width: '2140 mm',
           depth: '2310 mm',
           height: '2490 mm',
-          videoUrl: 'https://youtube.com',
+          videoUrl: '',
           quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Parkour%20Motor%20II%20(DX)'
         },
         'manx-tt-32': {
@@ -2588,7 +2588,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           width: '2150 mm',
           depth: '2200 mm',
           height: '2400 mm',
-          videoUrl: 'https://youtube.com',
+          videoUrl: '',
           quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20MANX%20TT%2032'
         },
         'super-air-hockey': {
@@ -2604,7 +2604,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           width: '2200 mm',
           depth: '1300 mm',
           height: '850 mm',
-          videoUrl: 'https://youtube.com',
+          videoUrl: '',
           quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Super%20Air%20Hockey'
         },
         'puck-carnival-air-hockey': {
@@ -2620,7 +2620,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           width: '2250 mm',
           depth: '1350 mm',
           height: '880 mm',
-          videoUrl: 'https://youtube.com',
+          videoUrl: '',
           quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Puck%20Carnival%20Air%20Hockey'
         },
         'dazzling-air-hockey-multi-puck': {
@@ -2636,7 +2636,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           width: '2300 mm',
           depth: '1400 mm',
           height: '900 mm',
-          videoUrl: 'https://youtube.com',
+          videoUrl: '',
           quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Dazzling%20Air%20Hockey'
         },
         'aurora-air-hockey': {
@@ -2652,7 +2652,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           width: '2150 mm',
           depth: '1250 mm',
           height: '840 mm',
-          videoUrl: 'https://youtube.com',
+          videoUrl: '',
           quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aurora%20Air%20Hockey'
         },
         'ocha-air-hockey': {
@@ -2668,7 +2668,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           width: '2100 mm',
           depth: '1200 mm',
           height: '820 mm',
-          videoUrl: 'https://youtube.com',
+          videoUrl: '',
           quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Ocha%20Air%20Hockey'
         },
         'aero-x-air-hockey': {
@@ -2684,7 +2684,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
           width: '2180 mm',
           depth: '1280 mm',
           height: '860 mm',
-          videoUrl: 'https://youtube.com',
+          videoUrl: '',
           quoteUrl: 'https://wa.me/919157873576?text=Hello%20Winera,%20I%20want%20a%20quote%20for%20Aero%20X%20Air%20Hockey'
         }
       };
@@ -2719,7 +2719,7 @@ export default function AdminDashboard({ siteData, refreshContent }) {
         gallery4: item.gallery4 || (Array.isArray(item.gallery) ? item.gallery[3] : '') || '',
         gallery5: item.gallery5 || (Array.isArray(item.gallery) ? item.gallery[4] : '') || '',
         gallery6: item.gallery6 || (Array.isArray(item.gallery) ? item.gallery[5] : '') || '',
-        videoUrl: item.videoUrl || knownDefault.videoUrl || 'https://youtube.com',
+        videoUrl: item.videoUrl || knownDefault.videoUrl || '',
         quoteUrl: item.quoteUrl || knownDefault.quoteUrl || 'https://wa.me/919157873576',
         feature1Title: item.feature1Title !== undefined ? String(item.feature1Title).replace(/12\+/g, '15+') : (knownDefault.feature1Title ? String(knownDefault.feature1Title).replace(/12\+/g, '15+') : '15+ Years of Expertise'),
         feature1Desc: item.feature1Desc !== undefined ? item.feature1Desc : (knownDefault.feature1Desc || 'Proven experience delivering game zone projects across malls, hotels, schools, and resorts since 2014.'),
@@ -6187,9 +6187,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         type="text"
                         value={modalItemData.videoUrl || ''}
                         onChange={(e) => setModalItemData(prev => ({ ...prev, videoUrl: e.target.value }))}
-                        placeholder="https://youtube.com/watch?v=..."
+                        placeholder="https://youtube.com/watch?v=... (Optional)"
                         style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
+                      <span style={{ display: 'block', fontSize: '10.5px', color: '#64748b', marginTop: '3px' }}>
+                        💡 <strong>Tip:</strong> Blank chhodne par "Watch Video" button hide rahega. YouTube URL daalte hi button automatic show ho jayega.
+                      </span>
                     </div>
                     <div>
                       <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Base WhatsApp Link / URL</label>
@@ -6667,9 +6670,12 @@ export default function AdminDashboard({ siteData, refreshContent }) {
                         type="text"
                         value={modalItemData.videoUrl || ''}
                         onChange={(e) => setModalItemData(prev => ({ ...prev, videoUrl: e.target.value }))}
-                        placeholder="https://youtube.com/watch?v=..."
+                        placeholder="https://youtube.com/watch?v=... (Optional)"
                         style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', fontSize: '12.5px' }}
                       />
+                      <span style={{ display: 'block', fontSize: '10.5px', color: '#64748b', marginTop: '3px' }}>
+                        💡 <strong>Tip:</strong> Blank chhodne par "Watch Video" button hide rahega. YouTube URL daalte hi button automatic show ho jayega.
+                      </span>
                     </div>
                     <div>
                       <label style={{ display: 'block', fontSize: '11.5px', fontWeight: '800', color: '#64748b', marginBottom: '4px' }}>Base WhatsApp Link</label>

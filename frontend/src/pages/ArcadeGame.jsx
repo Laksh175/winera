@@ -46,6 +46,7 @@ import WhyChooseUsMobileSlider from '../components/WhyChooseUsMobileSlider';
 import ArcadeSwipeCardDeck from '../components/ArcadeSwipeCardDeck';
 import { fetchArcadeProducts } from '../services/api';
 import { sanitizeAndFormatHtml } from './BlogDetail';
+import { isValidVideoUrl } from '../utils/videoUtils';
 
 const DEFAULT_ARCADE_CATEGORIES = [
   "Arcade Games", "Claw Machine", "Redemption Game", "Kiddy Ride",
@@ -499,27 +500,29 @@ export default function ArcadeGame({ siteData }) {
 
             {/* Action Buttons Row */}
             <div className="winera-arcade-intro-actions" style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
-              {/* Button 1: Watch Video with arcadegame-button-1.png BG */}
-              <button
-                onClick={() => openVideoModal(siteData?.arcadeIntro?.videoLink || "https://youtube.com", "Arcade Game Showcase")}
-                style={{
-                  width: '190px',
-                  height: '70px',
-                  background: `url(${getValidImageUrl(siteData?.arcadeIntro?.videoBtnBg, arcadeBtn1)}) center center / 100% 100% no-repeat`,
-                  color: '#ffffff',
-                  fontSize: '15px',
-                  fontWeight: '600',
-                  border: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  padding: '7px 5px 2px 0',
-                  textDecoration: 'none'
-                }}
-              >
-                <span>{siteData?.arcadeIntro?.videoBtnText || "Watch Video"}</span>
-              </button>
+              {/* Button 1: Watch Video with arcadegame-button-1.png BG - Only rendered when genuine video link exists */}
+              {isValidVideoUrl(siteData?.arcadeIntro?.videoLink) && (
+                <button
+                  onClick={() => openVideoModal(siteData?.arcadeIntro?.videoLink, "Arcade Game Showcase")}
+                  style={{
+                    width: '190px',
+                    height: '70px',
+                    background: `url(${getValidImageUrl(siteData?.arcadeIntro?.videoBtnBg, arcadeBtn1)}) center center / 100% 100% no-repeat`,
+                    color: '#ffffff',
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    border: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    padding: '7px 5px 2px 0',
+                    textDecoration: 'none'
+                  }}
+                >
+                  <span>{siteData?.arcadeIntro?.videoBtnText || "Watch Video"}</span>
+                </button>
+              )}
 
               {/* Button 2: Get a Quote with arcadegame-button-2.png BG */}
               {(() => {

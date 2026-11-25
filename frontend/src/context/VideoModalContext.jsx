@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { isValidVideoUrl, getVideoEmbedInfo } from '../utils/videoUtils';
 
 const VideoModalContext = createContext();
 
@@ -9,6 +10,11 @@ export function VideoModalProvider({ children }) {
   const [videoOptions, setVideoOptions] = useState({});
 
   const openVideoModal = (url, title = 'Winera Video Showcase', options = {}) => {
+    // Only open if URL is a genuine video link
+    if (!isValidVideoUrl(url)) {
+      console.warn('VideoModal: Ignored invalid or empty video URL:', url);
+      return;
+    }
     setVideoUrl(url || '');
     setVideoTitle(title);
     setVideoOptions(typeof options === 'object' && options !== null ? options : {});
@@ -86,51 +92,7 @@ function VideoModalDialog({ videoUrl, title, options = {}, onClose }) {
     setIsVertical(isVerticalDetected);
   }, [videoUrl, isVerticalDetected]);
 
-  // Helper to parse YouTube URL and extract video ID
-  const getEmbedInfo = (url) => {
-    // Default Twinkle Twinkle Little Star nursery rhyme video fallback
-    const defaultKidsVideoEmbed = 'https://www.youtube-nocookie.com/embed/yCjJyiqpAuU?autoplay=1&rel=0&modestbranding=1&controls=1';
-
-    if (!url || typeof url !== 'string') {
-      return { type: 'youtube', embedUrl: defaultKidsVideoEmbed };
-    }
-
-    const clean = url.trim();
-
-    // Direct MP4 / WebM video file
-    if (clean.match(/\.(mp4|webm|ogg)($|\?)/i)) {
-      return { type: 'direct', url: clean };
-    }
-
-    // YouTube regex patterns (supports standard, shorts, embed, youtu.be, and query parameters)
-    const ytReg = /(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/))([^"&?\/\s]{11})/i;
-    const match = clean.match(ytReg);
-
-    if (match && match[1]) {
-      const videoId = match[1];
-      return {
-        type: 'youtube',
-        embedUrl: `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1&enablejsapi=1`
-      };
-    }
-
-    // If it's already an embed link
-    if (clean.includes('youtube.com/embed/')) {
-      const separator = clean.includes('?') ? '&' : '?';
-      return {
-        type: 'youtube',
-        embedUrl: `${clean}${separator}autoplay=1&rel=0&modestbranding=1&controls=1`
-      };
-    }
-
-    // Fallback default Kids Play Zone video for any non-video link (e.g. WhatsApp links)
-    return {
-      type: 'youtube',
-      embedUrl: defaultKidsVideoEmbed
-    };
-  };
-
-  const embedInfo = getEmbedInfo(videoUrl);
+  const embedInfo = getVideoEmbedInfo(videoUrl);
 
   return (
     <div
@@ -284,7 +246,45 @@ function VideoModalDialog({ videoUrl, title, options = {}, onClose }) {
             width: '100%'
           })
         }}>
-          {embedInfo.type === 'direct' ? (
+          {!embedInfo ? (
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '24px',
+              textAlign: 'center',
+              color: '#ffffff',
+              background: '#0f172a'
+            }}>
+              <div style={{ fontSize: '40px', marginBottom: '12px' }}>🎬</div>
+              <h3 style={{ fontSize: '18px', fontWeight: '800', marginBottom: '8px', color: '#38bdf8' }}>Video Demo Available on WhatsApp</h3>
+              <p style={{ fontSize: '13.5px', color: '#94a3b8', maxWidth: '420px', lineHeight: 1.5, marginBottom: '20px' }}>
+                Our team shares unedited live factory and setup videos directly with clients. Request the video for this machine now.
+              </p>
+              <a
+                href={`https://wa.me/919157873576?text=${encodeURIComponent(`Hello Winera International! Please share the working video demo for: ${title || 'this machine'}`)}`}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  background: '#25D366',
+                  color: '#ffffff',
+                  fontWeight: '700',
+                  fontSize: '14px',
+                  padding: '10px 22px',
+                  borderRadius: '12px',
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                Request Video on WhatsApp
+              </a>
+            </div>
+          ) : embedInfo.type === 'direct' ? (
             <video
               src={embedInfo.url}
               controls
