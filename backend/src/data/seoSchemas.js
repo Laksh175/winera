@@ -95,84 +95,54 @@ export const SEO_SCHEMAS = {
           "name": "Game Zone Equipment",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Soft Play",
-                "url": "https://winera.in/product/soft-play"
-              }
+              "@type": "Service",
+              "name": "Soft Play",
+              "url": "https://winera.in/product/soft-play"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Trampoline Park",
-                "url": "https://winera.in/product/trampoline-park"
-              }
+              "@type": "Service",
+              "name": "Trampoline Park",
+              "url": "https://winera.in/product/trampoline-park"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Bowling Alley",
-                "url": "https://winera.in/product/bowling-alley"
-              }
+              "@type": "Service",
+              "name": "Bowling Alley",
+              "url": "https://winera.in/product/bowling-alley"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Arcade Games",
-                "url": "https://winera.in/product/arcade-games"
-              }
+              "@type": "Service",
+              "name": "Arcade Games",
+              "url": "https://winera.in/product/arcade-games"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "VR Games",
-                "url": "https://winera.in/product/vr-games"
-              }
+              "@type": "Service",
+              "name": "VR Games",
+              "url": "https://winera.in/product/vr-games"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "AR Games",
-                "url": "https://winera.in/product/ar-games"
-              }
+              "@type": "Service",
+              "name": "AR Games",
+              "url": "https://winera.in/product/ar-games"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Bumper Car",
-                "url": "https://winera.in/product/bumper-car"
-              }
+              "@type": "Service",
+              "name": "Bumper Car",
+              "url": "https://winera.in/product/bumper-car"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Amusement Park Rides",
-                "url": "https://winera.in/product/amusement-park"
-              }
+              "@type": "Service",
+              "name": "Amusement Park Rides",
+              "url": "https://winera.in/product/amusement-park"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Hypergrid",
-                "url": "https://winera.in/product/hypergrid"
-              }
+              "@type": "Service",
+              "name": "Hypergrid",
+              "url": "https://winera.in/product/hypergrid"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Laser Tag",
-                "url": "https://winera.in/product/laser-tag"
-              }
+              "@type": "Service",
+              "name": "Laser Tag",
+              "url": "https://winera.in/product/laser-tag"
             }
           ]
         },
@@ -378,68 +348,44 @@ export const SEO_SCHEMAS = {
           "name": "Arcade Game Categories",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Claw Machine",
-                "description": "46 models"
-              }
+              "@type": "Service",
+              "name": "Claw Machine",
+              "description": "46 models"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Redemption Game",
-                "description": "177 models"
-              }
+              "@type": "Service",
+              "name": "Redemption Game",
+              "description": "177 models"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Bike Racing Game",
-                "description": "32 models"
-              }
+              "@type": "Service",
+              "name": "Bike Racing Game",
+              "description": "32 models"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Car Racing Game",
-                "description": "64 models"
-              }
+              "@type": "Service",
+              "name": "Car Racing Game",
+              "description": "64 models"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Shooting Games",
-                "description": "67 models"
-              }
+              "@type": "Service",
+              "name": "Shooting Games",
+              "description": "67 models"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "VR Games",
-                "description": "158 models"
-              }
+              "@type": "Service",
+              "name": "VR Games",
+              "description": "158 models"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Kiddy Ride",
-                "description": "20 models"
-              }
+              "@type": "Service",
+              "name": "Kiddy Ride",
+              "description": "20 models"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Strength Based Games",
-                "description": "23 models"
-              }
+              "@type": "Service",
+              "name": "Strength Based Games",
+              "description": "23 models"
             }
           ]
         }
@@ -885,34 +831,22 @@ export const SEO_SCHEMAS = {
           "name": "AR and Interactive Gaming Equipment",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Sports Simulators",
-                "description": "Full sports simulators typically need 4–9 metres in length and 3–3.5 metres ceiling height."
-              }
+              "@type": "Service",
+              "name": "Sports Simulators",
+              "description": "Full sports simulators typically need 4–9 metres in length and 3–3.5 metres ceiling height."
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Interactive Floor Systems",
-                "description": "Interactive floor tiles from 30x30 cm per module."
-              }
+              "@type": "Service",
+              "name": "Interactive Floor Systems",
+              "description": "Interactive floor tiles from 30x30 cm per module."
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "AR Experiences"
-              }
+              "@type": "Service",
+              "name": "AR Experiences"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Immersive Gaming Equipment"
-              }
+              "@type": "Service",
+              "name": "Immersive Gaming Equipment"
             }
           ]
         }
@@ -1071,16 +1005,10 @@ export const SEO_SCHEMAS = {
           "name": "Bowling Systems",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@id": "https://winera.in/product/bowling-alley#free-fall"
-              }
+              "@id": "https://winera.in/product/bowling-alley#free-fall"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@id": "https://winera.in/product/bowling-alley#string"
-              }
+              "@id": "https://winera.in/product/bowling-alley#string"
             }
           ]
         }
@@ -1287,60 +1215,36 @@ export const SEO_SCHEMAS = {
           "name": "Trampoline Park Zones",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Free Jump Zones"
-              }
+              "@type": "Service",
+              "name": "Free Jump Zones"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Dunk Hoops"
-              }
+              "@type": "Service",
+              "name": "Dunk Hoops"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Zip Line"
-              }
+              "@type": "Service",
+              "name": "Zip Line"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Obstacle Courts"
-              }
+              "@type": "Service",
+              "name": "Obstacle Courts"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Air Bags"
-              }
+              "@type": "Service",
+              "name": "Air Bags"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Climbing Wall"
-              }
+              "@type": "Service",
+              "name": "Climbing Wall"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Ninja Courses"
-              }
+              "@type": "Service",
+              "name": "Ninja Courses"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Foam Cubes"
-              }
+              "@type": "Service",
+              "name": "Foam Cubes"
             }
           ]
         }
@@ -1483,32 +1387,20 @@ export const SEO_SCHEMAS = {
           "name": "Soft Play Zone Types",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Themed Play Zones"
-              }
+              "@type": "Service",
+              "name": "Themed Play Zones"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Toddler and Junior Play Areas"
-              }
+              "@type": "Service",
+              "name": "Toddler and Junior Play Areas"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Multi-Level Play Structures"
-              }
+              "@type": "Service",
+              "name": "Multi-Level Play Structures"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Ball Pit and Sensory Zones"
-              }
+              "@type": "Service",
+              "name": "Ball Pit and Sensory Zones"
             }
           ]
         }
@@ -1663,16 +1555,10 @@ export const SEO_SCHEMAS = {
           "name": "Bumper Car Types",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@id": "https://winera.in/product/bumper-car#electric-floor"
-              }
+              "@id": "https://winera.in/product/bumper-car#electric-floor"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@id": "https://winera.in/product/bumper-car#battery"
-              }
+              "@id": "https://winera.in/product/bumper-car#battery"
             }
           ]
         }
@@ -2029,39 +1915,24 @@ export const SEO_SCHEMAS = {
           "name": "Amusement Park Ride Types",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Thrill Rides"
-              }
+              "@type": "Service",
+              "name": "Thrill Rides"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Family Rides"
-              }
+              "@type": "Service",
+              "name": "Family Rides"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Kids' Rides"
-              }
+              "@type": "Service",
+              "name": "Kids' Rides"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Classic Favourites"
-              }
+              "@type": "Service",
+              "name": "Classic Favourites"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Custom Attractions"
-              }
+              "@type": "Service",
+              "name": "Custom Attractions"
             }
           ]
         }
@@ -2207,18 +2078,12 @@ export const SEO_SCHEMAS = {
           "name": "Laser Games",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Laser Tag Arena"
-              }
+              "@type": "Service",
+              "name": "Laser Tag Arena"
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Laser Spy Room"
-              }
+              "@type": "Service",
+              "name": "Laser Spy Room"
             }
           ]
         }
@@ -4288,52 +4153,34 @@ export const SEO_SCHEMAS = {
           "name": "From empty space to profit",
           "itemListElement": [
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Location & Feasibility",
-                "description": "We analyze your space and market and then project your ROI."
-              }
+              "@type": "Service",
+              "name": "Location & Feasibility",
+              "description": "We analyze your space and market and then project your ROI."
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Design & Layout",
-                "description": "Maximum games, best flow, optimized experience per sq. ft."
-              }
+              "@type": "Service",
+              "name": "Design & Layout",
+              "description": "Maximum games, best flow, optimized experience per sq. ft."
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Game Selection",
-                "description": "The right mix of high-demand and high-margin games."
-              }
+              "@type": "Service",
+              "name": "Game Selection",
+              "description": "The right mix of high-demand and high-margin games."
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Setup & Installation",
-                "description": "Complete installation, so you don't have to touch a single wire."
-              }
+              "@type": "Service",
+              "name": "Setup & Installation",
+              "description": "Complete installation, so you don't have to touch a single wire."
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Management System",
-                "description": "POS, pricing, staff training, reporting and maintenance."
-              }
+              "@type": "Service",
+              "name": "Management System",
+              "description": "POS, pricing, staff training, reporting and maintenance."
             },
             {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Ongoing Growth",
-                "description": "Help to scale revenue after opening, not just open doors."
-              }
+              "@type": "Service",
+              "name": "Ongoing Growth",
+              "description": "Help to scale revenue after opening, not just open doors."
             }
           ]
         }
