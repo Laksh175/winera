@@ -57,6 +57,8 @@ export const getTargetDirectories = () => {
 
   // Live Nginx web roots if present on Ubuntu server
   const liveNginxDirs = [
+    '/var/www/winera/frontend/dist',
+    '/var/www/winera/frontend/public',
     '/var/www/winera/frontend',
     '/var/www/html'
   ];
