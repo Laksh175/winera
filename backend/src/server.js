@@ -174,13 +174,33 @@ app.get([
   return res.redirect(301, `/product/${slug}${queryString}`);
 });
 
-// Legacy / Mismatched Blog URLs 301 Permanent Redirect Handler (SEO Canonical Preservation)
-app.get([
-  '/blog/bowling-alley-setup-cost-in-india-price-per-lane-roi',
-  '/blog/bowling-alley-setup-cost-in-india-price-per-lane-roi/'
-], (req, res) => {
-  const queryString = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
-  return res.redirect(301, `/blog/bowling-alley-setup-cost-in-india-price-per-lane${queryString}`);
+// Legacy & Alternate Blog URLs 301 Permanent Redirect Map (Resolves GSC Duplicates)
+const BLOG_SLUG_REDIRECTS = {
+  'bowling-alley-setup-cost-in-india-price-per-lane-roi': 'bowling-alley-setup-cost-in-india-price-per-lane',
+  'how-to-start-a-game-zone-in-surat-complete-guide-for-business-owners': 'how-to-start-a-game-zone-in-surat',
+  'how-much-does-an-indoor-playground-cost-in-india-a-2026-guide-for-investors': 'indoor-playground-cost-in-india-a-guide-for-investors',
+  'choosing-a-game-zone-developer-in-india-10-point-checklist': 'how-to-choose-game-zone-developer-india',
+  'soft-play-vs-trampoline-park': 'indoor-soft-play-vs-trampoline-park',
+  'what-can-indoor-playground-equipment-do-for-our-kids': 'indoor-playground-equipment-benefits-for-kids',
+  'why-turnkey-manufacturing-solutions-are-best-for-new-amusement-businesses': 'turnkey-amusement-park-solutions',
+  'the-history-and-some-fun-facts-about-bumper-cars': 'history-facts-about-bumper-cars',
+  'how-to-set-up-a-profitable-vr-gaming-zone-with-the-latest-machines': 'set-up-profitable-vr-gaming-zone',
+  'how-to-start-an-arcade-game-business': 'arcade-game-business-startup-guide',
+  'why-bumper-cars-are-a-profitable-attraction-for-fecs-and-amusement-parks': 'why-bumper-cars-profitable-attraction',
+  '5-key-features-of-a-vr-gaming-machine-manufacturer': 'features-of-vr-gaming-machine-manufacturer',
+  'top-5-trends-in-amusement-park-design-every-manufacturer-should-know': 'top-trends-in-amusement-park-design',
+  'top-trends-in-amusement-park-ride-manufacturing': 'trends-in-amusement-park-ride',
+  'how-to-choose-the-right-trampoline-park-manufacturer': 'how-choose-trampoline-park-manufacturer'
+};
+
+app.get('/blog/:slug', (req, res, next) => {
+  const rawSlug = (req.params.slug || '').toLowerCase().trim();
+  if (BLOG_SLUG_REDIRECTS[rawSlug]) {
+    const target = BLOG_SLUG_REDIRECTS[rawSlug];
+    const queryString = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+    return res.redirect(301, `/blog/${target}${queryString}`);
+  }
+  next();
 });
 
 app.use('/api', apiRoutes);
