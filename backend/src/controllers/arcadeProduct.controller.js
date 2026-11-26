@@ -1,6 +1,7 @@
 import ArcadeProduct from '../models/ArcadeProduct.js';
 import VrGame from '../models/VrGame.js';
 import Content from '../models/Content.js';
+import { syncAllDatabaseToSitemap } from '../utils/sitemapService.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -261,6 +262,7 @@ export const createArcadeProduct = async (req, res) => {
       data.slug = (data.title || data.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     }
     const created = await ArcadeProduct.create(data);
+    syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap sync notice on arcade product create:', e.message));
     res.json({ success: true, product: created });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -274,6 +276,7 @@ export const updateArcadeProduct = async (req, res) => {
     const { id } = req.params;
     const data = req.body;
     const updated = await ArcadeProduct.findByIdAndUpdate(id, data, { new: true });
+    syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap sync notice on arcade product update:', e.message));
     res.json({ success: true, product: updated });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -286,6 +289,7 @@ export const deleteArcadeProduct = async (req, res) => {
   try {
     const { id } = req.params;
     await ArcadeProduct.findByIdAndDelete(id);
+    syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap sync notice on arcade product delete:', e.message));
     res.json({ success: true, message: 'Product deleted' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

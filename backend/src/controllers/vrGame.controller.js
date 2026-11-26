@@ -1,5 +1,6 @@
 import VrGame from '../models/VrGame.js';
 import Content from '../models/Content.js';
+import { syncAllDatabaseToSitemap } from '../utils/sitemapService.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -169,6 +170,7 @@ export const createVrGame = async (req, res) => {
       data.slug = (data.title || data.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }
     const created = await VrGame.create(data);
+    syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap sync notice on VR game create:', e.message));
     res.json({ success: true, game: created });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -182,6 +184,7 @@ export const updateVrGame = async (req, res) => {
     if (!updated) {
       return res.status(404).json({ success: false, message: 'VR Game not found' });
     }
+    syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap sync notice on VR game update:', e.message));
     res.json({ success: true, game: updated });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -195,6 +198,7 @@ export const deleteVrGame = async (req, res) => {
     if (!deleted) {
       return res.status(404).json({ success: false, message: 'VR Game not found' });
     }
+    syncAllDatabaseToSitemap().catch(e => console.warn('Sitemap sync notice on VR game delete:', e.message));
     res.json({ success: true, message: 'VR Game deleted successfully' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
