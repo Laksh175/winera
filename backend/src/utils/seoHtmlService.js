@@ -337,6 +337,34 @@ export async function getBlogSeoData(slug) {
     blog = list.find(b => (b.slug || '').toLowerCase() === normalizedSlug);
   }
 
+  // Fallback 1: If slug has trailing '-roi' (e.g. legacy/crawled URL), match base slug
+  if (!blog && normalizedSlug.endsWith('-roi')) {
+    const stripped = normalizedSlug.replace(/-roi$/, '');
+    if (mongoose.connection && mongoose.connection.readyState === 1) {
+      try {
+        blog = await Blog.findOne({ slug: stripped }).maxTimeMS(2000).lean();
+      } catch (e) {}
+    }
+    if (!blog) {
+      const list = getBlogsFromJson();
+      blog = list.find(b => (b.slug || '').toLowerCase() === stripped);
+    }
+  }
+
+  // Fallback 2: Check Content collection sectionKey: 'blogPosts'
+  if (!blog && mongoose.connection && mongoose.connection.readyState === 1) {
+    try {
+      const contentDoc = await Content.findOne({ sectionKey: 'blogPosts' }).maxTimeMS(2000).lean();
+      if (contentDoc && contentDoc.data) {
+        const posts = Array.isArray(contentDoc.data) ? contentDoc.data : (contentDoc.data.posts || []);
+        blog = posts.find(b => {
+          const s = (b.slug || '').toLowerCase().trim();
+          return s === normalizedSlug || (normalizedSlug.endsWith('-roi') && s === normalizedSlug.replace(/-roi$/, ''));
+        });
+      }
+    } catch (e) {}
+  }
+
   if (!blog) return null;
 
   // Title formatting

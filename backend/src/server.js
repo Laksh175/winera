@@ -174,6 +174,15 @@ app.get([
   return res.redirect(301, `/product/${slug}${queryString}`);
 });
 
+// Legacy / Mismatched Blog URLs 301 Permanent Redirect Handler (SEO Canonical Preservation)
+app.get([
+  '/blog/bowling-alley-setup-cost-in-india-price-per-lane-roi',
+  '/blog/bowling-alley-setup-cost-in-india-price-per-lane-roi/'
+], (req, res) => {
+  const queryString = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  return res.redirect(301, `/blog/bowling-alley-setup-cost-in-india-price-per-lane${queryString}`);
+});
+
 app.use('/api', apiRoutes);
 
 // Dynamic HTML Server: Injects accurate SEO meta tags (title, description, image, canonical, OG & Twitter tags) for raw requests & web crawlers
