@@ -7,6 +7,7 @@ import { initDbBackupCron } from './services/dbBackupCron.js';
 import { initScheduledPublishingCron } from './services/scheduledPublishService.js';
 import apiRoutes from './routes/api.routes.js';
 import { getSitemapXmlController } from './controllers/content.controller.js';
+import { syncAllDatabaseToSitemap } from './utils/sitemapService.js';
 import {
   getBaseIndexHtml,
   injectSeoTags,
@@ -19,7 +20,9 @@ import {
 import fs from 'fs';
 import path from 'path';
 
-connectDB();
+connectDB().then(() => {
+  syncAllDatabaseToSitemap().catch(e => console.warn('[Startup Sitemap Sync Note]:', e?.message));
+});
 initDbBackupCron();
 initScheduledPublishingCron();
 

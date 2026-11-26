@@ -473,6 +473,13 @@ export const syncAllDatabaseToSitemap = async () => {
     });
     writeXmlFile('sitemap.xml', indexXml);
 
+    // Update in-memory real-time cache
+    sitemapMemoryCache.set('page', pageXml);
+    sitemapMemoryCache.set('product', productXml);
+    sitemapMemoryCache.set('project', projectXml);
+    sitemapMemoryCache.set('blog', blogXml);
+    sitemapMemoryCache.set('index', indexXml);
+
     const pageCount = (pageXml.match(/<loc>/g) || []).length;
     const productCount = (productXml.match(/<loc>/g) || []).length;
     const projectCount = (projectXml.match(/<loc>/g) || []).length;
@@ -538,10 +545,17 @@ export const addMultipleUrlsToSitemap = async (urlEntries = []) => {
   return syncAllDatabaseToSitemap();
 };
 
+// Real-time In-Memory Sitemap Cache
+const sitemapMemoryCache = new Map();
+
 /**
- * Direct Content Retrieval for HTTP Serving
+ * Direct Content Retrieval for HTTP Serving (Synchronous with Memory Cache & Disk Fallback)
  */
 export const getSitemapXmlContent = (type = 'index') => {
+  if (sitemapMemoryCache.has(type)) {
+    return sitemapMemoryCache.get(type);
+  }
+
   const today = getTodayDateString();
   const fileMap = {
     index: 'sitemap.xml',
@@ -554,6 +568,7 @@ export const getSitemapXmlContent = (type = 'index') => {
   const filename = fileMap[type] || 'sitemap.xml';
   const existingContent = readXmlFile(filename);
   if (existingContent) {
+    sitemapMemoryCache.set(type, existingContent);
     return existingContent;
   }
 
@@ -565,4 +580,55 @@ export const getSitemapXmlContent = (type = 'index') => {
   }
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${BASE_URL}/</loc>\n    <lastmod>${today}</lastmod>\n  </url>\n</urlset>`;
+};
+
+/**
+ * Dynamic Content Retrieval for HTTP Serving (Asynchronous: checks memory, disk, and generates fresh on-demand)
+ */
+export const getSitemapXmlContentAsync = async (type = 'index') => {
+  if (sitemapMemoryCache.has(type)) {
+    return sitemapMemoryCache.get(type);
+  }
+
+  const today = getTodayDateString();
+  const fileMap = {
+    index: 'sitemap.xml',
+    page: 'page-sitemap.xml',
+    product: 'product-sitemap.xml',
+    project: 'project-sitemap.xml',
+    blog: 'blog-sitemap.xml'
+  };
+
+  const filename = fileMap[type] || 'sitemap.xml';
+  const existingContent = readXmlFile(filename);
+  if (existingContent) {
+    sitemapMemoryCache.set(type, existingContent);
+    return existingContent;
+  }
+
+  // Generate on-the-fly directly from MongoDB if disk file is missing
+  let freshXml = '';
+  try {
+    if (type === 'index') {
+      freshXml = buildSitemapIndexXml();
+    } else if (type === 'page') {
+      freshXml = generatePageSitemapXml();
+    } else if (type === 'blog') {
+      freshXml = await generateBlogSitemapXml();
+    } else if (type === 'product') {
+      freshXml = await generateProductSitemapXml();
+    } else if (type === 'project') {
+      freshXml = await generateProjectSitemapXml();
+    }
+  } catch (err) {
+    console.error(`[Sitemap] On-the-fly generation error for ${type}:`, err.message);
+  }
+
+  if (freshXml) {
+    sitemapMemoryCache.set(type, freshXml);
+    writeXmlFile(filename, freshXml);
+    return freshXml;
+  }
+
+  return getSitemapXmlContent(type);
 };

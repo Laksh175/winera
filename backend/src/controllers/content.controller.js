@@ -15,7 +15,8 @@ import {
   addOrUpdateUrlInSitemap,
   addMultipleUrlsToSitemap,
   syncAllDatabaseToSitemap,
-  getSitemapXmlContent
+  getSitemapXmlContent,
+  getSitemapXmlContentAsync
 } from '../utils/sitemapService.js';
 
 const projectsData = JSON.parse(fs.readFileSync(new URL('../data/projectsData.json', import.meta.url), 'utf-8'));
@@ -3377,11 +3378,11 @@ export const syncSitemapController = async (req, res) => {
 
 // @desc    Serve sitemap.xml dynamically with XML content-type
 // @route   GET /sitemap.xml or GET /api/sitemap.xml, /page-sitemap.xml, etc.
-export const getSitemapXmlController = (reqOrType, res) => {
+export const getSitemapXmlController = async (reqOrType, res) => {
   if (typeof reqOrType === 'string') {
-    return (req, response) => {
+    return async (req, response) => {
       try {
-        const xml = getSitemapXmlContent(reqOrType);
+        const xml = await getSitemapXmlContentAsync(reqOrType);
         response.set('Content-Type', 'application/xml; charset=utf-8');
         response.send(xml);
       } catch (error) {
@@ -3399,7 +3400,7 @@ export const getSitemapXmlController = (reqOrType, res) => {
     else if (pathUrl.includes('project-sitemap')) type = 'project';
     else if (pathUrl.includes('blog-sitemap')) type = 'blog';
 
-    const xml = getSitemapXmlContent(type);
+    const xml = await getSitemapXmlContentAsync(type);
     res.set('Content-Type', 'application/xml; charset=utf-8');
     res.send(xml);
   } catch (error) {
